@@ -1,0 +1,55 @@
+/* Vòng quay Yên: one focused promotional wheel, no game frameworks or tracking. */
+.release-section.wheel-section{background:#e9eee1;overflow:hidden}
+.wheel-section .release-layout{display:grid;grid-template-columns:minmax(0,.78fr) minmax(0,1.22fr);align-items:center;gap:clamp(24px,4vw,64px)}
+.wheel-section .release-copy .section-title{font-size:clamp(47px,5.5vw,77px);line-height:1.07}
+.wheel-section .release-copy>p{max-width:380px}
+.wheel-section .wheel-copy-note{margin-top:17px!important;font-size:12px!important;line-height:1.55!important;color:#71806e!important}
+.wheel-panel{position:relative;background:#fffaf0;border:2px solid #294638;border-radius:27px;padding:16px 17px 20px;min-width:0;box-shadow:10px 12px 0 #b9cda8;transform:none!important;overflow:hidden}
+.wheel-toolbar{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:0 2px 9px;border-bottom:1px dashed #c2cfb7}
+.wheel-brand{font:900 10px/1.35 "Noto Sans",Arial,sans-serif;letter-spacing:.085em;color:#53735a}
+.wheel-brand span{display:inline-block;width:8px;height:8px;background:#eab28f;border:1px solid #b46f57;border-radius:100%;margin-right:6px}
+.wheel-demo-chip{font:850 10px/1.2 "Noto Sans",Arial,sans-serif;color:#8f6851;background:#fff0d9;border:1px solid #e5c5a5;border-radius:100px;padding:6px 10px}
+.wheel-content{display:grid;grid-template-columns:minmax(0,1.13fr) minmax(160px,.87fr);gap:7px;align-items:center;padding:7px 0 0}
+.wheel-main{min-width:0;display:flex;flex-direction:column;align-items:center}
+.wheel-viewport{position:relative;width:min(100%,410px);aspect-ratio:1;display:grid;place-items:center;isolation:isolate}
+.wheel-viewport:before{content:"";position:absolute;inset:4%;border-radius:50%;background:#e5d9bb;filter:blur(14px);transform:translateY(9px);z-index:-1}
+.wheel-disc{display:block;width:100%;height:100%;transform:rotate(0deg);will-change:transform;overflow:visible;filter:drop-shadow(0 6px 0 #9aaa8d)}
+.wheel-pointer{position:absolute;z-index:3;top:1.7%;left:50%;transform:translateX(-50%);width:38px;height:55px;filter:drop-shadow(0 3px 1px #4e614a5c);pointer-events:none}
+.wheel-pointer svg{width:100%;height:100%}
+.wheel-center{position:absolute;inset:37%;border:5px solid #fff9eb;border-radius:50%;background:#2d5140;box-shadow:0 0 0 3px #264437,0 4px 9px #0002;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff8e7;pointer-events:none}
+.wheel-center strong{font:900 clamp(19px,2.2vw,30px)/1.04 "Noto Serif",Georgia,serif;letter-spacing:-.05em}
+.wheel-center small{font:850 clamp(6px,.8vw,9px)/1.2 "Noto Sans",Arial,sans-serif;letter-spacing:.09em;margin-top:5px}
+.wheel-interact-note{text-align:center;font:750 10px/1.5 "Noto Sans",Arial,sans-serif;color:#617968;margin-top:0;min-height:15px}
+.wheel-right{display:flex;flex-direction:column;align-items:stretch;gap:11px;padding:4px 4px 4px 8px;min-width:0}
+.wheel-clerk{position:relative;margin:0 auto;width:135px;height:124px;display:flex;justify-content:center;align-items:flex-end}
+.wheel-clerk-face{width:95px;height:95px;border:3px solid #335343;border-radius:45% 55% 48% 52%;background:#d9e5b0;position:relative;box-shadow:inset -7px -6px 0 #bacc9a}
+.wheel-clerk-face:before,.wheel-clerk-face:after{content:"";position:absolute;top:43px;width:8px;height:9px;background:#2f5140;border-radius:100%}
+.wheel-clerk-face:before{left:24px}.wheel-clerk-face:after{right:24px}
+.wheel-clerk-smile{position:absolute;width:21px;height:12px;border-bottom:3px solid #335343;border-radius:50%;left:34px;top:54px}
+.wheel-clerk-cheeks{position:absolute;left:14px;top:55px;width:14px;height:8px;background:#edb5a3;border-radius:100%;box-shadow:52px 0 #edb5a3}
+.wheel-clerk-top{position:absolute;top:3px;left:24px;width:62px;height:28px;border:2px solid #315442;border-radius:18px 18px 7px 7px;background:#efc68a;transform:rotate(-7deg);z-index:1}
+.wheel-clerk-hand{position:absolute;bottom:21px;width:24px;height:13px;background:#d9e5b0;border:3px solid #335343;border-radius:100px}
+.wheel-clerk-hand.left{left:13px;transform:rotate(-26deg)}.wheel-clerk-hand.right{right:12px;transform:rotate(26deg)}
+.wheel-clerk.spinning .wheel-clerk-face{animation:wheel-clerk-bob .4s ease-in-out infinite alternate}
+@keyframes wheel-clerk-bob{to{transform:translateY(-5px) rotate(5deg)}}
+.wheel-speech{position:relative;text-align:center;border:1.5px solid #b9c6ac;border-radius:14px;padding:11px 12px;background:#eef2e0;min-height:64px;font:750 12px/1.48 "Noto Sans",Arial,sans-serif;color:#365845}
+.wheel-speech:before{content:"";position:absolute;top:-9px;left:calc(50% - 8px);width:14px;height:14px;background:#eef2e0;border-left:1.5px solid #b9c6ac;border-top:1.5px solid #b9c6ac;transform:rotate(45deg)}
+.wheel-spin-btn{border:2px solid #244335;border-radius:16px;box-shadow:0 5px 0 #86a17e;background:#315743;color:#fff9e7;min-height:65px;padding:12px 13px;font:900 clamp(16px,1.7vw,21px)/1.1 "Noto Sans",Arial,sans-serif;cursor:pointer;transition:transform .14s,box-shadow .14s,background .14s}
+.wheel-spin-btn:hover:not(:disabled){background:#3d654e;transform:translateY(-2px);box-shadow:0 7px 0 #86a17e}
+.wheel-spin-btn:active:not(:disabled){transform:translateY(3px);box-shadow:0 2px 0 #86a17e}
+.wheel-spin-btn:disabled{cursor:wait;background:#658474;box-shadow:0 3px 0 #a6b6a0}
+.wheel-result{background:#fff6e2;border:1.5px dashed #d4b68d;border-radius:14px;min-height:86px;padding:11px 12px;display:flex;flex-direction:column;gap:3px;justify-content:center}
+.wheel-result-label{font:900 9px/1.4 "Noto Sans",Arial,sans-serif;letter-spacing:.085em;color:#a16e4c}
+.wheel-result strong{font:900 clamp(17px,1.8vw,22px)/1.2 "Noto Sans",Arial,sans-serif;color:#2e543c}
+.wheel-result p{font:650 11px/1.45 "Noto Sans",Arial,sans-serif;margin:0;color:#667461}
+.wheel-result[hidden]{display:none}
+.wheel-disclaimer{font:650 11px/1.55 "Noto Sans",Arial,sans-serif;text-align:center;color:#667868;margin:13px 5px 0;border-top:1px dashed #c9d2be;padding-top:10px}
+.wheel-disclaimer strong{color:#855d42}
+.wheel-confetti{position:absolute;inset:0;z-index:4;overflow:hidden;pointer-events:none}
+.wheel-confetti-piece{position:absolute;top:-15px;width:8px;height:14px;border-radius:2px;animation:wheel-fall var(--d,1.8s) ease-out forwards}
+@keyframes wheel-fall{0%{transform:translate3d(0,-15px,0) rotate(0);opacity:1}100%{transform:translate3d(var(--dx,25px),var(--dy,530px),0) rotate(var(--rot,450deg));opacity:0}}
+.wheel-spin-btn:focus-visible{outline:3px solid #b47551;outline-offset:4px}
+@media(max-width:1100px){.wheel-content{grid-template-columns:minmax(0,1fr) minmax(152px,.8fr)}.wheel-right{padding-left:0}.wheel-clerk{transform:scale(.9);margin-block:-6px}.wheel-panel{padding:13px}.wheel-section .release-layout{grid-template-columns:minmax(0,.72fr) minmax(0,1.28fr)}}
+@media(max-width:860px){.wheel-section .release-layout{grid-template-columns:1fr;gap:20px}.wheel-section .release-copy>p{max-width:640px}.wheel-content{grid-template-columns:minmax(0,1fr) minmax(205px,.7fr);gap:12px}.wheel-panel{max-width:760px;width:100%;margin:0 auto}.wheel-section .release-copy .section-title{font-size:clamp(44px,8vw,67px)}}
+@media(max-width:540px){.wheel-panel{padding:11px 10px 15px;box-shadow:6px 7px 0 #b9cda8}.wheel-content{display:flex;flex-direction:column;gap:0}.wheel-main{width:100%}.wheel-viewport{width:min(100%,365px)}.wheel-right{width:100%;display:grid;grid-template-columns:90px minmax(0,1fr);grid-template-areas:"clerk speech" "button button" "result result";gap:9px 11px;align-items:center;padding:0 6px}.wheel-clerk{grid-area:clerk;width:90px;height:95px;transform:scale(.7);transform-origin:center center;margin:-10px}.wheel-speech{grid-area:speech;font-size:11.5px;min-height:0}.wheel-speech:before{top:calc(50% - 7px);left:-8px;border-left:1.5px solid #b9c6ac;border-bottom:1.5px solid #b9c6ac;border-top:0}.wheel-spin-btn{grid-area:button;min-height:57px;font-size:18px}.wheel-result{grid-area:result;min-height:72px}.wheel-disclaimer{font-size:10.5px;margin-top:12px}.wheel-interact-note{font-size:9px}.wheel-section .release-copy .section-title{font-size:clamp(43px,10vw,60px)}}
+@media(prefers-reduced-motion:reduce){.wheel-clerk.spinning .wheel-clerk-face,.wheel-confetti-piece{animation:none!important}}
