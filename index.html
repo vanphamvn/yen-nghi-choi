@@ -903,6 +903,70 @@
 .wheel-viewport:focus-visible{outline:3px solid #ae7953;outline-offset:2px;border-radius:50%}
 
 </style>
+  <style id="yen-tarot-inline-css">
+
+/* Yên Tarot: a separate 78-card reflection ritual inside section 01. */
+.mood-mode-tabs{display:flex;align-items:center;gap:5px;width:max-content;max-width:100%;margin:0 0 24px;padding:5px;border:1.5px solid #afc1a8;border-radius:999px;background:#edf2e5}
+.mood-mode-tab{appearance:none;border:0;border-radius:999px;padding:13px 22px;min-height:45px;background:transparent;color:#566e5d;font:850 13px/1.2 "Noto Sans",Arial,sans-serif;cursor:pointer;transition:background .18s,transform .18s,color .18s}
+.mood-mode-tab[aria-selected=true]{background:#305642;color:#fffaf0;box-shadow:0 3px 8px #243d2e21}
+.mood-mode-tab:hover:not([aria-selected=true]){background:#e1ead9}
+.mood-mode-tab:focus-visible{outline:3px solid #b77d5f;outline-offset:2px}
+.mood-classic-pane[hidden],.tarot-pane[hidden],.tarot-reading[hidden]{display:none!important}
+.tarot-pane{position:relative;border:2px solid #35503e;border-radius:27px;padding:24px 25px 21px;background:#f9f5e9;box-shadow:8px 10px 0 #d2ddc7;isolation:isolate;overflow:hidden}
+.tarot-pane:before{content:"";position:absolute;top:-220px;right:-140px;width:420px;height:420px;border:1px solid #b4c6ae80;border-radius:50%;box-shadow:0 0 0 42px #edf0e54d,0 0 0 91px #e9edd84a;pointer-events:none;z-index:-1}
+.tarot-toolbar{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px dashed #aebfaa;padding-bottom:15px}
+.tarot-label{font:900 11px/1.4 "Noto Sans",Arial,sans-serif;letter-spacing:.11em;color:#557359}
+.tarot-intro{margin:5px 0 0;color:#607562;font:600 13px/1.55 "Noto Sans",Arial,sans-serif;max-width:570px}
+.tarot-reverse-toggle{display:inline-flex;align-items:center;gap:9px;border:1.5px solid #adbea7;padding:10px 13px;border-radius:100px;background:#fffaf0;color:#395846;font:800 12px "Noto Sans",Arial,sans-serif;cursor:pointer;user-select:none}
+.tarot-reverse-toggle input{accent-color:#315a41;width:18px;height:18px;margin:0}
+.tarot-questions{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:17px 0 11px}
+.tarot-questions-label{margin-right:4px;color:#718071;font:900 10px/1.2 "Noto Sans",Arial,sans-serif;letter-spacing:.07em}
+.tarot-topic{min-height:38px;border:1.5px solid #b3c3aa;border-radius:999px;background:#fffcf4;padding:8px 13px;color:#385a43;font:800 12px "Noto Sans",Arial,sans-serif;cursor:pointer;transition:transform .15s,background .15s}
+.tarot-topic[aria-pressed=true]{background:#315a42;border-color:#315a42;color:#fff}
+.tarot-topic:focus-visible,.tarot-reshuffle:focus-visible,.tarot-card-back:focus-visible{outline:3px solid #b67f5d;outline-offset:3px}
+.tarot-topic:hover{transform:translateY(-2px)}
+.tarot-progress{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:18px 2px 11px;color:#536c58;font:900 11px/1.4 "Noto Sans",Arial,sans-serif}
+.tarot-progress span:last-child{font-weight:700;color:#8a836b}
+.tarot-fan{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:10px;align-items:center;margin-bottom:19px}
+.tarot-card-back{position:relative;min-width:0;width:100%;aspect-ratio:3/4.8;border:2px solid #9eac91;border-radius:12px;background:repeating-linear-gradient(45deg,#294c3b,#294c3b 6px,#315440 6px,#315440 12px);cursor:pointer;transform:rotate(var(--tilt,0deg));transition:transform .22s,opacity .22s,box-shadow .22s;box-shadow:3px 5px 0 #b1bc9d;overflow:hidden;color:#fff2cb}
+.tarot-card-back:before{content:"";position:absolute;inset:8%;border:1.5px solid #cfbb8c;border-radius:8px}
+.tarot-card-back:after{content:"✦";position:absolute;inset:20%;display:grid;place-items:center;border:1px solid #d9c894;border-radius:100px;font:900 clamp(20px,3.6vw,43px)/1 "Noto Serif",Georgia,serif;color:#f1dcab}
+.tarot-card-back:hover:not(:disabled),.tarot-card-back:focus-visible:not(:disabled){transform:rotate(0deg) translateY(-9px) scale(1.03);box-shadow:4px 10px 0 #b1bc9d}
+.tarot-card-back:disabled{cursor:default}
+.tarot-card-back.is-picked{opacity:.18;transform:translateY(8px) scale(.88);box-shadow:none}
+.tarot-reading-slots{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px;margin:6px 0 14px}
+.tarot-slot{min-width:0;padding:13px 12px 14px;border:1.5px dashed #aec0a4;background:#f1f1e6;border-radius:18px;text-align:center}
+.tarot-slot.has-card{background:#fffdf5;border:1.5px solid #abbdab;box-shadow:2px 3px 0 #d3ddcb}
+.tarot-slot-title{display:block;font:900 11px "Noto Sans",Arial,sans-serif;color:#486b50;text-transform:uppercase;letter-spacing:.065em;margin-bottom:9px}
+.tarot-slot-desc{display:block;margin:8px auto 0;max-width:250px;min-height:20px;font:650 11.5px/1.55 "Noto Sans",Arial,sans-serif;color:#5d6f5b}
+.tarot-card{width:min(100%,173px);aspect-ratio:3/4.2;margin:0 auto;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:space-between;gap:3px;background:#fef9e9;border:3px double #9caa88;border-radius:12px;color:#30513b;padding:11px 8px 10px;overflow:hidden;box-shadow:0 5px 11px #263d2a15}
+.tarot-card:before{content:"";position:absolute;inset:5px;border:1px solid #a8b99d;border-radius:8px;pointer-events:none}
+.tarot-card.is-major{background:#fff5dc;border-color:#af9865}
+.tarot-card.is-reversed .tarot-symbol{transform:rotate(180deg)}
+.tarot-card-no{font:850 9px/1.2 "Noto Sans",Arial,sans-serif;color:#8e805c;letter-spacing:.09em}
+.tarot-symbol{display:flex;align-items:center;justify-content:center;flex:1;font:500 clamp(34px,5vw,68px)/1 "Noto Serif",Georgia,serif;color:var(--tarot-ink,#426b51);text-shadow:3px 4px 0 #cad9ba99;transition:transform .3s}
+.tarot-card-name{font:900 clamp(10px,1.2vw,13px)/1.22 "Noto Sans",Arial,sans-serif;max-width:100%;color:#2c5139;overflow-wrap:anywhere}
+.tarot-card-state{min-height:15px;margin-top:3px;font:800 10px/1.1 "Noto Sans",Arial,sans-serif;color:#916c51}
+.tarot-slot.has-card .tarot-card{animation:tarot-deal .5s cubic-bezier(.2,.85,.2,1) backwards}
+@keyframes tarot-deal{0%{opacity:0;transform:rotateY(88deg) translateY(14px) scale(.84)}60%{transform:rotateY(-10deg) translateY(-4px)}100%{opacity:1;transform:none}}
+.tarot-footer{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.tarot-smallprint{margin:0;color:#7b8274;font:650 11px/1.5 "Noto Sans",Arial,sans-serif}
+.tarot-reshuffle{border:1.5px solid #355a43;border-radius:100px;min-height:43px;padding:10px 16px;color:#fffaf0;background:#335840;font:850 12px "Noto Sans",Arial,sans-serif;cursor:pointer;transition:background .15s}
+.tarot-reshuffle:hover{background:#426d51}
+.tarot-reading{margin-top:17px;padding:20px;border:1.5px solid #d0b990;background:#fff5df;border-radius:17px;animation:tarot-deal .4s backwards}
+.tarot-reading-kicker{display:block;font:900 10px/1.3 "Noto Sans",Arial,sans-serif;color:#98724e;letter-spacing:.07em}
+.tarot-reading h3{margin:7px 0 12px;font:600 clamp(23px,3.4vw,34px)/1.2 "Noto Serif",Georgia,serif;color:#32563d}
+.tarot-reading-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px}
+.tarot-reading-list article{border-left:2px solid #c8b68f;padding-left:12px}
+.tarot-reading-list strong{display:block;color:#3a5e46;font:900 12px/1.4 "Noto Sans",Arial,sans-serif;margin-bottom:5px}
+.tarot-reading-list p{color:#606e5c;margin:0;font:600 12px/1.6 "Noto Sans",Arial,sans-serif}
+.tarot-summary{margin:15px 0 9px;padding-top:13px;border-top:1px dashed #c9b58e;color:#436347;font:750 13px/1.65 "Noto Sans",Arial,sans-serif}
+.tarot-disclaimer{font:650 11px/1.55 "Noto Sans",Arial,sans-serif;color:#797b6b;margin:8px 0 0}
+@media(max-width:760px){.mood-mode-tabs{margin-bottom:18px}.mood-mode-tab{padding:11px 16px;font-size:12px}.tarot-pane{padding:16px 13px 17px;border-radius:20px;box-shadow:5px 6px 0 #d2ddc7}.tarot-fan{gap:5px}.tarot-card-back{border-radius:7px;border-width:1px;box-shadow:1px 3px 0 #b1bc9d}.tarot-card-back:before{inset:5%;border-radius:4px}.tarot-card-back:after{font-size:22px}.tarot-reading-slots{gap:7px}.tarot-slot{padding:9px 5px 10px;border-radius:12px}.tarot-slot-title{font-size:9px;letter-spacing:0}.tarot-card{padding:8px 4px 7px;border-width:2px;border-radius:8px}.tarot-card-no{font-size:8px}.tarot-card-name{font-size:10px}.tarot-symbol{font-size:clamp(29px,9vw,48px)}.tarot-card-state{font-size:9px}.tarot-slot-desc{font-size:10px;line-height:1.4}.tarot-reading{padding:14px}.tarot-reading-list{grid-template-columns:1fr;gap:13px}.tarot-questions{gap:6px}.tarot-topic{font-size:11px;padding:8px 10px}.tarot-footer{gap:10px}}
+@media(max-width:380px){.tarot-card-name{font-size:9px}.tarot-card-no{font-size:7px}.tarot-card-state{font-size:8px}.tarot-fan{gap:4px}.tarot-card-back:after{font-size:16px}}
+@media(prefers-reduced-motion:reduce){.tarot-slot.has-card .tarot-card,.tarot-reading{animation:none}.tarot-card-back,.tarot-topic{transition:none}}
+
+  </style>
 </head>
 <body>
   <!-- Yên doodle icons: hand-drawn, consistent stroke; no icon fonts or external assets -->
@@ -1008,16 +1072,59 @@
     </section>
     <div class="ticker" aria-hidden="true"><div class="ticker-track"><div class="ticker-group"><span>Đá viên tập bơi ngửa. Nước bảo: “Ủa, mày đang tan đó!”</span><b class="ticker-flower"><svg class="yen-icon" aria-hidden="true" focusable="false"><use href="#yen-bloom"></use></svg></b><span>Trân châu trốn muỗng. Núp dưới đáy ly mà tưởng không ai thấy.</span><b class="ticker-flower"><svg class="yen-icon" aria-hidden="true" focusable="false"><use href="#yen-bloom"></use></svg></b><span>Ống hút đòi làm sáo. Ly nước nghe xong xin bịt tai.</span><b class="ticker-flower"><svg class="yen-icon" aria-hidden="true" focusable="false"><use href="#yen-bloom"></use></svg></b><span>Miếng chanh cố làm mặt ngầu. Chua quá nên nhăn hết cả mặt.</span><b class="ticker-flower"><svg class="yen-icon" aria-hidden="true" focusable="false"><use href="#yen-bloom"></use></svg></b><span>Cái ly rủ Cục Yên đi làm. Cục Yên giả vờ không nghe.</span><b class="ticker-flower"><svg class="yen-icon" aria-hidden="true" focusable="false"><use href="#yen-bloom"></use></svg></b><span>Ai thả đám mây vào ly? Nó còn đang xin thêm đá.</span><b class="ticker-flower"><svg class="yen-icon" aria-hidden="true" focusable="false"><use href="#yen-bloom"></use></svg></b></div><div class="ticker-group"><span>Đá viên tập bơi ngửa. Nước bảo: “Ủa, mày đang tan đó!”</span><b class="ticker-flower"><svg class="yen-icon" aria-hidden="true" focusable="false"><use href="#yen-bloom"></use></svg></b><span>Trân châu trốn muỗng. Núp dưới đáy ly mà tưởng không ai thấy.</span><b class="ticker-flower"><svg class="yen-icon" aria-hidden="true" focusable="false"><use href="#yen-bloom"></use></svg></b><span>Ống hút đòi làm sáo. Ly nước nghe xong xin bịt tai.</span><b class="ticker-flower"><svg class="yen-icon" aria-hidden="true" focusable="false"><use href="#yen-bloom"></use></svg></b><span>Miếng chanh cố làm mặt ngầu. Chua quá nên nhăn hết cả mặt.</span><b class="ticker-flower"><svg class="yen-icon" aria-hidden="true" focusable="false"><use href="#yen-bloom"></use></svg></b><span>Cái ly rủ Cục Yên đi làm. Cục Yên giả vờ không nghe.</span><b class="ticker-flower"><svg class="yen-icon" aria-hidden="true" focusable="false"><use href="#yen-bloom"></use></svg></b><span>Ai thả đám mây vào ly? Nó còn đang xin thêm đá.</span><b class="ticker-flower"><svg class="yen-icon" aria-hidden="true" focusable="false"><use href="#yen-bloom"></use></svg></b></div></div></div>
     <section class="section mood-section wrap" id="tam-trang" aria-labelledby="mood-title">
-      <div class="section-header reveal"><div><div class="eyebrow">01 / Bói tâm trạng (không có bằng)</div><h2 class="section-title" id="mood-title">Hôm nay bạn<br>giống <i>thứ gì?</i></h2></div><p class="section-aside">Có 52 thẻ hơi ngốc. Mỗi ngày bày ra 7 thẻ. Chọn một thẻ, Cục Yên sẽ đoán mò tâm trạng của bạn.</p></div>
-      <div class="mood-deck-header"><button class="deck-random" id="deck-random" type="button" title="Để Cục Yên chọn giúp một thẻ"><svg class="yen-icon" aria-hidden="true" focusable="false"><use href="#yen-bloom"></use></svg> Bốc bừa một thẻ!</button></div>
-      <div class="mood-grid" id="mood-rail" aria-label="Bộ thẻ tâm trạng Cục Yên" tabindex="0">
+      <div class="mood-mode-tabs" role="tablist" aria-label="Chọn một cách bói bài của Cục Yên">
+        <button type="button" class="mood-mode-tab" role="tab" id="mode-mood" aria-selected="true" aria-controls="mood-classic-pane" tabindex="0">Bói tâm trạng</button>
+        <button type="button" class="mood-mode-tab" role="tab" id="mode-tarot" aria-selected="false" aria-controls="tarot-pane" tabindex="-1">Tarot 78 lá</button>
       </div>
-      <div class="mood-deck-controls" aria-label="Điều khiển bộ thẻ">
-        <div class="deck-status"><span class="deck-counter" id="deck-counter">01–03 / 07</span><span class="deck-progress"><span id="deck-progress" style="width:43%"></span></span></div>
-        <div class="deck-nav"><button id="deck-prev" aria-label="Xem thẻ trước" type="button" disabled><svg class="yen-icon" aria-hidden="true" focusable="false"><use href="#yen-arrow"></use></svg></button><button id="deck-next" aria-label="Xem thẻ tiếp theo" type="button"><svg class="yen-icon" aria-hidden="true" focusable="false"><use href="#yen-arrow"></use></svg></button></div>
+      <div class="section-header reveal">
+        <div>
+          <div class="eyebrow" id="mood-eyebrow">01 / Bói tâm trạng (không có bằng)</div>
+          <h2 class="section-title" id="mood-title">Hôm nay bạn<br>giống <i>thứ gì?</i></h2>
+        </div>
+        <p class="section-aside" id="mood-aside">Có 52 thẻ hơi ngốc. Mỗi ngày bày ra 7 thẻ. Chọn một thẻ, Cục Yên sẽ đoán mò tâm trạng của bạn.</p>
+      </div>
+      <div id="mood-classic-pane" class="mood-classic-pane" role="tabpanel" aria-labelledby="mode-mood">
+        <div class="mood-deck-header">
+          <button class="deck-random" id="deck-random" type="button" title="Để Cục Yên chọn giúp một thẻ">
+            <svg class="yen-icon" aria-hidden="true" focusable="false"><use href="#yen-bloom"></use></svg> Bốc bừa một thẻ!
+          </button>
+        </div>
+        <div class="mood-grid" id="mood-rail" aria-label="Bộ thẻ tâm trạng Cục Yên" tabindex="0"></div>
+        <div class="mood-deck-controls" aria-label="Điều khiển bộ thẻ">
+          <div class="deck-status"><span class="deck-counter" id="deck-counter">01–03 / 07</span><span class="deck-progress"><span id="deck-progress" style="width:43%"></span></span></div>
+          <div class="deck-nav">
+            <button id="deck-prev" aria-label="Xem thẻ trước" type="button" disabled><svg class="yen-icon" aria-hidden="true" focusable="false"><use href="#yen-arrow"></use></svg></button>
+            <button id="deck-next" aria-label="Xem thẻ tiếp theo" type="button"><svg class="yen-icon" aria-hidden="true" focusable="false"><use href="#yen-arrow"></use></svg></button>
+          </div>
+        </div>
+      </div>
+      <div id="tarot-pane" class="tarot-pane" role="tabpanel" aria-labelledby="mode-tarot" hidden>
+        <div class="tarot-toolbar">
+          <div>
+            <div class="tarot-label">YÊN TAROT · 22 ẨN CHÍNH + 56 ẨN PHỤ</div>
+            <p class="tarot-intro">Chọn chủ đề rồi rút 3 lá: Gốc rễ, Hiện tại, Hướng tiếp theo. Bói chơi để hiểu mình, không phải đoán chắc tương lai.</p>
+          </div>
+          <label class="tarot-reverse-toggle"><input type="checkbox" id="tarot-reversed"> Có lá ngược</label>
+        </div>
+        <div class="tarot-questions" role="group" aria-label="Chọn chủ đề trải bài">
+          <span class="tarot-questions-label">MÌNH MUỐN HỎI VỀ</span>
+          <button type="button" class="tarot-topic" data-tarot-topic="general" aria-pressed="true">Tổng quan</button>
+          <button type="button" class="tarot-topic" data-tarot-topic="love" aria-pressed="false">Tình cảm</button>
+          <button type="button" class="tarot-topic" data-tarot-topic="work" aria-pressed="false">Công việc</button>
+          <button type="button" class="tarot-topic" data-tarot-topic="self" aria-pressed="false">Bản thân</button>
+        </div>
+        <div class="tarot-progress"><span id="tarot-progress-label" aria-live="polite">Đã rút 0 / 3 lá</span><span>78 lá · Xào ngẫu nhiên · Không lưu kết quả</span></div>
+        <div class="tarot-fan" id="tarot-fan" role="group" aria-label="Chọn ba lá úp từ bảy lá rút ngẫu nhiên"></div>
+        <div class="tarot-reading-slots" id="tarot-slots" aria-label="Ba vị trí trải bài"></div>
+        <div class="tarot-footer">
+          <p id="tarot-prompt" class="tarot-smallprint" role="status" aria-live="polite">Chọn một lá úp để bắt đầu.</p>
+          <button id="tarot-reshuffle" class="tarot-reshuffle" type="button">Xào bài lại ↻</button>
+        </div>
+        <div id="tarot-reading" class="tarot-reading" role="region" aria-label="Luận giải trải bài Tarot" hidden></div>
+        <p class="tarot-disclaimer">Các lá bài chỉ gợi suy ngẫm. Không dùng để quyết định thay cho thông tin và tư vấn chuyên môn.</p>
       </div>
     </section>
-    
+
     <section class="section release-section wheel-section" id="buong" aria-labelledby="release-title">
   <div class="wrap release-layout">
     <div class="release-copy reveal">
@@ -1767,5 +1874,239 @@ const ALL_MOODS = [{"title":"Nồi mì sôi đầu","sub":"Ý nghĩ đang sôi l
   else startWheel();
 })();
 </script>
+  <script id="yen-tarot-inline-js">
+/* Yên Tarot 1.0. Rider-Waite-Smith conventions: 78 unique cards, three positions,
+   optional reversals. Reflective interpretations, never a factual forecast. */
+(function(){
+  'use strict';
+  function boot(){
+    const $=id=>document.getElementById(id);
+    const moodTab=$('mode-mood'),tarotTab=$('mode-tarot');
+    const moodPane=$('mood-classic-pane'),tarotPane=$('tarot-pane');
+    if(!moodTab||!tarotTab||!moodPane||!tarotPane)return;
+    const heading=$('mood-title'),eyebrow=$('mood-eyebrow'),aside=$('mood-aside');
+    const headerText={
+      mood:['01 / Bói tâm trạng (không có bằng)','Hôm nay bạn<br>giống <i>thứ gì?</i>','Có 52 thẻ hơi ngốc. Mỗi ngày bày ra 7 thẻ. Chọn một thẻ, Cục Yên sẽ đoán mò tâm trạng của bạn.'],
+      tarot:['01 / Tarot cùng Cục Yên','Ba lá bài. <i>Một góc nhìn khác.</i>','78 lá Tarot đúng cấu trúc truyền thống. Chọn ba lá để nhìn lại gốc rễ, hiện tại và hướng có thể thử tiếp.']
+    };
+    function setMode(mode,focus){
+      const tarot=mode==='tarot';
+      moodPane.hidden=tarot;tarotPane.hidden=!tarot;
+      moodTab.setAttribute('aria-selected',String(!tarot));
+      tarotTab.setAttribute('aria-selected',String(tarot));
+      moodTab.tabIndex=tarot?-1:0;tarotTab.tabIndex=tarot?0:-1;
+      eyebrow.textContent=headerText[mode][0];
+      heading.innerHTML=headerText[mode][1];
+      aside.textContent=headerText[mode][2];
+      if(focus)(tarot?tarotTab:moodTab).focus();
+      if(!tarot)window.dispatchEvent(new Event('resize'));
+    }
+    moodTab.addEventListener('click',()=>setMode('mood'));
+    tarotTab.addEventListener('click',()=>setMode('tarot'));
+    [moodTab,tarotTab].forEach(el=>el.addEventListener('keydown',e=>{
+      if(e.key!=='ArrowLeft'&&e.key!=='ArrowRight'&&e.key!=='Home'&&e.key!=='End')return;
+      e.preventDefault();
+      const to=(e.key==='Home'||e.key==='ArrowLeft')?'mood':'tarot';
+      setMode(to,true);
+    }));
+    const majorRaw=[
+      ['Kẻ Khờ','Khởi đầu mở ra cơ hội khám phá, hãy thử bước nhỏ.','Đang ngại bắt đầu hoặc vội đi mà thiếu chuẩn bị.','✧'],
+      ['Nhà Ảo Thuật','Bạn có công cụ và khả năng để biến ý tưởng thành hành động.','Khả năng chưa được sử dụng đúng chỗ hoặc thiếu tập trung.','✦'],
+      ['Nữ Tư Tế','Lắng nghe trực giác và điều chưa thể gọi tên.','Đang lờ đi cảm nhận hoặc chưa muốn nhìn sự thật bên trong.','☽'],
+      ['Hoàng Hậu','Nuôi dưỡng, chăm sóc và tạo điều kiện cho điều tốt lớn lên.','Chăm người khác quá mức mà quên chăm bản thân.','❀'],
+      ['Hoàng Đế','Cần cấu trúc, ranh giới và trách nhiệm rõ ràng.','Kỷ luật có thể đang thành cứng nhắc hoặc kiểm soát quá nhiều.','♜'],
+      ['Giáo Hoàng','Học hỏi truyền thống, người hướng dẫn và giá trị chung.','Một khuôn phép không còn phù hợp, hãy tự xét lại.','✥'],
+      ['Đôi Tình Nhân','Sự kết nối và một lựa chọn phù hợp với giá trị của mình.','Có sự lệch nhịp hoặc quyết định chưa thật lòng.','♡'],
+      ['Chiến Xa','Tập trung và điều hướng các lực đang kéo bạn nhiều phía.','Quá vội giành quyền kiểm soát hoặc thiếu hướng đi.','➤'],
+      ['Sức Mạnh','Kiên nhẫn, dịu dàng và can đảm đi cùng nhau.','Đang nghi ngờ sức mình hoặc dồn ép cảm xúc.','♌'],
+      ['Ẩn Sĩ','Khoảng lặng giúp tìm được câu trả lời từ bên trong.','Thu mình quá lâu hoặc tránh một cuộc đối thoại cần thiết.','✺'],
+      ['Bánh Xe Số Phận','Hoàn cảnh có chu kỳ; hãy linh hoạt khi mọi thứ chuyển động.','Đang chống lại thay đổi hoặc trông chờ vận may giải quyết hết.','◉'],
+      ['Công Lý','Xem xét sự thật, trách nhiệm và hệ quả một cách công bằng.','Cần kiểm tra thiên kiến, sự mất cân bằng hoặc điều chưa rõ.','⚖'],
+      ['Người Treo Ngược','Tạm dừng để thấy góc nhìn mới thay vì cố vùng vẫy.','Đang mắc kẹt trong trì hoãn hay hy sinh không cần thiết.','⌛'],
+      ['Cái Chết','Một giai đoạn khép lại để nhường chỗ cho chuyển đổi.','Khó buông điều đã hết vai trò; không phải cái chết theo nghĩa đen.','✹'],
+      ['Tiết Chế','Pha trộn những khác biệt với sự điều độ và kiên nhẫn.','Mất nhịp, quá đà hoặc thiếu sự phối hợp.','⚗'],
+      ['Ác Quỷ','Nhìn thẳng thói quen hay ràng buộc đang giữ chân mình.','Đã thấy đường thoát nhưng còn sợ thay đổi hoặc tự trách.','⛓'],
+      ['Tòa Tháp','Một cấu trúc cũ có thể cần được nhìn lại và làm mới.','Đang né một sự thật khó chịu hoặc sợ xáo trộn.','⚡'],
+      ['Ngôi Sao','Có chỗ cho hy vọng, sự hồi phục và cảm hứng.','Niềm tin đang mệt; hãy bắt đầu từ điều có thể chăm sóc.','✶'],
+      ['Mặt Trăng','Chưa đủ sáng tỏ; quan sát cảm xúc và điều mơ hồ.','Lo âu hoặc hiểu lầm có thể làm lệch cách nhìn.','☾'],
+      ['Mặt Trời','Niềm vui, rõ ràng và sự tự tin đang có cơ hội lớn lên.','Khó đón nhận niềm vui hoặc kỳ vọng quá hoàn hảo.','☼'],
+      ['Phán Xét','Đánh giá lại hành trình và lắng nghe lời gọi đổi mới.','Đang xét nét bản thân quá nghiêm hoặc né quyết định.','♬'],
+      ['Thế Giới','Nhìn nhận thành quả và sự trọn vẹn của một chu kỳ.','Còn một việc dang dở cần khép lại cho tử tế.','◎']
+    ];
+    const ranks=['Át','2','3','4','5','6','7','8','9','10','Tiểu đồng','Kỵ sĩ','Hoàng hậu','Quốc vương'];
+    const suits=[
+      ['Gậy','✺','#A46B37',[
+        ['Một ý tưởng hoặc nguồn năng lượng mới đang nhen lên.','Thiếu lửa hoặc hướng dùng năng lượng chưa rõ.'],
+        ['Đứng trước kế hoạch và cơ hội mở rộng tầm nhìn.','Có dự định nhưng ngại bước khỏi chỗ quen.'],
+        ['Chờ đợi tín hiệu từ những nỗ lực đã gieo.','Kỳ vọng đang lệch thực tế hoặc tiến độ chậm.'],
+        ['Cột mốc đáng mừng, cảm giác thuộc về một nơi.','Niềm vui hay sự ổn định chưa thật sự vững.'],
+        ['Nhiều quan điểm cạnh tranh, cần phối hợp hơn là hơn thua.','Xung đột âm ỉ hoặc né trao đổi cần thiết.'],
+        ['Được ghi nhận sau cố gắng; hãy nhận thành quả.','Thiếu sự công nhận hoặc quá lệ thuộc lời khen.'],
+        ['Giữ lập trường trước áp lực, chọn điều đáng bảo vệ.','Phòng thủ đến kiệt sức hoặc dễ buông quá sớm.'],
+        ['Đà tiến nhanh, tin tức và hành động đang tăng tốc.','Sự chậm trễ hoặc vội vã gây rối nhịp.'],
+        ['Bền bỉ dù mệt; ranh giới giúp bạn không cạn sức.','Cảnh giác quá mức hoặc mệt tới mức muốn bỏ.'],
+        ['Đang gánh nhiều trách nhiệm, đã đến lúc chia bớt.','Quá tải và cần học cách nhờ hỗ trợ.'],
+        ['Tò mò khám phá và sẵn sàng thử điều chưa biết.','Nhiệt tình nhưng thiếu hướng hoặc ngại bắt đầu.'],
+        ['Hành động táo bạo, sôi nổi và thích trải nghiệm.','Bốc đồng, hấp tấp hoặc khởi đầu rồi bỏ dở.'],
+        ['Tự tin, nồng nhiệt và khích lệ người xung quanh.','Sự tự tin hụt hơi hoặc muốn kiểm soát ánh nhìn.'],
+        ['Tầm nhìn, lãnh đạo và khả năng truyền cảm hứng.','Quyết đoán quá mức hoặc thiếu trách nhiệm với tầm nhìn.']
+      ]],
+      ['Cốc','♡','#5E779A',[
+        ['Một cảm xúc hay kết nối mới có thể bắt đầu.','Cảm xúc bị nén lại hoặc cần chăm lại lòng mình.'],
+        ['Tương tác qua lại, sự đồng điệu và tin cậy.','Cán cân cho nhận chưa đều hoặc thiếu trò chuyện.'],
+        ['Bạn bè, chia sẻ và niềm vui cùng nhau.','Cảm giác đứng ngoài cuộc hoặc mối quan hệ quá ồn.'],
+        ['Cần nhìn lại cảm xúc thay vì bỏ lỡ điều đang có.','Một chút cởi mở giúp thoát khỏi trạng thái thờ ơ.'],
+        ['Nỗi buồn vì điều mất đi cần được nhìn nhận.','Bắt đầu buông nỗi thất vọng để thấy phần còn lại.'],
+        ['Ký ức, sự ấm áp và những kết nối thân quen.','Đang lý tưởng hóa quá khứ hoặc khó bước khỏi nó.'],
+        ['Nhiều lựa chọn hấp dẫn; phân biệt ước mơ với thực tế.','Dần nhìn rõ lựa chọn hoặc bỏ bớt ảo tưởng.'],
+        ['Rời một điều đã hết ý nghĩa để đi tìm điều phù hợp.','Sợ rời vùng quen hoặc cứ quay lại lối cũ.'],
+        ['Cảm giác đủ đầy từ điều mình thật sự mong.','Bên ngoài ổn nhưng bên trong có điều chưa thỏa.'],
+        ['Sự gắn bó, hòa thuận và niềm vui chia sẻ.','Kỳ vọng hoàn hảo đang làm mối quan hệ căng.'],
+        ['Một lời nhắn từ cảm xúc hoặc cảm hứng sáng tạo.','Dễ mơ mộng quá nhiều hoặc ngại bộc lộ.'],
+        ['Bước theo điều trái tim coi trọng, với sự tinh tế.','Lý tưởng hóa hoặc hành động theo cảm xúc quá mức.'],
+        ['Biết lắng nghe, nâng đỡ và giữ lòng trắc ẩn.','Cảm xúc tràn bờ; cần đặt ranh giới.'],
+        ['Điềm tĩnh trước sóng cảm xúc, phản hồi khôn ngoan.','Kìm nén hoặc để cảm xúc dẫn dắt người khác.']
+      ]],
+      ['Kiếm','✦','#7B7294',[
+        ['Một sự thật hoặc ý tưởng trở nên rõ ràng.','Tư duy rối và khó gọi đúng vấn đề.'],
+        ['Đứng trước quyết định, cần tháo tấm bịt mắt.','Trì hoãn lựa chọn hoặc tránh nhìn thông tin mới.'],
+        ['Tổn thương và điều không như ý cần được chữa lành.','Nỗi đau đang dần dịu hoặc chưa được gọi tên.'],
+        ['Nghỉ để phục hồi suy nghĩ trước khi hành động.','Đầu óc không chịu ngơi hoặc đã tới lúc trở lại.'],
+        ['Tranh cãi thắng mà vẫn mất; cân nhắc cái giá.','Học cách hạ vũ khí hoặc thoát xung đột vô ích.'],
+        ['Rời giai đoạn khó khăn, tiến từng đoạn nhỏ.','Sợ thay đổi hoặc chưa muốn nhận giúp đỡ.'],
+        ['Cần chiến lược và tỉnh táo trước chuyện chưa minh bạch.','Một bí mật hay đường tắt cần được xem lại.'],
+        ['Cảm giác bị kẹt có thể đến từ niềm tin giới hạn mình.','Bắt đầu nhận ra lựa chọn vẫn còn.'],
+        ['Nỗi lo đang lớn trong đầu; cần tìm hỗ trợ thực tế.','Sự lo lắng đang bớt hoặc cần nói ra điều sợ.'],
+        ['Một kết thúc đau nhưng cũng là lúc khép chu kỳ.','Đang hồi phục, hoặc níu một chuyện đã tới hạn.'],
+        ['Tinh thần học hỏi, đặt câu hỏi và kiểm chứng.','Nói vội, suy diễn hoặc bị nhiễu thông tin.'],
+        ['Hành động mau lẹ với một lập trường rõ.','Vội vàng, lời nói sắc quá hoặc mất hướng.'],
+        ['Rạch ròi, độc lập và nói sự thật có chừng mực.','Quá lạnh lùng hoặc phê bình không cần thiết.'],
+        ['Lý trí sáng suốt, cân nhắc công bằng.','Khắt khe, áp đặt hoặc dùng lý lẽ để kiểm soát.']
+      ]],
+      ['Tiền','◇','#638269',[
+        ['Một cơ hội thực tế đáng để gieo hạt.','Cơ hội bị bỏ lỡ hoặc thiếu kế hoạch khả thi.'],
+        ['Xoay xở nhiều việc, tìm thế cân bằng.','Lịch trình và nguồn lực đang vượt sức.'],
+        ['Hợp tác, trau tay nghề và ghi nhận đóng góp.','Phối hợp chưa ăn ý hoặc ngại học từ người khác.'],
+        ['Giữ gìn nguồn lực, cần cảm giác an toàn.','Bám quá chặt hoặc lo mất đến mức không dám dùng.'],
+        ['Khó khăn vật chất hoặc cảm giác đơn độc cần được giúp đỡ.','Có cơ hội nhận hỗ trợ và bước ra khỏi thiếu thốn.'],
+        ['Cho và nhận công bằng, giúp đúng lúc.','Trao đổi không cân xứng hoặc sự giúp đỡ có điều kiện.'],
+        ['Kiên nhẫn nhìn lại kết quả đầu tư công sức.','Nóng lòng hoặc thiếu kế hoạch dài hạn.'],
+        ['Luyện tập đều đặn, sự tỉ mỉ tạo tay nghề.','Mải làm máy móc hoặc thiếu tập trung học hỏi.'],
+        ['Tự chủ, tận hưởng thành quả mình gây dựng.','Đang khó hưởng thụ hoặc phụ thuộc đánh giá bên ngoài.'],
+        ['Nền tảng bền vững, gia đình và giá trị lâu dài.','Mâu thuẫn về tài sản hay kỳ vọng an toàn.'],
+        ['Tinh thần học việc, cơ hội học từ thực tiễn.','Dễ phân tán hoặc chưa biến kế hoạch thành việc.'],
+        ['Đi chậm mà chắc, giữ trách nhiệm và nhịp làm.','Cố chấp hoặc mắc kẹt trong thói quen.'],
+        ['Chăm sóc bằng sự thực tế, chu đáo và đủ đầy.','Chăm người khác mà bỏ quên nhu cầu mình.'],
+        ['Quản lý tài nguyên vững vàng và có trách nhiệm.','Quá coi trọng vật chất hoặc kiểm soát cứng nhắc.']
+      ]]
+    ];
+    const roman=['0','I','II','III','IV','V','VI','VII','VIII','IX','X','XI','XII','XIII','XIV','XV','XVI','XVII','XVIII','XIX','XX','XXI'];
+    const cards=majorRaw.map((r,i)=>({id:'M'+i,name:r[0],up:r[1],down:r[2],symbol:r[3],number:roman[i],major:true,ink:'#9C7B4C'}));
+    suits.forEach(([suit,symbol,ink,rows])=>rows.forEach((r,i)=>cards.push({id:suit+i,name:ranks[i]+' '+suit,up:r[0],down:r[1],symbol,number:ranks[i].toUpperCase(),major:false,ink})));
+    if(cards.length!==78||new Set(cards.map(c=>c.id)).size!==78||suits.some(x=>x[3].length!==14))throw Error('Tarot deck must contain 22+56 distinct cards');
+    const topics={
+      general:{label:'Tổng quan',question:'Mình cần hiểu rõ điều gì ở hiện tại?',end:'Nếu chỉ làm một việc nhỏ sau trải bài, bạn muốn bắt đầu bằng điều nào?'},
+      love:{label:'Tình cảm',question:'Trong mối quan hệ này, điều gì đáng lắng nghe?',end:'Một cuộc trò chuyện chân thành hoặc ranh giới rõ ràng có giúp gì cho bạn không?'},
+      work:{label:'Công việc',question:'Ở công việc, mình có thể điều chỉnh điều gì?',end:'Điều gì nằm trong khả năng bạn thay đổi ngay tuần này?'},
+      self:{label:'Bản thân',question:'Mình cần chăm sóc điều gì ở chính mình?',end:'Bạn có thể dành cho bản thân một việc tử tế nào hôm nay?'}
+    };
+    const fan=$('tarot-fan'),slots=$('tarot-slots'),reading=$('tarot-reading'),progress=$('tarot-progress-label'),note=$('tarot-prompt');
+    const reversedToggle=$('tarot-reversed'),reshuffle=$('tarot-reshuffle');
+    let topic='general',deck=[],hand=[],picked=[];
+    function escapeText(value){return String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+    function rand(n){
+      if(window.crypto&&typeof window.crypto.getRandomValues==='function'){
+        const buf=new Uint32Array(1),lim=Math.floor(4294967296/n)*n;
+        do{window.crypto.getRandomValues(buf);}while(buf[0]>=lim);
+        return buf[0]%n;
+      }
+      return Math.floor(Math.random()*n);
+    }
+    function shuffle(source){
+      const arr=source.slice();
+      for(let i=arr.length-1;i>0;i--){const j=rand(i+1);[arr[i],arr[j]]=[arr[j],arr[i]];}
+      return arr;
+    }
+    function cardFace(draw){
+      const c=draw.card,reverse=draw.reversed;
+      return '<div class="tarot-card '+(c.major?'is-major ':'')+(reverse?'is-reversed':'')+'" style="--tarot-ink:'+c.ink+'">'+
+        '<span class="tarot-card-no">'+escapeText(c.major?'ẨN CHÍNH · '+c.number:'ẨN PHỤ · '+c.number)+'</span>'+
+        '<span class="tarot-symbol" aria-hidden="true">'+escapeText(c.symbol)+'</span>'+
+        '<span class="tarot-card-name">'+escapeText(c.name)+'</span>'+
+        '<span class="tarot-card-state">'+(reverse?'LÁ NGƯỢC':'LÁ XUÔI')+'</span>'+
+      '</div>';
+    }
+    const positions=[
+      {label:'01 · Gốc rễ',prompt:'Điều đã góp phần tạo nên tình huống.'},
+      {label:'02 · Hiện tại',prompt:'Điều đang ảnh hưởng đến bạn.'},
+      {label:'03 · Hướng tiếp theo',prompt:'Điều có thể cân nhắc, không phải số phận cố định.'}
+    ];
+    function renderSlots(){
+      slots.innerHTML=positions.map((p,i)=>{
+        const d=picked[i];
+        return '<div class="tarot-slot '+(d?'has-card':'')+'"><span class="tarot-slot-title">'+p.label+'</span>'+
+          (d?cardFace(d):'<div class="tarot-card" aria-hidden="true"><span class="tarot-card-no">YÊN TAROT</span><span class="tarot-symbol">✧</span><span class="tarot-card-name">Chờ rút bài</span></div>')+
+          '<span class="tarot-slot-desc">'+(d?escapeText(d.card.name+(d.reversed?' · Ngược':' · Xuôi')):escapeText(p.prompt))+'</span></div>';
+      }).join('');
+      progress.textContent=picked.length===3?'Đã đủ 3 lá · Xem lời giải':'Đã rút '+picked.length+' / 3 lá';
+      note.textContent=picked.length===3?'Cục Yên đang ghép ba câu chuyện lại...':'Chọn một lá úp để đặt vào vị trí '+positions[picked.length].label+'.';
+    }
+    function paintHand(){
+      fan.innerHTML=hand.map((d,i)=>
+        '<button type="button" class="tarot-card-back '+(d.picked?'is-picked':'')+'" data-tarot-index="'+i+'" style="--tilt:'+((i-3)*1.8)+'deg"'+
+        (d.picked||picked.length===3?' disabled':'')+
+        ' aria-label="Rút lá úp số '+(i+1)+'" title="Rút một lá bài"></button>'
+      ).join('');
+    }
+    function readCard(d,i){
+      const mood=d.reversed?d.card.down:d.card.up;
+      const intro=['Nhìn lại điều đã đặt nền cho chuyện này: ','Ở thời điểm hiện tại, lá bài gợi ra: ','Về hướng có thể đi tiếp, hãy cân nhắc: '][i];
+      return intro+mood;
+    }
+    function paintReading(){
+      if(picked.length!==3){reading.hidden=true;reading.innerHTML='';return;}
+      const majors=picked.filter(d=>d.card.major).length;
+      const c=topics[topic];
+      reading.innerHTML='<span class="tarot-reading-kicker">TRẢI BÀI 3 LÁ · '+escapeText(c.label.toUpperCase())+'</span>'+
+        '<h3>'+escapeText(c.question)+'</h3>'+
+        '<div class="tarot-reading-list">'+picked.map((d,i)=>
+          '<article><strong>'+escapeText(positions[i].label+' · '+d.card.name+(d.reversed?' (ngược)':''))+'</strong><p>'+escapeText(readCard(d,i))+'</p></article>'
+        ).join('')+'</div>'+
+        '<p class="tarot-summary">'+escapeText((majors>=2?'Có nhiều lá Ẩn chính trong trải bài, nên có thể dành thêm thời gian nhìn vào những chủ đề lớn đang lặp lại. ':'Các lá Ẩn phụ nhắc nhiều đến nhịp sống, lựa chọn và việc nhỏ mỗi ngày. ')+c.end)+'</p>'+
+        '<p class="tarot-disclaimer">Tarot ở Yên là một trò suy ngẫm, không phải lời tiên tri hay căn cứ cho quyết định sức khỏe, tài chính và pháp lý.</p>';
+      reading.hidden=false;
+      reading.scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'nearest'});
+    }
+    function newSpread(){
+      deck=shuffle(cards).map(card=>({card,reversed:reversedToggle.checked&&rand(2)===1}));
+      hand=deck.slice(0,7).map(d=>({...d,picked:false}));
+      picked=[];
+      paintHand();renderSlots();paintReading();
+      reshuffle.textContent='Xào bài lại ↻';
+    }
+    fan.addEventListener('click',e=>{
+      const button=e.target.closest('button[data-tarot-index]');
+      if(!button||button.disabled||picked.length>=3)return;
+      const i=Number(button.dataset.tarotIndex),d=hand[i];
+      if(!d||d.picked)return;
+      d.picked=true;picked.push(d);
+      paintHand();renderSlots();
+      if(picked.length===3){reshuffle.textContent='Trải bài mới ↻';paintReading();}
+    });
+    document.querySelectorAll('[data-tarot-topic]').forEach(btn=>btn.addEventListener('click',()=>{
+      topic=btn.dataset.tarotTopic;
+      document.querySelectorAll('[data-tarot-topic]').forEach(b=>b.setAttribute('aria-pressed',String(b===btn)));
+      newSpread();
+    }));
+    reshuffle.addEventListener('click',newSpread);
+    reversedToggle.addEventListener('change',newSpread);
+    setMode('mood');
+    newSpread();
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});
+  else boot();
+})();
+
+  </script>
 </body>
 </html>
