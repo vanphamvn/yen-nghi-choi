@@ -1919,6 +1919,21 @@
     const $=id=>document.getElementById(id);
     const intro=$("permit-intro"),form=$("permit-form"),receipt=$("permit-receipt");
     const stage=$("yen-permit"),stamp=$("permit-stamp"),notice=$("permit-message"),progress=$("permit-progress");
+    const performer=$("permit-stamp-performer"),landing=$("permit-stamp-landing");
+    // Read real layout geometry so Cục Yên carries the stamp to the paper on
+    // desktop and mobile. The ink mark itself remains on the paper.
+    function aimStamp(){
+      const base=stamp.querySelector(".permit-stamp-bottom");
+      if(!performer||!landing||!base||typeof base.getBoundingClientRect!=="function")return;
+      const source=base.getBoundingClientRect(),target=landing.getBoundingClientRect();
+      const dx=(target.left+target.width/2)-(source.left+source.width/2);
+      const dy=(target.top+target.height/2)-(source.top+source.height/2);
+      if(!Number.isFinite(dx)||!Number.isFinite(dy))return;
+      performer.style.setProperty("--stamp-x",dx.toFixed(1)+"px");
+      performer.style.setProperty("--stamp-y",dy.toFixed(1)+"px");
+      performer.style.setProperty("--stamp-half-x",(dx*.57).toFixed(1)+"px");
+      performer.style.setProperty("--stamp-half-y",(dy*.57-45).toFixed(1)+"px");
+    }
     const notes={
       noise:"Được phép tắt bớt tiếng ồn trong đầu. Cục Yên không kiểm tra hiệu suất nghỉ.",
       deadline:"Deadline vẫn ở đó, nhưng ly nước thì có thể uống trước.",
@@ -1960,7 +1975,8 @@
         return;
       }
       phase="stamping";round++;const thisRound=round;stamp.disabled=true;
-      stage.classList.add("is-stamping");announce("CỘP! Cục Yên đang đóng dấu duyệt nghỉ...");
+      aimStamp();
+      stage.classList.add("is-stamping");announce("Cục Yên đang nhấc con mộc lên... chuẩn bị CỘP!");
       clearTimeout(pending);
       pending=window.setTimeout(()=>{
         if(phase!=="stamping"||thisRound!==round)return;
@@ -1977,7 +1993,7 @@
         $("permit-receipt").setAttribute("tabindex","-1");
         $("permit-receipt").focus({preventScroll:true});
         $("permit-receipt").scrollIntoView({behavior:reduced?"auto":"smooth",block:"nearest"});
-      },reduced?0:780);
+      },reduced?0:2000);
     }
     function reset(){
       round++;clearTimeout(pending);phase="form";
