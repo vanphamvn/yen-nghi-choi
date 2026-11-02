@@ -985,6 +985,151 @@
   .permit-stage.is-stamping .permit-sheet{animation:none!important}
 }
 
+
+/* Permit mascot polish v2: a dedicated character lane. No stamp may cover
+   Cục Yên's face, including when the counter stacks on small phones. */
+.permit-counter-body{min-height:256px;overflow:visible}
+.permit-stamp-performer{
+  position:relative;display:grid;grid-template-columns:minmax(0,1.18fr) minmax(0,.82fr);
+  align-items:end;width:100%;max-width:295px;min-height:245px;
+  margin:0 auto;isolation:isolate;overflow:visible;
+}
+.permit-cuc-yen{
+  position:relative;left:auto;bottom:auto;grid-column:1;grid-row:1;
+  width:clamp(105px,100%,148px);height:auto;max-width:none;
+  align-self:end;justify-self:start;margin-bottom:18px;
+  z-index:4;overflow:visible;transform:translateY(0);
+  animation:permit-cuc-breathe 3.3s ease-in-out infinite;
+}
+.permit-cuc-eye{transform-box:fill-box;transform-origin:center;animation:permit-cuc-blink 5.1s linear infinite}
+.permit-stamp-performer .permit-stamp{
+  grid-column:2;grid-row:1;justify-self:end;align-self:end;
+  width:109px;max-width:109px;min-width:109px;min-height:202px;
+  padding:0;margin:0;transform:none;z-index:2;
+}
+.permit-stamp-performer .permit-stamp-handle{width:41px;height:39px}
+.permit-stamp-performer .permit-stamp-neck{width:24px;height:31px}
+.permit-stamp-performer .permit-stamp-wood{width:100px;height:72px;font-size:17px}
+.permit-stamp-performer .permit-stamp-bottom{width:108px;height:13px}
+.permit-stamp-performer .permit-stamp-caption{
+  display:block;width:109px;margin-top:13px;font-size:9px;line-height:1.35;white-space:normal
+}
+.permit-stamp-performer .permit-stamp:not(:disabled):hover{
+  transform:translateY(-5px) rotate(-2deg)
+}
+.permit-cuc-callout{
+  position:absolute;left:6px;top:8px;z-index:5;pointer-events:none;
+  transform:rotate(-7deg);
+  border:2px solid #73927a;border-radius:12px 12px 12px 3px;
+  padding:7px 9px;background:#fffaf0;color:#41684e;
+  box-shadow:2px 3px 0 #bdcbb0;
+  font:900 10px/1.2 "Noto Sans",Arial,sans-serif;letter-spacing:.03em
+}
+.permit-cuc-callout:after{
+  content:"";position:absolute;bottom:-7px;left:15px;width:10px;height:10px;
+  background:#fffaf0;border-bottom:2px solid #73927a;border-right:2px solid #73927a;
+  transform:rotate(45deg)
+}
+.permit-cuc-cop{display:none}
+.permit-stage.is-stamping .permit-cuc-ready{display:none}
+.permit-stage.is-stamping .permit-cuc-cop{display:inline}
+.permit-stage.is-stamping .permit-cuc-callout{animation:permit-cuc-callout-pop 2s ease-in-out both}
+.permit-stage.is-stamping .permit-cuc-legs{
+  transform-box:fill-box;transform-origin:center top;
+  animation:permit-cuc-steps 2s ease-in-out both
+}
+.permit-stage.is-stamping .permit-cuc-eyebrows{
+  transform-box:fill-box;transform-origin:center;
+  animation:permit-cuc-raise-brows 2s ease-in-out both
+}
+.permit-stage.is-stamping .permit-cuc-yen{
+  animation:permit-cuc-react 2s ease-in-out both
+}
+@keyframes permit-cuc-breathe{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+@keyframes permit-cuc-blink{0%,42%,44%,90%,92%,100%{transform:scaleY(1)}43%,91%{transform:scaleY(.12)}}
+@keyframes permit-cuc-react{
+  0%,100%{transform:translateY(0) rotate(0)}
+  16%{transform:translateY(-11px) rotate(-3deg)}
+  36%{transform:translateY(-7px) rotate(5deg)}
+  58%,63%{transform:translateY(8px) rotate(7deg)}
+  77%{transform:translateY(-5px) rotate(-4deg)}
+}
+@keyframes permit-cuc-steps{
+  0%,100%{transform:rotate(0)}
+  32%{transform:rotate(-9deg)}
+  49%{transform:rotate(11deg)}
+  74%{transform:rotate(-7deg)}
+}
+@keyframes permit-cuc-raise-brows{
+  0%,100%{transform:translateY(0)}
+  18%,50%{transform:translateY(-4px)}
+  62%{transform:translateY(4px)}
+}
+@keyframes permit-cuc-callout-pop{
+  0%,32%{opacity:0;transform:rotate(-7deg) scale(.75)}
+  48%,78%{opacity:1;transform:rotate(-7deg) scale(1)}
+  95%,100%{opacity:0;transform:rotate(-7deg) scale(.85)}
+}
+@media(max-width:840px) and (min-width:701px){
+  .permit-cuc-yen{width:112px}
+  .permit-stamp-performer{max-width:225px;min-height:238px}
+  .permit-cuc-callout{left:-5px;font-size:9px}
+}
+@media(max-width:700px){
+  .permit-clerk{display:grid;grid-template-columns:1fr;gap:9px;min-height:0}
+  .permit-clerk-title{grid-column:1;grid-row:1}
+  .permit-counter-body{grid-column:1;grid-row:2;min-height:224px}
+  .permit-stamp-performer{width:min(100%,315px);max-width:315px;min-height:217px;height:auto;margin:0 auto}
+  .permit-cuc-yen{left:auto;bottom:auto;width:clamp(119px,43vw,156px);margin-bottom:12px}
+  .permit-stamp-performer .permit-stamp{
+    min-width:106px;width:106px;max-width:106px;min-height:195px;
+    transform:none;transform-origin:center;margin:0
+  }
+  .permit-stamp-performer .permit-stamp:not(:disabled):hover{transform:translateY(-3px)}
+  .permit-stamp-performer .permit-stamp-wood{width:100px;height:68px;font-size:16px}
+  .permit-stamp-performer .permit-stamp-bottom{width:106px}
+  .permit-stamp-performer .permit-stamp-caption{width:106px;font-size:9px}
+  .permit-message{grid-column:1;grid-row:3;min-height:50px}
+  .permit-inkpad{grid-column:1;grid-row:4}
+  .permit-clerk-foot{grid-column:1;grid-row:5}
+  .permit-cuc-callout{top:0;left:8px}
+}
+@media(max-width:360px){
+  .permit-cuc-yen{width:118px}
+  .permit-stamp-performer{grid-template-columns:minmax(0,1fr) 106px}
+  .permit-cuc-callout{top:0;left:0;font-size:9px;padding:6px}
+}
+@media(prefers-reduced-motion:reduce){
+  .permit-cuc-yen,.permit-cuc-eye,.permit-stage.is-stamping .permit-cuc-yen,
+  .permit-stage.is-stamping .permit-cuc-callout,.permit-stage.is-stamping .permit-cuc-legs,
+  .permit-stage.is-stamping .permit-cuc-eyebrows{animation:none!important}
+}
+
+
+/* Mobile ceremony takes place inside the counter viewport, not off-screen
+   on the large form above it. The larger application still becomes the permit. */
+.permit-counter-slip{display:none}
+@media(max-width:700px){
+  .permit-counter-body{min-height:324px;display:flex;flex-direction:column;justify-content:flex-start;align-items:center}
+  .permit-stamp-performer{flex:0 0 222px}
+  .permit-counter-slip{
+    display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-start;
+    position:relative;flex:0 0 83px;width:182px;height:83px;
+    padding:8px 11px;margin-top:-9px;margin-bottom:5px;
+    background:#fff9e7;border:1.5px solid #708f79;border-radius:3px 8px 6px 5px;
+    transform:rotate(-3deg);box-shadow:3px 5px 0 #bcc9af;
+    font:850 9px/1.3 "Noto Sans",Arial,sans-serif;letter-spacing:.07em;color:#68836c
+  }
+  .permit-counter-slip:before{content:"";position:absolute;top:24px;left:11px;width:155px;border-top:1px dashed #b7c6b0}
+  .permit-stamp-landing-mobile{
+    display:flex;top:30px;left:62px;right:auto;bottom:auto;
+    width:89px;height:50px;border-width:3px;font-size:6px;
+    z-index:2;transform:rotate(-8deg) scale(1.2)
+  }
+  .permit-stamp-landing-mobile strong{font-size:9px;margin-top:1px}
+  .permit-clerk{overflow:visible}
+}
+
 @media print{body *{visibility:hidden!important}.permit-stage,.permit-stage *{visibility:visible!important}.permit-stage{position:absolute;inset:0;border:0;background:white;box-shadow:none;padding:0}.permit-sheet{border:1px solid #555;box-shadow:none;margin:auto;max-width:650px}.permit-clerk,.permit-bottom-strip,.permit-desk-ribbon,.permit-restart,.permit-map,.permit-screenshot-hint{display:none!important}}
 
 </style>
@@ -1266,19 +1411,21 @@
                   <path class="permit-cuc-backarm" d="M40 110Q20 125 16 147" fill="none" stroke="#305441" stroke-width="8" stroke-linecap="round"/>
                   <path d="M24 109C13 79 27 44 57 37c30-9 61 5 68 39 7 34-7 70-41 76-34 8-54-4-60-43Z" fill="#d4e2af" stroke="#305441" stroke-width="5" stroke-linejoin="round"/>
                   <path d="M37 71Q54 54 72 60" fill="none" stroke="#f8f7db" stroke-width="7" stroke-linecap="round" opacity=".75"/>
-                  <ellipse cx="55" cy="100" rx="5" ry="7" fill="#305441"/><ellipse cx="91" cy="100" rx="5" ry="7" fill="#305441"/>
+                  <path class="permit-cuc-eyebrows" d="M47 86q8-5 15 0m20 0q9-5 17 0" fill="none" stroke="#305441" stroke-width="3" stroke-linecap="round"/>
+                  <ellipse class="permit-cuc-eye" cx="55" cy="100" rx="5" ry="7" fill="#305441"/><ellipse class="permit-cuc-eye" cx="91" cy="100" rx="5" ry="7" fill="#305441"/>
                   <ellipse cx="35" cy="114" rx="11" ry="6" fill="#eaa995" opacity=".85"/>
                   <ellipse cx="113" cy="112" rx="10" ry="6" fill="#eaa995" opacity=".85"/>
                   <path d="M65 117q10 9 20-1" fill="none" stroke="#305441" stroke-width="3.3" stroke-linecap="round"/>
                   <g class="permit-cuc-working-arm" fill="none" stroke="#305441" stroke-width="9" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M117 113Q133 111 137 85L140 71"/>
-                    <path d="M134 75q7-13 15-5" stroke-width="5"/>
+                    <path d="M117 113Q145 111 154 82L169 49"/>
+                    <path d="M166 53q10-10 17-2" stroke-width="5"/>
                   </g>
                   <path d="M41 47q0-35 32-36 32-1 35 37" fill="#f6e7bb" stroke="#305441" stroke-width="4"/>
                   <path d="M35 48q38-7 82 0" stroke="#305441" stroke-width="5" stroke-linecap="round"/>
                   <rect x="59" y="21" width="27" height="17" rx="5" fill="#e0af84"/>
                   <text x="72" y="33" text-anchor="middle" font-size="10" font-weight="900" fill="#305441">YÊN</text>
                 </svg>
+                <span class="permit-cuc-callout" aria-hidden="true"><span class="permit-cuc-ready">ĐỂ YÊN LO!</span><span class="permit-cuc-cop">CỘP!</span></span>
               <button class="permit-stamp" id="permit-stamp" type="button" aria-describedby="permit-message" disabled>
                 <span class="permit-stamp-handle" aria-hidden="true"></span>
                 <span class="permit-stamp-neck" aria-hidden="true"></span>
@@ -1286,6 +1433,10 @@
                 <span class="permit-stamp-bottom" aria-hidden="true"></span>
                 <span class="permit-stamp-caption">NHỜ CỤC YÊN ĐÓNG MỘC</span>
               </button>
+              </div>
+              <div class="permit-counter-slip" aria-hidden="true">
+                <span>HỒ SƠ ĐANG XÉT</span>
+                <div class="permit-stamp-landing permit-stamp-landing-mobile" id="permit-stamp-landing-mobile"><span>CỤC YÊN</span><strong>ĐÃ DUYỆT NGHỈ</strong></div>
               </div>
               <div class="permit-inkpad" aria-hidden="true"><span>MỰC DUYỆT</span></div>
             </div>
@@ -1919,13 +2070,17 @@
     const $=id=>document.getElementById(id);
     const intro=$("permit-intro"),form=$("permit-form"),receipt=$("permit-receipt");
     const stage=$("yen-permit"),stamp=$("permit-stamp"),notice=$("permit-message"),progress=$("permit-progress");
-    const performer=$("permit-stamp-performer"),landing=$("permit-stamp-landing");
+    const performer=$("permit-stamp-performer"),landing=$("permit-stamp-landing"),mobileLanding=$("permit-stamp-landing-mobile");
     // Read real layout geometry so Cục Yên carries the stamp to the paper on
     // desktop and mobile. The ink mark itself remains on the paper.
     function aimStamp(){
       const base=stamp.querySelector(".permit-stamp-bottom");
       if(!performer||!landing||!base||typeof base.getBoundingClientRect!=="function")return;
-      const source=base.getBoundingClientRect(),target=landing.getBoundingClientRect();
+      // On narrow phones the main form is above the fold. Stamp the little
+      // paper at the counter so the player actually sees Cục Yên's whole act.
+      const isNarrow=window.matchMedia&&window.matchMedia("(max-width: 700px)").matches;
+      const targetNode=(isNarrow&&mobileLanding)?mobileLanding:landing;
+      const source=base.getBoundingClientRect(),target=targetNode.getBoundingClientRect();
       const dx=(target.left+target.width/2)-(source.left+source.width/2);
       const dy=(target.top+target.height/2)-(source.top+source.height/2);
       if(!Number.isFinite(dx)||!Number.isFinite(dy))return;
