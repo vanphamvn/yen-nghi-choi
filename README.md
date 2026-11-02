@@ -28,7 +28,7 @@ Bản GitHub-ready sử dụng Google Fonts Noto Sans, Noto Serif và Noto Sans 
 
 ## Bảo mật & SEO
 
-`vercel.json` và `robots.txt` đang ngăn lập chỉ mục vì trang còn trước khai trương. Gỡ các quy tắc noindex chỉ khi sẵn sàng mở website công khai trên công cụ tìm kiếm.
+`vercel.json` và `robots.txt` vẫn đang ngăn lập chỉ mục. Nội dung website hiện viết theo trạng thái quán đã mở, nhưng chỉ gỡ `noindex` sau khi chủ quán xác nhận ngày mở thực tế và duyệt SEO/ảnh chia sẻ/thông tin vận hành.
 
 ## Mã nguồn
 
