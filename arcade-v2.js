@@ -12,7 +12,6 @@ function boot(){
     guide:document.getElementById('yarc-guide'),
     kicker:document.getElementById('yarc-kicker'),
     msg:document.getElementById('yarc-message'),
-    cases:document.getElementById('yarc-cases'),
     dots:document.getElementById('yarc-dots'),
     score:document.getElementById('yarc-score'),
     action:document.getElementById('yarc-action'),
@@ -107,7 +106,7 @@ function boot(){
     }
   }
   function box(x,y,w,h,r,fill,stroke='#0000',sw=1){
-    ctx.beginPath();ctx.roundRect(x,y,w,h,r);ctx.fillStyle=fill;ctx.fill();
+    ctx.beginPath();if(typeof ctx.roundRect==='function')ctx.roundRect(x,y,w,h,r);else{const rr=Math.max(0,Math.min(r,Math.abs(w)/2,Math.abs(h)/2));ctx.moveTo(x+rr,y);ctx.lineTo(x+w-rr,y);ctx.quadraticCurveTo(x+w,y,x+w,y+rr);ctx.lineTo(x+w,y+h-rr);ctx.quadraticCurveTo(x+w,y+h,x+w-rr,y+h);ctx.lineTo(x+rr,y+h);ctx.quadraticCurveTo(x,y+h,x,y+h-rr);ctx.lineTo(x,y+rr);ctx.quadraticCurveTo(x,y,x+rr,y);ctx.closePath();}ctx.fillStyle=fill;ctx.fill();
     if(stroke!=='#0000'){ctx.lineWidth=sw;ctx.strokeStyle=stroke;ctx.stroke();}
   }
   function circ(x,y,r,fill,stroke='#0000',sw=1){
@@ -149,7 +148,6 @@ function boot(){
     ui.flash.innerHTML='';ui.kicker.textContent=games[mode].tag;ui.title.textContent=games[mode].name;
     ui.guide.textContent=games[mode].guide;ui.hint.textContent=games[mode].hint;
     ui.action.disabled=false;
-    ui.cases.innerHTML='';
     if(mode===0){
       blob={x:116,y:298,ax:116,ay:298,vx:0,vy:0,r:37,phase:'ready',drag:false,id:null,shots:0,hits:0,elapsed:0,rest:0,
         targets:[{x:474,y:96,r:40,label:'SEEN',alive:true},{x:598,y:217,r:43,label:'HỌP',alive:true},{x:428,y:296,r:40,label:'DEADLINE',alive:true}]};
@@ -556,7 +554,7 @@ function boot(){
   ui.sound.addEventListener('click',()=>{
     soundOn=!soundOn;ui.sound.setAttribute('aria-pressed',String(soundOn));
     ui.sound.setAttribute('aria-label',soundOn?'Tắt âm thanh trò chơi':'Bật âm thanh trò chơi');
-    ui.sound.textContent=soundOn?'♪':'♫̸';
+    ui.sound.textContent='Âm';
     if(soundOn)sfx(500,.08);
   });
   stage.addEventListener('keydown',e=>{
