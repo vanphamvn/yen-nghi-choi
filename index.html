@@ -823,6 +823,59 @@
 #receipt-dialog{max-height:calc(100dvh - 24px);max-width:calc(100vw - 16px);overflow-x:hidden;box-sizing:border-box}
 @media(max-width:760px){.drink-hat{position:relative;right:auto;top:auto;display:inline-flex;align-items:center;margin:0 0 16px 10px;transform:rotate(-2deg)}.drink-topline{clear:both}.drink-visual{padding-top:35px}.drink-doodle-one{top:0;left:2%;max-width:65%}.drink-tap-hint{bottom:0;left:0;font-size:12px}.hero-map-link{font-size:12px;min-height:44px}.receipt{padding:20px 18px}.product-info button{width:100%;justify-content:center}}
 
+
+/* Four randomly loaded Cục Yên mini-games */
+.release-section .release-layout{grid-template-columns:minmax(0,.78fr) minmax(0,1.22fr);gap:clamp(28px,5vw,70px);align-items:center}
+.release-section .arcade-panel{min-width:0;min-height:490px;transform:none;padding:22px;border:2px solid #314e3f;border-radius:24px;box-shadow:8px 9px 0 #b8cca7;background:#fffaf0}
+.arcade-privacy{margin-top:23px!important;font:800 10px/1.5 "Noto Sans",Arial,sans-serif!important;color:#69806f!important;letter-spacing:.07em}
+.arcade-top{display:flex;align-items:center;justify-content:space-between;gap:14px;border-bottom:1px dashed #b5c9ad;padding-bottom:13px;margin-bottom:16px}
+.arcade-top span{font:900 10px/1.4 "Noto Sans",Arial,sans-serif;color:#607d64;letter-spacing:.08em}
+.arcade-top button,.arcade-nextcase{border:1.5px solid #2d4b3c;border-radius:12px;background:#e2ebce;color:#274b37;padding:10px 13px;min-height:41px;font:850 12px "Noto Sans",Arial,sans-serif;cursor:pointer;white-space:nowrap}
+.arcade-game h3{font:900 clamp(28px,3.2vw,40px)/1.14 "Noto Sans",Arial,sans-serif;letter-spacing:-.04em;margin:4px 0 5px;color:#2a4a39}
+.arcade-game .arcade-sub{font:850 10px "Noto Sans",Arial,sans-serif;letter-spacing:.11em;color:#b77859}
+.arcade-game .arcade-instruction{font-size:13px;line-height:1.5;color:#5f7464;margin:0 0 14px}
+.arcade-choices{display:flex;flex-wrap:wrap;gap:7px;margin:0 0 12px}
+.arcade-choices button{border:1.5px solid #b5c8ac;background:#fff;color:#44614c;padding:8px 11px;min-height:36px;border-radius:100px;font:800 11px "Noto Sans",Arial,sans-serif;cursor:pointer}
+.arcade-choices button[aria-pressed=true]{background:#2d513d;color:#fff;border-color:#2d513d}
+.arcade-stage{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:9px;min-height:217px;padding:16px 10px;background:radial-gradient(ellipse at 50% 10%,#fffef8,#eaf0dc);border:2px dashed #a9c1a2;border-radius:19px;isolation:isolate}
+.arcade-note{font:900 10px "Noto Sans",Arial,sans-serif;letter-spacing:.06em;color:#718773;text-align:center}
+.arcade-feedback{min-height:51px;margin:12px 0 9px;padding:11px;background:#eef3e7;border:1px dashed #afc6a5;border-radius:11px;font:750 13px/1.45 "Noto Sans",Arial,sans-serif;color:#32523f}
+.arcade-footer{display:flex;justify-content:end}
+.arcade-nextcase{background:#fff1d7}
+.arcade-blob{position:relative;touch-action:none;user-select:none;width:158px;height:145px;display:grid;place-items:end center;padding-bottom:18px;border:3px solid #634a40;border-radius:45% 56% 48% 53%/54% 44% 57% 51%;background:#ecb0a0;box-shadow:inset -13px -10px 0 #da9688,6px 7px 0 #c7d5b5;cursor:grab;color:#6a4d44;font:900 11px "Noto Sans",Arial,sans-serif}
+.arcade-blob:before,.arcade-blob:after{content:"";position:absolute;top:53px;width:8px;height:11px;background:#4d4039;border-radius:50%}
+.arcade-blob:before{left:46px}.arcade-blob:after{right:46px}
+.arcade-blob span{max-width:130px;text-overflow:ellipsis;overflow:hidden;white-space:nowrap}
+.arcade-blob.dragging{cursor:grabbing}
+.arcade-blob.popped{animation:arcade-pop .55s both;pointer-events:none}
+@keyframes arcade-pop{0%{transform:scale(1)}30%{transform:scale(1.4,.6) rotate(-10deg)}70%{transform:scale(.6,1.25) rotate(9deg)}100%{transform:scale(.15);opacity:0}}
+.arcade-stage.boom:before{content:"✹   ✦   ✹";position:absolute;font-size:35px;color:#d68a6c;animation:arcade-burst .6s both;pointer-events:none}
+@keyframes arcade-burst{0%{transform:scale(.4);opacity:0}40%{opacity:1}100%{transform:scale(1.8);opacity:0}}
+.arcade-court-file{min-width:min(270px,95%);background:#fffdf4;padding:15px;border:2px solid #b8c7a9;border-radius:12px;text-align:center;transform:rotate(-2deg)}
+.arcade-court-file small{display:block;font:850 10px "Noto Sans",Arial,sans-serif;color:#81917c;margin-bottom:6px}
+.arcade-court-file strong{font-size:19px;color:#2d4b3b}
+.arcade-main-btn{border:2px solid #2c4c3a;background:#315440;color:white;border-radius:12px;padding:11px 22px;min-height:48px;font:900 14px "Noto Sans",Arial,sans-serif;box-shadow:0 4px 0 #95af87;cursor:pointer}
+.arcade-main-btn:active{transform:translateY(2px);box-shadow:0 2px 0 #95af87}
+.arcade-court-file.banged{animation:arcade-bang .38s ease-in-out}
+@keyframes arcade-bang{0%,100%{transform:rotate(-2deg)}50%{transform:rotate(5deg) scale(.94)}}
+.arcade-machine{width:min(272px,100%);border:3px solid #355544;background:#dbe8c3;border-radius:21px;padding:16px 14px;text-align:center;box-shadow:5px 5px 0 #adc0a2}
+.arcade-machine b{display:block;font-size:11px;letter-spacing:.1em;margin-bottom:11px;color:#3b5c45}
+.arcade-machine-output{display:grid;place-items:center;min-height:65px;background:#fffdf4;border:2px dashed #9aad90;border-radius:12px;padding:9px;color:#3e5744;font-weight:850;font-size:12px}
+.arcade-machine .arcade-main-btn{width:100%;margin-top:12px;background:#e7af95;color:#2b4c3a}
+.arcade-machine.shaking{animation:arcade-shake .5s}
+@keyframes arcade-shake{0%,100%{transform:none}20%,60%{transform:rotate(-2deg)}40%,80%{transform:rotate(2deg)}}
+.arcade-bin{position:relative;margin:12px 0 5px;width:128px;height:117px;border:3px solid #315343;border-radius:15px 15px 27px 27px;background:#a9caa5;display:grid;place-items:center;color:#315343;font-size:30px;font-weight:900;box-shadow:inset -10px -8px 0 #91b394}
+.arcade-bin:before{content:"";position:absolute;top:-18px;width:149px;height:19px;background:#4e7155;border:2px solid #315343;border-radius:8px;transform-origin:10% 90%;transition:transform .18s}
+.arcade-bin.over,.arcade-bin.chewing{background:#dee69d;transform:scale(1.08)}
+.arcade-bin.chewing:before{transform:rotate(-22deg)}
+.arcade-bin.spitting{animation:arcade-shake .5s}
+.arcade-trash-list{display:flex;flex-wrap:wrap;justify-content:center;gap:9px}
+.arcade-trash-list button{touch-action:none;user-select:none;position:relative;z-index:1;border:2px solid #bda986;border-radius:11px;padding:10px;min-height:42px;max-width:100%;background:#fff7dd;color:#46543d;font:850 11px "Noto Sans",Arial,sans-serif;cursor:grab;box-shadow:2px 3px 0 #ded8c1}
+.arcade-trash-list button.dragging{z-index:5;cursor:grabbing}
+.arcade-game button:focus-visible,.arcade-top button:focus-visible{outline:3px solid #b87550;outline-offset:3px}
+@media(max-width:760px){.release-section .release-layout{grid-template-columns:1fr;gap:20px}.release-section .arcade-panel{min-height:0;padding:16px;box-shadow:6px 7px 0 #b8cca7}.arcade-privacy{margin-top:12px!important}.arcade-stage{min-height:202px}.arcade-game h3{font-size:30px}}
+@media(max-width:350px){.release-section .arcade-panel{padding:12px}.arcade-stage{padding:13px 7px}.arcade-choices button{padding:8px 9px}}
+@media(prefers-reduced-motion:reduce){.arcade-blob.popped,.arcade-stage.boom:before,.arcade-court-file.banged,.arcade-machine.shaking,.arcade-bin.spitting{animation:none!important}}
 </style>
 </head>
 <body>
@@ -938,40 +991,17 @@
         <div class="deck-nav"><button id="deck-prev" aria-label="Xem thẻ trước" type="button" disabled><svg class="yen-icon" aria-hidden="true" focusable="false"><use href="#yen-arrow"></use></svg></button><button id="deck-next" aria-label="Xem thẻ tiếp theo" type="button"><svg class="yen-icon" aria-hidden="true" focusable="false"><use href="#yen-arrow"></use></svg></button></div>
       </div>
     </section>
+    
     <section class="section release-section" id="buong" aria-labelledby="release-title">
       <div class="wrap release-layout">
-        <div class="release-copy reveal"><div class="eyebrow">02 / Thổi bay chuyện phiền</div><h2 class="section-title" id="release-title">Có chuyện phiền à? <i>Thả xuống đây.</i></h2><p>Chọn một chuyện làm bạn bực. Cục Yên sẽ thổi nó bay đi. Bảo hành kết quả? Không có.</p>
+        <div class="release-copy reveal"><div class="eyebrow">02 / Xưởng xử chuyện phiền</div>
+          <h2 class="section-title" id="release-title">Có chuyện phiền? <i>Cho nó ăn một vố.</i></h2>
+          <p>Mỗi lần ghé, Cục Yên bốc ngẫu nhiên một trò. Không ưng thì đổi trò. Không ai chấm điểm.</p>
+          <p class="arcade-privacy">KHÔNG NHẬP GÌ · KHÔNG LƯU GÌ · CHỈ CHƠI THÔI</p>
         </div>
-        <div class="release-panel reveal" id="release-panel">
-          <div class="worry-station-top"><span class="worry-station-tag"><span class="worry-station-dot"></span> BƯU CỤC CHUYÊN GỬI CHUYỆN PHIỀN</span><span class="worry-postage">VÉ MỘT CHIỀU · 0Đ</span></div>
-          <div class="worry-station-head">
-            <div class="worry-station-copy">
-              <h3 class="panel-title">Trạm thổi bay<br><em>chuyện phiền</em></h3>
-              <p class="release-prompt">Chuyện nào đang làm bạn nhăn mặt? Chạm vào đó, <strong>Cục Yên phụ một hơi.</strong></p>
-            </div>
-            <div class="worry-clerk" id="worry-clerk" aria-hidden="true">
-              <svg class="worry-clerk-svg" viewBox="0 0 165 155" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <ellipse cx="88" cy="142" rx="47" ry="7" fill="#344d42" opacity=".10"/>
-                <path d="M64 43 70 28l10 8 12-15 11 15 11-7 3 18" fill="#f4d991" stroke="#294d3b" stroke-width="3.3" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M35 89c-4-38 14-54 45-55 34-1 56 22 56 56 0 25-21 45-53 45S39 121 35 89Z" fill="#e7ecc1" stroke="#294d3b" stroke-width="4.4" stroke-linejoin="round"/>
-                <path d="M41 96c-13-1-19-11-18-22" stroke="#294d3b" stroke-width="4.3" stroke-linecap="round"/>
-                <path d="M125 96c13-4 17-12 18-20" stroke="#294d3b" stroke-width="4.3" stroke-linecap="round"/>
-                <ellipse cx="63" cy="85" rx="4.5" ry="5" fill="#294d3b"/><ellipse cx="101" cy="85" rx="4.5" ry="5" fill="#294d3b"/>
-                <ellipse cx="54" cy="97" rx="9" ry="5" fill="#f1b1a2"/><ellipse cx="109" cy="97" rx="9" ry="5" fill="#f1b1a2"/>
-                <path d="M74 102q8 10 17 0" stroke="#294d3b" stroke-width="4" stroke-linecap="round"/>
-                <path d="m80 54 7-4" stroke="#294d3b" stroke-width="2.5" stroke-linecap="round"/>
-                <g class="worry-clerk-letter"><rect x="105" y="104" width="31" height="21" rx="3" fill="#fffaf2" stroke="#294d3b" stroke-width="3" transform="rotate(-10 105 104)"/><path d="m107 108 13 9 13-15" stroke="#294d3b" stroke-width="2" stroke-linecap="round" transform="rotate(-10 105 104)"/></g>
-                <path d="M17 56q-7-5-12 2M23 47q-5-5-10-2M145 49l7-5M149 59l9-2" stroke="#294d3b" stroke-width="2.8" stroke-linecap="round"/>
-              </svg>
-              <span class="worry-clerk-speech" id="worry-clerk-speech">Nhận chuyện phiền.<br>Thổi phù một cái. Xong!</span>
-              <span class="worry-clerk-job">nhân viên: Cục Yên</span>
-            </div>
-          </div>
-          <div class="worry-tray-head"><span>CHỌN MỘT CHUYỆN ĐỂ THỔI BAY</span><span>Chạm một cái, bay một cục</span></div>
-          <div class="worry-pills" id="worry-pills" role="group" aria-label="6 chuyện phiền để bạn chọn"></div>
-          <div class="worry-tray-bottom"><button type="button" id="worry-reshuffle" class="worry-reshuffle"><svg class="yen-icon" aria-hidden="true"><use href="#yen-bloom"></use></svg> Chuyện khác đi!</button></div>
-          <button type="button" id="release-random" class="release-random"><svg class="yen-icon" aria-hidden="true"><use href="#yen-plane"></use></svg> Không biết chọn? Để Cục Yên bốc bừa!</button>
-          <div class="release-result" id="release-result" role="status" aria-live="polite"><span class="release-result-symbol" aria-hidden="true"><svg class="yen-icon"><use href="#yen-talk"></use></svg></span><span id="release-message">Cục Yên đã lấy hơi rồi. Chọn một chuyện để nó thổi nhé.</span></div>
+        <div class="release-panel arcade-panel reveal" id="release-panel">
+          <div class="arcade-top"><span id="arcade-count">CỤC YÊN ĐANG BỐC...</span><button type="button" id="arcade-switch">Đổi trò ↻</button></div>
+          <div id="arcade-game" class="arcade-game" aria-label="Trò chơi xả phiền"></div>
         </div>
       </div>
     </section>
@@ -1379,116 +1409,130 @@ const ALL_MOODS = [{"title":"Nồi mì sôi đầu","sub":"Ý nghĩ đang sôi l
       /* Forty-eight gently absurd things to let go of. No visitor data is persisted. */
       const WORRY_BANK=[["Tin nhắn chưa trả lời","Tin nhắn nằm im. Còn bạn đã nghĩ hộ người kia mười câu trả lời.","chat"],["Lỡ nói một câu quê","Đã nói lỡ một câu. Não cứ phát lại cảnh đó như phim chiếu lại.","chat"],["Đầu đầy việc","Mười việc cùng gõ cửa. Cục Yên chui xuống gầm bàn trước.","brain"],["Deadline ngó mình","Hạn chót tới gần. Đồng hồ còn nhìn bạn như đang đòi nợ.","clock"],["Sợ người ta nghĩ gì","Tưởng tượng người ta nghĩ gì về mình. Mệt dù chẳng ai nói câu nào.","eye"],["Chuyện khó chịu chưa gọi được tên","Không rõ bực chuyện gì. Chỉ biết mặt đang nhăn tự động.","cloud"],["Một email chưa mở","Email chưa mở, mà não đã viết sẵn ba kịch bản xấu.","mail"],["Cuộc họp kéo dài","Họp mãi chưa xong. Chiếc ghế xin tan ca trước bạn.","clock"],["Quên uống nước","Cả buổi chưa uống nước. Bình nước nhìn bạn đầy trách móc.","cup"],["Bữa trưa quá vội","Ăn trưa như thi chạy. Cái bụng chưa kịp biết món gì.","cup"],["Một cuộc hẹn ngại đi","Lịch thì đã hẹn. Chân thì nhất quyết đòi ở nhà.","shoe"],["Lỡ để quên chìa khóa","Chìa khóa chơi trốn tìm. Bạn không hề đăng ký tham gia.","key"],["Chuyện chưa quyết được","Hai lựa chọn cãi nhau trong đầu. Cục Yên không biết xử ai thắng.","arrows"],["Một lời xin lỗi khó nói","Muốn xin lỗi nhưng miệng cứ mắc kẹt ở chữ “ờ”.","heart"],["Điện thoại còn 2%","Điện thoại còn 2% pin. Tự nhiên bạn cũng chỉ còn 2%.","battery"],["Việc người khác nhờ","Định giúp một chút. Giờ lịch mình đã thành lịch người ta.","calendar"],["So sánh với người ta","Người ta tiến nhanh, bạn bắt đầu đua. Chưa ai bấm còi mà.","ruler"],["Mua rồi lại tiếc","Mua xong mới thấy tiếc. Hóa đơn còn ngồi nhìn mình.","receipt"],["Đêm nghĩ lung tung","Tắt đèn rồi, não vẫn tự mở rạp chiếu phim đêm.","moon"],["Ngủ dậy vẫn mệt","Ngủ đủ giờ mà dậy vẫn như điện thoại chưa cắm sạc.","moon"],["Nhớ nhầm tên ai đó","Gọi nhầm tên người ta. Muốn xin làm người tàng hình ngay.","brain"],["Một lời khen ngượng ngùng","Được khen một câu. Tai đỏ tới mức muốn xin phép nghỉ.","heart"],["Chờ ai đó trả lời","Tin nhắn đã gửi. Ngón tay vẫn cứ mở màn hình xem phản hồi.","chat"],["Gặp một cái nhìn lạ","Người ta nhìn một cái. Não liền dựng cả bộ phim.","eye"],["Bị giục phải nhanh","Bị giục liên tục. Ốc sên trong lòng bạn đã nộp đơn nghỉ.","clock"],["Kế hoạch đổi phút chót","Kế hoạch đổi phút cuối. Dép bạn còn chưa kịp xỏ.","calendar"],["Làm sai một chút","Sai một chút. Não lại mở cuộc họp kiểm điểm kéo dài.","pencil"],["Quá nhiều thông báo","Điện thoại báo liên tục. Cái đầu cũng muốn bật chế độ im lặng.","bell"],["Tự nhận thêm việc","Miệng lỡ nói “được” trước khi nhìn cái lịch kín mít.","hand"],["Đang vui bỗng xị mặt","Đang vui tự nhiên xìu. Cục Yên nghi ai rút van cười.","cloud"],["Bị hiểu nhầm","Bạn nói một ý, người ta nghe thành ý khác. Điện thoại cũng không phiên dịch được.","arrows"],["Không muốn làm gì","Việc còn đầy, nhưng cả người chỉ muốn ngồi nhìn cái ghế.","chair"],["Nghĩ về chuyện cũ","Chuyện cũ tự nhiên chiếu lại trong đầu, chẳng ai mua vé.","moon"],["Một cuộc gọi nhỡ","Một cuộc gọi nhỡ. Não phân vân gọi lại hay giả vờ mất sóng.","bell"],["Sợ mai phải dậy sớm","Chưa tới sáng đã sợ tiếng chuông báo thức. Chuông vô tội mà.","clock"],["Bếp còn bát chưa rửa","Bát đĩa xếp hàng trong bồn rửa. Bạn lờ đi, chúng vẫn đứng đó.","cup"],["Trời nóng dễ cáu","Trời nóng, chuyện bé xíu cũng thấy muốn bốc khói.","sun"],["Một ý tưởng chưa ra","Ý tưởng đi đâu mất. Bút ngồi đợi đến khô mực.","pencil"],["Nói có khi muốn nói không","Định nói “không”. Miệng lại tự bật chế độ “dạ được”.","arrows"],["Bị mất một món nhỏ","Một món nhỏ mất tiêu. Bạn đã lục nhà như đang truy tìm kho báu.","key"],["Mong thứ gì thật nhanh","Mới gieo hạt mà đã muốn thấy cây. Hạt còn chưa mặc áo mầm.","flower"],["Muốn mọi thứ hoàn hảo","Xong việc rồi vẫn muốn sửa thêm. Cục tẩy xin nghỉ phép.","ruler"],["Cà phê nguội mất rồi","Mải làm việc, quay lại thấy cà phê nguội. Ly cà phê rất thất vọng.","cup"],["Tin vui đến hơi muộn","Tin vui tới hơi trễ. Cục Yên chạy ra đón, mang nhầm dép.","gift"],["Lo lắng chưa có tên","Tự nhiên thấy lo mà chưa biết lo chuyện gì. Não làm trò bí hiểm.","cloud"],["Tối rồi vẫn lướt máy","Đã khuya mà tay vẫn lướt điện thoại. Ngón cái tăng ca miễn phí.","phone"],["Bị mưa phá kế hoạch","Mưa tới đúng lúc có hẹn. Chiếc ô thì đang đi du lịch.","sun"],["Lỡ bấm gửi quá sớm","Lỡ bấm gửi rồi mới thấy lỗi. Tay làm trước, não đuổi theo.","mail"]];
       const WORRY_ART={"chat":"<path d=\"M8 8h23v19H17l-8 5v-5H8z\"/><circle cx=\"15\" cy=\"17\" r=\"1.2\" fill=\"currentColor\" stroke=\"none\"/><circle cx=\"21\" cy=\"17\" r=\"1.2\" fill=\"currentColor\" stroke=\"none\"/><circle cx=\"27\" cy=\"17\" r=\"1.2\" fill=\"currentColor\" stroke=\"none\"/>","brain":"<path d=\"M20 7c-4-4-10 0-10 5-6 0-7 8-2 11-3 7 6 11 12 6 6 5 15 1 12-6 5-3 4-11-2-11 0-5-6-9-10-5Zm0 1v23M13 14l6 3m9-3-7 4m-7 7 6-3m6 1-5 3\"/>","clock":"<circle cx=\"20\" cy=\"20\" r=\"14\"/><path d=\"M20 10v11l8 4\"/><circle cx=\"20\" cy=\"20\" r=\"1.5\" fill=\"currentColor\" stroke=\"none\"/>","eye":"<path d=\"M4 20Q20 5 36 20Q20 35 4 20Z\"/><circle cx=\"20\" cy=\"20\" r=\"6\"/><circle cx=\"21\" cy=\"18\" r=\"1.3\" fill=\"currentColor\" stroke=\"none\"/>","cloud":"<path d=\"M10 29c-8-3-7-13 1-16 1-8 10-10 15-4 9-1 12 12 6 15-1 3-3 5-7 5H10Z\"/><path d=\"m12 34 3-2m7 2 3-2\"/>","mail":"<rect x=\"5\" y=\"10\" width=\"30\" height=\"21\" rx=\"3\"/><path d=\"m5 13 15 11 15-11\"/>","cup":"<path d=\"M9 13h21v15q0 7-10 7T9 28V13Z\"/><path d=\"M30 16q9-1 7 7-1 6-7 4M13 7q3 2 0 4m8-4q3 2 0 4\"/>","shoe":"<path d=\"m6 22 9-9q3 9 11 10h7q4 0 4 7H5q0-5 1-8Z\"/><path d=\"M12 22h7m-5-4h7\"/>","key":"<circle cx=\"13\" cy=\"13\" r=\"8\"/><path d=\"m18 19 16 16m-6-6 4-4m-9-1 4-4\"/>","arrows":"<path d=\"M5 11h28l-7-6m7 6-7 6M35 29H7l7-6m-7 6 7 6\"/>","heart":"<path d=\"M20 32 6 18q-5-7 2-12 7-4 12 4 6-8 13-4 8 5 1 13Z\"/>","battery":"<rect x=\"7\" y=\"10\" width=\"27\" height=\"20\" rx=\"3\"/><path d=\"M34 16h3v8h-3M12 15h5v10h-5\"/>","calendar":"<rect x=\"6\" y=\"9\" width=\"28\" height=\"26\" rx=\"3\"/><path d=\"M6 16h28M13 5v8M26 5v8M14 22h6m-6 6h12\"/>","ruler":"<rect x=\"8\" y=\"9\" width=\"24\" height=\"22\" rx=\"3\" transform=\"rotate(12 20 20)\"/><path d=\"m12 11-1 7m7-6-1 4m6-3-1 7m6-6-1 4\"/>","receipt":"<path d=\"M9 6h23v28l-5-3-5 3-5-3-4 3-4-3V6Z\"/><path d=\"M14 14h13m-13 6h13m-13 6h8\"/>","moon":"<path d=\"M30 30q-13 5-20-6Q4 14 14 6q-3 14 8 17 5 1 8 7Z\"/><path d=\"M30 9v5m-3-2h6\"/>","pencil":"<path d=\"m8 28 18-21 7 6-18 21-9 2 2-8Z\"/><path d=\"m24 9 7 6M8 28l7 6\"/>","bell":"<path d=\"M10 29h21l-4-6V16q0-9-8-9t-8 9v7l-1 6Z\"/><path d=\"M15 33q5 7 10 0\"/>","hand":"<path d=\"M11 26V11q0-5 5-5v15-11q0-5 5-4v15-9q0-4 5-3v13-6q0-4 5-3v13q0 10-10 10H16q-6 0-9-10-1-4 4-4\"/>","chair":"<path d=\"M10 9v17h21V9M10 26v9m21-9v9M10 18H5\"/>","sun":"<circle cx=\"20\" cy=\"20\" r=\"8\"/><path d=\"M20 4v6m0 20v6M4 20h6m20 0h6M9 9l4 4m14 14 4 4M31 9l-4 4M13 27l-4 4\"/>","flower":"<circle cx=\"20\" cy=\"20\" r=\"5\"/><path d=\"M20 15q-10-17-13-4Q6 16 15 20q-15 2-6 12 6 4 11-7 5 11 11 7 9-10-6-12 9-4 8-9-3-13-13 4Z\"/>","gift":"<rect x=\"6\" y=\"17\" width=\"28\" height=\"19\" rx=\"2\"/><path d=\"M4 16h32M20 16v20M20 16Q3 13 9 7q7-5 11 9Zm0 0q6-16 12-9 5 7-12 9Z\"/>","phone":"<rect x=\"10\" y=\"3\" width=\"20\" height=\"34\" rx=\"5\"/><path d=\"M15 9h10M18 31h4\"/>"};
-      const worryRail=$('#worry-pills');
-      const releaseMessage=$('#release-message');
-      const releasePanel=$('#release-panel');
-      const worryColors=['#f6d5b5','#e7dcfc','#ddebc9','#f9cfcc','#d7eaf4','#fae3b7'];
-      function worryDoodle(type){return `<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${WORRY_ART[type]||WORRY_ART.cloud}</svg>`;}
-      function randomNumber(seed){return (Math.imul(seed,1664525)+1013904223)>>>0;}
-      function orderWorries(seed){
-        const ids=Array.from({length:WORRY_BANK.length},(_,i)=>i);let n=seed>>>0;
-        for(let i=ids.length-1;i>0;i--){n=randomNumber(n);const j=n%(i+1);[ids[i],ids[j]]=[ids[j],ids[i]];}
-        return ids;
+      
+      /* Four mini-games, sampled once on entry. No storage or analytics. */
+      const ARCADE_CASES=[
+        ['Sếp dí deadline','Tòa phạt deadline đi làm thêm. Bạn được nghỉ uống nước 5 phút.','Đồng hồ biết nói “mai tính”. Nó chỉ biết nói.','Thùng nuốt deadline. Xong nó xin nghỉ vì quá tải.'],
+        ['Người yêu cũ thả tim','Tội đào bới di tích. Yêu cầu đóng cửa bảo tàng ngay.','Máy dò người tử tế. Đúng lúc cần thì hết pin.','Thùng phun ngược: “Rác tái chế được, tình cũ thì tui chịu.”'],
+        ['Cuối tháng hết tiền','Số dư tài khoản bị tuyên án đi tìm chủ. Nó bỏ trốn rồi.','Ví chống gió. Không chống được hết tiền.','Thùng nói: “Trong đây cũng không có đồng nào!”'],
+        ['Bị seen không rep','Dấu “đã xem” phải lao động công ích: đi rep tin nhắn.','Một con dấu “Ừ, biết rồi”. Đóng xong vẫn chưa ai rep.','Thùng đọc rồi im. À không, nó cũng seen bạn.'],
+        ['Họp dài hai tiếng','Cái bàn phải viết biên bản. Người ngồi được về.','Tai nghe lọc tiếng họp. Lọc xong vẫn phải họp.','Thùng ngủ quên giữa cuộc họp. Phạt viết biên bản.'],
+        ['Thứ Hai tới quá nhanh','Tòa chuyển thứ Hai sang thứ Tư. Thứ Tư đang kháng cáo.','Tờ lịch chỉ có Chủ nhật. Khá thiếu thực tế.','Thùng nhai thứ Hai, nghẹn luôn đến thứ Ba.'],
+        ['Wi-Fi giật như cá','Phạt cục phát Wi-Fi đứng góc suy nghĩ về tốc độ.','Ăng-ten bằng mì gói. Bắt sóng bằng niềm tin.','Thùng tải mãi vẫn 1%. Đứng ngắm cũng mệt.'],
+        ['Nhắn nhầm nhóm chat','Tòa cho thu hồi tin nhắn. Tiếc là cả nhóm đã chụp màn hình.','Áo tàng hình 3 giây. Hết hạn lúc bước vào phòng.','Thùng xóa được tin, không xóa được trí nhớ đồng nghiệp.'],
+        ['Hàng xóm khoan 6 giờ','Máy khoan bị phạt nghe nhạc ru ngủ suốt ba ngày.','Nút bịt tai hình bánh mì. Chỉ ngon mắt thôi.','Thùng ăn xong phát ra tiếng khoan. Tệ hơn rồi.'],
+        ['Mất ngủ vì nghĩ nhiều','Tòa yêu cầu não tắt bớt tab. Não hỏi: “Tab là gì?”','Chiếc gối có bằng tư vấn. Hỏi gì cũng nói “ngủ đi”.','Thùng bảo: “Đưa não đây tui xếp lại.” Thôi khỏi!']
+      ];
+      const ARCADE_GAMES=[
+        ['Đập cục phiền','ĐẬP CHO ĐỠ TỨC','Chọn một chuyện. Chạm hoặc kéo búng cục phiền.'],
+        ['Tòa án Cục Yên','PHIÊN TÒA RẤT ẨU','Chọn bị cáo rồi đập búa. Luật do Cục Yên tự nghĩ.'],
+        ['Tiệm đổi phiền lấy xàm','ĐỔI VỚ VẨN · 0Đ','Đưa vào một chuyện phiền. Nhận về món vô dụng.'],
+        ['Thùng rác có thái độ','THÙNG RÁC HƠI HỖN','Chạm một chuyện hoặc kéo vào thùng. Thùng có quyền cãi.']
+      ];
+      let arcadeMode=0,arcadeChoices=[],arcadeSelected=0,arcadeRound=0,arcadeTimer=0;
+      const arcadeRandom=n=>Math.floor(Math.random()*n);
+      function arcadeSay(t){const el=$('#arcade-feedback');if(el)el.textContent=t;}
+      function arcadeDelay(t,delay){
+        const round=arcadeRound;
+        arcadeTimer=setTimeout(()=>{if(round===arcadeRound)arcadeSay(t);},delay);
       }
-      let dailyWorryKey='', dailyWorryGroup=0, currentWorryIds=[], flyingPaper=null, flightRaf=0, flightGeneration=0, flightFinishTimer=0;
-      function renderWorryOptions(ids){
-        currentWorryIds=ids;
-        worryRail.innerHTML=ids.map((id,i)=>{
-          const [title,note,art]=WORRY_BANK[id];
-          return `<button type="button" class="worry-pill" data-worry-id="${id}" aria-label="Phóng ${esc(title)}: ${esc(note)}"><span class="worry-card-sticker" aria-hidden="true">${String(i+1).padStart(2,'0')}</span><span class="worry-pill-art" aria-hidden="true" style="background:${worryColors[i%worryColors.length]}">${worryDoodle(art)}</span><span class="worry-pill-title">${esc(title)}</span><span class="worry-pill-sub">${esc(note)}</span><span class="worry-card-foot" aria-hidden="true">CHẠM ĐỂ THẢ ĐIỀU PHIỀN <svg class="yen-icon"><use href="#yen-arrow"></use></svg></span></button>`;
-        }).join('');
+      function arcadeLoad(mode){
+        arcadeRound++;clearTimeout(arcadeTimer);arcadeMode=mode;
+        const ids=ARCADE_CASES.map((_,i)=>i);
+        for(let i=ids.length-1;i>0;i--){const j=arcadeRandom(i+1);[ids[i],ids[j]]=[ids[j],ids[i]];}
+        arcadeChoices=ids.slice(0,4);arcadeSelected=arcadeChoices[0];
+        arcadeDraw();
       }
-      function buildDailyWorries(force=false){
-        const d=vietnamDay();if(!force&&dailyWorryKey===d.key)return;
-        dailyWorryKey=d.key;dailyWorryGroup=0;
-        const elapsed=d.day-dayZero;
-        const cycle=Math.floor(elapsed/8), slot=((elapsed%8)+8)%8;
-        const pool=orderWorries((cycle*36776121+0x75963)>>>0);
-        renderWorryOptions(pool.slice(slot*6,slot*6+6));
+      function arcadeDraw(){
+        const game=ARCADE_GAMES[arcadeMode],item=ARCADE_CASES[arcadeSelected];
+        $('#arcade-count').textContent='BỐC TRÚNG TRÒ '+(arcadeMode+1)+' / 4';
+        let choice='<div class="arcade-choices" role="group" aria-label="Chọn chuyện phiền">'+arcadeChoices.map(id=>'<button type="button" data-arcade-choice="'+id+'" aria-pressed="'+(id===arcadeSelected)+'">'+esc(ARCADE_CASES[id][0])+'</button>').join('')+'</div>';
+        let stage='';
+        if(arcadeMode===0)stage='<div class="arcade-stage" id="arcade-stage"><div class="arcade-note">BẮT QUẢ TANG CỤC PHIỀN</div><button class="arcade-blob" id="arcade-blob" type="button" aria-label="Đập '+esc(item[0])+'"><span>'+esc(item[0])+'</span></button><div class="arcade-note">KÉO · BÚNG · HOẶC BẤM MỘT CÁI</div></div>';
+        if(arcadeMode===1)stage='<div class="arcade-stage"><div class="arcade-note">TÒA ÁN CỤC YÊN · KHÔNG PHÚC THẨM</div><div class="arcade-court-file" id="arcade-file"><small>BỊ CÁO</small><strong>'+esc(item[0])+'</strong></div><button type="button" class="arcade-main-btn" id="arcade-judge">⚒ Tuyên án!</button></div>';
+        if(arcadeMode===2)stage='<div class="arcade-stage"><div class="arcade-machine" id="arcade-machine"><b>MÁY ĐỔI PHIỀN · 0Đ</b><div class="arcade-machine-output" id="arcade-output">Đã nhận: '+esc(item[0])+'</div><button class="arcade-main-btn" id="arcade-exchange" type="button">Gạt cần đổi xàm ↓</button></div></div>';
+        if(arcadeMode===3){choice='';stage='<div class="arcade-stage"><div class="arcade-note">THÙNG KHÔNG NHẬN BẢO HÀNH TÂM TRẠNG</div><div class="arcade-bin" id="arcade-bin" aria-hidden="true">•ᴗ•</div><div class="arcade-note">THẢ CHUYỆN PHIỀN VÀO THÙNG</div><div class="arcade-trash-list" role="group" aria-label="Chuyện phiền cần bỏ đi">'+arcadeChoices.slice(0,3).map(id=>'<button type="button" data-arcade-trash="'+id+'" aria-label="Bỏ '+esc(ARCADE_CASES[id][0])+' vào thùng">'+esc(ARCADE_CASES[id][0])+'</button>').join('')+'</div></div>';}
+        $('#arcade-game').innerHTML='<div class="arcade-sub">'+game[1]+'</div><h3>'+game[0]+'</h3><p class="arcade-instruction">'+game[2]+'</p>'+choice+stage+'<div id="arcade-feedback" class="arcade-feedback" role="status" aria-live="polite">Cục Yên sẵn sàng. Đến lượt bạn!</div><div class="arcade-footer"><button type="button" class="arcade-nextcase" id="arcade-nextcase">Chuyện khác nữa ↻</button></div>';
+        $$('#arcade-game [data-arcade-choice]').forEach(btn=>btn.addEventListener('click',()=>{
+          const id=Number(btn.dataset.arcadeChoice);if(id===arcadeSelected)return;
+          arcadeRound++;clearTimeout(arcadeTimer);arcadeSelected=id;arcadeDraw();
+        }));
+        $('#arcade-nextcase').addEventListener('click',()=>arcadeLoad(arcadeMode));
+        if(arcadeMode===0)arcadeBlob();
+        if(arcadeMode===1)$('#arcade-judge').addEventListener('click',()=>{
+          const btn=$('#arcade-judge');if(btn.disabled)return;btn.disabled=true;
+          $('#arcade-file').classList.add('banged');arcadeSay('CỐC! Tòa đang nghĩ ra luật...');
+          arcadeDelay('BẢN ÁN: '+ARCADE_CASES[arcadeSelected][1],420);
+        });
+        if(arcadeMode===2)$('#arcade-exchange').addEventListener('click',()=>{
+          const btn=$('#arcade-exchange');if(btn.disabled)return;btn.disabled=true;
+          $('#arcade-machine').classList.add('shaking');$('#arcade-output').textContent='LỘC CỘC...';
+          arcadeSay('Máy đang nhai chuyện phiền. Đừng thò tay vào.');
+          const round=arcadeRound;
+          arcadeTimer=setTimeout(()=>{if(round!==arcadeRound)return;$('#arcade-output').textContent='BẠN NHẬN: '+ARCADE_CASES[arcadeSelected][2];arcadeSay('Đổi thành công. Không hoàn tiền. Mà bạn có trả tiền đâu.');},600);
+        });
+        if(arcadeMode===3)arcadeBin();
       }
-      buildDailyWorries();
-      window.addEventListener('focus',()=>buildDailyWorries());
-      document.addEventListener('visibilitychange',()=>{if(!document.hidden)buildDailyWorries();else stopFlight();});
-      $('#worry-reshuffle').addEventListener('click',()=>{
-        // Manual reshuffle without storage; no duplicate choices in the visible batch.
-        const candidates=Array.from({length:WORRY_BANK.length},(_,i)=>i).filter(i=>!currentWorryIds.includes(i));
-        for(let i=candidates.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[candidates[i],candidates[j]]=[candidates[j],candidates[i]];}
-        renderWorryOptions(candidates.slice(0,6));
-      });
-      function stopFlight(){
-        flightGeneration++;
-        if(flightRaf)cancelAnimationFrame(flightRaf);
-        if(flightFinishTimer)clearTimeout(flightFinishTimer);
-        if(flyingPaper)flyingPaper.remove();
-        flightRaf=0;flightFinishTimer=0;flyingPaper=null;
-        $('#worry-clerk').classList.remove('worry-blowing');
-        $('#worry-clerk-speech').innerHTML='Nhận hết.<br>Thổi hết!';
-      }
-      function releaseWorry(id,sourceButton){
-        stopFlight();
-        const [title,note,art]=WORRY_BANK[id];
-        const paper=document.createElement('div');
-        paper.className='flying-paper';
-        // Every value is authored in our local preset bank and escaped before insertion.
-        paper.innerHTML=`<div class="paper-doodle">${worryDoodle(art)}</div><div class="paper-kicker">Cục phiền đang bay...</div><strong>${esc(title)}</strong><span class="paper-note">${esc(note)}</span>`;
-        paper.setAttribute('aria-hidden','true');
-        document.body.appendChild(paper); flyingPaper=paper;
-        const p=paper.getBoundingClientRect();
-        const b=(sourceButton||$('#release-random')).getBoundingClientRect();
-        const vw=window.innerWidth,vh=window.innerHeight;
-        const startX=Math.max(10,Math.min(vw-p.width-10,b.left+b.width/2-p.width/2));
-        const startY=Math.max(78,Math.min(vh-p.height-24,b.top+b.height/2-p.height/2));
-        const luck=Math.random();
-        const leftOrRight=Math.random()<.5?-1:1;
-        const side=leftOrRight*(28+luck*52);
-        const wobble=18+Math.random()*24;
-        const waves=1.0+Math.random()*1.5;
-        const lift=Math.max(170,Math.min(300,startY+72));
-        const turn=leftOrRight*(7+Math.random()*12);
-        const lifetime=3000;const generation=flightGeneration;
-        releaseMessage.textContent=`Cục Yên lấy hết hơi thổi “${title}” lên trời. Phùùù!`;
-        const clerk=$('#worry-clerk');clerk.classList.remove('worry-blowing');void clerk.offsetWidth;clerk.classList.add('worry-blowing');
-        $('#worry-clerk-speech').textContent=['PHÙ!','Bay đi, chuyện phiền!','Ối, gió thổi ngược!','Tạm biệt, chuyện lăn tăn!','Để mình thổi phụ!'][Math.floor(Math.random()*5)];
-        const box=$('#release-result');box.classList.remove('blinked');void box.offsetWidth;box.classList.add('blinked');
-        worryRail.querySelectorAll('.worry-pill').forEach(x=>x.classList.toggle('is-selected',x===sourceButton));
-        const setStyle=(progress)=>{
-          const u=progress*progress*(3-2*progress); // continuous velocity at start and end
-          const x=startX+side*u+Math.sin(u*Math.PI*2*waves)*wobble*Math.sin(Math.PI*u);
-          const y=startY-lift*u;
-          const angle=turn*u+Math.sin(u*Math.PI*3)*4*Math.sin(Math.PI*u);
-          const scale=1-.11*u;
-          const fade=progress<=.74?1:Math.max(0,1-(progress-.74)/.26);
-          paper.style.transform=`translate3d(${x}px,${y}px,0) rotate(${angle}deg) scale(${scale})`;
-          paper.style.opacity=String(fade);
-        };
-        setStyle(0);
-        if(prefersReduced){
-          flightFinishTimer=window.setTimeout(()=>{if(generation!==flightGeneration)return;paper.remove();flyingPaper=null;releaseMessage.textContent=`“${title}” bay mất rồi. Đừng bắt Cục Yên chạy theo nha.`;$('#worry-clerk').classList.remove('worry-blowing');},1500);
-          return;
+      function arcadeBlob(){
+        const btn=$('#arcade-blob'),stage=$('#arcade-stage');
+        let drag=null,ignoreClick=false,done=false;
+        function hit(){
+          if(done)return;done=true;btn.disabled=true;btn.classList.remove('dragging');
+          btn.style.transform='';btn.classList.add('popped');stage.classList.add('boom');
+          arcadeSay('BỤP! Cục Yên đang quét mảnh vụn...');
+          const jokes=['Cục phiền vỡ rồi. Cục Yên lỡ quét luôn đôi dép.','BỤP! Cục Yên xin giữ tiếng bụp làm nhạc chuông.','Đập xong rồi. Tự thưởng một ngụm nước đi.','Cục phiền tan rồi. Chưa chắc chuyện hết, nhưng bụp rất đã.'];
+          arcadeDelay(jokes[arcadeRandom(jokes.length)],570);
         }
-        const started=performance.now();
-        const step=(now)=>{
-          if(generation!==flightGeneration)return;
-          const t=Math.min(1,(now-started)/lifetime);
-          setStyle(t);
-          if(t<1)flightRaf=requestAnimationFrame(step);
-          else{paper.remove();flyingPaper=null;flightRaf=0;releaseMessage.textContent=`Đã tiễn “${title}” đi. Cục Yên đang thở bằng mũi để hồi sức. Ngoài đời Yên có ghế thật để ngồi nghỉ nhé.`;$('#worry-clerk').classList.remove('worry-blowing');}
-        };
-        flightRaf=requestAnimationFrame(step);
+        btn.addEventListener('pointerdown',e=>{
+          if(done||!e.isPrimary)return;drag={x:e.clientX,y:e.clientY};ignoreClick=false;
+          btn.setPointerCapture(e.pointerId);btn.classList.add('dragging');
+        });
+        btn.addEventListener('pointermove',e=>{
+          if(!drag||done)return;const dx=Math.max(-90,Math.min(90,e.clientX-drag.x)),dy=Math.max(-70,Math.min(70,e.clientY-drag.y));
+          btn.style.transform='translate('+dx+'px,'+dy+'px) rotate('+(dx/8)+'deg) scale('+(1+Math.abs(dx)/450)+')';
+        });
+        btn.addEventListener('pointerup',e=>{
+          if(!drag||done)return;
+          const distance=Math.hypot(e.clientX-drag.x,e.clientY-drag.y);
+          drag=null;btn.classList.remove('dragging');btn.style.transform='';
+          if(distance>12){ignoreClick=true;hit();}
+        });
+        btn.addEventListener('pointercancel',()=>{drag=null;btn.classList.remove('dragging');btn.style.transform='';});
+        btn.addEventListener('click',()=>{if(ignoreClick){ignoreClick=false;return;}hit();});
       }
-      worryRail.addEventListener('click',e=>{const btn=e.target.closest('.worry-pill');if(btn)releaseWorry(Number(btn.dataset.worryId),btn);});
-      $('#release-random').addEventListener('click',()=>{
-        // Full 48-item bank, not merely today's six.
-        const previous=Number($('#release-random').dataset.lastId??-1);
-        let id=Math.floor(Math.random()*WORRY_BANK.length);
-        if(id===previous)id=(id+1)%WORRY_BANK.length;
-        $('#release-random').dataset.lastId=String(id);
-        const visible=[...worryRail.querySelectorAll('.worry-pill')];
-        if(!visible.length)return;
-        const selected=visible[Math.floor(Math.random()*visible.length)];
-        id=Number(selected.dataset.worryId);
-        releaseWorry(id,selected);
-      });
+      function arcadeBin(){
+        const bin=$('#arcade-bin');let busy=false;
+        function feed(id){
+          if(busy)return;busy=true;
+          const spit=arcadeRandom(4)===0;
+          bin.classList.remove('over');bin.classList.add(spit?'spitting':'chewing');
+          $$('#arcade-game [data-arcade-trash]').forEach(x=>x.disabled=true);
+          arcadeSay(spit?'PHỤT! Thùng vừa từ chối nhận hàng.':'ỘP! Thùng đang nhai...');
+          arcadeDelay(ARCADE_CASES[id][3],600);
+        }
+        $$('#arcade-game [data-arcade-trash]').forEach(chip=>{
+          let drag=null,suppress=false;
+          chip.addEventListener('pointerdown',e=>{if(busy||!e.isPrimary)return;drag={x:e.clientX,y:e.clientY};suppress=false;chip.setPointerCapture(e.pointerId);chip.classList.add('dragging');});
+          chip.addEventListener('pointermove',e=>{
+            if(!drag||busy)return;const dx=e.clientX-drag.x,dy=e.clientY-drag.y;
+            chip.style.transform='translate('+dx+'px,'+dy+'px) rotate('+(dx/12)+'deg)';
+            const b=bin.getBoundingClientRect();bin.classList.toggle('over',e.clientX>=b.left&&e.clientX<=b.right&&e.clientY>=b.top&&e.clientY<=b.bottom);
+          });
+          chip.addEventListener('pointerup',e=>{
+            if(!drag)return;const distance=Math.hypot(e.clientX-drag.x,e.clientY-drag.y);
+            drag=null;chip.classList.remove('dragging');chip.style.transform='';bin.classList.remove('over');
+            if(distance>12){suppress=true;const b=bin.getBoundingClientRect();
+              if(e.clientX>=b.left&&e.clientX<=b.right&&e.clientY>=b.top&&e.clientY<=b.bottom)feed(Number(chip.dataset.arcadeTrash));
+              else arcadeSay('Trượt rồi. Thùng vẫn đang há miệng chờ.');
+            }
+          });
+          chip.addEventListener('pointercancel',()=>{drag=null;chip.classList.remove('dragging');chip.style.transform='';bin.classList.remove('over');});
+          chip.addEventListener('click',()=>{if(suppress){suppress=false;return;}feed(Number(chip.dataset.arcadeTrash));});
+        });
+      }
+      $('#arcade-switch').addEventListener('click',()=>arcadeLoad((arcadeMode+1+arcadeRandom(3))%4));
+      arcadeLoad(arcadeRandom(4));
+
       const shopQuotes={"tho":["Thở ra cái đã. Cục Yên không yêu cầu thành tích thở.","Bạn vừa có một phút rảnh. Xin đừng nhét deadline vào đó.","Cục Yên đem cân đo sự nhẹ nhõm. Cân hết pin, nhưng vẻ mặt trông ổn.","Chiếc ghế xin làm đồng nghiệp. Chuyên đỡ bạn, không giao việc.","Ngồi yên một phút cũng là một phút. Không ai thu hồi được.","Chưa giải quyết hết chuyện đâu. Uống ngụm nước trước đã.","Canh còn nóng phải để nguội. Cái đầu đang nóng cũng thế.","Ngồi xuống đi. Chiếc ghế chưa bao giờ bắt bạn viết đơn.","Cục Yên đóng dấu “ĐỦ RỒI” vào danh sách việc. Bằng dấu khoai tây.","Cái thở phào này không phải trả lại vào thứ Hai.","Bạn ngồi nghỉ, đám mây đi ngang cũng muốn kéo ghế.","Đồng hồ cứ chạy, kể cả khi bạn không cổ vũ nó.","Bạn thở ra một hơi. Hệ thống báo: con người vẫn hoạt động tốt.","Một phút yên tĩnh đã về tay bạn. Giấu kỹ kẻo chuông điện thoại thấy.","Hôm nay không có cuộc thi “ai gồng lâu hơn”. Cục Yên tự hủy rồi.","Con ốc sên bảo bạn đi nhanh quá. Nó nói xong đi mất hai phân.","Đừng vác cả bầu trời. Cầm ly nước thôi là đủ.","Hai cái vai xin nghỉ tăng ca. Cục Yên đã ký cho nghỉ.","Đời bật tốc độ 2x? Bạn được quyền bấm về 1x.","Đặt suy nghĩ xuống cạnh cái muỗng. Đừng làm rơi ly nhé.","Thở phào không sửa hết mọi thứ, nhưng ít nhất ngực bớt chật.","Cục Yên đặt dấu phẩy vào câu chuyện của bạn. Chưa tới dấu chấm đâu.","Cơn gió vừa xin việc làm quạt. Cục Yên đang phỏng vấn.","Bạn đã làm được một việc: ghé vào đây. Đủ điểm qua môn chơi.","Nghỉ mười giây. Vũ trụ chưa mất mạng đâu.","Cục Yên đang trồng một phút nghỉ. Chưa mọc lá, nhưng có ghế.","Não chưa muốn nở hoa? Cho nó uống nước thay vì ép ra ý tưởng.","Chiếc bàn không chấm điểm bạn. Ghế cũng chưa thấy gửi phiếu.","Đây là biên lai xác nhận: bạn vừa nghỉ một hơi, không mua gì.","Hết hơi thì thở tiếp. Không cần xin chữ ký cái lịch."],"khen":["Bạn biết lật gối tìm mặt mát. Kỹ năng sinh tồn rất đáng nể.","Bạn cầm muỗng trông rất có tiềm năng không làm đổ canh.","Bạn ngắm mây mà không đòi nó nộp báo cáo. Tâm hồn rất thoáng.","Cục Yên thấy bạn có năng khiếu ngồi ghế. Cả hai rất hợp nhau.","Ngón tay bấm nút rất quyết đoán. Hơi bất chấp lời cảnh báo, nhưng nhanh.","Bạn đọc được đến câu này. Cục Yên xin trao huy chương kiên nhẫn.","Bạn chọn chỗ ngồi khéo đến mức cái cây muốn hỏi bí quyết.","Nếu là bánh quy, bạn sẽ tròn trịa về tinh thần. Đừng hỏi tròn cỡ nào.","Bạn xứng đáng có cái ống hút biết chào. Cục Yên đang tuyển dụng.","Chim ngoài cửa vừa gật đầu khen bạn. Hoặc nó đang tìm sâu.","Bạn bước vào trang rất nhẹ nhàng. Cái ghế không hề giật mình.","Một chiếc ghế vừa xin kết bạn với bạn. Cục Yên làm người giới thiệu.","Chiếc lá khen bạn thở đều. Lời khen hơi lạc đề nhưng miễn phí.","Cái đĩa thấy bạn đáng tin. Nó muốn giao cho bạn trông miếng bánh.","Bạn ngồi chơi rất chuyên nghiệp. Cục Yên đang xin học nghề.","Bạn có vẻ hợp làm khăn trải bàn tiệc trà. Đừng lo, chỉ là lời khen.","Một con mèo chọn ngồi cạnh bạn. Đây gần như là giải thưởng lớn.","Bạn không cãi nhau với thời tiết. Cục Yên cho 10 điểm môn bình tĩnh.","Bạn đếm một chuyện vô ích rất tốt. Ví dụ: hôm nay đã chớp mắt mấy lần?","Cái bóng hôm nay theo bạn rất ngoan. Xin khen cả hai.","Nhớ uống nước là đủ tư cách vào đội vô địch hôm nay.","Tiếng đá lách cách nghe hợp với bạn. Cục Yên tự phong bạn làm DJ đá viên.","Hoa muốn mời bạn làm cố vấn nghỉ ngơi. Công việc chỉ ngắm hoa.","Cục Yên tặng bằng khen vì bạn chưa hỏi bằng khen đổi được gì.","Bạn tử tế đến mức cây bút hết mực cũng muốn viết thư cảm ơn.","Bạn nhận lời khen kỳ cục rất bình tĩnh. Cục Yên nể thật.","Bạn hợp làm nhân vật trong phim về cái cây. Vai chính: người ngồi dưới bóng mát.","Cái chuông khen bạn bấm nút đúng chỗ. Chuông hơi thiếu kiểm soát.","Ly cacao muốn tâm sự với bạn. Nó bảo bạn biết lắng nghe.","Hôm nay bạn có nụ cười tiềm năng. Nếu chưa cười, cứ để sau."],"luoi":["Giấy phép nghỉ có hiệu lực ngay. Cục Yên duyệt, đừng hỏi phòng nhân sự.","Được nằm nghỉ mà không cần giải trình với cái gối.","Hôm nay cho phép nạp pin bằng cách... không làm gì trong 5 phút.","Chữ ký Cục Yên: một vết mực tròn, nghi là dính cà phê.","Không cần tối ưu mọi phút. Có phút sinh ra chỉ để ngồi chơi.","Được quyền từ chối việc không cần thiết. Cái ghế ủng hộ.","Giấy chứng nhận: được nằm ngang 10 phút, không cần lý do.","Cái bàn đứng yên cả ngày vẫn được khen chắc chắn. Bạn nghỉ chút đi.","Nút “tạm dừng” đã được cấp phép. Cục Yên vừa bấm thử.","Không cần con dấu. Con dấu xin nghỉ trưa rồi.","Cho phép nhìn trần nhà năm phút. Nhìn ra ý tưởng thì lời quá.","Việc còn dài, nhưng ghế đang đợi. Ghế không thích bị cho leo cây.","Không cần biến sở thích thành dự án. Đi chơi thôi cũng được.","Ngồi nghe quạt quay 5 phút được tính là hoạt động rất nghiêm túc.","Được ăn bánh mà không cần đặt mục tiêu “ăn bánh xuất sắc”.","Lời khuyên không ai hỏi? Bạn được quyền không nhận.","Đồng hồ còn thức không có nghĩa bạn phải làm thêm.","Cục Yên đặt lịch hẹn bạn với chiếc ghế. Phí tư vấn: 0đ.","Không muốn làm gì? Nghỉ 5 phút đã, phần việc còn lại xếp hàng.","Cục Yên họp với cái lá giúp bạn. Lá biểu quyết nghỉ.","Chiều nay được chơi thứ vô ích. Ví dụ nhìn con kiến đi làm.","Được quyền ngắm trời xa xăm. Không cần nộp báo cáo lên mây.","Hôm nay cứ chậm như mật ong. Mật ong có bao giờ đua xe đâu.","Chế độ nghỉ đã bật. Không có bảng xếp hạng ai nghỉ giỏi nhất.","Não đang mệt, đừng bắt nó chạy marathon trong dép lê.","Ngáp một cái giữa cuộc họp? Cục Yên chấm đó là phần phát biểu thật lòng.","Cho phép gập máy tính và nhìn ra cửa sổ. Không cần xin phép cái bàn.","Ngày mai còn đó. Còn bây giờ, bạn được phép thở.","Giấy phép vẫn có hiệu lực khi trời mưa. Không chống nước, nhưng chống deadline.","Cục Yên đóng dấu “ĐỂ MAI” bằng khoai tây. Con dấu hơi thơm."]};
       const products={
         tho:{name:'Một cái thở phào'},
