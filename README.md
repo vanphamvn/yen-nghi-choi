@@ -20,7 +20,7 @@ Sau đó mở http://localhost:8000/ . Tránh mở bằng `file://` vì một s�
 2. Chọn **Framework Preset: Other** và **Root Directory: /**.
 3. Giữ `vercel.json` và `robots.txt` như cấu hình hiện tại.
 
-> **Lưu ý quan trọng:** Dự án `yen-nghi-choi` đang có trên Vercel nhưng chưa liên kết GitHub. Nếu muốn GitHub push tự deploy lên URL cũ, cần kết nối Git repository với **dự án hiện tại**, không tạo một Vercel project mới.
+Dự án Vercel hiện tại đã liên kết với GitHub. Push lên nhánh `main` sẽ kích hoạt deploy tự động trên cùng domain, không cần tạo dự án mới.
 
 ## Font tiếng Việt
 
@@ -32,7 +32,8 @@ Bản GitHub-ready sử dụng Google Fonts Noto Sans, Noto Serif và Noto Sans 
 
 ## Mã nguồn
 
-- `index.html`: giao diện, hoạt cảnh, trò chơi, lời thoại, JS và CSS.
+- `index.html`: bố cục, hoạt cảnh và nội dung chính.
+- `yen-wheel.js` và `yen-wheel.css`: Vòng quay Yên với 8 phần thưởng *mô phỏng*, chưa có giá trị đổi ưu đãi tại quán. Không lưu lượt quay hay dữ liệu người chơi.
 - `yen-logo.svg`: logo chính thức.
 - `vercel.json`, `robots.txt`: cấu hình deploy và SEO.
 - Font được tải qua Google Fonts; không lưu trữ file font trong repository.
