@@ -841,6 +841,108 @@
 .footer-scene{padding-top:18px}
 .footer-credit{margin-top:0}
 @media(max-width:760px){.irl-cup-interaction{margin-top:17px}.irl-cup-interaction .footer-play{flex-direction:row;gap:10px}.irl-cup-interaction .footer-cup{max-width:88px;flex-basis:88px}.irl-cup-interaction .footer-cup svg{width:80px}.irl-cup-interaction .footer-cup-says{min-height:54px;font-size:10.5px;max-width:none}.irl-ps{font-size:9px}}
+
+/* PERMIT OFFICE v1: the tabletop is a physical experience, not a form/card quiz. */
+.permit-section{padding:clamp(66px,8vw,108px) 0 105px}
+.permit-section [hidden]{display:none!important}
+.permit-heading{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;margin-bottom:26px}
+.permit-eyebrow{color:#51735a;font-size:12px;letter-spacing:.12em;font-weight:900;margin-bottom:18px;display:flex;align-items:center;gap:8px}
+.permit-number{background:#365942;border-radius:6px;color:#fff9e8;padding:4px 7px;font-size:11px;transform:rotate(-5deg)}
+.permit-heading h2{font-family:"Yen Serif","Noto Serif",Georgia,serif;font-size:clamp(39px,5.2vw,73px);font-weight:600;line-height:1.13;letter-spacing:-.045em;margin:0}
+.permit-heading h2 em{color:#527b61;font-weight:500}
+.permit-heading-aside{font-size:14px;line-height:1.7;color:#5c7464;max-width:290px;margin:0 0 4px}
+.permit-stage{position:relative;isolation:isolate;overflow:hidden;background:linear-gradient(130deg,#e3d3ac 0%,#e7d7b5 38%,#d8c49e 100%);border:2px solid #6f7655;border-radius:27px;padding:clamp(16px,3.5vw,33px);box-shadow:9px 12px 0 #becdb6,inset 0 0 0 5px rgba(255,249,226,.38)}
+.permit-desk-grain{position:absolute;inset:0;z-index:-1;pointer-events:none;opacity:.35;background:repeating-linear-gradient(171deg,transparent 0 18px,#bda47a 19px 20px,transparent 21px 46px),repeating-linear-gradient(12deg,transparent 0 63px,#fff2c9 65px 66px,transparent 67px 118px)}
+.permit-desk-ribbon{display:flex;justify-content:space-between;gap:10px;align-items:center;font:900 10px/1.4 "Noto Sans",Arial,sans-serif;letter-spacing:.12em;color:#735b44;margin:0 0 17px}
+.permit-stage-main{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(240px,.55fr);gap:clamp(14px,3vw,28px);align-items:start}
+.permit-sheet{position:relative;min-width:0;min-height:465px;background:#fffaf0;color:#304c3b;border:1.7px solid #536b51;border-radius:5px 16px 8px 8px;box-shadow:5px 6px 0 #c4b38f,9px 12px 25px #544c3c1b;padding:clamp(22px,3vw,36px);transform:rotate(-.55deg);transition:transform .42s ease}
+.permit-stage.is-filing .permit-sheet{transform:rotate(0deg)}
+.permit-paper-clip{position:absolute;top:-19px;left:40px;width:36px;height:61px;border:5px solid #70817a;border-bottom:0;border-radius:20px 20px 0 0;transform:rotate(10deg);z-index:1;box-shadow:1px 1px 0 #fff6e7}
+.permit-paper-clip:after{content:"";position:absolute;top:8px;left:8px;width:12px;height:35px;border:3px solid #70817a;border-bottom:0;border-radius:13px 13px 0 0}
+.permit-paperhead{display:flex;justify-content:space-between;gap:10px;align-items:start}
+.permit-agency{font:900 19px/1.06 "Noto Sans",Arial,sans-serif;letter-spacing:-.03em}
+.permit-agency small{display:block;font:850 9px/1.5 "Noto Sans",Arial,sans-serif;letter-spacing:.08em;color:#738472;margin-top:5px}
+.permit-reg{border:1.5px solid #739078;border-radius:6px;padding:6px 9px;color:#6d8a6d;text-align:center;transform:rotate(7deg);font:900 10px/1.25 "Noto Sans",Arial,sans-serif;white-space:nowrap}
+.permit-paper-rule{height:2px;background:repeating-linear-gradient(90deg,#79957c 0 12px,transparent 12px 17px);margin:15px 0 26px}
+.permit-sheet-kicker{font:900 10px/1.4 "Noto Sans",Arial,sans-serif;letter-spacing:.085em;color:#718875}
+.permit-sheet h3{font:650 clamp(29px,3.3vw,45px)/1.15 "Yen Serif","Noto Serif",Georgia,serif;letter-spacing:-.035em;margin:12px 0 11px;color:#2e4b3b}
+.permit-intro>p:not(.permit-small-note){font-size:14px;line-height:1.66;max-width:420px;color:#657867}
+.permit-illustration{max-width:400px;margin:14px auto 11px}
+.permit-illustration svg{display:block;width:100%;height:auto}
+.permit-action{border:2px solid #284935;background:#2f5842;color:#fff9e9;text-decoration:none;display:inline-flex;align-items:center;justify-content:space-between;gap:20px;min-height:53px;padding:13px 18px;border-radius:7px;box-shadow:4px 5px 0 #acc2a5;cursor:pointer;font:900 12px/1.25 "Noto Sans",Arial,sans-serif;letter-spacing:.035em;transition:transform .18s,box-shadow .18s,background .18s}
+.permit-action:hover,.permit-action:focus-visible{transform:translateY(-2px);box-shadow:4px 8px 0 #acc2a5;background:#3a684c}
+.permit-action:focus-visible,.permit-options button:focus-visible,.permit-stamp:focus-visible,.permit-restart:focus-visible{outline:3px solid #aa694c;outline-offset:3px}
+.permit-small-note{font:700 11px/1.5 "Noto Sans",Arial,sans-serif;color:#899184;margin:13px 0 0}
+.permit-form-intro{color:#758373;font-size:12px;margin:0 0 20px}
+.permit-field{padding:0;margin:0 0 22px;border:0;min-width:0}
+.permit-field legend{display:block;width:100%;margin-bottom:10px;padding:0;color:#3c6148;font:900 13px/1.45 "Noto Sans",Arial,sans-serif}
+.permit-field-index{display:inline-grid;place-items:center;background:#e8edde;border:1px solid #8ea78b;border-radius:5px;width:28px;height:26px;margin-right:7px;color:#4e6e56;font-size:11px;transform:rotate(-4deg)}
+.permit-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.permit-options button{position:relative;min-width:0;min-height:46px;padding:10px 11px;border:1.5px dashed #8fa990;border-radius:7px;background:#f9f9ef;color:#4b6752;font:850 12px/1.35 "Noto Sans",Arial,sans-serif;text-align:left;cursor:pointer;transition:background .16s,transform .16s,box-shadow .16s,border-color .16s}
+.permit-options button:hover{background:#eaf0e2;transform:translateY(-2px)}
+.permit-options button[aria-pressed=true]{border:2px solid #547855;background:#e4eddc;color:#2e5a3c;padding:9.5px 10.5px;box-shadow:2px 3px 0 #bdccb5;transform:rotate(-.5deg)}
+.permit-options button[aria-pressed=true]:after{content:"✓";position:absolute;right:8px;top:6px;color:#457454;font-weight:900}
+.permit-field.is-missing{background:#fff0e7;border-radius:8px;outline:2px dashed #be8163;outline-offset:4px}
+.permit-form-bottom{display:flex;justify-content:space-between;gap:8px;padding-top:14px;border-top:2px dashed #aebca6;font:900 10px/1.5 "Noto Sans",Arial,sans-serif;letter-spacing:.045em;color:#6b8671}
+.permit-clerk{position:relative;background:#e6ebd8;border:2px solid #5b765c;border-radius:18px;padding:16px 14px 13px;min-height:440px;box-shadow:4px 6px 0 #a7b89d;transform:rotate(1deg);display:flex;flex-direction:column}
+.permit-clerk-title{display:flex;align-items:center;justify-content:space-between;gap:5px;font:900 11px "Noto Sans",Arial,sans-serif;letter-spacing:.08em;color:#476a50}
+.permit-clerk-light{width:12px;height:12px;background:#8fb78e;border-radius:50%;box-shadow:0 0 0 4px #c7dabd}
+.permit-counter-body{position:relative;min-height:260px;display:flex;align-items:center;justify-content:center;flex:1}
+.permit-stamp{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;border:0;background:none;color:#35503f;cursor:pointer;min-width:170px;min-height:240px;padding:0;transform-origin:center 78%;transition:transform .18s}
+.permit-stamp:disabled{cursor:default}
+.permit-stamp-handle{display:block;width:55px;height:50px;border-radius:50% 50% 35% 35%;background:linear-gradient(90deg,#987150,#e3bd89,#ad784f);border:3px solid #5e4a3a;box-shadow:inset -7px 0 0 #9f71525a}
+.permit-stamp-neck{width:28px;height:41px;border:3px solid #604934;border-top:0;border-bottom:0;background:#c29268}
+.permit-stamp-wood{width:138px;height:92px;display:grid;place-content:center;background:linear-gradient(125deg,#e4bb85,#bc8a5c);border:4px solid #67503b;border-radius:15px 15px 9px 9px;text-align:center;color:#664b34;font:1000 21px/1.02 "Noto Sans",Arial,sans-serif;letter-spacing:.12em;text-shadow:0 1px #f3d6b0;box-shadow:inset 0 7px 0 #f6deb27d,0 7px 0 #936f4b}
+.permit-stamp-bottom{height:14px;width:150px;border:3px solid #683e37;border-radius:2px 2px 8px 8px;background:#8b544c;margin-top:6px;box-shadow:0 5px 0 #d9bd8e}
+.permit-stamp-caption{margin-top:21px;display:block;text-align:center;color:#6a7865;font:900 10px/1.4 "Noto Sans",Arial,sans-serif;letter-spacing:.045em}
+.permit-stage.is-filing .permit-stamp:not(:disabled) .permit-stamp-caption{color:#32613d;background:#e0edd6;border-radius:8px;padding:6px 9px}
+.permit-stamp:not(:disabled):hover{transform:translateY(-7px) rotate(-4deg)}
+.permit-stamp:not(:disabled):focus-visible{transform:translateY(-3px)}
+.permit-stamp-stand{position:absolute;bottom:26px;width:200px;height:28px;border-radius:50%;background:#bdc8ab;filter:blur(5px)}
+.permit-inkpad{align-self:center;display:grid;place-items:center;min-width:116px;min-height:31px;border:3px solid #5e6e50;border-radius:6px;background:#ba7868;transform:rotate(-7deg);box-shadow:3px 4px 0 #789276;color:#fff1e5;font:900 10px/1 "Noto Sans",Arial,sans-serif;letter-spacing:.055em}
+.permit-message{min-height:51px;display:grid;place-items:center;text-align:center;margin:15px 0 9px;padding:10px;background:#fff9e9;border:1px dashed #a4b49d;border-radius:10px;color:#607560;font:750 12px/1.5 "Noto Sans",Arial,sans-serif}
+.permit-clerk-foot{margin-top:auto;display:flex;justify-content:space-between;align-items:center;gap:4px;font:900 8px/1.4 "Noto Sans",Arial,sans-serif;color:#789176;letter-spacing:.04em}
+.permit-clerk-foot span{font-size:20px;color:#ab8460}
+.permit-bottom-strip{display:flex;flex-wrap:wrap;justify-content:space-between;gap:7px;margin-top:24px;padding-top:13px;border-top:1.5px dashed #9c9478;font:900 9px/1.5 "Noto Sans",Arial,sans-serif;letter-spacing:.07em;color:#735d44}
+.permit-bottom-strip span>span{color:#3e805b}
+.permit-desk-pencil{position:absolute;top:25px;right:200px;width:12px;height:95px;border:2px solid #8d6953;border-radius:6px;background:linear-gradient(90deg,#d9bd88 0 45%,#e9cf9b 46% 75%,#ba8463 76%);transform:rotate(24deg);opacity:.8;z-index:-1}
+.permit-desk-coaster{position:absolute;bottom:10px;left:-31px;width:110px;height:110px;background:#faf6da;border:7px solid #91a78b;border-radius:50%;transform:rotate(-14deg);box-shadow:3px 6px 0 #9e9272;opacity:.85;z-index:-1;text-align:center}
+.permit-coaster-face{font:900 25px/1.1 "Noto Sans",Arial,sans-serif;color:#52775c;margin-top:9px}
+.permit-coaster-mouth{display:block;font-size:17px;margin-top:-4px}
+.permit-coaster-caption{font:900 9px/1.3 "Noto Sans",Arial,sans-serif;color:#52775c}
+.permit-stage.is-stamping .permit-stamp{animation:permit-stamp-down .78s cubic-bezier(.2,.8,.27,1) both;pointer-events:none}
+.permit-stage.is-stamping .permit-sheet{animation:permit-paper-shake .6s ease-in-out .27s}
+.permit-stage.is-stamping .permit-inkpad{animation:permit-ink-shake .6s ease-in-out .3s}
+@keyframes permit-stamp-down{0%{transform:translateY(0)}20%{transform:translateY(-40px) rotate(-5deg)}51%{transform:translateY(49px) scale(.95,1.03)}63%{transform:translateY(53px) scale(1.03,.96)}82%{transform:translateY(-9px)}100%{transform:translateY(0)}}
+@keyframes permit-paper-shake{0%,100%{transform:rotate(0)}32%{transform:translateX(-4px) rotate(-1deg)}56%{transform:translateX(3px) rotate(1deg)}}
+@keyframes permit-ink-shake{0%,100%{transform:rotate(-7deg)}50%{transform:rotate(2deg)}}
+.permit-approved-header{display:flex;justify-content:space-between;gap:10px;align-items:center}
+.permit-receipt h3{font-size:clamp(27px,3vw,42px);margin:13px 0 18px}
+.permit-ink-seal{flex:0 0 121px;width:121px;height:121px;display:flex;flex-direction:column;align-items:center;justify-content:center;transform:rotate(-11deg);border:5px double #9e594e;border-radius:50%;color:#a65d51;background:#f7e2d47d;text-align:center;font:900 9px/1.3 "Noto Sans",Arial,sans-serif;letter-spacing:.06em}
+.permit-ink-seal strong{font:1000 17px/1.12 "Noto Sans",Arial,sans-serif;margin:5px 0}
+.permit-ink-seal small{font-size:8px}
+.permit-stage.is-issued .permit-ink-seal{animation:permit-stamp-mark .48s ease-out both}
+@keyframes permit-stamp-mark{from{opacity:.1;transform:rotate(-25deg) scale(1.6)}to{opacity:1;transform:rotate(-11deg) scale(1)}}
+.permit-receipt-lines{margin:21px 0 17px;border-top:2px solid #718b71}
+.permit-receipt-lines>div{display:grid;grid-template-columns:120px minmax(0,1fr);gap:8px;padding:12px 0;border-bottom:1px dashed #a1b59c;align-items:start}
+.permit-receipt-lines span{font:900 10px/1.4 "Noto Sans",Arial,sans-serif;color:#80917e;letter-spacing:.055em}
+.permit-receipt-lines strong{font:900 13px/1.45 "Noto Sans",Arial,sans-serif}
+.permit-verdict{padding:16px;border:1px dashed #a6b69a;background:#edf1e3;border-radius:9px;margin-bottom:16px}
+.permit-verdict span,.permit-drink-suggestion span{display:block;font:900 10px/1.4 "Noto Sans",Arial,sans-serif;letter-spacing:.075em;color:#607962}
+.permit-verdict p{font:700 17px/1.55 "Yen Serif","Noto Serif",Georgia,serif;margin:7px 0 0;color:#365b42}
+.permit-drink-suggestion{background:#f8e9d6;border:1px solid #c4a78b;border-radius:9px;padding:16px;margin-bottom:13px}
+.permit-drink-suggestion strong{display:block;font:900 18px/1.4 "Noto Sans",Arial,sans-serif;margin:6px 0;color:#3c5742}
+.permit-drink-suggestion p{font:700 12px/1.55 "Noto Sans",Arial,sans-serif;color:#776d5a;margin:0}
+.permit-legal{font:700 10px/1.55 "Noto Sans",Arial,sans-serif;color:#8b907f;margin:13px 0}
+.permit-result-actions{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-top:17px}
+.permit-restart{background:none;border:0;color:#456c50;font:850 12px/1.5 "Noto Sans",Arial,sans-serif;text-decoration:underline;text-underline-offset:4px;padding:12px 5px;cursor:pointer}
+.permit-screenshot-hint{margin-top:16px;color:#839080;font:700 11px/1.5 "Noto Sans",Arial,sans-serif}
+@media(max-width:840px){.permit-stage-main{grid-template-columns:minmax(0,1fr) 220px;gap:12px}.permit-clerk{padding:12px;min-height:400px}.permit-sheet{padding:21px}.permit-heading-aside{max-width:245px;font-size:12px}.permit-stamp{min-width:158px}}
+@media(max-width:700px){.permit-section{padding:68px 0 76px}.permit-heading{align-items:start;display:block;margin-bottom:20px}.permit-heading h2{font-size:clamp(35px,8.6vw,52px)}.permit-heading-aside{margin-top:14px;max-width:450px;font-size:13px}.permit-stage{border-radius:17px;padding:16px 12px 13px;box-shadow:5px 7px 0 #becdb6}.permit-desk-ribbon{font-size:8px;letter-spacing:.04em;margin-bottom:15px}.permit-stage-main{grid-template-columns:1fr;gap:19px}.permit-sheet{min-height:0;padding:20px 16px;transform:none;box-shadow:3px 4px 0 #c4b38f}.permit-clerk{min-height:0;transform:none;padding:12px;display:grid;grid-template-columns:110px minmax(0,1fr);gap:8px 12px;align-items:center}.permit-clerk-title{grid-column:1 / -1}.permit-counter-body{grid-row:2 / span 2;min-height:147px}.permit-stamp{min-height:144px;min-width:95px;transform:scale(.68);transform-origin:center center;margin:-21px -24px}.permit-stamp-handle{width:44px;height:39px}.permit-stamp-neck{height:24px}.permit-stamp-wood{width:120px;height:67px;font-size:17px}.permit-stamp-bottom{width:128px}.permit-stamp-caption{font-size:11px;margin-top:12px}.permit-inkpad{grid-column:2;grid-row:3;min-width:90px;padding:3px}.permit-message{grid-column:2;grid-row:2;min-height:69px;font-size:12px;margin:0}.permit-clerk-foot{grid-column:1 / -1;font-size:8px;padding-top:7px;border-top:1px dashed #aeb9a3}.permit-options button{min-height:45px;font-size:12px}.permit-form-bottom{font-size:8px}.permit-bottom-strip{margin-top:17px;font-size:8px}.permit-desk-coaster,.permit-desk-pencil{display:none}.permit-receipt-lines>div{grid-template-columns:93px minmax(0,1fr)}.permit-approved-header{align-items:start}.permit-ink-seal{flex-basis:88px;width:88px;height:88px;border-width:3px;font-size:7px}.permit-ink-seal strong{font-size:12px}.permit-result-actions{gap:7px;align-items:stretch;flex-direction:column}.permit-map{width:100%}.permit-restart{align-self:center}}
+@media(max-width:350px){.permit-sheet{padding:18px 12px}.permit-options{gap:6px}.permit-options button{font-size:11px;padding:9px 7px}.permit-paperhead .permit-agency{font-size:16px}.permit-paperhead .permit-agency small{font-size:8px}.permit-reg{font-size:8px}.permit-agency{font-size:16px}.permit-receipt h3{font-size:27px}}
+@media(prefers-reduced-motion:reduce){.permit-sheet,.permit-action,.permit-stamp,.permit-options button{transition:none!important}.permit-stage.is-stamping .permit-stamp,.permit-stage.is-stamping .permit-sheet,.permit-stage.is-stamping .permit-inkpad,.permit-stage.is-issued .permit-ink-seal{animation:none!important}}
+@media print{body *{visibility:hidden!important}.permit-stage,.permit-stage *{visibility:visible!important}.permit-stage{position:absolute;inset:0;border:0;background:white;box-shadow:none;padding:0}.permit-sheet{border:1px solid #555;box-shadow:none;margin:auto;max-width:650px}.permit-clerk,.permit-bottom-strip,.permit-desk-ribbon,.permit-restart,.permit-map,.permit-screenshot-hint{display:none!important}}
+
 </style>
   <style id="yen-wheel-inline-style">
 /* Vòng quay Yên: one focused promotional wheel, no game frameworks or tracking. */
@@ -1008,17 +1110,125 @@
       </div>
     </section>
     <div class="ticker" aria-hidden="true"><div class="ticker-track"><div class="ticker-group"><span>Đá viên tập bơi ngửa. Nước bảo: “Ủa, mày đang tan đó!”</span><b class="ticker-flower"><svg class="yen-icon" aria-hidden="true" focusable="false"><use href="#yen-bloom"></use></svg></b><span>Trân châu trốn muỗng. Núp dưới đáy ly mà tưởng không ai thấy.</span><b class="ticker-flower"><svg class="yen-icon" aria-hidden="true" focusable="false"><use href="#yen-bloom"></use></svg></b><span>Ống hút đòi làm sáo. Ly nước nghe xong xin bịt tai.</span><b class="ticker-flower"><svg class="yen-icon" aria-hidden="true" focusable="false"><use href="#yen-bloom"></use></svg></b><span>Miếng chanh cố làm mặt ngầu. Chua quá nên nhăn hết cả mặt.</span><b class="ticker-flower"><svg class="yen-icon" aria-hidden="true" focusable="false"><use href="#yen-bloom"></use></svg></b><span>Cái ly rủ Cục Yên đi làm. Cục Yên giả vờ không nghe.</span><b class="ticker-flower"><svg class="yen-icon" aria-hidden="true" focusable="false"><use href="#yen-bloom"></use></svg></b><span>Ai thả đám mây vào ly? Nó còn đang xin thêm đá.</span><b class="ticker-flower"><svg class="yen-icon" aria-hidden="true" focusable="false"><use href="#yen-bloom"></use></svg></b></div><div class="ticker-group"><span>Đá viên tập bơi ngửa. Nước bảo: “Ủa, mày đang tan đó!”</span><b class="ticker-flower"><svg class="yen-icon" aria-hidden="true" focusable="false"><use href="#yen-bloom"></use></svg></b><span>Trân châu trốn muỗng. Núp dưới đáy ly mà tưởng không ai thấy.</span><b class="ticker-flower"><svg class="yen-icon" aria-hidden="true" focusable="false"><use href="#yen-bloom"></use></svg></b><span>Ống hút đòi làm sáo. Ly nước nghe xong xin bịt tai.</span><b class="ticker-flower"><svg class="yen-icon" aria-hidden="true" focusable="false"><use href="#yen-bloom"></use></svg></b><span>Miếng chanh cố làm mặt ngầu. Chua quá nên nhăn hết cả mặt.</span><b class="ticker-flower"><svg class="yen-icon" aria-hidden="true" focusable="false"><use href="#yen-bloom"></use></svg></b><span>Cái ly rủ Cục Yên đi làm. Cục Yên giả vờ không nghe.</span><b class="ticker-flower"><svg class="yen-icon" aria-hidden="true" focusable="false"><use href="#yen-bloom"></use></svg></b><span>Ai thả đám mây vào ly? Nó còn đang xin thêm đá.</span><b class="ticker-flower"><svg class="yen-icon" aria-hidden="true" focusable="false"><use href="#yen-bloom"></use></svg></b></div></div></div>
-    <section class="section mood-section wrap" id="tam-trang" aria-labelledby="mood-title">
-      <div class="section-header reveal"><div><div class="eyebrow">01 / Bói tâm trạng (không có bằng)</div><h2 class="section-title" id="mood-title">Hôm nay bạn<br>giống <i>thứ gì?</i></h2></div><p class="section-aside">Có 52 thẻ hơi ngốc. Mỗi ngày bày ra 7 thẻ. Chọn một thẻ, Cục Yên sẽ đoán mò tâm trạng của bạn.</p></div>
-      <div class="mood-deck-header"><button class="deck-random" id="deck-random" type="button" title="Để Cục Yên chọn giúp một thẻ"><svg class="yen-icon" aria-hidden="true" focusable="false"><use href="#yen-bloom"></use></svg> Bốc bừa một thẻ!</button></div>
-      <div class="mood-grid" id="mood-rail" aria-label="Bộ thẻ tâm trạng Cục Yên" tabindex="0">
+    <section class="section permit-section wrap" id="tam-trang" aria-labelledby="permit-section-title">
+      <div class="permit-heading reveal">
+        <div>
+          <div class="permit-eyebrow"><span class="permit-number">01</span> / SỞ CẤP PHÉP NGHỈ</div>
+          <h2 id="permit-section-title">Muốn nghỉ chút không?<br><em>Làm đơn đi.</em></h2>
+        </div>
+        <p class="permit-heading-aside">Cục Yên nhận đơn xin nghỉ, không hỏi lương, không cần chữ ký sếp. Làm thủ tục một tí rồi đi uống nước.</p>
       </div>
-      <div class="mood-deck-controls" aria-label="Điều khiển bộ thẻ">
-        <div class="deck-status"><span class="deck-counter" id="deck-counter">01–03 / 07</span><span class="deck-progress"><span id="deck-progress" style="width:43%"></span></span></div>
-        <div class="deck-nav"><button id="deck-prev" aria-label="Xem thẻ trước" type="button" disabled><svg class="yen-icon" aria-hidden="true" focusable="false"><use href="#yen-arrow"></use></svg></button><button id="deck-next" aria-label="Xem thẻ tiếp theo" type="button"><svg class="yen-icon" aria-hidden="true" focusable="false"><use href="#yen-arrow"></use></svg></button></div>
+      <div class="permit-stage" id="yen-permit">
+        <div class="permit-desk-grain" aria-hidden="true"></div>
+        <div class="permit-desk-ribbon" aria-hidden="true"><span>HỒ SƠ ĐƯỢC PHÉP LƯỜI</span><span>YÊN · COFFEE & TEA</span></div>
+        <div class="permit-desk-pencil" aria-hidden="true"></div>
+        <div class="permit-desk-coaster" aria-hidden="true"><div class="permit-coaster-face"><span class="permit-coaster-eyes">• &nbsp; •</span><span class="permit-coaster-mouth">ᴗ</span></div><span class="permit-coaster-caption">Cục Yên<br>đang trực</span></div>
+        <div class="permit-stage-main">
+          <div class="permit-sheet" id="permit-sheet">
+            <span class="permit-paper-clip" aria-hidden="true"></span>
+            <div class="permit-paperhead">
+              <span class="permit-agency">CỤC YÊN <small>PHÒNG NGHỈ NGƠI TỰ NGUYỆN</small></span>
+              <span class="permit-reg" aria-hidden="true">MẪU<br>YN–01</span>
+            </div>
+            <div class="permit-paper-rule" aria-hidden="true"></div>
+            <div class="permit-intro" id="permit-intro">
+              <div class="permit-sheet-kicker">HỒ SƠ TRỐNG · ĐANG CHỜ TIẾP NHẬN</div>
+              <h3>ĐƠN XIN<br>NGHỈ MỘT CHÚT</h3>
+              <p>Cục Yên đã để sẵn tờ đơn. Bạn chỉ cần chọn ba điều, còn thủ tục khó để Cục Yên lo.</p>
+              <div class="permit-illustration" aria-hidden="true">
+                <svg viewBox="0 0 360 150" role="presentation" focusable="false">
+                  <ellipse cx="182" cy="139" rx="140" ry="10" fill="#cad7bb"/>
+                  <path d="M44 118h270" stroke="#779985" stroke-width="3" stroke-linecap="round"/>
+                  <path d="M58 106c-9-19-8-34-13-49m12 36c-19-5-20-18-14-19m13 3c17-10 26-2 22 9" stroke="#749b78" stroke-width="4" fill="none" stroke-linecap="round"/>
+                  <rect x="198" y="57" width="88" height="70" rx="10" fill="#dfae81" stroke="#315340" stroke-width="4"/>
+                  <path d="M210 61h66v29h-66z" fill="#fcf5e2"/>
+                  <path d="M222 75h44" stroke="#87ab91" stroke-width="3"/>
+                  <path d="M222 84h30" stroke="#87ab91" stroke-width="3"/>
+                  <path d="M214 108q27-14 56 0" fill="none" stroke="#315340" stroke-width="3"/>
+                  <path d="M111 91q-22-52 20-71 32-11 55 11 19 22 10 56-11 29-44 30-34 2-41-26Z" fill="#d5e4b0" stroke="#315340" stroke-width="5"/>
+                  <path d="M113 86q-22-9-26 13m110-13q18-4 26 7" stroke="#315340" stroke-width="5" fill="none" stroke-linecap="round"/>
+                  <path d="M131 111l-3 18m42-18 6 18" stroke="#315340" stroke-width="5" stroke-linecap="round"/>
+                  <ellipse cx="134" cy="72" rx="5" ry="7" fill="#315340"/><ellipse cx="172" cy="72" rx="5" ry="7" fill="#315340"/>
+                  <circle cx="117" cy="85" r="9" fill="#e9ac9b"/><circle cx="188" cy="85" r="9" fill="#e9ac9b"/>
+                  <path d="M146 90q8 8 16 0" stroke="#315340" stroke-width="3" fill="none" stroke-linecap="round"/>
+                  <path d="m246 29 4 9 9 4-9 4-4 9-4-9-9-4 9-4Z" fill="#e9b878"/>
+                </svg>
+              </div>
+              <button class="permit-action permit-start" type="button" id="permit-start"><span>NỘP ĐƠN XIN NGHỈ</span><span aria-hidden="true">↗</span></button>
+              <p class="permit-small-note">Không điền tên. Không lưu gì. Cục Yên cũng hay quên.</p>
+            </div>
+            <div class="permit-form" id="permit-form" hidden>
+              <div class="permit-sheet-kicker">ĐƠN SỐ KHÔNG · BA MỤC CẦN KHAI</div>
+              <h3>PHIẾU ĐỀ NGHỊ<br>ĐƯỢC NGỒI YÊN</h3>
+              <p class="permit-form-intro">Chọn đại cho thật lòng. Không có đáp án đúng.</p>
+              <fieldset class="permit-field" data-field="reason">
+                <legend><span class="permit-field-index">01</span> Lý do xin nghỉ hôm nay?</legend>
+                <div class="permit-options">
+                  <button type="button" data-permit-field="reason" data-permit-value="noise" aria-pressed="false">Đầu hơi ồn</button>
+                  <button type="button" data-permit-field="reason" data-permit-value="deadline" aria-pressed="false">Trốn deadline chút</button>
+                  <button type="button" data-permit-field="reason" data-permit-value="busy" aria-pressed="false">Rảnh mà cứ bận</button>
+                  <button type="button" data-permit-field="reason" data-permit-value="why" aria-pressed="false">Không lý do</button>
+                </div>
+              </fieldset>
+              <fieldset class="permit-field" data-field="style">
+                <legend><span class="permit-field-index">02</span> Nghỉ theo kiểu nào?</legend>
+                <div class="permit-options">
+                  <button type="button" data-permit-field="style" data-permit-value="coffee" aria-pressed="false">Cà phê cho tỉnh</button>
+                  <button type="button" data-permit-field="style" data-permit-value="tea" aria-pressed="false">Trà cho dịu</button>
+                  <button type="button" data-permit-field="style" data-permit-value="sweet" aria-pressed="false">Một chút ngọt</button>
+                  <button type="button" data-permit-field="style" data-permit-value="fruit" aria-pressed="false">Trái cây mát</button>
+                </div>
+              </fieldset>
+              <fieldset class="permit-field" data-field="duration">
+                <legend><span class="permit-field-index">03</span> Xin nghỉ trong bao lâu?</legend>
+                <div class="permit-options">
+                  <button type="button" data-permit-field="duration" data-permit-value="ten" aria-pressed="false">10 phút</button>
+                  <button type="button" data-permit-field="duration" data-permit-value="cup" aria-pressed="false">Một ly nước</button>
+                  <button type="button" data-permit-field="duration" data-permit-value="song" aria-pressed="false">Một bài nhạc</button>
+                  <button type="button" data-permit-field="duration" data-permit-value="better" aria-pressed="false">Tới khi thấy ổn</button>
+                </div>
+              </fieldset>
+              <div class="permit-form-bottom"><span id="permit-progress" aria-live="polite">ĐÃ KHAI 0/3 MỤC</span><span>CHỮ KÝ: CỤC YÊN LO</span></div>
+            </div>
+            <div class="permit-receipt" id="permit-receipt" hidden>
+              <div class="permit-sheet-kicker">ĐÃ ĐƯỢC DUYỆT · BẢN CHỈ ĐỂ VUI</div>
+              <div class="permit-approved-header"><h3>GIẤY PHÉP<br>NGHỈ TẠM THỜI</h3><div class="permit-ink-seal" aria-label="Đã duyệt nghỉ">CỤC YÊN<br><strong>ĐÃ DUYỆT<br>NGHỈ</strong><small>CHO VUI</small></div></div>
+              <div class="permit-receipt-lines">
+                <div><span>LÝ DO</span><strong id="permit-out-reason"></strong></div>
+                <div><span>HÌNH THỨC</span><strong id="permit-out-style"></strong></div>
+                <div><span>THỜI HẠN</span><strong id="permit-out-duration"></strong></div>
+              </div>
+              <div class="permit-verdict"><span>CỤC YÊN PHÊ DUYỆT</span><p id="permit-out-note"></p></div>
+              <div class="permit-drink-suggestion"><span>GỢI Ý 1 LY NGOÀI ĐỜI THẬT</span><strong id="permit-out-drink"></strong><p id="permit-out-why"></p></div>
+              <p class="permit-legal">Giấy phép này chỉ để chơi, không phải phiếu giảm giá hay quà tặng. Cục Yên không thay sếp duyệt nghỉ thật.</p>
+              <div class="permit-result-actions">
+                <a class="permit-action permit-map" href="https://maps.app.goo.gl/zxpyZev8F6YyzL3c6?g_st=ic" rel="noopener noreferrer" target="_blank">XEM ĐƯỜNG ĐẾN YÊN <span aria-hidden="true">↗</span></a>
+                <button type="button" class="permit-restart" id="permit-restart">Xin giấy phép khác ↺</button>
+              </div>
+              <p class="permit-screenshot-hint">Muốn giữ giấy này? Chụp màn hình là được. Cục Yên không lưu hộ đâu.</p>
+            </div>
+          </div>
+          <aside class="permit-clerk" aria-label="Quầy đóng dấu của Cục Yên">
+            <div class="permit-clerk-title"><span>QUẦY SỐ 01</span><span class="permit-clerk-light" aria-hidden="true"></span></div>
+            <div class="permit-counter-body">
+              <div class="permit-stamp-stand" aria-hidden="true"></div>
+              <button class="permit-stamp" id="permit-stamp" type="button" aria-describedby="permit-message" disabled>
+                <span class="permit-stamp-handle" aria-hidden="true"></span>
+                <span class="permit-stamp-neck" aria-hidden="true"></span>
+                <span class="permit-stamp-wood">CỤC<br>YÊN</span>
+                <span class="permit-stamp-bottom" aria-hidden="true"></span>
+                <span class="permit-stamp-caption">ẤN MỘC DUYỆT NGHỈ</span>
+              </button>
+              <div class="permit-inkpad" aria-hidden="true"><span>MỰC DUYỆT</span></div>
+            </div>
+            <div class="permit-message" id="permit-message" role="status" aria-live="polite">Cục Yên đang ngồi chờ đơn. Không có ai giục đâu.</div>
+            <div class="permit-clerk-foot">ĐƠN VỊ CHUYÊN TRÁCH: NGHỈ TẠM THỜI <span>✳</span></div>
+          </aside>
+        </div>
+        <div class="permit-bottom-strip"><span><span aria-hidden="true">●</span> KHÔNG CẦN ĐĂNG NHẬP</span><span>KHÔNG LƯU HỒ SƠ</span><span>KHÔNG CẦN THẬT SỰ MỆT</span></div>
       </div>
     </section>
-    
+
     <section class="section release-section wheel-section" id="buong" aria-labelledby="release-title">
   <div class="wrap release-layout">
     <div class="release-copy reveal">
@@ -1298,146 +1508,7 @@
       dareButton.addEventListener('click',runDare);
       // The cutscene is artwork, not an interaction shield: tapping the stage repeats the act.
       $('#hero-stage')?.addEventListener('click',e=>{if(e.target.closest('a,button'))return;if(sceneNode.classList.contains('is-playing'))runDare();});
-const ALL_MOODS = [{"title":"Nồi mì sôi đầu","sub":"Ý nghĩ đang sôi lục bục.","quote":"Não đang sôi như nồi mì.","goofy":"Đầu đang sôi như nồi mì. Tắt bếp 5 phút đi, không ai ăn mất ý nghĩ đâu.","mark":"BỐI RỐI","color":"#f5c6b8","art":"<svg aria-hidden=\"true\" fill=\"none\" viewbox=\"0 0 190 150\"><path d=\"M70 24c-4 9-3 17 4 25M98 19c-3 10-1 19 7 29M126 24c-4 8-3 16 4 24\" opacity=\".7\" stroke=\"#344c3d\" stroke-linecap=\"round\" stroke-width=\"5\"></path><path d=\"M48 73c8-11 23-16 46-16 24 0 41 5 50 16\" stroke=\"#344c3d\" stroke-linecap=\"round\" stroke-width=\"7\"></path><path d=\"M55 78c13-7 23 10 34 1 11-9 18 10 30 1 8-6 15 8 25 0\" stroke=\"#344c3d\" stroke-linecap=\"round\" stroke-width=\"6\"></path><path d=\"M40 86h110c-3 28-20 44-55 44S43 114 40 86Z\" fill=\"#fff8f2\" stroke=\"#344c3d\" stroke-width=\"7\"></path><path d=\"M57 98c14 8 57 8 76 0\" opacity=\".6\" stroke=\"#344c3d\" stroke-linecap=\"round\" stroke-width=\"5\"></path><circle cx=\"82\" cy=\"93\" fill=\"#344c3d\" r=\"4\"></circle><circle cx=\"109\" cy=\"93\" fill=\"#344c3d\" r=\"4\"></circle></svg>","shape":"original"},{"title":"Bánh mì hết pin","sub":"Chỉ muốn nằm im một tí.","quote":"Ổ bánh này hết pin, cần nằm một lát.","goofy":"Hôm nay bánh mì hết pin. Cho nằm một lát, đừng bắt nó giòn lên!","mark":"MỆT MỎI","color":"#e7dcfc","art":"<svg aria-hidden=\"true\" fill=\"none\" viewbox=\"0 0 190 150\"><path d=\"M29 93c-9-42 30-74 81-67 48 6 71 32 59 71-10 31-52 38-92 28-26-7-44-14-48-32Z\" fill=\"#fff4de\" stroke=\"#314538\" stroke-width=\"5\"></path><path d=\"M68 70v12m59-12v12M90 100c11 9 20 9 30 0\" stroke=\"#314538\" stroke-linecap=\"round\" stroke-width=\"5\"></path><ellipse cx=\"47\" cy=\"98\" fill=\"#f7a8a0\" rx=\"12\" ry=\"6\"></ellipse><ellipse cx=\"147\" cy=\"98\" fill=\"#f7a8a0\" rx=\"12\" ry=\"6\"></ellipse></svg>","shape":"original"},{"title":"Mây không deadline","sub":"Lơ lửng mà vẫn ổn.","quote":"Hôm nay chỉ muốn trôi như đám mây.","goofy":"Mây xin nghỉ deadline. Trời đồng ý, phòng nhân sự thì không liên lạc được.","mark":"THẢ TRÔI","color":"#dfebaa","art":"<svg aria-hidden=\"true\" fill=\"none\" viewbox=\"0 0 190 150\"><path d=\"M46 115c-24-9-25-39-8-50 5-22 25-28 42-18 20-34 60-24 65 11 32-3 40 44 8 57H46Z\" fill=\"#fffef3\" stroke=\"#314538\" stroke-width=\"5\"></path><path d=\"M79 81v10m46-10v10m-30 13q9 10 18 0\" stroke=\"#314538\" stroke-linecap=\"round\" stroke-width=\"5\"></path><path d=\"m27 27-6 5M158 25l8-6M96 18v-9\" stroke=\"#314538\" stroke-linecap=\"round\" stroke-width=\"4\"></path></svg>","shape":"original"},{"title":"Cá vàng quên đường","sub":"Quên mất mình vào đây làm gì.","quote":"Trí nhớ của bạn vừa đi bơi chưa về.","goofy":"Mình vừa quên định nói gì. Đứng ngơ cùng bạn cho đỡ ngại nhé.","mark":"ĐÃNG TRÍ","color":"#f6d5a7","art":"<svg aria-hidden=\"true\" fill=\"none\" viewbox=\"0 0 190 150\"><path d=\"M43 81c25-36 68-41 103-7l26-21-5 35 5 33-28-21C102 140 60 120 43 81Z\" fill=\"#ffefcb\" stroke=\"#30483c\" stroke-linejoin=\"round\" stroke-width=\"5\"></path><circle cx=\"79\" cy=\"79\" fill=\"#30483c\" r=\"5\"></circle><path d=\"M77 101c9 8 17 8 26 1\" stroke=\"#30483c\" stroke-linecap=\"round\" stroke-width=\"4\"></path><path d=\"M121 69c-12 11-12 24 0 37M57 51l-5-12M98 43l5-14\" stroke=\"#30483c\" stroke-linecap=\"round\" stroke-width=\"4\"></path><path d=\"M29 53c-9-8-10-21-1-27m17 3c5-8 14-12 24-11\" opacity=\".6\" stroke=\"#30483c\" stroke-linecap=\"round\" stroke-width=\"3\"></path></svg>","shape":"original"},{"title":"Khoai tây đang tải","sub":"Bộ não quay vòng vòng.","quote":"Não đang tải 12%. Đợi tí!","goofy":"Não đang tải 12%. Đừng bấm thêm, khoai tây này sắp nóng máy.","mark":"LAG NHẸ","color":"#d9e4f8","art":"<svg aria-hidden=\"true\" fill=\"none\" viewbox=\"0 0 190 150\"><path d=\"M56 33C83 18 129 24 145 57c18 33-7 66-38 72-41 8-71-10-70-48 0-19 2-37 19-48Z\" fill=\"#ffe7b4\" stroke=\"#30483c\" stroke-width=\"5\"></path><circle cx=\"78\" cy=\"72\" fill=\"#30483c\" r=\"5\"></circle><circle cx=\"117\" cy=\"70\" fill=\"#30483c\" r=\"5\"></circle><path d=\"M89 92c9 7 19 5 26-2\" stroke=\"#30483c\" stroke-linecap=\"round\" stroke-width=\"4\"></path><path d=\"M61 111c-8 6-8 13-2 17M122 115c8 6 11 11 8 16\" stroke=\"#30483c\" stroke-linecap=\"round\" stroke-width=\"4\"></path><rect fill=\"#fffbef\" height=\"12\" rx=\"6\" stroke=\"#30483c\" stroke-width=\"3\" width=\"86\" x=\"54\" y=\"12\"></rect><path d=\"M60 18h26\" stroke=\"#7b9d80\" stroke-linecap=\"round\" stroke-width=\"5\"></path></svg>","shape":"original"},{"title":"Ốc sên tăng tốc","sub":"Muốn nhanh mà chân không đồng ý.","quote":"Bạn chạy nhanh rồi, theo tiêu chuẩn ốc sên.","goofy":"Ốc sên vừa tăng tốc. Đi được hai phân, đòi nghỉ giải lao.","mark":"CHẬM MÀ CHẮC","color":"#efdfcf","art":"<svg aria-hidden=\"true\" fill=\"none\" viewbox=\"0 0 190 150\"><path d=\"M33 99c-9 0-14-7-14-17s7-17 15-17c13 0 20 12 25 27\" stroke=\"#30483c\" stroke-linecap=\"round\" stroke-width=\"5\"></path><path d=\"M22 115c12 13 116 13 140-2 12-7 5-26-12-27l-33-1\" fill=\"#fff5dc\" stroke=\"#30483c\" stroke-linejoin=\"round\" stroke-width=\"5\"></path><circle cx=\"92\" cy=\"76\" fill=\"#e9cfed\" r=\"47\" stroke=\"#30483c\" stroke-width=\"5\"></circle><path d=\"M112 58c-14-17-41-6-38 15 3 18 26 20 32 5 3-8-1-17-10-17\" stroke=\"#30483c\" stroke-linecap=\"round\" stroke-width=\"5\"></path><path d=\"M25 63 18 44m18 19 11-19\" stroke=\"#30483c\" stroke-linecap=\"round\" stroke-width=\"4\"></path><circle cx=\"18\" cy=\"39\" fill=\"#30483c\" r=\"5\"></circle><circle cx=\"47\" cy=\"39\" fill=\"#30483c\" r=\"5\"></circle><path d=\"M27 95c8 5 14 5 22-1\" stroke=\"#30483c\" stroke-linecap=\"round\" stroke-width=\"3\"></path></svg>","shape":"original"},{"title":"Xương rồng hơi nhột","sub":"Hơi cáu nhưng vẫn muốn được thương.","quote":"Hơi xù gai, chạm nhẹ nha.","goofy":"Hôm nay hơi nhiều gai. Cục Yên xin ôm bằng ánh mắt, đỡ bị chích.","mark":"DỄ CÁU","color":"#e2d7e9","art":"<svg aria-hidden=\"true\" fill=\"none\" viewbox=\"0 0 190 150\"><path d=\"M56 109V55c0-22 13-35 34-35s35 13 35 35v54\" fill=\"#c9e8bd\" stroke=\"#30483c\" stroke-width=\"5\"></path><path d=\"M55 77H43c-13 0-19-8-19-21V43m102 34h14c13 0 20-10 20-23V42\" stroke=\"#30483c\" stroke-linecap=\"round\" stroke-width=\"6\"></path><rect fill=\"#fff0d8\" height=\"27\" rx=\"9\" stroke=\"#30483c\" stroke-width=\"5\" width=\"83\" x=\"49\" y=\"104\"></rect><path d=\"M74 65v9m34-9v9M85 87c6 5 11 5 17 0\" stroke=\"#30483c\" stroke-linecap=\"round\" stroke-width=\"4\"></path><path d=\"M64 36l-6-5m42 0 4-7M125 49l7-5\" stroke=\"#30483c\" stroke-linecap=\"round\" stroke-width=\"4\"></path></svg>","shape":"original"},{"title":"Tất lẻ mất bạn","sub":"Hơi lạc lõng từ sáng","quote":"Giống chiếc tất đi tìm bạn cùng đôi.","goofy":"Máy giặt nói không thấy chiếc tất còn lại. Nghe giọng rất khả nghi.","mark":"LẠC LÕNG","color":"#dfebaa","shape":"sock"},{"title":"Tách trà đợi nguội","sub":"Chưa muốn quyết gì hết","quote":"Đang đợi mọi chuyện nguội bớt.","goofy":"Trà nóng thì để nguội. Việc khó cũng vậy, đừng húp một hơi.","mark":"CHỜ ĐỢI","color":"#e6d6bd","shape":"cup"},{"title":"Cây nhiều nhánh","sub":"Đầu đầy mấy chuyện lặt vặt","quote":"Đầu mọc nhiều ý nghĩ quá rồi.","goofy":"Đầu mọc nhiều nhánh quá! Cắt bớt một việc, Cục Yên giữ kéo cho.","mark":"PHÂN TÂM","color":"#f5c6b8","shape":"leaf"},{"title":"Bánh quy mềm lòng","sub":"Ai nói gì cũng dễ xiêu","quote":"Bánh quy này ai nhờ gì cũng mềm lòng.","goofy":"Bánh quy này mềm lòng quá. Ai nhờ gì cũng gật, sắp gãy đôi rồi.","mark":"MỀM LÒNG","color":"#efdfcf","shape":"cookie"},{"title":"Đồng hồ xin nghỉ","sub":"Không muốn bị giục nữa","quote":"Ngay cả đồng hồ cũng muốn xin nghỉ.","goofy":"Đồng hồ đòi nghỉ năm phút. Kim phút xin nghỉ thêm mười phút nữa.","mark":"CẦN NGHỈ","color":"#ddebe5","shape":"clock"},{"title":"Chú mèo họp kín","sub":"Muốn trốn cả thế giới","quote":"Đang bật chế độ mèo: muốn một mình.","goofy":"Mèo nằm lên giấy họp. Cả phòng được nghỉ, mèo được thăng chức.","mark":"THÍCH MỘT MÌNH","color":"#f6d5a7","shape":"cat"},{"title":"Chiếc ô quên mưa","sub":"Lo trước chuyện chưa tới","quote":"Chưa mưa mà đã lo kiếm ô.","goofy":"Trời còn chưa mưa mà Cục Yên đã mặc áo mưa. Bạn lo xa giống nó rồi.","mark":"LO XA","color":"#d8eacf","shape":"umbrella"},{"title":"Đèn bàn thức khuya","sub":"Đêm nào cũng nghĩ lung tung","quote":"Đầu còn sáng hơn cái đèn bàn.","goofy":"Đèn bàn xin tắt. Bộ não vẫn sáng? Cho nó uống nước rồi đi ngủ.","mark":"KHÓ NGỦ","color":"#e7dcfc","shape":"lamp"},{"title":"Củ hành nhiều lớp","sub":"Cứ bảo ổn, thật ra không","quote":"Có chuyện muốn nói, nhưng giữ trong lòng.","goofy":"Củ hành nhiều lớp. Cục Yên bóc đến lớp hai đã khóc, thôi để mai.","mark":"GIẤU TÂM SỰ","color":"#e2d7e9","shape":"onion"},{"title":"Quả bóng mất hơi","sub":"Nhiệt tình xì một nửa","quote":"Hết hơi chút xíu, cần nạp lại.","goofy":"Bóng xì hơi một tí. Không sao, Cục Yên chỉ mang bơm xe đạp tới thôi.","mark":"HỤT HƠI","color":"#f5e1b4","shape":"balloon"},{"title":"Dép trái đi lạc","sub":"Đi mãi vẫn thấy sai sai","quote":"Cứ thấy mình bước lệch một nhịp.","goofy":"Đi dép trái thì hơi lệch. Cứ dừng lại xỏ đúng dép đã, đường không chạy mất.","mark":"CHỆCH HƯỚNG","color":"#d9e4f8","shape":"shoe"},{"title":"Cà rốt xin nghỉ","sub":"Cố mãi chưa thấy kết quả","quote":"Cố mãi mà chưa thấy kết quả.","goofy":"Cà rốt đang nghỉ củ. Cả vườn rau vẫn sống khỏe, bạn nghỉ tí cũng được.","mark":"CHƯA TỚI LÚC","color":"#f6c7d7","shape":"carrot"},{"title":"Chiếc gối tăng ca","sub":"Mệt đến mức muốn nằm","quote":"Cái gối làm việc quá giờ rồi.","goofy":"Gối tăng ca cả ngày để đỡ đầu bạn. Tối nay nhớ cho nó làm đúng nghề.","mark":"BUỒN NGỦ","color":"#dfebaa","shape":"pillow"},{"title":"Ngôi sao hụt sáng","sub":"Hôm nay chẳng rực rỡ lắm","quote":"Hôm nay không cần sáng hết công suất.","goofy":"Ngôi sao hôm nay hơi mờ. Cục Yên bảo vẫn nhìn thấy, khỏi bật đèn pin.","mark":"CHẬM NHỊP","color":"#e6d6bd","shape":"star"},{"title":"Ấm nước hơi sốt","sub":"Bực một chuyện cỏn con","quote":"Bực một chút thôi, nhưng muốn xì khói.","goofy":"Ấm nước sôi thì tắt bếp. Bạn đang nóng mặt thì tạm rời cái bếp cãi nhau.","mark":"BỐC HỎA","color":"#f5c6b8","shape":"kettle"},{"title":"Chim cánh cụt mơ bay","sub":"Muốn làm điều rất khác","quote":"Ước gì mình bay được xa hơn.","goofy":"Chim cánh cụt muốn bay. Cục Yên tặng nó một cái vé tàu cho chắc.","mark":"MƠ MỘNG","color":"#efdfcf","shape":"bird"},{"title":"Con rùa thích đua","sub":"So sánh mình với người ta","quote":"Đang so tốc độ với người khác.","goofy":"Rùa thi chạy với xe máy. Thua tốc độ, nhưng thắng cuộc thi về tới nhà.","mark":"SO SÁNH","color":"#ddebe5","shape":"turtle"},{"title":"Quả trứng e dè","sub":"Ngại bước ra khỏi vỏ","quote":"Muốn thử mà còn hơi sợ.","goofy":"Trứng mới hé vỏ thôi. Cục Yên đừng đứng ngoài hét “NỞ ĐI!” nữa.","mark":"RỤT RÈ","color":"#f6d5a7","shape":"egg"},{"title":"Cục pin nằm võng","sub":"Năng lượng chỉ còn vạch đỏ","quote":"Pin còn một vạch, xin đừng giao thêm việc.","goofy":"Cục pin còn một vạch, lịch họp thì đầy. Cục Yên đề nghị sạc người trước.","mark":"CẠN PIN","color":"#d8eacf","shape":"battery"},{"title":"Bông hoa ngủ nướng","sub":"Sáng nay chậm bắt nhịp","quote":"Sáng nay vẫn chưa muốn mở mắt.","goofy":"Hoa ngủ nướng. Mặt trời đợi từ sáng, nhưng không hối.","mark":"NGÁI NGỦ","color":"#e7dcfc","shape":"flower"},{"title":"Chiếc cốc đầy quá","sub":"Dễ xúc động hơn mọi bữa","quote":"Cái cốc đầy chuyện quá rồi.","goofy":"Cái cốc đầy quá thì tràn. Đặt bớt một chuyện xuống trước đã nhé.","mark":"NHẠY CẢM","color":"#e2d7e9","shape":"cup"},{"title":"Lá thư chưa gửi","sub":"Có điều muốn nói rồi thôi","quote":"Có điều muốn nói nhưng chưa dám gửi.","goofy":"Lá thư chưa gửi. Cục Yên đã gấp phong bì, nhưng chưa ai dán tem.","mark":"CHẦN CHỪ","color":"#f5e1b4","shape":"letter"},{"title":"Nải chuối lo xa","sub":"Chưa chín đã lo héo","quote":"Mai chưa tới mà mình lo trước rồi.","goofy":"Chuối lo tuần sau bị chín. Cục Yên bảo: hôm nay cứ vàng vừa phải đi.","mark":"LO NGÀY MAI","color":"#d9e4f8","shape":"banana"},{"title":"Hạt đậu ôm mộng","sub":"Ý tưởng bé mà hơi to","quote":"Ước mơ to, người thì bé xíu.","goofy":"Hạt đậu đòi thành cây ngay. Đất bảo: “Từ từ, còn chưa tưới nước!”","mark":"HỨNG KHỞI","color":"#f6c7d7","shape":"seed"},{"title":"Bút chì nhụt ngòi","sub":"Cố nghĩ mà chưa ra gì","quote":"Đầu hơi bí, cần gọt bớt một ý.","goofy":"Bút chì cùn thì gọt. Não mệt thì nghỉ. Cấm dùng đồ gọt não nhé.","mark":"BÍ Ý TƯỞNG","color":"#dfebaa","shape":"pencil"},{"title":"Chiếc ghế biết thở","sub":"Muốn ngồi mà cứ ngại","quote":"Chỉ muốn ngồi xuống một chút.","goofy":"Ghế thấy bạn đứng mãi nên tủi thân. Ngồi xuống an ủi nó đi.","mark":"CẦN DỪNG","color":"#e6d6bd","shape":"chair"},{"title":"Mặt trăng dậy trễ","sub":"Lúc nào cũng lệch giờ","quote":"Hôm nay lệch giờ với cả thế giới.","goofy":"Mặt trăng dậy trễ. Không sao, có ai chấm công đêm đâu.","mark":"LỆCH NHỊP","color":"#f5c6b8","shape":"moon"},{"title":"Quả chanh cau mày","sub":"Mọi thứ hôm nay hơi chua","quote":"Hơi chua mặt, chưa cần ngọt đâu.","goofy":"Chanh hơi chua hôm nay. Không cần giả làm kẹo ngọt cho ai cả.","mark":"KHÓ Ở","color":"#efdfcf","shape":"lemon"},{"title":"Robot muốn nghỉ phép","sub":"Làm máy lâu đến phát chán","quote":"Muốn tắt chế độ làm việc một lát.","goofy":"Robot hết pin mà vẫn báo “đang làm”. Cục Yên rút phích giúp một lát.","mark":"QUÁ TẢI","color":"#ddebe5","shape":"robot"},{"title":"Cái kẹo đổi ý","sub":"Đang vui tự nhiên lại buồn","quote":"Tâm trạng hôm nay đổi vị liên tục.","goofy":"Kẹo đang đổi vị liên tục. Cục Yên nếm một cái rồi cũng... đổi ý.","mark":"THẤT THƯỜNG","color":"#f6d5a7","shape":"candy"},{"title":"Bong bóng nghĩ ngợi","sub":"Ý nghĩ nổi lung tung","quote":"Ý nghĩ bay lung tung như bong bóng.","goofy":"Bong bóng đầy ý nghĩ. Giữ một quả thôi, ôm hết thì nổ đó.","mark":"MƠ HỒ","color":"#d8eacf","shape":"balloon"},{"title":"Cây nấm đội mưa","sub":"Mọi thứ cứ dồn tới","quote":"Mọi việc kéo tới cùng lúc.","goofy":"Nấm đội mũ khi trời mưa. Bạn cũng được phép tìm chỗ trú, không cần làm siêu nhân.","mark":"NGẬP VIỆC","color":"#e7dcfc","shape":"mushroom"},{"title":"Chú ếch ngại nhảy","sub":"Biết phải làm mà cứ chần chừ","quote":"Lấy đà mãi mà chưa dám nhảy.","goofy":"Ếch lấy đà từ sáng chưa nhảy. Cục Yên hứa không quay video đâu.","mark":"DO DỰ","color":"#e2d7e9","shape":"frog"},{"title":"Chiếc bánh trong lò","sub":"Mọi chuyện chưa kịp chín","quote":"Chuyện này còn đang trong lò.","goofy":"Bánh còn trong lò. Mở cửa nhìn hoài chỉ khiến nó xẹp vì áp lực.","mark":"CHỜ KẾT QUẢ","color":"#f5e1b4","shape":"toast"},{"title":"Bút dạ hết mực","sub":"Muốn nói mà cạn từ","quote":"Muốn nói mà cạn cả chữ.","goofy":"Bút hết mực. Cục Yên cho phép bạn im lặng, không bắt diễn thuyết.","mark":"KHÓ NÓI","color":"#d9e4f8","shape":"pencil"},{"title":"Cá voi thích tắm","sub":"Muốn trốn dưới nước một lúc","quote":"Chỉ muốn trốn đi bơi một lúc.","goofy":"Cá voi muốn trốn dưới nước. Cục Yên giữ khăn trên bờ, dù khăn hơi nhỏ.","mark":"MUỐN TRỐN","color":"#f6c7d7","shape":"fish"},{"title":"Mầm cây thích núp","sub":"Muốn lớn mà sợ bị nhìn","quote":"Muốn lớn, nhưng ngại bị chú ý.","goofy":"Mầm cây ngại bị nhìn. Cục Yên quay lưng để bạn nảy lá cho thoải mái.","mark":"NGẠI NGÙNG","color":"#dfebaa","shape":"seed"},{"title":"Bánh rán xoay vòng","sub":"Lại nghĩ tới chuyện cũ","quote":"Cứ nghĩ vòng quanh chuyện cũ.","goofy":"Bánh rán quay vòng mãi. Cục Yên cắn một miếng để tạo lối ra.","mark":"QUẨN QUANH","color":"#e6d6bd","shape":"donut"},{"title":"Cánh diều ngại gió","sub":"Đang muốn đổi hướng","quote":"Muốn đổi hướng nhưng sợ gió.","goofy":"Diều muốn bay nhưng ngại gió. Cục Yên cầm dây, tay hơi run.","mark":"ĐỔI HƯỚNG","color":"#f5c6b8","shape":"kite"},{"title":"Cục đá mê nhạc","sub":"Bề ngoài bình tĩnh quá","quote":"Bên ngoài im re, bên trong mở nhạc.","goofy":"Cục đá không nhúc nhích. Trong đầu nó đang mở nhạc disco ầm ầm.","mark":"LẠNH NGOÀI ẤM TRONG","color":"#efdfcf","shape":"rock"},{"title":"Chai nước lơ đãng","sub":"Quên uống nước cả buổi","quote":"Hôm nay quên chăm mình rồi.","goofy":"Chai nước hết sạch rồi đó. Uống nước đi, Cục Yên không rót qua màn hình được.","mark":"BỎ QUÊN MÌNH","color":"#ddebe5","shape":"bottle"},{"title":"Hươu cao cổ cúi đầu","sub":"Cứ muốn làm vừa lòng tất cả","quote":"Chiều lòng mọi người đến mỏi cổ.","goofy":"Hươu cúi đầu chiều mọi người đến mỏi cổ. Ngẩng lên nghỉ cái đã.","mark":"CHIỀU LÒNG","color":"#f6d5a7","shape":"giraffe"},{"title":"Chiếc lá đi chơi","sub":"Muốn nghỉ mà chẳng có lý do","quote":"Muốn xin nghỉ mà không có lý do.","goofy":"Chiếc lá xin nghỉ vì gió đẹp. Cục Yên ký duyệt trước khi đọc đơn.","mark":"MUỐN ĐI CHƠI","color":"#d8eacf","shape":"leaf"},{"title":"Bánh flan run rẩy","sub":"Đụng nhẹ là thấy lo","quote":"Đụng nhẹ là hồi hộp.","goofy":"Flan run thì cứ run. Cục Yên giữ cái đĩa, không ai làm rớt đâu.","mark":"HỒI HỘP","color":"#e7dcfc","shape":"flan"},{"title":"Ngọn nến thư giãn","sub":"Tự nhiên thấy đời dịu lại","quote":"Hôm nay thấy đủ yên rồi.","goofy":"Ngọn nến hôm nay sáng vừa đủ. Cục Yên không bắt nó làm đèn pha.","mark":"DỄ CHỊU","color":"#e2d7e9","shape":"candle"}];
-      const MOOD_ORDER = [1,43,42,26,16,33,11,19,13,18,4,6,36,37,45,48,23,38,24,49,10,20,27,40,34,30,29,46,12,15,32,22,0,39,50,31,35,28,9,8,21,17,14,41,51,2,44,3,25,7,5,47];
-      const MINI_YEN = "<svg viewBox=\"0 0 120 115\" fill=\"none\" aria-hidden=\"true\"><g class=\"yen-mini-body\"><path d=\"M23 73c0-24 16-40 37-40s37 16 37 40c0 15-10 24-21 28-6 2-10 4-16 4s-11-2-17-4c-11-4-20-13-20-28Z\" fill=\"#fff9ee\" stroke=\"#30483c\" stroke-width=\"4\"/><circle cx=\"48\" cy=\"70\" r=\"3.8\" fill=\"#2f473b\"/><circle cx=\"72\" cy=\"70\" r=\"3.8\" fill=\"#2f473b\"/><path d=\"M52 85q8 6 16 0\" stroke=\"#2f473b\" stroke-width=\"3.5\" stroke-linecap=\"round\"/></g><path class=\"yen-mini-hand\" d=\"M35 76c-7 4-12 10-13 18\" stroke=\"#30483c\" stroke-width=\"4\" stroke-linecap=\"round\"/><path d=\"M83 77c8 4 11 10 13 18\" stroke=\"#30483c\" stroke-width=\"4\" stroke-linecap=\"round\"/><path d=\"M66 20c2-8 7-11 12-13\" stroke=\"#c28e77\" stroke-width=\"3\" stroke-linecap=\"round\"/></svg>";
-
-      function doodle(kind, n){
-        const stroke='#30483c';
-        const paths={
-          sock:'<path d="M55 27h47v47c0 15 15 18 30 21 14 3 20 13 17 24-4 18-31 19-53 12L58 117Q43 113 43 96V69h12Z" fill="#fffaf1" stroke="currentColor" stroke-width="6"/><path d="M55 47h47M53 79h41" stroke="currentColor" stroke-width="5"/><path d="M118 105q9-2 13 4" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>',
-          cup:'<path d="M45 57h84l-7 58q-3 15-36 15t-36-15Z" fill="#fffaf1" stroke="currentColor" stroke-width="6"/><path d="M129 70h12q22 0 12 26-5 13-24 12M60 35q-6 9 0 17m24-20q-6 9 0 19m24-17q-6 9 0 17" stroke="currentColor" stroke-width="5" stroke-linecap="round"/>',
-          leaf:'<path d="M38 111Q45 30 144 30q-3 101-95 100Z" fill="#fffaf1" stroke="currentColor" stroke-width="6"/><path d="M46 131q29-48 76-72M76 98l-15-31m38 8 34 3" stroke="currentColor" stroke-width="5" stroke-linecap="round"/>',
-          cookie:'<path d="M80 28q20-8 32 11 22-3 30 19 19 14 9 35 8 29-20 35-7 24-34 14-18 14-36-4-24 4-30-22-22-17-7-41-8-24 19-33 9-22 37-14Z" fill="#fff4d8" stroke="currentColor" stroke-width="6"/><circle cx="75" cy="67" r="8" fill="currentColor"/><circle cx="113" cy="92" r="8" fill="currentColor"/><circle cx="65" cy="106" r="6" fill="currentColor"/>',
-          clock:'<circle cx="95" cy="82" r="53" fill="#fffaf1" stroke="currentColor" stroke-width="6"/><path d="M95 48v36l24 18" stroke="currentColor" stroke-width="6" stroke-linecap="round"/><circle cx="95" cy="83" r="5" fill="currentColor"/>',
-          cat:'<path d="M40 67 49 27l29 20q16-8 34 0l29-20 9 40q9 49-22 63-30 14-60 0Q34 115 40 67Z" fill="#fffaf1" stroke="currentColor" stroke-width="6"/><path d="M71 79v4m44-4v4m-29 18 8 5 8-5m-8 5v7m0 0q-8 8-15 0m15 0q8 8 15 0M57 97l-27-4m27 12-27 5m93-13 26-4m-26 12 27 5" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>',
-          umbrella:'<path d="M29 84q10-70 67-70t66 70q-16-13-33 0-17-13-33 0-17-13-33 0-18-13-34 0Z" fill="#fffaf1" stroke="currentColor" stroke-width="6"/><path d="M96 84v43q0 23-21 11" stroke="currentColor" stroke-width="6" stroke-linecap="round"/>',
-          lamp:'<path d="M57 34h76l18 55H42Z" fill="#fffaf1" stroke="currentColor" stroke-width="6"/><path d="M95 89v42m-31 4h63M62 25l-11-11m87 12 10-12" stroke="currentColor" stroke-width="6" stroke-linecap="round"/>',
-          onion:'<path d="M97 19q8 25 28 41 22 18 22 43a50 50 0 0 1-100 0q0-24 21-43 20-17 29-41Z" fill="#fffaf1" stroke="currentColor" stroke-width="6"/><path d="M97 27q-14 55-7 101m7-100q18 52 12 99" stroke="currentColor" stroke-width="4" opacity=".45"/>',
-          balloon:'<ellipse cx="95" cy="67" rx="44" ry="51" fill="#fffaf1" stroke="currentColor" stroke-width="6"/><path d="m85 118 10 12 10-12m-10 13q-9 14 3 22" stroke="currentColor" stroke-width="5" stroke-linecap="round"/>',
-          shoe:'<path d="M27 89q30 1 52-37l24 15q0 22 49 29 16 3 16 22 0 16-25 16H50q-24 0-23-21Z" fill="#fffaf1" stroke="currentColor" stroke-width="6"/><path d="M92 76 81 90m23-11-12 14M28 115h138" stroke="currentColor" stroke-width="5" stroke-linecap="round"/>',
-          carrot:'<path d="M97 48q42 7 37 35-4 37-63 61Q56 84 72 60q8-12 25-12Z" fill="#fff2db" stroke="currentColor" stroke-width="6"/><path d="M95 47q-4-27 5-35m-1 32Q79 24 63 25m40 21q9-23 26-25M79 86l24 5m-33 13 17 3" stroke="currentColor" stroke-width="5" stroke-linecap="round"/>',
-          pillow:'<rect x="30" y="38" width="132" height="91" rx="25" fill="#fffaf1" stroke="currentColor" stroke-width="6"/><path d="M47 59q-12 25 0 49m99-49q12 25 0 49" stroke="currentColor" stroke-width="4" opacity=".5"/>',
-          star:'<path d="m95 15 21 48 53 6-40 35 12 48-46-26-46 26 12-48-40-35 53-6Z" fill="#fffaf1" stroke="currentColor" stroke-width="6" stroke-linejoin="round"/>',
-          kettle:'<path d="M56 66q-4-20 7-26h67q15 7 8 28l-8 61H62Z" fill="#fffaf1" stroke="currentColor" stroke-width="6"/><path d="M55 73Q28 67 25 86q-2 18 24 23m85-37 25-17-5-15M68 34h54m-39-14h25" stroke="currentColor" stroke-width="6" stroke-linecap="round"/>',
-          bird:'<path d="M71 29Q95 15 120 34q22 21 6 71-13 35-39 35-30 0-40-35-14-48 24-76Z" fill="#fffaf1" stroke="currentColor" stroke-width="6"/><path d="M69 72q-15 26 8 40m42-40q12 26-10 40" stroke="currentColor" stroke-width="5"/><path d="m93 80 16 10-16 7Z" fill="#f6ca83" stroke="currentColor" stroke-width="4"/><circle cx="76" cy="68" r="4" fill="currentColor"/><circle cx="112" cy="68" r="4" fill="currentColor"/>',
-          turtle:'<ellipse cx="95" cy="83" rx="58" ry="42" fill="#fffaf1" stroke="currentColor" stroke-width="6"/><circle cx="152" cy="83" r="19" fill="#fffaf1" stroke="currentColor" stroke-width="6"/><path d="m59 51 17 25-18 25m45-48L89 77l18 27M40 98l-13 15m108-8 13 13M77 124l-5 14m40-13 7 14" stroke="currentColor" stroke-width="5" stroke-linecap="round"/>',
-          egg:'<path d="M95 23q35 0 45 56 11 52-45 58-56-6-45-58Q60 23 95 23Z" fill="#fffaf1" stroke="currentColor" stroke-width="6"/><circle cx="80" cy="91" r="4" fill="currentColor"/><circle cx="109" cy="91" r="4" fill="currentColor"/><path d="M86 108q9 8 18 0" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>',
-          battery:'<rect x="47" y="36" width="98" height="99" rx="14" fill="#fffaf1" stroke="currentColor" stroke-width="6"/><path d="M79 24h33v12M77 110h37" stroke="currentColor" stroke-width="6" stroke-linecap="round"/><rect x="62" y="89" width="67" height="32" rx="7" fill="#e9b9ac"/>',
-          flower:'<circle cx="96" cy="81" r="18" fill="#f4d88c" stroke="currentColor" stroke-width="5"/><ellipse cx="96" cy="43" rx="20" ry="24" fill="#fffaf1" stroke="currentColor" stroke-width="5"/><ellipse cx="96" cy="119" rx="20" ry="24" fill="#fffaf1" stroke="currentColor" stroke-width="5"/><ellipse cx="58" cy="81" rx="24" ry="20" fill="#fffaf1" stroke="currentColor" stroke-width="5"/><ellipse cx="134" cy="81" rx="24" ry="20" fill="#fffaf1" stroke="currentColor" stroke-width="5"/>',
-          letter:'<rect x="31" y="44" width="130" height="88" rx="9" fill="#fffaf1" stroke="currentColor" stroke-width="6"/><path d="m33 52 63 48 63-48m-123 72 48-38m74 38-48-38" stroke="currentColor" stroke-width="5" stroke-linejoin="round"/>',
-          banana:'<path d="M37 58q21 61 95 43 19-4 34-25-11 60-73 61Q40 139 31 80Z" fill="#fff7d2" stroke="currentColor" stroke-width="6"/><path d="M36 52 27 45m138 30 10-4" stroke="currentColor" stroke-width="5" stroke-linecap="round"/>',
-          seed:'<path d="M96 121V68m0 25Q48 96 50 51q30-5 46 25m0-1q14-36 49-30 1 44-49 48" fill="#fffaf1" stroke="currentColor" stroke-width="6" stroke-linejoin="round"/><path d="M64 131h64" stroke="currentColor" stroke-width="6" stroke-linecap="round"/>',
-          pencil:'<path d="m54 123 14-80 30-21 23 24-22 86-45 15Z" fill="#fffaf1" stroke="currentColor" stroke-width="6"/><path d="M69 43 99 49m-33 82 32 5M96 21l24 26M55 145l-3-22" stroke="currentColor" stroke-width="4"/>',
-          chair:'<rect x="46" y="32" width="98" height="69" rx="17" fill="#fffaf1" stroke="currentColor" stroke-width="6"/><path d="M48 101h97m-88 0-10 41m86-41 10 41M36 69v32m120-32v32" stroke="currentColor" stroke-width="6" stroke-linecap="round"/>',
-          moon:'<path d="M118 18q-30 52 12 91 15 13 34 12-25 28-60 22-51-9-58-57-6-46 40-66 14-6 32-2Z" fill="#fffaf1" stroke="currentColor" stroke-width="6"/><path d="m48 25-6-13m-8 37-12-5m131 1 9-9" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>',
-          lemon:'<path d="M40 78q0-36 48-46 48-8 64 23 16 34-17 62-34 29-67 15Q40 118 40 78Z" fill="#fff4cc" stroke="currentColor" stroke-width="6"/><path d="m42 60-15-8m117 42 14 11" stroke="currentColor" stroke-width="5" stroke-linecap="round"/>',
-          robot:'<rect x="43" y="47" width="103" height="88" rx="18" fill="#fffaf1" stroke="currentColor" stroke-width="6"/><path d="M94 47V23m-9 0h18M43 85H29m117 0h15" stroke="currentColor" stroke-width="6" stroke-linecap="round"/><circle cx="75" cy="82" r="8" fill="currentColor"/><circle cx="117" cy="82" r="8" fill="currentColor"/><path d="M79 111h34" stroke="currentColor" stroke-width="5" stroke-linecap="round"/>',
-          candy:'<path d="m55 67-28-15 4 38 25-7m83-16 27-15-4 38-25-7" fill="#fffaf1" stroke="currentColor" stroke-width="6"/><rect x="53" y="48" width="88" height="57" rx="24" fill="#fffaf1" stroke="currentColor" stroke-width="6"/><path d="M89 52 71 99m45-47-18 50" stroke="currentColor" stroke-width="5"/>',
-          mushroom:'<path d="M52 90q-4-55 44-63 47 7 44 63Z" fill="#fffaf1" stroke="currentColor" stroke-width="6"/><rect x="75" y="90" width="41" height="48" rx="13" fill="#fffaf1" stroke="currentColor" stroke-width="6"/><circle cx="80" cy="60" r="9" fill="#efbbaa"/><circle cx="118" cy="61" r="8" fill="#efbbaa"/>',
-          frog:'<ellipse cx="96" cy="90" rx="59" ry="43" fill="#fffaf1" stroke="currentColor" stroke-width="6"/><circle cx="63" cy="47" r="19" fill="#fffaf1" stroke="currentColor" stroke-width="6"/><circle cx="128" cy="47" r="19" fill="#fffaf1" stroke="currentColor" stroke-width="6"/><circle cx="64" cy="45" r="5" fill="currentColor"/><circle cx="128" cy="45" r="5" fill="currentColor"/><path d="M78 98q17 12 35 0" stroke="currentColor" stroke-width="5" stroke-linecap="round"/>',
-          toast:'<path d="M43 70Q32 29 66 29h62q34 0 23 41v64H43Z" fill="#fff4d8" stroke="currentColor" stroke-width="6"/><rect x="61" y="78" width="72" height="41" rx="12" stroke="currentColor" stroke-width="4"/>',
-          fish:'<path d="M44 83q37-50 91 0-54 50-91 0Zm1 0L21 49v69Z" fill="#fffaf1" stroke="currentColor" stroke-width="6" stroke-linejoin="round"/><circle cx="108" cy="77" r="5" fill="currentColor"/><path d="M81 67q-16 16 0 32" stroke="currentColor" stroke-width="4"/>',
-          donut:'<circle cx="95" cy="84" r="57" fill="#fff0d6" stroke="currentColor" stroke-width="6"/><circle cx="95" cy="84" r="20" fill="#f7f3e9" stroke="currentColor" stroke-width="5"/><path d="M60 54l10 8m49-2 8-8m-75 43 11 7m60 11 12-5" stroke="#c88d7d" stroke-width="5" stroke-linecap="round"/>',
-          kite:'<path d="m95 22 48 61-48 48-48-48Z" fill="#fffaf1" stroke="currentColor" stroke-width="6"/><path d="M47 83h96m-48-61v109m0 0q-19 12 0 24m0-8-17 1m17 0 16-7" stroke="currentColor" stroke-width="4"/>',
-          rock:'<path d="M35 116 54 60 98 35l45 29 14 62-55 15-53-9Z" fill="#fffaf1" stroke="currentColor" stroke-width="6"/><path d="m55 80 40-25 33 21" stroke="currentColor" stroke-width="4" opacity=".4"/>',
-          bottle:'<path d="M75 25h40v20l17 21v71H59V66l16-21Z" fill="#fffaf1" stroke="currentColor" stroke-width="6"/><path d="M70 28h50M59 88h73" stroke="currentColor" stroke-width="5"/>',
-          giraffe:'<path d="M83 25h26l8 23-7 26v63H76V74l-7-26Z" fill="#fffaf1" stroke="currentColor" stroke-width="6"/><path d="M80 26 71 14m35 13 9-13M71 48l-24 4m69-4 24 4" stroke="currentColor" stroke-width="5" stroke-linecap="round"/><circle cx="85" cy="60" r="4" fill="currentColor"/><circle cx="108" cy="60" r="4" fill="currentColor"/><circle cx="89" cy="98" r="8" fill="#e9b9ac"/><circle cx="108" cy="118" r="7" fill="#e9b9ac"/>',
-          flan:'<path d="M50 49h91l11 69Q95 151 39 118Z" fill="#fff1d9" stroke="currentColor" stroke-width="6"/><path d="M47 49q1-19 48-19t47 19-47 18-48-18Z" fill="#e9b9ac" stroke="currentColor" stroke-width="6"/><path d="M28 130q64 25 137 0" stroke="currentColor" stroke-width="6" stroke-linecap="round"/>',
-          candle:'<path d="M71 65h49v70H71Z" fill="#fffaf1" stroke="currentColor" stroke-width="6"/><path d="M95 65V48m0-29q-22 24 0 33 21-12 0-33Z" fill="#f6d5a7" stroke="currentColor" stroke-width="5"/><path d="M54 137h81" stroke="currentColor" stroke-width="5" stroke-linecap="round"/>'
-        };
-        const body=paths[kind]||paths.flower;
-        const wiggle=(n%3)*5-5;
-        return `<svg viewBox="0 0 190 160" fill="none" aria-hidden="true" style="color:${stroke}"><g transform="translate(0 ${wiggle})">${body}</g><path d="M26 35l-8 -6m145 8 9-8M23 121l-7 8" stroke="currentColor" stroke-width="3" stroke-linecap="round" opacity=".35"/></svg>`;
-      }
-      function esc(value){return String(value).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
-      function renderMood(card, position, index){
-        const num=String(position+1).padStart(2,'0');
-        const frontArt=card.art||doodle(card.shape,index);
-        return `<button class="mood-card" type="button" data-title="${esc(card.title)}" aria-label="${esc(card.title)}. Chạm để lật thẻ" aria-pressed="false" style="--card-color:${card.color}">
-          <span class="mood-card-inner">
-            <span class="mood-face front" aria-hidden="false"><span class="mood-index"><span>HỒ SƠ ${num}</span><span class="mood-emoji-dot" aria-hidden="true"></span></span>
-              <span class="mood-graphic">${frontArt}</span>
-              <span class="mood-copy"><span class="mood-title">${esc(card.title)}</span><span class="mood-sub">${esc(card.sub)}</span></span>
-              <span class="mood-card-tip"><svg class="yen-icon" aria-hidden="true"><use href="#yen-arrow"></use></svg><span>Lật thẻ xem Cục Yên nói nhảm gì</span></span>
-            </span>
-            <span class="mood-face back" aria-hidden="true"><span class="mood-back-top"><span class="mood-badge"><svg class="yen-icon" aria-hidden="true"><use href="#yen-talk"></use></svg> CỤC YÊN NÓI NHẢM</span><span class="mood-back-no">${num} / 07</span></span>
-              <span class="yen-mini">${MINI_YEN}</span>
-              <span class="mood-back-copy"><span class="mood-quote">${esc(card.quote)}</span><span class="mood-goofy">${esc(card.goofy)}</span></span>
-              <span class="mood-back-footer"><svg class="yen-icon" aria-hidden="true"><use href="#yen-arrow"></use></svg><span>Chạm để úp lại</span><span class="mood-paper-mark">${esc(card.mark)}</span></span>
-            </span>
-          </span>
-        </button>`;
-      }
-      function vietnamDay(){
-        const parts=Object.fromEntries(new Intl.DateTimeFormat('en-US',{timeZone:'Asia/Ho_Chi_Minh',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date()).map(p=>[p.type,p.value]));
-        const day=Math.floor(Date.UTC(+parts.year,+parts.month-1,+parts.day)/86400000);
-        return {key:`${parts.year}-${parts.month}-${parts.day}`, day, label:`${parts.day}/${parts.month}`};
-      }
-      const dayZero=Math.floor(Date.UTC(2026,10,1)/86400000);
-      const moodRail=$('#mood-rail');
-      const deckCounter=$('#deck-counter');
-      const deckProgress=$('#deck-progress');
-      const deckPrev=$('#deck-prev');
-      const deckNext=$('#deck-next');
-      const deckRandom=$('#deck-random');
-      let moodCards=[]; let currentVietnamDay='';
-      function buildDailyDeck(force=false){
-        const date=vietnamDay();
-        if(!force && currentVietnamDay===date.key) return;
-        currentVietnamDay=date.key;
-        const shift=((date.day-dayZero)*7 % 52+52)%52;
-        const cards=Array.from({length:7},(_,i)=>{const index=MOOD_ORDER[(shift+i)%52];return {card:ALL_MOODS[index],index};});
-        moodRail.innerHTML=cards.map((v,i)=>renderMood(v.card,i,v.index)).join('');
-        moodCards=Array.from(moodRail.querySelectorAll('.mood-card'));
-        moodCards.forEach(btn=>btn.addEventListener('click',()=>flipMood(btn,!btn.classList.contains('is-flipped'))));
-        moodRail.scrollLeft=0;
-        updateDeck();
-      }
-      const digits=n=>String(n).padStart(2,'0');
-      function deckStep(){return moodCards.length>1?moodCards[1].offsetLeft-moodCards[0].offsetLeft:1;}
-      function deckVisibleCount(){return Math.max(1,Math.min(moodCards.length,Math.round(moodRail.clientWidth/deckStep())));}
-      function deckCurrent(){return Math.max(0,Math.round(moodRail.scrollLeft/deckStep()));}
-      function updateDeck(){
-        if(!moodCards.length) return;
-        const visible=deckVisibleCount(),lastStart=Math.max(0,moodCards.length-visible);
-        const current=Math.min(lastStart,Math.max(0,deckCurrent()));
-        deckCounter.textContent=digits(current+1)+(visible>1?'–'+digits(Math.min(moodCards.length,current+visible)):'')+' / 07';
-        deckProgress.style.width=((current+visible)/7*100)+'%';
-        deckPrev.disabled=current===0;deckNext.disabled=current>=lastStart;
-      }
-      function moveDeck(direction){
-        const visible=deckVisibleCount();
-        const dest=Math.max(0,Math.min(moodCards.length-visible,deckCurrent()+direction));
-        moodRail.scrollTo({left:moodCards[dest].offsetLeft-moodCards[0].offsetLeft,behavior:prefersReduced?'instant':'smooth'});
-      }
-      deckPrev.addEventListener('click',()=>moveDeck(-1));
-      deckNext.addEventListener('click',()=>moveDeck(1));
-      moodRail.addEventListener('keydown',e=>{if(e.target===moodRail&&(e.key==='ArrowRight'||e.key==='ArrowLeft')){e.preventDefault();moveDeck(e.key==='ArrowRight'?1:-1);}});
-      moodRail.addEventListener('scroll',()=>requestAnimationFrame(updateDeck),{passive:true});
-      window.addEventListener('resize',updateDeck);
-      function flipMood(btn,open){
-        moodCards.forEach(x=>{
-          x.classList.remove('is-flipped');x.setAttribute('aria-pressed','false');
-          x.querySelector('.front').setAttribute('aria-hidden','false');
-          x.querySelector('.back').setAttribute('aria-hidden','true');
-          x.setAttribute('aria-label',x.dataset.title+'. Chạm để lật thẻ');
-        });
-        if(open){btn.classList.add('is-flipped');btn.setAttribute('aria-pressed','true');btn.querySelector('.front').setAttribute('aria-hidden','true');btn.querySelector('.back').setAttribute('aria-hidden','false');btn.setAttribute('aria-label',btn.dataset.title+'. Cục Yên phán xong rồi. Chạm để úp thẻ lại.');}
-      }
-      deckRandom.addEventListener('click',()=>{
-        const previous=moodCards.findIndex(x=>x.classList.contains('is-flipped'));
-        let choice=Math.floor(Math.random()*moodCards.length);
-        if(choice===previous)choice=(choice+1)%moodCards.length;
-        const visible=deckVisibleCount(),destination=Math.min(choice,moodCards.length-visible);
-        moodRail.scrollTo({left:moodCards[destination].offsetLeft-moodCards[0].offsetLeft,behavior:prefersReduced?'instant':'smooth'});
-        flipMood(moodCards[choice],true);
-        updateDeck();
-      });
-      buildDailyDeck();
-      document.addEventListener('visibilitychange',()=>{if(!document.hidden)buildDailyDeck();});
-      window.addEventListener('focus',()=>buildDailyDeck());
-
+      // Bói tâm trạng retired: the new Cục Yên Permit Office owns section 01.
       const shopQuotes={"tho":["Thở ra cái đã. Cục Yên không yêu cầu thành tích thở.","Bạn vừa có một phút rảnh. Xin đừng nhét deadline vào đó.","Cục Yên đem cân đo sự nhẹ nhõm. Cân hết pin, nhưng vẻ mặt trông ổn.","Chiếc ghế xin làm đồng nghiệp. Chuyên đỡ bạn, không giao việc.","Ngồi yên một phút cũng là một phút. Không ai thu hồi được.","Chưa giải quyết hết chuyện đâu. Uống ngụm nước trước đã.","Canh còn nóng phải để nguội. Cái đầu đang nóng cũng thế.","Ngồi xuống đi. Chiếc ghế chưa bao giờ bắt bạn viết đơn.","Cục Yên đóng dấu “ĐỦ RỒI” vào danh sách việc. Bằng dấu khoai tây.","Cái thở phào này không phải trả lại vào thứ Hai.","Bạn ngồi nghỉ, đám mây đi ngang cũng muốn kéo ghế.","Đồng hồ cứ chạy, kể cả khi bạn không cổ vũ nó.","Bạn thở ra một hơi. Hệ thống báo: con người vẫn hoạt động tốt.","Một phút yên tĩnh đã về tay bạn. Giấu kỹ kẻo chuông điện thoại thấy.","Hôm nay không có cuộc thi “ai gồng lâu hơn”. Cục Yên tự hủy rồi.","Con ốc sên bảo bạn đi nhanh quá. Nó nói xong đi mất hai phân.","Đừng vác cả bầu trời. Cầm ly nước thôi là đủ.","Hai cái vai xin nghỉ tăng ca. Cục Yên đã ký cho nghỉ.","Đời bật tốc độ 2x? Bạn được quyền bấm về 1x.","Đặt suy nghĩ xuống cạnh cái muỗng. Đừng làm rơi ly nhé.","Thở phào không sửa hết mọi thứ, nhưng ít nhất ngực bớt chật.","Cục Yên đặt dấu phẩy vào câu chuyện của bạn. Chưa tới dấu chấm đâu.","Cơn gió vừa xin việc làm quạt. Cục Yên đang phỏng vấn.","Bạn đã làm được một việc: ghé vào đây. Đủ điểm qua môn chơi.","Nghỉ mười giây. Vũ trụ chưa mất mạng đâu.","Cục Yên đang trồng một phút nghỉ. Chưa mọc lá, nhưng có ghế.","Não chưa muốn nở hoa? Cho nó uống nước thay vì ép ra ý tưởng.","Chiếc bàn không chấm điểm bạn. Ghế cũng chưa thấy gửi phiếu.","Đây là biên lai xác nhận: bạn vừa nghỉ một hơi, không mua gì.","Hết hơi thì thở tiếp. Không cần xin chữ ký cái lịch."],"khen":["Bạn biết lật gối tìm mặt mát. Kỹ năng sinh tồn rất đáng nể.","Bạn cầm muỗng trông rất có tiềm năng không làm đổ canh.","Bạn ngắm mây mà không đòi nó nộp báo cáo. Tâm hồn rất thoáng.","Cục Yên thấy bạn có năng khiếu ngồi ghế. Cả hai rất hợp nhau.","Ngón tay bấm nút rất quyết đoán. Hơi bất chấp lời cảnh báo, nhưng nhanh.","Bạn đọc được đến câu này. Cục Yên xin trao huy chương kiên nhẫn.","Bạn chọn chỗ ngồi khéo đến mức cái cây muốn hỏi bí quyết.","Nếu là bánh quy, bạn sẽ tròn trịa về tinh thần. Đừng hỏi tròn cỡ nào.","Bạn xứng đáng có cái ống hút biết chào. Cục Yên đang tuyển dụng.","Chim ngoài cửa vừa gật đầu khen bạn. Hoặc nó đang tìm sâu.","Bạn bước vào trang rất nhẹ nhàng. Cái ghế không hề giật mình.","Một chiếc ghế vừa xin kết bạn với bạn. Cục Yên làm người giới thiệu.","Chiếc lá khen bạn thở đều. Lời khen hơi lạc đề nhưng miễn phí.","Cái đĩa thấy bạn đáng tin. Nó muốn giao cho bạn trông miếng bánh.","Bạn ngồi chơi rất chuyên nghiệp. Cục Yên đang xin học nghề.","Bạn có vẻ hợp làm khăn trải bàn tiệc trà. Đừng lo, chỉ là lời khen.","Một con mèo chọn ngồi cạnh bạn. Đây gần như là giải thưởng lớn.","Bạn không cãi nhau với thời tiết. Cục Yên cho 10 điểm môn bình tĩnh.","Bạn đếm một chuyện vô ích rất tốt. Ví dụ: hôm nay đã chớp mắt mấy lần?","Cái bóng hôm nay theo bạn rất ngoan. Xin khen cả hai.","Nhớ uống nước là đủ tư cách vào đội vô địch hôm nay.","Tiếng đá lách cách nghe hợp với bạn. Cục Yên tự phong bạn làm DJ đá viên.","Hoa muốn mời bạn làm cố vấn nghỉ ngơi. Công việc chỉ ngắm hoa.","Cục Yên tặng bằng khen vì bạn chưa hỏi bằng khen đổi được gì.","Bạn tử tế đến mức cây bút hết mực cũng muốn viết thư cảm ơn.","Bạn nhận lời khen kỳ cục rất bình tĩnh. Cục Yên nể thật.","Bạn hợp làm nhân vật trong phim về cái cây. Vai chính: người ngồi dưới bóng mát.","Cái chuông khen bạn bấm nút đúng chỗ. Chuông hơi thiếu kiểm soát.","Ly cacao muốn tâm sự với bạn. Nó bảo bạn biết lắng nghe.","Hôm nay bạn có nụ cười tiềm năng. Nếu chưa cười, cứ để sau."],"luoi":["Giấy phép nghỉ có hiệu lực ngay. Cục Yên duyệt, đừng hỏi phòng nhân sự.","Được nằm nghỉ mà không cần giải trình với cái gối.","Hôm nay cho phép nạp pin bằng cách... không làm gì trong 5 phút.","Chữ ký Cục Yên: một vết mực tròn, nghi là dính cà phê.","Không cần tối ưu mọi phút. Có phút sinh ra chỉ để ngồi chơi.","Được quyền từ chối việc không cần thiết. Cái ghế ủng hộ.","Giấy chứng nhận: được nằm ngang 10 phút, không cần lý do.","Cái bàn đứng yên cả ngày vẫn được khen chắc chắn. Bạn nghỉ chút đi.","Nút “tạm dừng” đã được cấp phép. Cục Yên vừa bấm thử.","Không cần con dấu. Con dấu xin nghỉ trưa rồi.","Cho phép nhìn trần nhà năm phút. Nhìn ra ý tưởng thì lời quá.","Việc còn dài, nhưng ghế đang đợi. Ghế không thích bị cho leo cây.","Không cần biến sở thích thành dự án. Đi chơi thôi cũng được.","Ngồi nghe quạt quay 5 phút được tính là hoạt động rất nghiêm túc.","Được ăn bánh mà không cần đặt mục tiêu “ăn bánh xuất sắc”.","Lời khuyên không ai hỏi? Bạn được quyền không nhận.","Đồng hồ còn thức không có nghĩa bạn phải làm thêm.","Cục Yên đặt lịch hẹn bạn với chiếc ghế. Phí tư vấn: 0đ.","Không muốn làm gì? Nghỉ 5 phút đã, phần việc còn lại xếp hàng.","Cục Yên họp với cái lá giúp bạn. Lá biểu quyết nghỉ.","Chiều nay được chơi thứ vô ích. Ví dụ nhìn con kiến đi làm.","Được quyền ngắm trời xa xăm. Không cần nộp báo cáo lên mây.","Hôm nay cứ chậm như mật ong. Mật ong có bao giờ đua xe đâu.","Chế độ nghỉ đã bật. Không có bảng xếp hạng ai nghỉ giỏi nhất.","Não đang mệt, đừng bắt nó chạy marathon trong dép lê.","Ngáp một cái giữa cuộc họp? Cục Yên chấm đó là phần phát biểu thật lòng.","Cho phép gập máy tính và nhìn ra cửa sổ. Không cần xin phép cái bàn.","Ngày mai còn đó. Còn bây giờ, bạn được phép thở.","Giấy phép vẫn có hiệu lực khi trời mưa. Không chống nước, nhưng chống deadline.","Cục Yên đóng dấu “ĐỂ MAI” bằng khoai tây. Con dấu hơi thơm."]};
       const products={
         tho:{name:'Một cái thở phào'},
@@ -1769,5 +1840,96 @@ const ALL_MOODS = [{"title":"Nồi mì sôi đầu","sub":"Ý nghĩ đang sôi l
 })();
 </script>
   
+<script id="yen-permit-script">
+
+/* Sở cấp phép nghỉ của Cục Yên · original vanilla JS, state in RAM only */
+(function(){
+  "use strict";
+  function start(){
+    const root=document.getElementById("yen-permit");
+    if(!root)return;
+    const $=id=>document.getElementById(id);
+    const intro=$("permit-intro"),form=$("permit-form"),receipt=$("permit-receipt");
+    const stage=$("yen-permit"),stamp=$("permit-stamp"),notice=$("permit-message"),progress=$("permit-progress");
+    const notes={
+      noise:"Được phép tắt bớt tiếng ồn trong đầu. Cục Yên không kiểm tra hiệu suất nghỉ.",
+      deadline:"Deadline vẫn ở đó, nhưng ly nước thì có thể uống trước.",
+      busy:"Đang rảnh mà cứ thấy bận? Đơn này cho phép ngồi xuống không cần chứng minh.",
+      why:"Không cần lý do chính đáng để ngồi chơi một chút. Đã đóng mộc xác nhận."
+    };
+    const fields={
+      reason:{noise:"Đầu hơi ồn",deadline:"Trốn deadline chút",busy:"Rảnh mà cứ bận",why:"Không lý do"},
+      style:{coffee:"Cà phê cho tỉnh",tea:"Trà cho dịu",sweet:"Một chút ngọt",fruit:"Trái cây mát"},
+      duration:{ten:"10 phút",cup:"Một ly nước",song:"Một bài nhạc",better:"Tới khi thấy ổn"}
+    };
+    const menu={
+      coffee:{name:"Cà phê đen nóng",why:"Bạn chọn cà phê, Cục Yên nhớ ngay một ly cà phê đen nóng của Yên."},
+      tea:{name:"Trà atiso đường phèn mật ong",why:"Bạn chọn trà. Cục Yên gợi một món trà thật trong menu Yên."},
+      sweet:{name:"Cacao cốt dừa",why:"Bạn chọn một chút ngọt, nên Cục Yên nghĩ tới cacao cốt dừa."},
+      fruit:{name:"Nước ép thơm táo",why:"Bạn chọn trái cây mát, nên Cục Yên gợi nước ép thơm táo."}
+    };
+    const values={reason:null,style:null,duration:null};
+    let phase="intro",round=0,pending=0;
+    const reduced=window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const count=()=>Object.values(values).filter(Boolean).length;
+    function announce(text){notice.textContent=text;}
+    function setChoices(field,value){
+      if(phase!=="form"||!fields[field]||!Object.hasOwn(fields[field],value))return;
+      values[field]=value;
+      root.querySelectorAll('[data-permit-field="'+field+'"]').forEach(btn=>btn.setAttribute("aria-pressed",String(btn.dataset.permitValue===value)));
+      root.querySelector('fieldset[data-field="'+field+'"]').classList.remove("is-missing");
+      progress.textContent="ĐÃ KHAI "+count()+"/3 MỤC";
+      if(count()===3){stamp.disabled=false;announce("Đơn đủ ba mục rồi. Ấn con dấu để Cục Yên duyệt!");}
+      else {stamp.disabled=false;announce("Đã ghi mục "+count()+"/3. Còn "+(3-count())+" mục để Cục Yên duyệt.");}
+    }
+    function issuePermit(){
+      if(phase!=="form")return;
+      const firstMissing=Object.keys(fields).find(f=>!values[f]);
+      if(firstMissing){
+        const item=root.querySelector('fieldset[data-field="'+firstMissing+'"]');
+        item.classList.add("is-missing");item.querySelector("button").focus();
+        announce("Còn thiếu một mục trong tờ đơn. Chọn phần được đánh dấu rồi hãy đóng mộc.");
+        return;
+      }
+      phase="stamping";round++;const thisRound=round;stamp.disabled=true;
+      stage.classList.add("is-stamping");announce("CỘP! Cục Yên đang đóng dấu duyệt nghỉ...");
+      clearTimeout(pending);
+      pending=window.setTimeout(()=>{
+        if(phase!=="stamping"||thisRound!==round)return;
+        const selected=menu[values.style];
+        $("permit-out-reason").textContent=fields.reason[values.reason];
+        $("permit-out-style").textContent=fields.style[values.style];
+        $("permit-out-duration").textContent=fields.duration[values.duration];
+        $("permit-out-note").textContent=notes[values.reason];
+        $("permit-out-drink").textContent=selected.name;
+        $("permit-out-why").textContent=selected.why;
+        form.hidden=true;intro.hidden=true;receipt.hidden=false;phase="issued";
+        stage.classList.remove("is-stamping");stage.classList.add("is-issued");
+        announce("Đã duyệt nghỉ. Giấy phép của bạn đã được in xong.");
+        $("permit-receipt").setAttribute("tabindex","-1");
+        $("permit-receipt").focus({preventScroll:true});
+        $("permit-receipt").scrollIntoView({behavior:reduced?"auto":"smooth",block:"nearest"});
+      },reduced?0:780);
+    }
+    function reset(){
+      round++;clearTimeout(pending);phase="form";
+      Object.keys(fields).forEach(field=>{values[field]=null;root.querySelectorAll('[data-permit-field="'+field+'"]').forEach(btn=>btn.setAttribute("aria-pressed","false"));root.querySelector('fieldset[data-field="'+field+'"]').classList.remove("is-missing");});
+      receipt.hidden=true;intro.hidden=true;form.hidden=false;
+      stage.classList.remove("is-stamping","is-issued");stage.classList.add("is-filing");
+      stamp.disabled=false;progress.textContent="ĐÃ KHAI 0/3 MỤC";announce("Cục Yên đã nhận tờ đơn. Điền ba mục rồi đóng dấu nhé.");
+    }
+    $("permit-start").addEventListener("click",()=>{if(phase!=="intro")return;reset();root.querySelector('[data-permit-field="reason"]').focus({preventScroll:true});});
+    root.addEventListener("click",event=>{
+      const btn=event.target.closest("button[data-permit-field]");
+      if(btn&&root.contains(btn))setChoices(btn.dataset.permitField,btn.dataset.permitValue);
+    });
+    stamp.addEventListener("click",issuePermit);
+    $("permit-restart").addEventListener("click",()=>{reset();root.querySelector('[data-permit-field="reason"]').focus({preventScroll:true});form.scrollIntoView({behavior:reduced?"auto":"smooth",block:"nearest"});});
+  }
+  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",start,{once:true});
+  else start();
+})();
+
+</script>
 </body>
 </html>

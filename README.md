@@ -34,7 +34,8 @@ Bản GitHub-ready sử dụng Google Fonts Noto Sans, Noto Serif và Noto Sans 
 
 - `index.html`: bố cục, hoạt cảnh và nội dung chính.
 - Vòng quay Yên được nhúng trực tiếp vào `index.html` (CSS/JS) để tránh lỗi tải tài nguyên rời, với 8 phần thưởng *mô phỏng*, chưa có giá trị đổi ưu đãi tại quán. Không lưu lượt quay hay dữ liệu người chơi.
-- Mục 01 hiện chỉ hiển thị **Bói tâm trạng** (52 thẻ, mỗi ngày 7 thẻ). **Tarot 78 lá đang tạm ẩn khỏi website**, sẽ tiếp tục phát triển ở nhánh `feature/tarot-v2-foundations`, Draft PR #14 và các issue Tarot #2–#13 trước khi đưa trở lại production.
+- Mục 01 đã được thay bằng **Sở cấp phép nghỉ của Cục Yên**: nộp đơn → chọn 3 mục → ấn mộc → giấy phép tượng trưng → gợi ý đồ uống và chỉ đường đến quán. Không lưu kết quả và không tạo voucher thật. Xem [đặc tả cùng checklist QA](docs/permit-office-v1.md) và các issue #15–#24.
+- Bộ **Tarot 78 lá** vẫn tạm dừng và không hiển thị ở production; bản nháp ở nhánh `feature/tarot-v2-foundations`, Draft PR #14, các issue #2–#13. Bộ Bói tâm trạng cũ được lưu trong lịch sử Git để có thể rollback khi cần.
 - `yen-logo.svg`: logo chính thức.
 - `vercel.json`, `robots.txt`: cấu hình deploy và SEO.
 - Font được tải qua Google Fonts; không lưu trữ file font trong repository.
