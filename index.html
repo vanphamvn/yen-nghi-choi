@@ -797,6 +797,22 @@
 @media(max-width:760px){.hero-intro{font-size:13px;margin:0 0 15px}.hero-cta{gap:9px}.hero-cta .hero-real-btn{min-height:49px;padding:12px 15px;font-size:12px}.irl-section{padding:56px 0}.irl-wrap{grid-template-columns:1fr;gap:26px}.irl-image-waiting{min-height:190px;transform:none}.irl-copy h2{font-size:clamp(37px,9vw,52px)}.irl-copy>p{font-size:14px}.irl-facts{margin:16px 0 20px}.irl-cta{width:100%;justify-content:center}}
 @media(prefers-reduced-motion:reduce){.hero-real-btn{transition:none}.hero-real-btn:hover{transform:none}}
 
+/* #30: direct path to the best game, with an unobtrusive side quest */
+.hero-game-lead{max-width:550px;margin:8px 0 10px;color:var(--ink);font-family:"Noto Serif",Georgia,serif;font-size:clamp(19px,2vw,25px);font-weight:600;line-height:1.45}
+.hero-game-details{color:#426b51;font-size:12px;font-weight:850;letter-spacing:.02em;margin:0 0 20px}
+.hero-cta{align-items:stretch;margin-bottom:18px}
+.hero-play-btn{display:inline-flex;align-items:center;justify-content:center;gap:12px;text-decoration:none;min-height:53px;white-space:normal;text-align:center}
+.hero-play-btn .yen-icon{width:18px;height:18px;flex-shrink:0}
+.hero-play-btn:focus-visible{outline:3px solid #d66a39;outline-offset:4px}
+.hero-intro{margin:0 0 7px;font-size:13px;max-width:480px}
+.hero-easter-row{margin-top:10px}
+.hero-easter-btn{border:0;background:transparent;padding:8px 2px;display:inline-flex;align-items:center;gap:7px;color:#526b5c;font-size:12px;font-weight:800;text-decoration:underline;text-decoration-style:dotted;text-underline-offset:4px;box-shadow:none}
+.hero-easter-btn .yen-icon{width:16px;height:16px}
+.hero-easter-btn:hover{color:#243c35}
+.hero-easter-btn:focus-visible{outline:3px solid #d66a39;outline-offset:3px}
+@media(max-width:760px){.hero-game-lead{font-size:clamp(18px,5vw,22px);margin-top:8px}.hero-game-details{font-size:11px;line-height:1.5;margin-bottom:15px}.hero-cta{gap:10px}.hero-play-btn{flex:1 1 100%;min-height:53px;padding:13px 15px}.hero-cta .hero-real-btn{flex:1 1 100%;min-height:48px}.hero-intro{margin:3px 0 5px}.hero-easter-row{margin:7px 0 0}}
+@media(prefers-reduced-motion:reduce){.hero-easter-btn{transition:none}}
+
 /* v32 copy polish: both “đi” words should be the visual emphasis */
 .hero h1 em.hero-go-word{font-style:normal;font-weight:900;color:#24573f}
 .hero h1 em.hero-go-word::after{bottom:-9%;border-bottom:5px solid #e8a78e;transform:rotate(-3deg)}
@@ -1283,10 +1299,12 @@
     <section class="hero wrap" id="dau" aria-labelledby="hero-title">
       <div class="hero-copy">
         <h1 id="hero-title">Ghé chơi.<span class="hero-invite-line"><em class="hero-go-word">Đi</em> đâu cho xa.</span><span class="hero-invite-line hero-local-line"><em class="hero-go-word">Đi</em> Láng Dài lái cục dàng nè</span></h1>
-        <p class="hero-intro">Ngoài đời, <strong>Yên Coffee &amp; Tea</strong> đang chuẩn bị một góc uống cà phê, trà và ngồi nghỉ. Còn trên web, Cục Yên đã tranh thủ mở cửa... để pha trò.</p>
-        <div class="hero-cta"><button class="big-btn hero-dare" id="poke-btn" type="button" aria-describedby="poke-reply">Đừng bấm cái này <svg class="yen-icon" aria-hidden="true" focusable="false"><use href="#yen-talk"></use></svg></button><a class="hero-real-btn" href="#yen-ngoai-doi">Yên ngoài đời <svg class="yen-icon" aria-hidden="true"><use href="#yen-arrow"></use></svg></a></div>
+        <p class="hero-game-lead">Cục Yên đang nhận đơn xin nghỉ. Bạn chọn 3 mục, nó đóng một cái mộc, rồi cấp giấy phép nghỉ... cho vui.</p>
+        <p class="hero-game-details" id="hero-play-details">Tầm 30 giây · Không đăng nhập · Không lưu dữ liệu</p>
+        <div class="hero-cta"><a class="big-btn hero-play-btn" href="#tam-trang" aria-describedby="hero-play-details">Xin giấy phép nghỉ <svg class="yen-icon" aria-hidden="true"><use href="#yen-arrow"></use></svg></a><a class="hero-real-btn" href="#yen-ngoai-doi">Yên ngoài đời <svg class="yen-icon" aria-hidden="true"><use href="#yen-arrow"></use></svg></a></div>
+        <p class="hero-intro">Ngoài đời, <strong>Yên Coffee &amp; Tea</strong> đang chuẩn bị một góc cà phê, trà và ngồi nghỉ. Còn trên web, Cục Yên tranh thủ pha trò trước.</p>
+        <div class="hero-easter-row"><button class="hero-dare hero-easter-btn" id="poke-btn" type="button" aria-describedby="poke-reply">Đừng bấm cái này <svg class="yen-icon" aria-hidden="true" focusable="false"><use href="#yen-talk"></use></svg></button></div>
         <p class="poke-reply" id="poke-reply" role="status" aria-live="polite"></p>
-        <a class="hero-map-link" href="https://maps.app.goo.gl/zxpyZev8F6YyzL3c6?g_st=ic" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer" aria-label="Mở Google Maps chỉ đường tới Yên">Xem đường đến Yên <svg class="yen-icon" aria-hidden="true"><use href="#yen-arrow"></use></svg></a>
         
       </div>
       <div class="hero-stage" id="hero-stage" aria-label="Cục Yên, nhân vật hoạt hình đang chào khách">
