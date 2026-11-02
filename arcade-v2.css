@@ -17,11 +17,6 @@
 .yarc-number{display:inline-grid;place-items:center;width:26px;height:26px;border:1.5px solid #c28e71;border-radius:8px;font-weight:900}
 .yarc-heading h3{font:900 clamp(25px,2.8vw,37px)/1.1 "Noto Sans",sans-serif;letter-spacing:-.05em;margin:8px 0 6px;color:#274738}
 .yarc-heading p{font:600 12px/1.5 "Noto Sans",sans-serif;color:#687d69;margin:0;min-height:18px}
-.yarc-cases{display:flex;flex-wrap:nowrap;gap:7px;overflow-x:auto;scrollbar-width:thin;scrollbar-color:#b2c5ab transparent;padding:7px 19px 11px}
-.yarc-cases:empty{display:none}
-.yarc-case{flex:none;display:inline-flex;align-items:center;justify-content:center;white-space:nowrap;min-height:35px;border:1.5px solid #b4c5aa;border-radius:100px;background:#fffefa;color:#3a624b;padding:8px 11px;font:800 11px "Noto Sans",sans-serif;cursor:pointer;transition:background .14s,transform .14s}
-.yarc-case[aria-pressed=true]{background:#2c4a3b;color:#fffaf2;border-color:#2c4a3b}
-.yarc-case:hover{transform:translateY(-1px)}
 .yarc-stage-wrap{position:relative;margin:0 12px;overflow:hidden;isolation:isolate;background:#e7f0e5;border:2px solid #375647;border-radius:17px;touch-action:none;user-select:none}
 .yarc-stage-wrap:before{content:"";display:block;padding-top:55.6%}
 .yarc-stage{position:absolute;inset:0;width:100%;height:100%;touch-action:none;display:block;cursor:crosshair;outline-offset:-4px}
@@ -52,3 +47,5 @@
 @media(max-width:760px){.release-section .release-layout{display:flex;flex-direction:column;align-items:stretch;gap:17px}.release-section .release-copy .section-title{font-size:clamp(43px,10vw,62px)}.release-section .release-copy>p{font-size:14px;line-height:1.55;max-width:100%}.release-section .release-copy .arcade-privacy{display:none}.release-section .arcade-shell{width:100%;box-shadow:6px 7px 0 #b2c6aa}.yarc-heading{padding:14px 14px 9px}.yarc-heading h3{font-size:clamp(26px,7vw,34px)}.yarc-topbar{padding:10px 13px}.yarc-cases{padding:5px 13px 11px}.yarc-stage-wrap{margin:0 9px}.yarc-hud{padding:9px 12px 0}.yarc-bottom{grid-template-columns:minmax(0,1fr);padding:9px 12px 11px}.yarc-buttons{justify-content:stretch}.yarc-primary,.yarc-replay{flex:1}.yarc-tip{padding:0 12px 10px}.yarc-message{min-height:45px}}
 @media(max-width:370px){.yarc-brand{font-size:10px}.yarc-switch{padding:8px 10px}.yarc-heading h3{font-size:25px}.yarc-stage-wrap:before{padding-top:62%}.yarc-case{font-size:10px}.yarc-bottom{gap:7px}}
 @media(prefers-reduced-motion:reduce){.yarc-shake,.yarc-flash,.yarc-float-label,.yarc-brand i{animation:none!important}.yarc-dot,.yarc-primary,.yarc-replay,.yarc-case{transition:none!important}}
+
+.yarc-icon-btn{font-size:11px;letter-spacing:0}
