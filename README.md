@@ -34,6 +34,7 @@ Bản GitHub-ready sử dụng Google Fonts Noto Sans, Noto Serif và Noto Sans 
 
 - `index.html`: bố cục, hoạt cảnh và nội dung chính.
 - Vòng quay Yên được nhúng trực tiếp vào `index.html` (CSS/JS) để tránh lỗi tải tài nguyên rời, với 8 phần thưởng *mô phỏng*, chưa có giá trị đổi ưu đãi tại quán. Không lưu lượt quay hay dữ liệu người chơi.
+- Mục 01 cho phép chuyển giữa **Bói tâm trạng** (52 thẻ, mỗi ngày 7 thẻ) và **Tarot 78 lá** (22 Major Arcana + 4 chất × 14 lá Minor Arcana). Chế độ Tarot trải 3 lá **Gốc rễ / Hiện tại / Hướng tiếp theo**, rút không trùng, tùy chọn nghĩa đảo ngược. Trải bài mang tính chiêm nghiệm, không khẳng định tiên tri, không lưu dữ liệu người chơi; mã CSS/JS nhúng trực tiếp vào `index.html`.
 - `yen-logo.svg`: logo chính thức.
 - `vercel.json`, `robots.txt`: cấu hình deploy và SEO.
 - Font được tải qua Google Fonts; không lưu trữ file font trong repository.
