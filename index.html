@@ -859,6 +859,34 @@
 @media(max-width:760px){.irl-cup-interaction{margin-top:17px}.irl-cup-interaction .footer-play{flex-direction:row;gap:10px}.irl-cup-interaction .footer-cup{max-width:88px;flex-basis:88px}.irl-cup-interaction .footer-cup svg{width:80px}.irl-cup-interaction .footer-cup-says{min-height:54px;font-size:10.5px;max-width:none}.irl-ps{font-size:9px}}
 
 
+/* #33: mobile game map: one hand-reachable row of four choices */
+.yen-playmap{position:relative;z-index:15;background:#e9efdf;border-block:1.5px dashed #9caf90;padding:14px 0}
+.yen-playmap-inner{display:flex;align-items:center;gap:18px}
+.yen-playmap-title{flex:0 0 auto;white-space:nowrap;font:900 10px/1.4 "Noto Sans",Arial,sans-serif;letter-spacing:.12em;color:#47664e}
+.yen-playmap-title span{font-size:16px}
+.yen-playmap-links{display:flex;gap:9px;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x proximity;scrollbar-width:thin;min-width:0}
+.yen-playmap-links a{display:inline-flex;gap:8px;align-items:center;white-space:nowrap;flex:0 0 auto;border:1.5px solid #91a98f;background:#fffcf2;color:#345a42;padding:10px 14px;min-height:44px;border-radius:11px;font:900 12px/1.2 "Noto Sans",Arial,sans-serif;scroll-snap-align:start;transition:background .15s,border-color .15s}
+.yen-playmap-links a span{font:900 10px/1 "Noto Sans",Arial,sans-serif;color:#768b77}
+.yen-playmap-links a:hover,.yen-playmap-links a:focus-visible,.yen-playmap-links a[aria-current=location]{background:#315b44;color:#fffdf2;border-color:#315b44}
+.yen-playmap-links a[aria-current=location] span,.yen-playmap-links a:hover span{color:#e5efda}
+.yen-playmap-links a:focus-visible{outline:3px solid #b5784e;outline-offset:2px}
+.game-next{display:inline-flex;align-items:center;gap:9px;border:1.5px dashed #6c906f;background:#edf1e1;color:#315d42;min-height:44px;padding:12px 16px;border-radius:12px;text-decoration:none;font:900 12px/1.4 "Noto Sans",Arial,sans-serif;margin-top:13px}
+.game-next:hover,.game-next:focus-visible{background:#d8e7d0;color:#244831}
+.game-next:focus-visible{outline:3px solid #c7804c;outline-offset:3px}
+.game-next[hidden]{display:none!important}
+@media(max-width:760px){
+  .yen-playmap{position:sticky;top:0;padding:6px 0;border-bottom:2px solid #a6b89f;background:rgba(241,244,230,.97);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+  .yen-playmap-inner{display:block}
+  .yen-playmap-title{display:block;font-size:9px;margin-bottom:4px}
+  .yen-playmap-title span{display:none}
+  .yen-playmap-links{gap:7px;padding-bottom:3px}
+  .yen-playmap-links a{min-height:42px;font-size:11px;padding:9px 11px}
+  #tam-trang,#buong,#cuahang,#ngoi-yen{scroll-margin-top:104px}
+  .permit-section{padding-top:55px}
+  .release-section.section,.shop-section.section{padding-top:65px;padding-bottom:72px}
+  .game-next{width:100%;justify-content:center}
+}
+@media(prefers-reduced-motion:reduce){.yen-playmap-links a{transition:none}}
 /* #32: Cục Yên reacts in-flow; illustrations never cover the results or stamp. */
 .cuc-reaction{display:flex;align-items:center;gap:12px;min-width:0;padding:10px 12px;margin-top:13px;background:#e8eee0;border:1px dashed #9db39d;border-radius:13px;color:#345441;text-align:left}
 .cuc-reaction-actor{flex:0 0 70px;width:70px;height:68px;display:grid;place-items:center;transform-origin:center 80%;animation:cuc-react-pop .62s cubic-bezier(.2,.8,.24,1) both}
@@ -1359,6 +1387,17 @@
       </div>
     </section>
     <div class="ticker" aria-hidden="true"><div class="ticker-track"><div class="ticker-group"><span>Đá viên tập bơi ngửa. Nước bảo: “Ủa, mày đang tan đó!”</span><b class="ticker-flower"><svg class="yen-icon" aria-hidden="true" focusable="false"><use href="#yen-bloom"></use></svg></b><span>Trân châu trốn muỗng. Núp dưới đáy ly mà tưởng không ai thấy.</span><b class="ticker-flower"><svg class="yen-icon" aria-hidden="true" focusable="false"><use href="#yen-bloom"></use></svg></b><span>Ống hút đòi làm sáo. Ly nước nghe xong xin bịt tai.</span><b class="ticker-flower"><svg class="yen-icon" aria-hidden="true" focusable="false"><use href="#yen-bloom"></use></svg></b><span>Miếng chanh cố làm mặt ngầu. Chua quá nên nhăn hết cả mặt.</span><b class="ticker-flower"><svg class="yen-icon" aria-hidden="true" focusable="false"><use href="#yen-bloom"></use></svg></b><span>Cái ly rủ Cục Yên đi làm. Cục Yên giả vờ không nghe.</span><b class="ticker-flower"><svg class="yen-icon" aria-hidden="true" focusable="false"><use href="#yen-bloom"></use></svg></b><span>Ai thả đám mây vào ly? Nó còn đang xin thêm đá.</span><b class="ticker-flower"><svg class="yen-icon" aria-hidden="true" focusable="false"><use href="#yen-bloom"></use></svg></b></div><div class="ticker-group"><span>Đá viên tập bơi ngửa. Nước bảo: “Ủa, mày đang tan đó!”</span><b class="ticker-flower"><svg class="yen-icon" aria-hidden="true" focusable="false"><use href="#yen-bloom"></use></svg></b><span>Trân châu trốn muỗng. Núp dưới đáy ly mà tưởng không ai thấy.</span><b class="ticker-flower"><svg class="yen-icon" aria-hidden="true" focusable="false"><use href="#yen-bloom"></use></svg></b><span>Ống hút đòi làm sáo. Ly nước nghe xong xin bịt tai.</span><b class="ticker-flower"><svg class="yen-icon" aria-hidden="true" focusable="false"><use href="#yen-bloom"></use></svg></b><span>Miếng chanh cố làm mặt ngầu. Chua quá nên nhăn hết cả mặt.</span><b class="ticker-flower"><svg class="yen-icon" aria-hidden="true" focusable="false"><use href="#yen-bloom"></use></svg></b><span>Cái ly rủ Cục Yên đi làm. Cục Yên giả vờ không nghe.</span><b class="ticker-flower"><svg class="yen-icon" aria-hidden="true" focusable="false"><use href="#yen-bloom"></use></svg></b><span>Ai thả đám mây vào ly? Nó còn đang xin thêm đá.</span><b class="ticker-flower"><svg class="yen-icon" aria-hidden="true" focusable="false"><use href="#yen-bloom"></use></svg></b></div></div></div>
+    <nav class="yen-playmap" aria-label="Bản đồ bốn trò chơi của Cục Yên">
+      <div class="wrap yen-playmap-inner">
+        <span class="yen-playmap-title">CHƠI THEO Ý BẠN <span aria-hidden="true">↘</span></span>
+        <div class="yen-playmap-links">
+          <a href="#tam-trang"><span>01</span> Xin nghỉ</a>
+          <a href="#buong"><span>02</span> Vòng quay</a>
+          <a href="#cuahang"><span>03</span> Tiệm 0đ</a>
+          <a href="#ngoi-yen"><span>04</span> Pha bậy</a>
+        </div>
+      </div>
+    </nav>
     <section class="section permit-section wrap" id="tam-trang" aria-labelledby="permit-section-title">
       <div class="permit-heading reveal">
         <div>
@@ -1455,6 +1494,7 @@
                 <button class="permit-action permit-share-btn" id="permit-share-img" type="button">LƯU / CHIA SẺ GIẤY PHÉP <span aria-hidden="true">↗</span></button>
                 <a class="permit-action permit-map" href="https://maps.app.goo.gl/zxpyZev8F6YyzL3c6?g_st=ic" rel="noopener noreferrer" target="_blank">XEM ĐƯỜNG ĐẾN YÊN <span aria-hidden="true">↗</span></a>
                 <button type="button" class="permit-restart" id="permit-restart">Xin giấy phép khác ↺</button>
+                <a class="game-next" href="#buong">Đơn được duyệt. Qua Vòng quay Yên →</a>
               </div>
               <p id="permit-share-status" class="permit-share-status" role="status" aria-live="polite" hidden></p>
               <p class="permit-screenshot-hint">Cục Yên tự vẽ ảnh PNG để bạn giữ hoặc gửi bạn bè. Không tải dữ liệu lên máy chủ, không tạo voucher thật.</p>
@@ -1611,6 +1651,7 @@
             <span class="wheel-result-label">CỤC YÊN QUAY THỬ TRÚNG</span>
             <strong id="yen-wheel-reward"></strong>
             <p id="yen-wheel-reward-note"></p>
+            <a class="game-next" href="#cuahang">Quay xong rồi. Qua Tiệm 0đ →</a>
           </div>
         </div>
       </div>
@@ -1674,7 +1715,7 @@
           <div class="drink-whisper" id="drink-whisper" role="status" aria-live="polite">Nè! Thử chạm mình xem, mình có chuyện muốn nói.</div>
           <span class="drink-tap-hint" aria-hidden="true">↑ Chọc cái ly xem nó cãi gì</span>
         </div>
-        <div class="drink-result" aria-live="polite" aria-atomic="true"><div class="drink-result-kicker" id="drink-label">PHIẾU PHA NƯỚC SỐ 000</div><h3 id="drink-name">Chưa có ly nào. Cái muỗng đang khởi động.</h3><p id="drink-quip">Cục Yên ôm cái muỗng chờ bạn chọn. Hai đứa đều sốt ruột.</p><span class="drink-result-topping" id="drink-result-topping">TOPPING: CHƯA THẢ GÌ CẢ</span></div>
+        <div class="drink-result" aria-live="polite" aria-atomic="true"><div class="drink-result-kicker" id="drink-label">PHIẾU PHA NƯỚC SỐ 000</div><h3 id="drink-name">Chưa có ly nào. Cái muỗng đang khởi động.</h3><p id="drink-quip">Cục Yên ôm cái muỗng chờ bạn chọn. Hai đứa đều sốt ruột.</p><span class="drink-result-topping" id="drink-result-topping">TOPPING: CHƯA THẢ GÌ CẢ</span><a class="game-next" id="drink-next-game" href="#yen-ngoai-doi" hidden>Xem Yên ngoài đời thật →</a></div>
         <button class="drink-generate" id="drink-generate" type="button"><svg class="yen-icon" aria-hidden="true"><use href="#yen-bloom"></use></svg><span id="drink-button-label">CỤC YÊN, PHA BẬY ĐI!</span><svg class="yen-icon" aria-hidden="true"><use href="#yen-arrow"></use></svg></button>
         <p class="drink-footnote">Đây là ly nước tưởng tượng, không phải đơn đặt hàng thật. Cục Yên không giao nước qua màn hình đâu.</p>
       </div>
@@ -1733,7 +1774,7 @@
       <div class="footer-bottom"><span class="footer-sign"><img src="yen-logo.svg" width="1450" height="585" alt="yên" loading="lazy" decoding="async"><span>COFFEE & TEA</span></span><span class="footer-fineprint">© Yên · Hết trang rồi. Cục Yên vẫn ngồi canh ghế.</span><button type="button" id="privacy-btn">Trang này nhớ gì về mình?</button></div>
     </div>
   </footer>
-  <dialog id="receipt-dialog" aria-labelledby="receipt-label"><div class="receipt"><button type="button" id="close-receipt" class="receipt-flower-close" aria-label="Đóng biên lai" title="Đóng biên lai"><svg class="yen-icon" aria-hidden="true" focusable="false"><use href="#yen-bloom"></use></svg></button><div class="receipt-head"><img class="receipt-logo" src="yen-logo.svg" width="1450" height="585" alt="yên" decoding="async"><p id="receipt-label">Biên lai 0đ, không mua gì cả</p></div><div class="receipt-items"><div class="receipt-row"><span>01 × <span id="receipt-name"></span></span><b>0 ₫</b></div><div class="receipt-row"><span>Phí làm bạn vui</span><b>0 ₫</b></div><div class="receipt-row"><span>Tổng cộng</span><b>0 ₫</b></div></div><p class="receipt-quote" id="receipt-quote"></p><div class="receipt-bottom">KHÔNG CÓ MÃ ĐƠN<br>VÌ BẠN CHẲNG MUA GÌ.<p class="irl-receipt-note">Biên lai này chỉ để vui. Muốn uống nước thật thì ghé Yên Coffee &amp; Tea ở Láng Dài, Đất Đỏ nha.</p></div></div></dialog>
+  <dialog id="receipt-dialog" aria-labelledby="receipt-label"><div class="receipt"><button type="button" id="close-receipt" class="receipt-flower-close" aria-label="Đóng biên lai" title="Đóng biên lai"><svg class="yen-icon" aria-hidden="true" focusable="false"><use href="#yen-bloom"></use></svg></button><div class="receipt-head"><img class="receipt-logo" src="yen-logo.svg" width="1450" height="585" alt="yên" decoding="async"><p id="receipt-label">Biên lai 0đ, không mua gì cả</p></div><div class="receipt-items"><div class="receipt-row"><span>01 × <span id="receipt-name"></span></span><b>0 ₫</b></div><div class="receipt-row"><span>Phí làm bạn vui</span><b>0 ₫</b></div><div class="receipt-row"><span>Tổng cộng</span><b>0 ₫</b></div></div><p class="receipt-quote" id="receipt-quote"></p><div class="receipt-bottom">KHÔNG CÓ MÃ ĐƠN<br>VÌ BẠN CHẲNG MUA GÌ.<p class="irl-receipt-note">Biên lai này chỉ để vui. Yên dự kiến khai trương tháng 12/2026 nha.</p><a class="game-next" href="#ngoi-yen" id="receipt-next-game">Nhận biên lai rồi. Qua Phòng pha bậy →</a></div></div></dialog>
   
   <script>
     (() => {
@@ -1886,6 +1927,7 @@
         const reaction=shopReactions[activeProduct];window.YenReaction?.show(receipt.querySelector('.receipt-bottom'),reaction[0],reaction[1]);
       }));
       $('#close-receipt').addEventListener('click',()=>receipt.close());
+      $('#receipt-next-game').addEventListener('click',()=>receipt.close());
       receipt.addEventListener('click',e=>{if(e.target===receipt)receipt.close();});
       // Fictional drinks, each generated locally in RAM. Never a real menu or order.
       const DRINKS = [{"name":"Cà phê đen tập bơi","quip":"Cà phê nhảy xuống ly, xong mới nhớ mình chính là nước. Đứng hình luôn.","liquid":"#aa8065","topping":"#e0bd8c","whisper":"“Đừng cứu! Cho mình mượn ống hút làm phao!”"},{"name":"Matcha dâu tập lái","quip":"Trái dâu cầm vô-lăng là cái muỗng. Matcha ngồi ghế sau thắt dây an toàn.","liquid":"#afc88e","topping":"#f5afb7","whisper":"“Muỗng chưa có bằng lái đâu nha!”"},{"name":"Cacao cốt dừa đắp chăn","quip":"Cacao kéo lớp cốt dừa lên làm chăn. Cục Yên ghen vì cũng muốn đắp.","liquid":"#b98e75","topping":"#f4e3c6","whisper":"“Suỵt! Đừng đánh thức trái dừa!”"},{"name":"Nước ép thơm táo đi thuyền","quip":"Thơm làm thuyền trưởng, táo cầm mái chèo. Thuyền chìm ngay trong chiếc ly.","liquid":"#f1d17a","topping":"#bcd9a7","whisper":"“Ống hút đâu? Cho làm phao cứu sinh!”"},{"name":"Trà atiso lên ngôi","quip":"Trà atiso đội vương miện lá. Vừa đăng quang đã yêu cầu một chiếc ống hút.","liquid":"#c09da7","topping":"#d4d9a9","whisper":"“Kính chào bệ hạ! Cho thần xin một ngụm.”"},{"name":"Matcha tào phớ đi học","quip":"Tào phớ học môn lắc lư. Thầy giáo là cái muỗng, vừa dạy vừa khuấy.","liquid":"#a8c39d","topping":"#fff3d4","whisper":"“Em tốt nghiệp loại... mềm!”"},{"name":"Ly cà phê mang nhầm dép","quip":"Ly cà phê chỉ đi dép trái. Vẫn tự tin bảo đó là mốt mới.","liquid":"#9c745e","topping":"#f4d6a6","whisper":"“Đợi tí, mình đi kiếm chiếc dép phải.”"},{"name":"Trà trái cây tập làm mây","quip":"Miếng trái cây muốn bay lên. Đá viên giữ chân lại, đòi đi cùng.","liquid":"#e8ac9a","topping":"#e9d5a0","whisper":"“Mây gì mà có cả ống hút vậy?”"},{"name":"Cacao cãi nhau với muỗng","quip":"Cacao giận cái muỗng ba giây. Muỗng khuấy một vòng, cả hai làm hòa.","liquid":"#ad8675","topping":"#ebcbb9","whisper":"“Giận thì giận, vẫn phải khuấy nha!”"},{"name":"Nước ép táo thơm mở concert","quip":"Táo hát chính, thơm đánh trống. Cục Yên ngồi hàng đầu, vỗ tay lệch nhịp.","liquid":"#d7d98d","topping":"#f6c57d","whisper":"“Bài đầu tiên: Uống một ngụm!”"},{"name":"Matcha dâu tập yoga","quip":"Dâu cúi chào lá trà. Cả hai tập quá hăng rồi lộn nhào vào ly.","liquid":"#b4cf9c","topping":"#efb0b0","whisper":"“Tư thế cuối: trái dâu úp ngược!”"},{"name":"Trà atiso ngồi nhầm ghế","quip":"Trà atiso ngồi lên bàn, tự tin bảo: “Ghế mới cao ghê!”","liquid":"#c3a6b0","topping":"#e1d7b4","whisper":"“Cái ghế thật đang đứng cạnh kìa!”"}];
@@ -1960,6 +2002,7 @@
         $('#drink-whisper').textContent='Nè! Thử chạm mình xem, mình có chuyện muốn nói.';
         $('#drink-result-topping').textContent='TOPPING: CHƯA THẢ GÌ CẢ';
         $('#drink-button-label').textContent='CỤC YÊN, PHA BẬY ĐI!';
+        $('#drink-next-game').hidden=true;
         setDrinkSymbols(null);
       }
       drinkBtn.addEventListener('click',()=>{
@@ -1986,6 +2029,7 @@
           $('#drink-button-label').textContent='PHA BẬY THÊM LY NỮA!';
           drinkHint.textContent='Xong ly '+topping.label+' rồi! Cục Yên nếm thử bằng mắt, bảo ổn.';
           drinkBtn.disabled=false;drinkMixing=false;
+          $('#drink-next-game').hidden=false;
           window.setTimeout(()=>drinkMachine.classList.remove('is-revealing'),prefersReduced?40:600);
         },prefersReduced?20:830);
       });
@@ -2197,6 +2241,23 @@
 </script>
   
 
+<script id="yen-playmap-script">
+(function(){
+  "use strict";
+  const links=Array.from(document.querySelectorAll(".yen-playmap-links a"));
+  const items=links.map(link=>({link,section:document.getElementById(link.hash.slice(1))})).filter(x=>x.section);
+  function mark(id){items.forEach(({link})=>{if(link.hash==="#"+id)link.setAttribute("aria-current","location");else link.removeAttribute("aria-current");});}
+  links.forEach(link=>link.addEventListener("click",()=>mark(link.hash.slice(1))));
+  if("IntersectionObserver" in window){
+    const observer=new IntersectionObserver(records=>{
+      const visible=records.filter(record=>record.isIntersecting).sort((a,b)=>a.boundingClientRect.top-b.boundingClientRect.top);
+      if(visible.length)mark(visible[0].target.id);
+    },{rootMargin:"-105px 0px -55% 0px",threshold:0});
+    items.forEach(({section})=>observer.observe(section));
+  }
+  if(location.hash){const id=decodeURIComponent(location.hash.slice(1));if(items.some(x=>x.section.id===id))mark(id);}
+})();
+</script>
 <script id="yen-mascot-reactions">
 (function(){
   "use strict";
