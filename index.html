@@ -801,6 +801,11 @@
 .hero h1 em.hero-go-word{font-style:normal;font-weight:900;color:#24573f}
 .hero h1 em.hero-go-word::after{bottom:-9%;border-bottom:5px solid #e8a78e;transform:rotate(-3deg)}
 @media(max-width:410px){.hero h1 .hero-last-line{font-size:clamp(22px,6.4vw,28px);letter-spacing:-.023em}}
+/* v33 hero: invitation with a local tongue-twister; emphasize both Đi words. */
+.hero h1 .hero-invite-line{display:block;max-width:100%;white-space:normal;overflow-wrap:break-word;text-wrap:balance;line-height:1.28;letter-spacing:-.018em;font-size:clamp(28px,3.65vw,51px)}
+.hero h1 .hero-local-line{font-size:clamp(23px,2.65vw,36px);margin-top:3px}
+@media(max-width:760px){.hero h1 .hero-invite-line{font-size:clamp(27px,7.5vw,37px)}.hero h1 .hero-local-line{font-size:clamp(22px,5.85vw,29px)}}
+@media(max-width:390px){.hero h1 .hero-local-line{font-size:clamp(21px,5.7vw,23px);line-height:1.34}}
 /* v31 accessibility and mobile fixes */
 .hero-stage{z-index:0}.hero-copy{position:relative;z-index:2}
 .mascot-button.is-staged{visibility:hidden}
@@ -887,7 +892,7 @@
   <main>
     <section class="hero wrap" id="dau" aria-labelledby="hero-title">
       <div class="hero-copy">
-        <h1 id="hero-title">Ghé chơi.<span class="hero-last-line">Rồi muốn <em class="hero-go-word">đi</em> đâu thì <em class="hero-go-word">đi</em>.</span></h1>
+        <h1 id="hero-title">Ghé chơi.<span class="hero-invite-line"><em class="hero-go-word">Đi</em> đâu cho xa.</span><span class="hero-invite-line hero-local-line"><em class="hero-go-word">Đi</em> Láng Dài lái cục dàng nè</span></h1>
         <p class="hero-intro"><strong>Yên Coffee &amp; Tea · Đất Đỏ.</strong> Ngoài đời có cà phê, trà và một góc để ngồi nghỉ. Trên web thì Cục Yên chỉ giỏi pha trò.</p>
         <div class="hero-cta"><button class="big-btn hero-dare" id="poke-btn" type="button" aria-describedby="poke-reply">Đừng bấm cái này <svg class="yen-icon" aria-hidden="true" focusable="false"><use href="#yen-talk"></use></svg></button><a class="hero-real-btn" href="#yen-ngoai-doi">Yên ngoài đời <svg class="yen-icon" aria-hidden="true"><use href="#yen-arrow"></use></svg></a></div>
         <p class="poke-reply" id="poke-reply" role="status" aria-live="polite"></p>
