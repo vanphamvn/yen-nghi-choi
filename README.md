@@ -33,7 +33,7 @@ Bản GitHub-ready sử dụng Google Fonts Noto Sans, Noto Serif và Noto Sans 
 ## Mã nguồn
 
 - `index.html`: bố cục, hoạt cảnh và nội dung chính.
-- `yen-wheel.js` và `yen-wheel.css`: Vòng quay Yên với 8 phần thưởng *mô phỏng*, chưa có giá trị đổi ưu đãi tại quán. Không lưu lượt quay hay dữ liệu người chơi.
+- Vòng quay Yên được nhúng trực tiếp vào `index.html` (CSS/JS) để tránh lỗi tải tài nguyên rời, với 8 phần thưởng *mô phỏng*, chưa có giá trị đổi ưu đãi tại quán. Không lưu lượt quay hay dữ liệu người chơi.
 - `yen-logo.svg`: logo chính thức.
 - `vercel.json`, `robots.txt`: cấu hình deploy và SEO.
 - Font được tải qua Google Fonts; không lưu trữ file font trong repository.
