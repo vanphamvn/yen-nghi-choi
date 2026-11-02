@@ -1157,17 +1157,34 @@
 .wheel-center small{font:850 clamp(6px,.8vw,9px)/1.2 "Noto Sans",Arial,sans-serif;letter-spacing:.09em;margin-top:5px}
 .wheel-interact-note{text-align:center;font:750 10px/1.5 "Noto Sans",Arial,sans-serif;color:#617968;margin-top:0;min-height:15px}
 .wheel-right{display:flex;flex-direction:column;align-items:stretch;gap:11px;padding:4px 4px 4px 8px;min-width:0}
-.wheel-clerk{position:relative;margin:0 auto;width:135px;height:124px;display:flex;justify-content:center;align-items:flex-end}
-.wheel-clerk-face{width:95px;height:95px;border:3px solid #335343;border-radius:45% 55% 48% 52%;background:#d9e5b0;position:relative;box-shadow:inset -7px -6px 0 #bacc9a}
-.wheel-clerk-face:before,.wheel-clerk-face:after{content:"";position:absolute;top:43px;width:8px;height:9px;background:#2f5140;border-radius:100%}
-.wheel-clerk-face:before{left:24px}.wheel-clerk-face:after{right:24px}
-.wheel-clerk-smile{position:absolute;width:21px;height:12px;border-bottom:3px solid #335343;border-radius:50%;left:34px;top:54px}
-.wheel-clerk-cheeks{position:absolute;left:14px;top:55px;width:14px;height:8px;background:#edb5a3;border-radius:100%;box-shadow:52px 0 #edb5a3}
-.wheel-clerk-top{position:absolute;top:3px;left:24px;width:62px;height:28px;border:2px solid #315442;border-radius:18px 18px 7px 7px;background:#efc68a;transform:rotate(-7deg);z-index:1}
-.wheel-clerk-hand{position:absolute;bottom:21px;width:24px;height:13px;background:#d9e5b0;border:3px solid #335343;border-radius:100px}
-.wheel-clerk-hand.left{left:13px;transform:rotate(-26deg)}.wheel-clerk-hand.right{right:12px;transform:rotate(26deg)}
-.wheel-clerk.spinning .wheel-clerk-face{animation:wheel-clerk-bob .4s ease-in-out infinite alternate}
-@keyframes wheel-clerk-bob{to{transform:translateY(-5px) rotate(5deg)}}
+/* Cục Yên: crisp original SVG mascot, readable from laptop down to mobile. */
+.wheel-clerk{position:relative;width:174px;height:194px;margin:0 auto;display:flex;align-items:center;justify-content:center;isolation:isolate;flex:none}
+.wheel-clerk-art{display:block;width:100%;height:100%;overflow:visible;filter:drop-shadow(0 6px 0 #bdcfae)}
+.wheel-clerk-body,.wheel-clerk-arm-left,.wheel-clerk-arm-right,.wheel-clerk-hat,.wheel-clerk-feet,.wheel-clerk-brows,.wheel-clerk-sparkles{transform-box:fill-box;transform-origin:center}
+.wheel-clerk-mouth-spin,.wheel-clerk-mouth-win{display:none}
+.wheel-clerk:not(.spinning):not(.celebrating) .wheel-clerk-body{animation:wheel-clerk-breathe 3.5s ease-in-out infinite}
+.wheel-clerk:not(.spinning):not(.celebrating) .wheel-clerk-eyes{animation:wheel-clerk-blink 5.2s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+.wheel-clerk.spinning .wheel-clerk-body{animation:wheel-clerk-watch .55s ease-in-out infinite alternate}
+.wheel-clerk.spinning .wheel-clerk-hat{animation:wheel-clerk-hat-tilt .65s ease-in-out infinite alternate}
+.wheel-clerk.spinning .wheel-clerk-arm-right{animation:wheel-clerk-wave .48s ease-in-out infinite alternate}
+.wheel-clerk.spinning .wheel-clerk-mouth-idle{display:none}
+.wheel-clerk.spinning .wheel-clerk-mouth-spin{display:block}
+.wheel-clerk.spinning .wheel-clerk-pupil{transform:translateX(-3px)}
+.wheel-clerk.celebrating .wheel-clerk-body{animation:wheel-clerk-hop .75s ease-out 2}
+.wheel-clerk.celebrating .wheel-clerk-arm-left{animation:wheel-clerk-cheer-left .7s ease-in-out 2}
+.wheel-clerk.celebrating .wheel-clerk-arm-right{animation:wheel-clerk-cheer-right .7s ease-in-out 2}
+.wheel-clerk.celebrating .wheel-clerk-mouth-idle{display:none}
+.wheel-clerk.celebrating .wheel-clerk-mouth-win{display:block}
+.wheel-clerk.celebrating .wheel-clerk-sparkles{animation:wheel-clerk-twinkle .55s ease-in-out 3}
+@keyframes wheel-clerk-breathe{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+@keyframes wheel-clerk-blink{0%,42%,44%,88%,90%,100%{transform:scaleY(1)}43%,89%{transform:scaleY(.12)}}
+@keyframes wheel-clerk-watch{from{transform:rotate(-4deg) translateY(0)}to{transform:rotate(3deg) translateY(-7px)}}
+@keyframes wheel-clerk-hat-tilt{from{transform:rotate(0)}to{transform:rotate(-6deg)}}
+@keyframes wheel-clerk-wave{from{transform:rotate(-10deg)}to{transform:rotate(9deg)}}
+@keyframes wheel-clerk-hop{0%,100%{transform:translateY(0)}35%{transform:translateY(-19px)}65%{transform:translateY(-3px)}}
+@keyframes wheel-clerk-cheer-left{0%,100%{transform:rotate(0)}35%,65%{transform:rotate(-19deg)}}
+@keyframes wheel-clerk-cheer-right{0%,100%{transform:rotate(0)}35%,65%{transform:rotate(20deg)}}
+@keyframes wheel-clerk-twinkle{0%,100%{opacity:.3;transform:scale(.85)}50%{opacity:1;transform:scale(1.13)}}
 .wheel-speech{position:relative;text-align:center;border:1.5px solid #b9c6ac;border-radius:14px;padding:11px 12px;background:#eef2e0;min-height:64px;font:750 12px/1.48 "Noto Sans",Arial,sans-serif;color:#365845}
 .wheel-speech:before{content:"";position:absolute;top:-9px;left:calc(50% - 8px);width:14px;height:14px;background:#eef2e0;border-left:1.5px solid #b9c6ac;border-top:1.5px solid #b9c6ac;transform:rotate(45deg)}
 .wheel-spin-btn{border:2px solid #244335;border-radius:16px;box-shadow:0 5px 0 #86a17e;background:#315743;color:#fff9e7;min-height:65px;padding:12px 13px;font:900 clamp(16px,1.7vw,21px)/1.1 "Noto Sans",Arial,sans-serif;cursor:pointer;transition:transform .14s,box-shadow .14s,background .14s}
@@ -1185,10 +1202,11 @@
 .wheel-confetti-piece{position:absolute;top:-15px;width:8px;height:14px;border-radius:2px;animation:wheel-fall var(--d,1.8s) ease-out forwards}
 @keyframes wheel-fall{0%{transform:translate3d(0,-15px,0) rotate(0);opacity:1}100%{transform:translate3d(var(--dx,25px),var(--dy,530px),0) rotate(var(--rot,450deg));opacity:0}}
 .wheel-spin-btn:focus-visible{outline:3px solid #b47551;outline-offset:4px}
-@media(max-width:1100px){.wheel-content{grid-template-columns:minmax(0,1fr) minmax(152px,.8fr)}.wheel-right{padding-left:0}.wheel-clerk{transform:scale(.9);margin-block:-6px}.wheel-panel{padding:13px}.wheel-section .release-layout{grid-template-columns:minmax(0,.72fr) minmax(0,1.28fr)}}
+@media(max-width:1100px){.wheel-content{grid-template-columns:minmax(0,1fr) minmax(152px,.8fr)}.wheel-right{padding-left:0}.wheel-clerk{width:155px;height:174px;margin-block:0}.wheel-panel{padding:13px}.wheel-section .release-layout{grid-template-columns:minmax(0,.72fr) minmax(0,1.28fr)}}
 @media(max-width:860px){.wheel-section .release-layout{grid-template-columns:1fr;gap:20px}.wheel-section .release-copy>p{max-width:640px}.wheel-content{grid-template-columns:minmax(0,1fr) minmax(205px,.7fr);gap:12px}.wheel-panel{max-width:760px;width:100%;margin:0 auto}.wheel-section .release-copy .section-title{font-size:clamp(44px,8vw,67px)}}
-@media(max-width:540px){.wheel-panel{padding:11px 10px 15px;box-shadow:6px 7px 0 #b9cda8}.wheel-content{display:flex;flex-direction:column;gap:0}.wheel-main{width:100%}.wheel-viewport{width:min(100%,365px)}.wheel-right{width:100%;display:grid;grid-template-columns:90px minmax(0,1fr);grid-template-areas:"clerk speech" "button button" "result result";gap:9px 11px;align-items:center;padding:0 6px}.wheel-clerk{grid-area:clerk;width:90px;height:95px;transform:scale(.7);transform-origin:center center;margin:-10px}.wheel-speech{grid-area:speech;font-size:11.5px;min-height:0}.wheel-speech:before{top:calc(50% - 7px);left:-8px;border-left:1.5px solid #b9c6ac;border-bottom:1.5px solid #b9c6ac;border-top:0}.wheel-spin-btn{grid-area:button;min-height:57px;font-size:18px}.wheel-result{grid-area:result;min-height:72px}.wheel-disclaimer{font-size:10.5px;margin-top:12px}.wheel-interact-note{font-size:9px}.wheel-section .release-copy .section-title{font-size:clamp(43px,10vw,60px)}}
-@media(prefers-reduced-motion:reduce){.wheel-clerk.spinning .wheel-clerk-face,.wheel-confetti-piece{animation:none!important}}
+@media(max-width:540px){.wheel-panel{padding:11px 10px 15px;box-shadow:6px 7px 0 #b9cda8}.wheel-content{display:flex;flex-direction:column;gap:0}.wheel-main{width:100%}.wheel-viewport{width:min(100%,365px)}.wheel-right{width:100%;display:grid;grid-template-columns:118px minmax(0,1fr);grid-template-areas:"clerk speech" "button button" "result result";gap:9px 11px;align-items:center;padding:0 6px}.wheel-clerk{grid-area:clerk;width:118px;height:134px;transform:none;margin:0;align-self:center}.wheel-speech{grid-area:speech;font-size:11.5px;min-height:0}.wheel-speech:before{top:calc(50% - 7px);left:-8px;border-left:1.5px solid #b9c6ac;border-bottom:1.5px solid #b9c6ac;border-top:0}.wheel-spin-btn{grid-area:button;min-height:57px;font-size:18px}.wheel-result{grid-area:result;min-height:72px}.wheel-disclaimer{font-size:10.5px;margin-top:12px}.wheel-interact-note{font-size:9px}.wheel-section .release-copy .section-title{font-size:clamp(43px,10vw,60px)}}
+@media(max-width:360px){.wheel-right{grid-template-columns:106px minmax(0,1fr);gap:8px}.wheel-clerk{width:106px;height:124px}}
+@media(prefers-reduced-motion:reduce){.wheel-clerk *, .wheel-confetti-piece{animation:none!important;transition:none!important}}
 
 .wheel-viewport:disabled{cursor:wait}
 .wheel-viewport:focus-visible{outline:3px solid #ae7953;outline-offset:2px;border-radius:50%}
@@ -1472,9 +1490,76 @@
         </div>
         <div class="wheel-right">
           <div class="wheel-clerk" id="yen-wheel-clerk" aria-hidden="true">
-            <span class="wheel-clerk-top"></span><span class="wheel-clerk-hand left"></span>
-            <span class="wheel-clerk-face"><span class="wheel-clerk-smile"></span><span class="wheel-clerk-cheeks"></span></span>
-            <span class="wheel-clerk-hand right"></span>
+            <svg class="wheel-clerk-art" viewBox="0 0 248 278" xmlns="http://www.w3.org/2000/svg" focusable="false">
+              <defs>
+                <linearGradient id="yen-wheel-clerk-body" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0" stop-color="#e5efc6"/>
+                  <stop offset=".65" stop-color="#d3e4ae"/>
+                  <stop offset="1" stop-color="#b6cf96"/>
+                </linearGradient>
+                <linearGradient id="yen-wheel-clerk-hat" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0" stop-color="#ffdf9d"/>
+                  <stop offset="1" stop-color="#dba36f"/>
+                </linearGradient>
+              </defs>
+              <ellipse cx="121" cy="261" rx="92" ry="10" fill="#9aaf93" opacity=".35"/>
+              <g class="wheel-clerk-feet" fill="none" stroke="#315341" stroke-width="8" stroke-linecap="round">
+                <path d="M92 220Q88 242 81 247"/><path d="M153 220Q156 243 166 245"/>
+              </g>
+              <g fill="#d5a984" stroke="#315341" stroke-width="5" stroke-linejoin="round">
+                <path d="M78 240q-14-2-22 7 2 10 24 10 15-1 14-9z"/>
+                <path d="M167 238q14-2 23 8-3 10-26 10-15-1-13-9z"/>
+              </g>
+              <g class="wheel-clerk-arm-left">
+                <path d="M57 158Q28 155 22 124" fill="none" stroke="#315341" stroke-width="16" stroke-linecap="round"/>
+                <path d="M57 158Q28 155 22 124" fill="none" stroke="#d5e4ae" stroke-width="9" stroke-linecap="round"/>
+                <ellipse cx="22" cy="122" rx="12" ry="13" fill="#dce9bc" stroke="#315341" stroke-width="5"/>
+              </g>
+              <g class="wheel-clerk-arm-right">
+                <path d="M193 159Q225 148 224 116" fill="none" stroke="#315341" stroke-width="16" stroke-linecap="round"/>
+                <path d="M193 159Q225 148 224 116" fill="none" stroke="#d5e4ae" stroke-width="9" stroke-linecap="round"/>
+                <ellipse cx="223" cy="114" rx="12" ry="13" fill="#dce9bc" stroke="#315341" stroke-width="5"/>
+                <path d="M219 98l-7-13m14 11 6-10" fill="none" stroke="#315341" stroke-width="4" stroke-linecap="round"/>
+              </g>
+              <g class="wheel-clerk-body">
+                <path d="M53 149Q45 112 70 89Q85 72 117 72Q160 67 183 94Q209 119 197 178Q188 222 149 235Q120 247 88 231Q59 218 53 186Q49 171 53 149Z"
+                  fill="url(#yen-wheel-clerk-body)" stroke="#315341" stroke-width="7" stroke-linejoin="round"/>
+                <path d="M66 133Q79 104 98 101" fill="none" stroke="#fffbea" stroke-width="9" stroke-linecap="round" opacity=".55"/>
+                <path d="M83 218Q124 243 169 215" fill="none" stroke="#91ae83" stroke-width="7" stroke-linecap="round" opacity=".52"/>
+                <g class="wheel-clerk-face">
+                  <g class="wheel-clerk-brows" fill="none" stroke="#315341" stroke-width="5" stroke-linecap="round">
+                    <path d="M88 125Q101 119 111 124"/><path d="M144 124Q157 119 167 126"/>
+                  </g>
+                  <g class="wheel-clerk-eyes">
+                    <ellipse cx="101" cy="149" rx="12" ry="15" fill="#fffdf0" stroke="#315341" stroke-width="3.5"/>
+                    <ellipse cx="155" cy="149" rx="12" ry="15" fill="#fffdf0" stroke="#315341" stroke-width="3.5"/>
+                    <ellipse class="wheel-clerk-pupil" cx="104" cy="150" rx="6.5" ry="9" fill="#315341"/>
+                    <ellipse class="wheel-clerk-pupil" cx="158" cy="150" rx="6.5" ry="9" fill="#315341"/>
+                    <circle cx="106" cy="146" r="2.5" fill="#fffdf0"/><circle cx="160" cy="146" r="2.5" fill="#fffdf0"/>
+                  </g>
+                  <ellipse cx="79" cy="175" rx="17" ry="10" fill="#ecad9f" opacity=".9"/>
+                  <ellipse cx="178" cy="175" rx="17" ry="10" fill="#ecad9f" opacity=".9"/>
+                  <path class="wheel-clerk-mouth-idle" d="M113 181Q128 196 144 180" fill="none" stroke="#315341" stroke-width="5" stroke-linecap="round"/>
+                  <ellipse class="wheel-clerk-mouth-spin" cx="129" cy="184" rx="9" ry="12" fill="#315341"/>
+                  <path class="wheel-clerk-mouth-win" d="M107 179Q129 214 151 180Z" fill="#985f60" stroke="#315341" stroke-width="5" stroke-linejoin="round"/>
+                  <path class="wheel-clerk-mouth-win" d="M117 197Q129 189 142 196" fill="none" stroke="#f8d3c4" stroke-width="4" stroke-linecap="round"/>
+                </g>
+                <path d="M101 218L127 230 153 218" fill="#edbf89" stroke="#315341" stroke-width="4" stroke-linejoin="round"/>
+                <path d="M126 229l-2 17 13-10" fill="#d79474" stroke="#315341" stroke-width="3" stroke-linejoin="round"/>
+              </g>
+              <g class="wheel-clerk-hat">
+                <path d="M75 93Q66 62 89 47Q110 31 142 36Q168 41 176 65L175 91Z" fill="url(#yen-wheel-clerk-hat)" stroke="#315341" stroke-width="6" stroke-linejoin="round"/>
+                <path d="M66 93Q126 81 185 91" fill="none" stroke="#315341" stroke-width="8" stroke-linecap="round"/>
+                <path d="M94 58Q122 48 150 55" fill="none" stroke="#fff1c7" stroke-width="5" stroke-linecap="round"/>
+                <rect x="109" y="59" width="41" height="22" rx="7" fill="#fff6df" stroke="#315341" stroke-width="3"/>
+                <text x="129.5" y="75" text-anchor="middle" font-family="Arial,sans-serif" font-size="13" font-weight="900" fill="#315341">YÊN</text>
+                <path d="M124 33Q128 18 143 13Q145 31 128 36Z" fill="#8faf7c" stroke="#315341" stroke-width="3" stroke-linejoin="round"/>
+              </g>
+              <g class="wheel-clerk-sparkles" fill="#e9bc83" stroke="#315341" stroke-width="2">
+                <path d="M37 51l5 12 12 5-12 5-5 12-5-12-12-5 12-5z"/>
+                <path d="M198 49l4 9 10 5-10 4-4 10-4-10-10-4 10-5z"/>
+              </g>
+            </svg>
           </div>
           <div class="wheel-speech" id="yen-wheel-speech" role="status" aria-live="polite">Bấm quay đi! Cục Yên đứng đây cổ vũ.</div>
           <button class="wheel-spin-btn" id="yen-wheel-spin" type="button">QUAY YÊN!</button>
@@ -1984,6 +2069,7 @@
       spinButton.disabled=false;wheelButton.disabled=false;
       spinButton.textContent='Quay thêm lượt nữa ↻';
       host.classList.remove('spinning');
+      host.classList.add('celebrating');
       const gift=prizes[index];
       resultName.textContent=gift.name;
       resultDescription.textContent=gift.message+' Đây chỉ là ưu đãi mô phỏng, chưa dùng để đổi quà tại quán.';
@@ -1998,6 +2084,7 @@
       confetti.replaceChildren();
       spinButton.disabled=true;wheelButton.disabled=true;
       spinButton.textContent='Đang quay...';
+      host.classList.remove('celebrating');
       host.classList.add('spinning');
       announce(['Cục Yên đang chóng mặt. Bạn giữ hộ cái nón!','Quay đều tay, đừng để Cục Yên bay theo!','Đang tìm phần quà... hay tìm cái ghế ngồi?'][randomInt(3)]);
       const selectedIndex=randomInt(prizes.length);
@@ -2031,7 +2118,7 @@
       else if(!document.hidden&&isSpinning){
         // If a tab was backgrounded, end the spin safely rather than leave disabled controls.
         isSpinning=false;spinButton.disabled=false;wheelButton.disabled=false;
-        spinButton.textContent='Quay lại nào ↻';host.classList.remove('spinning');
+        spinButton.textContent='Quay lại nào ↻';host.classList.remove('spinning','celebrating');
         announce('Cục Yên đứng đợi bạn về tab. Quay lại một lần nhé!');
       }
     });
@@ -2039,7 +2126,7 @@
       if(frame)cancelAnimationFrame(frame);
       frame=0;isSpinning=false;rotation=0;spinCount=0;paint();
       result.hidden=true;spinButton.disabled=false;wheelButton.disabled=false;
-      spinButton.textContent='QUAY YÊN!';host.classList.remove('spinning');
+      spinButton.textContent='QUAY YÊN!';host.classList.remove('spinning','celebrating');
       confetti.replaceChildren();announce('Bấm quay đi! Cục Yên đứng đây cổ vũ.');
     }};
     paint();
