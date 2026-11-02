@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="light">
+<title>Yên Tarot v2 · A1 UX Prototype</title>
+<style>
+:root{--ink:#294b3b;--muted:#59715e;--paper:#fcf7ea;--sage:#dfe9d9;--gold:#e6c286;--blush:#ebae9d;--border:#aabb9f}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:#e8efdf;color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans",Arial,sans-serif;line-height:1.5}
+button,input{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible,summary:focus-visible{outline:3px solid #bc7655;outline-offset:3px}
+.page{max-width:1150px;margin:auto;padding:clamp(18px,4vw,42px)}
+.topline{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:20px}
+.brand{font:900 27px/1 Georgia,serif;letter-spacing:-.06em}.brand small{display:block;font:800 9px/1.5 system-ui;letter-spacing:.13em}
+.draft{border:1px solid #b59c73;border-radius:999px;padding:7px 11px;font-size:10px;font-weight:800;color:#8b7054;background:#fff9e8}
+.mode{display:flex;width:max-content;max-width:100%;gap:5px;padding:5px;background:#f8f8ef;border:1px solid var(--border);border-radius:999px;margin:0 0 20px}
+.tab{background:transparent;border:0;border-radius:999px;color:var(--muted);padding:12px 20px;font-size:12px;font-weight:900}
+.tab[aria-selected=true]{background:var(--ink);color:#fff}
+h1{font:500 clamp(37px,7vw,65px)/1.1 Georgia,serif;letter-spacing:-.045em;margin:0 0 8px}
+h1 i{color:#739477}p{margin:0}.hero-desc{color:#647866;font-size:14px;margin-bottom:24px}
+.eyebrow{font-size:10px;font-weight:900;letter-spacing:.12em;color:#8a785f;margin-bottom:9px}
+.panel{border:2px solid var(--ink);border-radius:27px;background:var(--paper);padding:clamp(14px,2.5vw,25px);box-shadow:9px 10px 0 #b8caa9;overflow:hidden}
+.stepper{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;list-style:none;padding:0;margin:0 0 24px}
+.step{border-bottom:4px solid #d2dfcb;padding:0 4px 9px;color:#89998a;font-size:11px;font-weight:850;transition:border .2s,color .2s}
+.step.active{border-color:#d8ab77;color:var(--ink)}.step.complete{border-color:#699875;color:#4c7555}
+.main-scene{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:30px;align-items:start;min-height:248px}
+h2{font:650 clamp(27px,4vw,43px)/1.13 Georgia,serif;margin:4px 0 13px;letter-spacing:-.03em}
+.instructions{color:#637565;font-size:13px;line-height:1.62;margin-bottom:20px;max-width:480px}
+.question{font-size:13px;font-weight:750;margin-top:13px;min-height:48px;color:#506956;max-width:390px}
+.topics{display:flex;flex-wrap:wrap;gap:8px}
+.topic{border:1.5px solid #abc1aa;background:#fffefa;color:#41654c;border-radius:999px;padding:10px 14px;min-height:44px;font-size:12px;font-weight:800}
+.topic.active{background:#315541;border-color:#315541;color:#fff}
+.options{display:flex;align-items:center;gap:8px;margin-top:19px;font-size:12px;color:#55705d;font-weight:750}
+.options input{width:19px;height:19px;accent-color:#315541}
+.primary{min-height:54px;border:2px solid #254532;border-radius:13px;background:#315541;color:white;box-shadow:0 5px 0 #9bb294;padding:11px 23px;font-size:14px;font-weight:900}
+.primary:disabled{background:#99b0a0;cursor:wait}.secondary{border:1px solid #9ab19c;border-radius:12px;background:#fffef7;color:var(--ink);min-height:45px;padding:10px 17px;font-size:12px;font-weight:800}
+.ctas{display:flex;gap:9px;align-items:center;flex-wrap:wrap}
+.deck-scene{display:flex;align-items:center;justify-content:center;min-height:245px;background:radial-gradient(circle at center,#f3f6e7,#e5edd9);border:1px dashed #b0c4ac;border-radius:21px;position:relative;overflow:hidden}
+.stack{position:relative;width:136px;height:206px;margin:15px}
+.stack span{position:absolute;inset:0;border:3px solid var(--ink);border-radius:13px;background:repeating-linear-gradient(45deg,#315541,#315541 9px,#3e664b 9px,#3e664b 18px);box-shadow:5px 9px 0 #becab2;display:grid;place-items:center;color:#dfc894;font-size:61px}
+.stack span:nth-child(1){transform:translate(-15px,-6px) rotate(-9deg)}
+.stack span:nth-child(2){transform:translate(13px,-3px) rotate(8deg)}
+.stack span:nth-child(3){transform:rotate(0)}
+.deck-scene.shuffling .stack span:nth-child(1){animation:splitleft .85s ease-in-out}
+.deck-scene.shuffling .stack span:nth-child(2){animation:splitright .85s ease-in-out}
+@keyframes splitleft{45%{transform:translate(-95px,-19px) rotate(-28deg)}100%{transform:translate(-15px,-6px) rotate(-9deg)}}
+@keyframes splitright{45%{transform:translate(95px,-19px) rotate(28deg)}100%{transform:translate(13px,-3px) rotate(8deg)}}
+.status-line{display:block;margin-top:17px;color:#637665;font-size:11px;font-weight:850;min-height:20px}
+.fan-caption{font-size:12px;color:#59715e;font-weight:800;margin:18px 0 9px}
+.fan{display:flex;justify-content:center;gap:8px;overflow-x:auto;overscroll-behavior-inline:contain;padding:14px 5px 17px;scroll-snap-type:x proximity}
+.back{position:relative;flex:0 0 clamp(83px,10vw,122px);height:clamp(135px,16vw,182px);border:3px solid var(--ink);border-radius:12px;color:#e7ca94;box-shadow:3px 6px 0 #bacab1;scroll-snap-align:start;background:repeating-linear-gradient(45deg,#315541,#315541 8px,#42684e 8px,#42684e 16px);transition:transform .22s,opacity .2s;display:grid;place-items:center;font-size:36px}
+.back:after{content:"";position:absolute;inset:8%;border:2px solid #d2bd89;border-radius:7px;pointer-events:none}
+.back:hover:not(:disabled){transform:translateY(-10px) rotate(-2deg)}
+.back:disabled{opacity:.22;box-shadow:none}
+.back.picking{animation:deal .42s ease-out forwards}
+@keyframes deal{0%{transform:translateY(0) rotate(0)}50%{transform:translateY(-40px) scale(1.08)}100%{transform:translateY(-15px) scale(.72);opacity:0}}
+.spread{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:15px 0 0}
+.slot{border:1.5px dashed #b0c3aa;background:#f0f1e5;padding:12px 8px 11px;text-align:center;border-radius:17px;min-width:0}
+.slot.active{border:2px solid #d2a36c;background:#fbedd7}
+.slot.filled{border:1.5px solid #9fb59c;background:#fffdf4}
+.slot-label{display:block;font-weight:900;font-size:11px;margin-bottom:8px}
+.face{margin:0 auto;width:min(100%,155px);aspect-ratio:3/4.2;border:3px double #8b9f86;border-radius:9px;background:#fff7df;padding:12px 5px 8px;display:flex;flex-direction:column;justify-content:space-between;align-items:center;gap:7px}
+.face .top{font:850 9px system-ui;color:#7e785b}.face .art{display:grid;place-items:center;flex:1;width:100%;font-size:clamp(23px,4vw,53px);color:#4d7657;background:#e0ead5;border-radius:7px}
+.face .name{font-size:clamp(9px,1.5vw,13px);font-weight:900;overflow-wrap:anywhere}
+.face .orientation{font-size:9px;font-weight:800;color:#9b7258}
+.slot .hint{font-size:11px;color:#6a7c6d;margin-top:7px;min-height:28px}
+.explainer{padding:16px 19px;margin:18px 0 0;background:#fff6dc;border:1.5px solid #d3bc90;border-radius:16px}
+.reading-title{font:600 clamp(24px,3.7vw,35px) Georgia,serif;margin-bottom:10px}
+.reading-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.reading-item{padding:11px 12px;background:#fffef9;border:1px solid #c7cbb3;border-radius:12px}
+.reading-item strong{display:block;font-size:12px}.reading-item p{margin:7px 0;font-size:12px;line-height:1.55;color:#647262}
+.reading-item details{border-top:1px dashed #bdcbb7;padding-top:7px;margin-top:8px}
+.reading-item summary{cursor:pointer;font-weight:900;font-size:11px;color:#3b664a}
+.synthesis{margin:14px 0;padding-top:11px;border-top:1px dashed #b8c39f;font-size:13px;color:#426748;line-height:1.65}
+.footnote{margin-top:18px;font-size:11px;color:#6e7c6d}
+.dialog{border:2px solid var(--ink);padding:23px;background:var(--paper);border-radius:20px;width:min(92vw,420px);box-shadow:9px 9px 0 #294b3b2b}
+.dialog::backdrop{background:#1b3627a8}
+.dialog h3{font:600 28px Georgia,serif;margin:0 0 8px}
+.dialog p{font-size:13px;color:#55705d;margin:0 0 19px}
+[hidden]{display:none!important}
+@media(max-width:750px){.main-scene{grid-template-columns:1fr;gap:17px}.deck-scene{min-height:200px}.stack{width:112px;height:165px}.fan{justify-content:flex-start}.spread{gap:7px}.slot{padding:10px 4px}.slot-label{font-size:9px}.face{padding:8px 3px}.reading-grid{grid-template-columns:1fr}.reading-item{padding:13px}.step{font-size:9px}.page{padding:15px 13px 35px}.topline{margin-bottom:14px}.hero-desc{font-size:13px}.tab{padding:10px 12px}.panel{box-shadow:5px 6px 0 #b8caa9}.slot .hint{font-size:10px}.status-line{font-size:11px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<main class="page">
+<div class="topline"><div class="brand">yên <small>COFFEE &amp; TEA</small></div><span class="draft">A1 · UX PROTOTYPE · CHƯA PHÁT HÀNH</span></div>
+<div class="mode" role="tablist" aria-label="Chế độ bói bài">
+<button class="tab" role="tab" aria-selected="true" aria-controls="mood-preview" id="mood-tab">Bói tâm trạng</button>
+<button class="tab" role="tab" aria-selected="false" aria-controls="tarot-view" id="tarot-tab">Tarot 78 lá</button>
+</div>
+<section id="mood-preview" role="tabpanel" aria-labelledby="mood-tab">
+<div class="eyebrow">01 / BÓI TÂM TRẠNG</div><h1>Trò cũ <i>vẫn ở đây.</i></h1>
+<p class="hero-desc">Đây là prototype cho Tarot. Bói tâm trạng 52 thẻ trên website chính sẽ giữ nguyên.</p>
+<button class="primary" id="open-tarot" type="button">Thử Tarot mới</button>
+</section>
+<section id="tarot-view" role="tabpanel" aria-labelledby="tarot-tab" hidden>
+<div class="eyebrow">01 / TAROT CÙNG CỤC YÊN</div>
+<h1>Ba lá bài. <i>Một góc nhìn khác.</i></h1>
+<p class="hero-desc">Tarot để suy ngẫm, không khẳng định tương lai. Không nhập dữ liệu, không lưu kết quả.</p>
+<div class="panel">
+<ol class="stepper" aria-label="Tiến trình trải bài"><li class="step" id="step-choose">01 CHỌN</li><li class="step" id="step-shuffle">02 XÀO</li><li class="step" id="step-draw">03 RÚT</li><li class="step" id="step-reading">04 ĐỌC</li></ol>
+<div class="main-scene">
+<div class="left">
+<h2 id="stage-title">Bạn đang nghĩ về chuyện gì?</h2>
+<p class="instructions" id="stage-help">Chọn một chủ đề. Không cần kể bí mật cho Cục Yên.</p>
+<div id="choice-tools">
+<div class="topics" role="group" aria-label="Chủ đề"><button type="button" class="topic active" data-topic="general" aria-pressed="true">Tổng quan</button><button type="button" class="topic" data-topic="love" aria-pressed="false">Tình cảm</button><button type="button" class="topic" data-topic="work" aria-pressed="false">Công việc</button><button type="button" class="topic" data-topic="self" aria-pressed="false">Bản thân</button></div>
+<p id="question" class="question">Mình cần nhìn rõ điều gì ở hiện tại?</p>
+<label class="options"><input id="reversals" type="checkbox"> Có lá ngược (không mặc định là xấu)</label>
+</div>
+<div class="ctas"><button class="primary" id="main-cta" type="button">Xào bài thôi</button><button type="button" class="secondary" id="restart" hidden>Bắt đầu lại</button></div>
+<span id="status" class="status-line" role="status" aria-live="polite"></span>
+</div>
+<div class="right"><div class="deck-scene" id="deck-scene"><div class="stack" aria-hidden="true"><span></span><span></span><span>✦</span></div></div></div>
+</div>
+<div id="draw-area" hidden><p class="fan-caption" id="draw-caption">Rút lá 1 / 3 · Gốc rễ</p><div id="fan" class="fan" aria-label="Bộ lá úp để rút"></div></div>
+<div id="spread" class="spread" aria-label="Trải ba lá">
+<div class="slot" id="slot-0"><span class="slot-label">01 · GỐC RỄ</span><div class="face"><span class="top">YÊN TAROT</span><span class="art">✧</span><span class="name">Chờ rút</span></div><p class="hint">Điều tạo nên chuyện này</p></div>
+<div class="slot" id="slot-1"><span class="slot-label">02 · HIỆN TẠI</span><div class="face"><span class="top">YÊN TAROT</span><span class="art">✧</span><span class="name">Chờ rút</span></div><p class="hint">Điều đang ảnh hưởng</p></div>
+<div class="slot" id="slot-2"><span class="slot-label">03 · HƯỚNG TIẾP</span><div class="face"><span class="top">YÊN TAROT</span><span class="art">✧</span><span class="name">Chờ rút</span></div><p class="hint">Điều có thể thử</p></div>
+</div>
+<div id="reading" class="explainer" hidden><div class="reading-title">Cục Yên đọc xong rồi.</div><div id="reading-grid" class="reading-grid"></div><p id="synthesis" class="synthesis"></p><div class="ctas"><button class="primary" id="read-again" type="button">Trải bài mới</button><button class="secondary" id="read-mood" type="button">Bói tâm trạng</button></div></div>
+<p class="footnote">Bản nháp trải nghiệm. Phần hình trên lá đang là placeholder; xem B1 để duyệt 5 concept minh họa. Không dùng bài Tarot thay cho tư vấn chuyên môn.</p>
+</div>
+</section>
+</main>
+<dialog class="dialog" id="reset-dialog" aria-labelledby="reset-heading"><h3 id="reset-heading">Xào lại từ đầu nha?</h3><p>Trải bài đang rút sẽ được xóa khỏi bàn, nhưng không có thông tin nào được lưu cả.</p><div class="ctas"><button class="primary" id="reset-ok">Xào lại</button><button class="secondary" id="reset-cancel">Giữ trải bài</button></div></dialog>
+<script>
+(function(){
+"use strict";
+const $=id=>document.getElementById(id);
+const labels=["Gốc rễ","Hiện tại","Hướng tiếp theo"];
+const majors=["Kẻ Khờ","Nhà Ảo Thuật","Nữ Tư Tế","Hoàng Hậu","Hoàng Đế","Giáo Hoàng","Đôi Tình Nhân","Chiến Xa","Sức Mạnh","Ẩn Sĩ","Bánh Xe Số Phận","Công Lý","Người Treo Ngược","Cái Chết","Tiết Chế","Ác Quỷ","Tòa Tháp","Ngôi Sao","Mặt Trăng","Mặt Trời","Phán Xét","Thế Giới"];
+const ranks=["Át","2","3","4","5","6","7","8","9","10","Tiểu đồng","Kỵ sĩ","Hoàng hậu","Quốc vương"];
+const suits=[["Gậy","✺"],["Cốc","♡"],["Kiếm","✦"],["Tiền","◇"]];
+const deck=majors.map((name,i)=>({id:"M"+i,name,mark:"☼",family:"Major"}));
+suits.forEach(s=>ranks.forEach((rank,i)=>deck.push({id:s[0]+i,name:rank+" "+s[0],mark:s[1],family:s[0]})));
+if(deck.length!==78)throw Error("Prototype deck error");
+const question={general:"Mình cần nhìn rõ điều gì ở hiện tại?",love:"Trong chuyện này, điều gì cần được lắng nghe?",work:"Mình có thể thay đổi điều gì trong cách làm việc?",self:"Mình cần chăm sóc điều gì ở chính mình?"};
+const posHints=["Điều đã góp phần tạo nên câu chuyện.","Điều đang ảnh hưởng tới mình.","Một hướng có thể thử, không phải định mệnh."];
+const reduce=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+let state="choose",topic="general",fan=[],drawn=[],timer=0,token=0,mode="mood",pending=null;
+const rand=n=>{if(window.crypto&&window.crypto.getRandomValues){const buf=new Uint32Array(1);window.crypto.getRandomValues(buf);return buf[0]%n;}return Math.floor(Math.random()*n);};
+function shuffle(){const out=deck.slice();for(let i=out.length-1;i>0;i--){const j=rand(i+1),temp=out[i];out[i]=out[j];out[j]=temp;}return out;}
+function setMode(newMode){mode=newMode;$("tarot-view").hidden=newMode!=="tarot";$("mood-preview").hidden=newMode!=="mood";$("tarot-tab").setAttribute("aria-selected",String(newMode==="tarot"));$("mood-tab").setAttribute("aria-selected",String(newMode==="mood"));}
+$("mood-tab").addEventListener("click",()=>setMode("mood"));
+$("tarot-tab").addEventListener("click",()=>setMode("tarot"));
+$("open-tarot").addEventListener("click",()=>setMode("tarot"));
+function status(msg){$("status").textContent=msg;}
+function clearAsync(){token++;clearTimeout(timer);}
+function setPhase(phase){state=phase;const current=phase==="choose"?0:phase==="shuffling"?1:phase==="reading"?3:2;["choose","shuffle","draw","reading"].forEach((x,i)=>{$("step-"+x).className="step"+(i<current?" complete":i===current?" active":"");});}
+function paintSlots(){
+ for(let i=0;i<3;i++){const el=$("slot-"+i),entry=drawn[i];el.classList.toggle("active",state==="draw"&&i===drawn.length);el.classList.toggle("filled",!!entry);
+  if(!entry)continue;
+  el.querySelector(".top").textContent=entry.card.family==="Major"?"ẨN CHÍNH":"ẨN PHỤ";
+  el.querySelector(".art").textContent=entry.card.mark;
+  el.querySelector(".name").textContent=entry.card.name;
+  el.querySelector(".hint").textContent=entry.reversed?"Lá ngược":"Lá xuôi";
+ }
+}
+function reset(){
+ clearAsync();setPhase("choose");fan=[];drawn=[];
+ $("stage-title").textContent="Bạn đang nghĩ về chuyện gì?";$("stage-help").textContent="Chọn một chủ đề. Không cần kể bí mật cho Cục Yên.";
+ $("choice-tools").hidden=false;$("main-cta").hidden=false;$("main-cta").disabled=false;$("main-cta").textContent="Xào bài thôi";$("restart").hidden=true;
+ $("deck-scene").hidden=false;$("deck-scene").classList.remove("shuffling");$("draw-area").hidden=true;$("fan").innerHTML="";
+ $("reading").hidden=true;$("spread").querySelectorAll(".slot").forEach(el=>{el.classList.remove("filled","active");el.querySelector(".top").textContent="YÊN TAROT";el.querySelector(".art").textContent="✧";el.querySelector(".name").textContent="Chờ rút";});
+ ["Điều tạo nên chuyện này","Điều đang ảnh hưởng","Điều có thể thử"].forEach((hint,i)=>$("slot-"+i).querySelector(".hint").textContent=hint);
+ status("Bộ bài mới đang chờ.");}
+function askReset(yesFn){if(state==="choose"){yesFn();return;}pending=yesFn;const d=$("reset-dialog");if(typeof d.showModal==="function")d.showModal();else if(window.confirm("Xào lại từ đầu nha?")){pending();pending=null;}}
+$("reset-cancel").addEventListener("click",()=>{$("reset-dialog").close();pending=null;});
+$("reset-ok").addEventListener("click",()=>{$("reset-dialog").close();const fn=pending;pending=null;if(fn)fn();});
+function doShuffle(){
+ if(state!=="choose")return;clearAsync();const curr=token;fan=shuffle().slice(0,7).map(card=>({card,reversed:$("reversals").checked&&rand(2)===1,used:false}));drawn=[];
+ setPhase("shuffling");$("main-cta").disabled=true;$("main-cta").textContent="Đang xào...";$("deck-scene").classList.add("shuffling");status("Cục Yên đang xào bài...");
+ timer=setTimeout(()=>{if(curr!==token)return;setPhase("draw");$("deck-scene").hidden=true;$("draw-area").hidden=false;$("choice-tools").hidden=true;$("main-cta").hidden=true;$("restart").hidden=false;
+ $("stage-title").textContent="Rút lá Gốc rễ";$("stage-help").textContent="Chạm một lá úp để bắt đầu. Không cần kéo thả.";status("Xào xong. Cục Yên không nhìn trộm.");paintFan();paintSlots();},reduce?10:990);
+}
+$("main-cta").addEventListener("click",doShuffle);
+$("restart").addEventListener("click",()=>askReset(reset));
+document.querySelectorAll("[data-topic]").forEach(b=>b.addEventListener("click",()=>{
+ const next=b.dataset.topic;if(next===topic)return;
+ askReset(()=>{topic=next;document.querySelectorAll("[data-topic]").forEach(x=>{x.classList.toggle("active",x===b);x.setAttribute("aria-pressed",String(x===b));});$("question").textContent=question[topic];reset();});
+}));
+$("reversals").addEventListener("change",()=>{if(state!=="choose")askReset(reset);});
+function paintFan(){
+ $("fan").innerHTML=fan.map((e,i)=>'<button class="back" type="button" data-index="'+i+'" aria-label="Rút lá úp số '+(i+1)+' cho vị trí '+labels[drawn.length]+'" '+(e.used||state!=="draw"?'disabled':'')+'>✦</button>').join("");
+ $("draw-caption").textContent="Rút lá "+(drawn.length+1)+" / 3 · "+labels[drawn.length];}
+$("fan").addEventListener("click",e=>{
+ const btn=e.target.closest("button[data-index]");if(!btn||btn.disabled||state!=="draw")return;
+ const i=Number(btn.dataset.index),entry=fan[i];if(!entry||entry.used)return;
+ entry.used=true;const t=++token;state="dealing";btn.disabled=true;btn.classList.add("picking");
+ status("Lá "+(drawn.length+1)+" đang về vị trí...");
+ timer=setTimeout(()=>{if(t!==token)return;drawn.push(entry);state=drawn.length===3?"reading":"draw";
+  if(state==="reading"){setPhase("reading");$("draw-area").hidden=true;$("stage-title").textContent="Ba lá đủ rồi."; $("stage-help").textContent="Đọc ngắn trước. Muốn đọc sâu thì mở từng lá.";status("Cục Yên nhường bạn đọc.");$("reading").hidden=false;paintReading();}
+  else{$("stage-title").textContent="Rút lá "+labels[drawn.length];$("stage-help").textContent=posHints[drawn.length];status("Lá đã chịu ra mặt. Còn "+(3-drawn.length)+" lá.");paintFan();}
+  paintSlots();
+ },reduce?10:470);
+});
+function paintReading(){
+ const phrase=["Để hiểu tình huống, thử nhìn vào điều đã diễn ra.","Điều đang ảnh hưởng bạn có thể được nhìn theo một góc khác.","Hãy cân nhắc hành động nhỏ nằm trong khả năng mình."];
+ $("reading-grid").innerHTML=drawn.map((e,i)=>'<div class="reading-item"><strong>'+labels[i]+' · '+e.card.name+(e.reversed?' (ngược)':'')+'</strong><p>'+phrase[i]+'</p><details><summary>Xem kỹ hơn</summary><p>Đây là mô phỏng UX, không phải luận giải hoàn chỉnh. Lá '+e.card.name+' sẽ có nội dung theo vị trí và chủ đề khi A4 được triển khai.</p></details></div>').join("");
+ $("synthesis").textContent="Cục Yên hỏi: “Nếu thử một việc nhỏ sau trải bài, bạn sẽ chọn việc gì?”";
+}
+$("read-again").addEventListener("click",reset);
+$("read-mood").addEventListener("click",()=>setMode("mood"));
+reset();
+})();
+</script>
+</body>
+</html>
