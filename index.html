@@ -1105,6 +1105,31 @@
   .permit-stage.is-stamping .permit-cuc-eyebrows{animation:none!important}
 }
 
+
+/* Mobile ceremony takes place inside the counter viewport, not off-screen
+   on the large form above it. The larger application still becomes the permit. */
+.permit-counter-slip{display:none}
+@media(max-width:700px){
+  .permit-counter-body{min-height:324px;display:flex;flex-direction:column;justify-content:flex-start;align-items:center}
+  .permit-stamp-performer{flex:0 0 222px}
+  .permit-counter-slip{
+    display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-start;
+    position:relative;flex:0 0 83px;width:182px;height:83px;
+    padding:8px 11px;margin-top:-9px;margin-bottom:5px;
+    background:#fff9e7;border:1.5px solid #708f79;border-radius:3px 8px 6px 5px;
+    transform:rotate(-3deg);box-shadow:3px 5px 0 #bcc9af;
+    font:850 9px/1.3 "Noto Sans",Arial,sans-serif;letter-spacing:.07em;color:#68836c
+  }
+  .permit-counter-slip:before{content:"";position:absolute;top:24px;left:11px;width:155px;border-top:1px dashed #b7c6b0}
+  .permit-stamp-landing-mobile{
+    display:flex;top:30px;left:62px;right:auto;bottom:auto;
+    width:89px;height:50px;border-width:3px;font-size:6px;
+    z-index:2;transform:rotate(-8deg) scale(1.2)
+  }
+  .permit-stamp-landing-mobile strong{font-size:9px;margin-top:1px}
+  .permit-clerk{overflow:visible}
+}
+
 @media print{body *{visibility:hidden!important}.permit-stage,.permit-stage *{visibility:visible!important}.permit-stage{position:absolute;inset:0;border:0;background:white;box-shadow:none;padding:0}.permit-sheet{border:1px solid #555;box-shadow:none;margin:auto;max-width:650px}.permit-clerk,.permit-bottom-strip,.permit-desk-ribbon,.permit-restart,.permit-map,.permit-screenshot-hint{display:none!important}}
 
 </style>
@@ -1408,6 +1433,10 @@
                 <span class="permit-stamp-bottom" aria-hidden="true"></span>
                 <span class="permit-stamp-caption">NHỜ CỤC YÊN ĐÓNG MỘC</span>
               </button>
+              </div>
+              <div class="permit-counter-slip" aria-hidden="true">
+                <span>HỒ SƠ ĐANG XÉT</span>
+                <div class="permit-stamp-landing permit-stamp-landing-mobile" id="permit-stamp-landing-mobile"><span>CỤC YÊN</span><strong>ĐÃ DUYỆT NGHỈ</strong></div>
               </div>
               <div class="permit-inkpad" aria-hidden="true"><span>MỰC DUYỆT</span></div>
             </div>
@@ -2041,13 +2070,17 @@
     const $=id=>document.getElementById(id);
     const intro=$("permit-intro"),form=$("permit-form"),receipt=$("permit-receipt");
     const stage=$("yen-permit"),stamp=$("permit-stamp"),notice=$("permit-message"),progress=$("permit-progress");
-    const performer=$("permit-stamp-performer"),landing=$("permit-stamp-landing");
+    const performer=$("permit-stamp-performer"),landing=$("permit-stamp-landing"),mobileLanding=$("permit-stamp-landing-mobile");
     // Read real layout geometry so Cục Yên carries the stamp to the paper on
     // desktop and mobile. The ink mark itself remains on the paper.
     function aimStamp(){
       const base=stamp.querySelector(".permit-stamp-bottom");
       if(!performer||!landing||!base||typeof base.getBoundingClientRect!=="function")return;
-      const source=base.getBoundingClientRect(),target=landing.getBoundingClientRect();
+      // On narrow phones the main form is above the fold. Stamp the little
+      // paper at the counter so the player actually sees Cục Yên's whole act.
+      const isNarrow=window.matchMedia&&window.matchMedia("(max-width: 700px)").matches;
+      const targetNode=(isNarrow&&mobileLanding)?mobileLanding:landing;
+      const source=base.getBoundingClientRect(),target=targetNode.getBoundingClientRect();
       const dx=(target.left+target.width/2)-(source.left+source.width/2);
       const dy=(target.top+target.height/2)-(source.top+source.height/2);
       if(!Number.isFinite(dx)||!Number.isFinite(dy))return;
