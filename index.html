@@ -824,6 +824,23 @@
 @media(max-width:760px){.drink-hat{position:relative;right:auto;top:auto;display:inline-flex;align-items:center;margin:0 0 16px 10px;transform:rotate(-2deg)}.drink-topline{clear:both}.drink-visual{padding-top:35px}.drink-doodle-one{top:0;left:2%;max-width:65%}.drink-tap-hint{bottom:0;left:0;font-size:12px}.hero-map-link{font-size:12px;min-height:44px}.receipt{padding:20px 18px}.product-info button{width:100%;justify-content:center}}
 
 
+
+/* v36: merge the real-world invitation and the former footer advertisement.
+   The footer now keeps credits only; Cục Yên's interactive cup belongs to the real café section. */
+.irl-section{padding-block:clamp(52px,6vw,82px)}
+.irl-ps{display:inline-flex;align-items:center;gap:8px;margin:0 0 8px;padding:7px 11px;border:1px solid #c3d2b8;border-radius:999px;background:#eef3e6;color:#52724f;font:900 10px/1.3 "Noto Sans",Arial,sans-serif;letter-spacing:.07em}
+.irl-copy>p{margin:9px 0 0}
+.irl-copy>p strong{color:#2e503e;font-weight:900}
+.irl-facts{margin:17px 0 18px}
+.irl-cup-interaction{display:flex;align-items:center;justify-content:flex-start;gap:10px;margin-top:19px}
+.irl-cup-interaction .footer-play{display:flex;flex-direction:row;justify-content:flex-start;align-items:center;gap:12px;width:100%}
+.irl-cup-interaction .footer-cup{flex:0 0 100px;min-width:0;max-width:100px;width:100px;padding:0}
+.irl-cup-interaction .footer-cup svg{width:91px;max-width:100%;height:auto}
+.irl-cup-interaction .footer-cup-touch{font-size:9px;white-space:normal;text-align:center;line-height:1.2}
+.irl-cup-interaction .footer-cup-says{flex:1;max-width:305px;min-height:58px;margin:0;font-size:11px;line-height:1.5}
+.footer-scene{padding-top:18px}
+.footer-credit{margin-top:0}
+@media(max-width:760px){.irl-cup-interaction{margin-top:17px}.irl-cup-interaction .footer-play{flex-direction:row;gap:10px}.irl-cup-interaction .footer-cup{max-width:88px;flex-basis:88px}.irl-cup-interaction .footer-cup svg{width:80px}.irl-cup-interaction .footer-cup-says{min-height:54px;font-size:10.5px;max-width:none}.irl-ps{font-size:9px}}
 </style>
   <style id="yen-wheel-inline-style">
 /* Vòng quay Yên: one focused promotional wheel, no game frameworks or tracking. */
@@ -1105,7 +1122,7 @@
     </div></section>
     <section class="irl-section" id="yen-ngoai-doi" aria-labelledby="irl-title">
       <div class="wrap irl-wrap">
-        <div class="irl-image-waiting" role="img" aria-label="Khung chờ ảnh thật của quán Yên khi hoàn thiện">
+        <div class="irl-image-waiting" role="img" aria-label="Khung chờ ảnh thật của quán Yên">
           <svg class="yen-icon" aria-hidden="true"><use href="#yen-sprout"></use></svg>
           <b>Chừa chỗ cho Yên.</b>
           <p>Quán có thật, nhưng trang này chưa có ảnh quán. Cục Yên bảo đừng lấy ảnh người ta để giả vờ.</p>
@@ -1113,27 +1130,12 @@
         <div class="irl-copy">
           <span class="eyebrow">05 / Yên ngoài đời thật</span>
           <h2 id="irl-title">Ủa, Yên <em>có thật hả?</em></h2>
-          <p>Có chứ. Cục Yên trên web pha nước bằng mây. Quán <strong>Yên Coffee &amp; Tea ở Láng Dài, Đất Đỏ</strong> có cà phê, trà và chỗ ngồi nghỉ thật. Uống được đàng hoàng.</p>
-          <div class="irl-facts"><span>Láng Dài, Đất Đỏ</span><span>Đã mở cửa · Mời ghé chơi</span></div>
+          <span class="irl-ps">P.S. QUẢNG CÁO HƠI NGẠI</span>
+          <p>Có chứ. Trên web Cục Yên chỉ giỏi pha trò. Còn <strong>Yên Coffee &amp; Tea ở Láng Dài, Đất Đỏ</strong> có cà phê, trà và một góc ngồi nghỉ thật. Ghé uống một ly nha.</p>
+          <div class="irl-facts"><span>Láng Dài, Đất Đỏ</span><span>Yên đã mở cửa · Mời ghé chơi</span></div>
           <a class="irl-cta" href="https://maps.app.goo.gl/zxpyZev8F6YyzL3c6?g_st=ic" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer" aria-label="Mở Google Maps chỉ đường đến Yên">Chỉ đường đến Yên <svg class="yen-icon" aria-hidden="true"><use href="#yen-arrow"></use></svg></a>
-          <p class="irl-small">Quán thật có nước uống. Cục Yên trên web thì chưa biết pha.</p>
-        </div>
-      </div>
-    </section>
-    <section class="leave-section wrap" id="ra-ve" aria-labelledby="leave-title"><svg class="yen-icon leave-decor" aria-hidden="true" focusable="false"><use href="#yen-bloom"></use></svg><svg class="yen-icon leave-decor right" aria-hidden="true" focusable="false"><use href="#yen-bloom"></use></svg><div class="eyebrow reveal">06 / Cửa ra luôn mở</div><h2 class="reveal" id="leave-title">Chơi đủ rồi?<br><i>Cục Yên chưa đâu.</i></h2><p class="leave-desc reveal">Chơi đủ thì đi thôi. Cục Yên không níu. Có dịp ghé Yên, nó đã nhờ người giữ ghế rồi.</p><div class="leave-sticker reveal">Dấu chân không được lưu <svg class="yen-icon " aria-hidden="true" focusable="false"><use href="#yen-foot"></use></svg></div><div class="reveal"><button class="big-btn" type="button" id="exit-btn">Mình đi nha! <svg class="yen-icon " aria-hidden="true" focusable="false"><use href="#yen-arrow"></use></svg></button></div>
-
-    </section>
-  </main>
-  <footer class="footer-scene" aria-label="Cuối trang và lời mời ghé Yên">
-    <div class="wrap">
-      <div class="footer-invite">
-        <div class="footer-copy">
-          <span class="footer-ps"><svg class="yen-icon" aria-hidden="true"><use href="#yen-bloom"></use></svg>P.S. QUẢNG CÁO HƠI NGẠI</span>
-          <h2>Cục Yên chỉ <em>giỏi pha trò.</em></h2>
-          <p>Muốn uống một ly thật thì ghé <strong>Yên Coffee &amp; Tea ở Láng Dài, Đất Đỏ</strong>. Cục Yên chỉ đứng đây pha trò, không pha nước đâu.</p>
-          <div class="footer-opening"><span class="footer-opening-dot" aria-hidden="true"></span><span>Yên đã mở cửa · Ghé chơi nha</span></div>
-        </div>
-        <div class="footer-play">
+          <div class="irl-cup-interaction">
+            <div class="footer-play">
           <button class="footer-cup" id="footer-cup" type="button" aria-label="Chọc chiếc ly để nghe một câu đùa">
             <svg viewBox="0 0 230 235" aria-hidden="true" focusable="false" fill="none">
               <path d="M93 37c-8-8-7-19-1-27M118 35c9-10 9-18 5-26" stroke="#587762" stroke-width="5" stroke-linecap="round" opacity=".57"/>
@@ -1158,22 +1160,13 @@
           </button>
           <p class="footer-cup-says" id="footer-cup-says" role="status" aria-live="polite">“Mình là cái ly. Nhiệm vụ hôm nay là đứng yên, bạn đừng giao thêm nhé.”</p>
         </div>
-        <a class="footer-map-ticket" href="https://maps.app.goo.gl/zxpyZev8F6YyzL3c6?g_st=ic" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer" aria-label="Mở bản đồ chỉ đường đến Yên">
-          <span class="footer-map-art" aria-hidden="true">
-            <svg viewBox="0 0 78 78" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M7 15 28 9l19 6 23-6v51l-22 8-20-7-21 6Z" fill="#fff4c6" stroke="#304f3e" stroke-width="3" stroke-linejoin="round"/>
-              <path d="m28 9 0 52m19-46 1 53" stroke="#88a88d" stroke-width="2" stroke-dasharray="4 4"/>
-              <path d="M12 49c11-19 18 9 30-13s13 2 22-14" stroke="#d7976c" stroke-linecap="round" stroke-width="3" stroke-dasharray="3 6"/>
-              <path d="M56 8c-8 0-13 5-13 12s13 22 13 22 13-15 13-22S64 8 56 8Z" fill="#e7ac9a" stroke="#304f3e" stroke-width="3"/>
-              <circle cx="52" cy="20" r="1.5" fill="#304f3e"/><circle cx="59" cy="20" r="1.5" fill="#304f3e"/>
-              <path d="M53 25q3 3 6 0" stroke="#304f3e" stroke-width="2" stroke-linecap="round"/>
-              <path d="M13 24c3-3 5-3 8 0m-7 7 2 2" stroke="#7d986f" stroke-width="2" stroke-linecap="round"/>
-            </svg>
-          </span>
-          <span class="footer-map-words"><span class="footer-map-kicker">BẢN ĐỒ TỚI YÊN</span><strong>Google Maps biết đường. Cục Yên biết vẫy tay.</strong><small>Tới Yên cứ theo bản đồ. Theo Cục Yên là có khi lạc vào bếp.</small></span>
-          <span class="footer-map-action">Dẫn tui tới Yên <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 18c7 0 12-5 14-12m-8 1 8-2 1 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-        </a>
+          </div>
+        </div>
       </div>
+    </section>
+  </main>
+  <footer class="footer-scene" aria-label="Cuối trang và lời mời ghé Yên">
+    <div class="wrap">
       <div class="footer-credit" aria-label="Chuyện hậu trường làm web">
         <span class="footer-credit-stamp" aria-hidden="true">CHƯA NGHIỆM THU<br>· VẪN CHƠI TỐT</span>
         <p><strong>Website này dựng để chơi.</strong> Nhân viên đầu tiên là Cục Yên, hiện đang xin phụ cấp vì bị bấm nút quá nhiều.</p>
@@ -1182,7 +1175,7 @@
     </div>
   </footer>
   <dialog id="receipt-dialog" aria-labelledby="receipt-label"><div class="receipt"><button type="button" id="close-receipt" class="receipt-flower-close" aria-label="Đóng biên lai" title="Đóng biên lai"><svg class="yen-icon" aria-hidden="true" focusable="false"><use href="#yen-bloom"></use></svg></button><div class="receipt-head"><img class="receipt-logo" src="yen-logo.svg" width="1450" height="585" alt="yên" decoding="async"><p id="receipt-label">Biên lai 0đ, không mua gì cả</p></div><div class="receipt-items"><div class="receipt-row"><span>01 × <span id="receipt-name"></span></span><b>0 ₫</b></div><div class="receipt-row"><span>Phí làm bạn vui</span><b>0 ₫</b></div><div class="receipt-row"><span>Tổng cộng</span><b>0 ₫</b></div></div><p class="receipt-quote" id="receipt-quote"></p><div class="receipt-bottom">KHÔNG CÓ MÃ ĐƠN<br>VÌ BẠN CHẲNG MUA GÌ.<p class="irl-receipt-note">Biên lai này chỉ để vui. Muốn uống nước thật thì ghé Yên Coffee &amp; Tea ở Láng Dài, Đất Đỏ nha.</p></div></div></dialog>
-  <dialog id="exit-dialog" aria-labelledby="exit-label"><div class="exit-content"><div class="exit-symbol" aria-hidden="true"><svg class="yen-icon " aria-hidden="true" focusable="false"><use href="#yen-bloom"></use></svg></div><h2 id="exit-label">Bạn đi rồi.<br>Cục Yên vẫn ngồi đây.</h2><p>Cục Yên tiếp tục trực ghế. Khi nào rảnh bạn lại vào chơi.</p><button type="button" id="again-btn">Ủa, chơi lại hả?</button><p style="font-size:12px;margin:16px 0 0">Hoặc đóng tab cũng được. Cục Yên không chạy theo đâu.</p></div></dialog>
+  
   <script>
     (() => {
       'use strict';
@@ -1573,16 +1566,6 @@ const ALL_MOODS = [{"title":"Nồi mì sôi đầu","sub":"Ý nghĩ đang sôi l
         },prefersReduced?20:830);
       });
       setDrinkSymbols(null);
-      const exitDialog = $('#exit-dialog');
-      $('#exit-btn').addEventListener('click', () => exitDialog.showModal());
-      $('#again-btn').addEventListener('click', () => {
-        exitDialog.close();
-        resetDrink();
-        flipMood(moodCards[0],false);
-        moodRail.scrollTo({left:0,behavior:'instant'});updateDeck();
-        window.YenWheel?.reset();
-        window.scrollTo({ top:0, behavior:prefersReduced?'auto':'smooth' });
-      });
       const footerCup=$('#footer-cup');
       const footerCupSays=$('#footer-cup-says');
       const footerCupLines=[
