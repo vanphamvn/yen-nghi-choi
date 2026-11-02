@@ -1,0 +1,16 @@
+# OS / IDE
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+# Sensitive files
+.env
+.env.*
+!.env.example
+# Optional generated assets and local dependencies
+node_modules/
+dist/
+.vercel/
+# Licensed font binaries stay outside this source archive
+fonts/*.woff2
+fonts/*.woff
