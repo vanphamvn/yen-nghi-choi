@@ -68,3 +68,12 @@ State lives in JS scope. Repeated clicks in the stamping/issued phases cannot is
 - [ ] Keyboard-only and screen-reader smoke in real browser.
 - [ ] Confirm exact café map pin and final menu inventory before using for real-world marketing.
 - [ ] Optional future physical QR activation after opening (P9).
+
+## Stamp motion · Cục Yên vận hành con mộc (02/11/2026)
+
+- Puppet Cục Yên xuất hiện cạnh con mộc ở quầy, tay phải vươn tới tay cầm; nhấc mộc lên rồi **mang cả cụm Cục Yên + mộc tới tờ giấy**.
+- Trước khi animate, `aimStamp()` đo `getBoundingClientRect()` của chân mộc và vùng mực trên giấy. Translation được tính ở thời điểm click để khớp desktop và mobile, không hardcode điểm đến.
+- Cảnh khoảng **2 giây**: giơ mộc → nhấc lên → di chuyển → chạm giấy → vệt mực xuất hiện → đưa mộc về quầy; giấy phép được cấp khi cảnh kết thúc. Chế độ `prefers-reduced-motion` bỏ chuyển động và phát giấy ngay.
+- Input bị khóa khi đang đóng dấu và bộ đếm `round` ngăn callback cũ làm xuất hiện giấy trùng; nút **NHỜ CỤC YÊN ĐÓNG MỘC** vẫn thao tác bằng tap/click/keyboard, không cần kéo.
+- **QA mô phỏng:** geometry variables được thiết lập, lifecycle 2.000ms, thiếu lựa chọn, double tap, reset và 64/64 lựa chọn hợp lệ đều pass. Browser preview HTTP 200, các inline JS pass cú pháp.
+- **Chưa xác minh** cảm giác chuyển động, layer/overlap, kích thước hit target trên iPhone Safari/Android Chrome thật; theo dõi ở #23.
