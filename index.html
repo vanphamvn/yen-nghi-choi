@@ -859,6 +859,19 @@
 @media(max-width:760px){.irl-cup-interaction{margin-top:17px}.irl-cup-interaction .footer-play{flex-direction:row;gap:10px}.irl-cup-interaction .footer-cup{max-width:88px;flex-basis:88px}.irl-cup-interaction .footer-cup svg{width:80px}.irl-cup-interaction .footer-cup-says{min-height:54px;font-size:10.5px;max-width:none}.irl-ps{font-size:9px}}
 
 
+/* #35: a real invitation only after visitors learn what Yên is */
+.irl-bridge{border:1.5px solid #9db69b;border-radius:18px;background:#fffaf0;padding:18px 19px;margin:17px 0 20px;box-shadow:4px 5px 0 #d7e3d1}
+.irl-bridge-top{font:900 10px/1.4 "Noto Sans",Arial,sans-serif;letter-spacing:.1em;color:#53765b;margin:0 0 9px}
+.irl-bridge h3{font:650 clamp(19px,2.1vw,26px)/1.25 "Noto Serif",Georgia,serif;letter-spacing:-.03em;color:#2d573e;margin:0 0 9px}
+.irl-bridge p{font:600 13px/1.6 "Noto Sans",Arial,sans-serif;color:#556b5b;margin:0 0 10px}
+.irl-bridge-tags{display:flex;gap:7px;flex-wrap:wrap}
+.irl-bridge-tags span{background:#e6eede;border-radius:100px;border:1px solid #b5c4b0;padding:6px 10px;color:#43694a;font:800 10px/1.3 "Noto Sans",Arial,sans-serif}
+.irl-bridge-actions{display:flex;align-items:center;flex-wrap:wrap;gap:10px}
+.irl-bridge-tiktok{font:850 12px/1.4 "Noto Sans",Arial,sans-serif;color:#3c6648;text-decoration:underline;text-underline-offset:4px;display:inline-flex;padding:10px 4px;min-height:44px;align-items:center}
+.irl-soft-link{display:inline-flex;color:#406a50;font:800 11px/1.55 "Noto Sans",Arial,sans-serif;min-height:44px;align-items:center;margin-top:7px;text-decoration:underline;text-underline-offset:3px}
+.irl-soft-link:hover,.irl-soft-link:focus-visible,.irl-bridge-tiktok:hover{color:#244631}
+.irl-soft-link:focus-visible,.irl-bridge-tiktok:focus-visible{outline:3px solid #b97952;outline-offset:3px}
+@media(max-width:760px){.irl-bridge{padding:16px;margin:14px 0}.irl-bridge-actions{gap:4px}.irl-bridge-tiktok{padding-inline:8px}}
 /* #34: every result leaves a visual souvenir instead of one more paragraph */
 .wheel-souvenir{position:relative;overflow:hidden;display:grid;grid-template-columns:62px minmax(0,1fr);gap:13px;align-items:center;background:#f3e6c5;border:1.5px dashed #c5a57d;border-radius:12px;padding:13px;margin:9px 0 5px}
 .wheel-souvenir[hidden]{display:none!important}
@@ -1519,6 +1532,7 @@
                 <a class="permit-action permit-map" href="https://maps.app.goo.gl/zxpyZev8F6YyzL3c6?g_st=ic" rel="noopener noreferrer" target="_blank">XEM ĐƯỜNG ĐẾN YÊN <span aria-hidden="true">↗</span></a>
                 <button type="button" class="permit-restart" id="permit-restart">Xin giấy phép khác ↺</button>
                 <a class="game-next" href="#buong">Đơn được duyệt. Qua Vòng quay Yên →</a>
+                <a class="irl-soft-link" href="#yen-ngoai-doi">Cục Yên đang chuẩn bị quán thật. Xem thử →</a>
               </div>
               <p id="permit-share-status" class="permit-share-status" role="status" aria-live="polite" hidden></p>
               <p class="permit-screenshot-hint">Cục Yên tự vẽ ảnh PNG để bạn giữ hoặc gửi bạn bè. Không tải dữ liệu lên máy chủ, không tạo voucher thật.</p>
@@ -1677,6 +1691,7 @@
             <p id="yen-wheel-reward-note"></p>
             <div class="wheel-souvenir" id="yen-wheel-souvenir" hidden><span class="wheel-souvenir-art" id="yen-wheel-symbol" aria-hidden="true">?</span><span><b id="yen-wheel-souvenir-text"></b><small>QUÀ TƯỞNG TƯỢNG · CHƯA CÓ GIÁ TRỊ ĐỔI TẠI QUÁN</small></span></div>
             <a class="game-next" href="#cuahang">Quay xong rồi. Qua Tiệm 0đ →</a>
+            <a class="irl-soft-link" href="#yen-ngoai-doi">Không đổi được quà ảo, nhưng có thể xem Yên thật →</a>
           </div>
         </div>
       </div>
@@ -1758,7 +1773,14 @@
           <span class="irl-ps">P.S. QUẢNG CÁO HƠI NGẠI</span>
           <p>Có chứ, Yên đang dần thành hình ở Láng Dài, Đất Đỏ. Trên web Cục Yên đã làm việc trước rồi. <strong>Yên Coffee &amp; Tea</strong> dự kiến khai trương tháng 12/2026, với cà phê, trà và một góc ngồi nghỉ. Hẹn gặp bạn khi quán mở cửa nha.</p>
           <div class="irl-facts"><span>Láng Dài, Đất Đỏ</span><span>Sắp khai trương · Dự kiến tháng 12/2026</span></div>
+          <aside class="irl-bridge" aria-label="Một lời mời đến quán Yên">
+            <p class="irl-bridge-top">CỤC YÊN GỬI LỜI NHẮN NGOÀI ĐỜI</p>
+            <h3>Trên web nghỉ giả vờ. Ở Yên, ngồi nghỉ thật.</h3>
+            <p>Yên đang chuẩn bị một góc ngồi dễ chịu để uống cà phê, trà và chơi với nhau. Khi quán mở, ghé ngồi một chút. Không cần bày ra lý do.</p>
+            <div class="irl-bridge-tags"><span>Cà phê &amp; trà</span><span>Một góc ngồi nghỉ</span><span>Đang chuẩn bị mở cửa</span></div>
+          </aside>
           <a class="irl-cta" href="https://maps.app.goo.gl/zxpyZev8F6YyzL3c6?g_st=ic" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer" aria-label="Mở Google Maps chỉ đường đến Yên">Chỉ đường đến Yên <svg class="yen-icon" aria-hidden="true"><use href="#yen-arrow"></use></svg></a>
+          <a class="irl-bridge-tiktok" href="https://www.tiktok.com/@yencafeday" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer">Xem Yên chuẩn bị trên TikTok ↗</a>
           <div class="irl-cup-interaction">
             <div class="footer-play">
           <button class="footer-cup" id="footer-cup" type="button" aria-label="Chọc chiếc ly để nghe một câu đùa">
