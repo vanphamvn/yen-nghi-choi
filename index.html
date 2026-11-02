@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#f7f3e9">
-  <meta name="description" content="Yên Coffee &amp; Tea ở Láng Dài, Đất Đỏ: quán cà phê, trà và một góc ngồi nghỉ. Trên web, chơi với Cục Yên, lật thẻ tâm trạng, thử bốn trò xả phiền và tìm đường đến Yên thật.">
+  <meta name="description" content="Yên Coffee &amp; Tea ở Láng Dài, Đất Đỏ: quán cà phê, trà và một góc ngồi nghỉ. Trên web, chơi với Cục Yên, lật thẻ tâm trạng, quay thử Vòng quay Yên và tìm đường đến Yên thật.">
   <meta name="referrer" content="no-referrer">
   <meta name="robots" content="noindex, nofollow, noarchive">
   <meta property="og:type" content="website">
@@ -825,7 +825,7 @@
 
 
 </style>
-  <link rel="stylesheet" href="/arcade-v2.css">
+  <link rel="stylesheet" href="/yen-wheel.css">
 </head>
 <body>
   <!-- Yên doodle icons: hand-drawn, consistent stroke; no icon fonts or external assets -->
@@ -941,40 +941,45 @@
       </div>
     </section>
     
-    <section class="section release-section" id="buong" aria-labelledby="release-title">
+    <section class="section release-section wheel-section" id="buong" aria-labelledby="release-title">
   <div class="wrap release-layout">
     <div class="release-copy reveal">
-      <div class="eyebrow">02 / Xưởng xử chuyện phiền</div>
-      <h2 class="section-title" id="release-title">Chuyện phiền? <i>Đem ra chơi.</i></h2>
-      <p>Cục Yên có bốn trò hơi xàm. Mỗi lần vào, bốc một trò. Chơi chán thì đổi.</p>
-      <p class="arcade-privacy">KHÔNG ĐĂNG NHẬP · KHÔNG LƯU DỮ LIỆU CHƠI</p>
+      <div class="eyebrow">02 / Cục Yên phát quà</div>
+      <h2 class="section-title" id="release-title">Vòng quay Yên. <i>Trúng gì thì cười.</i></h2>
+      <p>Cục Yên đứng quầy phát quà. Bạn chỉ việc quay, nó sẽ hồi hộp giùm.</p>
+      <p class="wheel-copy-note">Đây là vòng quay thử, chưa phải chương trình khuyến mãi chính thức.</p>
     </div>
-    <div class="release-panel arcade-shell reveal" id="yarc-shell">
-      <div class="yarc-topbar">
-        <div class="yarc-brand"><i aria-hidden="true"></i> CỤC YÊN / MÁY GIẢI PHIỀN</div>
-        <div class="yarc-top-actions">
-          <button class="yarc-icon-btn" id="yarc-sound" type="button" aria-pressed="false" aria-label="Bật âm thanh trò chơi" title="Bật / tắt tiếng">Âm</button>
-          <button class="yarc-switch" id="yarc-switch" type="button">Đổi trò ↻</button>
+    <div class="wheel-panel reveal" id="yen-wheel-panel">
+      <div class="wheel-toolbar">
+        <span class="wheel-brand"><span aria-hidden="true"></span> VÒNG QUAY MAY MẮN · CỤC YÊN</span>
+        <span class="wheel-demo-chip">ĐANG CHƠI THỬ</span>
+      </div>
+      <div class="wheel-content">
+        <div class="wheel-main">
+          <button class="wheel-viewport" id="yen-wheel-tap" type="button" aria-label="Chạm để quay Vòng quay Yên. Phần thưởng chỉ là mô phỏng.">
+            <svg class="wheel-disc" id="yen-wheel-disc" viewBox="0 0 440 440" role="img" aria-label="Vòng quay tám phần thưởng: giảm 5 nghìn, topping, giảm 10 phần trăm, nâng size, giảm 3 nghìn, quà bí mật, giảm 5 phần trăm, giảm 8 nghìn"></svg>
+            <span class="wheel-pointer" aria-hidden="true"><svg viewBox="0 0 38 55" fill="none"><path d="M19 51 3 12Q1 5 8 5h22q7 0 5 7L19 51Z" fill="#335642" stroke="#fff9e9" stroke-width="4" stroke-linejoin="round"/><circle cx="19" cy="14" r="5" fill="#efc68b"/></svg></span>
+            <span class="wheel-center" aria-hidden="true"><strong>yên</strong><small>COFFEE &amp; TEA</small></span>
+          </button>
+          <p class="wheel-interact-note">Chạm vào vòng quay hoặc bấm nút bên cạnh</p>
+        </div>
+        <div class="wheel-right">
+          <div class="wheel-clerk" id="yen-wheel-clerk" aria-hidden="true">
+            <span class="wheel-clerk-top"></span><span class="wheel-clerk-hand left"></span>
+            <span class="wheel-clerk-face"><span class="wheel-clerk-smile"></span><span class="wheel-clerk-cheeks"></span></span>
+            <span class="wheel-clerk-hand right"></span>
+          </div>
+          <div class="wheel-speech" id="yen-wheel-speech" role="status" aria-live="polite">Bấm quay đi! Cục Yên đứng đây cổ vũ.</div>
+          <button class="wheel-spin-btn" id="yen-wheel-spin" type="button">QUAY YÊN!</button>
+          <div class="wheel-result" id="yen-wheel-result" role="status" aria-live="polite" hidden>
+            <span class="wheel-result-label">CỤC YÊN QUAY THỬ TRÚNG</span>
+            <strong id="yen-wheel-reward"></strong>
+            <p id="yen-wheel-reward-note"></p>
+          </div>
         </div>
       </div>
-      <div class="yarc-heading">
-        <span class="yarc-kicker" id="yarc-kicker">ĐANG CHỌN TRÒ...</span>
-        <h3 id="yarc-title">Cục Yên đang bốc trò</h3>
-        <p id="yarc-guide">Một tí nữa là có chuyện để chơi.</p>
-      </div>
-      <div class="yarc-stage-wrap">
-        <canvas class="yarc-stage" id="yarc-stage" tabindex="0" role="button" aria-label="Tương tác mini-game bằng kéo, chạm, nhấn Enter hoặc Space">Trình duyệt chưa hỗ trợ canvas.</canvas>
-        <div id="yarc-float" aria-hidden="true"></div>
-      </div>
-      <div class="yarc-hud"><div class="yarc-progress" id="yarc-dots"></div><div class="yarc-score" id="yarc-score"></div></div>
-      <div class="yarc-bottom">
-        <div class="yarc-message" id="yarc-message" role="status" aria-live="polite">Cục Yên đang chuẩn bị trò.</div>
-        <div class="yarc-buttons">
-          <button type="button" class="yarc-primary" id="yarc-action">Chơi ngay</button>
-          <button type="button" class="yarc-replay" id="yarc-replay">Chơi lại</button>
-        </div>
-      </div>
-      <div class="yarc-tip"><span id="yarc-legend">CHẠM / KÉO ĐỂ CHƠI</span><span>VUI CHỨ KHÔNG CHẤM ĐIỂM</span></div>
+      <p class="wheel-disclaimer"><strong>Chơi thử thôi nha.</strong> Các phần thưởng trên vòng quay chỉ để trải nghiệm, chưa có giá trị đổi ưu đãi tại quán. Yên sẽ thông báo thể lệ khi áp dụng chính thức.</p>
+      <div class="wheel-confetti" id="yen-wheel-confetti" aria-hidden="true"></div>
     </div>
   </div>
 </section>
@@ -1515,7 +1520,7 @@ const ALL_MOODS = [{"title":"Nồi mì sôi đầu","sub":"Ý nghĩ đang sôi l
         resetDrink();
         flipMood(moodCards[0],false);
         moodRail.scrollTo({left:0,behavior:'instant'});updateDeck();
-        window.YenArcade?.randomGame();
+        window.YenWheel?.reset();
         window.scrollTo({ top:0, behavior:prefersReduced?'auto':'smooth' });
       });
       const footerCup=$('#footer-cup');
@@ -1550,6 +1555,6 @@ const ALL_MOODS = [{"title":"Nồi mì sôi đầu","sub":"Ý nghĩ đang sôi l
       } else $$('.reveal').forEach(el => el.classList.add('visible'));
     })();
   </script>
-  <script defer src="/arcade-v2.js"></script>
+  <script defer src="/yen-wheel.js"></script>
 </body>
 </html>
