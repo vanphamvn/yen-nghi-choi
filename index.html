@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#f7f3e9">
-  <meta name="description" content="Yên Coffee &amp; Tea có một góc chơi hơi khờ: lật thẻ tâm trạng, thổi bay chuyện phiền và pha nước tưởng tượng. Vào chơi miễn phí, không cần đăng nhập.">
+  <meta name="description" content="Yên Coffee &amp; Tea ở Đất Đỏ: một góc quán đang chuẩn bị mở cửa. Trên web, chơi với Cục Yên, lật thẻ tâm trạng, thả chuyện phiền và tìm đường đến Yên thật.">
   <meta name="referrer" content="no-referrer">
   <meta name="robots" content="noindex, nofollow, noarchive">
   <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data:; font-src 'self' https://fonts.gstatic.com; connect-src 'none'; form-action 'none'; base-uri 'none'; object-src 'none'">
@@ -31,11 +31,9 @@
       }, { once: true });
     })();
   </script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700;800;900&amp;family=Noto+Sans+Mono:wght@400;700&amp;family=Noto+Serif:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&amp;display=swap" rel="stylesheet">
   <style>
-    /* Vietnamese-friendly Noto fonts load from Google Fonts with system fallbacks. */
+    @import url("https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700;800;900&family=Noto+Serif:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500&display=swap");
+    /* Compatibility aliases for previous Yên typography. */
     :root{--paper:#f7f3e9;--ink:#243c35;--ink-muted:#61746a;--green:#2e5a46;--lime:#dbe78d;--pink:#f6b4a6;--lav:#dfd9f5;--butter:#f4d98a;--line:rgba(36,60,53,.19);--radius:28px;--shadow:0 18px 55px rgba(35,57,43,.10)}
     *,*::before,*::after{box-sizing:border-box}
     html{scroll-behavior:smooth;scroll-padding-top:90px;overflow-x:clip}
@@ -187,7 +185,7 @@
     .footer button{background:transparent;border:0;text-decoration:underline;text-underline-offset:3px;color:var(--ink-muted);padding:6px 0}
     dialog{border:0;padding:0;background:transparent;color:var(--ink);max-width:min(92vw,445px);max-height:90vh;box-shadow:none}
     dialog::backdrop{background:rgba(28,42,33,.64);backdrop-filter:blur(5px)}
-    .receipt{background:#fbf5e6;width:min(420px,90vw);padding:27px 29px 25px;position:relative;border:1.5px solid var(--ink);box-shadow:10px 12px 0 rgba(0,0,0,.22);font-family:"Noto Sans Mono",monospace;animation:pop .32s cubic-bezier(.2,.9,.2,1)}
+    .receipt{background:#fbf5e6;width:min(420px,90vw);padding:27px 29px 25px;position:relative;border:1.5px solid var(--ink);box-shadow:10px 12px 0 rgba(0,0,0,.22);font-family:ui-monospace,monospace;animation:pop .32s cubic-bezier(.2,.9,.2,1)}
     .receipt:before,.receipt:after{content:"";position:absolute;left:0;width:100%;height:11px;background:linear-gradient(135deg,transparent 33%,#fbf5e6 34%) 0 0/16px 16px,linear-gradient(225deg,transparent 33%,#fbf5e6 34%) 0 0/16px 16px}
     .receipt:before{top:-9px}.receipt:after{bottom:-9px;transform:rotate(180deg)}
     @keyframes pop{from{opacity:0;transform:translateY(28px) rotate(5deg)}to{opacity:1;transform:translateY(0) rotate(-1deg)}}
@@ -767,6 +765,30 @@
 
     .hero h1 .hero-last-line{display:block;white-space:nowrap;font-size:clamp(26px,3.3vw,48px);line-height:1.3;letter-spacing:-.018em}
     @media(max-width:760px){.hero h1 .hero-last-line{font-size:clamp(24px,7.2vw,34px)}}
+
+/* v30: Cục Yên trên mạng, quán Yên ngoài đời */
+.hero-intro{max-width:520px;margin:-4px 0 20px;color:#4d6657;font-size:15px;line-height:1.65}
+.hero-intro strong{color:#244b39}
+.hero-cta .hero-real-btn{display:inline-flex;align-items:center;gap:8px;justify-content:center;min-height:53px;padding:15px 20px;border:1.5px solid var(--ink);border-radius:100px;font-size:14px;font-weight:850;background:#fffaf0;color:var(--ink);transition:transform .2s,background .2s}
+.hero-real-btn:hover,.hero-real-btn:focus-visible{background:#e4efda;transform:translateY(-2px)}
+.hero-real-btn .yen-icon{width:16px;height:16px}
+.irl-section{padding:90px 0;background:#f9f5eb;border-top:1px dashed #b8c7b7;border-bottom:1px dashed #b8c7b7}
+.irl-wrap{display:grid;grid-template-columns:minmax(0,.88fr) minmax(0,1.12fr);gap:clamp(20px,5vw,68px);align-items:center}
+.irl-image-waiting{min-height:340px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:14px;border:2px dashed #8da68c;border-radius:28px;background:#e7eddf;transform:rotate(-1deg);color:#526c57;text-align:center;padding:25px;position:relative}
+.irl-image-waiting .yen-icon{width:62px;height:62px;opacity:.78}.irl-image-waiting b{font-family:'Yen Serif',Georgia,serif;font-size:clamp(24px,3vw,34px);font-weight:600;color:#294936}.irl-image-waiting p{max-width:260px;margin:0;font-size:13px;line-height:1.65}
+.irl-image-waiting:after{content:'ẢNH THẬT SẼ TỚI';position:absolute;right:15px;top:17px;border:1px solid #55745c;border-radius:100px;background:#fff9e9;padding:7px 10px;font-size:10px;font-weight:900;transform:rotate(5deg)}
+.irl-copy h2{font-family:'Yen Serif',Georgia,serif;font-weight:600;font-size:clamp(40px,5vw,67px);line-height:1.12;margin:15px 0 19px;letter-spacing:-.025em}
+.irl-copy h2 em{color:var(--green);font-weight:500}
+.irl-copy>p{font-size:16px;line-height:1.75;max-width:510px;color:#536b5b}
+.irl-facts{display:flex;flex-wrap:wrap;gap:9px;margin:22px 0 26px}
+.irl-facts span{border:1px solid #9cae97;border-radius:999px;padding:9px 13px;color:#3c654c;font-size:12px;font-weight:800;background:#fefbf2}
+.irl-cta{display:inline-flex;align-items:center;gap:10px;background:#2e5a46;color:white;border-radius:999px;padding:14px 22px;font-weight:850;font-size:14px;min-height:52px}
+.irl-cta .yen-icon{width:18px;height:18px}.irl-cta:hover{background:#1b4633}
+.irl-small{margin:12px 0 0;font-size:12px!important;color:#647767!important}
+.irl-game-note{margin-top:14px;padding:12px 15px;border:1px dashed #b7c7b3;border-radius:14px;background:#f9f7eb;color:#496950;font-size:12px;line-height:1.55}
+.irl-receipt-note{margin:16px 0 0;font-size:12px;color:#456d4e;line-height:1.5}
+@media(max-width:760px){.hero-intro{font-size:13px;margin:0 0 15px}.hero-cta{gap:9px}.hero-cta .hero-real-btn{min-height:49px;padding:12px 15px;font-size:12px}.irl-section{padding:56px 0}.irl-wrap{grid-template-columns:1fr;gap:26px}.irl-image-waiting{min-height:190px;transform:none}.irl-copy h2{font-size:clamp(37px,9vw,52px)}.irl-copy>p{font-size:14px}.irl-facts{margin:16px 0 20px}.irl-cta{width:100%;justify-content:center}}
+@media(prefers-reduced-motion:reduce){.hero-real-btn{transition:none}.hero-real-btn:hover{transform:none}}
 </style>
 </head>
 <body>
@@ -839,9 +861,10 @@
       <div class="hero-copy">
         <div class="kicker">Một website để chơi, không cần lý do</div>
         <h1 id="hero-title">Ghé chơi.<br>Cười <em>một cái.</em><span class="hero-last-line">Rồi muốn đi đâu thì đi.</span></h1>
-        <div class="hero-cta"><button class="big-btn hero-dare" id="poke-btn" type="button" aria-describedby="poke-reply">Đừng bấm cái này <svg class="yen-icon" aria-hidden="true" focusable="false"><use href="#yen-talk"></use></svg></button></div>
+        <p class="hero-intro"><strong>Yên Coffee &amp; Tea · Đất Đỏ.</strong> Ngoài đời có cà phê, trà và một góc để ngồi nghỉ. Trên web thì Cục Yên chỉ giỏi pha trò.</p>
+        <div class="hero-cta"><button class="big-btn hero-dare" id="poke-btn" type="button" aria-describedby="poke-reply">Đừng bấm cái này <svg class="yen-icon" aria-hidden="true" focusable="false"><use href="#yen-talk"></use></svg></button><a class="hero-real-btn" href="#yen-ngoai-doi">Yên ngoài đời <svg class="yen-icon" aria-hidden="true"><use href="#yen-arrow"></use></svg></a></div>
         <p class="poke-reply" id="poke-reply" role="status" aria-live="polite"></p>
-        <a class="hero-map-link" href="https://maps.app.goo.gl/zxpyZev8F6YyzL3c6?g_st=ic" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer" aria-label="Mở Google Maps chỉ đường tới Yên ở Đất Đỏ">Muốn đến quán Yên thật à? Bấm bản đồ nhé, Cục Yên chỉ đường hay lạc lắm. <svg class="yen-icon" aria-hidden="true"><use href="#yen-arrow"></use></svg></a>
+        <a class="hero-map-link" href="https://maps.app.goo.gl/zxpyZev8F6YyzL3c6?g_st=ic" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer" aria-label="Mở Google Maps chỉ đường tới Yên ở Đất Đỏ">Quán thật ở Đất Đỏ. Xem đường đến Yên <svg class="yen-icon" aria-hidden="true"><use href="#yen-arrow"></use></svg></a>
         
       </div>
       <div class="hero-stage" aria-label="Cục Yên, nhân vật hoạt hình đang chào khách">
@@ -979,7 +1002,24 @@
         <p class="drink-footnote">Đây là ly nước tưởng tượng, không phải đơn đặt hàng thật. Cục Yên không giao nước qua màn hình đâu.</p>
       </div>
     </div></section>
-    <section class="leave-section wrap" id="ra-ve" aria-labelledby="leave-title"><svg class="yen-icon leave-decor" aria-hidden="true" focusable="false"><use href="#yen-bloom"></use></svg><svg class="yen-icon leave-decor right" aria-hidden="true" focusable="false"><use href="#yen-bloom"></use></svg><div class="eyebrow reveal">05 / Cửa ra luôn mở</div><h2 class="reveal" id="leave-title">Chơi đủ rồi?<br><i>Cục Yên chưa đâu.</i></h2><p class="leave-desc reveal">Chơi đủ thì đi thôi. Cục Yên không níu, nó đang bận ngồi.</p><div class="leave-sticker reveal">Dấu chân không được lưu <svg class="yen-icon " aria-hidden="true" focusable="false"><use href="#yen-foot"></use></svg></div><div class="reveal"><button class="big-btn" type="button" id="exit-btn">Mình đi nha! <svg class="yen-icon " aria-hidden="true" focusable="false"><use href="#yen-arrow"></use></svg></button></div>
+    <section class="irl-section" id="yen-ngoai-doi" aria-labelledby="irl-title">
+      <div class="wrap irl-wrap">
+        <div class="irl-image-waiting" role="img" aria-label="Khung chờ ảnh thật của quán Yên khi hoàn thiện">
+          <svg class="yen-icon" aria-hidden="true"><use href="#yen-sprout"></use></svg>
+          <b>Chừa chỗ cho Yên.</b>
+          <p>Quán đang chuẩn bị. Cục Yên bảo đợi có ảnh thật rồi hãy khoe, đừng lấy ảnh người ta.</p>
+        </div>
+        <div class="irl-copy">
+          <span class="eyebrow">06 / Yên ngoài đời thật</span>
+          <h2 id="irl-title">Ủa, Yên <em>có thật hả?</em></h2>
+          <p>Có chứ. Cục Yên trên web pha nước bằng mây. Quán <strong>Yên Coffee &amp; Tea ở Đất Đỏ</strong> thì chuẩn bị cà phê, trà và chỗ ngồi nghỉ tử tế. Uống được đàng hoàng.</p>
+          <div class="irl-facts"><span>Đất Đỏ</span><span>Dự kiến khai trương · 12/2026</span></div>
+          <a class="irl-cta" href="https://maps.app.goo.gl/zxpyZev8F6YyzL3c6?g_st=ic" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer" aria-label="Mở Google Maps chỉ đường đến Yên ở Đất Đỏ">Chỉ đường đến Yên <svg class="yen-icon" aria-hidden="true"><use href="#yen-arrow"></use></svg></a>
+          <p class="irl-small">Chưa mở cửa nhé. Cục Yên chỉ ngồi canh chỗ trước thôi.</p>
+        </div>
+      </div>
+    </section>
+    <section class="leave-section wrap" id="ra-ve" aria-labelledby="leave-title"><svg class="yen-icon leave-decor" aria-hidden="true" focusable="false"><use href="#yen-bloom"></use></svg><svg class="yen-icon leave-decor right" aria-hidden="true" focusable="false"><use href="#yen-bloom"></use></svg><div class="eyebrow reveal">05 / Cửa ra luôn mở</div><h2 class="reveal" id="leave-title">Chơi đủ rồi?<br><i>Cục Yên chưa đâu.</i></h2><p class="leave-desc reveal">Chơi đủ thì đi thôi. Cục Yên không níu. Có dịp ghé Yên ở Đất Đỏ, nó đã nhờ người giữ ghế rồi.</p><div class="leave-sticker reveal">Dấu chân không được lưu <svg class="yen-icon " aria-hidden="true" focusable="false"><use href="#yen-foot"></use></svg></div><div class="reveal"><button class="big-btn" type="button" id="exit-btn">Mình đi nha! <svg class="yen-icon " aria-hidden="true" focusable="false"><use href="#yen-arrow"></use></svg></button></div>
 
     </section>
   </main>
@@ -1395,7 +1435,7 @@ const ALL_MOODS = [{"title":"Nồi mì sôi đầu","sub":"Ý nghĩ đang sôi l
           const t=Math.min(1,(now-started)/lifetime);
           setStyle(t);
           if(t<1)flightRaf=requestAnimationFrame(step);
-          else{paper.remove();flyingPaper=null;flightRaf=0;releaseMessage.textContent=`Đã tiễn “${title}” đi. Cục Yên đang thở bằng mũi để hồi sức.`;$('#worry-clerk').classList.remove('worry-blowing');}
+          else{paper.remove();flyingPaper=null;flightRaf=0;releaseMessage.textContent=`Đã tiễn “${title}” đi. Cục Yên đang thở bằng mũi để hồi sức. Ngoài đời Yên có ghế thật để ngồi nghỉ nhé.`;$('#worry-clerk').classList.remove('worry-blowing');}
         };
         flightRaf=requestAnimationFrame(step);
       }
@@ -1428,7 +1468,7 @@ const ALL_MOODS = [{"title":"Nồi mì sôi đầu","sub":"Ý nghĩ đang sôi l
         }
         const index=bag.pop();lastQuote[key]=index;return all[index];
       }
-      function updateReceiptQuote(){if(!activeProduct)return;$('#receipt-quote').textContent=getReceiptQuote(activeProduct);}
+      function updateReceiptQuote(){if(!activeProduct)return;$('#receipt-quote').textContent=getReceiptQuote(activeProduct)+' Quà này 0đ. Nước thật ở Yên thì có giá nha!';}
       $$('.product button').forEach(btn=>btn.addEventListener('click',()=>{
         activeProduct=btn.dataset.product;
         $('#receipt-name').textContent=products[activeProduct].name;
@@ -1527,7 +1567,7 @@ const ALL_MOODS = [{"title":"Nồi mì sôi đầu","sub":"Ý nghĩ đang sôi l
           drinkMachine.classList.remove('is-mixing');drinkMachine.classList.add('is-revealing');
           $('#drink-label').textContent='PHIẾU PHA NƯỚC SỐ '+String(drinkCount).padStart(3,'0');
           $('#drink-name').textContent=drink.name;
-          $('#drink-quip').textContent=drink.quip;
+          $('#drink-quip').textContent=drink.quip+' Ly này pha chơi thôi nhé. Muốn uống được thì ghé Yên ngoài đời.';
           $('#drink-whisper').textContent=drink.whisper;
           $('#drink-result-topping').textContent='ĐÃ THẢ VÀO LY: '+topping.label;
           $('#drink-button-label').textContent='PHA BẬY THÊM LY NỮA!';
