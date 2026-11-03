@@ -22,6 +22,18 @@ Sau đó mở http://localhost:8000/ . Tránh mở bằng `file://` vì một s�
 
 Dự án Vercel hiện tại đã liên kết với GitHub. Push lên nhánh `main` sẽ kích hoạt deploy tự động trên cùng domain, không cần tạo dự án mới.
 
+## Deploy lên Netlify
+
+Repository này đã có `netlify.toml`, nên Netlify có thể phục vụ nguyên bộ website tĩnh và asset SVG mà không cần npm hoặc build framework.
+
+1. Mở [Netlify: Add new project](https://app.netlify.com/start) → **Import an existing project** → **GitHub**.
+2. Cho phép Netlify truy cập repository private `vanphamvn/yen-nghi-choi`, chọn nhánh **main**.
+3. **Base directory:** để trống. **Build command:** để trống. **Publish directory:** `.` (root).
+4. Chọn **Deploy / Publish**. Netlify sẽ tự động triển khai những commit tiếp theo của `main`.
+5. Kiểm tra `/`, `/assets/cuc-yen/mascot.svg`, `/assets/cuc-yen/preview.html` và các hoạt cảnh qua `/assets/cuc-yen/stories-preview.html`.
+
+Tương tự Vercel, các header trong `netlify.toml` đang giữ website ở trạng thái `noindex` đến khi chủ quán cho phép lập chỉ mục. Không xóa `netlify.toml` khi chuyển hosting.
+
 ## Font tiếng Việt
 
 Bản GitHub-ready sử dụng Google Fonts Noto Sans, Noto Serif và Noto Sans Mono. Đã loại bỏ 9 khai báo `@font-face` trỏ tới các file WOFF2 không tồn tại trong bộ source, tránh request 404 khi deploy mới. Có CSS fallback hệ thống nếu Google Fonts không tải được.
