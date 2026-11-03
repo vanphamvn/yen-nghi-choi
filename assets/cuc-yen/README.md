@@ -1,6 +1,9 @@
-# Cục Yên · Mascot model v1
+# Cục Yên · Mascot model v2 · 3D sơn dầu
 
-Bộ nhân vật vector được dựng lại theo bảng tạo hình Cục Yên đã tạo. Đây là **bộ SVG có thể tái sử dụng**, không phải bản vector tự động truy vết từng pixel của ảnh minh họa gốc.
+Bộ nhân vật vector được dựng theo bảng tạo hình Cục Yên 3D sơn dầu. Đây là **bộ SVG có thể tái sử dụng và chuyển động trên website**, không phải bản truy vết từng pixel của ảnh minh họa, không phải mô hình lưới 3D. Vân cọ được mô phỏng bằng SVG patterns; khối nổi bằng gradient, nếp màu và shadow nhẹ.
+
+Tất cả 21 pose sử dụng **cùng bộ nhận diện sơn dầu** (khối kem, phần caramel ấm, khăn rêu có nếp vẽ, má đào). Đừng thay bằng các ảnh mascot phẳng đời cũ; nhân vật trong cutscene chỉ đổi tư thế/đạo cụ.
+
 
 ## Đặc điểm bắt buộc giữ cố định
 
@@ -45,4 +48,4 @@ pose.setAttribute("href", "/assets/cuc-yen/mascot.svg#cuc-yen-sleepy");
 
 ## Giới hạn của v1
 
-Bảng tạo hình được sinh ra là PNG. Bộ hiện tại là bản dựng lại bằng SVG để dùng thật trong sản phẩm; không có tệp rig/mesh 3D, không phải file Figma gốc. **Các nhân vật hiện ra trên website (Hero, 20 cutscene, nhân viên đóng dấu, nhân viên quay quà, phản ứng kết quả, khu đồ uống và Ghé quán) đều dùng chung sprite.** Phông cảnh và đạo cụ được vẽ riêng. Các CSS legacy không còn được dùng có thể dọn dẹp trong lần bảo trì tiếp theo.
+Bảng tạo hình tham khảo được sinh ra là PNG với chất liệu sơn dầu nổi. Bộ hiện tại là bản dịch phong cách đó sang SVG để dùng thật trong sản phẩm; không có tệp rig/mesh 3D, không phải file Figma gốc. **Các nhân vật hiện ra trên website (Hero, 20 cutscene, nhân viên đóng dấu, nhân viên quay quà, phản ứng kết quả, khu đồ uống và Ghé quán) đều dùng chung sprite.** Phông cảnh và đạo cụ được vẽ riêng. Các CSS legacy không còn được dùng có thể dọn dẹp trong lần bảo trì tiếp theo.
