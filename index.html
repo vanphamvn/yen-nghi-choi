@@ -1265,34 +1265,18 @@
 .wheel-center small{font:850 clamp(6px,.8vw,9px)/1.2 "Noto Sans",Arial,sans-serif;letter-spacing:.09em;margin-top:5px}
 .wheel-interact-note{text-align:center;font:750 10px/1.5 "Noto Sans",Arial,sans-serif;color:#617968;margin-top:0;min-height:15px}
 .wheel-right{display:flex;flex-direction:column;align-items:stretch;gap:11px;padding:4px 4px 4px 8px;min-width:0}
-/* Cục Yên: crisp original SVG mascot, readable from laptop down to mobile. */
+/* One character, two roles: staff wears a removable cap; body is shared. */
 .wheel-clerk{position:relative;width:174px;height:194px;margin:0 auto;display:flex;align-items:center;justify-content:center;isolation:isolate;flex:none}
 .wheel-clerk-art{display:block;width:100%;height:100%;overflow:visible;filter:drop-shadow(0 6px 0 #bdcfae)}
-.wheel-clerk-body,.wheel-clerk-arm-left,.wheel-clerk-arm-right,.wheel-clerk-hat,.wheel-clerk-feet,.wheel-clerk-brows,.wheel-clerk-sparkles{transform-box:fill-box;transform-origin:center}
-.wheel-clerk-mouth-spin,.wheel-clerk-mouth-win{display:none}
-.wheel-clerk:not(.spinning):not(.celebrating) .wheel-clerk-body{animation:wheel-clerk-breathe 3.5s ease-in-out infinite}
-.wheel-clerk:not(.spinning):not(.celebrating) .wheel-clerk-eyes{animation:wheel-clerk-blink 5.2s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
-.wheel-clerk.spinning .wheel-clerk-body{animation:wheel-clerk-watch .55s ease-in-out infinite alternate}
-.wheel-clerk.spinning .wheel-clerk-hat{animation:wheel-clerk-hat-tilt .65s ease-in-out infinite alternate}
-.wheel-clerk.spinning .wheel-clerk-arm-right{animation:wheel-clerk-wave .48s ease-in-out infinite alternate}
-.wheel-clerk.spinning .wheel-clerk-mouth-idle{display:none}
-.wheel-clerk.spinning .wheel-clerk-mouth-spin{display:block}
-.wheel-clerk.spinning .wheel-clerk-pupil{transform:translateX(-3px)}
-.wheel-clerk.celebrating .wheel-clerk-body{animation:wheel-clerk-hop .75s ease-out 2}
-.wheel-clerk.celebrating .wheel-clerk-arm-left{animation:wheel-clerk-cheer-left .7s ease-in-out 2}
-.wheel-clerk.celebrating .wheel-clerk-arm-right{animation:wheel-clerk-cheer-right .7s ease-in-out 2}
-.wheel-clerk.celebrating .wheel-clerk-mouth-idle{display:none}
-.wheel-clerk.celebrating .wheel-clerk-mouth-win{display:block}
-.wheel-clerk.celebrating .wheel-clerk-sparkles{animation:wheel-clerk-twinkle .55s ease-in-out 3}
-@keyframes wheel-clerk-breathe{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
-@keyframes wheel-clerk-blink{0%,42%,44%,88%,90%,100%{transform:scaleY(1)}43%,89%{transform:scaleY(.12)}}
-@keyframes wheel-clerk-watch{from{transform:rotate(-4deg) translateY(0)}to{transform:rotate(3deg) translateY(-7px)}}
-@keyframes wheel-clerk-hat-tilt{from{transform:rotate(0)}to{transform:rotate(-6deg)}}
-@keyframes wheel-clerk-wave{from{transform:rotate(-10deg)}to{transform:rotate(9deg)}}
-@keyframes wheel-clerk-hop{0%,100%{transform:translateY(0)}35%{transform:translateY(-19px)}65%{transform:translateY(-3px)}}
-@keyframes wheel-clerk-cheer-left{0%,100%{transform:rotate(0)}35%,65%{transform:rotate(-19deg)}}
-@keyframes wheel-clerk-cheer-right{0%,100%{transform:rotate(0)}35%,65%{transform:rotate(20deg)}}
-@keyframes wheel-clerk-twinkle{0%,100%{opacity:.3;transform:scale(.85)}50%{opacity:1;transform:scale(1.13)}}
+.wheel-role-spin,.wheel-role-win{display:none}
+.wheel-clerk.spinning .wheel-role-idle,.wheel-clerk.celebrating .wheel-role-idle{display:none}
+.wheel-clerk.spinning .wheel-role-spin,.wheel-clerk.celebrating .wheel-role-win{display:inline}
+.wheel-clerk:not(.spinning):not(.celebrating) .wheel-clerk-art{animation:wheel-cuc-breathe 3.6s ease-in-out infinite}
+.wheel-clerk.spinning .wheel-clerk-art{animation:wheel-cuc-watch .55s ease-in-out infinite alternate}
+.wheel-clerk.celebrating .wheel-clerk-art{animation:wheel-cuc-hop .78s ease-out 2}
+@keyframes wheel-cuc-breathe{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+@keyframes wheel-cuc-watch{from{transform:rotate(-5deg) translateY(0)}to{transform:rotate(6deg) translateY(-6px)}}
+@keyframes wheel-cuc-hop{0%,100%{transform:translateY(0)}40%{transform:translateY(-17px)}68%{transform:translateY(-2px)}}
 .wheel-speech{position:relative;text-align:center;border:1.5px solid #b9c6ac;border-radius:14px;padding:11px 12px;background:#eef2e0;min-height:64px;font:750 12px/1.48 "Noto Sans",Arial,sans-serif;color:#365845}
 .wheel-speech:before{content:"";position:absolute;top:-9px;left:calc(50% - 8px);width:14px;height:14px;background:#eef2e0;border-left:1.5px solid #b9c6ac;border-top:1.5px solid #b9c6ac;transform:rotate(45deg)}
 .wheel-spin-btn{border:2px solid #244335;border-radius:16px;box-shadow:0 5px 0 #86a17e;background:#315743;color:#fff9e7;min-height:65px;padding:12px 13px;font:900 clamp(16px,1.7vw,21px)/1.1 "Noto Sans",Arial,sans-serif;cursor:pointer;transition:transform .14s,box-shadow .14s,background .14s}
@@ -1408,6 +1392,19 @@
   .irl-map-open{right:11px;top:11px}
 }
 
+/* Canonical mascot assets are SVG instances, never hand-drawn doppelgängers. */
+.cuc-yen-model{display:block;overflow:visible}
+.mascot-button .cuc-yen-hero{width:100%;height:100%;animation:yen-cuc-hero-idle 4s ease-in-out infinite}
+.mascot-button.wink .cuc-yen-hero{animation:yen-cuc-hero-wink .42s ease-out both}
+@keyframes yen-cuc-hero-idle{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-9px) rotate(2deg)}}
+@keyframes yen-cuc-hero-wink{0%,100%{transform:scale(1)}50%{transform:scale(1.04) rotate(4deg)}}
+.permit-role-stamp{display:none}
+.permit-stage.is-stamping .permit-role-idle{display:none}
+.permit-stage.is-stamping .permit-role-stamp{display:inline}
+.cuc-reaction .cuc-yen-model{width:100%;height:100%;filter:drop-shadow(1px 3px 0 #b6c7a9)}
+@media(prefers-reduced-motion:reduce){
+  .mascot-button .cuc-yen-hero,.wheel-clerk .wheel-clerk-art{animation:none!important;transform:none!important}
+}
 /* Real drinks: a small, illustrated tasting shelf, not a full sales menu. */
 .yen-drinks-section{
   padding:clamp(65px,7vw,105px) 0 clamp(62px,7vw,94px);
@@ -1708,20 +1705,8 @@
         <div class="stamp top"><small>ĐÃ KIỂM TRA ·</small><br>KHÔNG CÓ<br>VIỆC GẤP</div>
         <div class="stage-ellipse"></div>
         <button class="mascot-button" type="button" id="mascot" aria-label="Chạm vào Cục Yên để nghe nó nói nhảm một câu">
-          <svg viewBox="0 0 450 450" fill="none" aria-hidden="true">
-            <g class="mascot-body">
-              <path d="M105 206C96 184 73 177 55 180M51 178l-22-17M54 184l-19 13" stroke="#243c35" stroke-width="9" stroke-linecap="round" class="mascot-hand-left"/>
-              <path d="M340 203c28-24 50-12 64 7m-3-13 11 16m-9-4 15-1" stroke="#243c35" stroke-width="9" stroke-linecap="round"/>
-              <path d="M173 341c-4 23-11 42-17 56m123-60c7 23 14 41 21 54" stroke="#243c35" stroke-width="10" stroke-linecap="round"/>
-              <path d="M149 396c-23 8-36 5-43-1m195-5c16 7 30 8 42 2" stroke="#243c35" stroke-width="10" stroke-linecap="round"/>
-              <path d="M117 113C151 72 205 82 230 93c51-22 97 7 111 47 37 51 12 83 13 113-1 47-19 108-81 123-58 18-137 10-175-37-26-33-31-99-23-140 3-35 15-62 42-86Z" fill="#fffdf1" stroke="#243c35" stroke-width="8" stroke-linejoin="round"/>
-              <path d="M135 130c8-11 25-20 34-22" stroke="#e8dfce" stroke-width="10" stroke-linecap="round"/>
-              <ellipse cx="154" cy="262" rx="20" ry="11" fill="#f8b4aa" opacity=".85"/><ellipse cx="302" cy="257" rx="20" ry="11" fill="#f8b4aa" opacity=".85"/>
-              <ellipse class="eye-left" cx="189" cy="229" rx="10" ry="16" fill="#243c35"/><ellipse cx="272" cy="226" rx="10" ry="16" fill="#243c35"/>
-              <path d="M222 261c9 12 19 12 29-1" stroke="#243c35" stroke-width="6" stroke-linecap="round"/>
-              <path d="M146 166c-8 5-14 14-15 21" stroke="#f1e5d5" stroke-width="7" stroke-linecap="round"/>
-              <path d="M300 138c12 8 16 14 18 23" stroke="#f1e5d5" stroke-width="7" stroke-linecap="round"/>
-            </g>
+          <svg class="cuc-yen-model cuc-yen-hero" viewBox="0 0 320 320" aria-hidden="true" focusable="false">
+            <use href="/assets/cuc-yen/mascot.svg#cuc-yen-waving"></use>
           </svg>
         </button>
         <div class="mascot-cutscene" id="mascot-cutscene" aria-hidden="true"></div>
@@ -1850,27 +1835,9 @@
             <div class="permit-counter-body">
               <div class="permit-stamp-stand" aria-hidden="true"></div>
               <div class="permit-stamp-performer" id="permit-stamp-performer">
-                <svg class="permit-cuc-yen" viewBox="0 0 154 184" aria-hidden="true" focusable="false">
-                  <ellipse cx="74" cy="177" rx="61" ry="6" fill="#91aa91" opacity=".36"/>
-                  <g class="permit-cuc-legs" fill="none" stroke="#305441" stroke-width="6" stroke-linecap="round">
-                    <path d="M57 148 53 169 42 170"/><path d="M93 148 100 169 112 169"/>
-                  </g>
-                  <path class="permit-cuc-backarm" d="M40 110Q20 125 16 147" fill="none" stroke="#305441" stroke-width="8" stroke-linecap="round"/>
-                  <path d="M24 109C13 79 27 44 57 37c30-9 61 5 68 39 7 34-7 70-41 76-34 8-54-4-60-43Z" fill="#d4e2af" stroke="#305441" stroke-width="5" stroke-linejoin="round"/>
-                  <path d="M37 71Q54 54 72 60" fill="none" stroke="#f8f7db" stroke-width="7" stroke-linecap="round" opacity=".75"/>
-                  <path class="permit-cuc-eyebrows" d="M47 86q8-5 15 0m20 0q9-5 17 0" fill="none" stroke="#305441" stroke-width="3" stroke-linecap="round"/>
-                  <ellipse class="permit-cuc-eye" cx="55" cy="100" rx="5" ry="7" fill="#305441"/><ellipse class="permit-cuc-eye" cx="91" cy="100" rx="5" ry="7" fill="#305441"/>
-                  <ellipse cx="35" cy="114" rx="11" ry="6" fill="#eaa995" opacity=".85"/>
-                  <ellipse cx="113" cy="112" rx="10" ry="6" fill="#eaa995" opacity=".85"/>
-                  <path d="M65 117q10 9 20-1" fill="none" stroke="#305441" stroke-width="3.3" stroke-linecap="round"/>
-                  <g class="permit-cuc-working-arm" fill="none" stroke="#305441" stroke-width="9" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M117 113Q145 111 154 82L169 49"/>
-                    <path d="M166 53q10-10 17-2" stroke-width="5"/>
-                  </g>
-                  <path d="M41 47q0-35 32-36 32-1 35 37" fill="#f6e7bb" stroke="#305441" stroke-width="4"/>
-                  <path d="M35 48q38-7 82 0" stroke="#305441" stroke-width="5" stroke-linecap="round"/>
-                  <rect x="59" y="21" width="27" height="17" rx="5" fill="#e0af84"/>
-                  <text x="72" y="33" text-anchor="middle" font-size="10" font-weight="900" fill="#305441">YÊN</text>
+                <svg class="permit-cuc-yen cuc-yen-model" viewBox="0 0 320 320" aria-hidden="true" focusable="false">
+                  <use class="permit-role-idle" href="/assets/cuc-yen/mascot.svg#cuc-yen-clerk-ready"></use>
+                  <use class="permit-role-stamp" href="/assets/cuc-yen/mascot.svg#cuc-yen-clerk-stamp"></use>
                 </svg>
                 <span class="permit-cuc-callout" aria-hidden="true"><span class="permit-cuc-ready">ĐỂ YÊN LO!</span><span class="permit-cuc-cop">CỘP!</span></span>
               <button class="permit-stamp" id="permit-stamp" type="button" aria-describedby="permit-message" disabled>
@@ -1919,75 +1886,10 @@
         </div>
         <div class="wheel-right">
           <div class="wheel-clerk" id="yen-wheel-clerk" aria-hidden="true">
-            <svg class="wheel-clerk-art" viewBox="0 0 248 278" xmlns="http://www.w3.org/2000/svg" focusable="false">
-              <defs>
-                <linearGradient id="yen-wheel-clerk-body" x1="0" y1="0" x2="1" y2="1">
-                  <stop offset="0" stop-color="#e5efc6"/>
-                  <stop offset=".65" stop-color="#d3e4ae"/>
-                  <stop offset="1" stop-color="#b6cf96"/>
-                </linearGradient>
-                <linearGradient id="yen-wheel-clerk-hat" x1="0" y1="0" x2="1" y2="1">
-                  <stop offset="0" stop-color="#ffdf9d"/>
-                  <stop offset="1" stop-color="#dba36f"/>
-                </linearGradient>
-              </defs>
-              <ellipse cx="121" cy="261" rx="92" ry="10" fill="#9aaf93" opacity=".35"/>
-              <g class="wheel-clerk-feet" fill="none" stroke="#315341" stroke-width="8" stroke-linecap="round">
-                <path d="M92 220Q88 242 81 247"/><path d="M153 220Q156 243 166 245"/>
-              </g>
-              <g fill="#d5a984" stroke="#315341" stroke-width="5" stroke-linejoin="round">
-                <path d="M78 240q-14-2-22 7 2 10 24 10 15-1 14-9z"/>
-                <path d="M167 238q14-2 23 8-3 10-26 10-15-1-13-9z"/>
-              </g>
-              <g class="wheel-clerk-arm-left">
-                <path d="M57 158Q28 155 22 124" fill="none" stroke="#315341" stroke-width="16" stroke-linecap="round"/>
-                <path d="M57 158Q28 155 22 124" fill="none" stroke="#d5e4ae" stroke-width="9" stroke-linecap="round"/>
-                <ellipse cx="22" cy="122" rx="12" ry="13" fill="#dce9bc" stroke="#315341" stroke-width="5"/>
-              </g>
-              <g class="wheel-clerk-arm-right">
-                <path d="M193 159Q225 148 224 116" fill="none" stroke="#315341" stroke-width="16" stroke-linecap="round"/>
-                <path d="M193 159Q225 148 224 116" fill="none" stroke="#d5e4ae" stroke-width="9" stroke-linecap="round"/>
-                <ellipse cx="223" cy="114" rx="12" ry="13" fill="#dce9bc" stroke="#315341" stroke-width="5"/>
-                <path d="M219 98l-7-13m14 11 6-10" fill="none" stroke="#315341" stroke-width="4" stroke-linecap="round"/>
-              </g>
-              <g class="wheel-clerk-body">
-                <path d="M53 149Q45 112 70 89Q85 72 117 72Q160 67 183 94Q209 119 197 178Q188 222 149 235Q120 247 88 231Q59 218 53 186Q49 171 53 149Z"
-                  fill="url(#yen-wheel-clerk-body)" stroke="#315341" stroke-width="7" stroke-linejoin="round"/>
-                <path d="M66 133Q79 104 98 101" fill="none" stroke="#fffbea" stroke-width="9" stroke-linecap="round" opacity=".55"/>
-                <path d="M83 218Q124 243 169 215" fill="none" stroke="#91ae83" stroke-width="7" stroke-linecap="round" opacity=".52"/>
-                <g class="wheel-clerk-face">
-                  <g class="wheel-clerk-brows" fill="none" stroke="#315341" stroke-width="5" stroke-linecap="round">
-                    <path d="M88 125Q101 119 111 124"/><path d="M144 124Q157 119 167 126"/>
-                  </g>
-                  <g class="wheel-clerk-eyes">
-                    <ellipse cx="101" cy="149" rx="12" ry="15" fill="#fffdf0" stroke="#315341" stroke-width="3.5"/>
-                    <ellipse cx="155" cy="149" rx="12" ry="15" fill="#fffdf0" stroke="#315341" stroke-width="3.5"/>
-                    <ellipse class="wheel-clerk-pupil" cx="104" cy="150" rx="6.5" ry="9" fill="#315341"/>
-                    <ellipse class="wheel-clerk-pupil" cx="158" cy="150" rx="6.5" ry="9" fill="#315341"/>
-                    <circle cx="106" cy="146" r="2.5" fill="#fffdf0"/><circle cx="160" cy="146" r="2.5" fill="#fffdf0"/>
-                  </g>
-                  <ellipse cx="79" cy="175" rx="17" ry="10" fill="#ecad9f" opacity=".9"/>
-                  <ellipse cx="178" cy="175" rx="17" ry="10" fill="#ecad9f" opacity=".9"/>
-                  <path class="wheel-clerk-mouth-idle" d="M113 181Q128 196 144 180" fill="none" stroke="#315341" stroke-width="5" stroke-linecap="round"/>
-                  <ellipse class="wheel-clerk-mouth-spin" cx="129" cy="184" rx="9" ry="12" fill="#315341"/>
-                  <path class="wheel-clerk-mouth-win" d="M107 179Q129 214 151 180Z" fill="#985f60" stroke="#315341" stroke-width="5" stroke-linejoin="round"/>
-                  <path class="wheel-clerk-mouth-win" d="M117 197Q129 189 142 196" fill="none" stroke="#f8d3c4" stroke-width="4" stroke-linecap="round"/>
-                </g>
-                <path d="M101 218L127 230 153 218" fill="#edbf89" stroke="#315341" stroke-width="4" stroke-linejoin="round"/>
-                <path d="M126 229l-2 17 13-10" fill="#d79474" stroke="#315341" stroke-width="3" stroke-linejoin="round"/>
-              </g>
-              <g class="wheel-clerk-hat">
-                <path d="M75 93Q66 62 89 47Q110 31 142 36Q168 41 176 65L175 91Z" fill="url(#yen-wheel-clerk-hat)" stroke="#315341" stroke-width="6" stroke-linejoin="round"/>
-                <path d="M66 93Q126 81 185 91" fill="none" stroke="#315341" stroke-width="8" stroke-linecap="round"/>
-                <path d="M94 58Q122 48 150 55" fill="none" stroke="#fff1c7" stroke-width="5" stroke-linecap="round"/>
-                <rect x="109" y="59" width="41" height="22" rx="7" fill="#fff6df" stroke="#315341" stroke-width="3"/>
-                <text x="129.5" y="75" text-anchor="middle" font-family="Arial,sans-serif" font-size="13" font-weight="900" fill="#315341">!</text>
-                <path d="M124 33Q128 18 143 13Q145 31 128 36Z" fill="#8faf7c" stroke="#315341" stroke-width="3" stroke-linejoin="round"/>
-              </g>
-              <g class="wheel-clerk-sparkles" fill="#e9bc83" stroke="#315341" stroke-width="2">
-                <path d="M37 51l5 12 12 5-12 5-5 12-5-12-12-5 12-5z"/>
-                <path d="M198 49l4 9 10 5-10 4-4 10-4-10-10-4 10-5z"/>
-              </g>
+            <svg class="wheel-clerk-art cuc-yen-model" viewBox="0 0 320 320" focusable="false">
+              <use class="wheel-role-idle" href="/assets/cuc-yen/mascot.svg#cuc-yen-clerk"></use>
+              <use class="wheel-role-spin" href="/assets/cuc-yen/mascot.svg#cuc-yen-clerk-spin"></use>
+              <use class="wheel-role-win" href="/assets/cuc-yen/mascot.svg#cuc-yen-clerk-win"></use>
             </svg>
           </div>
           <div class="wheel-speech" id="yen-wheel-speech" role="status" aria-live="polite">Bấm quay đi! Muốn nhận quà thật thì quay tại Yên trước mặt nhân viên nhé.</div>
@@ -2200,7 +2102,12 @@
         mascot.classList.remove('wink');
         void mascot.offsetWidth;
         mascot.classList.add('wink');
-        window.setTimeout(() => mascot.classList.remove('wink'), 450);
+        const actor=mascot.querySelector('use');
+        if(actor)actor.setAttribute('href','/assets/cuc-yen/mascot.svg#cuc-yen-wink');
+        window.setTimeout(() => {
+          mascot.classList.remove('wink');
+          if(actor)actor.setAttribute('href','/assets/cuc-yen/mascot.svg#cuc-yen-waving');
+        }, 450);
       }
       mascot.addEventListener('click', () => poke());
       // Four distinct illustrated micro-stories. Each one has its own silhouette and choreography.
@@ -2798,18 +2705,13 @@
 <script id="yen-mascot-reactions">
 (function(){
   "use strict";
-  const mouths={sleepy:"M43 56 Q55 63 67 56",surprised:"M51 54 A5 7 0 1 1 51 68 A5 7 0 1 1 51 54",cheeky:"M42 54 Q55 73 69 53"};
-  const eyes={
-    sleepy:'<path d="M31 47 Q38 43 45 47 M67 47 Q74 43 81 47" stroke="#305343" stroke-width="3.5" stroke-linecap="round" fill="none"/>',
-    surprised:'<circle cx="38" cy="45" r="6" fill="#305343"/><circle cx="74" cy="45" r="6" fill="#305343"/>',
-    cheeky:'<circle cx="38" cy="45" r="5" fill="#305343"/><path d="M67 45 Q74 40 81 45" stroke="#305343" stroke-width="3.5" fill="none" stroke-linecap="round"/>'
-  };
+  const valid=new Set(["happy","sleepy","surprised","cheeky","shy","delighted","coffee","tea","spinning","resting","front","waving"]);
   function show(target,mood,message){
-    if(!target||!Object.prototype.hasOwnProperty.call(mouths,mood))return;
+    if(!target||!valid.has(mood))return;
     const old=target.querySelector(":scope > .cuc-reaction");if(old)old.remove();
     const card=document.createElement("div");card.className="cuc-reaction";card.dataset.mood=mood;
     const actor=document.createElement("span");actor.className="cuc-reaction-actor";actor.setAttribute("aria-hidden","true");
-    actor.innerHTML='<svg viewBox="0 0 112 90" fill="none" aria-hidden="true" focusable="false"><path d="M13 61 Q4 41 22 24 Q41 3 71 11 Q95 13 99 40 Q108 65 84 77 Q58 89 35 77 Q21 73 13 61Z" fill="#d3e0af" stroke="#50775a" stroke-width="4.5" stroke-linejoin="round"/><path d="M21 65 l-15 6 M91 66 l14 4" stroke="#50775a" stroke-width="5" stroke-linecap="round"/>'+eyes[mood]+'<path d="'+mouths[mood]+'" stroke="#305343" stroke-width="3.5" stroke-linecap="round" fill="none"/></svg>';
+    actor.innerHTML='<svg class="cuc-yen-model" viewBox="0 0 320 320" focusable="false"><use href="/assets/cuc-yen/mascot.svg#cuc-yen-'+mood+'"></use></svg>';
     const line=document.createElement("span");line.className="cuc-reaction-text";line.textContent=message;
     card.append(actor,line);target.appendChild(card);
   }
