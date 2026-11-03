@@ -2121,6 +2121,139 @@
 @media(max-width:360px){.permit-cuc-trigger{width:118px}}
 
 </style>
+<style id="yen-giant-stamp-sequence">
+
+/* The permit is revealed first. The giant wooden seal is animated over this
+   exact target. Red ink must not exist visually before the physical impact. */
+.permit-seal-target{
+  position:relative;flex:0 0 121px;width:121px;height:121px;
+  display:grid;place-items:center;isolation:isolate;overflow:visible;
+}
+.permit-seal-target .permit-ink-seal{
+  position:absolute;inset:0;margin:auto;width:121px;height:121px;
+  z-index:3;visibility:hidden;opacity:0;
+  pointer-events:none;transform:rotate(-11deg) scale(1.35);
+}
+.permit-seal-wait{
+  position:absolute;z-index:1;inset:13px;display:grid;place-items:center;
+  color:#a8a189;text-align:center;letter-spacing:.13em;
+  font:900 10px/1.28 "Noto Sans",Arial,sans-serif;
+  border:2px dashed #d4c5a9;border-radius:50%;
+}
+.permit-stage.is-seal-imprinted .permit-ink-seal{
+  visibility:visible;opacity:1;transform:rotate(-11deg) scale(1);
+  animation:permit-red-ink-appear .36s cubic-bezier(.15,.85,.28,1.2) both!important;
+}
+.permit-stage.is-seal-imprinted .permit-seal-wait{visibility:hidden}
+.permit-stage.is-issued .permit-ink-seal{animation:none!important;opacity:1;visibility:visible}
+.permit-receipt-mascot{
+  position:absolute;z-index:5;left:-116px;bottom:-8px;width:96px;height:96px;
+  opacity:0;pointer-events:none;transform-origin:50% 80%;
+  filter:drop-shadow(0 7px 4px #644c3b38);
+}
+.permit-stage.is-previewing .permit-receipt-mascot{opacity:1;animation:permit-cuc-arrive .48s ease-out both}
+.permit-stage.is-collecting .permit-receipt-mascot{
+  opacity:1;animation:permit-cuc-fetch .75s cubic-bezier(.32,.03,.56,1) both;
+}
+.permit-stage.is-seal-coming .permit-receipt-mascot{
+  animation:permit-cuc-step-aside .9s ease-out both;
+}
+@keyframes permit-cuc-arrive{
+  from{opacity:0;transform:translate(-19px,14px) rotate(-7deg) scale(.85)}
+  to{opacity:1;transform:none}
+}
+@keyframes permit-cuc-fetch{
+  0%{opacity:1;transform:translate(0,0) rotate(-6deg)}
+  22%{transform:translate(17px,-9px) rotate(7deg)}
+  48%{transform:translate(36px,2px) rotate(-8deg)}
+  75%{transform:translate(60px,-13px) rotate(12deg)}
+  100%{opacity:1;transform:translate(67px,-4px) rotate(-4deg)}
+}
+@keyframes permit-cuc-step-aside{
+  0%{opacity:1;transform:translate(67px,-4px) rotate(-4deg)}
+  45%{opacity:1;transform:translate(-5px,-7px) rotate(-9deg)}
+  100%{opacity:0;transform:translate(-19px,-14px) rotate(-11deg)}
+}
+.permit-giant-stamp{
+  position:absolute;left:50%;top:50%;z-index:7;
+  width:166px;height:215px;display:flex;flex-direction:column;align-items:center;
+  pointer-events:none;opacity:0;transform-origin:50% 100%;
+  filter:drop-shadow(0 11px 7px #513d2c65);
+}
+.permit-giant-stamp-handle{
+  width:66px;height:56px;border:4px solid #634932;
+  border-radius:47% 47% 32% 32%;
+  background:linear-gradient(95deg,#9a6845 0%,#f0cc97 42%,#b07a4a 76%,#8c5538 100%);
+  box-shadow:inset 5px 4px 7px #f9dbab66,inset -6px 0 5px #72422944
+}
+.permit-giant-stamp-neck{
+  height:39px;width:36px;background:linear-gradient(90deg,#875839,#dcaa74,#875839);
+  border-left:4px solid #69462d;border-right:4px solid #69462d
+}
+.permit-giant-stamp-wood{
+  display:grid;place-content:center;text-align:center;
+  width:154px;height:93px;border:5px solid #624831;border-radius:17px 17px 10px 10px;
+  background:linear-gradient(117deg,#d8a166,#f6d8a8 46%,#c28b56 78%,#af7549);
+  color:#674631;font:1000 27px/1 "Noto Sans",Arial,sans-serif;
+  letter-spacing:.11em;text-shadow:0 1px #ffe8c6;
+  box-shadow:inset 0 7px #fff2c345
+}
+.permit-giant-stamp-base{
+  display:block;width:161px;height:19px;border:4px solid #70453e;
+  border-radius:3px 3px 9px 9px;background:linear-gradient(#c3866a,#8c4c46);
+  box-shadow:0 5px 0 #9d715e
+}
+.permit-stage.is-seal-coming .permit-giant-stamp{
+  animation:permit-giant-slam 1.05s cubic-bezier(.22,.61,.28,1) both;
+}
+@keyframes permit-giant-slam{
+  0%{opacity:0;transform:translate(-50%,-175%) rotate(-10deg) scale(.82)}
+  18%{opacity:1;transform:translate(-50%,-160%) rotate(-9deg) scale(.97)}
+  41%{opacity:1;transform:translate(-50%,-147%) rotate(-5deg) scale(1.12)}
+  62%{opacity:1;transform:translate(-50%,-132%) rotate(-2deg) scale(1.12)}
+  72%{opacity:1;transform:translate(-50%,-98%) rotate(1deg) scale(1.13,.91)}
+  80%{opacity:1;transform:translate(-50%,-107%) rotate(-2deg) scale(1.06)}
+  91%{opacity:.75;transform:translate(-50%,-143%) rotate(-5deg) scale(1.02)}
+  100%{opacity:0;transform:translate(-50%,-168%) rotate(-7deg) scale(.94)}
+}
+@keyframes permit-red-ink-appear{
+  from{opacity:0;transform:rotate(-17deg) scale(1.35)}
+  70%{opacity:1;transform:rotate(-10deg) scale(.94)}
+  to{opacity:1;transform:rotate(-11deg) scale(1)}
+}
+.permit-stage.is-seal-imprinted .permit-sheet{
+  animation:permit-paper-impact .27s ease-out both;
+}
+@keyframes permit-paper-impact{
+  0%,100%{transform:rotate(0)}
+  35%{transform:translate(2px,2px) rotate(.3deg)}
+  65%{transform:translate(-1px,0) rotate(-.2deg)}
+}
+.permit-stage.is-previewing .permit-result-actions,
+.permit-stage.is-collecting .permit-result-actions,
+.permit-stage.is-seal-coming .permit-result-actions{visibility:hidden;pointer-events:none}
+@media(max-width:700px){
+  .permit-seal-target{flex-basis:88px;width:88px;height:88px}
+  .permit-seal-target .permit-ink-seal{width:88px;height:88px}
+  .permit-seal-wait{inset:8px;font-size:8px}
+  .permit-receipt-mascot{left:-74px;bottom:-16px;width:69px;height:69px}
+  .permit-giant-stamp{transform-origin:50% 100%;width:148px}
+  .permit-giant-stamp-wood{width:135px;font-size:24px}
+  .permit-giant-stamp-base{width:142px}
+  .permit-giant-stamp-handle{width:59px}
+}
+@media(prefers-reduced-motion:reduce){
+  .permit-stage .permit-receipt-mascot,.permit-stage .permit-giant-stamp,
+  .permit-stage .permit-ink-seal,.permit-stage .permit-sheet{
+    animation:none!important
+  }
+  .permit-stage.is-seal-imprinted .permit-ink-seal{
+    visibility:visible;opacity:1;transform:rotate(-11deg) scale(1)
+  }
+  .permit-stage .permit-giant-stamp{opacity:0}
+}
+
+</style>
 </head>
 <body>
   <!-- Yên doodle icons: hand-drawn, consistent stroke; no icon fonts or external assets -->
@@ -2303,7 +2436,22 @@
             </div>
             <div class="permit-receipt" id="permit-receipt" hidden>
               <div class="permit-sheet-kicker">ĐÃ ĐƯỢC DUYỆT · BẢN CHỈ ĐỂ VUI</div>
-              <div class="permit-approved-header"><h3>GIẤY PHÉP<br>NGHỈ TẠM THỜI</h3><div class="permit-ink-seal" aria-label="Đã duyệt nghỉ">CỤC YÊN<br><strong>ĐÃ DUYỆT<br>NGHỈ</strong><small>CHO VUI</small></div></div>
+              <div class="permit-approved-header">
+                <h3>GIẤY PHÉP<br>NGHỈ TẠM THỜI</h3>
+                <div class="permit-seal-target" id="permit-seal-target">
+                  <span class="permit-seal-wait" aria-hidden="true">CHỜ<br>ĐÓNG<br>MỘC</span>
+                  <div class="permit-ink-seal" id="permit-ink-seal" aria-label="Dấu Cục Yên đã duyệt">CỤC YÊN<br><strong>ĐÃ DUYỆT<br>NGHỈ</strong><small>CHO VUI</small></div>
+                  <svg class="permit-receipt-mascot cuc-yen-model" viewBox="0 0 320 320" aria-hidden="true" focusable="false">
+                    <use href="/assets/cuc-yen/mascot.svg#cuc-yen-clerk-ready"></use>
+                  </svg>
+                  <div class="permit-giant-stamp" id="permit-giant-stamp" aria-hidden="true">
+                    <span class="permit-giant-stamp-handle"></span>
+                    <span class="permit-giant-stamp-neck"></span>
+                    <span class="permit-giant-stamp-wood">CỤC<br>YÊN</span>
+                    <span class="permit-giant-stamp-base"></span>
+                  </div>
+                </div>
+              </div>
               <div class="permit-receipt-lines">
                 <div><span>LÝ DO</span><strong id="permit-out-reason"></strong></div>
                 <div><span>THỜI HẠN</span><strong id="permit-out-duration"></strong></div>
