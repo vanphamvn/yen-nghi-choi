@@ -13,7 +13,7 @@
 1. Một đoạn chỉ nhắc tên nhân vật khi thực sự cần phân biệt ai đang làm gì. Đã có hình Cục Yên ngay cạnh thì ưu tiên câu hành động.
 2. Chuyển từ kể chuyện về Cục Yên sang cho khách **chơi**: “Chọn ba điều rồi đóng mộc”, không phải “Cục Yên bảo bạn chọn ba điều”.
 3. Trò đùa phải ngắn, dễ hình dung, có kết quả cụ thể. Tránh nhắc tên chỉ để làm câu có vẻ dễ thương.
-4. Tên trò, chữ trên con dấu, giấy phép PNG, nhãn logo, thẻ meta và `aria-label` hữu ích **không thuộc diện cần cắt**.
+4. Tên trò, chữ trên con dấu, giấy phép PNG, nhãn logo, thẻ meta và `aria-label` hữu ích **không thuộc diện cần cắt**. Tuy nhiên, trong một khu trò chơi nên có **một điểm nhận diện thương hiệu nổi bật**; tránh lặp tên trong tiêu đề, bảng quầy, phụ kiện nhân vật, nút bấm và lời chú thích cùng lúc.
 5. Khách cần biết món nước/game giả tưởng có thể **không phải món thật/khuyến mãi thật**. Không khiến người xem tưởng vòng quay có voucher có thể đổi.
 6. **Yên chưa mở cửa** tại thời điểm cập nhật. Dùng “dự kiến khai trương tháng 12/2026” nếu nhắc tình trạng quán; không tự tuyên bố “đã mở”.
 7. Không thêm cookie, telemetry, database, đăng nhập hoặc lưu thông tin cá nhân chỉ để thay câu chữ.
@@ -46,3 +46,9 @@
 - [ ] Thông báo sản phẩm giả tưởng, ảnh PNG, không lưu data và sắp khai trương vẫn chính xác.
 - [ ] Xem bằng điện thoại để phát hiện overflow, line wrapping trong nút, con dấu và biên lai.
 
+
+### Ví dụ bổ sung: Vòng quay (#47)
+
+- **Giữ:** chữ `yên · COFFEE & TEA` ở tâm vòng quay như điểm nhận diện chính.
+- **Đổi:** `Vòng quay Yên` → `Quay một vòng`; `VÒNG QUAY MAY MẮN · CỤC YÊN` → `QUẦY VẬN MAY · SỐ 02`; `QUAY YÊN!` → `QUAY THỬ!`; bảng tên nhỏ trên mũ thành dấu `!`.
+- **Giữ nguyên:** số tiền/topping hiển thị trên 8 lát vòng quay, thông báo quà mô phỏng, điều hướng game, ID và logic quay.
