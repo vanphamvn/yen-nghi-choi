@@ -1379,7 +1379,7 @@
 
 
 
-/* #56: in-store reward program stays off until registration and cashier sign-off */
+/* Wheel is playable for everyone; real reward redemption requires staff-witnessed in-store spin. */
 .wheel-panel[data-program=inactive] .wheel-spin-btn:disabled,
 .wheel-panel[data-program=completed] .wheel-spin-btn:disabled{cursor:not-allowed}
 .wheel-panel[data-program=inactive] .wheel-viewport:disabled,
@@ -1684,18 +1684,18 @@
   <div class="wrap release-layout">
     <div class="release-copy reveal">
       <div class="eyebrow">02 / Quầy phát quà</div>
-      <h2 class="section-title" id="release-title">Quay một vòng. <i>Quà về tay.</i></h2>
-      <p>Ghé quầy, nhờ nhân viên chứng kiến rồi quay nhé.</p>
+      <h2 class="section-title" id="release-title">Quay ngay. <i>Quà nhận tại Yên.</i></h2>
+      <p>Ở đâu cũng quay được. Quà chỉ trao khi nhân viên tận mắt thấy bạn quay tại quán.</p>
       
     </div>
     <div class="wheel-panel reveal" id="yen-wheel-panel">
       <div class="wheel-toolbar">
         <span class="wheel-brand"><span aria-hidden="true"></span> QUẦY VẬN MAY · SỐ 02</span>
-        <span class="wheel-demo-chip" id="yen-wheel-program-state">CHƯA NHẬN LƯỢT</span>
+        <span class="wheel-demo-chip" id="yen-wheel-program-state">QUAY TỰ DO</span>
       </div>
       <div class="wheel-content">
         <div class="wheel-main">
-          <button class="wheel-viewport" id="yen-wheel-tap" type="button" disabled aria-describedby="yen-wheel-guidance" aria-label="Quay nhận quà tại quầy, cần nhân viên chứng kiến">
+          <button class="wheel-viewport" id="yen-wheel-tap" type="button" aria-describedby="yen-wheel-guidance" aria-label="Chạm vào vòng quay để chơi. Quà chỉ được trao khi quay tại Yên có nhân viên chứng kiến">
             <svg class="wheel-disc" id="yen-wheel-disc" viewBox="0 0 440 440" role="img" aria-label="Vòng quay tám phần thưởng: giảm 5 nghìn, topping, giảm 10 phần trăm, nâng size, giảm 3 nghìn, quà bí mật, giảm 5 phần trăm, giảm 8 nghìn"></svg>
             <span class="wheel-pointer" aria-hidden="true"><svg viewBox="0 0 38 55" fill="none"><path d="M19 51 3 12Q1 5 8 5h22q7 0 5 7L19 51Z" fill="#335642" stroke="#fff9e9" stroke-width="4" stroke-linejoin="round"/><circle cx="19" cy="14" r="5" fill="#efc68b"/></svg></span>
             <span class="wheel-center" aria-hidden="true"><strong>yên</strong><small>COFFEE &amp; TEA</small></span>
@@ -1775,17 +1775,17 @@
               </g>
             </svg>
           </div>
-          <div class="wheel-speech" id="yen-wheel-speech" role="status" aria-live="polite">Vòng quay nhận quà được mở theo lịch chương trình tại quầy.</div>
-          <button class="wheel-spin-btn" id="yen-wheel-spin" type="button" disabled aria-describedby="yen-wheel-guidance">CHƯA NHẬN LƯỢT</button>
+          <div class="wheel-speech" id="yen-wheel-speech" role="status" aria-live="polite">Bấm quay đi! Muốn nhận quà thật thì quay tại Yên trước mặt nhân viên nhé.</div>
+          <button class="wheel-spin-btn" id="yen-wheel-spin" type="button" aria-describedby="yen-wheel-guidance">QUAY NGAY</button>
           <div class="wheel-result" id="yen-wheel-result" role="status" aria-live="polite" hidden>
-            <span class="wheel-result-label">PHẦN QUÀ CỦA BẠN</span>
+            <span class="wheel-result-label">KẾT QUẢ VÒNG QUAY</span>
             <strong id="yen-wheel-reward"></strong>
             <p id="yen-wheel-reward-note"></p>
             <div class="wheel-souvenir" id="yen-wheel-souvenir" hidden><span class="wheel-souvenir-art" id="yen-wheel-symbol" aria-hidden="true">?</span><span><b id="yen-wheel-souvenir-text"></b></span></div>
           </div>
         </div>
       </div>
-      <p class="wheel-disclaimer" id="yen-wheel-guidance"><strong>Quà thật tại quầy.</strong> Nhân viên chứng kiến lượt quay và xác nhận phần thưởng theo thể lệ chương trình.</p>
+      <p class="wheel-disclaimer" id="yen-wheel-guidance"><strong>Quay online chỉ để chơi.</strong> Quà chỉ được trao khi bạn quay trực tiếp tại Yên, có nhân viên chứng kiến từ lúc bấm quay. Ảnh chụp kết quả không có giá trị nhận quà.</p>
       <div class="wheel-confetti" id="yen-wheel-confetti" aria-hidden="true"></div>
     </div>
   </div>
@@ -2209,7 +2209,7 @@
     })();
   </script>
   <script id="yen-wheel-inline-script">
-/* Yên Coffee & Tea: in-store reward wheel, no persistence or automatic voucher issuance. */
+/* Yên Coffee & Tea: publicly playable wheel. Only a staff-witnessed in-store spin is redeemable; no voucher or stored proof. */
 (function(){
   'use strict';
   function init(){
@@ -2225,14 +2225,14 @@
     const confetti=byId('yen-wheel-confetti');
     if(!disc||!spinButton||!wheelButton||!speech||!result||!resultName||!resultDescription||!host||!confetti)return;
     const prizes=[
-      {lines:['GIẢM','5.000Đ'],name:'Giảm 5.000đ',message:'Bạn nhận ưu đãi giảm 5.000đ.',color:'#E9B3A1'},
-      {lines:['TOPPING','0Đ'],name:'Tặng topping',message:'Bạn nhận một phần topping miễn phí.',color:'#DCE9B7'},
-      {lines:['GIẢM','10%'],name:'Giảm 10%',message:'Bạn nhận ưu đãi giảm 10%.',color:'#EBD69E'},
-      {lines:['UPSIZE','0Đ'],name:'Tặng nâng size',message:'Bạn nhận một lượt nâng size miễn phí.',color:'#D2E5DF'},
-      {lines:['GIẢM','3.000Đ'],name:'Giảm 3.000đ',message:'Bạn nhận ưu đãi giảm 3.000đ.',color:'#E5D6EC'},
-      {lines:['QUÀ','BÍ MẬT'],name:'Quà bí mật',message:'Quà bất ngờ đang đợi bạn ở quầy.',color:'#F3CCAF'},
-      {lines:['GIẢM','5%'],name:'Giảm 5%',message:'Bạn nhận ưu đãi giảm 5%.',color:'#D7E3BE'},
-      {lines:['GIẢM','8.000Đ'],name:'Giảm 8.000đ',message:'Bạn nhận ưu đãi giảm 8.000đ.',color:'#EDC5D2'}
+      {lines:['GIẢM','5.000Đ'],name:'Giảm 5.000đ',message:'Ưu đãi giảm 5.000đ.',color:'#E9B3A1'},
+      {lines:['TOPPING','0Đ'],name:'Tặng topping',message:'Một phần topping miễn phí.',color:'#DCE9B7'},
+      {lines:['GIẢM','10%'],name:'Giảm 10%',message:'Ưu đãi giảm 10%.',color:'#EBD69E'},
+      {lines:['UPSIZE','0Đ'],name:'Tặng nâng size',message:'Một lượt nâng size miễn phí.',color:'#D2E5DF'},
+      {lines:['GIẢM','3.000Đ'],name:'Giảm 3.000đ',message:'Ưu đãi giảm 3.000đ.',color:'#E5D6EC'},
+      {lines:['QUÀ','BÍ MẬT'],name:'Quà bí mật',message:'Một món quà bất ngờ tại quầy.',color:'#F3CCAF'},
+      {lines:['GIẢM','5%'],name:'Giảm 5%',message:'Ưu đãi giảm 5%.',color:'#D7E3BE'},
+      {lines:['GIẢM','8.000Đ'],name:'Giảm 8.000đ',message:'Ưu đãi giảm 8.000đ.',color:'#EDC5D2'}
     ];
     const svgNS='http://www.w3.org/2000/svg';
     const make=(tag,attrs={})=>{
@@ -2277,12 +2277,11 @@
       }
       return Math.floor(Math.random()*n);
     };
-    // Launch gate: enable only AFTER official promo registration and store procedures.
-    // No cookie/storage/backend: staff must witness and record every valid award.
-    const WHEEL_PROGRAM_ACTIVE=false;
+    // Playing is always available. Only staff can validate an in-person spin for a real reward.
+    // No cookie, storage, backend, screenshots, or self-issued vouchers establish eligibility.
     const statusChip=byId('yen-wheel-program-state');
     const panel=byId('yen-wheel-panel');
-    let rotation=0,isSpinning=false,frame=0,spinCompleted=false;
+    let rotation=0,isSpinning=false,frame=0;
     let pendingPrizeIndex=null,pendingDestination=0;
     function paint(){disc.style.transform='rotate('+rotation+'deg)';}
     function announce(message){speech.textContent=message;}
@@ -2307,39 +2306,41 @@
     function complete(index){
       if(!isSpinning||!Number.isInteger(index)||index<0||index>=prizes.length)return;
       rotation=Math.round(rotation*1000)/1000;paint();
-      isSpinning=false;spinCompleted=true;pendingPrizeIndex=null;frame=0;
-      spinButton.disabled=true;wheelButton.disabled=true;
-      spinButton.textContent='ĐÃ CÓ KẾT QUẢ';
-      if(statusChip)statusChip.textContent='CHỜ NHẬN QUÀ';
+      isSpinning=false;pendingPrizeIndex=null;frame=0;
+      spinButton.disabled=false;wheelButton.disabled=false;
+      spinButton.textContent='QUAY LẦN NỮA';
+      if(statusChip)statusChip.textContent='ĐÃ QUAY XONG';
       if(panel)panel.dataset.program='completed';
       host.classList.remove('spinning');
       host.classList.add('celebrating');
       const gift=prizes[index];
       resultName.textContent=gift.name;
-      resultDescription.textContent=gift.message;
+      resultDescription.textContent=gift.message+' Quà thật chỉ được xác nhận nếu nhân viên trực tiếp chứng kiến lượt quay tại Yên.';
       const kinds=['discount','topping','discount','size','discount','secret','discount','discount'];
       const symbols=['5','o','%','+','3','?','%','8'];
       result.dataset.kind=kinds[index];
       byId('yen-wheel-symbol').textContent=symbols[index];
-      byId('yen-wheel-souvenir-text').textContent='Mời nhân viên xác nhận để nhận quà.';
+      byId('yen-wheel-souvenir-text').textContent='Ảnh chụp màn hình không dùng để nhận quà.';
       byId('yen-wheel-souvenir').hidden=false;
       result.hidden=false;
-      const reactions=[['sleepy','Tới lượt quà rồi, tỉnh ngủ ngay!'],['surprised','Trúng quà thật, mắt tròn hơn trân châu.'],['cheeky','Có quà rồi, mang cho nhân viên xem nhé!']];
+      const reactions=[['sleepy','Quay xong rồi, tỉnh ngủ ngay!'],['surprised','Cục Yên tròn mắt với kết quả này.'],['cheeky','Muốn nhận quà, quay tại quán trước mặt nhân viên nhé!']];
       const reaction=reactions[index%reactions.length];window.YenReaction?.show(result,reaction[0],reaction[1]);
-      announce('Trúng quà rồi! Nhân viên không được ngất nha.');
+      announce('Ra '+gift.name+'! Muốn nhận thật, quay tại quán cho nhân viên thấy nhé.');
       celebrate();
     }
     function spin(){
-      if(!WHEEL_PROGRAM_ACTIVE||isSpinning||spinCompleted)return;
+      if(isSpinning)return;
       isSpinning=true;
       result.hidden=true;
       byId('yen-wheel-souvenir').hidden=true;
       confetti.replaceChildren();
       spinButton.disabled=true;wheelButton.disabled=true;
       spinButton.textContent='ĐANG QUAY...';
+      if(statusChip)statusChip.textContent='ĐANG QUAY';
+      if(panel)panel.dataset.program='active';
       host.classList.remove('celebrating');
       host.classList.add('spinning');
-      announce(['Nhân viên chứng kiến rồi chứ? Quay nào!','Đang tìm quà cho bạn...','Mũ bảo hiểm đâu? Vòng quay tăng tốc!'][randomInt(3)]);
+      announce(['Cục Yên đã khởi động vòng quay!','Đang tìm một ô may mắn...','Giữ mũ nào, vòng quay tăng tốc!'][randomInt(3)]);
       const selectedIndex=randomInt(prizes.length);
       const target=(((-selectedIndex*step)%360)+360)%360;
       const present=((rotation%360)+360)%360;
@@ -2370,14 +2371,12 @@
         frame=0;rotation=pendingDestination;complete(pendingPrizeIndex);
       }
     });
-    spinButton.disabled=!WHEEL_PROGRAM_ACTIVE;
-    wheelButton.disabled=!WHEEL_PROGRAM_ACTIVE;
-    if(statusChip)statusChip.textContent=WHEEL_PROGRAM_ACTIVE?'QUÀ THẬT TẠI QUẦY':'CHƯA NHẬN LƯỢT';
-    spinButton.textContent=WHEEL_PROGRAM_ACTIVE?'QUAY NHẬN QUÀ':'CHƯA NHẬN LƯỢT';
-    if(panel)panel.dataset.program=WHEEL_PROGRAM_ACTIVE?'active':'inactive';
-    announce(WHEEL_PROGRAM_ACTIVE
-      ?'Nhờ nhân viên chứng kiến rồi bấm quay nhận quà nhé.'
-      :'Chương trình chưa nhận lượt. Hỏi nhân viên trước khi quay nhé.');
+    spinButton.disabled=false;
+    wheelButton.disabled=false;
+    if(statusChip)statusChip.textContent='QUAY TỰ DO';
+    spinButton.textContent='QUAY NGAY';
+    if(panel)panel.dataset.program='active';
+    announce('Bấm quay đi! Quà chỉ được trao khi nhân viên tận mắt thấy bạn quay tại Yên.');
     paint();
 
   }
