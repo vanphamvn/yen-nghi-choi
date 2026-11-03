@@ -1483,6 +1483,246 @@
   }
 }
 
+
+/* STORYBOARD v3: direct action beats follow the exact copy, not generic wiggles.
+   Time budget per scene = 2.35s; is-settled is applied after 2.45s. */
+.mascot-cutscene .scene-story-detail{pointer-events:none}
+.mascot-cutscene .scene-story-detail>g,
+.mascot-cutscene .scene-story-detail .story-drop,
+.mascot-cutscene .scene-props-front .story-mini-clone{
+  transform-box:fill-box;transform-origin:50% 50%;
+}
+.mascot-cutscene .scene-motion-caught{animation-name:yenActionCaught}
+.mascot-cutscene .scene-motion-hide{animation-name:yenActionHide}
+.mascot-cutscene .scene-motion-ride{animation-name:yenPropFlight}
+.mascot-cutscene .scene-motion-flanify{animation-name:yenActionFlan}
+.mascot-cutscene .scene-motion-umbrellahold{animation-name:yenActionUmbrella}
+.mascot-cutscene .scene-motion-rabbit{animation-name:yenActionRabbit}
+.mascot-cutscene .scene-motion-abduct{animation-name:yenActionAbduct}
+.mascot-cutscene .scene-motion-bubblefloat{animation-name:yenPropBubble}
+.mascot-cutscene .scene-motion-interview{animation-name:yenActionInterview}
+.mascot-cutscene .scene-motion-snooze{animation-name:yenActionSnooze}
+.mascot-cutscene .scene-motion-toastjump{animation-name:yenActionToast}
+.mascot-cutscene .scene-motion-dogrun{animation-name:yenActionDogRun}
+.mascot-cutscene .scene-motion-reading{animation-name:yenActionReading}
+.mascot-cutscene .scene-motion-hoistsign{animation-name:yenActionHoist}
+.mascot-cutscene .scene-motion-carefulserve{animation-name:yenActionServe}
+.mascot-cutscene .scene-motion-wigglerun{animation-name:yenActionWiggleRun}
+.mascot-cutscene .scene-motion-sucked{animation-name:yenActionSucked}
+.mascot-cutscene .scene-motion-printclone{animation-name:yenActionPrinting}
+.mascot-cutscene .scene-motion-djgroove{animation-name:yenActionDJ}
+.mascot-cutscene .scene-motion-cookieskate{animation-name:yenPropSkate}
+@keyframes yenActionCaught{
+  0%,13%{transform:translateY(9px);opacity:1}
+  28%{transform:translateY(-30px) rotate(-8deg) scale(1.08)}
+  40%{transform:rotate(8deg) scale(.97)}
+  58%{transform:rotate(-5deg)}
+  77%{transform:translateY(-7px)}
+  100%{transform:none}
+}
+@keyframes yenActionHide{
+  0%{opacity:.8;transform:translateY(-170px) scale(.82)}
+  28%{opacity:1;transform:translateY(-65px)}
+  50%{transform:translateY(39px) scale(.94)}
+  68%{transform:translateY(-10px)}
+  85%{transform:translateY(9px)}
+  100%{opacity:1;transform:none}
+}
+@keyframes yenActionFlan{
+  0%{transform:translateY(-21px) scale(1.02,1.15)}
+  22%{transform:translateY(13px) scale(1.17,.65)}
+  39%{transform:translateY(-5px) scale(.94,1.04)}
+  54%{transform:translateY(12px) scale(1.16,.68)}
+  72%{transform:translateY(2px) scale(.99,.83)}
+  100%{transform:translateY(7px) scale(1.1,.76)}
+}
+@keyframes yenActionUmbrella{
+  0%{transform:translateY(23px) rotate(5deg);opacity:.6}
+  25%{transform:translateY(0) rotate(-5deg);opacity:1}
+  42%{transform:rotate(5deg)}
+  58%{transform:rotate(-4deg)}
+  75%{transform:rotate(3deg)}
+  100%{transform:none}
+}
+@keyframes yenActionRabbit{
+  0%{opacity:0;transform:translateY(160px) scale(.45)}
+  26%{opacity:1;transform:translateY(105px) scale(.76)}
+  48%{transform:translateY(-46px) scale(1.06)}
+  66%{transform:translateY(-19px) rotate(-8deg)}
+  79%{transform:translateY(-32px) rotate(7deg)}
+  100%{transform:none}
+}
+@keyframes yenActionAbduct{
+  0%{opacity:1;transform:translateY(135px) rotate(-9deg)}
+  20%{transform:translateY(111px) rotate(5deg)}
+  53%{transform:translateY(-32px) rotate(-8deg) scale(.88)}
+  75%{transform:translateY(-43px) rotate(4deg) scale(.92)}
+  100%{transform:translateY(-18px) rotate(-4deg) scale(.94)}
+}
+@keyframes yenActionInterview{
+  0%{transform:translateY(100px);opacity:.7}
+  32%{transform:translateY(-15px);opacity:1}
+  50%{transform:translateY(10px)}
+  65%{transform:rotate(-5deg)}
+  80%{transform:rotate(5deg)}
+  100%{transform:none}
+}
+@keyframes yenActionSnooze{
+  0%,15%{transform:translateY(-11px) rotate(-4deg)}
+  36%{transform:translateY(15px) rotate(4deg)}
+  66%{transform:translateY(9px) rotate(-2deg)}
+  100%{transform:translateY(9px)}
+}
+@keyframes yenActionToast{
+  0%,18%{transform:translateY(149px) scale(.83);opacity:0}
+  27%{opacity:1}
+  43%{transform:translateY(-66px) rotate(-10deg) scale(1.07)}
+  63%{transform:translateY(-31px) rotate(9deg)}
+  80%{transform:translateY(-43px) rotate(-4deg)}
+  100%{transform:translateY(-23px)}
+}
+@keyframes yenActionDogRun{
+  0%{opacity:1;transform:translate(-54px,0) rotate(-7deg)}
+  25%{transform:translate(12px,-15px) rotate(7deg)}
+  47%{transform:translate(-7px,2px) rotate(-10deg)}
+  67%{transform:translate(19px,-10px) rotate(7deg)}
+  83%{transform:translate(35px,-1px) rotate(-4deg)}
+  100%{transform:translate(46px,0)}
+}
+@keyframes yenActionReading{
+  0%{transform:translateX(-28px) rotate(-8deg);opacity:0}
+  25%{opacity:1;transform:rotate(6deg)}
+  45%{transform:rotate(-5deg)}
+  60%{transform:rotate(4deg)}
+  78%{transform:rotate(-4deg)}
+  100%{transform:none}
+}
+@keyframes yenActionHoist{
+  0%{opacity:.8;transform:translateY(105px) scale(.9)}
+  33%{opacity:1;transform:translateY(19px)}
+  53%{transform:translateY(-21px)}
+  72%{transform:translateY(-13px) rotate(-3deg)}
+  100%{transform:none}
+}
+@keyframes yenActionServe{
+  0%{opacity:1;transform:translateX(-37px) rotate(-3deg)}
+  25%{transform:translateX(-20px) rotate(1deg)}
+  50%{transform:translateX(-9px) rotate(-1deg)}
+  75%{transform:translateX(-4px) rotate(.5deg)}
+  100%{transform:none}
+}
+@keyframes yenActionWiggleRun{
+  0%{transform:translateX(-55px) rotate(-8deg);opacity:1}
+  19%{transform:translateX(-25px) rotate(8deg)}
+  37%{transform:translateX(-12px) rotate(-8deg)}
+  55%{transform:translateX(6px) rotate(9deg)}
+  73%{transform:translateX(27px) rotate(-7deg)}
+  88%{transform:translateX(42px) rotate(4deg)}
+  100%{transform:translateX(47px)}
+}
+@keyframes yenActionSucked{
+  0%{transform:translateX(79px) rotate(-8deg)}
+  24%{transform:translateX(40px) rotate(6deg)}
+  45%{transform:translateX(-22px) rotate(-9deg) scale(.96)}
+  64%{transform:translateX(-76px) rotate(-15deg) scale(.88)}
+  82%{transform:translateX(-55px) rotate(7deg) scale(.91)}
+  100%{transform:translateX(-66px) rotate(-8deg) scale(.90)}
+}
+@keyframes yenActionPrinting{
+  0%{transform:translateY(-11px);opacity:1}
+  25%{transform:translateY(3px) rotate(3deg)}
+  41%{transform:rotate(-5deg)}
+  60%{transform:rotate(4deg)}
+  80%{transform:translateY(-4px)}
+  100%{transform:none}
+}
+@keyframes yenActionDJ{
+  0%{opacity:1;transform:translateY(25px) rotate(-12deg)}
+  20%{transform:translateY(0) rotate(14deg)}
+  40%{transform:translateY(-18px) rotate(-14deg)}
+  60%{transform:translateY(0) rotate(12deg)}
+  80%{transform:translateY(-11px) rotate(-9deg)}
+  100%{transform:none}
+}
+/* Actions and specific props each have their own clear timeline. */
+.mascot-cutscene.is-playing[data-scene="alarm"] .story-finger{animation:storyPressButton 2.35s both}
+.mascot-cutscene.is-playing[data-scene="alarm"] .story-red-button{animation:storyButtonSquash 2.35s both}
+.mascot-cutscene.is-playing[data-scene="alarm"] .story-evidence{animation:storyEvidence 2.35s both}
+.mascot-cutscene.is-playing[data-scene="cup"] .story-hide-peek{animation:storyQuestion 2.35s both}
+.mascot-cutscene.is-playing[data-scene="flight"] .story-crosswind{animation:storyCrosswind 2.35s both}
+.mascot-cutscene.is-playing[data-scene="flan"] .story-spoon{animation:storySpoon 2.35s both}
+.mascot-cutscene.is-playing[data-scene="flan"] .story-caramel{animation:storyCaramel 2.35s both}
+.mascot-cutscene.is-playing[data-scene="rain"] .story-drop-1{animation:storyRaindrop 1.2s .06s linear both}
+.mascot-cutscene.is-playing[data-scene="rain"] .story-drop-2{animation:storyRaindrop 1.2s .27s linear both}
+.mascot-cutscene.is-playing[data-scene="rain"] .story-drop-3{animation:storyRaindrop 1.2s .52s linear both}
+.mascot-cutscene.is-playing[data-scene="rain"] .story-umbrella-hands{animation:storyUmbrellaHands 2.35s both}
+.mascot-cutscene.is-playing[data-scene="magic"] .story-clapping{animation:storyClap 2.35s both}
+.mascot-cutscene.is-playing[data-scene="magic"] .story-magic-stars{animation:storyMagicStars 2.35s both}
+.mascot-cutscene.is-playing[data-scene="ufo"] .story-falling-shoes{animation:storyShoesFall 2.35s both}
+.mascot-cutscene.is-playing[data-scene="ufo"] .story-alien-note{animation:storyAlienNote 2.35s both}
+.mascot-cutscene.is-playing[data-scene="bubble"] .story-seatbelt{animation:yenPropBubble 2.35s both}
+.mascot-cutscene.is-playing[data-scene="news"] .story-interview-mic{animation:storyMicrophone 2.35s both}
+.mascot-cutscene.is-playing[data-scene="sleep"] .story-snore{animation:storyZzz 2.35s both}
+.mascot-cutscene.is-playing[data-scene="toast"] .story-butter-ask{animation:storyButter 2.35s both}
+.mascot-cutscene.is-playing[data-scene="toast"] .story-toaster-smoke{animation:storySmoke 2.35s both}
+.mascot-cutscene.is-playing[data-scene="dog"] .story-playful-dog{animation:storyDogChase 2.35s both}
+.mascot-cutscene.is-playing[data-scene="dog"] .story-lost-slipper{animation:storySlipper 2.35s both}
+.mascot-cutscene.is-playing[data-scene="menu"] .story-menu-question{animation:storyMenuQuestion 2.35s both}
+.mascot-cutscene.is-playing[data-scene="menu"] .story-menu-scan{animation:storyMenuScan 2.35s both}
+.mascot-cutscene.is-playing[data-scene="logo"] .story-sign-hands{animation:yenPropSign 2.35s both}
+.mascot-cutscene.is-playing[data-scene="logo"] .story-sign-rays{animation:storySignCheer 2.35s both}
+.mascot-cutscene.is-playing[data-scene="serve"] .story-liquid-levels{animation:storyNoSpill 2.35s both}
+.mascot-cutscene.is-playing[data-scene="run"] .story-footsteps{animation:storyFootsteps 2.35s both}
+.mascot-cutscene.is-playing[data-scene="vacuum"] .story-vacuum-wind{animation:storyVacuumAir 2.35s both}
+.mascot-cutscene.is-playing[data-scene="clone"] .story-mini-1{animation:storyClonePop 2.35s both}
+.mascot-cutscene.is-playing[data-scene="clone"] .story-mini-2{animation:storyClonePop2 2.35s both}
+.mascot-cutscene.is-playing[data-scene="clone"] .story-mini-3{animation:storyClonePop3 2.35s both}
+.mascot-cutscene.is-playing[data-scene="clone"] .story-clones-nap{animation:storyCloneNap 2.35s both}
+.mascot-cutscene.is-playing[data-scene="dj"] .story-dancing-boba{animation:storyBoba 2.35s both}
+.mascot-cutscene.is-playing[data-scene="dj"] .story-ice-judge{animation:storyScore 2.35s both}
+.mascot-cutscene.is-playing[data-scene="dj"] .story-tired-cup{animation:storyTiredCup 2.35s both}
+.mascot-cutscene.is-playing[data-scene="skate"] .story-banana-peel{animation:storyBanana 2.35s both}
+.mascot-cutscene.is-playing[data-scene="skate"] .story-gasp{animation:storyGasp 2.35s both}
+@keyframes storyPressButton{0%{transform:translate(-65px,-25px);opacity:0}18%{opacity:1;transform:translate(-16px,-15px)}35%{transform:translate(8px,12px)}56%{transform:translate(9px,17px)}100%{transform:none}}
+@keyframes storyButtonSquash{0%,25%{transform:scale(1)}35%,54%{transform:scale(1,.79)}72%,100%{transform:scale(1)}}
+@keyframes storyEvidence{0%,49%{opacity:0;transform:translateY(28px) rotate(10deg)}70%{opacity:1;transform:translateY(-10px) rotate(-3deg)}100%{opacity:1;transform:none}}
+@keyframes storyQuestion{0%,49%{opacity:0}64%{opacity:1;transform:scale(1.15)}100%{opacity:1;transform:none}}
+@keyframes storyCrosswind{0%{opacity:0;transform:translateX(95px)}25%{opacity:1;transform:translateX(15px)}60%{transform:translateX(-65px)}100%{opacity:.75;transform:translateX(-22px)}}
+@keyframes storySpoon{0%,48%{opacity:0;transform:translate(125px,-100px) rotate(20deg)}70%{opacity:1;transform:translate(30px,-12px) rotate(-5deg)}87%{transform:translate(9px,-3px)}100%{opacity:1;transform:none}}
+@keyframes storyCaramel{0%,33%{opacity:0;transform:scale(.3)}58%{opacity:1;transform:scale(1.13)}75%{transform:scale(.95)}100%{opacity:1;transform:none}}
+@keyframes storyRaindrop{0%{opacity:0;transform:translateY(-55px)}22%{opacity:1}75%{opacity:1}100%{opacity:0;transform:translateY(38px)}}
+@keyframes storyUmbrellaHands{0%,18%{opacity:0;transform:translateY(33px)}45%{opacity:1;transform:translateY(0)}70%{transform:rotate(-4deg)}100%{opacity:1;transform:none}}
+@keyframes storyClap{0%,49%{opacity:0;transform:scale(.7)}60%{opacity:1;transform:scale(1.13)}72%{transform:scale(.8)}85%{transform:scale(1.12)}100%{opacity:1;transform:none}}
+@keyframes storyMagicStars{0%,29%{opacity:0;transform:scale(.4)}55%{opacity:1;transform:scale(1.24)}75%{opacity:.6;transform:scale(.9)}100%{opacity:1;transform:none}}
+@keyframes storyShoesFall{0%,34%{opacity:0;transform:translateY(-86px) rotate(-25deg)}54%{opacity:1;transform:translateY(-33px) rotate(18deg)}80%{transform:translateY(7px) rotate(-6deg)}100%{opacity:1;transform:none}}
+@keyframes storyAlienNote{0%,55%{opacity:0;transform:scale(.5)}75%{opacity:1;transform:scale(1.13)}100%{opacity:1;transform:none}}
+@keyframes storyMicrophone{0%,46%{opacity:0;transform:translate(98px,45px)}67%{opacity:1;transform:translate(-9px,-4px)}85%{transform:translate(7px,3px)}100%{opacity:1;transform:none}}
+@keyframes storyZzz{0%,27%{opacity:0;transform:translateY(30px)}52%{opacity:1;transform:translateY(0)}78%{opacity:.7;transform:translateY(-15px)}100%{opacity:1;transform:none}}
+@keyframes storyButter{0%,55%{opacity:0;transform:translateY(25px) scale(.6)}70%{opacity:1;transform:translateY(-10px) scale(1.13)}100%{opacity:1;transform:none}}
+@keyframes storySmoke{0%{opacity:0;transform:translateY(0)}30%{opacity:.8}75%{opacity:.5;transform:translateY(-31px)}100%{opacity:.7;transform:none}}
+@keyframes storyDogChase{0%{transform:translateX(-91px) rotate(-9deg);opacity:0}25%{opacity:1;transform:translateX(-22px) rotate(5deg)}47%{transform:translateX(11px) rotate(-5deg)}76%{transform:translateX(24px) rotate(6deg)}100%{opacity:1;transform:none}}
+@keyframes storySlipper{0%,38%{opacity:0;transform:translate(-85px,-106px) rotate(-40deg)}61%{opacity:1;transform:translate(2px,-21px) rotate(30deg)}85%{transform:translateY(6px) rotate(-8deg)}100%{opacity:1;transform:none}}
+@keyframes storyMenuQuestion{0%,58%{opacity:0;transform:scale(.3)}79%{opacity:1;transform:scale(1.2)}100%{opacity:1;transform:none}}
+@keyframes storyMenuScan{0%{opacity:0;transform:translateY(-11px)}12%{opacity:.8}40%{transform:translateY(55px)}65%{transform:translateY(-11px)}88%{transform:translateY(77px)}100%{opacity:0;transform:translateY(77px)}}
+@keyframes storySignCheer{0%,45%{opacity:0;transform:scale(.5)}60%{opacity:1;transform:scale(1.24)}80%{opacity:.8;transform:scale(.9)}100%{opacity:1;transform:none}}
+@keyframes storyNoSpill{0%,100%{transform:rotate(0)}25%{transform:rotate(2deg)}50%{transform:rotate(-2deg)}75%{transform:rotate(1deg)}}
+@keyframes storyFootsteps{0%{opacity:0}33%{opacity:.4}63%{opacity:1}100%{opacity:.8}}
+@keyframes storyVacuumAir{0%{opacity:0;transform:translateX(90px)}30%{opacity:1}85%{transform:translateX(-48px)}100%{opacity:.8;transform:translateX(-24px)}}
+@keyframes storyClonePop{0%,38%{opacity:0;transform:translateY(75px) scale(.5)}56%{opacity:1;transform:translateY(-13px) scale(1.09)}100%{opacity:1;transform:none}}
+@keyframes storyClonePop2{0%,51%{opacity:0;transform:translateY(75px) scale(.5)}67%{opacity:1;transform:translateY(-16px) scale(1.08)}100%{opacity:1;transform:none}}
+@keyframes storyClonePop3{0%,64%{opacity:0;transform:translateY(75px) scale(.5)}80%{opacity:1;transform:translateY(-13px) scale(1.08)}100%{opacity:1;transform:none}}
+@keyframes storyCloneNap{0%,77%{opacity:0}92%{opacity:1}100%{opacity:1}}
+@keyframes storyBoba{0%{opacity:0;transform:translateY(37px)}22%{opacity:1;transform:translateY(-29px)}42%{transform:translateY(9px)}65%{transform:translateY(-25px)}82%{transform:translateY(5px)}100%{transform:none}}
+@keyframes storyScore{0%,54%{opacity:0;transform:translateY(38px) rotate(9deg)}72%{opacity:1;transform:translateY(-9px) rotate(-3deg)}100%{opacity:1;transform:none}}
+@keyframes storyTiredCup{0%,35%{opacity:0}55%{opacity:1;transform:rotate(5deg)}70%{transform:rotate(-5deg)}100%{opacity:1;transform:none}}
+@keyframes storyBanana{0%,24%{opacity:0;transform:translateX(80px) rotate(-19deg)}46%{opacity:1;transform:translateX(5px) rotate(5deg)}100%{opacity:1;transform:none}}
+@keyframes storyGasp{0%,45%{opacity:0;transform:scale(.7)}65%{opacity:1;transform:scale(1.18)}100%{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){
+  .mascot-cutscene .scene-story-detail *, .mascot-cutscene .story-mini-clone{
+    animation:none!important;opacity:1!important;transform:none!important
+  }
+}
+
 /* Canonical mascot assets are SVG instances, never hand-drawn doppelgängers. */
 .cuc-yen-model{display:block;overflow:visible}
 .mascot-button .cuc-yen-hero{width:100%;height:100%;animation:yen-cuc-hero-idle 4s ease-in-out infinite}
