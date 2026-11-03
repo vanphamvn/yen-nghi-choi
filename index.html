@@ -976,6 +976,9 @@
 .permit-intro>p:not(.permit-small-note){font-size:14px;line-height:1.66;max-width:420px;color:#657867}
 .permit-illustration{max-width:400px;margin:14px auto 11px}
 .permit-illustration svg{display:block;width:100%;height:auto}
+.permit-preview-cuc{transform-origin:45% 77%;animation:permit-preview-bob 4s ease-in-out infinite}
+@keyframes permit-preview-bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+@media(prefers-reduced-motion:reduce){.permit-preview-cuc{animation:none!important}}
 .permit-action{border:2px solid #284935;background:#2f5842;color:#fff9e9;text-decoration:none;display:inline-flex;align-items:center;justify-content:space-between;gap:20px;min-height:53px;padding:13px 18px;border-radius:7px;box-shadow:4px 5px 0 #acc2a5;cursor:pointer;font:900 12px/1.25 "Noto Sans",Arial,sans-serif;letter-spacing:.035em;transition:transform .18s,box-shadow .18s,background .18s}
 .permit-action:hover,.permit-action:focus-visible{transform:translateY(-2px);box-shadow:4px 8px 0 #acc2a5;background:#3a684c}
 .permit-action:focus-visible,.permit-options button:focus-visible,.permit-stamp:focus-visible,.permit-restart:focus-visible{outline:3px solid #aa694c;outline-offset:3px}
@@ -1780,21 +1783,17 @@
               <p>Chọn ba điều. Việc đóng mộc có người lo.</p>
               <div class="permit-illustration" aria-hidden="true">
                 <svg viewBox="0 0 360 150" role="presentation" focusable="false">
-                  <ellipse cx="182" cy="139" rx="140" ry="10" fill="#cad7bb"/>
-                  <path d="M44 118h270" stroke="#779985" stroke-width="3" stroke-linecap="round"/>
-                  <path d="M58 106c-9-19-8-34-13-49m12 36c-19-5-20-18-14-19m13 3c17-10 26-2 22 9" stroke="#749b78" stroke-width="4" fill="none" stroke-linecap="round"/>
-                  <rect x="198" y="57" width="88" height="70" rx="10" fill="#dfae81" stroke="#315340" stroke-width="4"/>
-                  <path d="M210 61h66v29h-66z" fill="#fcf5e2"/>
-                  <path d="M222 75h44" stroke="#87ab91" stroke-width="3"/>
-                  <path d="M222 84h30" stroke="#87ab91" stroke-width="3"/>
-                  <path d="M214 108q27-14 56 0" fill="none" stroke="#315340" stroke-width="3"/>
-                  <path d="M111 91q-22-52 20-71 32-11 55 11 19 22 10 56-11 29-44 30-34 2-41-26Z" fill="#d5e4b0" stroke="#315340" stroke-width="5"/>
-                  <path d="M113 86q-22-9-26 13m110-13q18-4 26 7" stroke="#315340" stroke-width="5" fill="none" stroke-linecap="round"/>
-                  <path d="M131 111l-3 18m42-18 6 18" stroke="#315340" stroke-width="5" stroke-linecap="round"/>
-                  <ellipse cx="134" cy="72" rx="5" ry="7" fill="#315340"/><ellipse cx="172" cy="72" rx="5" ry="7" fill="#315340"/>
-                  <circle cx="117" cy="85" r="9" fill="#e9ac9b"/><circle cx="188" cy="85" r="9" fill="#e9ac9b"/>
-                  <path d="M146 90q8 8 16 0" stroke="#315340" stroke-width="3" fill="none" stroke-linecap="round"/>
-                  <path d="m246 29 4 9 9 4-9 4-4 9-4-9-9-4 9-4Z" fill="#e9b878"/>
+                  <ellipse cx="182" cy="138" rx="140" ry="10" fill="#cad7bb"/>
+                  <path d="M42 119h275" stroke="#779985" stroke-width="3" stroke-linecap="round"/>
+                  <path d="M56 106c-8-19-8-34-13-49m12 36c-19-5-20-18-14-19m13 3c17-10 26-2 22 9" stroke="#749b78" stroke-width="4" fill="none" stroke-linecap="round"/>
+                  <rect x="220" y="50" width="88" height="76" rx="9" fill="#dfae81" stroke="#315340" stroke-width="4"/>
+                  <rect x="232" y="59" width="65" height="37" rx="3" fill="#fcf5e2"/>
+                  <path d="M242 72h42m-42 13h32" stroke="#87ab91" stroke-width="3" stroke-linecap="round"/>
+                  <path d="M240 109q26-14 49 0" fill="none" stroke="#315340" stroke-width="3"/>
+                  <g class="permit-preview-cuc">
+                    <use href="/assets/cuc-yen/mascot.svg#cuc-yen-clerk-ready" x="69" y="-8" width="170" height="170"/>
+                  </g>
+                  <path d="M337 22l4 10 11 4-11 4-4 10-4-10-11-4 11-4Z" fill="#e9b878"/>
                 </svg>
               </div>
               <button class="permit-action permit-start" type="button" id="permit-start"><span>NỘP ĐƠN XIN NGHỈ</span><span aria-hidden="true">↗</span></button>
