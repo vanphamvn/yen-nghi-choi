@@ -1599,18 +1599,18 @@
   <div class="wrap release-layout">
     <div class="release-copy reveal">
       <div class="eyebrow">02 / Quầy phát quà thử</div>
-      <h2 class="section-title" id="release-title">Vòng quay Yên. <i>Trúng gì thì cười.</i></h2>
+      <h2 class="section-title" id="release-title">Quay một vòng. <i>Trúng gì thì cười.</i></h2>
       <p>Bạn cứ quay đi. Có nhân viên đứng cạnh hồi hộp giùm rồi.</p>
-      <p class="wheel-copy-note">Đây là vòng quay thử, chưa phải chương trình khuyến mãi chính thức.</p>
+      <p class="wheel-copy-note">Chơi cho vui thôi, chưa có ưu đãi thật.</p>
     </div>
     <div class="wheel-panel reveal" id="yen-wheel-panel">
       <div class="wheel-toolbar">
-        <span class="wheel-brand"><span aria-hidden="true"></span> VÒNG QUAY MAY MẮN · CỤC YÊN</span>
+        <span class="wheel-brand"><span aria-hidden="true"></span> QUẦY VẬN MAY · SỐ 02</span>
         <span class="wheel-demo-chip">ĐANG CHƠI THỬ</span>
       </div>
       <div class="wheel-content">
         <div class="wheel-main">
-          <button class="wheel-viewport" id="yen-wheel-tap" type="button" aria-label="Chạm để quay Vòng quay Yên. Phần thưởng chỉ là mô phỏng.">
+          <button class="wheel-viewport" id="yen-wheel-tap" type="button" aria-label="Chạm để quay thử. Phần thưởng chỉ là mô phỏng, không đổi được tại quán.">
             <svg class="wheel-disc" id="yen-wheel-disc" viewBox="0 0 440 440" role="img" aria-label="Vòng quay tám phần thưởng: giảm 5 nghìn, topping, giảm 10 phần trăm, nâng size, giảm 3 nghìn, quà bí mật, giảm 5 phần trăm, giảm 8 nghìn"></svg>
             <span class="wheel-pointer" aria-hidden="true"><svg viewBox="0 0 38 55" fill="none"><path d="M19 51 3 12Q1 5 8 5h22q7 0 5 7L19 51Z" fill="#335642" stroke="#fff9e9" stroke-width="4" stroke-linejoin="round"/><circle cx="19" cy="14" r="5" fill="#efc68b"/></svg></span>
             <span class="wheel-center" aria-hidden="true"><strong>yên</strong><small>COFFEE &amp; TEA</small></span>
@@ -1681,7 +1681,7 @@
                 <path d="M66 93Q126 81 185 91" fill="none" stroke="#315341" stroke-width="8" stroke-linecap="round"/>
                 <path d="M94 58Q122 48 150 55" fill="none" stroke="#fff1c7" stroke-width="5" stroke-linecap="round"/>
                 <rect x="109" y="59" width="41" height="22" rx="7" fill="#fff6df" stroke="#315341" stroke-width="3"/>
-                <text x="129.5" y="75" text-anchor="middle" font-family="Arial,sans-serif" font-size="13" font-weight="900" fill="#315341">YÊN</text>
+                <text x="129.5" y="75" text-anchor="middle" font-family="Arial,sans-serif" font-size="13" font-weight="900" fill="#315341">!</text>
                 <path d="M124 33Q128 18 143 13Q145 31 128 36Z" fill="#8faf7c" stroke="#315341" stroke-width="3" stroke-linejoin="round"/>
               </g>
               <g class="wheel-clerk-sparkles" fill="#e9bc83" stroke="#315341" stroke-width="2">
@@ -1691,18 +1691,18 @@
             </svg>
           </div>
           <div class="wheel-speech" id="yen-wheel-speech" role="status" aria-live="polite">Bấm quay đi! Có đứa đang giơ cả hai tay cổ vũ.</div>
-          <button class="wheel-spin-btn" id="yen-wheel-spin" type="button">QUAY YÊN!</button>
+          <button class="wheel-spin-btn" id="yen-wheel-spin" type="button">QUAY THỬ!</button>
           <div class="wheel-result" id="yen-wheel-result" role="status" aria-live="polite" hidden>
             <span class="wheel-result-label">KẾT QUẢ QUAY THỬ</span>
             <strong id="yen-wheel-reward"></strong>
             <p id="yen-wheel-reward-note"></p>
             <div class="wheel-souvenir" id="yen-wheel-souvenir" hidden><span class="wheel-souvenir-art" id="yen-wheel-symbol" aria-hidden="true">?</span><span><b id="yen-wheel-souvenir-text"></b><small>QUÀ TƯỞNG TƯỢNG · CHƯA CÓ GIÁ TRỊ ĐỔI TẠI QUÁN</small></span></div>
             <a class="game-next" href="#cuahang">Quay xong rồi. Qua Tiệm 0đ →</a>
-            <a class="irl-soft-link" href="#yen-ngoai-doi">Không đổi được quà ảo, nhưng có thể xem Yên thật →</a>
+            <a class="irl-soft-link" href="#yen-ngoai-doi">Xem quán đang chuẩn bị mở cửa →</a>
           </div>
         </div>
       </div>
-      <p class="wheel-disclaimer"><strong>Chơi thử thôi nha.</strong> Các phần thưởng trên vòng quay chỉ để trải nghiệm, chưa có giá trị đổi ưu đãi tại quán. Yên sẽ thông báo thể lệ khi áp dụng chính thức.</p>
+      <p class="wheel-disclaimer"><strong>Quà chỉ có trên màn hình.</strong> Các mức giảm và phần thưởng không có giá trị đổi tại quán. Nếu có chương trình thật, quán sẽ thông báo sau.</p>
       <div class="wheel-confetti" id="yen-wheel-confetti" aria-hidden="true"></div>
     </div>
   </div>
@@ -2309,7 +2309,7 @@
       if(frame)cancelAnimationFrame(frame);
       frame=0;isSpinning=false;rotation=0;spinCount=0;paint();
       result.hidden=true;spinButton.disabled=false;wheelButton.disabled=false;
-      spinButton.textContent='QUAY YÊN!';host.classList.remove('spinning','celebrating');
+      spinButton.textContent='QUAY THỬ!';host.classList.remove('spinning','celebrating');
       confetti.replaceChildren();announce('Bấm quay đi! Có đứa đang giơ cả hai tay cổ vũ.');
     }};
     paint();
