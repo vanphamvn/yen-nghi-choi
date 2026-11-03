@@ -628,22 +628,8 @@
     @keyframes toastShake{0%,24%{transform:translateX(0)}28%{transform:translateX(-6px)}33%{transform:translateX(5px)}38%{transform:translateX(-4px)}42%,100%{transform:translateX(0)}}
     @keyframes toastSmoke{0%{opacity:0;transform:translateY(12px)}45%,75%{opacity:.9}100%{opacity:0;transform:translateY(-38px)}}
 
-    /* After each cartoon ends, preserve its final illustrated pose.
-       Give the whole finished scene only a tiny, slow idle motion.
-       Animate the SVG wrapper, never the inner character's final-frame transform. */
-    .mascot-cutscene.is-settled > svg{transform-origin:50% 62%;animation:yenIdleBreath 4.5s ease-in-out infinite}
-    .mascot-cutscene.is-settled[data-scene="flight"] > svg,
-    .mascot-cutscene.is-settled[data-scene="bubble"] > svg,
-    .mascot-cutscene.is-settled[data-scene="ufo"] > svg,
-    .mascot-cutscene.is-settled[data-scene="magic"] > svg{animation-name:yenIdleFloat;animation-duration:5.3s}
-    .mascot-cutscene.is-settled[data-scene="flan"] > svg,
-        .mascot-cutscene.is-settled[data-scene="toast"] > svg,
-    .mascot-cutscene.is-settled[data-scene="logo"] > svg,
-    .mascot-cutscene.is-settled[data-scene="serve"] > svg{animation-name:yenIdleBalance;animation-duration:4s}
-    @keyframes yenIdleBreath{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-2px) scale(1.008)}}
-    @keyframes yenIdleFloat{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-3px) rotate(.6deg)}}
-    @keyframes yenIdleBalance{0%,100%{transform:rotate(0) scale(1)}50%{transform:rotate(-.45deg) scale(1.005)}}
-    @media(prefers-reduced-motion:reduce){.mascot-cutscene.is-settled > svg{animation:none!important}}
+    /* Settled animation belongs to the canonical mascot actor, not the whole stage.
+       See the storyboard CSS near the Cục Yên sprite rules. */
 
 
     /* V26: separate illustrated choreography, not variants of the same wobble. */
