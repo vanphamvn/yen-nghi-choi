@@ -15,7 +15,7 @@
 3. Trò đùa phải ngắn, dễ hình dung, có kết quả cụ thể. Tránh nhắc tên chỉ để làm câu có vẻ dễ thương.
 4. Tên trò, chữ trên con dấu, giấy phép PNG, nhãn logo, thẻ meta và `aria-label` hữu ích **không thuộc diện cần cắt**. Tuy nhiên, trong một khu trò chơi nên có **một điểm nhận diện thương hiệu nổi bật**; tránh lặp tên trong tiêu đề, bảng quầy, phụ kiện nhân vật, nút bấm và lời chú thích cùng lúc.
 5. Khách cần biết món nước/game giả tưởng có thể **không phải món thật/khuyến mãi thật**. Không khiến người xem tưởng vòng quay có voucher có thể đổi.
-6. **Yên chưa mở cửa** tại thời điểm cập nhật. Dùng “dự kiến khai trương tháng 12/2026” nếu nhắc tình trạng quán; không tự tuyên bố “đã mở”.
+6. **Quy tắc nội dung cho ngày ra mắt:** viết nội dung chính như quán đang hoạt động và mời khách ghé quán ngay. Không dùng “sắp khai trương”, “đang xây”, “dự kiến mở”. Chỉ công bố website khi quán thực sự mở cửa và đã xác minh mọi thông tin thực tế.
 7. Không thêm cookie, telemetry, database, đăng nhập hoặc lưu thông tin cá nhân chỉ để thay câu chữ.
 
 ## 3. Trước → sau (mẫu)
@@ -43,7 +43,7 @@
 - [ ] Giữ tên brand/logo, tên bốn trò, dấu và chữ ký trên giấy phép, aria-label quan trọng.
 - [ ] Các id/anchor, data attributes và 6 khối script JavaScript không đổi cấu trúc.
 - [ ] Không lặp chủ thể làm câu tối nghĩa; đọc thử copy riêng từng section.
-- [ ] Thông báo sản phẩm giả tưởng, ảnh PNG, không lưu data và sắp khai trương vẫn chính xác.
+- [ ] Thông báo sản phẩm giả tưởng, ảnh PNG và không lưu data vẫn chính xác; không còn thông tin chờ khai trương trong bản phát hành.
 - [ ] Xem bằng điện thoại để phát hiện overflow, line wrapping trong nút, con dấu và biên lai.
 
 
@@ -52,3 +52,11 @@
 - **Giữ:** chữ `yên · COFFEE & TEA` ở tâm vòng quay như điểm nhận diện chính.
 - **Đổi:** `Vòng quay Yên` → `Quay một vòng`; `VÒNG QUAY MAY MẮN · CỤC YÊN` → `QUẦY VẬN MAY · SỐ 02`; `QUAY YÊN!` → `QUAY THỬ!`; bảng tên nhỏ trên mũ thành dấu `!`.
 - **Giữ nguyên:** số tiền/topping hiển thị trên 8 lát vòng quay, thông báo quà mô phỏng, điều hướng game, ID và logic quay.
+
+## 6. Release gate: bản nội dung viết sẵn cho ngày khai trương
+
+- Website có thể được **soạn và kiểm thử** trước ngày khai trương, nhưng copy công khai viết theo trạng thái quán đã hoạt động.
+- Trong thời gian chưa khai trương, **không quảng bá link** và phải nhớ rằng URL Vercel có thể mở trực tiếp dù đặt `noindex`. `noindex` không phải chế độ riêng tư hay khóa truy cập; nếu cần bảo mật thật, bật bảo vệ deployment.
+- Trước ngày phát hành, kiểm tra quán đã mở thật; liên kết Google Maps, TikTok, đồ uống/menu, giờ hoạt động (nếu đăng) và giá trị ưu đãi (nếu có) đã xác nhận.
+- Giữ riêng cảnh báo vòng quay và giấy phép là **trải nghiệm mô phỏng**, không phải voucher đổi tại quán, cho đến khi chủ quán chính thức triển khai chương trình thật.
+- Ảnh Open Graph PNG và fallback SVG phải khớp nội dung ngày ra mắt, không còn mốc “tháng 12/2026”.
