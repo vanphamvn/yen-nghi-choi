@@ -3670,7 +3670,7 @@
       // All three entry points reveal the approved paper BEFORE any stamp moves.
       // The red seal appears only at the giant stamp's actual contact with the paper.
       phase="stamping";round++;const thisRound=round;
-      clearTimeout(pending);
+      window.clearTimeout(pending);
       stamp.disabled=true;cucTrigger.disabled=true;updateApprovalHint();
       const selected=menu[values.reason];
       $("permit-out-reason").textContent=fields.reason[values.reason];
@@ -3829,7 +3829,7 @@
       }
     });
     function reset(){
-      round++;clearTimeout(pending);phase="form";
+      round++;window.clearTimeout(pending);phase="form";
       Object.keys(fields).forEach(field=>{values[field]=null;root.querySelectorAll('[data-permit-field="'+field+'"]').forEach(btn=>btn.setAttribute("aria-pressed","false"));root.querySelector('fieldset[data-field="'+field+'"]').classList.remove("is-missing");});
       receipt.hidden=true;intro.hidden=true;form.hidden=false;
       stage.classList.remove("is-stamping","is-issued","is-previewing","is-collecting","is-seal-coming","is-seal-imprinted");stage.classList.add("is-filing");
