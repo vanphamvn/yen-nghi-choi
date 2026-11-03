@@ -31,7 +31,7 @@
         const nav = performance.getEntriesByType('navigation')[0];
         isReload = nav ? nav.type === 'reload' : performance.navigation?.type === 1;
       } catch (_) { /* Older browsers fall back to regular navigation. */ }
-      if (!isReload) return;
+      if (!isReload || location.hash) return;
       if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
       document.documentElement.classList.add('yen-reloading');
       const resetPosition = () => window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
@@ -50,7 +50,7 @@
     /* Compatibility aliases for previous Yên typography. */
     :root{--paper:#f7f3e9;--ink:#243c35;--ink-muted:#61746a;--green:#2e5a46;--lime:#dbe78d;--pink:#f6b4a6;--lav:#dfd9f5;--butter:#f4d98a;--line:rgba(36,60,53,.19);--radius:28px;--shadow:0 18px 55px rgba(35,57,43,.10)}
     *,*::before,*::after{box-sizing:border-box}
-    html{scroll-behavior:smooth;scroll-padding-top:90px;overflow-x:clip}
+    html{scroll-behavior:smooth;scroll-padding-top:24px;overflow-x:clip}
     html.yen-reloading{scroll-behavior:auto!important}
     body{margin:0;background:var(--paper);color:var(--ink);font-family:"Noto Sans",Arial,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden;line-height:1.5}
     body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:30;opacity:.18;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.68' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.13'/%3E%3C/svg%3E")}
@@ -920,7 +920,7 @@
   .yen-playmap-title span{display:none}
   .yen-playmap-links{gap:7px;padding-bottom:3px}
   .yen-playmap-links a{min-height:42px;font-size:11px;padding:9px 11px}
-  #tam-trang,#buong,#cuahang,#ngoi-yen{scroll-margin-top:104px}
+  html{scroll-padding-top:88px}
   .permit-section{padding-top:55px}
   .release-section.section,.shop-section.section{padding-top:65px;padding-bottom:72px}
   .game-next{width:100%;justify-content:center}
@@ -1406,6 +1406,14 @@
   .irl-section .irl-copy>p{font-size:16px;line-height:1.55}
   .irl-map{aspect-ratio:1.25;min-height:255px;border-radius:19px}
   .irl-map-open{right:11px;top:11px}
+}
+
+/* Landing targets start at readable headings; avoid centering the intro beside tall widgets. */
+@media(min-width:861px){
+  .wheel-section .release-layout,.drink-layout{align-items:start}
+}
+@media(min-width:761px){
+  .irl-section .irl-wrap{align-items:start}
 }
 
 </style>
@@ -2397,20 +2405,80 @@
   
 
 <script id="yen-playmap-script">
+/* Unified section jumps: measure the mobile sticky game bar, not two stacked CSS offsets. */
 (function(){
   "use strict";
+  const nav=document.querySelector(".yen-playmap");
   const links=Array.from(document.querySelectorAll(".yen-playmap-links a"));
-  const items=links.map(link=>({link,section:document.getElementById(link.hash.slice(1))})).filter(x=>x.section);
-  function mark(id){items.forEach(({link})=>{if(link.hash==="#"+id)link.setAttribute("aria-current","location");else link.removeAttribute("aria-current");});}
-  links.forEach(link=>link.addEventListener("click",()=>mark(link.hash.slice(1))));
+  const items=links.map(link=>({link,section:document.getElementById(link.hash.slice(1))})).filter(item=>item.section);
+  const mobile=window.matchMedia("(max-width: 760px)");
+  const reduced=window.matchMedia("(prefers-reduced-motion: reduce)");
+  let userNavigated=false;
+
+  function hashId(hash){
+    if(!hash||hash.charAt(0)!=="#")return null;
+    try{return decodeURIComponent(hash.slice(1));}catch(_){return null;}
+  }
+  function mark(id){
+    items.forEach(({link})=>{
+      if(link.hash==="#"+id)link.setAttribute("aria-current","location");
+      else link.removeAttribute("aria-current");
+    });
+  }
+  function landmark(section){
+    return section.querySelector(".permit-heading, .release-copy, .section-header, .drink-copy, .irl-copy")||section;
+  }
+  function jump(id,{push=false,smooth=true}={}){
+    const section=document.getElementById(id);
+    if(!section)return false;
+    // The site header scrolls away. Only the mobile game navigation stays at the top.
+    const stickyHeight=mobile.matches&&nav&&id!=="dau"?Math.ceil(nav.getBoundingClientRect().height):0;
+    const gap=mobile.matches?14:28;
+    const top=id==="dau"?0:Math.max(0,Math.round(
+      window.scrollY+landmark(section).getBoundingClientRect().top-stickyHeight-gap
+    ));
+    if(push&&location.hash!=="#"+encodeURIComponent(id)){
+      history.pushState(null,"","#"+encodeURIComponent(id));
+    }
+    window.scrollTo({top,behavior:smooth&&!reduced.matches?"smooth":"instant"});
+    mark(id);
+    return true;
+  }
+  // All on-page CTA links use the same landing calculation, including links inside a dialog.
+  document.addEventListener("click",event=>{
+    if(event.defaultPrevented||event.button!==0||event.metaKey||event.ctrlKey||event.shiftKey||event.altKey)return;
+    const link=event.target.closest('a[href^="#"]');
+    if(!link)return;
+    const id=hashId(link.getAttribute("href"));
+    if(!id||!document.getElementById(id))return;
+    event.preventDefault();
+    userNavigated=true;
+    const dialog=link.closest("dialog[open]");
+    if(dialog)dialog.close();
+    requestAnimationFrame(()=>jump(id,{push:true}));
+  });
+  function restoreHash(){
+    const id=hashId(location.hash);
+    if(id)requestAnimationFrame(()=>jump(id,{smooth:false}));
+    else if(!location.hash)mark("");
+  }
+  window.addEventListener("popstate",restoreHash);
+  window.addEventListener("hashchange",restoreHash);
   if("IntersectionObserver" in window){
     const observer=new IntersectionObserver(records=>{
-      const visible=records.filter(record=>record.isIntersecting).sort((a,b)=>a.boundingClientRect.top-b.boundingClientRect.top);
+      const visible=records.filter(record=>record.isIntersecting)
+        .sort((a,b)=>a.boundingClientRect.top-b.boundingClientRect.top);
       if(visible.length)mark(visible[0].target.id);
-    },{rootMargin:"-105px 0px -55% 0px",threshold:0});
+    },{rootMargin:"-100px 0px -55% 0px",threshold:0});
     items.forEach(({section})=>observer.observe(section));
   }
-  if(location.hash){const id=decodeURIComponent(location.hash.slice(1));if(items.some(x=>x.section.id===id))mark(id);}
+  // Direct #section URLs (including refreshes) should land correctly after layout loads.
+  if(location.hash){
+    requestAnimationFrame(()=>restoreHash());
+    window.addEventListener("load",()=>{
+      if(!userNavigated)restoreHash();
+    },{once:true});
+  }
 })();
 </script>
 <script id="yen-mascot-reactions">
