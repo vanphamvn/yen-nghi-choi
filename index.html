@@ -1323,6 +1323,44 @@
 .wheel-viewport:disabled{cursor:wait}
 .wheel-viewport:focus-visible{outline:3px solid #ae7953;outline-offset:2px;border-radius:50%}
 
+
+/* #49: lower text density, preserve the interactive controls and essential legal notes */
+.hero-game-lead{max-width:31ch;line-height:1.48}
+.hero-intro{max-width:45ch;line-height:1.65}
+.permit-heading-aside{max-width:31ch}
+.release-copy>p,.drink-desc{max-width:34ch}
+.section-aside{max-width:33ch}
+.irl-copy>p{max-width:42ch}
+.irl-bridge h3{max-width:31ch;margin-bottom:0}
+.wheel-disclaimer{max-width:66ch;margin-inline:auto;line-height:1.6}
+@media(max-width:760px){
+  .ticker{display:none}
+  .hero .hero-game-lead{max-width:29ch;line-height:1.52;margin-top:18px}
+  .hero .hero-game-details{font-size:12px;line-height:1.6;margin-bottom:18px}
+  .hero .hero-intro{font-size:14px;line-height:1.65;margin:17px 0 8px}
+  .hero-cta{gap:10px;margin-bottom:10px}
+  .permit-heading{margin-bottom:30px}
+  .permit-heading-aside{font-size:14px;line-height:1.55;margin-top:16px;max-width:32ch}
+  .permit-desk-ribbon,.permit-desk-coaster,.permit-bottom-strip,.permit-clerk-foot{display:none}
+  .permit-sheet{padding-block:26px}
+  .permit-intro>p:not(.permit-small-note){font-size:14px;line-height:1.55;max-width:34ch}
+  .release-copy>p{margin:15px 0 0;font-size:14px;line-height:1.58}
+  .wheel-disclaimer{padding-inline:4px;font-size:12px;line-height:1.6}
+  .section-aside{font-size:14px;line-height:1.55;margin-top:15px}
+  .drink-side-comic,.drink-hat,.drink-topline,.drink-lab-pre,.drink-doodle-one,.drink-tap-hint{display:none}
+  .drink-copy{margin-bottom:25px}
+  .drink-desc{font-size:14px;line-height:1.6;margin:16px 0 0;max-width:32ch}
+  .drink-machine-header{margin-top:0}
+  .drink-hint{font-size:12px;line-height:1.6}
+  .drink-footnote{font-size:12px;line-height:1.6}
+  .irl-ps{display:none}
+  .irl-copy>p{font-size:15px;line-height:1.65;margin:20px 0 0;max-width:37ch}
+  .irl-bridge{padding:20px 18px;margin:24px 0 20px}
+  .irl-bridge h3{font-size:clamp(19px,5.5vw,24px);line-height:1.35}
+  .irl-bridge-tiktok{margin-top:9px}
+}
+@media(prefers-reduced-motion:reduce){.ticker-track{animation:none}}
+
 </style>
   
 </head>
