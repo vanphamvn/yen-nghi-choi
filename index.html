@@ -2095,7 +2095,7 @@
           </button>
         </div>
         <div class="yen-drinks-footer">
-          <p id="yen-drinks-choice" role="status" aria-live="polite">Chọn một ly. Yên chỉ đường, không bắt đặt hàng.</p>
+          <p id="yen-drinks-choice" role="status" aria-live="polite">Cục Yên đã nếm thử mấy ly này. Chạm vào một ly để nghe nó kể.</p>
           <a class="yen-drinks-visit" id="yen-drinks-visit" href="#yen-ngoai-doi">Xem đường đến Yên <svg class="yen-icon" aria-hidden="true" focusable="false"><use href="#yen-arrow"></use></svg></a>
         </div>
       </div>
@@ -2657,7 +2657,7 @@
   
 
 <script id="yen-real-drinks-script">
-/* No orders or analytics: choosing a drink updates only the visible invitation. */
+/* Cục Yên's fictional tasting notes; choosing a drink never creates an order or stores data. */
 (function(){
   "use strict";
   function init(){
@@ -2665,11 +2665,18 @@
     const status=document.getElementById("yen-drinks-choice");
     const cta=document.getElementById("yen-drinks-visit");
     if(!cards.length||!status||!cta)return;
+    const reactions={
+      "Matcha dâu":"Cục Yên nhấp matcha dâu, thấy mình dịu dàng hẳn. Soi gương mới biết mép dính màu hồng.",
+      "Cacao cốt dừa":"Cục Yên uống cacao cốt dừa, thấy êm như được quấn chăn. Suýt nữa xin nghỉ thêm một buổi.",
+      "Trà atiso đường phèn mật ong":"Cục Yên nhấp trà atiso đường phèn mật ong, tự nhiên muốn nói nhỏ lại. Sợ đánh thức cái ly.",
+      "Nước ép thơm táo":"Cục Yên uống nước ép thơm táo, tỉnh táo đến mức định dọn bàn. May mà ý định ấy qua nhanh.",
+      "Cold Brew Cam Vàng":"Cục Yên uống Cold Brew Cam Vàng, tỉnh ngủ ngay. Quay sang hỏi lát cam: 'Ủa, ai cho bạn vào cà phê?'"
+    };
     cards.forEach(card=>card.addEventListener("click",()=>{
       cards.forEach(item=>item.setAttribute("aria-pressed",String(item===card)));
       const name=card.getAttribute("data-yen-drink");
-      status.textContent="Bạn chọn "+name+". Muốn uống thật thì ghé Yên nhé.";
-      cta.firstChild.textContent="Ghé Yên thử "+name+" ";
+      status.textContent=reactions[name]||"Cục Yên uống một ngụm, gật gù rồi xin thêm thời gian suy nghĩ.";
+      cta.firstChild.textContent="Xem đường đến Yên ";
     }));
   }
   if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",init,{once:true});
