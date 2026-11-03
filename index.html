@@ -1423,6 +1423,80 @@
 @keyframes yenStoryBalance{0%{opacity:0;transform:rotate(-20deg) translateY(45px)}30%{opacity:1;transform:rotate(9deg) translateY(-10px)}60%{transform:rotate(-6deg)}100%{transform:none}}
 @keyframes yenStoryGroove{0%{opacity:0;transform:translateY(30px) rotate(-16deg)}25%{opacity:1;transform:rotate(13deg)}50%{transform:rotate(-15deg)}75%{transform:rotate(10deg)}100%{transform:none}}
 @media(prefers-reduced-motion:reduce){.mascot-cutscene .scene-cuc-actor{animation:none!important;transform:none!important;opacity:1!important}}
+/* Cục Yên v2 storyboard: scenery and props move with the shared actor.
+   Keep the full stage fixed at the end; only the mascot breathes.
+   All 20 story timelines are 2.35s, synchronized with the existing 2.45s settle. */
+.mascot-cutscene.is-settled > .scene-illustration{animation:none!important;transform:none!important}
+.mascot-cutscene.is-settled .scene-cuc-actor{animation:yenStoryIdle 4.3s ease-in-out infinite}
+.mascot-cutscene.is-settled[data-scene="flight"] .scene-cuc-actor,
+.mascot-cutscene.is-settled[data-scene="ufo"] .scene-cuc-actor,
+.mascot-cutscene.is-settled[data-scene="bubble"] .scene-cuc-actor{animation-name:yenStoryHover;animation-duration:5.1s}
+@keyframes yenStoryIdle{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-4px) rotate(1deg)}}
+@keyframes yenStoryHover{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
+.mascot-cutscene.is-playing:not(.is-settled) .scene-props-front,
+.mascot-cutscene.is-playing:not(.is-settled) .scene-props-back{
+  animation-duration:2.35s;animation-fill-mode:both;animation-timing-function:cubic-bezier(.2,.72,.26,1)
+}
+.mascot-cutscene.is-playing[data-scene="alarm"] .scene-props-back{animation-name:yenPropAlarm}
+.mascot-cutscene.is-playing[data-scene="cup"] .scene-props-front{animation-name:yenPropCup}
+.mascot-cutscene.is-playing[data-scene="flight"] .scene-props-front{animation-name:yenPropFlight}
+.mascot-cutscene.is-playing[data-scene="flan"] .scene-props-front{animation-name:yenPropFlan}
+.mascot-cutscene.is-playing[data-scene="rain"] .scene-props-front{animation-name:yenPropUmbrella}
+.mascot-cutscene.is-playing[data-scene="rain"] .scene-props-back{animation-name:yenPropRain}
+.mascot-cutscene.is-playing[data-scene="magic"] .scene-props-front{animation-name:yenPropMagicHat}
+.mascot-cutscene.is-playing[data-scene="magic"] .scene-props-back{animation-name:yenPropSparkles}
+.mascot-cutscene.is-playing[data-scene="ufo"] .scene-props-back{animation-name:yenPropUfo}
+.mascot-cutscene.is-playing[data-scene="bubble"] .scene-props-front{animation-name:yenPropBubble}
+.mascot-cutscene.is-playing[data-scene="news"] .scene-props-front{animation-name:yenPropNewspaper}
+.mascot-cutscene.is-playing[data-scene="sleep"] .scene-props-front{animation-name:yenPropBlanket}
+.mascot-cutscene.is-playing[data-scene="toast"] .scene-props-front{animation-name:yenPropToaster}
+.mascot-cutscene.is-playing[data-scene="dog"] .scene-props-back{animation-name:yenPropDog}
+.mascot-cutscene.is-playing[data-scene="menu"] .scene-props-front{animation-name:yenPropMenu}
+.mascot-cutscene.is-playing[data-scene="logo"] .scene-props-front{animation-name:yenPropSign}
+.mascot-cutscene.is-playing[data-scene="serve"] .scene-props-front{animation-name:yenPropTray}
+.mascot-cutscene.is-playing[data-scene="run"] .scene-props-back{animation-name:yenPropDust}
+.mascot-cutscene.is-playing[data-scene="vacuum"] .scene-props-back{animation-name:yenPropVacuum}
+.mascot-cutscene.is-playing[data-scene="clone"] .scene-props-front{animation-name:yenPropPrinter}
+.mascot-cutscene.is-playing[data-scene="dj"] .scene-props-front{animation-name:yenPropMusic}
+.mascot-cutscene.is-playing[data-scene="dj"] .scene-props-back{animation-name:yenPropLights}
+.mascot-cutscene.is-playing[data-scene="skate"] .scene-props-front{animation-name:yenPropSkate}
+.mascot-cutscene.is-playing[data-scene="flight"] .scene-ground-shadow,
+.mascot-cutscene.is-playing[data-scene="ufo"] .scene-ground-shadow,
+.mascot-cutscene.is-playing[data-scene="magic"] .scene-ground-shadow,
+.mascot-cutscene.is-playing[data-scene="toast"] .scene-ground-shadow{
+  animation:yenPropShadow 2.35s ease-in-out both
+}
+@keyframes yenPropAlarm{0%{opacity:0;transform:translateY(-28px) scale(.7)}20%{opacity:1;transform:scale(1.13) rotate(7deg)}34%{transform:rotate(-9deg)}48%{transform:rotate(6deg)}70%{transform:rotate(-3deg)}100%{transform:none}}
+@keyframes yenPropCup{0%{transform:translateY(120px) rotate(-8deg)}30%{transform:translateY(14px) rotate(4deg)}52%{transform:translateY(-8px) rotate(-2deg)}75%{transform:translateY(4px)}100%{transform:none}}
+@keyframes yenPropFlight{0%{transform:translate(-100px,125px) rotate(-15deg);opacity:.3}38%{transform:translate(4px,-12px) rotate(6deg);opacity:1}65%{transform:translate(-8px,-4px) rotate(-4deg)}100%{transform:none}}
+@keyframes yenPropFlan{0%{transform:scale(.6,.6);opacity:0}28%{opacity:1;transform:scale(1.1,.83)}48%{transform:scale(.94,1.13)}67%{transform:scale(1.03,.96)}100%{transform:none}}
+@keyframes yenPropUmbrella{0%{transform:translateY(-100px) rotate(-24deg);opacity:0}28%{opacity:1;transform:translateY(-4px) rotate(12deg)}50%{transform:rotate(-8deg)}74%{transform:rotate(4deg)}100%{transform:none}}
+@keyframes yenPropRain{0%{opacity:0;transform:translateY(-25px)}20%{opacity:1}70%{transform:translateY(19px);opacity:.8}100%{transform:none;opacity:1}}
+@keyframes yenPropMagicHat{0%{transform:translateY(75px) scale(.85);opacity:0}38%{transform:translateY(-13px) scale(1.07);opacity:1}70%{transform:translateY(4px) scale(.98)}100%{transform:none}}
+@keyframes yenPropSparkles{0%{opacity:0;transform:scale(.6)}35%{opacity:1;transform:scale(1.14)}68%{transform:scale(.91)}100%{transform:none;opacity:1}}
+@keyframes yenPropUfo{0%{opacity:0;transform:translateY(-100px) scale(.8)}35%{opacity:1;transform:translateY(0) scale(1.05)}75%{transform:translateY(-9px)}100%{transform:none}}
+@keyframes yenPropBubble{0%{opacity:0;transform:translateY(80px) scale(.6)}34%{opacity:1;transform:translateY(-12px) scale(1.06)}65%{transform:translateY(-25px) scale(.97)}100%{transform:none}}
+@keyframes yenPropNewspaper{0%{opacity:0;transform:rotate(-18deg) translateY(85px)}38%{opacity:1;transform:rotate(6deg) translateY(0)}62%{transform:rotate(-5deg)}100%{transform:none}}
+@keyframes yenPropBlanket{0%{transform:translateY(140px);opacity:0}34%{opacity:1;transform:translateY(0)}58%{transform:translateY(-9px)}100%{transform:none}}
+@keyframes yenPropToaster{0%{opacity:0;transform:translateY(140px)}35%{opacity:1;transform:translateY(-10px)}55%{transform:translateY(6px)}100%{transform:none}}
+@keyframes yenPropDog{0%{opacity:0;transform:translateX(-120px) rotate(-12deg)}35%{opacity:1;transform:translateX(30px) rotate(8deg)}60%{transform:translateX(-14px) rotate(-4deg)}100%{transform:none}}
+@keyframes yenPropMenu{0%{opacity:0;transform:translateX(95px) rotate(10deg)}36%{opacity:1;transform:translateX(-8px) rotate(-3deg)}65%{transform:rotate(4deg)}100%{transform:none}}
+@keyframes yenPropSign{0%{opacity:0;transform:translateY(-95px) rotate(5deg)}36%{opacity:1;transform:translateY(9px) rotate(-5deg)}62%{transform:translateY(-6px) rotate(3deg)}100%{transform:none}}
+@keyframes yenPropTray{0%{opacity:0;transform:translateX(85px) rotate(13deg)}40%{opacity:1;transform:translateX(-6px) rotate(-5deg)}66%{transform:rotate(4deg)}100%{transform:none}}
+@keyframes yenPropDust{0%{opacity:0;transform:translateX(-90px)}28%{opacity:1;transform:translateX(20px)}58%{opacity:.72;transform:translateX(-3px)}100%{opacity:1;transform:none}}
+@keyframes yenPropVacuum{0%{opacity:0;transform:translateX(-88px) rotate(-8deg)}38%{opacity:1;transform:translateX(10px) rotate(4deg)}70%{transform:rotate(-3deg)}100%{transform:none}}
+@keyframes yenPropPrinter{0%{opacity:0;transform:translateY(105px)}37%{opacity:1;transform:translateY(-9px)}55%{transform:translateY(5px)}75%{transform:translateY(-3px)}100%{transform:none}}
+@keyframes yenPropMusic{0%{opacity:0;transform:translateY(100px) rotate(5deg)}30%{opacity:1;transform:translateY(0) rotate(-7deg)}52%{transform:rotate(7deg)}77%{transform:rotate(-4deg)}100%{transform:none}}
+@keyframes yenPropLights{0%{opacity:0;transform:scale(.5)}24%{opacity:1;transform:scale(1.13)}48%{opacity:.3;transform:scale(.92)}71%{opacity:1;transform:scale(1.08)}100%{opacity:1;transform:none}}
+@keyframes yenPropSkate{0%{opacity:0;transform:translateX(-100px) rotate(-12deg)}38%{opacity:1;transform:translateX(10px) rotate(8deg)}60%{transform:translateX(-8px) rotate(-6deg)}100%{transform:none}}
+@keyframes yenPropShadow{0%,100%{transform:scale(1);opacity:.16}46%{transform:scale(.62);opacity:.08}}
+@media(prefers-reduced-motion:reduce){
+  .mascot-cutscene .scene-props-front,.mascot-cutscene .scene-props-back,
+  .mascot-cutscene .scene-ground-shadow,.mascot-cutscene .scene-cuc-actor{
+    animation:none!important;transform:none!important;opacity:1!important
+  }
+}
+
 /* Canonical mascot assets are SVG instances, never hand-drawn doppelgängers. */
 .cuc-yen-model{display:block;overflow:visible}
 .mascot-button .cuc-yen-hero{width:100%;height:100%;animation:yen-cuc-hero-idle 4s ease-in-out infinite}
