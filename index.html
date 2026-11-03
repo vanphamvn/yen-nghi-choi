@@ -1511,6 +1511,22 @@
   .yen-drinks-visit{width:100%}
 }
 @media(prefers-reduced-motion:reduce){.yen-drink-card{transition:none}.yen-drink-card:hover{transform:none}}
+/* Shared vector mascot model v1, reused across both the drink interaction and café preview. */
+.yen-drinks-reaction{
+  display:flex;align-items:center;gap:13px;flex:1 1 360px;min-width:0;
+}
+.yen-drinks-reaction svg{display:block;width:90px;height:90px;flex:0 0 90px}
+.yen-drinks-reaction p{flex:1;min-width:0}
+.irl-preview-mascot{
+  width:clamp(118px,18vw,185px);height:auto;aspect-ratio:1;flex:none;
+  filter:drop-shadow(0 7px 4px #334a3920)
+}
+@media(max-width:760px){
+  .yen-drinks-reaction{align-items:center;gap:8px}
+  .yen-drinks-reaction svg{width:78px;height:78px;flex-basis:78px}
+  .yen-drinks-reaction p{font-size:12px}
+  .irl-preview-mascot{width:clamp(112px,32vw,163px)}
+}
 /* #65: Photo-first real-life section. Real café photos replace the honest placeholder later. */
 .irl-section .irl-wrap{align-items:start}
 .irl-media{display:grid;gap:14px;min-width:0}
@@ -2095,7 +2111,12 @@
           </button>
         </div>
         <div class="yen-drinks-footer">
-          <p id="yen-drinks-choice" role="status" aria-live="polite">Cục Yên đã nếm thử mấy ly này. Chạm vào một ly để nghe nó kể.</p>
+          <div class="yen-drinks-reaction">
+            <svg id="yen-drinks-mascot" viewBox="0 0 320 320" role="img" aria-label="Cục Yên đang vui vẻ">
+              <use href="/assets/cuc-yen/mascot.svg#cuc-yen-happy"></use>
+            </svg>
+            <p id="yen-drinks-choice" role="status" aria-live="polite">Cục Yên đã nếm thử mấy ly này. Chạm vào một ly để nghe nó kể.</p>
+          </div>
           <a class="yen-drinks-visit" id="yen-drinks-visit" href="#yen-ngoai-doi">Xem đường đến Yên <svg class="yen-icon" aria-hidden="true" focusable="false"><use href="#yen-arrow"></use></svg></a>
         </div>
       </div>
@@ -2112,7 +2133,7 @@
             <!-- Khi có ảnh quán thật, thay phần .irl-preview-empty bằng ảnh <img class="irl-preview-photo" ...>. -->
             <div class="irl-preview-empty" role="img" aria-label="Khung ảnh xem trước quán Yên, hiện chưa có ảnh thực tế">
               <span class="irl-preview-kicker">MỘT GÓC YÊN</span>
-              <span class="irl-preview-mark" aria-hidden="true">yên</span>
+              <svg class="irl-preview-mascot" viewBox="0 0 320 320" aria-hidden="true" focusable="false"><use href="/assets/cuc-yen/mascot.svg#cuc-yen-resting"></use></svg>
               <span class="irl-preview-message">Ảnh quán sẽ có sớm.</span>
             </div>
           </figure>
@@ -2664,6 +2685,7 @@
     const cards=Array.from(document.querySelectorAll(".yen-drink-card[data-yen-drink]"));
     const status=document.getElementById("yen-drinks-choice");
     const cta=document.getElementById("yen-drinks-visit");
+    const mascotPose=document.querySelector("#yen-drinks-mascot use");
     if(!cards.length||!status||!cta)return;
     const reactions={
       "Matcha dâu":"Cục Yên nhấp matcha dâu, thấy mình dịu dàng hẳn. Soi gương mới biết mép dính màu hồng.",
@@ -2676,6 +2698,18 @@
       cards.forEach(item=>item.setAttribute("aria-pressed",String(item===card)));
       const name=card.getAttribute("data-yen-drink");
       status.textContent=reactions[name]||"Cục Yên uống một ngụm, gật gù rồi xin thêm thời gian suy nghĩ.";
+      if(mascotPose){
+        const poseByDrink={
+          "Matcha dâu":"delighted",
+          "Cacao cốt dừa":"sleepy",
+          "Trà atiso đường phèn mật ong":"tea",
+          "Nước ép thơm táo":"happy",
+          "Cold Brew Cam Vàng":"surprised"
+        };
+        const pose=poseByDrink[name]||"front";
+        mascotPose.setAttribute("href","/assets/cuc-yen/mascot.svg#cuc-yen-"+pose);
+        document.getElementById("yen-drinks-mascot").setAttribute("aria-label","Cục Yên: "+name);
+      }
       cta.firstChild.textContent="Xem đường đến Yên ";
     }));
   }
