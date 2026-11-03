@@ -12,6 +12,18 @@ const scenes=JSON.parse(sceneMatch[1]);
 const expected=["alarm","cup","flight","flan","rain","magic","ufo","bubble","news","sleep",
   "toast","dog","menu","logo","serve","run","vacuum","clone","dj","skate"];
 
+test("oil-paint character style is consistent across all 21 mascot variants",()=>{
+  assert.ok(svg.includes('id="cy-cream-paint"'),"Missing cream brushstrokes");
+  assert.ok(svg.includes('id="cy-caramel-paint"'),"Missing caramel brushstrokes");
+  assert.ok(svg.includes('id="cy-scarf-paint"'),"Missing scarf brushstrokes");
+  assert.ok(svg.includes('id="cy-soft-paint-shadow"'),"Missing sculpted shadow");
+  assert.ok(svg.includes('id="cy-cream"')&&svg.includes('id="cy-caramel"')&&svg.includes('id="cy-moss"'));
+  assert.ok(svg.includes('<g id="cy-torso" filter="url(#cy-soft-paint-shadow)">'));
+  assert.ok(html.includes('<style id="cuc-yen-oil-style">'));
+  assert.ok(html.includes('mask-image:radial-gradient'));
+  assert.ok(!svg.includes('<symbol id="cuc-yen-wink" viewBox="0 0 320 320"><use href="#cuc-yen-cheeky"/><use href="#cy-clerk-cap"/>'));
+});
+
 test("one mascot source with regular and staff roles",()=>{
   assert.equal(spriteIds.size,21);
   for(const name of ["waving","happy","sleepy","surprised","clerk","clerk-ready","clerk-stamp","clerk-spin","clerk-win","barista"]){
