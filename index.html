@@ -1402,6 +1402,41 @@
 .wheel-panel[data-program=completed] .wheel-viewport:disabled{cursor:not-allowed}
 .wheel-panel[data-program=active] .wheel-demo-chip{color:#28593b;background:#e4f0d8;border-color:#adc89c}
 
+
+/* #60 / Real visit: one invitation, one clear place, one illustration that does something. */
+.irl-section{padding-block:clamp(46px,6vw,78px)}
+.irl-section .irl-wrap{grid-template-columns:minmax(0,1.04fr) minmax(280px,.96fr);gap:clamp(24px,5vw,66px);align-items:center}
+.irl-section .irl-copy{min-width:0}
+.irl-section .irl-copy h2{max-width:12ch;font-size:clamp(39px,4.75vw,66px);line-height:1.12;margin:13px 0 20px;letter-spacing:-.035em;text-wrap:balance}
+.irl-section .irl-copy>p:not(.irl-location){max-width:30ch;font-size:clamp(16px,1.6vw,18px);line-height:1.6;color:#425f4d;margin:0 0 19px}
+.irl-section .irl-location{margin:0 0 25px!important;font:800 13px/1.45 "Noto Sans",Arial,sans-serif!important;letter-spacing:.045em;color:#3d654c!important}
+.irl-section .irl-actions{display:flex;align-items:center;gap:12px 20px;flex-wrap:wrap}
+.irl-section .irl-actions .irl-cta{min-height:52px;padding:13px 22px;justify-content:center;width:auto;font-size:14px}
+.irl-section .irl-actions .irl-bridge-tiktok{min-height:48px;padding:8px 4px;margin:0;font-size:13px}
+.irl-visual{position:relative;isolation:isolate;min-width:0;min-height:345px;padding:20px;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#e5edda;border:1.5px solid #bbcfb6;border-radius:30px;overflow:hidden}
+.irl-visual::before{content:"";position:absolute;z-index:-1;left:50%;top:43%;width:min(74%,285px);aspect-ratio:1;border-radius:50%;background:#f8e7ce;transform:translate(-50%,-50%);box-shadow:0 0 0 30px rgba(255,255,255,.15)}
+.irl-visual .footer-cup{display:flex;flex:none;flex-direction:column;align-items:center;justify-content:center;width:100%;max-width:250px;min-width:0;padding:5px 8px 9px;background:transparent;border:0;cursor:pointer;color:#305842;position:relative;z-index:1}
+.irl-visual .footer-cup svg{display:block;width:min(205px,100%);max-width:100%;height:auto;transition:transform .28s ease}
+.irl-visual .footer-cup-touch{display:inline-flex;align-items:center;justify-content:center;white-space:nowrap;margin-top:4px;padding:7px 13px;border:1px solid #8da887;border-radius:99px;background:#fffaf0;font:850 12px/1.4 "Noto Sans",Arial,sans-serif;letter-spacing:0;text-decoration:none}
+.irl-visual .footer-cup:focus-visible{outline:3px solid #b47853;outline-offset:4px;border-radius:20px}
+.irl-visual .footer-cup-says{display:block;flex:none;max-width:min(290px,100%);min-height:0;margin:12px 0 0;padding:11px 15px;font:700 12px/1.5 "Noto Sans",Arial,sans-serif;color:#315740}
+.irl-visual .footer-cup-says[hidden]{display:none!important}
+@media(max-width:760px){
+  .irl-section .irl-wrap{grid-template-columns:minmax(0,1fr);gap:26px}
+  .irl-section .irl-copy h2{max-width:15ch;font-size:clamp(36px,9vw,52px);margin:12px 0 14px}
+  .irl-section .irl-copy>p:not(.irl-location){font-size:16px;line-height:1.55;margin:0 0 12px}
+  .irl-section .irl-location{margin:0 0 20px!important;font-size:12px!important}
+  .irl-section .irl-actions{gap:10px 17px}
+  .irl-section .irl-actions .irl-cta{width:auto;min-height:48px;padding:12px 19px}
+  .irl-section .irl-actions .irl-bridge-tiktok{margin:0;min-height:44px}
+  .irl-visual{min-height:230px;padding:14px 20px 18px;border-radius:23px}
+  .irl-visual::before{width:190px;top:44%;box-shadow:0 0 0 21px rgba(255,255,255,.15)}
+  .irl-visual .footer-cup svg{width:146px}
+  .irl-visual .footer-cup-touch{font-size:11px;padding:6px 13px;margin-top:1px}
+  .irl-visual .footer-cup-says{margin-top:9px;font-size:12px}
+}
+@media(prefers-reduced-motion:reduce){.irl-visual .footer-cup svg{transition:none}}
+
 </style>
   
 </head>
@@ -1846,23 +1881,18 @@
     </div></section>
     <section class="irl-section" id="yen-ngoai-doi" aria-labelledby="irl-title">
       <div class="wrap irl-wrap">
-        <div class="irl-image-waiting" role="img" aria-label="Minh họa góc ngồi nghỉ của Yên, không phải ảnh chụp quán">
-          <svg class="yen-icon" aria-hidden="true"><use href="#yen-sprout"></use></svg>
-          <b>Chỗ này chừa cho bạn.</b>
-          
-        </div>
         <div class="irl-copy">
-          <span class="eyebrow">05 / Yên ngoài đời thật</span>
-          <h2 id="irl-title">Ủa, Yên <em>có thật hả?</em></h2>
-          <p>Có chứ. Ghé <strong>Yên Coffee &amp; Tea</strong> ở Láng Dài, Đất Đỏ uống cà phê, trà và ngồi chơi.</p>
-          
+          <span class="eyebrow">05 / GHÉ QUÁN</span>
+          <h2 id="irl-title">Ghé ngồi <em>một chút.</em></h2>
+          <p>Cà phê, trà và một góc nghỉ dễ chịu.</p>
+          <p class="irl-location">Láng Dài · Đất Đỏ</p>
           <div class="irl-actions">
             <a class="irl-cta" href="https://maps.app.goo.gl/zxpyZev8F6YyzL3c6?g_st=ic" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer" aria-label="Mở Google Maps chỉ đường đến Yên">Chỉ đường <svg class="yen-icon" aria-hidden="true"><use href="#yen-arrow"></use></svg></a>
             <a class="irl-bridge-tiktok" href="https://www.tiktok.com/@yencafeday" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer" aria-label="Xem TikTok của Yên">TikTok ↗</a>
           </div>
-          <div class="irl-cup-interaction">
-            <div class="footer-play">
-          <button class="footer-cup" id="footer-cup" type="button" aria-label="Chọc chiếc ly để nghe một câu đùa">
+        </div>
+        <div class="irl-visual">
+          <button class="footer-cup irl-feature-cup" id="footer-cup" type="button" aria-label="Chọc chiếc ly để nghe một câu đùa">
             <svg viewBox="0 0 230 235" aria-hidden="true" focusable="false" fill="none">
               <path d="M93 37c-8-8-7-19-1-27M118 35c9-10 9-18 5-26" stroke="#587762" stroke-width="5" stroke-linecap="round" opacity=".57"/>
               <path d="M155 71 182 25" stroke="#2c4738" stroke-width="9" stroke-linecap="round"/>
@@ -1882,11 +1912,9 @@
               <path d="M89 215v10m56-10v10" stroke="#304939" stroke-width="5" stroke-linecap="round"/>
               <path d="M18 100c-5-4-6-8-5-13m4 24-9 2M210 74l6-7m-3 15 10 1" stroke="#74916b" stroke-width="3" stroke-linecap="round"/>
             </svg>
-            <span class="footer-cup-touch">Chọc cái ly</span>
+            <span class="footer-cup-touch">Chạm vào ly</span>
           </button>
           <p class="footer-cup-says" id="footer-cup-says" role="status" aria-live="polite" hidden></p>
-        </div>
-          </div>
         </div>
       </div>
     </section>
