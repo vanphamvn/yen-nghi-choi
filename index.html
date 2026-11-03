@@ -1383,7 +1383,6 @@
 .wheel-panel[data-program=completed] .wheel-spin-btn:disabled{cursor:not-allowed}
 .wheel-panel[data-program=inactive] .wheel-viewport:disabled,
 .wheel-panel[data-program=completed] .wheel-viewport:disabled{cursor:not-allowed}
-.wheel-claim-instruction{font:750 12px/1.5 "Noto Sans",Arial,sans-serif;color:#3c6349;margin:9px 0 0}
 .wheel-panel[data-program=active] .wheel-demo-chip{color:#28593b;background:#e4f0d8;border-color:#adc89c}
 
 </style>
@@ -1759,8 +1758,7 @@
             <span class="wheel-result-label">PHẦN QUÀ CỦA BẠN</span>
             <strong id="yen-wheel-reward"></strong>
             <p id="yen-wheel-reward-note"></p>
-            <div class="wheel-souvenir" id="yen-wheel-souvenir" hidden><span class="wheel-souvenir-art" id="yen-wheel-symbol" aria-hidden="true">?</span><span><b id="yen-wheel-souvenir-text"></b><small>ĐƯA KẾT QUẢ CHO NHÂN VIÊN XÁC NHẬN</small></span></div>
-            <p class="wheel-claim-instruction">Giữ màn hình kết quả để nhận quà tại quầy.</p>
+            <div class="wheel-souvenir" id="yen-wheel-souvenir" hidden><span class="wheel-souvenir-art" id="yen-wheel-symbol" aria-hidden="true">?</span><span><b id="yen-wheel-souvenir-text"></b></span></div>
           </div>
         </div>
       </div>
@@ -2347,12 +2345,12 @@
       const symbols=['5','o','%','+','3','?','%','8'];
       result.dataset.kind=kinds[index];
       byId('yen-wheel-symbol').textContent=symbols[index];
-      byId('yen-wheel-souvenir-text').textContent='Đưa kết quả này cho nhân viên tại quầy.';
+      byId('yen-wheel-souvenir-text').textContent='Mời nhân viên xác nhận để nhận quà.';
       byId('yen-wheel-souvenir').hidden=false;
       result.hidden=false;
       const reactions=[['sleepy','Tới lượt quà rồi, tỉnh ngủ ngay!'],['surprised','Trúng quà thật, mắt tròn hơn trân châu.'],['cheeky','Có quà rồi, mang cho nhân viên xem nhé!']];
       const reaction=reactions[index%reactions.length];window.YenReaction?.show(result,reaction[0],reaction[1]);
-      announce('Bạn nhận '+gift.name+'. Mời nhân viên xác nhận kết quả tại quầy.');
+      announce('Trúng quà rồi! Nhân viên không được ngất nha.');
       celebrate();
     }
     function spin(){
