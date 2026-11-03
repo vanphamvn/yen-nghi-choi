@@ -1717,6 +1717,21 @@
 @keyframes storyTiredCup{0%,35%{opacity:0}55%{opacity:1;transform:rotate(5deg)}70%{transform:rotate(-5deg)}100%{opacity:1;transform:none}}
 @keyframes storyBanana{0%,24%{opacity:0;transform:translateX(80px) rotate(-19deg)}46%{opacity:1;transform:translateX(5px) rotate(5deg)}100%{opacity:1;transform:none}}
 @keyframes storyGasp{0%,45%{opacity:0;transform:scale(.7)}65%{opacity:1;transform:scale(1.18)}100%{opacity:1;transform:none}}
+/* Hold the actual ending of the story instead of snapping every scene to a neutral stance. */
+.mascot-cutscene.is-settled[data-scene="flan"] .scene-cuc-actor{animation:storyFlanRest 4s ease-in-out infinite}
+.mascot-cutscene.is-settled[data-scene="ufo"] .scene-cuc-actor{animation:storyAbductRest 4.7s ease-in-out infinite}
+.mascot-cutscene.is-settled[data-scene="toast"] .scene-cuc-actor{animation:storyToastRest 4s ease-in-out infinite}
+.mascot-cutscene.is-settled[data-scene="run"] .scene-cuc-actor{animation:storyRunnerRest 4s ease-in-out infinite}
+.mascot-cutscene.is-settled[data-scene="dog"] .scene-cuc-actor{animation:storyDogRest 4s ease-in-out infinite}
+.mascot-cutscene.is-settled[data-scene="vacuum"] .scene-cuc-actor{animation:storyVacuumRest 4s ease-in-out infinite}
+.mascot-cutscene.is-settled[data-scene="sleep"] .scene-cuc-actor{animation:storySleepRest 4.8s ease-in-out infinite}
+@keyframes storyFlanRest{0%,100%{transform:translateY(7px) scale(1.1,.76)}50%{transform:translateY(6px) scale(1.12,.74)}}
+@keyframes storyAbductRest{0%,100%{transform:translateY(-18px) rotate(-4deg) scale(.94)}50%{transform:translateY(-26px) rotate(2deg) scale(.94)}}
+@keyframes storyToastRest{0%,100%{transform:translateY(-23px)}50%{transform:translateY(-29px) rotate(1deg)}}
+@keyframes storyRunnerRest{0%,100%{transform:translateX(47px)}50%{transform:translateX(47px) rotate(3deg)}}
+@keyframes storyDogRest{0%,100%{transform:translateX(46px)}50%{transform:translateX(46px) rotate(-4deg)}}
+@keyframes storyVacuumRest{0%,100%{transform:translateX(-66px) rotate(-8deg) scale(.90)}50%{transform:translateX(-67px) rotate(5deg) scale(.91)}}
+@keyframes storySleepRest{0%,100%{transform:translateY(9px)}50%{transform:translateY(12px)}}
 @media(prefers-reduced-motion:reduce){
   .mascot-cutscene .scene-story-detail *, .mascot-cutscene .story-mini-clone{
     animation:none!important;opacity:1!important;transform:none!important
