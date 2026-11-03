@@ -1363,6 +1363,36 @@
 }
 @media(prefers-reduced-motion:reduce){.ticker-track{animation:none}}
 
+
+/* #51 Tiệm 0đ: one visual gift, one line of humor, one next action */
+#receipt-dialog{max-width:min(430px,calc(100vw - 24px));max-height:calc(100dvh - 24px);overflow-y:auto;overflow-x:visible}
+#receipt-dialog .receipt-simple{width:min(396px,calc(100vw - 36px));padding:24px 25px 25px;text-align:center;box-sizing:border-box;transform:none;animation:none}
+#receipt-dialog .receipt-head{border:0;padding:2px 44px 0}
+#receipt-dialog .receipt-logo{width:min(112px,75%);margin-bottom:8px}
+#receipt-dialog .receipt-head p{font:900 10px/1.35 "Noto Sans",Arial,sans-serif;letter-spacing:.12em;color:#617665}
+#receipt-dialog .receipt-gift{display:flex;flex-direction:column;align-items:center;gap:10px;margin:21px 0 12px}
+#receipt-dialog .receipt-gift .receipt-souvenir-symbol{width:92px;height:92px;display:grid;place-items:center;border:2px solid #355c44;border-radius:26px;background:#dfead4;color:#315841;font:900 52px/1 "Noto Serif",Georgia,serif;transform:rotate(-7deg);box-shadow:5px 6px 0 #c5d5c0}
+#receipt-dialog[data-product=khen] .receipt-gift .receipt-souvenir-symbol{background:#f4dce0;transform:rotate(6deg)}
+#receipt-dialog[data-product=luoi] .receipt-gift .receipt-souvenir-symbol{background:#e4dff3;transform:rotate(-3deg)}
+#receipt-dialog .receipt-gift h2{font:650 clamp(26px,6.5vw,34px)/1.2 "Yen Serif","Noto Serif",Georgia,serif;letter-spacing:-.035em;margin:0;max-width:13ch;text-wrap:balance;color:#294d38}
+#receipt-dialog .receipt-quote{margin:0;max-width:29ch;min-height:2.6em;color:#506852;font:600 clamp(14px,3.8vw,16px)/1.5 "Noto Sans",Arial,sans-serif;font-style:normal;text-wrap:balance}
+#receipt-dialog .receipt-price{margin:15px auto 7px;font:900 26px/1.3 "Noto Sans",Arial,sans-serif;color:#315741}
+#receipt-dialog .receipt-price span{font:700 12px/1.5 "Noto Sans",Arial,sans-serif;color:#617565}
+#receipt-dialog .receipt-disclaimer{font:650 11px/1.5 "Noto Sans",Arial,sans-serif;color:#647667;margin:0 0 19px}
+#receipt-dialog .receipt-next{display:flex;align-items:center;justify-content:center;gap:10px;min-height:50px;padding:12px 16px;background:#2e5c44;color:#fffdf4;border-radius:12px;text-decoration:none;font:900 14px/1.3 "Noto Sans",Arial,sans-serif}
+#receipt-dialog .receipt-next:hover{background:#214b36}
+#receipt-dialog .receipt-next:focus-visible,#receipt-dialog .receipt-flower-close:focus-visible{outline:3px solid #cc7c40;outline-offset:3px}
+#receipt-dialog .receipt-flower-close{right:10px;top:9px}
+#privacy-dialog{max-width:min(460px,calc(100vw - 24px));max-height:calc(100dvh - 24px);overflow-y:auto}
+.privacy-card{position:relative;background:#fbf5e6;border:2px solid #365947;border-radius:20px;padding:36px 27px 24px;box-shadow:7px 9px 0 #243c3550}
+.privacy-card h2{font:650 clamp(23px,6vw,30px)/1.25 "Yen Serif","Noto Serif",Georgia,serif;margin:0 42px 16px 0}
+.privacy-card p{font:500 14px/1.65 "Noto Sans",Arial,sans-serif;color:#4a6252;margin:0 0 14px}
+.privacy-close{position:absolute;right:10px;top:8px;width:44px;height:44px;border:0;border-radius:50%;background:transparent;font:500 28px/1 "Noto Sans",Arial,sans-serif;cursor:pointer}
+.privacy-done{display:block;width:100%;margin-top:18px;min-height:48px;border:0;border-radius:11px;background:#315b42;color:white;font:850 14px "Noto Sans",Arial,sans-serif;cursor:pointer}
+.privacy-close:focus-visible,.privacy-done:focus-visible{outline:3px solid #cc7c40;outline-offset:3px}
+@media(max-width:420px){#receipt-dialog .receipt-simple{padding:20px 18px 19px}#receipt-dialog .receipt-gift{margin:15px 0 9px;gap:8px}#receipt-dialog .receipt-gift .receipt-souvenir-symbol{width:74px;height:74px;border-radius:22px;font-size:43px}#receipt-dialog .receipt-quote{min-height:0}#receipt-dialog .receipt-disclaimer{margin-bottom:14px}.privacy-card{padding:29px 19px 20px}}
+@media(prefers-reduced-motion:reduce){#receipt-dialog .receipt-gift .receipt-souvenir-symbol{transform:none!important}}
+
 </style>
   
 </head>
@@ -1868,7 +1898,29 @@
       <div class="footer-bottom"><span class="footer-sign"><img src="yen-logo.svg" width="1450" height="585" alt="yên" loading="lazy" decoding="async"><span>COFFEE & TEA</span></span><span class="footer-fineprint">© Yên · Hết trang rồi. Có người vẫn đang canh chiếc ghế trống.</span><button type="button" id="privacy-btn">Trang này nhớ gì về mình?</button></div>
     </div>
   </footer>
-  <dialog id="receipt-dialog" aria-labelledby="receipt-label"><div class="receipt"><button type="button" id="close-receipt" class="receipt-flower-close" aria-label="Đóng biên lai" title="Đóng biên lai"><svg class="yen-icon" aria-hidden="true" focusable="false"><use href="#yen-bloom"></use></svg></button><div class="receipt-head"><img class="receipt-logo" src="yen-logo.svg" width="1450" height="585" alt="yên" decoding="async"><p id="receipt-label">Biên lai 0đ, không mua gì cả</p></div><div class="receipt-items"><div class="receipt-row"><span>01 × <span id="receipt-name"></span></span><b>0 ₫</b></div><div class="receipt-row"><span>Phí làm bạn vui</span><b>0 ₫</b></div><div class="receipt-row"><span>Tổng cộng</span><b>0 ₫</b></div></div><p class="receipt-quote" id="receipt-quote"></p><div class="receipt-souvenir"><span class="receipt-souvenir-symbol" id="receipt-souvenir-symbol" aria-hidden="true">?</span><span class="receipt-souvenir-copy" id="receipt-souvenir-copy">Quầy 0đ đang kiểm kê. Kiểm lâu cũng chẳng thêm tiền.</span></div><div class="receipt-bottom">KHÔNG CÓ MÃ ĐƠN<br>VÌ BẠN CHẲNG MUA GÌ.<p class="irl-receipt-note">Biên lai này chỉ để vui. Còn cà phê, trà ở quán thì bán thật nha.</p><a class="game-next" href="#ngoi-yen" id="receipt-next-game">Nhận biên lai rồi. Qua Phòng pha bậy →</a></div></div></dialog>
+  <dialog id="receipt-dialog" aria-labelledby="receipt-label">
+    <div class="receipt receipt-simple">
+      <button type="button" id="close-receipt" class="receipt-flower-close" aria-label="Đóng quà 0 đồng" title="Đóng"><svg class="yen-icon" aria-hidden="true" focusable="false"><use href="#yen-bloom"></use></svg></button>
+      <div class="receipt-head"><img class="receipt-logo" src="yen-logo.svg" width="1450" height="585" alt="yên" decoding="async"><p id="receipt-label">MỘT MÓN QUÀ 0Đ</p></div>
+      <div class="receipt-gift">
+        <span class="receipt-souvenir-symbol" id="receipt-souvenir-symbol" aria-hidden="true">~</span>
+        <h2 id="receipt-name">Một cái thở phào</h2>
+        <p class="receipt-quote" id="receipt-quote"></p>
+      </div>
+      <div class="receipt-price" aria-label="Giá: 0 đồng">0 ₫ <span>· lấy thoải mái</span></div>
+      <p class="receipt-disclaimer">Quà vui trên web, không đổi tại quán.</p>
+      <a class="receipt-next" href="#ngoi-yen" id="receipt-next-game">Chơi tiếp: Pha bậy <span aria-hidden="true">→</span></a>
+    </div>
+  </dialog>
+  <dialog id="privacy-dialog" aria-labelledby="privacy-label">
+    <div class="privacy-card">
+      <button class="privacy-close" id="close-privacy" type="button" aria-label="Đóng thông tin riêng tư">×</button>
+      <h2 id="privacy-label">Trang này nhớ gì về bạn?</h2>
+      <p>Không cần đăng nhập. Các trò chơi chạy ngay trên trình duyệt, không lưu nội dung bạn chọn.</p>
+      <p>Máy chủ lưu trữ website và dịch vụ phông chữ có thể xử lý dữ liệu kỹ thuật như địa chỉ IP theo chính sách riêng.</p>
+      <button class="privacy-done" id="privacy-done" type="button">Đã hiểu</button>
+    </div>
+  </dialog>
   
   <script>
     (() => {
@@ -1992,7 +2044,39 @@
       // The cutscene is artwork, not an interaction shield: tapping the stage repeats the act.
       $('#hero-stage')?.addEventListener('click',e=>{if(e.target.closest('a,button'))return;if(sceneNode.classList.contains('is-playing'))runDare();});
       // Bói tâm trạng retired: the new Cục Yên Permit Office owns section 01.
-      const shopQuotes={"tho":["Thở ra cái đã. Cục Yên không yêu cầu thành tích thở.","Bạn vừa có một phút rảnh. Xin đừng nhét deadline vào đó.","Cục Yên đem cân đo sự nhẹ nhõm. Cân hết pin, nhưng vẻ mặt trông ổn.","Chiếc ghế xin làm đồng nghiệp. Chuyên đỡ bạn, không giao việc.","Ngồi yên một phút cũng là một phút. Không ai thu hồi được.","Chưa giải quyết hết chuyện đâu. Uống ngụm nước trước đã.","Canh còn nóng phải để nguội. Cái đầu đang nóng cũng thế.","Ngồi xuống đi. Chiếc ghế chưa bao giờ bắt bạn viết đơn.","Cục Yên đóng dấu “ĐỦ RỒI” vào danh sách việc. Bằng dấu khoai tây.","Cái thở phào này không phải trả lại vào thứ Hai.","Bạn ngồi nghỉ, đám mây đi ngang cũng muốn kéo ghế.","Đồng hồ cứ chạy, kể cả khi bạn không cổ vũ nó.","Bạn thở ra một hơi. Hệ thống báo: con người vẫn hoạt động tốt.","Một phút yên tĩnh đã về tay bạn. Giấu kỹ kẻo chuông điện thoại thấy.","Hôm nay không có cuộc thi “ai gồng lâu hơn”. Cục Yên tự hủy rồi.","Con ốc sên bảo bạn đi nhanh quá. Nó nói xong đi mất hai phân.","Đừng vác cả bầu trời. Cầm ly nước thôi là đủ.","Hai cái vai xin nghỉ tăng ca. Cục Yên đã ký cho nghỉ.","Đời bật tốc độ 2x? Bạn được quyền bấm về 1x.","Đặt suy nghĩ xuống cạnh cái muỗng. Đừng làm rơi ly nhé.","Thở phào không sửa hết mọi thứ, nhưng ít nhất ngực bớt chật.","Cục Yên đặt dấu phẩy vào câu chuyện của bạn. Chưa tới dấu chấm đâu.","Cơn gió vừa xin việc làm quạt. Cục Yên đang phỏng vấn.","Bạn đã làm được một việc: ghé vào đây. Đủ điểm qua môn chơi.","Nghỉ mười giây. Vũ trụ chưa mất mạng đâu.","Cục Yên đang trồng một phút nghỉ. Chưa mọc lá, nhưng có ghế.","Não chưa muốn nở hoa? Cho nó uống nước thay vì ép ra ý tưởng.","Chiếc bàn không chấm điểm bạn. Ghế cũng chưa thấy gửi phiếu.","Đây là biên lai xác nhận: bạn vừa nghỉ một hơi, không mua gì.","Hết hơi thì thở tiếp. Không cần xin chữ ký cái lịch."],"khen":["Bạn biết lật gối tìm mặt mát. Kỹ năng sinh tồn rất đáng nể.","Bạn cầm muỗng trông rất có tiềm năng không làm đổ canh.","Bạn ngắm mây mà không đòi nó nộp báo cáo. Tâm hồn rất thoáng.","Cục Yên thấy bạn có năng khiếu ngồi ghế. Cả hai rất hợp nhau.","Ngón tay bấm nút rất quyết đoán. Hơi bất chấp lời cảnh báo, nhưng nhanh.","Bạn đọc được đến câu này. Cục Yên xin trao huy chương kiên nhẫn.","Bạn chọn chỗ ngồi khéo đến mức cái cây muốn hỏi bí quyết.","Nếu là bánh quy, bạn sẽ tròn trịa về tinh thần. Đừng hỏi tròn cỡ nào.","Bạn xứng đáng có cái ống hút biết chào. Cục Yên đang tuyển dụng.","Chim ngoài cửa vừa gật đầu khen bạn. Hoặc nó đang tìm sâu.","Bạn bước vào trang rất nhẹ nhàng. Cái ghế không hề giật mình.","Một chiếc ghế vừa xin kết bạn với bạn. Cục Yên làm người giới thiệu.","Chiếc lá khen bạn thở đều. Lời khen hơi lạc đề nhưng miễn phí.","Cái đĩa thấy bạn đáng tin. Nó muốn giao cho bạn trông miếng bánh.","Bạn ngồi chơi rất chuyên nghiệp. Cục Yên đang xin học nghề.","Bạn có vẻ hợp làm khăn trải bàn tiệc trà. Đừng lo, chỉ là lời khen.","Một con mèo chọn ngồi cạnh bạn. Đây gần như là giải thưởng lớn.","Bạn không cãi nhau với thời tiết. Cục Yên cho 10 điểm môn bình tĩnh.","Bạn đếm một chuyện vô ích rất tốt. Ví dụ: hôm nay đã chớp mắt mấy lần?","Cái bóng hôm nay theo bạn rất ngoan. Xin khen cả hai.","Nhớ uống nước là đủ tư cách vào đội vô địch hôm nay.","Tiếng đá lách cách nghe hợp với bạn. Cục Yên tự phong bạn làm DJ đá viên.","Hoa muốn mời bạn làm cố vấn nghỉ ngơi. Công việc chỉ ngắm hoa.","Cục Yên tặng bằng khen vì bạn chưa hỏi bằng khen đổi được gì.","Bạn tử tế đến mức cây bút hết mực cũng muốn viết thư cảm ơn.","Bạn nhận lời khen kỳ cục rất bình tĩnh. Cục Yên nể thật.","Bạn hợp làm nhân vật trong phim về cái cây. Vai chính: người ngồi dưới bóng mát.","Cái chuông khen bạn bấm nút đúng chỗ. Chuông hơi thiếu kiểm soát.","Ly cacao muốn tâm sự với bạn. Nó bảo bạn biết lắng nghe.","Hôm nay bạn có nụ cười tiềm năng. Nếu chưa cười, cứ để sau."],"luoi":["Giấy phép nghỉ có hiệu lực ngay. Cục Yên duyệt, đừng hỏi phòng nhân sự.","Được nằm nghỉ mà không cần giải trình với cái gối.","Hôm nay cho phép nạp pin bằng cách... không làm gì trong 5 phút.","Chữ ký Cục Yên: một vết mực tròn, nghi là dính cà phê.","Không cần tối ưu mọi phút. Có phút sinh ra chỉ để ngồi chơi.","Được quyền từ chối việc không cần thiết. Cái ghế ủng hộ.","Giấy chứng nhận: được nằm ngang 10 phút, không cần lý do.","Cái bàn đứng yên cả ngày vẫn được khen chắc chắn. Bạn nghỉ chút đi.","Nút “tạm dừng” đã được cấp phép. Cục Yên vừa bấm thử.","Không cần con dấu. Con dấu xin nghỉ trưa rồi.","Cho phép nhìn trần nhà năm phút. Nhìn ra ý tưởng thì lời quá.","Việc còn dài, nhưng ghế đang đợi. Ghế không thích bị cho leo cây.","Không cần biến sở thích thành dự án. Đi chơi thôi cũng được.","Ngồi nghe quạt quay 5 phút được tính là hoạt động rất nghiêm túc.","Được ăn bánh mà không cần đặt mục tiêu “ăn bánh xuất sắc”.","Lời khuyên không ai hỏi? Bạn được quyền không nhận.","Đồng hồ còn thức không có nghĩa bạn phải làm thêm.","Cục Yên đặt lịch hẹn bạn với chiếc ghế. Phí tư vấn: 0đ.","Không muốn làm gì? Nghỉ 5 phút đã, phần việc còn lại xếp hàng.","Cục Yên họp với cái lá giúp bạn. Lá biểu quyết nghỉ.","Chiều nay được chơi thứ vô ích. Ví dụ nhìn con kiến đi làm.","Được quyền ngắm trời xa xăm. Không cần nộp báo cáo lên mây.","Hôm nay cứ chậm như mật ong. Mật ong có bao giờ đua xe đâu.","Chế độ nghỉ đã bật. Không có bảng xếp hạng ai nghỉ giỏi nhất.","Não đang mệt, đừng bắt nó chạy marathon trong dép lê.","Ngáp một cái giữa cuộc họp? Cục Yên chấm đó là phần phát biểu thật lòng.","Cho phép gập máy tính và nhìn ra cửa sổ. Không cần xin phép cái bàn.","Ngày mai còn đó. Còn bây giờ, bạn được phép thở.","Giấy phép vẫn có hiệu lực khi trời mưa. Không chống nước, nhưng chống deadline.","Cục Yên đóng dấu “ĐỂ MAI” bằng khoai tây. Con dấu hơi thơm."]};
+
+      const shopQuotes={
+        tho:[
+          'Hít vào. Thở ra. Không chấm điểm.',
+          'Thở ra rồi. Đừng nín lại để tiết kiệm.',
+          'Cái ghế giữ chỗ. Bạn cứ thở.',
+          'Não xin vắng mặt năm phút.',
+          'Một cái ngáp cũng tính là thành tích.',
+          'Deadline chưa chạy mất. Chắc vậy.',
+          'Đã nhận một chút nhẹ người.',
+          'Bạn được phép thở phào thêm lần nữa.'
+        ],
+        khen:[
+          'Bạn rất giỏi... tìm đúng cái nút.',
+          'Cái ghế khen bạn ngồi rất chuẩn.',
+          'Ngón tay bấm nút có tố chất lãnh đạo.',
+          'Bạn xứng đáng được khen vì ghé chơi.',
+          'Chiếc lá bảo hôm nay bạn ổn áp.',
+          'Bạn biết thở đều. Xuất sắc.',
+          'Cục Yên vừa gật đầu. Không rõ vì sao.',
+          'Cái ly khen bạn rất biết chọn quà.'
+        ],
+        luoi:[
+          'Không làm gì cũng cần kỹ năng.',
+          'Giấy này cho phép ngồi thêm chút.',
+          'Chiếc ghế xin làm người bảo lãnh.',
+          'Công việc xếp hàng. Bạn ngồi trước.',
+          'Nằm yên là một kế hoạch khả thi.',
+          'Ngày mai vẫn còn đó. Hên ghê.',
+          'Không cần tối ưu cả giờ nghỉ.',
+          'Cái gối đã duyệt, không cần họp.'
+        ]
+      };
       const products={
         tho:{name:'Một cái thở phào'},
         khen:{name:'Một lời khen hơi lạc đề'},
@@ -2012,20 +2096,13 @@
         }
         const index=bag.pop();lastQuote[key]=index;return all[index];
       }
-      function updateReceiptQuote(){if(!activeProduct)return;$('#receipt-quote').textContent=getReceiptQuote(activeProduct)+' Quà này 0đ. Nước thật ở Yên thì có giá nha!';}
+      function updateReceiptQuote(){if(!activeProduct)return;$('#receipt-quote').textContent=getReceiptQuote(activeProduct);}
       $$('.product button').forEach(btn=>btn.addEventListener('click',()=>{
         activeProduct=btn.dataset.product;
         $('#receipt-name').textContent=products[activeProduct].name;
         updateReceiptQuote();receipt.dataset.product=activeProduct;receipt.showModal();
-        const souvenirs={
-          tho:["~","Một hơi thở phào vừa xuất kho. Hàng dễ vỡ: đừng nín thở."],
-          khen:["*","Tấm phiếu xác nhận: hôm nay bạn được khen. Không cần lý do."],
-          luoi:["Z","Chứng chỉ lười hạng A. Có chiếc ghế làm người bảo lãnh."]
-        };
-        $('#receipt-souvenir-symbol').textContent=souvenirs[activeProduct][0];
-        $('#receipt-souvenir-copy').textContent=souvenirs[activeProduct][1];
-        const shopReactions={tho:['sleepy','Ngáp hộ khách một cái. Dịch vụ chăm sóc rất tận tâm.'],khen:['surprised','Định khen bạn, xong khen nhầm cái ghế.'],luoi:['cheeky','Ký đơn lười bằng tay không thuận. Chữ đẹp bất ngờ.']};
-        const reaction=shopReactions[activeProduct];window.YenReaction?.show(receipt.querySelector('.receipt-bottom'),reaction[0],reaction[1]);
+        const symbols={tho:'~',khen:'✳',luoi:'Z'};
+        $('#receipt-souvenir-symbol').textContent=symbols[activeProduct];
       }));
       $('#close-receipt').addEventListener('click',()=>receipt.close());
       $('#receipt-next-game').addEventListener('click',()=>receipt.close());
@@ -2164,12 +2241,11 @@
         void footerCup.offsetWidth;
         footerCup.classList.add('poked');
       });
-      $('#privacy-btn').addEventListener('click', () => {
-        $('#receipt-name').textContent = 'Trò này không cần đăng nhập';
-        $('#receipt-quote').textContent = 'Bạn không cần đăng nhập để chơi. Các trò trên trang chạy ngay trong trình duyệt. Trang này không yêu cầu tài khoản và không lưu nội dung trò chơi vào bộ nhớ trình duyệt. Khi truy cập, nền tảng lưu trữ và dịch vụ font có thể xử lý dữ liệu kỹ thuật như địa chỉ IP theo chính sách riêng của họ.';
-        activeProduct=null;
-        receipt.showModal();
-      });
+      const privacyDialog=$('#privacy-dialog');
+      $('#privacy-btn').addEventListener('click',()=>privacyDialog.showModal());
+      $('#close-privacy').addEventListener('click',()=>privacyDialog.close());
+      $('#privacy-done').addEventListener('click',()=>privacyDialog.close());
+      privacyDialog.addEventListener('click',e=>{if(e.target===privacyDialog)privacyDialog.close();});
       if('IntersectionObserver' in window && !prefersReduced){
         const observer = new IntersectionObserver(entries => entries.forEach(entry => {
           if(entry.isIntersecting){entry.target.classList.add('visible');observer.unobserve(entry.target);}
