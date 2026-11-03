@@ -3658,36 +3658,76 @@
       const firstMissing=Object.keys(fields).find(f=>!values[f]);
       if(firstMissing){
         const item=root.querySelector('fieldset[data-field="'+firstMissing+'"]');
-        item.classList.add("is-missing");item.querySelector("button").focus({preventScroll:true});
+        item.classList.add("is-missing");
+        item.querySelector("button").focus({preventScroll:true});
         item.scrollIntoView({behavior:reduced?"auto":"smooth",block:"nearest"});
         updateApprovalHint();
         approveStatus.textContent="Chọn thêm cái cớ đang được đánh dấu rồi bấm DUYỆT ĐƠN nhé.";
         announce("Phiếu chưa đủ 2 câu. Chọn mục đang được đánh dấu rồi bấm DUYỆT ĐƠN.");
         return;
       }
-      phase="stamping";round++;const thisRound=round;stamp.disabled=true;
-      cucTrigger.disabled=true;updateApprovalHint();
-      aimStamp();
-      stage.classList.add("is-stamping");announce("Con mộc đã được nhấc lên... chuẩn bị CỘP!");
+
+      // All three entry points reveal the approved paper BEFORE any stamp moves.
+      // The red seal appears only at the giant stamp's actual contact with the paper.
+      phase="stamping";round++;const thisRound=round;
       clearTimeout(pending);
+      stamp.disabled=true;cucTrigger.disabled=true;updateApprovalHint();
+      const selected=menu[values.reason];
+      $("permit-out-reason").textContent=fields.reason[values.reason];
+      $("permit-out-duration").textContent=fields.duration[values.duration];
+      $("permit-out-note").textContent=notes[values.reason];
+      $("permit-out-drink").textContent=selected.name;
+      $("permit-out-why").textContent=selected.why;
+      const permitReactions={
+        noise:["sleepy","Cục Yên thử đóng 38 tab trong đầu. Đóng được hai tab thì ngáp."],
+        deadline:["surprised","Deadline gõ cửa. Cục Yên giả vờ làm con dấu."],
+        busy:["cheeky","Mood tan ca rồi. Cục Yên ký đơn xin nghỉ hộ mood."],
+        why:["sleepy","Pin xã hội 1%. Cục Yên tự chuyển qua chế độ tiết kiệm năng lượng."]
+      };
+      const reaction=permitReactions[values.reason];
+      window.YenReaction?.show(receipt.querySelector(".permit-verdict"),reaction[0],reaction[1]);
+      form.hidden=true;intro.hidden=true;receipt.hidden=false;
+      stage.classList.remove("is-issued","is-stamping","is-filing","is-collecting","is-seal-coming","is-seal-imprinted");
+      stage.classList.add("is-previewing");
+      $("permit-receipt").setAttribute("tabindex","-1");
+      receipt.focus({preventScroll:true});
+      receipt.scrollIntoView({behavior:reduced?"auto":"smooth",block:"center"});
+      announce("Giấy phép đã hiện ra. Cục Yên đi lấy mộc để đóng dấu đỏ!");
+
+      const active=()=>phase==="stamping"&&thisRound===round;
+      function finish(){
+        if(!active())return;
+        phase="issued";
+        stage.classList.remove("is-previewing","is-collecting","is-seal-coming");
+        stage.classList.add("is-seal-imprinted","is-issued");
+        stamp.disabled=false;cucTrigger.disabled=false;updateApprovalHint();
+        announce("CỘP! Con dấu đỏ đã được đóng đúng trên giấy. Giấy phép hoàn tất!");
+      }
+      if(reduced){
+        stage.classList.add("is-seal-imprinted");
+        finish();
+        return;
+      }
+
+      // One cancellable timeout chain. Reset invalidates the round and clears the
+      // current timer, so a previous stamp cannot reappear on a fresh application.
       pending=window.setTimeout(()=>{
-        if(phase!=="stamping"||thisRound!==round)return;
-        const selected=menu[values.reason];
-        $("permit-out-reason").textContent=fields.reason[values.reason];
-        $("permit-out-duration").textContent=fields.duration[values.duration];
-        $("permit-out-note").textContent=notes[values.reason];
-        $("permit-out-drink").textContent=selected.name;
-        $("permit-out-why").textContent=selected.why;
-        const permitReactions={noise:["sleepy","Cục Yên thử đóng 38 tab trong đầu. Đóng được hai tab thì ngáp."],deadline:["surprised","Deadline gõ cửa. Cục Yên giả vờ làm con dấu."],busy:["cheeky","Mood tan ca rồi. Cục Yên ký đơn xin nghỉ hộ mood."],why:["sleepy","Pin xã hội 1%. Cục Yên tự chuyển qua chế độ tiết kiệm năng lượng."]};
-        const reaction=permitReactions[values.reason];window.YenReaction?.show(receipt.querySelector(".permit-verdict"),reaction[0],reaction[1]);
-        form.hidden=true;intro.hidden=true;receipt.hidden=false;phase="issued";
-        stage.classList.remove("is-stamping");stage.classList.add("is-issued");
-        cucTrigger.disabled=false;
-        announce("Đã duyệt nghỉ. Giấy phép của bạn đã được in xong.");
-        $("permit-receipt").setAttribute("tabindex","-1");
-        $("permit-receipt").focus({preventScroll:true});
-        $("permit-receipt").scrollIntoView({behavior:reduced?"auto":"smooth",block:"nearest"});
-      },reduced?0:2000);
+        if(!active())return;
+        stage.classList.add("is-collecting");
+        announce("Cục Yên đang bước qua lấy con mộc...");
+        pending=window.setTimeout(()=>{
+          if(!active())return;
+          stage.classList.remove("is-previewing","is-collecting");
+          stage.classList.add("is-seal-coming");
+          announce("Mộc lớn đã được nhấc lên. Nhắm đúng ô tròn trên giấy...");
+          pending=window.setTimeout(()=>{
+            if(!active())return;
+            stage.classList.add("is-seal-imprinted");
+            announce("CỘP! Đóng mộc trúng ngay ô dấu đỏ!");
+            pending=window.setTimeout(finish,350);
+          },755);
+        },720);
+      },470);
     }
 
     // #31: all illustration and export work happens on the visitor's device.
@@ -3792,7 +3832,7 @@
       round++;clearTimeout(pending);phase="form";
       Object.keys(fields).forEach(field=>{values[field]=null;root.querySelectorAll('[data-permit-field="'+field+'"]').forEach(btn=>btn.setAttribute("aria-pressed","false"));root.querySelector('fieldset[data-field="'+field+'"]').classList.remove("is-missing");});
       receipt.hidden=true;intro.hidden=true;form.hidden=false;
-      stage.classList.remove("is-stamping","is-issued");stage.classList.add("is-filing");
+      stage.classList.remove("is-stamping","is-issued","is-previewing","is-collecting","is-seal-coming","is-seal-imprinted");stage.classList.add("is-filing");
       stamp.disabled=false;cucTrigger.disabled=false;progress.textContent="ĐÃ KHAI 0/2 MỤC";
       updateApprovalHint();
       announce("Chọn hai cái cớ trên phiếu, rồi bấm nút xanh NHỜ CỤC YÊN DUYỆT ĐƠN.");
