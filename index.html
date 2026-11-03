@@ -1364,24 +1364,15 @@
 @media(prefers-reduced-motion:reduce){.ticker-track{animation:none}}
 
 
-/* #51 Tiệm 0đ: one visual gift, one line of humor, one next action */
-#receipt-dialog{max-width:min(430px,calc(100vw - 24px));max-height:calc(100dvh - 24px);overflow-y:auto;overflow-x:visible}
-#receipt-dialog .receipt-simple{width:min(396px,calc(100vw - 36px));padding:24px 25px 25px;text-align:center;box-sizing:border-box;transform:none;animation:none}
-#receipt-dialog .receipt-head{border:0;padding:2px 44px 0}
-#receipt-dialog .receipt-logo{width:min(112px,75%);margin-bottom:8px}
-#receipt-dialog .receipt-head p{font:900 10px/1.35 "Noto Sans",Arial,sans-serif;letter-spacing:.12em;color:#617665}
-#receipt-dialog .receipt-gift{display:flex;flex-direction:column;align-items:center;gap:10px;margin:21px 0 12px}
-#receipt-dialog .receipt-gift .receipt-souvenir-symbol{width:92px;height:92px;display:grid;place-items:center;border:2px solid #355c44;border-radius:26px;background:#dfead4;color:#315841;font:900 52px/1 "Noto Serif",Georgia,serif;transform:rotate(-7deg);box-shadow:5px 6px 0 #c5d5c0}
-#receipt-dialog[data-product=khen] .receipt-gift .receipt-souvenir-symbol{background:#f4dce0;transform:rotate(6deg)}
-#receipt-dialog[data-product=luoi] .receipt-gift .receipt-souvenir-symbol{background:#e4dff3;transform:rotate(-3deg)}
-#receipt-dialog .receipt-gift h2{font:650 clamp(26px,6.5vw,34px)/1.2 "Yen Serif","Noto Serif",Georgia,serif;letter-spacing:-.035em;margin:0;max-width:13ch;text-wrap:balance;color:#294d38}
-#receipt-dialog .receipt-quote{margin:0;max-width:29ch;min-height:2.6em;color:#506852;font:600 clamp(14px,3.8vw,16px)/1.5 "Noto Sans",Arial,sans-serif;font-style:normal;text-wrap:balance}
-#receipt-dialog .receipt-price{margin:15px auto 7px;font:900 26px/1.3 "Noto Sans",Arial,sans-serif;color:#315741}
-#receipt-dialog .receipt-disclaimer{font:650 11px/1.5 "Noto Sans",Arial,sans-serif;color:#647667;margin:0 0 19px}
-#receipt-dialog .receipt-next{display:flex;align-items:center;justify-content:center;gap:10px;min-height:50px;padding:12px 16px;background:#2e5c44;color:#fffdf4;border-radius:12px;text-decoration:none;font:900 14px/1.3 "Noto Sans",Arial,sans-serif}
-#receipt-dialog .receipt-next:hover{background:#214b36}
-#receipt-dialog .receipt-next:focus-visible,#receipt-dialog .receipt-flower-close:focus-visible{outline:3px solid #cc7c40;outline-offset:3px}
-#receipt-dialog .receipt-flower-close{right:10px;top:9px}
+/* #53: restore the original paper-receipt design; only trim redundant copy. */
+#receipt-dialog{max-height:calc(100dvh - 24px);overflow-y:auto}
+#receipt-dialog .receipt-items{padding:17px 0}
+#receipt-dialog .receipt-quote{margin:18px 0;font-size:clamp(19px,4.9vw,23px);line-height:1.42}
+#receipt-dialog .receipt-souvenir{margin:11px 0;padding:10px}
+#receipt-dialog .receipt-bottom .irl-receipt-note{margin:10px 0}
+#receipt-dialog .receipt-bottom .game-next{margin-top:10px}
+#receipt-dialog .receipt-bottom .cuc-reaction{margin-top:12px}
+#receipt-dialog .receipt-flower-close:focus-visible,#receipt-dialog .game-next:focus-visible{outline:3px solid #c7804c;outline-offset:3px}
 #privacy-dialog{max-width:min(460px,calc(100vw - 24px));max-height:calc(100dvh - 24px);overflow-y:auto}
 .privacy-card{position:relative;background:#fbf5e6;border:2px solid #365947;border-radius:20px;padding:36px 27px 24px;box-shadow:7px 9px 0 #243c3550}
 .privacy-card h2{font:650 clamp(23px,6vw,30px)/1.25 "Yen Serif","Noto Serif",Georgia,serif;margin:0 42px 16px 0}
@@ -1389,8 +1380,8 @@
 .privacy-close{position:absolute;right:10px;top:8px;width:44px;height:44px;border:0;border-radius:50%;background:transparent;font:500 28px/1 "Noto Sans",Arial,sans-serif;cursor:pointer}
 .privacy-done{display:block;width:100%;margin-top:18px;min-height:48px;border:0;border-radius:11px;background:#315b42;color:white;font:850 14px "Noto Sans",Arial,sans-serif;cursor:pointer}
 .privacy-close:focus-visible,.privacy-done:focus-visible{outline:3px solid #cc7c40;outline-offset:3px}
-@media(max-width:420px){#receipt-dialog .receipt-simple{padding:20px 18px 19px}#receipt-dialog .receipt-gift{margin:15px 0 9px;gap:8px}#receipt-dialog .receipt-gift .receipt-souvenir-symbol{width:74px;height:74px;border-radius:22px;font-size:43px}#receipt-dialog .receipt-quote{min-height:0}#receipt-dialog .receipt-disclaimer{margin-bottom:14px}.privacy-card{padding:29px 19px 20px}}
-@media(prefers-reduced-motion:reduce){#receipt-dialog .receipt-gift .receipt-souvenir-symbol{transform:none!important}}
+@media(max-width:420px){#receipt-dialog .receipt{padding:26px 18px 22px}.privacy-card{padding:29px 19px 20px}}
+
 
 </style>
   
@@ -1897,20 +1888,7 @@
       <div class="footer-bottom"><span class="footer-sign"><img src="yen-logo.svg" width="1450" height="585" alt="yên" loading="lazy" decoding="async"><span>COFFEE & TEA</span></span><span class="footer-fineprint">© Yên · Hết trang rồi. Có người vẫn đang canh chiếc ghế trống.</span><button type="button" id="privacy-btn">Trang này nhớ gì về mình?</button></div>
     </div>
   </footer>
-  <dialog id="receipt-dialog" aria-labelledby="receipt-label">
-    <div class="receipt receipt-simple">
-      <button type="button" id="close-receipt" class="receipt-flower-close" aria-label="Đóng quà 0 đồng" title="Đóng"><svg class="yen-icon" aria-hidden="true" focusable="false"><use href="#yen-bloom"></use></svg></button>
-      <div class="receipt-head"><img class="receipt-logo" src="yen-logo.svg" width="1450" height="585" alt="yên" decoding="async"><p id="receipt-label">BẠN VỪA NHẬN</p></div>
-      <div class="receipt-gift">
-        <span class="receipt-souvenir-symbol" id="receipt-souvenir-symbol" aria-hidden="true">~</span>
-        <h2 id="receipt-name">Một cái thở phào</h2>
-        <p class="receipt-quote" id="receipt-quote"></p>
-      </div>
-      <div class="receipt-price" aria-label="Giá: 0 đồng">0 ₫</div>
-      <p class="receipt-disclaimer">Quà vui trên web, không đổi tại quán.</p>
-      <a class="receipt-next" href="#ngoi-yen" id="receipt-next-game">Chơi tiếp: Pha bậy <span aria-hidden="true">→</span></a>
-    </div>
-  </dialog>
+  <dialog id="receipt-dialog" aria-labelledby="receipt-label"><div class="receipt"><button type="button" id="close-receipt" class="receipt-flower-close" aria-label="Đóng biên lai" title="Đóng biên lai"><svg class="yen-icon" aria-hidden="true" focusable="false"><use href="#yen-bloom"></use></svg></button><div class="receipt-head"><img class="receipt-logo" src="yen-logo.svg" width="1450" height="585" alt="yên" decoding="async"><p id="receipt-label">BIÊN LAI 0Đ</p></div><div class="receipt-items"><div class="receipt-row"><span>01 × <span id="receipt-name"></span></span><b>0 ₫</b></div><div class="receipt-row"><span>Tổng cộng</span><b>0 ₫</b></div></div><p class="receipt-quote" id="receipt-quote"></p><div class="receipt-souvenir"><span class="receipt-souvenir-symbol" id="receipt-souvenir-symbol" aria-hidden="true">?</span><span class="receipt-souvenir-copy" id="receipt-souvenir-copy">Quà kỳ cục. Mang về nhé.</span></div><div class="receipt-bottom"><p class="irl-receipt-note">Quà vui trên web, không đổi tại quán.</p><a class="game-next" href="#ngoi-yen" id="receipt-next-game">Qua Phòng pha bậy →</a></div></div></dialog>
   <dialog id="privacy-dialog" aria-labelledby="privacy-label">
     <div class="privacy-card">
       <button class="privacy-close" id="close-privacy" type="button" aria-label="Đóng thông tin riêng tư">×</button>
@@ -2100,8 +2078,16 @@
         activeProduct=btn.dataset.product;
         $('#receipt-name').textContent=products[activeProduct].name;
         updateReceiptQuote();receipt.dataset.product=activeProduct;receipt.showModal();
-        const symbols={tho:'~',khen:'✳',luoi:'Z'};
-        $('#receipt-souvenir-symbol').textContent=symbols[activeProduct];
+        const souvenirs={
+          tho:['~','Một hơi thở phào mang về.'],
+          khen:['✳','Lời khen này là của bạn.'],
+          luoi:['Z','Được phép lười thêm chút.']
+        };
+        $('#receipt-souvenir-symbol').textContent=souvenirs[activeProduct][0];
+        $('#receipt-souvenir-copy').textContent=souvenirs[activeProduct][1];
+        const reactions={tho:['sleepy','Ngáp thay bạn một cái.'],khen:['surprised','Nhân viên cũng bất ngờ.'],luoi:['cheeky','Đã duyệt. Khỏi họp.']};
+        const reaction=reactions[activeProduct];
+        window.YenReaction?.show(receipt.querySelector('.receipt-bottom'),reaction[0],reaction[1]);
       }));
       $('#close-receipt').addEventListener('click',()=>receipt.close());
       $('#receipt-next-game').addEventListener('click',()=>receipt.close());
