@@ -39,6 +39,13 @@
 <g id="cy-face-delighted"><path d="M133 150 L136 158 L144 161 L136 165 L133 173 L129 165 L121 161 L129 158Z M197 150 L200 158 L208 161 L200 165 L197 173 L193 165 L185 161 L193 158Z" fill="#2f4a2f"/><use href="#cy-cheeks"/><use href="#cy-mouth-happy"/></g>
 <g id="cy-mug"><path d="M131 210 H194 L188 255 Q162 268 140 255 Z" fill="#dfc1a0" stroke="#2f4a2f" stroke-width="5" stroke-linejoin="round"/><path d="M192 220 Q217 209 213 231 Q209 243 191 237" stroke="#2f4a2f" stroke-width="5" fill="none"/><path d="M152 223 Q159 213 169 225 Q170 240 158 242 Q148 234 152 223Z" fill="#7a563a" stroke="#fff5dc" stroke-width="2"/><path d="M156 216 Q145 200 155 190 M174 216 Q165 202 175 190" fill="none" stroke="#aa764b" stroke-width="3.7" stroke-linecap="round"/></g>
 <g id="cy-iced"><path d="M133 205 H192 L186 264 Q161 275 140 263Z" fill="#d39856" stroke="#2f4a2f" stroke-width="5"/><path d="M136 220 H190 L186 261 Q162 271 142 261Z" fill="#d7a662"/><path d="M178 197 L185 172" stroke="#44795b" stroke-width="6" stroke-linecap="round"/><path d="M150 227 L160 241 L149 246 M175 220 L166 236" fill="none" stroke="#f8ebc3" stroke-width="5" opacity=".75"/><path d="M160 250 Q162 237 170 232 M164 242 Q152 240 153 231 M165 241 Q174 242 178 233" stroke="#7a8f5a" stroke-width="3.5" fill="none" stroke-linecap="round"/></g>
+<g id="cy-clerk-cap">
+  <path d="M112 89 Q107 60 132 50 Q170 33 206 49 Q223 61 219 88 Q165 99 112 89 Z" fill="#e7cb9b" stroke="#2f4a2f" stroke-width="5.8" stroke-linejoin="round"/>
+  <path d="M101 92 Q167 78 231 91" fill="none" stroke="#2f4a2f" stroke-width="6" stroke-linecap="round"/>
+  <rect x="151" y="59" width="38" height="22" rx="8" fill="#fff4e3" stroke="#2f4a2f" stroke-width="3"/>
+  <path d="M165 73 Q170 65 176 73 Q172 79 165 73 Z" fill="#7a8f5a"/>
+  <path d="M138 58 Q155 48 177 53" fill="none" stroke="#fff4e3" stroke-width="4" stroke-linecap="round"/>
+</g>
 </defs>
 <symbol id="cuc-yen-front" viewBox="0 0 320 320"><use href="#cy-shadow"/><use href="#cy-arms-idle"/><use href="#cy-torso"/><use href="#cy-face-calm"/></symbol>
 <symbol id="cuc-yen-happy" viewBox="0 0 320 320"><use href="#cy-shadow"/><use href="#cy-arms-wave"/><use href="#cy-torso"/><use href="#cy-face-happy"/><path d="M27 101 l-8 -10 M42 95 l0 -12" stroke="#bd8148" stroke-width="5" stroke-linecap="round"/></symbol>
@@ -54,5 +61,12 @@
 <symbol id="cuc-yen-waving" viewBox="0 0 320 320"><use href="#cy-shadow"/><use href="#cy-arms-wave"/><use href="#cy-torso"/><use href="#cy-face-happy"/></symbol>
 <symbol id="cuc-yen-side" viewBox="0 0 320 320"><use href="#cy-shadow"/><use href="#cy-feet"/><path d="M126 74 Q168 41 193 79 Q221 83 229 128 Q247 170 224 222 Q211 259 165 266 Q120 264 104 225 Q90 171 104 117Z" fill="url(#cy-cream)" stroke="#2f4a2f" stroke-width="7"/><path d="M103 132 Q98 90 126 74 Q168 41 193 79 Q221 83 229 128 Q171 148 103 132Z" fill="url(#cy-caramel)"/><path d="M103 219 Q165 232 222 211 L221 233 Q161 247 109 236Z" fill="#7a8f5a" stroke="#2f4a2f" stroke-width="5"/><ellipse cx="118" cy="163" rx="5" ry="9" fill="#2f4a2f"/><ellipse cx="129" cy="184" rx="12" ry="9" fill="#f6b3a1"/><path d="M99 175 Q83 173 82 192 Q84 206 103 203" fill="#fff4e3" stroke="#2f4a2f" stroke-width="6"/></symbol>
 <symbol id="cuc-yen-back" viewBox="0 0 320 320"><use href="#cy-shadow"/><use href="#cy-arms-idle"/><use href="#cy-feet"/><path d="M91 120 C79 101 84 84 105 78 C118 71 127 45 153 44 C178 43 183 55 194 70 C209 63 222 69 227 86 C245 92 256 104 257 123 C275 141 272 166 266 182 L260 217 C255 244 234 262 207 267 C190 270 166 269 160 268 C126 270 104 259 90 243 C71 219 64 181 72 157 C74 138 82 129 91 120Z" fill="url(#cy-cream)" stroke="#2f4a2f" stroke-width="7"/><g clip-path="url(#cy-body-clip)"><path d="M77 140 Q82 88 107 78 Q127 48 153 44 Q180 44 194 70 Q220 60 232 88 Q257 98 264 145Z" fill="url(#cy-caramel)"/></g><path d="M81 212 Q160 224 255 212 L252 237 Q173 247 88 234Z" fill="#7a8f5a" stroke="#2f4a2f" stroke-width="5"/><circle cx="167" cy="227" r="8" fill="#8ba270" stroke="#2f4a2f" stroke-width="3"/></symbol>
+<symbol id="cuc-yen-wink" viewBox="0 0 320 320"><use href="#cuc-yen-cheeky"/><use href="#cy-clerk-cap"/></symbol>
+<symbol id="cuc-yen-clerk" viewBox="0 0 320 320"><use href="#cuc-yen-front"/><use href="#cy-clerk-cap"/></symbol>
+<symbol id="cuc-yen-clerk-ready" viewBox="0 0 320 320"><use href="#cuc-yen-waving"/><use href="#cy-clerk-cap"/></symbol>
+<symbol id="cuc-yen-clerk-spin" viewBox="0 0 320 320"><use href="#cuc-yen-surprised"/><use href="#cy-clerk-cap"/></symbol>
+<symbol id="cuc-yen-clerk-win" viewBox="0 0 320 320"><use href="#cuc-yen-delighted"/><use href="#cy-clerk-cap"/></symbol>
+<symbol id="cuc-yen-clerk-stamp" viewBox="0 0 320 320"><use href="#cuc-yen-happy"/><use href="#cy-clerk-cap"/></symbol>
+<symbol id="cuc-yen-barista" viewBox="0 0 320 320"><use href="#cuc-yen-coffee"/><use href="#cy-clerk-cap"/></symbol>
 <use href="#cuc-yen-happy"/>
 </svg>
