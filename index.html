@@ -1408,6 +1408,101 @@
   .irl-map-open{right:11px;top:11px}
 }
 
+/* Real drinks: a small, illustrated tasting shelf, not a full sales menu. */
+.yen-drinks-section{
+  padding:clamp(65px,7vw,105px) 0 clamp(62px,7vw,94px);
+  background:#f6ead7;color:#304738;
+}
+.yen-drinks-heading{max-width:850px;margin-bottom:28px}
+.yen-drinks-heading .eyebrow{color:#547d58}
+.yen-drinks-heading h2{
+  font:500 clamp(41px,5vw,68px)/1.13 "Noto Serif",Georgia,serif;
+  letter-spacing:-.042em;margin:13px 0 13px;text-wrap:balance
+}
+.yen-drinks-heading h2 em{color:#2b6848;font-weight:600}
+.yen-drinks-heading>p{font:550 15px/1.62 "Noto Sans",Arial,sans-serif;color:#64705f;max-width:47ch;margin:0}
+.yen-drinks-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;align-items:stretch}
+.yen-drink-card{
+  display:flex;flex-direction:column;min-width:0;min-height:355px;
+  padding:10px;text-align:left;appearance:none;background:#fffbf3;
+  border:1.5px solid #aabb9d;border-radius:19px;
+  box-shadow:3px 4px 0 #d6d3ba;cursor:pointer;
+  transition:transform .18s,box-shadow .18s,border-color .18s
+}
+.yen-drink-card:hover{transform:translateY(-4px);box-shadow:5px 8px 0 #d6d3ba}
+.yen-drink-card[aria-pressed=true]{border-color:#315b44;box-shadow:0 0 0 2px #315b44,4px 6px 0 #c4cfb0}
+.yen-drink-card:focus-visible{outline:3px solid #ba7956;outline-offset:4px}
+.yen-drink-visual{
+  --drink-top:#a0bd83;--drink-bottom:#d98297;
+  position:relative;display:block;min-height:220px;aspect-ratio:1/1;
+  border-radius:12px;overflow:hidden;isolation:isolate;
+  background:radial-gradient(circle at 75% 20%,#fff9ea 0%,transparent 45%),#e8d4d4
+}
+.yen-drink-visual:before{
+  content:"";position:absolute;bottom:12px;left:50%;transform:translateX(-50%);
+  width:150px;height:21px;border-radius:50%;background:#34403230;filter:blur(7px)
+}
+.yen-drink-glass{
+  position:absolute;z-index:2;top:17%;left:50%;transform:translateX(-50%) rotate(-3deg);
+  width:45%;height:69%;min-width:85px;max-width:119px;
+  border:4px solid #fff9ebbb;border-top:6px solid #fff8efdf;border-radius:12px 12px 25px 25px;
+  background:linear-gradient(to bottom,var(--drink-top) 0 43%,var(--drink-top) 47%,var(--drink-bottom) 51% 100%);
+  clip-path:polygon(0 0,100% 0,90% 100%,10% 100%);
+  box-shadow:inset 8px 0 0 #fff8e83d,inset -7px 0 0 #25362812,0 11px 22px #33412b30
+}
+.yen-drink-glass:before{
+  content:"";position:absolute;inset:4% 9% auto;height:18%;
+  background:radial-gradient(circle at 23% 40%,#fff9e7a8 0 16%,transparent 18%),
+             radial-gradient(circle at 74% 67%,#fff9e7a6 0 18%,transparent 20%);
+}
+.yen-drink-glass:after{content:"";position:absolute;top:15%;bottom:18%;left:10%;width:9%;border-radius:14px;background:#fffef67d;filter:blur(1px)}
+.yen-drink-straw{
+  position:absolute;z-index:1;top:6%;left:60%;height:56%;width:7px;
+  transform:rotate(9deg);border-radius:5px;background:#f9f3dd;
+  box-shadow:2px 1px 0 #51735d66
+}
+.yen-drink-art-label{position:absolute;z-index:3;bottom:10px;right:10px;font:850 8px/1 "Noto Sans",Arial,sans-serif;letter-spacing:.12em;color:#3c604e99}
+.yen-drink-cacao{--drink-top:#f5e7c9;--drink-bottom:#744c35;background:radial-gradient(circle at 77% 17%,#fff1da 0%,transparent 45%),#e9d2c1}
+.yen-drink-atiso{--drink-top:#eebd74;--drink-bottom:#9d693e;background:radial-gradient(circle at 77% 18%,#fff9e1 0%,transparent 45%),#ebe2c7}
+.yen-drink-juice{--drink-top:#f7d67b;--drink-bottom:#e19b35;background:radial-gradient(circle at 77% 17%,#fff6d8 0%,transparent 45%),#dfe6c9}
+.yen-drink-info{display:flex;flex:1;flex-direction:column;align-items:flex-start;padding:15px 8px 8px;gap:5px}
+.yen-drink-info strong{font:800 clamp(16px,1.65vw,20px)/1.3 "Noto Sans",Arial,sans-serif;color:#2c4d37;letter-spacing:-.025em}
+.yen-drink-info>span:not(.yen-drink-pick){font:500 12px/1.5 "Noto Sans",Arial,sans-serif;color:#667564}
+.yen-drink-pick{margin-top:auto;padding-top:16px;font:850 12px/1.3 "Noto Sans",Arial,sans-serif;color:#3b7954}
+.yen-drink-card[aria-pressed=true] .yen-drink-pick{color:#245f40}
+.yen-drinks-footer{
+  display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;
+  padding-top:27px
+}
+.yen-drinks-footer p{font:650 13px/1.5 "Noto Sans",Arial,sans-serif;color:#50664f;margin:0;max-width:45ch}
+.yen-drinks-visit{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  padding:13px 19px;min-height:47px;border-radius:100px;
+  background:#305b43;color:#fff9e9;font:850 13px/1.3 "Noto Sans",Arial,sans-serif;
+  border:1.5px solid #305b43;white-space:normal
+}
+.yen-drinks-visit:hover{background:#447357}
+.yen-drinks-visit:focus-visible{outline:3px solid #b97952;outline-offset:3px}
+.yen-drinks-visit .yen-icon{width:17px;height:17px;flex:none}
+@media(max-width:1000px){.yen-drinks-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.yen-drink-card{min-height:315px}.yen-drink-visual{aspect-ratio:1.4}}
+@media(max-width:760px){
+  .yen-drinks-section{padding:56px 0 60px}
+  .yen-drinks-heading{margin-bottom:22px}
+  .yen-drinks-heading h2{font-size:clamp(36px,9.2vw,49px)}
+  .yen-drinks-heading>p{font-size:14px}
+  .yen-drinks-grid{
+    display:flex;gap:12px;overflow-x:auto;
+    scroll-snap-type:x mandatory;scroll-padding-inline:2px;
+    overscroll-behavior-x:contain;padding:3px 7px 10px 3px;
+    margin-right:-18px;scrollbar-width:thin
+  }
+  .yen-drink-card{flex:0 0 min(78vw,270px);scroll-snap-align:start;min-height:320px}
+  .yen-drink-visual{aspect-ratio:1.25;min-height:190px}
+  .yen-drink-info strong{font-size:18px}
+  .yen-drinks-footer{padding-top:21px;gap:13px}
+  .yen-drinks-visit{width:100%}
+}
+@media(prefers-reduced-motion:reduce){.yen-drink-card{transition:none}.yen-drink-card:hover{transform:none}}
 /* #65: Photo-first real-life section. Real café photos replace the honest placeholder later. */
 .irl-section .irl-wrap{align-items:start}
 .irl-media{display:grid;gap:14px;min-width:0}
@@ -1579,7 +1674,7 @@
         <p class="hero-game-lead">Chọn 3 điều. Nhận giấy phép nghỉ... cho vui.</p>
         <p class="hero-game-details" id="hero-play-details">Tầm 30 giây · Không đăng nhập · Không lưu dữ liệu</p>
         <div class="hero-cta"><a class="big-btn hero-play-btn" href="#tam-trang" aria-describedby="hero-play-details">Xin giấy phép nghỉ <svg class="yen-icon" aria-hidden="true"><use href="#yen-arrow"></use></svg></a><a class="hero-real-btn" href="#yen-ngoai-doi">Yên ngoài đời <svg class="yen-icon" aria-hidden="true"><use href="#yen-arrow"></use></svg></a></div>
-        <p class="hero-intro">Ngoài đời có <strong>Yên Coffee &amp; Tea</strong> để ngồi nghỉ thật. Trên web thì cứ chơi đã.</p>
+        <p class="hero-intro">Ở Yên có <strong>matcha dâu, cacao cốt dừa</strong> và một góc để ngồi nghỉ thật. Trên web thì cứ chơi đã.</p>
         <div class="hero-easter-row"><button class="hero-dare hero-easter-btn" id="poke-btn" type="button" aria-describedby="poke-reply">Đừng bấm cái này <svg class="yen-icon" aria-hidden="true" focusable="false"><use href="#yen-talk"></use></svg></button></div>
         <p class="poke-reply" id="poke-reply" role="status" aria-live="polite"></p>
         
@@ -1941,11 +2036,54 @@
           <div class="drink-whisper" id="drink-whisper" role="status" aria-live="polite">Nè! Thử chạm mình xem, mình có chuyện muốn nói.</div>
           <span class="drink-tap-hint" aria-hidden="true">↑ Chọc cái ly xem nó cãi gì</span>
         </div>
-        <div class="drink-result" aria-live="polite" aria-atomic="true"><div class="drink-result-kicker" id="drink-label">PHIẾU PHA NƯỚC SỐ 000</div><h3 id="drink-name">Chưa có ly nào. Cái muỗng đang khởi động.</h3><p id="drink-quip">Cái muỗng chờ tới lượt.</p><span class="drink-result-topping" id="drink-result-topping">TOPPING: CHƯA THẢ GÌ CẢ</span><div class="drink-personality" id="drink-personality" hidden><span class="drink-personality-emblem" id="drink-personality-emblem" aria-hidden="true">?</span><span class="drink-personality-copy" id="drink-personality-copy"></span></div><a class="game-next" id="drink-next-game" href="#yen-ngoai-doi" hidden>Xem Yên ngoài đời thật →</a></div>
+        <div class="drink-result" aria-live="polite" aria-atomic="true"><div class="drink-result-kicker" id="drink-label">PHIẾU PHA NƯỚC SỐ 000</div><h3 id="drink-name">Chưa có ly nào. Cái muỗng đang khởi động.</h3><p id="drink-quip">Cái muỗng chờ tới lượt.</p><span class="drink-result-topping" id="drink-result-topping">TOPPING: CHƯA THẢ GÌ CẢ</span><div class="drink-personality" id="drink-personality" hidden><span class="drink-personality-emblem" id="drink-personality-emblem" aria-hidden="true">?</span><span class="drink-personality-copy" id="drink-personality-copy"></span></div><a class="game-next" id="drink-next-game" href="#mon-that" hidden>Ly tưởng tượng xong rồi. Xem ly thật →</a></div>
         <button class="drink-generate" id="drink-generate" type="button"><svg class="yen-icon" aria-hidden="true"><use href="#yen-bloom"></use></svg><span id="drink-button-label">PHA BẬY ĐI!</span><svg class="yen-icon" aria-hidden="true"><use href="#yen-arrow"></use></svg></button>
         <p class="drink-footnote">Ly tưởng tượng thôi, không phải đơn hàng thật.</p>
       </div>
     </div></section>
+    <section class="yen-drinks-section" id="mon-that" aria-labelledby="yen-drinks-title">
+      <div class="wrap">
+        <div class="yen-drinks-heading">
+          <span class="eyebrow">MÓN THẬT Ở YÊN</span>
+          <h2 id="yen-drinks-title">Chơi tới đây rồi. <em>Khát chưa?</em></h2>
+          <p>Đây là những ly nước có thật trong menu Yên. Chọn một ly bạn muốn thử nhé.</p>
+        </div>
+        <div class="yen-drinks-grid" role="group" aria-label="Chọn một món bạn muốn thử ở Yên">
+          <button class="yen-drink-card" type="button" data-yen-drink="Matcha dâu" aria-pressed="false">
+            <span class="yen-drink-visual yen-drink-matcha" role="img" aria-label="Minh họa ly matcha dâu hai lớp xanh và hồng">
+              <span class="yen-drink-straw" aria-hidden="true"></span><span class="yen-drink-glass" aria-hidden="true"></span>
+              <span class="yen-drink-art-label">MINH HỌA</span>
+            </span>
+            <span class="yen-drink-info"><strong>Matcha dâu</strong><span>Vị matcha, thêm dâu.</span><span class="yen-drink-pick">Muốn thử ly này <span aria-hidden="true">↗</span></span></span>
+          </button>
+          <button class="yen-drink-card" type="button" data-yen-drink="Cacao cốt dừa" aria-pressed="false">
+            <span class="yen-drink-visual yen-drink-cacao" role="img" aria-label="Minh họa ly cacao màu nâu cùng lớp cốt dừa trắng kem">
+              <span class="yen-drink-straw" aria-hidden="true"></span><span class="yen-drink-glass" aria-hidden="true"></span>
+              <span class="yen-drink-art-label">MINH HỌA</span>
+            </span>
+            <span class="yen-drink-info"><strong>Cacao cốt dừa</strong><span>Cacao thơm, cốt dừa béo.</span><span class="yen-drink-pick">Muốn thử ly này <span aria-hidden="true">↗</span></span></span>
+          </button>
+          <button class="yen-drink-card" type="button" data-yen-drink="Trà atiso đường phèn mật ong" aria-pressed="false">
+            <span class="yen-drink-visual yen-drink-atiso" role="img" aria-label="Minh họa ly trà atiso màu hổ phách">
+              <span class="yen-drink-straw" aria-hidden="true"></span><span class="yen-drink-glass" aria-hidden="true"></span>
+              <span class="yen-drink-art-label">MINH HỌA</span>
+            </span>
+            <span class="yen-drink-info"><strong>Trà atiso đường phèn mật ong</strong><span>Một ly trà dịu nhẹ.</span><span class="yen-drink-pick">Muốn thử ly này <span aria-hidden="true">↗</span></span></span>
+          </button>
+          <button class="yen-drink-card" type="button" data-yen-drink="Nước ép thơm táo" aria-pressed="false">
+            <span class="yen-drink-visual yen-drink-juice" role="img" aria-label="Minh họa ly nước ép trái cây màu vàng cam">
+              <span class="yen-drink-straw" aria-hidden="true"></span><span class="yen-drink-glass" aria-hidden="true"></span>
+              <span class="yen-drink-art-label">MINH HỌA</span>
+            </span>
+            <span class="yen-drink-info"><strong>Nước ép thơm táo</strong><span>Thơm và táo trong một ly.</span><span class="yen-drink-pick">Muốn thử ly này <span aria-hidden="true">↗</span></span></span>
+          </button>
+        </div>
+        <div class="yen-drinks-footer">
+          <p id="yen-drinks-choice" role="status" aria-live="polite">Chọn một ly. Yên chỉ đường, không bắt đặt hàng.</p>
+          <a class="yen-drinks-visit" id="yen-drinks-visit" href="#yen-ngoai-doi">Xem đường đến Yên <svg class="yen-icon" aria-hidden="true" focusable="false"><use href="#yen-arrow"></use></svg></a>
+        </div>
+      </div>
+    </section>
     <section class="irl-section" id="yen-ngoai-doi" aria-labelledby="irl-title">
       <div class="wrap irl-wrap">
         <div class="irl-copy">
@@ -2502,6 +2640,27 @@
 </script>
   
 
+<script id="yen-real-drinks-script">
+/* No orders or analytics: choosing a drink updates only the visible invitation. */
+(function(){
+  "use strict";
+  function init(){
+    const cards=Array.from(document.querySelectorAll(".yen-drink-card[data-yen-drink]"));
+    const status=document.getElementById("yen-drinks-choice");
+    const cta=document.getElementById("yen-drinks-visit");
+    if(!cards.length||!status||!cta)return;
+    cards.forEach(card=>card.addEventListener("click",()=>{
+      cards.forEach(item=>item.setAttribute("aria-pressed",String(item===card)));
+      const name=card.getAttribute("data-yen-drink");
+      status.textContent="Bạn chọn "+name+". Muốn uống thật thì ghé Yên nhé.";
+      cta.firstChild.textContent="Ghé Yên thử "+name+" ";
+    }));
+  }
+  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",init,{once:true});
+  else init();
+})();
+</script>
+
 <script id="yen-playmap-script">
 /* Jumps align section headings below the mobile logo + visit button header. */
 (function(){
@@ -2524,7 +2683,7 @@
     });
   }
   function landmark(section){
-    return section.querySelector(".permit-heading, .release-copy, .section-header, .drink-copy, .irl-copy")||section;
+    return section.querySelector(".permit-heading, .release-copy, .section-header, .drink-copy, .yen-drinks-heading, .irl-copy")||section;
   }
   function jump(id,{push=false,smooth=true}={}){
     const section=document.getElementById(id);
