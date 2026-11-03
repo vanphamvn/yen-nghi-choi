@@ -1377,6 +1377,15 @@
 @media(max-width:420px){#receipt-dialog .receipt{padding:26px 18px 22px}.privacy-card{padding:29px 19px 20px}}
 
 
+
+/* #56: in-store reward program stays off until registration and cashier sign-off */
+.wheel-panel[data-program=inactive] .wheel-spin-btn:disabled,
+.wheel-panel[data-program=completed] .wheel-spin-btn:disabled{cursor:not-allowed}
+.wheel-panel[data-program=inactive] .wheel-viewport:disabled,
+.wheel-panel[data-program=completed] .wheel-viewport:disabled{cursor:not-allowed}
+.wheel-claim-instruction{font:750 12px/1.5 "Noto Sans",Arial,sans-serif;color:#3c6349;margin:9px 0 0}
+.wheel-panel[data-program=active] .wheel-demo-chip{color:#28593b;background:#e4f0d8;border-color:#adc89c}
+
 </style>
   
 </head>
@@ -2294,7 +2303,13 @@
       }
       return Math.floor(Math.random()*n);
     };
-    let rotation=0,isSpinning=false,frame=0,spinCount=0;
+    // Launch gate: enable only AFTER official promo registration and store procedures.
+    // No cookie/storage/backend: staff must witness and record every valid award.
+    const WHEEL_PROGRAM_ACTIVE=false;
+    const statusChip=byId('yen-wheel-program-state');
+    const panel=byId('yen-wheel-panel');
+    let rotation=0,isSpinning=false,frame=0,spinCompleted=false;
+    let pendingPrizeIndex=null,pendingDestination=0;
     function paint(){disc.style.transform='rotate('+rotation+'deg)';}
     function announce(message){speech.textContent=message;}
     function celebrate(){
@@ -2314,68 +2329,58 @@
       }
       window.setTimeout(()=>confetti.replaceChildren(),2600);
     }
+
     function complete(index){
+      if(!isSpinning||!Number.isInteger(index)||index<0||index>=prizes.length)return;
       rotation=Math.round(rotation*1000)/1000;paint();
-      isSpinning=false;
-      spinButton.disabled=false;wheelButton.disabled=false;
-      spinButton.textContent='Quay thêm lượt nữa ↻';
+      isSpinning=false;spinCompleted=true;pendingPrizeIndex=null;frame=0;
+      spinButton.disabled=true;wheelButton.disabled=true;
+      spinButton.textContent='ĐÃ CÓ KẾT QUẢ';
+      if(statusChip)statusChip.textContent='CHỜ NHẬN QUÀ';
+      if(panel)panel.dataset.program='completed';
       host.classList.remove('spinning');
       host.classList.add('celebrating');
       const gift=prizes[index];
       resultName.textContent=gift.name;
-      resultDescription.textContent=gift.message+' Đây chỉ là ưu đãi mô phỏng, chưa dùng để đổi quà tại quán.';
-      const kinds=["discount","topping","discount","size","discount","secret","discount","discount"];
-      const symbols=["5","o","%","+","3","?","%","8"];
-      const notes=[
-        "Năm nghìn đồng trong tưởng tượng. Ví vẫn nguyên vẹn.",
-        "Có topping ảo. Tặng thêm một cái gật đầu miễn phí.",
-        "Mười phần trăm trên giấy nháp. Con số đẹp, chưa có hiệu lực.",
-        "Ly tưởng tượng nay cao thêm. Đừng bê bằng hai tay.",
-        "Ba nghìn thử nghiệm. Bộ phận tài chính vẫn đang gãi đầu.",
-        "Quà bí mật đến mức bộ phận phát quà cũng chưa biết là gì.",
-        "Năm phần trăm của niềm vui, không phải đơn hàng.",
-        "Tám nghìn trên vòng quay thử. Chưa có chương trình thật."
-      ];
+      resultDescription.textContent=gift.message;
+      const kinds=['discount','topping','discount','size','discount','secret','discount','discount'];
+      const symbols=['5','o','%','+','3','?','%','8'];
       result.dataset.kind=kinds[index];
       byId('yen-wheel-symbol').textContent=symbols[index];
-      byId('yen-wheel-souvenir-text').textContent=notes[index];
+      byId('yen-wheel-souvenir-text').textContent='Đưa kết quả này cho nhân viên tại quầy.';
       byId('yen-wheel-souvenir').hidden=false;
       result.hidden=false;
-      const wheelReactions=[['sleepy','Ăn mừng khẽ thôi. Đang trong giờ nghỉ.'],['surprised','Nhìn kết quả hai lần, mắt tròn như hai hạt trân châu.'],['cheeky','Định giữ quà, xong nhớ ra đây là vòng quay thử.']];
-      const reaction=wheelReactions[index%wheelReactions.length];window.YenReaction?.show(result,reaction[0],reaction[1]);
-      announce(['Bốc được '+gift.name+'! Nhưng nhớ nhé, đây vẫn là vòng quay thử.','Trúng thử '+gift.name+'! Ưu đãi ngoài đời vẫn chưa được duyệt đâu.','Ra '+gift.name+'! Vòng quay thử xong, chương trình thật thì chưa công bố.'][randomInt(3)]);
+      const reactions=[['sleepy','Tới lượt quà rồi, tỉnh ngủ ngay!'],['surprised','Trúng quà thật, mắt tròn hơn trân châu.'],['cheeky','Có quà rồi, mang cho nhân viên xem nhé!']];
+      const reaction=reactions[index%reactions.length];window.YenReaction?.show(result,reaction[0],reaction[1]);
+      announce('Bạn nhận '+gift.name+'. Mời nhân viên xác nhận kết quả tại quầy.');
       celebrate();
     }
     function spin(){
-      if(isSpinning)return;
-      isSpinning=true;spinCount++;
+      if(!WHEEL_PROGRAM_ACTIVE||isSpinning||spinCompleted)return;
+      isSpinning=true;
       result.hidden=true;
       byId('yen-wheel-souvenir').hidden=true;
       confetti.replaceChildren();
       spinButton.disabled=true;wheelButton.disabled=true;
-      spinButton.textContent='Đang quay...';
+      spinButton.textContent='ĐANG QUAY...';
       host.classList.remove('celebrating');
       host.classList.add('spinning');
-      announce(['Quay chóng mặt rồi. Bạn giữ hộ cái nón!','Quay đều tay, kẻo nhân viên bay theo!','Đang tìm phần quà... hay tìm cái ghế ngồi?'][randomInt(3)]);
+      announce(['Nhân viên chứng kiến rồi chứ? Quay nào!','Đang tìm quà cho bạn...','Mũ bảo hiểm đâu? Vòng quay tăng tốc!'][randomInt(3)]);
       const selectedIndex=randomInt(prizes.length);
       const target=(((-selectedIndex*step)%360)+360)%360;
       const present=((rotation%360)+360)%360;
       const extraTurns=360*(5+randomInt(2));
       const diff=(target-present+360)%360;
       const destination=rotation+extraTurns+diff;
+      pendingPrizeIndex=selectedIndex;pendingDestination=destination;
       if(prefReduce){rotation=destination;complete(selectedIndex);return;}
       const starting=rotation,startTime=performance.now(),duration=4600;
-      let lastTick=-1;
       function animate(now){
+        if(!isSpinning)return;
         const t=Math.min(1,Math.max(0,(now-startTime)/duration));
         const eased=1-Math.pow(1-t,4);
         rotation=starting+(destination-starting)*eased;
         paint();
-        const tick=Math.floor((rotation+step/2)/step);
-        if(tick!==lastTick){
-          lastTick=tick;
-          if(t<.83&&navigator.vibrate&&t>.28&&spinCount%3===0){/* Haptic stays off: no unrequested vibration. */}
-        }
         if(t<1){frame=requestAnimationFrame(animate);}
         else{frame=0;rotation=destination;complete(selectedIndex);}
       }
@@ -2384,22 +2389,23 @@
     spinButton.addEventListener('click',spin);
     wheelButton.addEventListener('click',spin);
     document.addEventListener('visibilitychange',()=>{
-      if(document.hidden&&frame){cancelAnimationFrame(frame);frame=0;}
-      else if(!document.hidden&&isSpinning){
-        // If a tab was backgrounded, end the spin safely rather than leave disabled controls.
-        isSpinning=false;spinButton.disabled=false;wheelButton.disabled=false;
-        spinButton.textContent='Quay lại nào ↻';host.classList.remove('spinning','celebrating');
-        announce('Thấy bạn quay lại rồi! Vòng quay chờ nãy giờ đấy.');
+      // If the tab sleeps during the spin, finish the SAME drawn prize.
+      // Never allow a second roll after returning to the page.
+      if(document.hidden&&isSpinning&&pendingPrizeIndex!==null){
+        if(frame)cancelAnimationFrame(frame);
+        frame=0;rotation=pendingDestination;complete(pendingPrizeIndex);
       }
     });
-    window.YenWheel={reset:()=>{
-      if(frame)cancelAnimationFrame(frame);
-      frame=0;isSpinning=false;rotation=0;spinCount=0;paint();
-      result.hidden=true;spinButton.disabled=false;wheelButton.disabled=false;
-      spinButton.textContent='QUAY THỬ!';host.classList.remove('spinning','celebrating');
-      confetti.replaceChildren();announce('Nhân viên đã sẵn sàng hồi hộp giùm.');
-    }};
+    spinButton.disabled=!WHEEL_PROGRAM_ACTIVE;
+    wheelButton.disabled=!WHEEL_PROGRAM_ACTIVE;
+    if(statusChip)statusChip.textContent=WHEEL_PROGRAM_ACTIVE?'QUÀ THẬT TẠI QUẦY':'CHƯA NHẬN LƯỢT';
+    spinButton.textContent=WHEEL_PROGRAM_ACTIVE?'QUAY NHẬN QUÀ':'CHƯA NHẬN LƯỢT';
+    if(panel)panel.dataset.program=WHEEL_PROGRAM_ACTIVE?'active':'inactive';
+    announce(WHEEL_PROGRAM_ACTIVE
+      ?'Nhờ nhân viên chứng kiến rồi bấm quay nhận quà nhé.'
+      :'Chương trình chưa nhận lượt. Hỏi nhân viên trước khi quay nhé.');
     paint();
+
   }
   function startWheel(){
     try { init(); }
