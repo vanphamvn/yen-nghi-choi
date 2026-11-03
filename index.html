@@ -1685,7 +1685,7 @@
     <div class="release-copy reveal">
       <div class="eyebrow">02 / Quầy phát quà</div>
       <h2 class="section-title" id="release-title">Quay ngay. <i>Quà nhận tại Yên.</i></h2>
-      <p>Ở đâu cũng quay được. Quà chỉ trao khi nhân viên tận mắt thấy bạn quay tại quán.</p>
+      <p><strong>Mỗi đơn từ 25.000đ được 1 lượt quay nhận quà tại Yên.</strong> Trên web, bạn vẫn có thể quay thử thoải mái.</p>
       
     </div>
     <div class="wheel-panel reveal" id="yen-wheel-panel">
@@ -1785,7 +1785,7 @@
           </div>
         </div>
       </div>
-      <p class="wheel-disclaimer" id="yen-wheel-guidance"><strong>Quay online chỉ để chơi.</strong> Quà chỉ được trao khi bạn quay trực tiếp tại Yên, có nhân viên chứng kiến từ lúc bấm quay. Ảnh chụp kết quả không có giá trị nhận quà.</p>
+      <p class="wheel-disclaimer" id="yen-wheel-guidance"><strong>Thể lệ nhận quà:</strong> Mỗi đơn hàng thanh toán từ 25.000đ được đúng 1 lượt quay, không cộng thêm lượt khi đơn có giá trị cao hơn. Nhân viên kiểm tra đơn và chứng kiến lượt quay tại Yên mới trao quà. Quay thử online hoặc ảnh chụp kết quả không có giá trị nhận quà.</p>
       <div class="wheel-confetti" id="yen-wheel-confetti" aria-hidden="true"></div>
     </div>
   </div>
@@ -2315,17 +2315,17 @@
       host.classList.add('celebrating');
       const gift=prizes[index];
       resultName.textContent=gift.name;
-      resultDescription.textContent=gift.message+' Quà thật chỉ được xác nhận nếu nhân viên trực tiếp chứng kiến lượt quay tại Yên.';
+      resultDescription.textContent=gift.message+' Nhận quà thật: 1 lượt quay cho mỗi đơn từ 25.000đ, có nhân viên chứng kiến tại Yên.';
       const kinds=['discount','topping','discount','size','discount','secret','discount','discount'];
       const symbols=['5','o','%','+','3','?','%','8'];
       result.dataset.kind=kinds[index];
       byId('yen-wheel-symbol').textContent=symbols[index];
-      byId('yen-wheel-souvenir-text').textContent='Ảnh chụp màn hình không dùng để nhận quà.';
+      byId('yen-wheel-souvenir-text').textContent='Quay thử không tính lượt nhận quà; ảnh chụp không dùng để đổi quà.';
       byId('yen-wheel-souvenir').hidden=false;
       result.hidden=false;
       const reactions=[['sleepy','Quay xong rồi, tỉnh ngủ ngay!'],['surprised','Cục Yên tròn mắt với kết quả này.'],['cheeky','Muốn nhận quà, quay tại quán trước mặt nhân viên nhé!']];
       const reaction=reactions[index%reactions.length];window.YenReaction?.show(result,reaction[0],reaction[1]);
-      announce('Ra '+gift.name+'! Muốn nhận thật, quay tại quán cho nhân viên thấy nhé.');
+      announce('Ra '+gift.name+'! Mỗi đơn từ 25.000đ được 1 lượt quay nhận quà tại Yên, có nhân viên chứng kiến.');
       celebrate();
     }
     function spin(){
@@ -2376,7 +2376,7 @@
     if(statusChip)statusChip.textContent='QUAY TỰ DO';
     spinButton.textContent='QUAY NGAY';
     if(panel)panel.dataset.program='active';
-    announce('Bấm quay đi! Quà chỉ được trao khi nhân viên tận mắt thấy bạn quay tại Yên.');
+    announce('Quay thử thoải mái! Mỗi đơn từ 25.000đ được 1 lượt nhận quà khi quay tại Yên trước mặt nhân viên.');
     paint();
 
   }
