@@ -41,6 +41,25 @@ test("20 cutscenes use canonical mascot symbols and props",()=>{
   }
 });
 
+test("all 20 scenes dramatize the story with a visual prop and distinct timing",()=>{
+  assert.ok(html.includes('scene-story-detail'),"Scene detail layer missing");
+  assert.ok(html.includes('+(scene.detail||"")'),"Scene details are not rendered");
+  for(const [id,scene] of Object.entries(scenes)){
+    assert.ok(typeof scene.story==="string"&&scene.story.length>35,id+" needs a narrative storyboard");
+    assert.ok(typeof scene.detail==="string"&&scene.detail.includes("<"),id+" needs scenario-specific artwork");
+    assert.ok(scene.motion.length>3&&html.includes('.scene-motion-'+scene.motion+'{animation-name:'),id+" needs an actor timeline");
+    assert.ok(html.includes('[data-scene="'+id+'"] .story-')||id==="flight",id+" lacks prop/action animation");
+  }
+  assert.equal(scenes.run.pose,"back","Runner must show its backside");
+  assert.equal((scenes.rain.back.match(/story-drop-\d/g)||[]).length,3,"Exactly 3 raindrops");
+  assert.ok(scenes.flan.detail.includes("story-spoon"));
+  assert.ok(scenes.skate.front.includes("story-cookie-board"));
+  assert.ok(scenes.skate.detail.includes("story-banana-peel"));
+  assert.ok(scenes.clone.front.includes("story-mini-3"));
+  assert.ok(html.includes('const requestedScene=(new URLSearchParams(window.location.search)).get("cuc_scene")'));
+
+});
+
 test("scene settles character only, not the entire backdrop",()=>{
   assert.ok(html.includes('.mascot-cutscene.is-settled .scene-cuc-actor{animation:yenStoryIdle'));
   assert.ok(!html.includes('.mascot-cutscene.is-settled > svg{transform-origin:50% 62%'));
