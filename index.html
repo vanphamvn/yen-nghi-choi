@@ -1239,6 +1239,23 @@
 
 @media print{body *{visibility:hidden!important}.permit-stage,.permit-stage *{visibility:visible!important}.permit-stage{position:absolute;inset:0;border:0;background:white;box-shadow:none;padding:0}.permit-sheet{border:1px solid #555;box-shadow:none;margin:auto;max-width:650px}.permit-clerk,.permit-bottom-strip,.permit-desk-ribbon,.permit-restart,.permit-map,.permit-screenshot-hint{display:none!important}}
 
+
+/* #58: one clear invitation, one action row, optional talking-cup surprise */
+.irl-section .irl-image-waiting::after{display:none}
+.irl-section .irl-copy>p{max-width:43ch;margin:17px 0 23px;line-height:1.6;text-wrap:pretty}
+.irl-actions{display:flex;align-items:center;flex-wrap:wrap;gap:10px 18px}
+.irl-actions .irl-cta{margin:0;white-space:nowrap}
+.irl-actions .irl-bridge-tiktok{margin:0;padding:8px 4px;white-space:nowrap}
+.irl-cup-interaction{margin-top:24px}
+.irl-cup-interaction .footer-cup-says[hidden]{display:none!important}
+@media(max-width:760px){
+  .irl-section .irl-copy>p{max-width:39ch;margin:15px 0 20px;font-size:15px;line-height:1.6}
+  .irl-actions{gap:8px 14px}
+  .irl-actions .irl-cta{width:auto;min-height:48px;padding:12px 18px;font-size:13px}
+  .irl-actions .irl-bridge-tiktok{margin:0;font-size:13px;min-height:44px}
+  .irl-cup-interaction{margin-top:18px}
+}
+
 </style>
   <style id="yen-wheel-inline-style">
 /* Vòng quay Yên: one focused promotional wheel, no game frameworks or tracking. */
@@ -1837,17 +1854,12 @@
         <div class="irl-copy">
           <span class="eyebrow">05 / Yên ngoài đời thật</span>
           <h2 id="irl-title">Ủa, Yên <em>có thật hả?</em></h2>
-          <span class="irl-ps">P.S. QUẢNG CÁO HƠI NGẠI</span>
-          <p>Có chứ. <strong>Yên Coffee &amp; Tea</strong> ở Láng Dài, Đất Đỏ có cà phê, trà và chỗ để ngồi chơi. Ghé lúc nào tiện nhé.</p>
+          <p>Có chứ. Ghé <strong>Yên Coffee &amp; Tea</strong> ở Láng Dài, Đất Đỏ uống cà phê, trà và ngồi chơi.</p>
           
-          <aside class="irl-bridge" aria-label="Một lời mời đến quán Yên">
-            
-            <h3>Trên web nghỉ giả vờ. Ở Yên, ngồi nghỉ thật.</h3>
-            
-            
-          </aside>
-          <a class="irl-cta" href="https://maps.app.goo.gl/zxpyZev8F6YyzL3c6?g_st=ic" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer" aria-label="Mở Google Maps chỉ đường đến Yên">Chỉ đường đến Yên <svg class="yen-icon" aria-hidden="true"><use href="#yen-arrow"></use></svg></a>
-          <a class="irl-bridge-tiktok" href="https://www.tiktok.com/@yencafeday" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer">Xem Yên trên TikTok ↗</a>
+          <div class="irl-actions">
+            <a class="irl-cta" href="https://maps.app.goo.gl/zxpyZev8F6YyzL3c6?g_st=ic" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer" aria-label="Mở Google Maps chỉ đường đến Yên">Chỉ đường <svg class="yen-icon" aria-hidden="true"><use href="#yen-arrow"></use></svg></a>
+            <a class="irl-bridge-tiktok" href="https://www.tiktok.com/@yencafeday" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer" aria-label="Xem TikTok của Yên">TikTok ↗</a>
+          </div>
           <div class="irl-cup-interaction">
             <div class="footer-play">
           <button class="footer-cup" id="footer-cup" type="button" aria-label="Chọc chiếc ly để nghe một câu đùa">
@@ -1870,9 +1882,9 @@
               <path d="M89 215v10m56-10v10" stroke="#304939" stroke-width="5" stroke-linecap="round"/>
               <path d="M18 100c-5-4-6-8-5-13m4 24-9 2M210 74l6-7m-3 15 10 1" stroke="#74916b" stroke-width="3" stroke-linecap="round"/>
             </svg>
-            <span class="footer-cup-touch">Chọc cái ly thử xem</span>
+            <span class="footer-cup-touch">Chọc cái ly</span>
           </button>
-          <p class="footer-cup-says" id="footer-cup-says" role="status" aria-live="polite">“Mình là cái ly. Nhiệm vụ hôm nay là đứng yên, bạn đừng giao thêm nhé.”</p>
+          <p class="footer-cup-says" id="footer-cup-says" role="status" aria-live="polite" hidden></p>
         </div>
           </div>
         </div>
@@ -2211,10 +2223,11 @@
         '“Ghé Yên chơi nha. Mình không chạy ra đường mời đâu.”',
         '“Ly trên web đựng trò đùa. Ly ngoài đời đựng nước thật. Nhớ phân biệt!”'
       ];
-      let footerCupIndex=0;
+      let footerCupIndex=-1;
       footerCup.addEventListener('click',()=>{
         footerCupIndex=(footerCupIndex+1)%footerCupLines.length;
         footerCupSays.textContent=footerCupLines[footerCupIndex];
+        footerCupSays.hidden=false;
         footerCup.classList.remove('poked');
         void footerCup.offsetWidth;
         footerCup.classList.add('poked');
