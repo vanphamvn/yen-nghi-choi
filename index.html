@@ -3432,6 +3432,7 @@
     const $=id=>document.getElementById(id);
     const intro=$("permit-intro"),form=$("permit-form"),receipt=$("permit-receipt");
     const stage=$("yen-permit"),stamp=$("permit-stamp"),notice=$("permit-message"),progress=$("permit-progress");
+    const approve=$("permit-approve"),approveStatus=$("permit-approve-status"),cucTrigger=$("permit-cuc-trigger");
     const performer=$("permit-stamp-performer"),landing=$("permit-stamp-landing"),mobileLanding=$("permit-stamp-landing-mobile");
     // Read real layout geometry so Cục Yên carries the stamp to the paper on
     // desktop and mobile. The ink mark itself remains on the paper.
@@ -3483,25 +3484,41 @@
     const reduced=window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const count=()=>Object.values(values).filter(Boolean).length;
     function announce(text){notice.textContent=text;}
+    function updateApprovalHint(){
+      if(!approve||!approveStatus)return;
+      const remaining=2-count();
+      approve.disabled=phase==="stamping";
+      approve.classList.toggle("is-ready",phase==="form"&&remaining===0);
+      if(phase==="stamping")approveStatus.textContent="Cục Yên đang đóng mộc. CỘP!";
+      else if(remaining===0)approveStatus.textContent="Đủ 2 cái cớ rồi! Bấm nút xanh để Cục Yên duyệt đơn.";
+      else approveStatus.textContent=remaining===2
+        ?"Chọn 2 cái cớ ở trên, rồi bấm nút xanh để được duyệt."
+        :"Còn chọn thêm 1 cái cớ nữa, rồi bấm nút xanh.";
+    }
     function setChoices(field,value){
       if(phase!=="form"||!fields[field]||!Object.hasOwn(fields[field],value))return;
       values[field]=value;
       root.querySelectorAll('[data-permit-field="'+field+'"]').forEach(btn=>btn.setAttribute("aria-pressed",String(btn.dataset.permitValue===value)));
       root.querySelector('fieldset[data-field="'+field+'"]').classList.remove("is-missing");
       progress.textContent="ĐÃ KHAI "+count()+"/2 MỤC";
-      if(count()===2){stamp.disabled=false;announce("Hai cái cớ đã đủ độ thuyết phục. Gọi Cục Yên đóng mộc thôi!");}
-      else {stamp.disabled=false;announce("Đã ghi "+count()+"/2 cái cớ. Còn "+(2-count())+" mục nữa thôi.");}
+      updateApprovalHint();
+      if(count()===2){announce("Đủ rồi! Bấm NHỜ CỤC YÊN DUYỆT ĐƠN ngay trên tờ phiếu nhé.");}
+      else {announce("Đã ghi "+count()+"/2 cái cớ. Còn "+(2-count())+" mục nữa thôi.");}
     }
     function issuePermit(){
       if(phase!=="form")return;
       const firstMissing=Object.keys(fields).find(f=>!values[f]);
       if(firstMissing){
         const item=root.querySelector('fieldset[data-field="'+firstMissing+'"]');
-        item.classList.add("is-missing");item.querySelector("button").focus();
-        announce("Còn thiếu một mục trong tờ đơn. Chọn phần được đánh dấu rồi hãy đóng mộc.");
+        item.classList.add("is-missing");item.querySelector("button").focus({preventScroll:true});
+        item.scrollIntoView({behavior:reduced?"auto":"smooth",block:"nearest"});
+        updateApprovalHint();
+        approveStatus.textContent="Chọn thêm cái cớ đang được đánh dấu rồi bấm DUYỆT ĐƠN nhé.";
+        announce("Phiếu chưa đủ 2 câu. Chọn mục đang được đánh dấu rồi bấm DUYỆT ĐƠN.");
         return;
       }
       phase="stamping";round++;const thisRound=round;stamp.disabled=true;
+      cucTrigger.disabled=true;updateApprovalHint();
       aimStamp();
       stage.classList.add("is-stamping");announce("Con mộc đã được nhấc lên... chuẩn bị CỘP!");
       clearTimeout(pending);
@@ -3517,6 +3534,7 @@
         const reaction=permitReactions[values.reason];window.YenReaction?.show(receipt.querySelector(".permit-verdict"),reaction[0],reaction[1]);
         form.hidden=true;intro.hidden=true;receipt.hidden=false;phase="issued";
         stage.classList.remove("is-stamping");stage.classList.add("is-issued");
+        cucTrigger.disabled=false;
         announce("Đã duyệt nghỉ. Giấy phép của bạn đã được in xong.");
         $("permit-receipt").setAttribute("tabindex","-1");
         $("permit-receipt").focus({preventScroll:true});
@@ -3627,14 +3645,27 @@
       Object.keys(fields).forEach(field=>{values[field]=null;root.querySelectorAll('[data-permit-field="'+field+'"]').forEach(btn=>btn.setAttribute("aria-pressed","false"));root.querySelector('fieldset[data-field="'+field+'"]').classList.remove("is-missing");});
       receipt.hidden=true;intro.hidden=true;form.hidden=false;
       stage.classList.remove("is-stamping","is-issued");stage.classList.add("is-filing");
-      stamp.disabled=false;progress.textContent="ĐÃ KHAI 0/2 MỤC";announce("Đã nhận đơn mới. Chọn hai cái cớ rồi đóng mộc nhé.");
+      stamp.disabled=false;cucTrigger.disabled=false;progress.textContent="ĐÃ KHAI 0/2 MỤC";
+      updateApprovalHint();
+      announce("Chọn hai cái cớ trên phiếu, rồi bấm nút xanh NHỜ CỤC YÊN DUYỆT ĐƠN.");
     }
-    $("permit-start").addEventListener("click",()=>{if(phase!=="intro")return;reset();root.querySelector('[data-permit-field="reason"]').focus({preventScroll:true});});
+    function requestApproval(){
+      if(phase==="intro"){
+        reset();
+        root.querySelector('[data-permit-field="reason"]').focus({preventScroll:true});
+        form.scrollIntoView({behavior:reduced?"auto":"smooth",block:"nearest"});
+        return;
+      }
+      if(phase==="form")issuePermit();
+    }
+    $("permit-start").addEventListener("click",requestApproval);
     root.addEventListener("click",event=>{
       const btn=event.target.closest("button[data-permit-field]");
       if(btn&&root.contains(btn))setChoices(btn.dataset.permitField,btn.dataset.permitValue);
     });
-    stamp.addEventListener("click",issuePermit);
+    approve.addEventListener("click",requestApproval);
+    stamp.addEventListener("click",requestApproval);
+    cucTrigger.addEventListener("click",requestApproval);
     $("permit-restart").addEventListener("click",()=>{reset();root.querySelector('[data-permit-field="reason"]').focus({preventScroll:true});form.scrollIntoView({behavior:reduced?"auto":"smooth",block:"nearest"});});
   }
   if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",start,{once:true});
