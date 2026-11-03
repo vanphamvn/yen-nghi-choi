@@ -14,7 +14,7 @@
 2. Chuyển từ kể chuyện về Cục Yên sang cho khách **chơi**: “Chọn ba điều rồi đóng mộc”, không phải “Cục Yên bảo bạn chọn ba điều”.
 3. Trò đùa phải ngắn, dễ hình dung, có kết quả cụ thể. Tránh nhắc tên chỉ để làm câu có vẻ dễ thương.
 4. Tên trò, chữ trên con dấu, giấy phép PNG, nhãn logo, thẻ meta và `aria-label` hữu ích **không thuộc diện cần cắt**. Tuy nhiên, trong một khu trò chơi nên có **một điểm nhận diện thương hiệu nổi bật**; tránh lặp tên trong tiêu đề, bảng quầy, phụ kiện nhân vật, nút bấm và lời chú thích cùng lúc.
-5. Khách cần biết món nước/game giả tưởng có thể **không phải món thật/khuyến mãi thật**. Không khiến người xem tưởng vòng quay có voucher có thể đổi.
+5. **Phân biệt trò chơi giả tưởng với quà thật:** Sở cấp phép, Tiệm 0đ và Phòng pha bậy vẫn chỉ để chơi. **Riêng Quầy phát quà** là chương trình trao thưởng thật tại quán khi đã kích hoạt, nhân viên chứng kiến và xác nhận. Khi chưa đủ điều kiện triển khai, không cho quay nhận quà.
 6. **Quy tắc nội dung cho ngày ra mắt:** viết nội dung chính như quán đang hoạt động và mời khách ghé quán ngay. Không dùng “sắp khai trương”, “đang xây”, “dự kiến mở”. Chỉ công bố website khi quán thực sự mở cửa và đã xác minh mọi thông tin thực tế.
 7. Không thêm cookie, telemetry, database, đăng nhập hoặc lưu thông tin cá nhân chỉ để thay câu chữ.
 
@@ -50,13 +50,19 @@
 ### Ví dụ bổ sung: Vòng quay (#47)
 
 - **Giữ:** chữ `yên · COFFEE & TEA` ở tâm vòng quay như điểm nhận diện chính.
-- **Đổi:** `Vòng quay Yên` → `Quay một vòng`; `VÒNG QUAY MAY MẮN · CỤC YÊN` → `QUẦY VẬN MAY · SỐ 02`; `QUAY YÊN!` → `QUAY THỬ!`; bảng tên nhỏ trên mũ thành dấu `!`.
-- **Giữ nguyên:** số tiền/topping hiển thị trên 8 lát vòng quay, thông báo quà mô phỏng, điều hướng game, ID và logic quay.
+- **Đổi:** `Vòng quay Yên` → `Quay một vòng`; `VÒNG QUAY MAY MẮN · CỤC YÊN` → `QUẦY VẬN MAY · SỐ 02`; bảng tên nhỏ trên mũ thành dấu `!`. **Cập nhật #56:** `QUAY THỬ!` được thay bằng `QUAY NHẬN QUÀ` khi chương trình kích hoạt; trước kích hoạt hiển thị `CHƯA NHẬN LƯỢT`.
+- **Giữ nguyên:** 8 lát vòng quay và phong cách nhân vật. **Đổi riêng về nghiệp vụ:** phần thưởng là ưu đãi thật, có nhân viên chứng kiến/đối soát, một lượt quay trong mỗi lần tải trang (không bảo đảm một lượt/người nếu reload).
 
 ## 6. Release gate: bản nội dung viết sẵn cho ngày khai trương
 
 - Website có thể được **soạn và kiểm thử** trước ngày khai trương, nhưng copy công khai viết theo trạng thái quán đã hoạt động.
 - Trong thời gian chưa khai trương, **không quảng bá link** và phải nhớ rằng URL Vercel có thể mở trực tiếp dù đặt `noindex`. `noindex` không phải chế độ riêng tư hay khóa truy cập; nếu cần bảo mật thật, bật bảo vệ deployment.
 - Trước ngày phát hành, kiểm tra quán đã mở thật; liên kết Google Maps, TikTok, đồ uống/menu, giờ hoạt động (nếu đăng) và giá trị ưu đãi (nếu có) đã xác nhận.
-- Giữ riêng cảnh báo vòng quay và giấy phép là **trải nghiệm mô phỏng**, không phải voucher đổi tại quán, cho đến khi chủ quán chính thức triển khai chương trình thật.
+- **Giấy phép nghỉ, Tiệm 0đ, Phòng pha bậy** vẫn mô phỏng; **Quầy phát quà** là khuyến mại thật nhưng hiện được khóa bằng `WHEEL_PROGRAM_ACTIVE=false` trong `index.html` cho đến khi có thể lệ, xác nhận đăng ký và quy trình nhân viên. Không tự phát hành voucher online.
 - Ảnh Open Graph PNG và fallback SVG phải khớp nội dung ngày ra mắt, không còn mốc “tháng 12/2026”.
+
+## 7. Khuyến mại thật tại quầy (issue #56)
+
+- Khi bật chương trình, tên gọi là **Quầy phát quà**; có tám giải đúng theo các ô trên vòng quay. Không còn từ “thử”, “ảo”, “mô phỏng” trong riêng luồng vòng quay.
+- Trước khi được bật, giao diện hiển thị tình trạng **CHƯA NHẬN LƯỢT**. Không quảng bá là voucher đang đổi được.
+- Kết quả phải được nhân viên chứng kiến và xác nhận tại quầy; vòng quay không xác thực định danh hoặc chống tải lại trang. Xem `docs/wheel-rewards-playbook.md`.
