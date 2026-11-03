@@ -1652,19 +1652,19 @@
     <section class="section release-section wheel-section" id="buong" aria-labelledby="release-title">
   <div class="wrap release-layout">
     <div class="release-copy reveal">
-      <div class="eyebrow">02 / Quầy phát quà thử</div>
-      <h2 class="section-title" id="release-title">Quay một vòng. <i>Trúng gì thì cười.</i></h2>
-      <p>Bạn quay, nhân viên hồi hộp giùm.</p>
+      <div class="eyebrow">02 / Quầy phát quà</div>
+      <h2 class="section-title" id="release-title">Quay một vòng. <i>Quà về tay.</i></h2>
+      <p>Ghé quầy, nhờ nhân viên chứng kiến rồi quay nhé.</p>
       
     </div>
     <div class="wheel-panel reveal" id="yen-wheel-panel">
       <div class="wheel-toolbar">
         <span class="wheel-brand"><span aria-hidden="true"></span> QUẦY VẬN MAY · SỐ 02</span>
-        <span class="wheel-demo-chip">ĐANG CHƠI THỬ</span>
+        <span class="wheel-demo-chip" id="yen-wheel-program-state">CHƯA NHẬN LƯỢT</span>
       </div>
       <div class="wheel-content">
         <div class="wheel-main">
-          <button class="wheel-viewport" id="yen-wheel-tap" type="button" aria-label="Chạm để quay thử. Phần thưởng chỉ là mô phỏng, không đổi được tại quán.">
+          <button class="wheel-viewport" id="yen-wheel-tap" type="button" disabled aria-describedby="yen-wheel-guidance" aria-label="Quay nhận quà tại quầy, cần nhân viên chứng kiến">
             <svg class="wheel-disc" id="yen-wheel-disc" viewBox="0 0 440 440" role="img" aria-label="Vòng quay tám phần thưởng: giảm 5 nghìn, topping, giảm 10 phần trăm, nâng size, giảm 3 nghìn, quà bí mật, giảm 5 phần trăm, giảm 8 nghìn"></svg>
             <span class="wheel-pointer" aria-hidden="true"><svg viewBox="0 0 38 55" fill="none"><path d="M19 51 3 12Q1 5 8 5h22q7 0 5 7L19 51Z" fill="#335642" stroke="#fff9e9" stroke-width="4" stroke-linejoin="round"/><circle cx="19" cy="14" r="5" fill="#efc68b"/></svg></span>
             <span class="wheel-center" aria-hidden="true"><strong>yên</strong><small>COFFEE &amp; TEA</small></span>
@@ -1744,19 +1744,18 @@
               </g>
             </svg>
           </div>
-          <div class="wheel-speech" id="yen-wheel-speech" role="status" aria-live="polite">Nhân viên đã sẵn sàng hồi hộp giùm.</div>
-          <button class="wheel-spin-btn" id="yen-wheel-spin" type="button">QUAY THỬ!</button>
+          <div class="wheel-speech" id="yen-wheel-speech" role="status" aria-live="polite">Vòng quay nhận quà được mở theo lịch chương trình tại quầy.</div>
+          <button class="wheel-spin-btn" id="yen-wheel-spin" type="button" disabled aria-describedby="yen-wheel-guidance">CHƯA NHẬN LƯỢT</button>
           <div class="wheel-result" id="yen-wheel-result" role="status" aria-live="polite" hidden>
-            <span class="wheel-result-label">KẾT QUẢ QUAY THỬ</span>
+            <span class="wheel-result-label">PHẦN QUÀ CỦA BẠN</span>
             <strong id="yen-wheel-reward"></strong>
             <p id="yen-wheel-reward-note"></p>
-            <div class="wheel-souvenir" id="yen-wheel-souvenir" hidden><span class="wheel-souvenir-art" id="yen-wheel-symbol" aria-hidden="true">?</span><span><b id="yen-wheel-souvenir-text"></b><small>QUÀ TƯỞNG TƯỢNG · CHƯA CÓ GIÁ TRỊ ĐỔI TẠI QUÁN</small></span></div>
-            <a class="game-next" href="#cuahang">Chơi tiếp: Tiệm 0đ →</a>
-            <a class="irl-soft-link" href="#yen-ngoai-doi">Ghé quán thật →</a>
+            <div class="wheel-souvenir" id="yen-wheel-souvenir" hidden><span class="wheel-souvenir-art" id="yen-wheel-symbol" aria-hidden="true">?</span><span><b id="yen-wheel-souvenir-text"></b><small>ĐƯA KẾT QUẢ CHO NHÂN VIÊN XÁC NHẬN</small></span></div>
+            <p class="wheel-claim-instruction">Giữ màn hình kết quả để nhận quà tại quầy.</p>
           </div>
         </div>
       </div>
-      <p class="wheel-disclaimer"><strong>Quà ảo thôi nha.</strong> Không có giá trị đổi tại quán. Ưu đãi thật sẽ có thông báo riêng.</p>
+      <p class="wheel-disclaimer" id="yen-wheel-guidance"><strong>Quà thật tại quầy.</strong> Nhân viên chứng kiến lượt quay và xác nhận phần thưởng theo thể lệ chương trình.</p>
       <div class="wheel-confetti" id="yen-wheel-confetti" aria-hidden="true"></div>
     </div>
   </div>
@@ -2227,7 +2226,7 @@
     })();
   </script>
   <script id="yen-wheel-inline-script">
-/* Yên Coffee & Tea: promotional wheel preview. No cookies, storage, analytics, or voucher claims. */
+/* Yên Coffee & Tea: in-store reward wheel, no persistence or automatic voucher issuance. */
 (function(){
   'use strict';
   function init(){
@@ -2243,14 +2242,14 @@
     const confetti=byId('yen-wheel-confetti');
     if(!disc||!spinButton||!wheelButton||!speech||!result||!resultName||!resultDescription||!host||!confetti)return;
     const prizes=[
-      {lines:['GIẢM','5.000Đ'],name:'Giảm 5.000đ',message:'Giảm giá thử thôi, chiếc ví chưa cần xúc động.',color:'#E9B3A1'},
-      {lines:['TOPPING','0Đ'],name:'Tặng topping',message:'Có thêm topping tưởng tượng. Không tính tiền vì chưa có gì để tính.',color:'#DCE9B7'},
-      {lines:['GIẢM','10%'],name:'Giảm 10%',message:'Giảm một chút, vui thêm một chút.',color:'#EBD69E'},
-      {lines:['UPSIZE','0Đ'],name:'Tặng nâng size',message:'Ly tưởng tượng to hơn. Nhớ uống bằng trí tưởng tượng nhé!',color:'#D2E5DF'},
-      {lines:['GIẢM','3.000Đ'],name:'Giảm 3.000đ',message:'Ba nghìn cũng là tiền. Quầy đếm đi đếm lại ba lần.',color:'#E5D6EC'},
-      {lines:['QUÀ','BÍ MẬT'],name:'Quà bí mật',message:'Quà vẫn đang nằm trong trí tưởng tượng của nhân viên.',color:'#F3CCAF'},
-      {lines:['GIẢM','5%'],name:'Giảm 5%',message:'Một món quà nhẹ tênh cho chiếc ví.',color:'#D7E3BE'},
-      {lines:['GIẢM','8.000Đ'],name:'Giảm 8.000đ',message:'Mạnh tay trong phiên bản chơi thử. Ngoài đời chưa phát quà đâu.',color:'#EDC5D2'}
+      {lines:['GIẢM','5.000Đ'],name:'Giảm 5.000đ',message:'Bạn nhận ưu đãi giảm 5.000đ.',color:'#E9B3A1'},
+      {lines:['TOPPING','0Đ'],name:'Tặng topping',message:'Bạn nhận một phần topping miễn phí.',color:'#DCE9B7'},
+      {lines:['GIẢM','10%'],name:'Giảm 10%',message:'Bạn nhận ưu đãi giảm 10%.',color:'#EBD69E'},
+      {lines:['UPSIZE','0Đ'],name:'Tặng nâng size',message:'Bạn nhận một lượt nâng size miễn phí.',color:'#D2E5DF'},
+      {lines:['GIẢM','3.000Đ'],name:'Giảm 3.000đ',message:'Bạn nhận ưu đãi giảm 3.000đ.',color:'#E5D6EC'},
+      {lines:['QUÀ','BÍ MẬT'],name:'Quà bí mật',message:'Quà bất ngờ đang đợi bạn ở quầy.',color:'#F3CCAF'},
+      {lines:['GIẢM','5%'],name:'Giảm 5%',message:'Bạn nhận ưu đãi giảm 5%.',color:'#D7E3BE'},
+      {lines:['GIẢM','8.000Đ'],name:'Giảm 8.000đ',message:'Bạn nhận ưu đãi giảm 8.000đ.',color:'#EDC5D2'}
     ];
     const svgNS='http://www.w3.org/2000/svg';
     const make=(tag,attrs={})=>{
