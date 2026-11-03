@@ -1484,6 +1484,18 @@
 }
 
 
+/* Two-question permit: longer Gen Z excuses remain readable and tappable. */
+.permit-form .permit-options button{
+  display:flex;align-items:center;min-height:70px;
+  line-height:1.45;padding:12px 25px 12px 12px;
+  overflow-wrap:anywhere
+}
+.permit-form .permit-options button[aria-pressed=true]{padding:11.5px 24.5px 11.5px 11.5px}
+@media(max-width:420px){
+  .permit-form .permit-options{grid-template-columns:1fr;gap:7px}
+  .permit-form .permit-options button{min-height:49px;font-size:12px;padding:10px 30px 10px 12px}
+  .permit-form .permit-options button[aria-pressed=true]{padding:9.5px 29.5px 9.5px 11.5px}
+}
 /* STORYBOARD v3: direct action beats follow the exact copy, not generic wiggles.
    Time budget per scene = 2.35s; is-settled is applied after 2.45s. */
 .mascot-cutscene .scene-story-detail{pointer-events:none}
