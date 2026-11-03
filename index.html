@@ -1396,7 +1396,10 @@
 }
 
 /* Twenty stories use the canonical Cục Yên model as the actor, not twenty hand-drawn clones. */
-.mascot-cutscene .scene-cuc-model{display:block;overflow:visible}
+.mascot-cutscene .scene-cuc-model{pointer-events:none}
+.mascot-cutscene .scene-props-back,.mascot-cutscene .scene-props-front{transform-box:fill-box;transform-origin:50% 75%}
+.mascot-cutscene .scene-ground-shadow{transform-origin:center}
+
 .mascot-cutscene .scene-cuc-actor{transform-box:fill-box;transform-origin:50% 72%;animation:yenStoryPop 2.35s cubic-bezier(.2,.8,.25,1) both}
 .mascot-cutscene .scene-motion-jump{animation-name:yenStoryJump}
 .mascot-cutscene .scene-motion-shock{animation-name:yenStoryShock}
@@ -2298,7 +2301,7 @@
                 "size": 188,
                 "motion": "pop",
                 "back": "",
-                "front": "<rect x=\"64\" y=\"229\" width=\"331\" height=\"170\" rx=\"30\" fill=\"#cddfd0\" stroke=\"#2f4a2f\" stroke-width=\"8\"/><rect x=\"107\" y=\"249\" width=\"230\" height=\"48\" rx=\"10\" fill=\"#fff6e7\" stroke=\"#2f4a2f\" stroke-width=\"5\"/><svg x=\"84\" y=\"298\" width=\"106\" height=\"106\" viewBox=\"0 0 320 320\"><use href=\"/assets/cuc-yen/mascot.svg#cuc-yen-happy\"/></svg><svg x=\"188\" y=\"298\" width=\"106\" height=\"106\" viewBox=\"0 0 320 320\"><use href=\"/assets/cuc-yen/mascot.svg#cuc-yen-sleepy\"/></svg><svg x=\"286\" y=\"298\" width=\"106\" height=\"106\" viewBox=\"0 0 320 320\"><use href=\"/assets/cuc-yen/mascot.svg#cuc-yen-cheeky\"/></svg>"
+                "front": "<rect x=\"64\" y=\"229\" width=\"331\" height=\"170\" rx=\"30\" fill=\"#cddfd0\" stroke=\"#2f4a2f\" stroke-width=\"8\"/><rect x=\"107\" y=\"249\" width=\"230\" height=\"48\" rx=\"10\" fill=\"#fff6e7\" stroke=\"#2f4a2f\" stroke-width=\"5\"/><use href=\"/assets/cuc-yen/mascot.svg#cuc-yen-happy\" x=\"84\" y=\"298\" width=\"106\" height=\"106\"/><use href=\"/assets/cuc-yen/mascot.svg#cuc-yen-sleepy\" x=\"188\" y=\"298\" width=\"106\" height=\"106\"/><use href=\"/assets/cuc-yen/mascot.svg#cuc-yen-cheeky\" x=\"286\" y=\"298\" width=\"106\" height=\"106\"/>"
         },
         "dj": {
                 "pose": "clerk-win",
@@ -2321,8 +2324,9 @@
 };
       function renderYenScene(id){
         const scene=YEN_SCENE_ART[id]||YEN_SCENE_ART.alarm;
-        const mascot='<svg class="scene-cuc-model" x="'+scene.x+'" y="'+scene.y+'" width="'+scene.size+'" height="'+scene.size+'" viewBox="0 0 320 320" focusable="false" aria-hidden="true"><use href="'+CUC_SPRITE+scene.pose+'"></use></svg>';
-        return '<svg class="scene-illustration" viewBox="0 0 460 460" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><ellipse cx="228" cy="421" rx="139" ry="12" fill="#7b896f" opacity=".16"/>'+scene.back+'<g class="scene-cuc-actor scene-motion-'+scene.motion+'">'+mascot+'</g>'+scene.front+'</svg>';
+        // Use an SVG <use> geometry instance, not a nested <svg>. Legacy CSS sizes every nested SVG to 100% on mobile.
+        const mascot='<use class="scene-cuc-model" href="'+CUC_SPRITE+scene.pose+'" x="'+scene.x+'" y="'+scene.y+'" width="'+scene.size+'" height="'+scene.size+'"/>';
+        return '<svg class="scene-illustration" viewBox="0 0 460 460" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><ellipse class="scene-ground-shadow" cx="228" cy="421" rx="139" ry="12" fill="#7b896f" opacity=".16"/><g class="scene-props-back">'+scene.back+'</g><g class="scene-cuc-actor scene-motion-'+scene.motion+'">'+mascot+'</g><g class="scene-props-front">'+scene.front+'</g></svg>';
       }
       const DARE_ACTS=[
         {"id": "alarm", "label": "BẮT QUẢ TANG", "chat": "Ê! Ai vừa bấm nút? Mình đã ghi tên ngón tay này rồi đó!", "reply": "Bảng ghi công hôm nay: ngón tay bạn đã bấm nút cấm. Nhân chứng là cái nút đỏ."},
