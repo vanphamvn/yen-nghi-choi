@@ -1979,6 +1979,100 @@
 
 </style>
   
+<style id="cuc-yen-oil-style">
+
+/* Cục Yên · Oil-paint 3D art direction v2.
+   Rendered with SVG gradients, hand-painted brush patterns and subtle material lighting;
+   all interactions continue to use the shared, light vector sprite. */
+:root{
+  --cuc-oil-paper:#fff6e8;
+  --cuc-oil-caramel:#d99a66;
+  --cuc-oil-moss:#7a8f5a;
+  --cuc-oil-cream:#fff4e3;
+  --cuc-oil-ink:#2f4a2f;
+  --cuc-oil-peach:#f6b3a1;
+}
+.hero-stage::before{
+  background:
+    radial-gradient(ellipse at 28% 25%,#fffaf0 0%,#fcebd4 34%,transparent 67%),
+    radial-gradient(ellipse at 72% 67%,#d4ddba 0%,#e6e8ca 46%,#ece4c8 85%),
+    #f0e3cd;
+  border:1px solid #ad9e7630;
+  box-shadow:inset 0 0 24px #fdf1dbbb,0 10px 34px #866d5030;
+  border-radius:49% 51% 53% 47% / 49% 43% 57% 51%;
+}
+.hero-stage::after{
+  content:"";position:absolute;z-index:-1;pointer-events:none;
+  width:min(89%,460px);height:70%;left:50%;top:15%;transform:translateX(-50%) rotate(-8deg);
+  border-radius:51% 49% 48% 52% / 44% 57% 43% 56%;
+  opacity:.16;
+  background:repeating-linear-gradient(117deg,transparent 0 8px,#bfa380 9px 10px,transparent 11px 16px);
+  mask-image:radial-gradient(ellipse at center,#000 4%,transparent 76%);
+}
+.hero-stage .stage-ellipse{
+  background:rgba(112,91,60,.16);filter:blur(17px);
+  width:58%;height:11%;bottom:14%;
+}
+.mascot-button{
+  filter:drop-shadow(0 17px 9px #80654330) drop-shadow(2px 5px 2px #8d715b24);
+}
+.mascot-button .cuc-yen-hero{
+  filter:drop-shadow(0 6px 5px #8b674d35);
+}
+.mascot-cutscene .scene-illustration{
+  filter:drop-shadow(0 10px 6px #87664f24);
+}
+.mascot-cutscene .scene-cuc-model{
+  filter:drop-shadow(0 5px 5px #9b73552c);
+}
+.permit-illustration{
+  background:radial-gradient(ellipse at 37% 30%,#fffaf1,transparent 60%),#f5eddb;
+  border:1px solid #dfd1b8;border-radius:22px;
+  box-shadow:inset 0 3px 17px #fff8ee,inset 0 -9px 19px #c6b59425;
+  overflow:hidden;
+}
+.permit-illustration .permit-preview-cuc{filter:drop-shadow(0 4px 3px #95785840)}
+.permit-clerk{
+  background:linear-gradient(145deg,#f6efdc 0%,#e8eddb 54%,#dbe6cd 100%);
+  border-color:#8a9b72;
+  box-shadow:4px 6px 0 #a2b698,0 12px 29px #856b4a1b;
+}
+.permit-cuc-yen{filter:drop-shadow(1px 9px 5px #755b3d45)!important}
+.wheel-clerk-art{filter:drop-shadow(0 8px 5px #886b4a4d)!important}
+.wheel-clerk{background:radial-gradient(ellipse at 50% 69%,#fff4db8c,transparent 70%);border-radius:50%}
+.cuc-reaction .cuc-yen-model{
+  filter:drop-shadow(0 4px 3px #8f73524a)!important;
+}
+.cuc-reaction-actor{background:radial-gradient(ellipse at 48% 50%,#fff5e9,transparent 69%);border-radius:50%}
+.yen-drinks-reaction{
+  background:linear-gradient(130deg,#fff9ed 0%,#f7f0e1 74%,#e6eedb 100%);
+  border:1px solid #ddd4bc;border-radius:16px;
+  padding:8px 13px 8px 8px;
+  box-shadow:inset 0 2px 13px #fffcf5,1px 2px 0 #ddd0b473;
+}
+.yen-drinks-reaction svg{filter:drop-shadow(0 5px 3px #91735239)}
+.irl-preview-mascot{filter:drop-shadow(0 8px 5px #85684b45)!important}
+.irl-preview-frame{
+  background:radial-gradient(ellipse at 30% 25%,#fff5e4 0%,transparent 60%),linear-gradient(140deg,#e8eddb,#f5e6d2)!important;
+}
+.yen-drink-visual{
+  box-shadow:inset 0 3px 19px #fffaf199,inset 0 -9px 19px #795a4030;
+}
+.yen-drink-visual::after{
+  content:"";position:absolute;inset:0;z-index:5;pointer-events:none;
+  opacity:.22;
+  background:repeating-linear-gradient(123deg,transparent 0 11px,#fff6e1 12px 13px,transparent 14px 23px);
+  mask-image:linear-gradient(to bottom,#000 0%,transparent 86%);
+}
+@media(max-width:760px){
+  .yen-drinks-reaction{padding:7px 10px 7px 3px}
+  .hero-stage::after{width:86%;height:64%}
+}
+@media(prefers-reduced-motion:reduce){
+  .hero-stage::after,.yen-drink-visual::after{animation:none!important}
+}
+
+</style>
 </head>
 <body>
   <!-- Yên doodle icons: hand-drawn, consistent stroke; no icon fonts or external assets -->
@@ -2050,7 +2144,7 @@
     <section class="hero wrap" id="dau" aria-labelledby="hero-title">
       <div class="hero-copy">
         <h1 id="hero-title">Ghé chơi.<span class="hero-invite-line"><em class="hero-go-word">Đi</em> đâu cho xa.</span><span class="hero-invite-line hero-local-line"><em class="hero-go-word">Đi</em> Láng Dài lái cục dàng nè</span></h1>
-        <p class="hero-game-lead">Chọn 3 điều. Nhận giấy phép nghỉ... cho vui.</p>
+        <p class="hero-game-lead">Chọn 2 cái cớ. Cục Yên đóng mộc cho vui.</p>
         <p class="hero-game-details" id="hero-play-details">Tầm 30 giây · Không đăng nhập · Không lưu dữ liệu</p>
         <div class="hero-cta"><a class="big-btn hero-play-btn" href="#tam-trang" aria-describedby="hero-play-details">Xin giấy phép nghỉ <svg class="yen-icon" aria-hidden="true"><use href="#yen-arrow"></use></svg></a><a class="hero-real-btn" href="#yen-ngoai-doi">Yên ngoài đời <svg class="yen-icon" aria-hidden="true"><use href="#yen-arrow"></use></svg></a></div>
         <p class="hero-intro">Ở Yên có <strong>matcha dâu, cacao cốt dừa</strong> và một góc để ngồi nghỉ thật. Trên web thì cứ chơi đã.</p>
