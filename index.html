@@ -1408,6 +1408,41 @@
   .irl-map-open{right:11px;top:11px}
 }
 
+/* #65: Photo-first real-life section. Real café photos replace the honest placeholder later. */
+.irl-section .irl-wrap{align-items:start}
+.irl-media{display:grid;gap:14px;min-width:0}
+.irl-preview-frame{
+  position:relative;min-width:0;aspect-ratio:16/9;margin:0;overflow:hidden;
+  border:1.5px solid #a9bda6;border-radius:23px;background:#e7eddf;
+  box-shadow:5px 6px 0 #cbd9c2;
+}
+.irl-preview-empty{
+  position:absolute;inset:0;display:flex;flex-direction:column;
+  justify-content:center;align-items:center;text-align:center;
+  padding:26px;color:#42634d;
+  background:radial-gradient(ellipse at 72% 20%,#f4f0df 0%,transparent 48%),
+             linear-gradient(140deg,#e3ead9 0%,#dce6d8 100%);
+}
+.irl-preview-empty::before{content:"";position:absolute;inset:13px;border:1px solid rgba(62,92,68,.22);border-radius:15px;pointer-events:none}
+.irl-preview-kicker{position:absolute;top:29px;left:30px;font:850 10px/1.4 "Noto Sans",Arial,sans-serif;letter-spacing:.14em}
+.irl-preview-mark{font:italic 500 clamp(66px,9vw,120px)/1 "Noto Serif",Georgia,serif;letter-spacing:-.075em;color:#6f9575;opacity:.68}
+.irl-preview-message{margin-top:12px;font:700 13px/1.45 "Noto Sans",Arial,sans-serif;color:#486751}
+.irl-preview-photo{display:block;width:100%;height:100%;object-fit:cover}
+.irl-media .irl-map{
+  height:175px;min-height:0;aspect-ratio:auto;border-radius:18px;
+  box-shadow:3px 4px 0 #cbd9c2
+}
+.irl-media .irl-map-open{right:10px;top:10px;width:39px;height:39px}
+.irl-media .irl-map-open .yen-icon{width:18px;height:18px}
+@media(max-width:760px){
+  .irl-media{gap:12px}
+  .irl-preview-frame{aspect-ratio:4/3;border-radius:18px;box-shadow:3px 4px 0 #cbd9c2}
+  .irl-preview-kicker{top:25px;left:25px;font-size:9px}
+  .irl-preview-mark{font-size:clamp(62px,17vw,98px)}
+  .irl-preview-message{font-size:12px}
+  .irl-media .irl-map{height:155px;min-height:0;aspect-ratio:auto;border-radius:15px}
+}
+
 /* Mobile: only the Yên wordmark and a direct "Ghé quán" CTA stay visible.
    The four-game chooser remains in the normal document flow, never sticky. */
 .header-visit-link{display:none}
@@ -1918,18 +1953,28 @@
           <h2 id="irl-title"><span class="irl-title-lead">Ghé ngồi</span> <em>một chút.</em></h2>
           <p>Cà phê, trà và một góc nghỉ dễ chịu.</p>
         </div>
-        <div class="irl-map" role="group" aria-label="Bản đồ vị trí quán Yên">
-          <iframe
-            title="Bản đồ ghim vị trí Yên Coffee &amp; Tea"
-            src="https://maps.google.com/maps?hl=vi&amp;q=10.513739%2C107.346992&amp;z=18&amp;output=embed"
-            loading="lazy"
-            referrerpolicy="no-referrer"
-            allowfullscreen></iframe>
-          <a class="irl-map-open" href="https://maps.app.goo.gl/CxPWLPyZMRsHRYa46"
-             target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer"
-             aria-label="Mở vị trí quán Yên trên Google Maps">
-            <svg class="yen-icon" aria-hidden="true" focusable="false"><use href="#yen-arrow"></use></svg>
-          </a>
+        <div class="irl-media" aria-label="Xem trước quán Yên và vị trí bản đồ">
+          <figure class="irl-preview-frame">
+            <!-- Khi có ảnh quán thật, thay phần .irl-preview-empty bằng ảnh <img class="irl-preview-photo" ...>. -->
+            <div class="irl-preview-empty" role="img" aria-label="Khung ảnh xem trước quán Yên, hiện chưa có ảnh thực tế">
+              <span class="irl-preview-kicker">MỘT GÓC YÊN</span>
+              <span class="irl-preview-mark" aria-hidden="true">yên</span>
+              <span class="irl-preview-message">Ảnh quán sẽ có sớm.</span>
+            </div>
+          </figure>
+          <div class="irl-map irl-map-small" role="group" aria-label="Bản đồ vị trí quán Yên">
+            <iframe
+              title="Bản đồ ghim vị trí Yên Coffee &amp; Tea"
+              src="https://maps.google.com/maps?hl=vi&amp;q=10.513739%2C107.346992&amp;z=18&amp;output=embed"
+              loading="lazy"
+              referrerpolicy="no-referrer"
+              allowfullscreen></iframe>
+            <a class="irl-map-open" href="https://maps.app.goo.gl/CxPWLPyZMRsHRYa46"
+               target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer"
+               aria-label="Mở vị trí quán Yên trên Google Maps">
+              <svg class="yen-icon" aria-hidden="true" focusable="false"><use href="#yen-arrow"></use></svg>
+            </a>
+          </div>
         </div>
       </div>
     </section>
