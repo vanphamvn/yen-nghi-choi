@@ -2709,7 +2709,11 @@
       const sceneNode=$('#mascot-cutscene');
       const mascotChat=$('#mascot-chat');
       let actBag=[],lastAct=-1,dareTimer=0,settleTimer=0;
+      const requestedScene=(new URLSearchParams(window.location.search)).get("cuc_scene");
       function chooseAct(){
+        // Explicit QA scenes are opt-in by URL only. Ordinary visitors keep random stories.
+        const requested=DARE_ACTS.find(act=>act.id===requestedScene);
+        if(requested)return requested;
         if(!actBag.length){
           actBag=DARE_ACTS.map((_,i)=>i);
           for(let i=actBag.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[actBag[i],actBag[j]]=[actBag[j],actBag[i]];}
