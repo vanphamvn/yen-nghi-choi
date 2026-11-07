@@ -2282,6 +2282,240 @@
 }
 
 </style>
+<style id="yen-stamp-cinema-style">
+
+/* Cục Yên's single-focus stamping theater: independent of document scroll and
+   stacking contexts, perfectly centered even on a small phone. */
+body.yen-stamping-active{overflow:hidden}
+.permit-stage{max-width:1030px;margin:0 auto;padding:clamp(14px,3vw,25px);border-radius:18px}
+.permit-stage-main{grid-template-columns:minmax(0,1.45fr) minmax(190px,.55fr);gap:clamp(14px,2vw,24px)}
+.permit-sheet{min-height:355px;transform:none;border-radius:14px;padding:clamp(20px,3vw,28px)}
+.permit-intro h3{margin-top:13px;font-size:clamp(30px,4vw,45px)}
+.permit-intro>p{max-width:39ch}
+.permit-counter-body{min-height:210px}
+.permit-clerk{min-height:345px;box-shadow:none;transform:none}
+.permit-message{margin:5px 0 0;font-size:11px;padding:9px;border:none;background:transparent}
+.permit-stamp-caption{font-size:10px}
+.yen-stamp-cinema[hidden]{display:none!important}
+.yen-stamp-cinema{
+  position:fixed;inset:0;z-index:2147482000;display:grid;place-items:center;
+  padding:clamp(10px,3vw,28px);isolation:isolate;
+  overflow-x:hidden;overflow-y:auto;overscroll-behavior:contain;
+  -webkit-overflow-scrolling:touch;
+}
+.yen-stamp-cinema-shade{
+  position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:radial-gradient(ellipse at 50% 42%,rgba(54,68,47,.72) 0%,rgba(20,35,27,.91) 75%),rgba(18,28,22,.82);
+  backdrop-filter:blur(9px);-webkit-backdrop-filter:blur(9px)
+}
+.yen-stamp-cinema-card{
+  width:min(100%,540px);max-height:calc(100dvh - 18px);
+  display:flex;flex-direction:column;justify-content:center;
+  filter:drop-shadow(0 25px 30px #0b18127a);
+  animation:yenCinemaEnter .42s cubic-bezier(.16,.8,.17,1) both
+}
+@keyframes yenCinemaEnter{
+  from{opacity:0;transform:translateY(24px) scale(.93)}
+  to{opacity:1;transform:none}
+}
+.yen-stamp-cinema-tag{
+  color:#f6e8ce;text-align:center;font:850 10px/1.5 "Noto Sans",Arial,sans-serif;
+  letter-spacing:.16em;margin-bottom:9px
+}
+.yen-stamp-cinema-paper{
+  position:relative;min-width:0;overflow:hidden;
+  background:radial-gradient(circle at 12% 4%,#fffdf2 0%,#fff6e8 55%,#ecd9b9 100%);
+  padding:clamp(16px,3.2vw,29px);border-radius:17px 24px 19px 16px;
+  border:3px solid #eddfc5;box-shadow:inset 0 0 35px #ddc6a255,0 3px 0 #c8a47e;
+}
+.yen-stamp-cinema-heading{
+  border-bottom:2px solid #68816a;letter-spacing:-.035em;
+  padding-bottom:11px;margin-bottom:8px;color:#2f4a2f;
+  font:900 clamp(21px,4.3vw,30px)/1.22 "Noto Serif",Georgia,serif
+}
+.yen-stamp-cinema-heading em{display:block;font-style:normal}
+.yen-stamp-cinema-answers{display:grid;gap:1px}
+.yen-stamp-cinema-answers>div{
+  display:grid;grid-template-columns:77px minmax(0,1fr);
+  gap:12px;align-items:start;border-bottom:1px dashed #c9bc9d;padding:8px 0
+}
+.yen-stamp-cinema-answers span{
+  color:#759078;font:900 10px/1.35 "Noto Sans",Arial,sans-serif;letter-spacing:.1em
+}
+.yen-stamp-cinema-answers strong{
+  color:#36533c;font:800 clamp(11px,2.6vw,14px)/1.45 "Noto Sans",Arial,sans-serif;
+  overflow-wrap:anywhere
+}
+.yen-stamp-cinema-scene{
+  position:relative;height:clamp(190px,30dvh,255px);margin-top:10px;
+  border-radius:14px;
+  background:radial-gradient(ellipse at 50% 75%,#fff9e8 0%,#e9e6cc 58%,#dbe6d4 100%);
+  overflow:hidden;isolation:isolate;border:1px solid #bec7af55
+}
+.yen-stamp-cinema-scene::before{
+  content:"";position:absolute;left:50%;bottom:13px;transform:translateX(-50%);
+  width:74%;height:18px;border-radius:50%;
+  background:#687b633d;filter:blur(12px)
+}
+.yen-stamp-cinema-target{
+  position:absolute;left:50%;top:57%;transform:translate(-50%,-50%);
+  width:116px;height:116px;z-index:2;display:grid;place-items:center
+}
+.yen-stamp-cinema-outline,.yen-stamp-cinema-red{
+  position:absolute;inset:0;border-radius:50%;display:flex;align-items:center;
+  flex-direction:column;justify-content:center;text-align:center
+}
+.yen-stamp-cinema-outline{
+  border:3px dashed #bead8e;color:#a69b86;
+  font:900 13px/1.15 "Noto Sans",Arial,sans-serif;letter-spacing:.13em
+}
+.yen-stamp-cinema-red{
+  color:#9e5349;background:#f8e6d5e8;border:5px double #a4574d;
+  font:900 11px/1.3 "Noto Sans",Arial,sans-serif;letter-spacing:.05em;
+  opacity:0;transform:rotate(-16deg) scale(1.4)
+}
+.yen-stamp-cinema-red strong{font-size:17px}
+.yen-stamp-cinema-red small{font-size:11px}
+.yen-stamp-cinema-cuc{
+  position:absolute;left:2%;bottom:2%;width:clamp(98px,29%,151px);height:auto;
+  z-index:3;overflow:visible;filter:drop-shadow(0 6px 5px #7059444d);
+  transform-origin:center bottom;
+}
+.yen-stamp-cinema-tool,.yen-stamp-cinema-giant{
+  display:flex;align-items:center;flex-direction:column;pointer-events:none;
+  filter:drop-shadow(0 6px 5px #422c224d)
+}
+.yen-stamp-cinema-tool{
+  position:absolute;right:8%;bottom:12%;width:87px;height:135px;z-index:3
+}
+.yen-stamp-cinema-tool-handle{
+  height:44px;width:53px;flex:none;border:4px solid #5f412f;border-radius:45% 45% 30% 30%;
+  background:linear-gradient(90deg,#a06c47,#eed2a5 46%,#ac784e 76%,#8c5438);
+  box-shadow:inset 5px 3px 4px #f5ddae77
+}
+.yen-stamp-cinema-tool-neck{
+  height:27px;width:30px;flex:none;background:linear-gradient(90deg,#98623d,#e7bb86,#915d3c);
+  border-left:4px solid #765037;border-right:4px solid #765037
+}
+.yen-stamp-cinema-tool-wood{
+  display:grid;place-content:center;flex:none;width:100%;height:59px;
+  background:linear-gradient(110deg,#d19a60,#f7d7a1 47%,#b47b49);
+  border:4px solid #634530;border-radius:11px;text-align:center;color:#594331;
+  font:1000 16px/1 "Noto Sans",Arial,sans-serif;letter-spacing:.12em
+}
+.yen-stamp-cinema-tool-base{
+  height:12px;flex:none;width:100%;border:3px solid #704b40;
+  background:linear-gradient(#b77464,#864943);border-radius:2px 2px 7px 7px
+}
+.yen-stamp-cinema-giant{
+  position:absolute;left:50%;top:57%;z-index:5;
+  width:155px;height:193px;opacity:0;
+  transform:translate(-50%,-165%);
+  transform-origin:50% 100%
+}
+.yen-stamp-cinema-giant .yen-stamp-cinema-tool-handle{height:55px;width:67px}
+.yen-stamp-cinema-giant .yen-stamp-cinema-tool-neck{height:39px;width:38px}
+.yen-stamp-cinema-giant .yen-stamp-cinema-tool-wood{height:84px;font-size:24px;border-width:5px}
+.yen-stamp-cinema-giant .yen-stamp-cinema-tool-base{height:15px}
+.yen-stamp-cinema-impact{
+  position:absolute;left:50%;top:39%;z-index:6;opacity:0;pointer-events:none;
+  transform:translate(-50%,-50%) rotate(-8deg) scale(.5);
+  font:1000 clamp(44px,10vw,80px)/1 "Noto Sans",Arial,sans-serif;color:#b9634d;
+  text-shadow:3px 3px #fff2d5,6px 8px #4c5f4255;letter-spacing:.03em
+}
+.yen-stamp-cinema-caption{
+  color:#fff5df;text-align:center;min-height:22px;
+  font:850 13px/1.4 "Noto Sans",Arial,sans-serif;margin:14px 0 0
+}
+.yen-stamp-cinema.is-collecting .yen-stamp-cinema-cuc{
+  animation:yenCinemaFetch .72s cubic-bezier(.25,.72,.37,1) both
+}
+.yen-stamp-cinema.is-collecting .yen-stamp-cinema-tool{
+  animation:yenCinemaPickUp .72s ease-in-out both
+}
+@keyframes yenCinemaFetch{
+  0%{transform:translateX(0) rotate(-4deg)}
+  23%{transform:translateX(20%) rotate(8deg) translateY(-8px)}
+  48%{transform:translateX(52%) rotate(-5deg)}
+  73%{transform:translateX(84%) rotate(7deg) translateY(-8px)}
+  100%{transform:translateX(106%) rotate(-3deg) translateY(-3px)}
+}
+@keyframes yenCinemaPickUp{
+  0%,45%{opacity:1;transform:none}
+  78%{opacity:1;transform:translateY(-20px) rotate(-11deg)}
+  100%{opacity:0;transform:translateY(-35px) rotate(-7deg)}
+}
+.yen-stamp-cinema.is-seal-coming .yen-stamp-cinema-cuc{
+  animation:yenCinemaStepBack .94s ease-in both
+}
+@keyframes yenCinemaStepBack{
+  from{transform:translateX(106%) rotate(-3deg)}
+  38%{transform:translateX(40%) rotate(-8deg)}
+  100%{transform:translateX(0) rotate(-4deg)}
+}
+.yen-stamp-cinema.is-seal-coming .yen-stamp-cinema-tool{opacity:0}
+.yen-stamp-cinema.is-seal-coming .yen-stamp-cinema-giant{
+  animation:yenCinemaGiantStamp 1.05s cubic-bezier(.25,.64,.32,1) both
+}
+@keyframes yenCinemaGiantStamp{
+  0%{opacity:0;transform:translate(46%,-181%) rotate(-13deg) scale(.83)}
+  16%{opacity:1;transform:translate(23%,-171%) rotate(-9deg) scale(.99)}
+  47%{opacity:1;transform:translate(-50%,-158%) rotate(-5deg) scale(1.08)}
+  63%{opacity:1;transform:translate(-50%,-142%) rotate(-3deg) scale(1.12)}
+  72%{opacity:1;transform:translate(-50%,-100%) rotate(1deg) scale(1.13,.9)}
+  80%{opacity:1;transform:translate(-50%,-110%) rotate(-2deg) scale(1.06)}
+  100%{opacity:0;transform:translate(-50%,-170%) rotate(-5deg) scale(.95)}
+}
+.yen-stamp-cinema.is-seal-imprinted .yen-stamp-cinema-outline{opacity:0}
+.yen-stamp-cinema.is-seal-imprinted .yen-stamp-cinema-red{
+  animation:yenCinemaInk .32s cubic-bezier(.11,.82,.3,1.25) both
+}
+.yen-stamp-cinema.is-seal-imprinted .yen-stamp-cinema-impact{
+  animation:yenCinemaCop .38s ease-out both
+}
+.yen-stamp-cinema.is-seal-imprinted .yen-stamp-cinema-scene{
+  animation:yenCinemaPaperShake .32s ease-out both
+}
+@keyframes yenCinemaInk{
+  0%{opacity:0;transform:rotate(-18deg) scale(1.42)}
+  76%{opacity:1;transform:rotate(-8deg) scale(.94)}
+  100%{opacity:1;transform:rotate(-11deg) scale(1)}
+}
+@keyframes yenCinemaCop{
+  0%{opacity:0;transform:translate(-50%,-50%) scale(.5) rotate(-8deg)}
+  45%{opacity:1;transform:translate(-50%,-80%) scale(1.2) rotate(-8deg)}
+  100%{opacity:0;transform:translate(-50%,-122%) scale(.93) rotate(-8deg)}
+}
+@keyframes yenCinemaPaperShake{
+  0%,100%{transform:none}
+  30%{transform:translate(3px,2px) rotate(.5deg)}
+  63%{transform:translate(-2px,-1px) rotate(-.2deg)}
+}
+@media(max-width:700px){
+  .permit-stage-main{grid-template-columns:1fr;gap:13px}
+  .permit-sheet{min-height:0}
+  .permit-clerk{min-height:0;padding:10px}
+  .permit-counter-body{min-height:168px}
+  .yen-stamp-cinema-card{width:min(100%,430px)}
+  .yen-stamp-cinema-paper{padding:16px}
+  .yen-stamp-cinema-scene{height:clamp(190px,29dvh,224px)}
+}
+@media(max-height:590px){
+  .yen-stamp-cinema{padding:8px}
+  .yen-stamp-cinema-paper{padding:10px 14px}
+  .yen-stamp-cinema-tag{margin-bottom:3px}
+  .yen-stamp-cinema-heading{font-size:21px;margin-bottom:2px;padding-bottom:5px}
+  .yen-stamp-cinema-answers>div{padding:5px 0}
+  .yen-stamp-cinema-scene{height:164px;margin-top:5px}
+  .yen-stamp-cinema-caption{margin-top:5px;font-size:11px}
+  .yen-stamp-cinema-target{transform:translate(-50%,-50%) scale(.81)}
+}
+@media(prefers-reduced-motion:reduce){
+  .yen-stamp-cinema *{animation:none!important}
+  .yen-stamp-cinema.is-seal-imprinted .yen-stamp-cinema-red{opacity:1;transform:rotate(-11deg) scale(1)}
+}
+
+</style>
 </head>
 <body>
   <!-- Yên doodle icons: hand-drawn, consistent stroke; no icon fonts or external assets -->
@@ -2394,13 +2628,13 @@
           <div class="permit-eyebrow"><span class="permit-number">01</span> / SỞ CẤP PHÉP NGHỈ</div>
           <h2 id="permit-section-title">Muốn nghỉ chút không?<br><em>Cục Yên lo.</em></h2>
         </div>
-        <p class="permit-heading-aside">Không cần khai gì hết. Cục Yên tự bịa lý do, rồi đóng mộc cho bạn.</p>
+        <p class="permit-heading-aside">Không cần điền đơn. Chờ một cú CỘP!</p>
       </div>
       <div class="permit-stage" id="yen-permit">
-        <div class="permit-desk-grain" aria-hidden="true"></div>
-        <div class="permit-desk-ribbon" aria-hidden="true"><span>HỒ SƠ ĐƯỢC PHÉP LƯỜI</span><span>YÊN · COFFEE & TEA</span></div>
-        <div class="permit-desk-pencil" aria-hidden="true"></div>
-        <div class="permit-desk-coaster" aria-hidden="true"><div class="permit-coaster-face"><span class="permit-coaster-eyes">• &nbsp; •</span><span class="permit-coaster-mouth">ᴗ</span></div><span class="permit-coaster-caption">Cục Yên<br>đang trực</span></div>
+        
+        
+        
+        
         <div class="permit-stage-main">
           <div class="permit-sheet" id="permit-sheet">
             <span class="permit-paper-clip" aria-hidden="true"></span>
@@ -2411,26 +2645,11 @@
             <div class="permit-paper-rule" aria-hidden="true"></div>
             <div class="permit-stamp-landing" id="permit-stamp-landing" aria-hidden="true"><span>CỤC YÊN</span><strong>ĐÃ DUYỆT NGHỈ</strong></div>
             <div class="permit-intro" id="permit-intro">
-              <div class="permit-sheet-kicker">HỒ SƠ TỰ ĐỘNG · KHÔNG CẦN ĐIỀN</div>
-              <h3>ĐƠN XIN<br>NGHỈ MỘT CHÚT</h3>
-              <p>Bấm một cái. Cục Yên bốc lý do, chọn thời hạn rồi đóng mộc CỘP!</p>
-              <div class="permit-illustration" aria-hidden="true">
-                <svg viewBox="0 0 360 150" role="presentation" focusable="false">
-                  <ellipse cx="182" cy="138" rx="140" ry="10" fill="#cad7bb"/>
-                  <path d="M42 119h275" stroke="#779985" stroke-width="3" stroke-linecap="round"/>
-                  <path d="M56 106c-8-19-8-34-13-49m12 36c-19-5-20-18-14-19m13 3c17-10 26-2 22 9" stroke="#749b78" stroke-width="4" fill="none" stroke-linecap="round"/>
-                  <rect x="220" y="50" width="88" height="76" rx="9" fill="#dfae81" stroke="#315340" stroke-width="4"/>
-                  <rect x="232" y="59" width="65" height="37" rx="3" fill="#fcf5e2"/>
-                  <path d="M242 72h42m-42 13h32" stroke="#87ab91" stroke-width="3" stroke-linecap="round"/>
-                  <path d="M240 109q26-14 49 0" fill="none" stroke="#315340" stroke-width="3"/>
-                  <g class="permit-preview-cuc">
-                    <use href="/assets/cuc-yen/mascot.svg#cuc-yen-clerk-ready" x="69" y="-8" width="170" height="170"/>
-                  </g>
-                  <path d="M337 22l4 10 11 4-11 4-4 10-4-10-11-4 11-4Z" fill="#e9b878"/>
-                </svg>
-              </div>
+              <div class="permit-sheet-kicker">CỤC YÊN · TỰ ĐỘNG DUYỆT</div>
+              <h3>NGHỈ MỘT<br>CHÚT NHÉ?</h3>
+              <p>Cục Yên sẽ bốc hộ cái cớ. Bạn chỉ việc xem CỘP!</p>
               <button class="permit-action permit-start" type="button" id="permit-start"><span>BỐC GIẤY PHÉP NGHỈ</span><span aria-hidden="true">↗</span></button>
-              <p class="permit-small-note">Không cần chọn gì. Mỗi lần bốc một giấy phép khác. Không lưu dữ liệu.</p>
+              <p class="permit-small-note">Một chạm · Không lưu dữ liệu</p>
             </div>
             <div class="permit-receipt" id="permit-receipt" hidden>
               <div class="permit-sheet-kicker" id="permit-receipt-kicker">ĐÃ BỐC XONG · ĐANG CHỜ ĐÓNG MỘC</div>
@@ -2488,17 +2707,14 @@
                 <span class="permit-stamp-caption">NHỜ CỤC YÊN ĐÓNG MỘC</span>
               </button>
               </div>
-              <div class="permit-counter-slip" aria-hidden="true">
-                <span>HỒ SƠ ĐANG XÉT</span>
-                <div class="permit-stamp-landing permit-stamp-landing-mobile" id="permit-stamp-landing-mobile"><span>CỤC YÊN</span><strong>ĐÃ DUYỆT NGHỈ</strong></div>
-              </div>
-              <div class="permit-inkpad" aria-hidden="true"><span>MỰC DUYỆT</span></div>
+              
+              
             </div>
             <div class="permit-message" id="permit-message" role="status" aria-live="polite">Bấm Bốc giấy phép. Cục Yên sẽ tự lo phần còn lại.</div>
-            <div class="permit-clerk-foot">ĐƠN VỊ CHUYÊN TRÁCH: NGHỈ TẠM THỜI <span>✳</span></div>
+            
           </aside>
         </div>
-        <div class="permit-bottom-strip"><span><span aria-hidden="true">●</span> KHÔNG CẦN ĐĂNG NHẬP</span><span>KHÔNG LƯU HỒ SƠ</span><span>KHÔNG CẦN THẬT SỰ MỆT</span></div>
+        
       </div>
     </section>
 
@@ -3567,6 +3783,38 @@
 })();
 </script>
 
+<div class="yen-stamp-cinema" id="permit-cinema" role="dialog" aria-modal="true" aria-label="Cục Yên đang đóng mộc" tabindex="-1" hidden>
+  <div class="yen-stamp-cinema-shade" aria-hidden="true"></div>
+  <div class="yen-stamp-cinema-card">
+    <div class="yen-stamp-cinema-tag">CỤC YÊN · QUẦY CẤP PHÉP NGHỈ</div>
+    <div class="yen-stamp-cinema-paper">
+      <div class="yen-stamp-cinema-heading">GIẤY PHÉP <em>NGHỈ TẠM THỜI</em></div>
+      <div class="yen-stamp-cinema-answers">
+        <div><span>LÝ DO</span><strong id="permit-cinema-reason"></strong></div>
+        <div><span>THỜI HẠN</span><strong id="permit-cinema-duration"></strong></div>
+      </div>
+      <div class="yen-stamp-cinema-scene" aria-hidden="true">
+        <div class="yen-stamp-cinema-target">
+          <div class="yen-stamp-cinema-outline">CHỜ<br>MỘC</div>
+          <div class="yen-stamp-cinema-red">CỤC YÊN<strong>ĐÃ DUYỆT</strong><small>NGHỈ!</small></div>
+        </div>
+        <svg class="yen-stamp-cinema-cuc" viewBox="0 0 320 320" focusable="false">
+          <use href="/assets/cuc-yen/mascot.svg#cuc-yen-clerk-ready"></use>
+        </svg>
+        <div class="yen-stamp-cinema-tool">
+          <span class="yen-stamp-cinema-tool-handle"></span><span class="yen-stamp-cinema-tool-neck"></span>
+          <span class="yen-stamp-cinema-tool-wood">CỤC<br>YÊN</span><span class="yen-stamp-cinema-tool-base"></span>
+        </div>
+        <div class="yen-stamp-cinema-giant">
+          <span class="yen-stamp-cinema-tool-handle"></span><span class="yen-stamp-cinema-tool-neck"></span>
+          <span class="yen-stamp-cinema-tool-wood">CỤC<br>YÊN</span><span class="yen-stamp-cinema-tool-base"></span>
+        </div>
+        <span class="yen-stamp-cinema-impact">CỘP!</span>
+      </div>
+    </div>
+    <p class="yen-stamp-cinema-caption" id="permit-cinema-status" role="status" aria-live="polite">Giấy phép đang chờ con mộc.</p>
+  </div>
+</div>
 <script id="yen-permit-script">
 
 /* Sở cấp phép nghỉ của Cục Yên · original vanilla JS, state in RAM only */
