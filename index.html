@@ -2969,213 +2969,99 @@ body.yen-stamping-active{overflow:hidden}
 }
 </style>
 
-<style id="yen-real-drink-picker-v1">
-/* 04: one playful product discovery machine. All five recommendations are real Yên menu items. */
-.yen-picker-section.section{
-  position:relative;isolation:isolate;overflow:clip;padding:clamp(65px,8vw,112px) 0 100px;
-  background:linear-gradient(155deg,#eef1e3 0%,#f7f3e4 56%,#e9eedf 100%);
-}
-.yen-picker-section::before{
-  content:"";position:absolute;inset:0;pointer-events:none;opacity:.28;
-  background-image:radial-gradient(#59765d 1px,transparent 1.5px);
-  background-size:24px 24px;mask-image:linear-gradient(110deg,#000,transparent 65%)
-}
-.yen-picker-old-anchor{position:absolute;top:0;left:0;width:1px;height:1px;pointer-events:none}
-.yen-picker-layout{position:relative;display:grid;grid-template-columns:minmax(0,.94fr) minmax(0,1.06fr);gap:clamp(23px,5vw,82px);align-items:start}
-.yen-picker-intro{padding-top:27px;min-width:0}
-.yen-picker-eyebrow{display:inline-block;color:#54725b!important;font-weight:900!important;letter-spacing:.12em}
-.yen-picker-intro h2{
-  font:800 clamp(37px,4.6vw,66px)/1.13 "Noto Serif",Georgia,serif;
-  letter-spacing:-.045em;color:#2d523d;margin:17px 0 19px;max-width:530px
-}
-.yen-picker-intro h2 em{display:inline;color:#ae7154;font-weight:600;font-style:italic}
-.yen-picker-lead{font:450 clamp(14px,1.45vw,17px)/1.7 "Noto Sans",Arial,sans-serif;color:#47624f;max-width:460px}
-.yen-picker-lead strong{font-weight:850;color:#254d37}
-.yen-picker-choice-heading{display:flex;gap:12px;align-items:center;justify-content:space-between;margin:37px 0 14px;color:#3c684d;font:900 12px/1.4 "Noto Sans",Arial,sans-serif;letter-spacing:.08em}
-.yen-picker-choice-heading small{font:900 9px/1.4 "Noto Sans",Arial,sans-serif;color:#819884}
-.yen-picker-moods{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px;max-width:515px}
-.yen-picker-mood{
-  position:relative;min-width:0;min-height:68px;display:flex;align-items:center;gap:10px;
-  border:1.5px solid #a7bea8;border-radius:17px;
-  background:#fffdf4;color:#3e6048;cursor:pointer;
-  padding:11px 12px;text-align:left;
-  font:850 clamp(11px,1.3vw,14px)/1.3 "Noto Sans",Arial,sans-serif;
-  box-shadow:2px 3px 0 #d5dfca;
-  transition:transform .18s ease,background .18s ease,box-shadow .18s ease,border-color .18s ease
-}
-.yen-picker-mood:hover:not(:disabled){transform:translateY(-3px);box-shadow:3px 6px 0 #cfddc7}
-.yen-picker-mood[aria-pressed="true"]{
-  background:#dcecb6;border-color:#3c7453;color:#2c593f;
-  box-shadow:inset 0 0 0 1px #67936e,3px 4px 0 #a7c49b
-}
-.yen-picker-mood:focus-visible,.yen-picker-generate:focus-visible,.yen-picker-ticket-actions a:focus-visible,.yen-picker-ticket-actions button:focus-visible,.yen-picker-retry:focus-visible{outline:3px solid #af704e;outline-offset:3px}
-.yen-picker-mood:disabled{opacity:.61;cursor:wait}
-.yen-picker-mood-icon{
-  flex:0 0 35px;height:35px;display:grid;place-items:center;
-  font:900 21px/1 "Noto Sans",Arial,sans-serif;
-  color:#527b57;border-radius:12px;background:#e5eddd;
-  transform:rotate(-8deg)
-}
-.yen-picker-mood[aria-pressed="true"] .yen-picker-mood-icon{background:#f9f4d9;color:#a45a43;transform:rotate(6deg)}
-.yen-picker-mood-random .yen-picker-mood-icon{background:#f8e5d9}
-.yen-picker-aside{color:#728777;font:500 11px/1.6 "Noto Sans",Arial,sans-serif;margin:16px 0 0}
-.yen-picker-machine{
-  min-width:0;position:relative;margin-top:4px;padding:15px 16px 21px;
-  border:2px solid #466d51;border-radius:32px 32px 26px 26px;
-  background:linear-gradient(155deg,#d6e5cc,#aecaa9 52%,#98b993 100%);
-  box-shadow:inset 0 4px 9px #fffdf280,inset -7px -9px 13px #61826452,9px 14px 0 #d5ddcc,12px 23px 35px #52664b38
-}
-.yen-picker-machine::before,.yen-picker-machine::after{
-  content:"";position:absolute;bottom:-11px;width:43px;height:13px;border-radius:0 0 8px 8px;background:#44684d;border:1px solid #34543c
-}
-.yen-picker-machine::before{left:28px}.yen-picker-machine::after{right:28px}
-.yen-picker-machine-top{display:flex;justify-content:space-between;gap:8px;align-items:center;padding:2px 10px 13px;font:900 10px/1.4 "Noto Sans",Arial,sans-serif;letter-spacing:.075em;color:#315c42}
-.yen-picker-machine-top i{
-  display:inline-block;width:7px;height:7px;background:#598d62;border-radius:50%;vertical-align:middle;margin-right:5px;box-shadow:0 0 0 3px #e8f1d6
-}
-.yen-picker-machine-badge{color:#fff6db;padding:5px 8px;border-radius:6px;background:#507957;transform:rotate(3deg)}
-.yen-picker-console{
-  position:relative;min-width:0;border:1.5px solid #6a896f;border-radius:21px;
-  background:#fff9e8;padding:clamp(15px,3.2vw,27px);
-  box-shadow:inset 0 2px 7px #46654424,0 4px 0 #729278
-}
-.yen-picker-machine-head{display:flex;align-items:center;gap:15px;margin-bottom:13px}
-.yen-picker-machine-mascot{display:block;flex:0 0 79px;width:79px;height:79px;filter:drop-shadow(0 3px 2px #7595784d)}
-.yen-picker-machine-head span{display:block;font:900 9px/1.4 "Noto Sans",Arial,sans-serif;letter-spacing:.14em;color:#738873;margin-bottom:6px}
-.yen-picker-machine-head strong{font:900 clamp(13px,1.7vw,18px)/1.3 "Noto Sans",Arial,sans-serif;letter-spacing:.015em;color:#3b5a43}
-.yen-picker-machine-head em{color:#a46d55;font-style:normal}
-.yen-picker-window-frame{
-  position:relative;padding:13px;border:3px solid #526f56;border-radius:18px;
-  background:linear-gradient(120deg,#4a6853,#7b9875 40%,#456e4d);
-  box-shadow:inset 2px 3px 6px #263b2e82,0 2px 1px #fff9ec
-}
-.yen-picker-screen{
-  display:grid;place-items:center;text-align:center;min-height:120px;gap:8px;padding:20px 13px;
-  background:#e9eed4;color:#355743;border-radius:9px;
-  border:2px solid #aec3a0;box-shadow:inset 0 0 25px #899a7933;
-  overflow:hidden
-}
-.yen-picker-screen::after{content:"";pointer-events:none;position:absolute;inset:13px;border-radius:9px;background:repeating-linear-gradient(0deg,transparent 0 5px,#20352708 6px);opacity:.6}
-.yen-picker-screen-top,.yen-picker-screen-bottom{
-  font:800 9px/1.45 "Noto Sans",Arial,sans-serif;letter-spacing:.11em;
-  color:#708776
-}
-.yen-picker-screen strong{
-  position:relative;z-index:1;color:#2b573e;
-  font:900 clamp(23px,2.8vw,34px)/1.2 "Noto Sans",Arial,sans-serif;letter-spacing:-.045em;
-  text-wrap:balance;overflow-wrap:anywhere
-}
-.yen-picker-screw{position:absolute;right:4px;top:3px;color:#aec4a6;font-weight:900}
-.yen-picker-screw:last-child{top:auto;bottom:2px}
-.yen-picker-slot{position:relative;display:flex;justify-content:center;margin:14px auto 0;width:min(76%,285px);height:20px;background:#385e45;border:3px solid #738f75;border-radius:40px;box-shadow:inset 0 4px 3px #213a2a}
-.yen-picker-slot span{position:absolute;top:2px;font:900 7px/1.3 "Noto Sans",Arial,sans-serif;letter-spacing:.08em;color:#dbe4ce}
-.yen-picker-generate[hidden]{display:none!important}
-.yen-picker-generate{
-  display:flex;width:100%;align-items:center;justify-content:space-between;gap:11px;
-  margin-top:18px;padding:14px 20px;min-height:57px;background:#a5523b;color:#fff9e6;
-  border:2px solid #804b38;border-radius:16px;
-  box-shadow:0 5px 0 #e7c3ab;font:900 15px/1.35 "Noto Sans",Arial,sans-serif;letter-spacing:.04em;cursor:pointer;
-  transition:transform .18s ease,box-shadow .18s ease,background .18s ease
-}
-.yen-picker-generate:hover:not(:disabled){transform:translateY(-2px);background:#b26149;box-shadow:0 7px 0 #e7c3ab}
-.yen-picker-generate:active:not(:disabled){transform:translateY(3px);box-shadow:0 2px 0 #e7c3ab}
-.yen-picker-generate:disabled{cursor:wait;opacity:.72}
-.yen-picker-generate-flower{font-size:24px;line-height:1}
-.yen-picker-machine-note{font:700 11px/1.5 "Noto Sans",Arial,sans-serif;color:#3c6649;text-align:center;margin:15px 0 0}
-.yen-picker-status{font:600 11px/1.5 "Noto Sans",Arial,sans-serif;color:#64806a;text-align:center;margin:13px 0 0;min-height:17px}
-.yen-picker-machine.is-scanning .yen-picker-screen{animation:yenPickScreenScan .22s linear infinite alternate}
-.yen-picker-machine.is-scanning .yen-picker-machine-mascot{animation:yenPickMascotShake .22s ease-in-out infinite alternate}
-.yen-picker-machine.is-scanning .yen-picker-window-frame{box-shadow:inset 2px 3px 6px #263b2e82,0 0 0 4px #f5dd8b77}
-.yen-picker-machine.is-scanning .yen-picker-slot{animation:yenPickSlotTap .3s ease-in-out infinite alternate}
-@keyframes yenPickScreenScan{to{background:#f1f4d0;transform:translateY(1px)}}
-@keyframes yenPickMascotShake{to{transform:rotate(5deg) translateY(-2px)}}
-@keyframes yenPickSlotTap{to{transform:translateY(2px)}}
-.yen-picker-ticket[hidden]{display:none!important}
-.yen-picker-ticket{
-  position:relative;margin:-4px 0 5px;padding:20px clamp(15px,2.8vw,25px) 17px;
-  background:#fffcf1;border:1.5px solid #d5c7a5;
-  box-shadow:0 7px 0 #e3d5b5,0 12px 20px #536b4b2f;transform:rotate(-.5deg);
-  clip-path:polygon(0 0,100% 0,100% 96.7%,98% 98%,96% 96.7%,94% 98%,92% 96.7%,90% 98%,88% 96.7%,86% 98%,84% 96.7%,82% 98%,80% 96.7%,78% 98%,76% 96.7%,74% 98%,72% 96.7%,70% 98%,68% 96.7%,66% 98%,64% 96.7%,62% 98%,60% 96.7%,58% 98%,56% 96.7%,54% 98%,52% 96.7%,50% 98%,48% 96.7%,46% 98%,44% 96.7%,42% 98%,40% 96.7%,38% 98%,36% 96.7%,34% 98%,32% 96.7%,30% 98%,28% 96.7%,26% 98%,24% 96.7%,22% 98%,20% 96.7%,18% 98%,16% 96.7%,14% 98%,12% 96.7%,10% 98%,8% 96.7%,6% 98%,4% 96.7%,2% 98%,0 96.7%);
-  padding-bottom:28px
-}
-.yen-picker-machine.is-issued .yen-picker-ticket{animation:yenPickTicketPrint .52s cubic-bezier(.2,.72,.25,1) both}
-@keyframes yenPickTicketPrint{from{opacity:0;transform:translateY(-20px) scale(.96) rotate(1deg)}to{opacity:1;transform:translateY(0) scale(1) rotate(-.5deg)}}
-.yen-picker-ticket-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;padding-bottom:12px;border-bottom:1.5px dashed #cbbba0}
-.yen-picker-ticket-top span{font:900 9px/1.5 "Noto Sans",Arial,sans-serif;color:#4e7457;letter-spacing:.055em}
-.yen-picker-ticket-top span:last-child{text-align:right;color:#a48f75;font-size:7px;max-width:145px}
-.yen-picker-ticket-heading{display:block;font:800 10px/1.5 "Noto Sans",Arial,sans-serif;letter-spacing:.1em;color:#8e795f;margin:20px 0 9px;text-transform:uppercase}
-.yen-picker-ticket-product{display:grid;grid-template-columns:118px minmax(0,1fr);gap:13px;align-items:center;min-height:165px}
-.yen-picker-product-copy{min-width:0}
-.yen-picker-product-copy h3{margin:0 0 10px;font:850 clamp(24px,2.6vw,34px)/1.17 "Noto Serif",Georgia,serif;letter-spacing:-.04em;color:#315743;overflow-wrap:anywhere}
-.yen-picker-product-copy p{margin:0;color:#657c65;font:600 12px/1.56 "Noto Sans",Arial,sans-serif}
-.yen-picker-illustration{position:relative;width:116px;height:166px;display:grid;place-items:center}
-.yen-picker-glass{position:absolute;bottom:13px;left:15px;width:91px;height:118px;overflow:hidden;
-  border:4px solid #54745e;border-top:7px solid #54745e;border-radius:7px 7px 18px 18px;
-  background:#fefdf4;box-shadow:inset 10px 2px 8px #fff8e2ad,5px 5px 0 #b4cbb571;transform:rotate(-4deg)
-}
-.yen-picker-glass:before{content:"";position:absolute;left:7px;top:13px;bottom:13px;width:7px;border-radius:8px;background:#ffffffa8;z-index:3}
-.yen-picker-liquid{
-  position:absolute;left:0;right:0;bottom:0;height:84%;border-radius:18% 18% 0 0;
-  background:linear-gradient(180deg,var(--picker-top,#bdcfa5) 0 42%,var(--picker-bottom,#e6b6b1) 43% 100%)
-}
-.yen-picker-ice{position:absolute;top:30px;right:12px;width:19px;height:18px;border:2px solid #fff9e8a0;border-radius:5px;transform:rotate(19deg)}
-.yen-picker-ice:after{content:"";position:absolute;top:34px;left:-31px;width:17px;height:17px;border:2px solid #fff9e89a;border-radius:5px;transform:rotate(-40deg)}
-.yen-picker-glass-face{position:absolute;left:0;right:0;bottom:24px;text-align:center;color:#3e624e;font:900 22px/1 "Noto Sans",Arial,sans-serif;letter-spacing:2px;transform:rotate(4deg)}
-.yen-picker-straw{position:absolute;right:20px;top:11px;height:110px;width:11px;border:3px solid #51735c;border-radius:6px;transform:rotate(15deg);background:#f3bbaf;z-index:1}
-.yen-picker-fruit{position:absolute;right:7px;top:35px;width:42px;height:42px;border:5px solid #ddad64;border-radius:50%;background:#ffdc92;box-shadow:inset 0 0 0 2px #f5ecb3;transform:rotate(-18deg);opacity:0}
-.yen-picker-illustration[data-drink="matcha"]{--picker-top:#90b58c;--picker-bottom:#e8a7b2}
-.yen-picker-illustration[data-drink="cacao"]{--picker-top:#fff0ce;--picker-bottom:#976853}
-.yen-picker-illustration[data-drink="atiso"]{--picker-top:#e1ca91;--picker-bottom:#bb8359}
-.yen-picker-illustration[data-drink="juice"]{--picker-top:#ffdc95;--picker-bottom:#f2ae57}
-.yen-picker-illustration[data-drink="coldbrew"]{--picker-top:#a26948;--picker-bottom:#69442d}
-.yen-picker-illustration[data-drink="coldbrew"] .yen-picker-fruit{opacity:1}
-.yen-picker-illustration[data-drink="juice"] .yen-picker-fruit{opacity:1;background:#ffde85}
-.yen-picker-why{border-top:1px dashed #d3c4a9;padding-top:12px;margin:6px 0 11px;color:#526f56;font:600 12px/1.6 "Noto Sans",Arial,sans-serif}
-.yen-picker-quip{margin:0 0 15px;padding:10px 13px;background:#e6ecd8;border-radius:7px 16px 16px 16px;color:#486d50;font:750 12px/1.56 "Noto Sans",Arial,sans-serif}
-.yen-picker-ticket-stamp{position:absolute;right:11px;top:52px;width:64px;height:64px;border:3px double #bb7863;border-radius:50%;display:grid;place-content:center;text-align:center;transform:rotate(14deg);color:#b87965;opacity:.75;font:900 7px/1.1 "Noto Sans",Arial,sans-serif;letter-spacing:.03em;pointer-events:none}
-.yen-picker-ticket-stamp strong{font-size:10px;line-height:1.4}
-.yen-picker-ticket-actions{display:flex;gap:8px;flex-wrap:wrap}
-.yen-picker-visit,.yen-picker-save{min-height:43px;display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:10px;padding:10px 12px;text-decoration:none;font:900 11px/1.35 "Noto Sans",Arial,sans-serif;cursor:pointer}
-.yen-picker-visit{flex:1.5;background:#3b6549;color:#fffbed;border:1.5px solid #36573d}
-.yen-picker-visit:hover{color:#fffbed;background:#547b5a}
-.yen-picker-save{flex:1;min-width:94px;border:1.5px solid #b6c6ae;color:#426c4d;background:#f0f4e7}
-.yen-picker-save:hover{background:#e3eed7}
-.yen-picker-retry{margin:12px auto 0;padding:8px;display:block;border:0;background:transparent;color:#6c816f;font:800 11px/1.4 "Noto Sans",Arial,sans-serif;text-decoration:underline;text-underline-offset:4px;cursor:pointer}
-@media(max-width:950px){
-  .yen-picker-layout{grid-template-columns:minmax(0,1fr);max-width:630px;gap:25px}
-  .yen-picker-intro{padding-top:0}
-  .yen-picker-intro h2{max-width:100%;font-size:clamp(36px,7vw,52px)}
-  .yen-picker-choice-heading{margin-top:25px}
-  .yen-picker-machine{margin-top:0}
-}
-@media(max-width:480px){
-  .yen-picker-section.section{padding:62px 0 78px}
-  .yen-picker-moods{gap:8px}
-  .yen-picker-mood{padding:9px;min-height:62px;font-size:11px;gap:7px;border-radius:13px}
-  .yen-picker-mood-icon{flex-basis:29px;height:29px;font-size:19px;border-radius:9px}
-  .yen-picker-machine{padding:10px 10px 16px;border-radius:22px}
-  .yen-picker-console{padding:13px;border-radius:15px}
-  .yen-picker-machine-mascot{width:65px;height:65px;flex-basis:65px}
-  .yen-picker-machine-head strong{font-size:13px}
-  .yen-picker-screen{min-height:108px;padding:15px 8px}
-  .yen-picker-ticket{padding:15px 12px 24px}
-  .yen-picker-ticket-product{grid-template-columns:100px minmax(0,1fr);gap:8px}
-  .yen-picker-illustration{width:100px}
-  .yen-picker-glass{left:8px}.yen-picker-straw{right:13px}.yen-picker-fruit{right:1px}
-  .yen-picker-product-copy h3{font-size:clamp(20px,5.8vw,26px)}
-  .yen-picker-ticket-stamp{width:50px;height:50px;right:10px;top:60px;font-size:6px}
-  .yen-picker-ticket-stamp strong{font-size:8px}
-  .yen-picker-ticket-heading{max-width:calc(100% - 55px)}
-}
-@media(prefers-reduced-motion:reduce){
-  .yen-picker-machine.is-scanning .yen-picker-screen,
-  .yen-picker-machine.is-scanning .yen-picker-machine-mascot,
-  .yen-picker-machine.is-scanning .yen-picker-slot,
-  .yen-picker-machine.is-issued .yen-picker-ticket{animation:none!important}
-  .yen-picker-mood,.yen-picker-generate{transition:none!important}
-}
 </style>
 
+
+<style id="yen-quiet-sounds-v1">
+/* A small, opt-in sound desk and future YouTube playlist collection. */
+.yen-sound-section.section{position:relative;padding:clamp(75px,9vw,116px) 0 98px;overflow:clip;background:#edf0e6}
+.yen-sound-section::before{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle at 85% 15%,#fbf7e6 0%,transparent 40%),radial-gradient(circle at 15% 93%,#d4e2d2 0%,transparent 41%)}
+.yen-sound-legacy-anchor{position:absolute;top:0;left:0;width:1px;height:1px;pointer-events:none}
+.yen-sound-wrap{position:relative}
+.yen-sound-heading{display:flex;align-items:end;justify-content:space-between;gap:30px;margin:0 0 clamp(27px,5vw,52px)}
+.yen-sound-headline{min-width:0}
+.yen-sound-eyebrow{color:#507253!important;font-weight:900!important;letter-spacing:.1em}
+.yen-sound-heading h2{margin:15px 0 0;color:#33533e;font:750 clamp(37px,5.3vw,70px)/1.13 "Noto Serif",Georgia,serif;letter-spacing:-.05em;text-wrap:balance}
+.yen-sound-heading h2 em{color:#a67153;font-style:italic;font-weight:600}
+.yen-sound-heading > p{width:min(34%,365px);margin:0 0 5px;color:#587160;font:500 14px/1.7 "Noto Sans",Arial,sans-serif}
+.yen-sound-layout{display:grid;grid-template-columns:minmax(0,1.04fr) minmax(0,.96fr);gap:clamp(15px,3.8vw,42px);align-items:start}
+.yen-sound-player{min-width:0;padding:clamp(17px,2.5vw,27px);border:2px solid #395942;border-radius:27px;background:linear-gradient(142deg,#365f48,#2e4d3b 65%,#234533);box-shadow:8px 11px 0 #c6d3c3,10px 17px 26px #3e64412b;color:#f5f5dd}
+.yen-sound-player-top{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;font:900 10px/1.3 "Noto Sans",Arial,sans-serif;letter-spacing:.075em;color:#cbe5c4}
+.yen-sound-live{display:flex;align-items:center;gap:8px}
+.yen-sound-live>span{width:8px;height:8px;border-radius:50%;background:#799b7b;box-shadow:0 0 0 3px #799b7b25}
+.yen-sound-player.is-playing .yen-sound-live>span{background:#e2d692;box-shadow:0 0 0 4px #e2d6922d}
+.yen-sound-issue{border:1px solid #9fc29c85;border-radius:6px;padding:5px 8px;font-size:8px;transform:rotate(2deg)}
+.yen-sound-monitor{margin:23px 0 20px;padding:13px;border:3px solid #93af97;border-radius:16px;background:linear-gradient(140deg,#a4bd9b,#5f846b);box-shadow:inset 0 3px 5px #203e3055,0 3px 0 #1c3b2d}
+.yen-sound-monitor-rim{position:relative;display:grid;place-items:center;min-height:147px;border:2px solid #355741;border-radius:11px;background:radial-gradient(ellipse at center,#cfddb9 0%,#a6bd9c 65%,#88a88b 100%);overflow:hidden;isolation:isolate}
+.yen-sound-monitor-rim::before{content:"";position:absolute;inset:0;opacity:.18;pointer-events:none;background:repeating-linear-gradient(0deg,transparent 0 4px,#244333 5px)}
+.yen-sound-wave{position:absolute;inset:0;display:flex;justify-content:center;align-items:center;gap:clamp(4px,.9vw,9px);opacity:.64;pointer-events:none}
+.yen-sound-wave i{display:block;width:clamp(5px,.8vw,9px);height:14px;border-radius:9px;background:#507a5a;transform-origin:center;opacity:.72}
+.yen-sound-wave i:nth-child(3n){height:28px}.yen-sound-wave i:nth-child(4n){height:38px}.yen-sound-wave i:nth-child(7n){height:22px}
+.yen-sound-player.is-playing .yen-sound-wave i{animation:yenAmbientMeters .85s ease-in-out infinite alternate}
+.yen-sound-player.is-playing .yen-sound-wave i:nth-child(2n){animation-duration:1.1s;animation-delay:-.3s}
+.yen-sound-player.is-playing .yen-sound-wave i:nth-child(3n){animation-duration:.65s;animation-delay:-.5s}
+.yen-sound-player.is-playing .yen-sound-wave i:nth-child(5n){animation-duration:1.45s;animation-delay:-.9s}
+@keyframes yenAmbientMeters{0%{transform:scaleY(.45)}100%{transform:scaleY(2.25)}}
+.yen-sound-dial{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;justify-content:center;width:106px;height:106px;transform:rotate(-9deg);border-radius:50%;border:2px solid #648b6e;background:#e9ebcbeb;box-shadow:4px 6px 0 #587d625e,inset 0 0 0 5px #c4d6b6}
+.yen-sound-dial span{color:#396b4a;font:italic 37px/1 "Noto Serif",Georgia,serif;letter-spacing:-.08em}
+.yen-sound-dial small{font:900 8px/1.4 "Noto Sans",Arial,sans-serif;letter-spacing:.16em;color:#68826c}
+.yen-sound-player h3{margin:0 0 7px;font:700 clamp(23px,2.5vw,30px)/1.25 "Noto Serif",Georgia,serif;letter-spacing:-.03em;color:#fff7df}
+.yen-sound-description{margin:0 0 18px;color:#d2dfc9;font:500 12px/1.65 "Noto Sans",Arial,sans-serif}
+.yen-sound-presets{display:grid;gap:9px}
+.yen-sound-preset{display:flex;align-items:center;gap:12px;width:100%;min-height:70px;text-align:left;cursor:pointer;border:1px solid #668c72;border-radius:13px;background:#3e684f;color:#fbf6e4;padding:9px 11px;transition:background .2s ease,transform .2s ease}
+.yen-sound-preset:hover{background:#4b7559;transform:translateY(-2px)}
+.yen-sound-preset[aria-pressed="true"]{border-color:#d1e2af;background:#648769;box-shadow:inset 0 0 0 1px #d7e6b4}
+.yen-sound-preset:focus-visible,.yen-sound-stop:focus-visible,.yen-music-open:focus-visible{outline:3px solid #e5c489;outline-offset:3px}
+.yen-sound-preset-icon{flex:0 0 44px;height:43px;display:grid;place-items:center;border:1px solid #a1bd94;border-radius:11px;background:#dbe6c7;color:#4c6f50;font:900 27px/1 "Noto Sans",Arial,sans-serif}
+.yen-sound-preset>span:nth-child(2){display:block;flex:1;min-width:0}
+.yen-sound-preset strong{display:block;font:850 14px/1.35 "Noto Sans",Arial,sans-serif}
+.yen-sound-preset small{display:block;margin-top:3px;color:#c7d8bd;font:500 11px/1.4 "Noto Sans",Arial,sans-serif}
+.yen-sound-preset-action{flex:0 0 30px;display:grid;place-items:center;color:#f1e7ae;font-size:18px}
+.yen-sound-preset[aria-pressed="true"] .yen-sound-preset-action{color:#fff9e4}
+.yen-sound-controls{display:flex;align-items:center;gap:13px;flex-wrap:wrap;margin:18px 0 0;padding-top:15px;border-top:1px dashed #a9c5a455}
+.yen-sound-controls label{display:flex;flex-direction:column;gap:2px;color:#d2e2c9;font:900 9px/1.4 "Noto Sans",Arial,sans-serif;letter-spacing:.065em}
+.yen-sound-controls input{flex:1;min-width:100px;max-width:220px;accent-color:#e2e8b1;cursor:pointer}
+.yen-sound-stop{margin-left:auto;border:1px solid #a9c2a377;border-radius:9px;background:#315541;color:#f8f4df;padding:9px 12px;font:850 11px/1.3 "Noto Sans",Arial,sans-serif;cursor:pointer}
+.yen-sound-stop:disabled{opacity:.42;cursor:default}
+.yen-sound-status{font:600 11px/1.5 "Noto Sans",Arial,sans-serif;color:#d1dfc8;margin:14px 0 1px;min-height:17px}
+.yen-music-list{min-width:0;padding:clamp(22px,4vw,42px);border:1.5px solid #b0bea5;border-radius:25px;background:#fffbef;box-shadow:5px 7px 0 #dbe4d4}
+.yen-music-label{display:block;color:#82947c;font:900 10px/1.4 "Noto Sans",Arial,sans-serif;letter-spacing:.13em}
+.yen-music-list-intro h3{font:740 clamp(29px,3.7vw,46px)/1.16 "Noto Serif",Georgia,serif;letter-spacing:-.05em;color:#375a43;margin:13px 0 13px}
+.yen-music-list-intro h3 em{color:#b47855;font-style:italic;font-weight:500}
+.yen-music-list-intro p{font:500 13px/1.65 "Noto Sans",Arial,sans-serif;color:#6b816d;max-width:390px;margin:0 0 23px}
+.yen-music-items{display:grid;gap:11px}
+.yen-music-card{display:grid;grid-template-columns:38px minmax(0,1fr);align-items:center;gap:0 13px;position:relative;padding:17px 16px;border:1.5px solid #bdcbb6;border-radius:15px;background:#f8f9ee}
+.yen-music-card-number{grid-row:span 2;color:#c2aa90;font:italic 27px/1 "Noto Serif",Georgia,serif}
+.yen-music-card-copy strong{display:block;color:#42634d;font:850 17px/1.35 "Noto Serif",Georgia,serif;letter-spacing:-.02em}
+.yen-music-card-copy small{display:block;color:#8a9988;font:550 11px/1.5 "Noto Sans",Arial,sans-serif;margin-top:4px}
+.yen-music-pending,.yen-music-open{grid-column:2;justify-self:start;margin-top:11px}
+.yen-music-pending{font:900 9px/1.4 "Noto Sans",Arial,sans-serif;letter-spacing:.09em;color:#a09a82;padding:5px 8px;border:1px dashed #c6c8b3;border-radius:6px}
+.yen-music-open{font:850 11px/1.35 "Noto Sans",Arial,sans-serif;border-radius:9px;padding:9px 12px;background:#365d43;color:#fffbed;text-decoration:none}
+.yen-music-open:hover{background:#527459;color:#fffbed}
+.yen-music-open[hidden],.yen-music-pending[hidden]{display:none!important}
+.yen-music-postscript{margin:16px 0 0;color:#9a9b82;font:600 11px/1.6 "Noto Sans",Arial,sans-serif}
+.yen-music-footer{margin-top:24px;padding-top:16px;border-top:1px dashed #c8d5bf;font:italic 14px/1.6 "Noto Serif",Georgia,serif;color:#9c7862}
+@media(max-width:940px){
+  .yen-sound-heading{display:block}.yen-sound-heading>p{width:min(100%,560px);margin-top:19px}
+  .yen-sound-layout{grid-template-columns:1fr;max-width:660px;margin:0 auto}
+  .yen-sound-heading{max-width:660px;margin-inline:auto}
+}
+@media(max-width:520px){
+  .yen-sound-section.section{padding:63px 0 76px}
+  .yen-sound-heading h2{font-size:clamp(33px,9vw,45px)}
+  .yen-sound-player{padding:14px;border-radius:19px}
+  .yen-sound-player-top{font-size:9px}.yen-sound-issue{font-size:7px}
+  .yen-sound-monitor{margin:17px 0}.yen-sound-monitor-rim{min-height:120px}
+  .yen-sound-preset{min-height:66px;padding:8px}
+  .yen-sound-controls{gap:10px}.yen-sound-controls input{min-width:90px}
+  .yen-music-list{padding:23px 18px;border-radius:19px}
+  .yen-music-card{padding:14px 12px;gap:0 10px}
+}
+@media(prefers-reduced-motion:reduce){
+  .yen-sound-player.is-playing .yen-sound-wave i{animation:none!important}
+  .yen-sound-preset{transition:none!important}
+}
+</style>
 </head>
 <body>
   <!-- Yên doodle icons: hand-drawn, consistent stroke; no icon fonts or external assets -->
@@ -3278,7 +3164,7 @@ body.yen-stamping-active{overflow:hidden}
           <a href="#tam-trang"><span>01</span> Xin nghỉ</a>
           <a href="#buong"><span>02</span> Vòng quay</a>
           <a href="#cuahang"><span>03</span> Tiệm 0đ</a>
-          <a href="#ngoi-yen"><span>04</span> Chọn ly</a>
+          <a href="#ngoi-yen"><span>04</span> Nghe Yên</a>
         </div>
       </div>
     </nav>
@@ -3393,77 +3279,82 @@ body.yen-stamping-active{overflow:hidden}
       </div>
       
     </div></section>
-    <section class="section yen-picker-section" id="ngoi-yen" aria-labelledby="yen-picker-title">
-      <span id="mon-that" class="yen-picker-old-anchor" aria-hidden="true"></span>
-      <div class="wrap yen-picker-layout">
-        <div class="yen-picker-intro reveal">
-          <span class="eyebrow yen-picker-eyebrow">04 / MÁY CHỌN LY</span>
-          <h2 id="yen-picker-title">Không biết<br>uống gì? <em>Để Yên chọn hộ.</em></h2>
-          <p class="yen-picker-lead">Chọn thứ bạn đang thèm. Máy sẽ đề xuất một món <strong>có thật trong menu Yên.</strong> Không cần phải hiểu cái máy đang nghĩ gì.</p>
-          <div class="yen-picker-choice-heading"><span>HÔM NAY BẠN MUỐN...</span><small>CHỌN 1 THÔI</small></div>
-          <div class="yen-picker-moods" role="group" aria-label="Chọn kiểu đồ uống bạn muốn thử">
-            <button type="button" class="yen-picker-mood" data-yen-mood="tinh" aria-pressed="false"><span class="yen-picker-mood-icon" aria-hidden="true">☀</span><span>...tỉnh một chút</span></button>
-            <button type="button" class="yen-picker-mood" data-yen-mood="ngot" aria-pressed="false"><span class="yen-picker-mood-icon" aria-hidden="true">♡</span><span>...ngọt dịu</span></button>
-            <button type="button" class="yen-picker-mood" data-yen-mood="beo" aria-pressed="false"><span class="yen-picker-mood-icon" aria-hidden="true">◕</span><span>...béo thơm</span></button>
-            <button type="button" class="yen-picker-mood" data-yen-mood="nhe" aria-pressed="false"><span class="yen-picker-mood-icon" aria-hidden="true">☁</span><span>...nhẹ nhàng</span></button>
-            <button type="button" class="yen-picker-mood" data-yen-mood="mat" aria-pressed="false"><span class="yen-picker-mood-icon" aria-hidden="true">✳</span><span>...thanh mát</span></button>
-            <button type="button" class="yen-picker-mood yen-picker-mood-random" data-yen-mood="batky" aria-pressed="true"><span class="yen-picker-mood-icon" aria-hidden="true">?</span><span>Máy tự quyết!</span></button>
+    <section class="section yen-sound-section" id="ngoi-yen" aria-labelledby="yen-sound-title">
+      <span id="mon-that" class="yen-sound-legacy-anchor" aria-hidden="true"></span>
+      <div class="wrap yen-sound-wrap">
+        <div class="yen-sound-heading reveal">
+          <div class="yen-sound-headline">
+            <div class="eyebrow yen-sound-eyebrow">04 / MỘT ÍT ÂM THANH</div>
+            <h2 id="yen-sound-title">Bớt nhìn màn hình.<br><em>Nghe gì đó đi.</em></h2>
           </div>
-          <p class="yen-picker-aside">Cục Yên đã thử hết mấy món này. Cục Yên vẫn còn nguyên.</p>
+          <p>Yên để dành vài tiếng động nhỏ và vài playlist cho những lúc bạn muốn ngồi yên. Không cần làm gì cho ra thành tích.</p>
         </div>
-        <div class="yen-picker-machine reveal" id="yen-picker-machine">
-          <div class="yen-picker-machine-top">
-            <span><i aria-hidden="true"></i> MÁY CHỌN LY · SỐ 004</span>
-            <span class="yen-picker-machine-badge">ĐANG RẢNH</span>
-          </div>
-          <div class="yen-picker-console" aria-label="Máy giới thiệu đồ uống của quán Yên">
-            <div class="yen-picker-machine-head">
-              <svg class="yen-picker-machine-mascot" id="yen-picker-mascot" viewBox="0 0 320 320" role="img" aria-label="Cục Yên đang chờ chọn món"><use href="/assets/cuc-yen/mascot.svg#cuc-yen-cheeky"></use></svg>
-              <div><span>PHÒNG GỢI Ý ĐỒ UỐNG</span><strong>MÁY NÀY CHỌN ĐƯỢC.<br><em>PHA THÌ CHƯA.</em></strong></div>
+        <div class="yen-sound-layout">
+          <div class="yen-sound-player reveal" id="yen-sound-player">
+            <div class="yen-sound-player-top">
+              <span class="yen-sound-live"><span aria-hidden="true"></span> ĐÀI YÊN · FM 00.0</span>
+              <span class="yen-sound-issue">PHÁT KHI BẠN BẤM</span>
             </div>
-            <div class="yen-picker-window-frame">
-              <div class="yen-picker-screen" aria-hidden="true">
-                <span class="yen-picker-screen-top">ĐANG TÌM LY HỢP GU...</span>
-                <strong id="yen-picker-reel">CHỜ LỆNH</strong>
-                <span class="yen-picker-screen-bottom" id="yen-picker-screen-bottom">5 MÓN THẬT · KHÔNG BỐC MÓN ẢO</span>
-              </div>
-              <span class="yen-picker-screw" aria-hidden="true">×</span>
-              <span class="yen-picker-screw" aria-hidden="true">×</span>
-            </div>
-            <div class="yen-picker-slot" aria-hidden="true"><span>↓ CỬA RA CỦA THẺ</span></div>
-            <div id="yen-picker-ticket" class="yen-picker-ticket" hidden>
-              <div class="yen-picker-ticket-top">
-                <span>YÊN COFFEE &amp; TEA</span><span>PHIẾU GỢI Ý · KHÔNG PHẢI HÓA ĐƠN</span>
-              </div>
-              <span class="yen-picker-ticket-heading">Cục Yên chọn cho bạn:</span>
-              <div class="yen-picker-ticket-product">
-                <div class="yen-picker-illustration" id="yen-picker-illustration" data-drink="matcha" role="img" aria-label="Minh họa ly nước được gợi ý">
-                  <span class="yen-picker-straw"></span>
-                  <span class="yen-picker-glass"><span class="yen-picker-liquid"></span><span class="yen-picker-ice"></span><span class="yen-picker-glass-face">•ᴗ•</span></span>
-                  <span class="yen-picker-fruit"></span>
+            <div class="yen-sound-monitor" aria-hidden="true">
+              <div class="yen-sound-monitor-rim">
+                <div class="yen-sound-wave" id="yen-sound-wave">
+                  <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
                 </div>
-                <div class="yen-picker-product-copy">
-                  <h3 id="yen-picker-drink-name">Một ly ở Yên</h3>
-                  <p id="yen-picker-drink-desc"></p>
-                </div>
+                <div class="yen-sound-dial"><span>YÊN</span><small>KHÔNG VỘI</small></div>
               </div>
-              <p class="yen-picker-why" id="yen-picker-why"></p>
-              <p class="yen-picker-quip" id="yen-picker-quip"></p>
-              <div class="yen-picker-ticket-stamp" aria-hidden="true">CỤC YÊN<br><strong>ĐỀ CỬ</strong></div>
-              <div class="yen-picker-ticket-actions">
-                <a href="#yen-ngoai-doi" class="yen-picker-visit" id="yen-picker-visit">Ghé Yên thử ly này <span aria-hidden="true">↗</span></a>
-                <button type="button" class="yen-picker-save" id="yen-picker-save">Lưu thẻ <span aria-hidden="true">↓</span></button>
-              </div>
-              <button type="button" class="yen-picker-retry" id="yen-picker-retry">Đổi gu, chọn lại ↻</button>
             </div>
-            <button type="button" class="yen-picker-generate" id="yen-picker-generate">
-              <span class="yen-picker-generate-flower" aria-hidden="true">✳</span>
-              <span id="yen-picker-generate-label">BỐC LY HỢP GU</span>
-              <span aria-hidden="true">↗</span>
-            </button>
-            <p id="yen-picker-status" class="yen-picker-status" role="status" aria-live="polite">Đang chọn kiểu “máy tự quyết”. Bạn có thể đổi ý.</p>
+            <h3>Mượn một chút âm thanh</h3>
+            <p class="yen-sound-description">Ba tiếng nền dịu nhẹ, tạo trực tiếp trên máy bạn. Không nhạc, không quảng cáo, không tự phát.</p>
+            <div class="yen-sound-presets" role="group" aria-label="Chọn âm thanh nền">
+              <button type="button" class="yen-sound-preset" data-yen-sound="rain" aria-pressed="false">
+                <span class="yen-sound-preset-icon" aria-hidden="true">⋮⋮</span>
+                <span><strong>Mưa bên hiên</strong><small>Trời mưa. Chưa cần chạy.</small></span><span class="yen-sound-preset-action" aria-hidden="true">▶</span>
+              </button>
+              <button type="button" class="yen-sound-preset" data-yen-sound="wind" aria-pressed="false">
+                <span class="yen-sound-preset-icon" aria-hidden="true">〰</span>
+                <span><strong>Gió qua lá</strong><small>Lá nói nhỏ thôi.</small></span><span class="yen-sound-preset-action" aria-hidden="true">▶</span>
+              </button>
+              <button type="button" class="yen-sound-preset" data-yen-sound="waves" aria-pressed="false">
+                <span class="yen-sound-preset-icon" aria-hidden="true">≈</span>
+                <span><strong>Sóng ở xa</strong><small>Đầu óc đi dạo một lát.</small></span><span class="yen-sound-preset-action" aria-hidden="true">▶</span>
+              </button>
+            </div>
+            <div class="yen-sound-controls">
+              <label for="yen-sound-volume">ÂM LƯỢNG <span id="yen-sound-volume-value">35%</span></label>
+              <input type="range" id="yen-sound-volume" min="0" max="100" step="5" value="35" aria-label="Âm lượng âm thanh nền Yên">
+              <button type="button" id="yen-sound-stop" class="yen-sound-stop" disabled>Tắt tiếng <span aria-hidden="true">■</span></button>
+            </div>
+            <p class="yen-sound-status" id="yen-sound-status" role="status" aria-live="polite">Chưa bật tiếng nào. Yên cũng không vội.</p>
           </div>
-          <p class="yen-picker-machine-note">Máy chỉ gợi ý. Nước ngon thì Yên pha ở quán.</p>
+          <div class="yen-music-list reveal" id="yen-music-playlists">
+            <div class="yen-music-list-intro">
+              <span class="yen-music-label">YÊN CHỌN NHẠC · YOUTUBE</span>
+              <h3>Nhạc cho lúc<br><em>muốn nghe riêng.</em></h3>
+              <p>Playlist Yên đề xuất để bạn tự mở trên YouTube. Không có nhạc tự chạy khi ghé trang này.</p>
+            </div>
+            <div class="yen-music-items" aria-label="Danh sách playlist YouTube của Yên">
+              <div class="yen-music-card" data-yen-playlist="morning">
+                <span class="yen-music-card-number">01</span>
+                <div class="yen-music-card-copy"><strong>Sáng chưa vội</strong><small>Mở ngày mới bằng chút nhạc.</small></div>
+                <span class="yen-music-pending" data-yen-pending="morning">ĐANG CHỌN BÀI</span>
+                <a class="yen-music-open" data-yen-open="morning" href="" target="_blank" rel="noopener noreferrer" hidden>Nghe trên YouTube ↗</a>
+              </div>
+              <div class="yen-music-card" data-yen-playlist="afternoon">
+                <span class="yen-music-card-number">02</span>
+                <div class="yen-music-card-copy"><strong>Chiều ngồi lâu</strong><small>Để thời gian chậm lại một chút.</small></div>
+                <span class="yen-music-pending" data-yen-pending="afternoon">ĐANG CHỌN BÀI</span>
+                <a class="yen-music-open" data-yen-open="afternoon" href="" target="_blank" rel="noopener noreferrer" hidden>Nghe trên YouTube ↗</a>
+              </div>
+              <div class="yen-music-card" data-yen-playlist="evening">
+                <span class="yen-music-card-number">03</span>
+                <div class="yen-music-card-copy"><strong>Tối đèn vàng</strong><small>Một góc yên trước khi về.</small></div>
+                <span class="yen-music-pending" data-yen-pending="evening">ĐANG CHỌN BÀI</span>
+                <a class="yen-music-open" data-yen-open="evening" href="" target="_blank" rel="noopener noreferrer" hidden>Nghe trên YouTube ↗</a>
+              </div>
+            </div>
+            <p class="yen-music-postscript">Đang lựa bài cho hợp cái tên Yên. Có playlist rồi sẽ mở nghe được ngay tại đây.</p>
+            <div class="yen-music-footer">Nhạc không làm deadline biến mất. Nhưng có thể làm cái ghế dễ ngồi hơn.</div>
+          </div>
         </div>
       </div>
     </section>
@@ -3530,7 +3421,7 @@ body.yen-stamping-active{overflow:hidden}
   <div class="yen-rewind-caption" id="yen-rewind-caption">Đang tua về tập 1...</div>
 </div>
 
-  <dialog id="receipt-dialog" aria-labelledby="receipt-label"><div class="receipt"><button type="button" id="close-receipt" class="receipt-flower-close" aria-label="Đóng biên lai" title="Đóng biên lai"><svg class="yen-icon" aria-hidden="true" focusable="false"><use href="#yen-bloom"></use></svg></button><div class="receipt-head"><img class="receipt-logo" src="yen-logo.svg" width="1450" height="585" alt="yên" decoding="async"><p id="receipt-label">BIÊN LAI 0Đ</p></div><div class="receipt-items"><div class="receipt-row"><span>01 × <span id="receipt-name"></span></span><b>0 ₫</b></div><div class="receipt-row"><span>Tổng cộng</span><b>0 ₫</b></div></div><p class="receipt-quote" id="receipt-quote"></p><div class="receipt-bottom"><p class="irl-receipt-note">Quà vui trên web, không đổi tại quán.</p><a class="game-next" href="#ngoi-yen" id="receipt-next-game">Qua Máy chọn ly →</a></div></div></dialog>
+  <dialog id="receipt-dialog" aria-labelledby="receipt-label"><div class="receipt"><button type="button" id="close-receipt" class="receipt-flower-close" aria-label="Đóng biên lai" title="Đóng biên lai"><svg class="yen-icon" aria-hidden="true" focusable="false"><use href="#yen-bloom"></use></svg></button><div class="receipt-head"><img class="receipt-logo" src="yen-logo.svg" width="1450" height="585" alt="yên" decoding="async"><p id="receipt-label">BIÊN LAI 0Đ</p></div><div class="receipt-items"><div class="receipt-row"><span>01 × <span id="receipt-name"></span></span><b>0 ₫</b></div><div class="receipt-row"><span>Tổng cộng</span><b>0 ₫</b></div></div><p class="receipt-quote" id="receipt-quote"></p><div class="receipt-bottom"><p class="irl-receipt-note">Quà vui trên web, không đổi tại quán.</p><a class="game-next" href="#ngoi-yen" id="receipt-next-game">Qua Góc nghe Yên →</a></div></div></dialog>
   <dialog id="privacy-dialog" aria-labelledby="privacy-label">
     <div class="privacy-card">
       <button class="privacy-close" id="close-privacy" type="button" aria-label="Đóng thông tin riêng tư">×</button>
@@ -4142,176 +4033,170 @@ body.yen-stamping-active{overflow:hidden}
   
 
 
-<script id="yen-real-drink-picker-script">
-/* A real-menu-only taste match. Session state stays in memory; no tracking or ordering. */
-(function(){
-  "use strict";
-  const byId=id=>document.getElementById(id);
-  const machine=byId("yen-picker-machine"),generate=byId("yen-picker-generate");
-  const reel=byId("yen-picker-reel"),ticket=byId("yen-picker-ticket");
-  const status=byId("yen-picker-status"),illustration=byId("yen-picker-illustration");
-  const mascot=byId("yen-picker-mascot");
-  const moods=Array.from(document.querySelectorAll("[data-yen-mood]"));
-  if(!machine||!generate||!reel||!ticket||!status||!illustration||!moods.length)return;
-  const reduced=window.matchMedia("(prefers-reduced-motion: reduce)");
-  const drinks=[
-    {id:"coldbrew",name:"Cold Brew Cam Vàng",desc:"Cà phê ủ lạnh, thêm vị cam vàng.",why:"Bạn muốn tỉnh một chút. Máy đề cử cà phê ủ lạnh có vị cam vàng.",quip:"Cục Yên bảo: “Tỉnh thôi nha. Đừng tỉnh tới mức nhớ deadline.”",pose:"surprised"},
-    {id:"matcha",name:"Matcha dâu",desc:"Matcha kết hợp cùng dâu.",why:"Bạn muốn vị ngọt dịu. Một ly matcha dâu là gợi ý hợp gu.",quip:"Cục Yên thử một ngụm, nói: “Ngọt thế này thì giận nhau hơi khó.”",pose:"delighted"},
-    {id:"cacao",name:"Cacao cốt dừa",desc:"Cacao thơm, thêm cốt dừa béo.",why:"Bạn đang thèm thứ béo thơm. Cacao cốt dừa hợp với lựa chọn đó.",quip:"Cục Yên uống xong ngồi yên. Lần này là do ngon.",pose:"sleepy"},
-    {id:"atiso",name:"Trà atiso đường phèn mật ong",desc:"Trà atiso với đường phèn và mật ong.",why:"Bạn muốn nhẹ nhàng. Máy chọn một ly trà có vị ngọt dịu.",quip:"Cục Yên bảo: “Ly này có vẻ biết nói nhỏ. Hợp với tôi.”",pose:"tea"},
-    {id:"juice",name:"Nước ép thơm táo",desc:"Nước ép từ thơm và táo.",why:"Bạn muốn thanh mát. Máy đề cử một ly nước ép trái cây.",quip:"Cục Yên nhấp thử. Táo và thơm đều tưởng mình là nhân vật chính.",pose:"happy"}
-  ];
-  const moodToDrink={tinh:0,ngot:1,beo:2,nhe:3,mat:4};
-  const moodNames={tinh:"tỉnh một chút",ngot:"ngọt dịu",beo:"béo thơm",nhe:"nhẹ nhàng",mat:"thanh mát",batky:"máy tự quyết"};
-  let selected="batky",isSpinning=false,tick=0,delay=0,lastIndex=-1,current=null;
-  function chooseMood(value){
-    if(isSpinning||!(value in moodNames))return;
-    selected=value;ticket.hidden=true;generate.hidden=false;machine.classList.remove("is-issued");
-    reel.textContent="CHỜ LỆNH";
-    byId("yen-picker-screen-bottom").textContent="5 MÓN THẬT · KHÔNG BỐC MÓN ẢO";
-    byId("yen-picker-generate-label").textContent="BỐC LY HỢP GU";
-    status.textContent=value==="batky"?"Máy tự chọn một món trong menu Yên.":"Đã chọn kiểu "+moodNames[value]+". Bấm để xem ly hợp gu.";
-    current=null;
-    moods.forEach(btn=>btn.setAttribute("aria-pressed",String(btn.dataset.yenMood===value)));
-    const u=mascot?.querySelector("use");if(u)u.setAttribute("href","/assets/cuc-yen/mascot.svg#cuc-yen-cheeky");
-  }
-  moods.forEach(btn=>btn.addEventListener("click",()=>chooseMood(btn.dataset.yenMood)));
-  function pick(){
-    if(selected!=="batky")return moodToDrink[selected];
-    const choices=drinks.map((_,i)=>i).filter(i=>i!==lastIndex);
-    return choices[Math.floor(Math.random()*choices.length)];
-  }
-  function stopAnimation(){
-    window.clearInterval(tick);window.clearTimeout(delay);
-    machine.classList.remove("is-scanning");moods.forEach(btn=>btn.disabled=false);
-    generate.disabled=false;isSpinning=false;
-  }
-  function showResult(index){
-    stopAnimation();
-    lastIndex=index;current=drinks[index];
-    reel.textContent="ĐÃ TÌM THẤY!";
-    byId("yen-picker-screen-bottom").textContent="MÓN CÓ THẬT Ở YÊN";
-    illustration.dataset.drink=current.id;
-    illustration.setAttribute("aria-label","Hình minh họa "+current.name);
-    byId("yen-picker-drink-name").textContent=current.name;
-    byId("yen-picker-drink-desc").textContent=current.desc;
-    byId("yen-picker-why").textContent=current.why;
-    byId("yen-picker-quip").textContent=current.quip;
-    const u=mascot?.querySelector("use");if(u)u.setAttribute("href","/assets/cuc-yen/mascot.svg#cuc-yen-"+current.pose);
-    if(mascot)mascot.setAttribute("aria-label","Cục Yên vừa chọn "+current.name);
-    ticket.hidden=false;machine.classList.add("is-issued");
-    generate.hidden=true;
-    status.textContent="Máy chọn "+current.name+". Món này có thật ở Yên.";
-    if(window.innerWidth<=950){
-      window.requestAnimationFrame(()=>{
-        const bounds=ticket.getBoundingClientRect();
-        if(bounds.bottom>window.innerHeight+50&&bounds.top>0){
-          ticket.scrollIntoView({behavior:reduced.matches?"auto":"smooth",block:"nearest"});
-        }
-      });
-    }
-  }
-  function reset(){
-    if(isSpinning)return;
-    ticket.hidden=true;generate.hidden=false;
-    chooseMood("batky");
-    generate.focus({preventScroll:true});
-  }
-  function start(){
-    if(isSpinning)return;
-    const winning=pick();
-    isSpinning=true;machine.classList.remove("is-issued");
-    machine.classList.add("is-scanning");ticket.hidden=true;
-    generate.disabled=true;generate.hidden=false;
-    moods.forEach(btn=>btn.disabled=true);
-    byId("yen-picker-generate-label").textContent="MÁY ĐANG SUY NGHĨ...";
-    status.textContent="Máy đang chọn một món có thật trong menu...";
-    byId("yen-picker-screen-bottom").textContent="KHÔNG ĐƯỢC HỐI MÁY";
-    let step=0;
-    if(!reduced.matches){
-      tick=window.setInterval(()=>{
-        reel.textContent=drinks[(step++)%drinks.length].name;
-      },98);
-    }
-    delay=window.setTimeout(()=>showResult(winning),reduced.matches?0:1340);
-  }
-  generate.addEventListener("click",start);
-  byId("yen-picker-retry").addEventListener("click",reset);
-  function drawCard(d){
-    const canvas=document.createElement("canvas");canvas.width=1080;canvas.height=1350;
-    const ctx=canvas.getContext("2d");if(!ctx)throw new Error("Không thể tạo ảnh");
-    const colors={matcha:["#91b78a","#e6a2b0"],cacao:["#f6e4c2","#966b4b"],atiso:["#e5d1a2","#b58160"],juice:["#ffdb8d","#efa65b"],coldbrew:["#ae7c54","#6d482f"]}[d.id];
-    ctx.fillStyle="#e4ebd9";ctx.fillRect(0,0,1080,1350);
-    ctx.fillStyle="#fffbed";ctx.fillRect(60,58,960,1234);
-    ctx.strokeStyle="#719276";ctx.lineWidth=6;ctx.strokeRect(80,77,920,1194);
-    ctx.fillStyle="#315e42";ctx.textAlign="left";ctx.font='900 35px "Noto Sans",Arial,sans-serif';
-    ctx.fillText("yên  ·  COFFEE & TEA",122,155);
-    ctx.fillStyle="#8ba18d";ctx.font='800 20px "Noto Sans",Arial,sans-serif';
-    ctx.fillText("MÁY CHỌN LY 004  /  PHIẾU GỢI Ý",123,204);
-    ctx.strokeStyle="#b1c3af";ctx.lineWidth=2;ctx.setLineDash([9,10]);ctx.beginPath();ctx.moveTo(122,240);ctx.lineTo(957,240);ctx.stroke();ctx.setLineDash([]);
-    ctx.fillStyle="#a87757";ctx.font='700 33px "Noto Serif",Georgia,serif';
-    ctx.fillText("Cục Yên chọn cho bạn:",122,308);
-    // Illustration only, not a representation of the actual drink presentation.
-    ctx.save();ctx.translate(540,470);ctx.rotate(-.06);
-    ctx.fillStyle="#849f8860";ctx.beginPath();ctx.ellipse(0,250,155,20,0,0,Math.PI*2);ctx.fill();
-    ctx.fillStyle="#eebaa9";ctx.fillRect(51,-161,20,270);
-    ctx.fillStyle="#4d715c";ctx.fillRect(-125,-88,250,297);
-    ctx.fillStyle="#fffef6";ctx.fillRect(-118,-83,236,279);
-    const g=ctx.createLinearGradient(0,-25,0,220);g.addColorStop(0,colors[0]);g.addColorStop(.48,colors[0]);g.addColorStop(.52,colors[1]);g.addColorStop(1,colors[1]);
-    ctx.fillStyle=g;ctx.fillRect(-111,-12,222,209);
-    ctx.strokeStyle="#fffef7";ctx.lineWidth=11;ctx.beginPath();ctx.moveTo(-88,-61);ctx.lineTo(-88,148);ctx.stroke();
-    ctx.fillStyle="#375844";ctx.font='900 48px "Noto Sans",Arial,sans-serif';ctx.textAlign="center";ctx.fillText("• ᴗ •",0,121);
-    ctx.restore();
-    if(d.id==="coldbrew"||d.id==="juice"){
-      ctx.strokeStyle="#dba54d";ctx.lineWidth=18;ctx.beginPath();ctx.arc(707,386,45,0,Math.PI*2);ctx.stroke();
-    }
-    const lines=(str,maxWidth,font)=>{ctx.font=font;const out=[];let row="";
-      for(const word of str.split(/\s+/)){const next=row?row+" "+word:word;
-        if(ctx.measureText(next).width>maxWidth&&row){out.push(row);row=word;}else row=next;
-      }if(row)out.push(row);return out;
-    };
-    ctx.fillStyle="#315b42";ctx.textAlign="center";
-    const nameLines=lines(d.name,800,'900 58px "Noto Serif",Georgia,serif');
-    let y=790;
-    for(const l of nameLines){ctx.font='900 58px "Noto Serif",Georgia,serif';ctx.fillText(l,540,y);y+=70;}
-    ctx.fillStyle="#597863";ctx.font='600 26px "Noto Sans",Arial,sans-serif';
-    ctx.fillText(d.desc,540,y+7);
-    ctx.strokeStyle="#b9c8aa";ctx.setLineDash([7,9]);ctx.beginPath();ctx.moveTo(122,976);ctx.lineTo(957,976);ctx.stroke();ctx.setLineDash([]);
-    ctx.fillStyle="#41674d";ctx.textAlign="left";
-    const whyLines=lines(d.why,796,'650 27px "Noto Sans",Arial,sans-serif');
-    y=1030;ctx.font='650 27px "Noto Sans",Arial,sans-serif';for(const l of whyLines){ctx.fillText(l,135,y);y+=40;}
-    ctx.fillStyle="#a46a51";ctx.font='900 23px "Noto Sans",Arial,sans-serif';ctx.fillText("LÁNG DÀI · ĐẤT ĐỎ",130,1214);
-    ctx.textAlign="right";ctx.fillText("GHÉ YÊN UỐNG THẬT ↗",948,1214);
-    return canvas.toDataURL("image/png");
-  }
-  byId("yen-picker-save").addEventListener("click",()=>{
-    if(!current)return;
-    let uri;
-    try{uri=drawCard(current);}catch(_){status.textContent="Chưa tạo được ảnh. Bạn vẫn có thể chụp màn hình thẻ.";return;}
-    function download(){
-      const a=document.createElement("a");a.href=uri;a.download="yen-chon-ly-"+current.id+".png";
-      document.body.appendChild(a);a.click();a.remove();
-      status.textContent="Đã tạo thẻ PNG. Nếu iPhone mở ảnh, hãy nhấn giữ để lưu.";
-    }
-    if(typeof File!=="undefined"&&navigator.share&&navigator.canShare){
-      try{
-        const raw=atob(uri.split(",")[1]),bytes=new Uint8Array(raw.length);
-        for(let i=0;i<raw.length;i++)bytes[i]=raw.charCodeAt(i);
-        const file=new File([bytes],"yen-chon-ly-"+current.id+".png",{type:"image/png"});
-        if(navigator.canShare({files:[file]})){
-          navigator.share({files:[file],title:"Cục Yên chọn ly cho tôi"})
-            .then(()=>{status.textContent="Đã mở chia sẻ thẻ gợi ý.";})
-            .catch(err=>{if(err.name!=="AbortError")download();});
-          return;
-        }
-      }catch(_){/* Use local download fallback. */}
-    }
-    download();
-  });
-  chooseMood("batky");
-})();
 </script>
 
+
+<script id="yen-quiet-sounds-script">
+/* Yên ambient desk: original browser-generated ambience, no audio files or copyrighted music.
+   Playback begins only after a user gesture and is entirely local to the browser.
+   Fill the playlist URLs below when the owner shares public YouTube playlist links. */
+(function(){
+  "use strict";
+  const playlists={
+    morning:"",
+    afternoon:"",
+    evening:""
+  };
+  function validYouTubePlaylist(raw){
+    if(!raw)return false;
+    try{
+      const u=new URL(raw);
+      const h=u.hostname.toLowerCase();
+      return u.protocol==="https:" &&
+        (h==="youtube.com"||h==="www.youtube.com"||h==="m.youtube.com"||h==="music.youtube.com") &&
+        Boolean(u.searchParams.get("list"));
+    }catch(_){return false;}
+  }
+  for(const [id,url] of Object.entries(playlists)){
+    if(!validYouTubePlaylist(url))continue;
+    const link=document.querySelector('[data-yen-open="'+id+'"]');
+    const pending=document.querySelector('[data-yen-pending="'+id+'"]');
+    if(link&&pending){link.href=url;link.hidden=false;pending.hidden=true;}
+  }
+  const player=document.getElementById("yen-sound-player");
+  const presets=Array.from(document.querySelectorAll("[data-yen-sound]"));
+  const volume=document.getElementById("yen-sound-volume");
+  const volumeValue=document.getElementById("yen-sound-volume-value");
+  const stopButton=document.getElementById("yen-sound-stop");
+  const status=document.getElementById("yen-sound-status");
+  if(!player||!presets.length||!volume||!stopButton||!status)return;
+  const AC=window.AudioContext||window.webkitAudioContext;
+  if(!AC){
+    presets.forEach(p=>p.disabled=true);
+    status.textContent="Trình duyệt này chưa hỗ trợ phát tiếng nền. Playlist YouTube vẫn có thể nghe khi Yên đăng link.";
+    return;
+  }
+  let ctx=null,noiseBuffers={},active=null,requestId=0;
+  const names={rain:"Mưa bên hiên",wind:"Gió qua lá",waves:"Sóng ở xa"};
+  function setUi(key){
+    player.classList.toggle("is-playing",Boolean(key));
+    presets.forEach(p=>{
+      const selected=p.dataset.yenSound===key;
+      p.setAttribute("aria-pressed",String(selected));
+      p.querySelector(".yen-sound-preset-action").textContent=selected?"Ⅱ":"▶";
+      p.setAttribute("aria-label",selected?"Tạm dừng "+names[p.dataset.yenSound]:"Nghe "+names[p.dataset.yenSound]);
+    });
+    stopButton.disabled=!key;
+    status.textContent=key?"Đang nghe "+names[key]+". Bấm lại để tắt.":"Đã tắt tiếng. Yên vẫn đang ở đây.";
+  }
+  function silence(){
+    const playing=active;active=null;
+    if(!playing||!ctx)return;
+    if(playing.dropTimer)window.clearTimeout(playing.dropTimer);
+    const t=ctx.currentTime;
+    playing.bus.gain.cancelScheduledValues(t);
+    playing.bus.gain.setTargetAtTime(0,t,.055);
+    window.setTimeout(()=>{
+      playing.sources.forEach(node=>{try{node.stop()}catch(_){/* Already ended. */}});
+      playing.nodes.forEach(node=>{try{node.disconnect()}catch(_){/* Already released. */}});
+    },280);
+  }
+  function stop(){
+    requestId++;
+    silence();
+    setUi(null);
+  }
+  function makeNoise(kind){
+    if(noiseBuffers[kind])return noiseBuffers[kind];
+    const length=ctx.sampleRate*2;
+    const buffer=ctx.createBuffer(1,length,ctx.sampleRate);
+    const channel=buffer.getChannelData(0);
+    let b0=0,b1=0,b2=0,b3=0,b4=0,b5=0,b6=0;
+    for(let i=0;i<length;i++){
+      const w=Math.random()*2-1;
+      if(kind==="white"){channel[i]=w*.55;continue;}
+      b0=.99886*b0+w*.0555179;b1=.99332*b1+w*.0750759;
+      b2=.969*b2+w*.153852;b3=.8665*b3+w*.3104856;
+      b4=.55*b4+w*.5329522;b5=-.7616*b5-w*.016898;
+      channel[i]=(b0+b1+b2+b3+b4+b5+b6+w*.5362)*.055;
+      b6=w*.115926;
+    }
+    noiseBuffers[kind]=buffer;
+    return buffer;
+  }
+  function voice(playing,{color="pink",filter="lowpass",freq=1200,q=.7,gain=.1,lfo=0,depth=0}){
+    const src=ctx.createBufferSource();src.buffer=makeNoise(color);src.loop=true;
+    const eq=ctx.createBiquadFilter();eq.type=filter;eq.frequency.value=freq;eq.Q.value=q;
+    const level=ctx.createGain();level.gain.value=gain;
+    src.connect(eq);eq.connect(level);level.connect(playing.bus);
+    playing.nodes.push(src,eq,level);playing.sources.push(src);
+    if(lfo){
+      const oscill=ctx.createOscillator(),amount=ctx.createGain();
+      oscill.type="sine";oscill.frequency.value=lfo;amount.gain.value=depth;
+      oscill.connect(amount);amount.connect(level.gain);oscill.start();
+      playing.sources.push(oscill);playing.nodes.push(oscill,amount);
+    }
+    src.start();
+  }
+  function drop(playing){
+    if(active!==playing||!ctx)return;
+    const now=ctx.currentTime;
+    const osc=ctx.createOscillator(),gain=ctx.createGain();
+    osc.type="sine";
+    const f=460+Math.random()*430;
+    osc.frequency.setValueAtTime(f,now);
+    osc.frequency.exponentialRampToValueAtTime(f*.55,now+.066);
+    gain.gain.setValueAtTime(.0001,now);
+    gain.gain.exponentialRampToValueAtTime(.018+Math.random()*.02,now+.007);
+    gain.gain.exponentialRampToValueAtTime(.0001,now+.092);
+    osc.connect(gain);gain.connect(playing.bus);
+    osc.start(now);osc.stop(now+.1);
+    osc.onended=()=>{try{osc.disconnect();gain.disconnect()}catch(_){}};
+    playing.dropTimer=window.setTimeout(()=>drop(playing),180+Math.random()*570);
+  }
+  async function startSound(key){
+    if(active&&active.key===key){stop();return;}
+    const token=++requestId;
+    silence();setUi(null);
+    try{
+      if(!ctx){ctx=new AC();noiseBuffers={};}
+      await ctx.resume();
+      if(token!==requestId)return;
+      const bus=ctx.createGain();
+      bus.gain.setValueAtTime(0,ctx.currentTime);
+      bus.gain.setTargetAtTime((Number(volume.value)/100)*.85,ctx.currentTime,.22);
+      bus.connect(ctx.destination);
+      const playing={key,bus,sources:[],nodes:[bus],dropTimer:0};
+      active=playing;
+      if(key==="rain"){
+        voice(playing,{color:"white",filter:"lowpass",freq:4000,q:.45,gain:.14});
+        voice(playing,{color:"pink",filter:"lowpass",freq:550,q:.5,gain:.09});
+        playing.dropTimer=window.setTimeout(()=>drop(playing),220);
+      }else if(key==="wind"){
+        voice(playing,{color:"pink",filter:"bandpass",freq:430,q:.6,gain:.19,lfo:.13,depth:.12});
+        voice(playing,{color:"white",filter:"lowpass",freq:1500,q:.55,gain:.018,lfo:.85,depth:.012});
+      }else{
+        voice(playing,{color:"pink",filter:"lowpass",freq:980,q:.6,gain:.14,lfo:.115,depth:.115});
+        voice(playing,{color:"white",filter:"bandpass",freq:1600,q:.5,gain:.025,lfo:.12,depth:.019});
+      }
+      setUi(key);
+    }catch(_){
+      silence();setUi(null);
+      status.textContent="Không phát được âm thanh trên thiết bị này. Bạn có thể thử mở lại bằng một lần chạm.";
+    }
+  }
+  presets.forEach(button=>button.addEventListener("click",()=>startSound(button.dataset.yenSound)));
+  stopButton.addEventListener("click",stop);
+  volume.addEventListener("input",()=>{
+    const v=Number(volume.value);volumeValue.textContent=v+"%";
+    if(active&&ctx)active.bus.gain.setTargetAtTime(v/100*.85,ctx.currentTime,.05);
+  });
+  // Do not leave an unexpected sound running after the visitor leaves the page.
+  document.addEventListener("visibilitychange",()=>{if(document.hidden)stop();});
+  window.addEventListener("pagehide",stop);
+  setUi(null);
+})();
+</script>
 <script id="yen-playmap-script">
 /* Jumps align section headings below the mobile logo + visit button header. */
 (function(){
