@@ -2254,6 +2254,34 @@
 }
 
 </style>
+<style id="yen-zero-form-permit-style">
+
+/* Zero-form permit UX: results first, the stamp performance is the centerpiece. */
+.permit-stage-main{align-items:start}
+.permit-intro{text-align:left}
+.permit-intro .permit-action.permit-start{
+  width:100%;min-height:64px;background:linear-gradient(117deg,#294a3a,#467953);
+  color:#fffdf2;font-size:14px;border-radius:12px;box-shadow:5px 6px 0 #a9bc9b
+}
+.permit-intro .permit-small-note{font-size:11px}
+.permit-stage.is-previewing .permit-ink-seal,
+.permit-stage.is-collecting .permit-ink-seal,
+.permit-stage.is-seal-coming:not(.is-seal-imprinted) .permit-ink-seal{visibility:hidden!important;opacity:0!important}
+.permit-stage.is-issued .permit-restart{
+  display:inline-flex;align-items:center;justify-content:center;
+  background:#e8eedc;border:1.5px solid #698469;border-radius:10px;
+  text-decoration:none;min-height:44px;padding:10px 15px;color:#2c5540
+}
+.permit-stage.is-previewing .permit-result-actions,
+.permit-stage.is-collecting .permit-result-actions,
+.permit-stage.is-seal-coming .permit-result-actions{visibility:hidden;pointer-events:none}
+.permit-stage.is-issued .permit-result-actions{visibility:visible}
+@media(max-width:700px){
+  .permit-stage-main{gap:12px}
+  .permit-intro .permit-action.permit-start{min-height:62px;font-size:13px}
+}
+
+</style>
 </head>
 <body>
   <!-- Yên doodle icons: hand-drawn, consistent stroke; no icon fonts or external assets -->
@@ -2325,8 +2353,8 @@
     <section class="hero wrap" id="dau" aria-labelledby="hero-title">
       <div class="hero-copy">
         <h1 id="hero-title">Ghé chơi.<span class="hero-invite-line"><em class="hero-go-word">Đi</em> đâu cho xa.</span><span class="hero-invite-line hero-local-line"><em class="hero-go-word">Đi</em> Láng Dài lái cục dàng nè</span></h1>
-        <p class="hero-game-lead">Chọn 2 cái cớ. Cục Yên đóng mộc cho vui.</p>
-        <p class="hero-game-details" id="hero-play-details">Tầm 30 giây · Không đăng nhập · Không lưu dữ liệu</p>
+        <p class="hero-game-lead">Bấm một cái. Cục Yên tự bốc lý do rồi đóng mộc.</p>
+        <p class="hero-game-details" id="hero-play-details">Một cú bấm · Không đăng nhập · Không lưu dữ liệu</p>
         <div class="hero-cta"><a class="big-btn hero-play-btn" href="#tam-trang" aria-describedby="hero-play-details">Xin giấy phép nghỉ <svg class="yen-icon" aria-hidden="true"><use href="#yen-arrow"></use></svg></a><a class="hero-real-btn" href="#yen-ngoai-doi">Yên ngoài đời <svg class="yen-icon" aria-hidden="true"><use href="#yen-arrow"></use></svg></a></div>
         <p class="hero-intro">Ở Yên có <strong>matcha dâu, cacao cốt dừa</strong> và một góc để ngồi nghỉ thật. Trên web thì cứ chơi đã.</p>
         <div class="hero-easter-row"><button class="hero-dare hero-easter-btn" id="poke-btn" type="button" aria-describedby="poke-reply">Đừng bấm cái này <svg class="yen-icon" aria-hidden="true" focusable="false"><use href="#yen-talk"></use></svg></button></div>
@@ -2364,9 +2392,9 @@
       <div class="permit-heading reveal">
         <div>
           <div class="permit-eyebrow"><span class="permit-number">01</span> / SỞ CẤP PHÉP NGHỈ</div>
-          <h2 id="permit-section-title">Muốn nghỉ chút không?<br><em>Làm đơn đi.</em></h2>
+          <h2 id="permit-section-title">Muốn nghỉ chút không?<br><em>Cục Yên lo.</em></h2>
         </div>
-        <p class="permit-heading-aside">Không cần chữ ký sếp. Ở đây nghỉ cũng được duyệt.</p>
+        <p class="permit-heading-aside">Không cần khai gì hết. Cục Yên tự bịa lý do, rồi đóng mộc cho bạn.</p>
       </div>
       <div class="permit-stage" id="yen-permit">
         <div class="permit-desk-grain" aria-hidden="true"></div>
@@ -2383,9 +2411,9 @@
             <div class="permit-paper-rule" aria-hidden="true"></div>
             <div class="permit-stamp-landing" id="permit-stamp-landing" aria-hidden="true"><span>CỤC YÊN</span><strong>ĐÃ DUYỆT NGHỈ</strong></div>
             <div class="permit-intro" id="permit-intro">
-              <div class="permit-sheet-kicker">HỒ SƠ TRỐNG · ĐANG CHỜ TIẾP NHẬN</div>
+              <div class="permit-sheet-kicker">HỒ SƠ TỰ ĐỘNG · KHÔNG CẦN ĐIỀN</div>
               <h3>ĐƠN XIN<br>NGHỈ MỘT CHÚT</h3>
-              <p>Chọn hai cái cớ. Việc đóng mộc có Cục Yên lo.</p>
+              <p>Bấm một cái. Cục Yên bốc lý do, chọn thời hạn rồi đóng mộc CỘP!</p>
               <div class="permit-illustration" aria-hidden="true">
                 <svg viewBox="0 0 360 150" role="presentation" focusable="false">
                   <ellipse cx="182" cy="138" rx="140" ry="10" fill="#cad7bb"/>
@@ -2401,41 +2429,11 @@
                   <path d="M337 22l4 10 11 4-11 4-4 10-4-10-11-4 11-4Z" fill="#e9b878"/>
                 </svg>
               </div>
-              <button class="permit-action permit-start" type="button" id="permit-start"><span>NỘP ĐƠN XIN NGHỈ</span><span aria-hidden="true">↗</span></button>
-              <p class="permit-small-note">Không cần tên. Không lưu hồ sơ.</p>
-            </div>
-            <div class="permit-form" id="permit-form" hidden>
-              <div class="permit-sheet-kicker">ĐƠN SỐ KHÔNG · HAI MỤC CẦN KHAI</div>
-              <h3>PHIẾU ĐỀ NGHỊ<br>ĐƯỢC NGỒI YÊN</h3>
-              <p class="permit-form-intro">Không có đáp án sai.</p>
-              <fieldset class="permit-field" data-field="reason">
-                <legend><span class="permit-field-index">01</span> Hôm nay lấy cớ gì để ngồi Yên?</legend>
-                <div class="permit-options">
-                  <button type="button" data-permit-field="reason" data-permit-value="noise" aria-pressed="false">Não mở 38 tab, tab nào cũng phát nhạc</button>
-                  <button type="button" data-permit-field="reason" data-permit-value="deadline" aria-pressed="false">Deadline dí, mình giả vờ mất sóng</button>
-                  <button type="button" data-permit-field="reason" data-permit-value="busy" aria-pressed="false">Việc chưa xong, mood đã tan ca</button>
-                  <button type="button" data-permit-field="reason" data-permit-value="why" aria-pressed="false">Pin xã hội còn đúng 1%</button>
-                </div>
-              </fieldset>
-              <fieldset class="permit-field" data-field="duration">
-                <legend><span class="permit-field-index">02</span> Bao giờ mới chịu đứng dậy?</legend>
-                <div class="permit-options">
-                  <button type="button" data-permit-field="duration" data-permit-value="ten" aria-pressed="false">10 phút nữa, hứa bằng Wi-Fi</button>
-                  <button type="button" data-permit-field="duration" data-permit-value="cup" aria-pressed="false">Hết ly rồi tính, đừng hối</button>
-                  <button type="button" data-permit-field="duration" data-permit-value="song" aria-pressed="false">Hết bài này... rồi bài nữa</button>
-                  <button type="button" data-permit-field="duration" data-permit-value="better" aria-pressed="false">Khi nào mood chịu hợp tác</button>
-                </div>
-              </fieldset>
-              <div class="permit-approval-panel">
-                <p class="permit-approve-hint" id="permit-approve-status" role="status" aria-live="polite">Chọn 2 cái cớ ở trên, rồi nhờ Cục Yên đóng mộc.</p>
-                <button class="permit-action permit-approve" type="button" id="permit-approve" aria-describedby="permit-approve-status">
-                  <span>NHỜ CỤC YÊN DUYỆT ĐƠN</span><span aria-hidden="true">↗</span>
-                </button>
-              </div>
-              <div class="permit-form-bottom"><span id="permit-progress" aria-live="polite">ĐÃ KHAI 0/2 MỤC</span><span>CHỮ KÝ: CỤC YÊN LO</span></div>
+              <button class="permit-action permit-start" type="button" id="permit-start"><span>BỐC GIẤY PHÉP NGHỈ</span><span aria-hidden="true">↗</span></button>
+              <p class="permit-small-note">Không cần chọn gì. Mỗi lần bốc một giấy phép khác. Không lưu dữ liệu.</p>
             </div>
             <div class="permit-receipt" id="permit-receipt" hidden>
-              <div class="permit-sheet-kicker">ĐÃ ĐƯỢC DUYỆT · BẢN CHỈ ĐỂ VUI</div>
+              <div class="permit-sheet-kicker" id="permit-receipt-kicker">ĐÃ BỐC XONG · ĐANG CHỜ ĐÓNG MỘC</div>
               <div class="permit-approved-header">
                 <h3>GIẤY PHÉP<br>NGHỈ TẠM THỜI</h3>
                 <div class="permit-seal-target" id="permit-seal-target">
@@ -2462,7 +2460,7 @@
               <div class="permit-result-actions">
                 <button class="permit-action permit-share-btn" id="permit-share-img" type="button">LƯU / CHIA SẺ GIẤY PHÉP <span aria-hidden="true">↗</span></button>
                 <a class="permit-action permit-map" href="https://maps.app.goo.gl/CxPWLPyZMRsHRYa46" rel="noopener noreferrer" target="_blank">XEM ĐƯỜNG ĐẾN YÊN <span aria-hidden="true">↗</span></a>
-                <button type="button" class="permit-restart" id="permit-restart">Xin giấy phép khác ↺</button>
+                <button type="button" class="permit-restart" id="permit-restart">Bốc giấy phép khác ↺</button>
                 <a class="game-next" href="#buong">Chơi tiếp: Vòng quay →</a>
                 <a class="irl-soft-link" href="#yen-ngoai-doi">Xem quán thật →</a>
               </div>
@@ -2471,7 +2469,7 @@
             </div>
           </div>
           <aside class="permit-clerk" aria-label="Quầy đóng dấu của Cục Yên">
-            <div class="permit-clerk-title"><span>QUẦY SỐ 01</span><span class="permit-clerk-light" aria-hidden="true"></span></div>
+            <div class="permit-clerk-title"><span>QUẦY ĐÓNG MỘC</span><span class="permit-clerk-light" aria-hidden="true"></span></div>
             <div class="permit-counter-body">
               <div class="permit-stamp-stand" aria-hidden="true"></div>
               <div class="permit-stamp-performer" id="permit-stamp-performer">
@@ -2496,7 +2494,7 @@
               </div>
               <div class="permit-inkpad" aria-hidden="true"><span>MỰC DUYỆT</span></div>
             </div>
-            <div class="permit-message" id="permit-message" role="status" aria-live="polite">Bàn giấy trống. Bạn cứ thong thả.</div>
+            <div class="permit-message" id="permit-message" role="status" aria-live="polite">Bấm Bốc giấy phép. Cục Yên sẽ tự lo phần còn lại.</div>
             <div class="permit-clerk-foot">ĐƠN VỊ CHUYÊN TRÁCH: NGHỈ TẠM THỜI <span>✳</span></div>
           </aside>
         </div>
@@ -3578,9 +3576,9 @@
     const root=document.getElementById("yen-permit");
     if(!root)return;
     const $=id=>document.getElementById(id);
-    const intro=$("permit-intro"),form=$("permit-form"),receipt=$("permit-receipt");
-    const stage=$("yen-permit"),stamp=$("permit-stamp"),notice=$("permit-message"),progress=$("permit-progress");
-    const approve=$("permit-approve"),approveStatus=$("permit-approve-status"),cucTrigger=$("permit-cuc-trigger");
+    const intro=$("permit-intro"),receipt=$("permit-receipt");
+    const stage=$("yen-permit"),stamp=$("permit-stamp"),notice=$("permit-message");
+    const cucTrigger=$("permit-cuc-trigger"),receiptKicker=$("permit-receipt-kicker");
     const performer=$("permit-stamp-performer"),landing=$("permit-stamp-landing"),mobileLanding=$("permit-stamp-landing-mobile");
     // Read real layout geometry so Cục Yên carries the stamp to the paper on
     // desktop and mobile. The ink mark itself remains on the paper.
@@ -3628,50 +3626,32 @@
       why:{name:"Nước ép thơm táo",why:"Pin xã hội 1%? Cục Yên đề xuất một ly nước ép thơm táo."}
     };
     const values={reason:null,duration:null};
+    let lastCombination="";
     let phase="intro",round=0,pending=0;
     const reduced=window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const count=()=>Object.values(values).filter(Boolean).length;
     function announce(text){notice.textContent=text;}
-    function updateApprovalHint(){
-      if(!approve||!approveStatus)return;
-      const remaining=2-count();
-      approve.disabled=phase==="stamping";
-      approve.classList.toggle("is-ready",phase==="form"&&remaining===0);
-      if(phase==="stamping")approveStatus.textContent="Cục Yên đang đóng mộc. CỘP!";
-      else if(remaining===0)approveStatus.textContent="Đủ 2 cái cớ rồi! Bấm nút xanh để Cục Yên duyệt đơn.";
-      else approveStatus.textContent=remaining===2
-        ?"Chọn 2 cái cớ ở trên, rồi bấm nút xanh để được duyệt."
-        :"Còn chọn thêm 1 cái cớ nữa, rồi bấm nút xanh.";
-    }
-    function setChoices(field,value){
-      if(phase!=="form"||!fields[field]||!Object.hasOwn(fields[field],value))return;
-      values[field]=value;
-      root.querySelectorAll('[data-permit-field="'+field+'"]').forEach(btn=>btn.setAttribute("aria-pressed",String(btn.dataset.permitValue===value)));
-      root.querySelector('fieldset[data-field="'+field+'"]').classList.remove("is-missing");
-      progress.textContent="ĐÃ KHAI "+count()+"/2 MỤC";
-      updateApprovalHint();
-      if(count()===2){announce("Đủ rồi! Bấm NHỜ CỤC YÊN DUYỆT ĐƠN ngay trên tờ phiếu nhé.");}
-      else {announce("Đã ghi "+count()+"/2 cái cớ. Còn "+(2-count())+" mục nữa thôi.");}
+    function randomizePermit(){
+      const reasons=Object.keys(fields.reason),durations=Object.keys(fields.duration);
+      let reason,duration,pair;
+      // No saved data. Avoid repeating the same two-answer combination in a row.
+      do{
+        reason=reasons[Math.floor(Math.random()*reasons.length)];
+        duration=durations[Math.floor(Math.random()*durations.length)];
+        pair=reason+":"+duration;
+      }while(pair===lastCombination);
+      lastCombination=pair;
+      values.reason=reason;values.duration=duration;
     }
     function issuePermit(){
-      if(phase!=="form")return;
-      const firstMissing=Object.keys(fields).find(f=>!values[f]);
-      if(firstMissing){
-        const item=root.querySelector('fieldset[data-field="'+firstMissing+'"]');
-        item.classList.add("is-missing");
-        item.querySelector("button").focus({preventScroll:true});
-        item.scrollIntoView({behavior:reduced?"auto":"smooth",block:"nearest"});
-        updateApprovalHint();
-        approveStatus.textContent="Chọn thêm cái cớ đang được đánh dấu rồi bấm DUYỆT ĐƠN nhé.";
-        announce("Phiếu chưa đủ 2 câu. Chọn mục đang được đánh dấu rồi bấm DUYỆT ĐƠN.");
-        return;
-      }
-
+      if(phase==="stamping")return;
+      // A single click generates the form values and immediately reveals the result.
+      // The giant stamp only arrives after the random result is readable.
+      randomizePermit();
       // All three entry points reveal the approved paper BEFORE any stamp moves.
       // The red seal appears only at the giant stamp's actual contact with the paper.
       phase="stamping";round++;const thisRound=round;
       window.clearTimeout(pending);
-      stamp.disabled=true;cucTrigger.disabled=true;updateApprovalHint();
+      stamp.disabled=true;cucTrigger.disabled=true;
       const selected=menu[values.reason];
       $("permit-out-reason").textContent=fields.reason[values.reason];
       $("permit-out-duration").textContent=fields.duration[values.duration];
@@ -3686,7 +3666,9 @@
       };
       const reaction=permitReactions[values.reason];
       window.YenReaction?.show(receipt.querySelector(".permit-verdict"),reaction[0],reaction[1]);
-      form.hidden=true;intro.hidden=true;receipt.hidden=false;
+      intro.hidden=true;receipt.hidden=false;
+      receiptKicker.textContent="ĐÃ BỐC XONG · ĐANG CHỜ ĐÓNG MỘC";
+      $("permit-share-status").hidden=true;
       stage.classList.remove("is-issued","is-stamping","is-filing","is-collecting","is-seal-coming","is-seal-imprinted");
       stage.classList.add("is-previewing");
       $("permit-receipt").setAttribute("tabindex","-1");
@@ -3700,7 +3682,8 @@
         phase="issued";
         stage.classList.remove("is-previewing","is-collecting","is-seal-coming");
         stage.classList.add("is-seal-imprinted","is-issued");
-        stamp.disabled=false;cucTrigger.disabled=false;updateApprovalHint();
+        stamp.disabled=false;cucTrigger.disabled=false;
+        receiptKicker.textContent="ĐÃ ĐƯỢC DUYỆT · BẢN CHỈ ĐỂ VUI";
         announce("CỘP! Con dấu đỏ đã được đóng đúng trên giấy. Giấy phép hoàn tất!");
       }
       if(reduced){
@@ -3828,33 +3811,14 @@
         status.hidden=false;status.textContent="Ảnh chưa xuất được trên trình duyệt này. Bạn chụp màn hình giấy phép giúp nha.";
       }
     });
-    function reset(){
-      round++;window.clearTimeout(pending);phase="form";
-      Object.keys(fields).forEach(field=>{values[field]=null;root.querySelectorAll('[data-permit-field="'+field+'"]').forEach(btn=>btn.setAttribute("aria-pressed","false"));root.querySelector('fieldset[data-field="'+field+'"]').classList.remove("is-missing");});
-      receipt.hidden=true;intro.hidden=true;form.hidden=false;
-      stage.classList.remove("is-stamping","is-issued","is-previewing","is-collecting","is-seal-coming","is-seal-imprinted");stage.classList.add("is-filing");
-      stamp.disabled=false;cucTrigger.disabled=false;progress.textContent="ĐÃ KHAI 0/2 MỤC";
-      updateApprovalHint();
-      announce("Chọn hai cái cớ trên phiếu, rồi bấm nút xanh NHỜ CỤC YÊN DUYỆT ĐƠN.");
-    }
     function requestApproval(){
-      if(phase==="intro"){
-        reset();
-        root.querySelector('[data-permit-field="reason"]').focus({preventScroll:true});
-        form.scrollIntoView({behavior:reduced?"auto":"smooth",block:"nearest"});
-        return;
-      }
-      if(phase==="form")issuePermit();
+      if(phase==="stamping")return;
+      issuePermit();
     }
     $("permit-start").addEventListener("click",requestApproval);
-    root.addEventListener("click",event=>{
-      const btn=event.target.closest("button[data-permit-field]");
-      if(btn&&root.contains(btn))setChoices(btn.dataset.permitField,btn.dataset.permitValue);
-    });
-    approve.addEventListener("click",requestApproval);
     stamp.addEventListener("click",requestApproval);
     cucTrigger.addEventListener("click",requestApproval);
-    $("permit-restart").addEventListener("click",()=>{reset();root.querySelector('[data-permit-field="reason"]').focus({preventScroll:true});form.scrollIntoView({behavior:reduced?"auto":"smooth",block:"nearest"});});
+    $("permit-restart").addEventListener("click",requestApproval);
   }
   if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",start,{once:true});
   else start();
