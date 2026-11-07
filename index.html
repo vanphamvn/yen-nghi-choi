@@ -2849,6 +2849,53 @@ body.yen-stamping-active{overflow:hidden}
 @media(max-height:590px){.yen-stamp-cinema-target .yen-stamp-cinema-giant{scale:.79;transform-origin:50% 100%}}
 @media(prefers-reduced-motion:reduce){.yen-stamp-cinema-giant{display:none!important}}
 </style>
+
+<style id="yen-footer-replay-style">
+/* The only way out is up. Compact CTA with a little Yên-style bounce. */
+.footer-replay{
+  margin:24px 2px 3px;padding:21px clamp(17px,3.5vw,30px);
+  display:flex;justify-content:space-between;align-items:center;gap:22px;
+  border:1.5px solid #a7bea7;border-radius:20px;background:#f7f1dc;
+  box-shadow:4px 5px 0 #d7e3d0;position:relative;isolation:isolate;
+}
+.footer-replay:before{
+  content:"";position:absolute;right:19%;top:-11px;width:48px;height:18px;
+  border-top:2px dashed #8aa88d;border-radius:50%;transform:rotate(-16deg);pointer-events:none;
+}
+.footer-replay-copy{min-width:0}
+.footer-replay-kicker{
+  display:block;color:#6b886e;font:900 10px/1.35 "Noto Sans",Arial,sans-serif;
+  letter-spacing:.1em
+}
+.footer-replay-copy p{
+  margin:6px 0 0;color:#304e3b;font:600 clamp(19px,2.5vw,27px)/1.35 "Yen Serif","Noto Serif",Georgia,serif
+}
+.footer-replay-link{
+  flex:none;display:inline-flex;align-items:center;justify-content:space-between;gap:17px;
+  padding:8px 8px 8px 20px;min-height:56px;border:2px solid #2c513a;border-radius:999px;
+  background:#315a43;color:#fffdf2;font:850 13px/1.35 "Noto Sans",Arial,sans-serif;
+  box-shadow:0 4px 0 #aec7a8;
+  transition:transform .2s ease,box-shadow .2s ease,background .2s ease
+}
+.footer-replay-link:hover{transform:translateY(-3px);background:#426f51;box-shadow:0 7px 0 #aec7a8;color:#fffdf2}
+.footer-replay-link:active{transform:translateY(2px);box-shadow:0 2px 0 #aec7a8}
+.footer-replay-link:focus-visible{outline:3px solid #b9764d;outline-offset:3px}
+.footer-replay-arrow{
+  display:grid;place-items:center;flex:none;width:37px;height:37px;
+  border-radius:50%;background:#e9efb6;color:#315a43;font-size:27px;line-height:1;
+  transition:transform .25s cubic-bezier(.2,.8,.2,1)
+}
+.footer-replay-link:hover .footer-replay-arrow{transform:translateY(-4px) rotate(-13deg)}
+@media(max-width:600px){
+  .footer-replay{padding:19px 17px;flex-direction:column;align-items:stretch;gap:15px}
+  .footer-replay-copy p{font-size:23px}
+  .footer-replay-link{width:100%;min-height:55px}
+}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .footer-replay-link,.footer-replay-arrow{transition:none!important}
+}
+</style>
 </head>
 <body>
   <!-- Yên doodle icons: hand-drawn, consistent stroke; no icon fonts or external assets -->
@@ -2907,7 +2954,7 @@ body.yen-stamping-active{overflow:hidden}
     </defs>
   </svg>
 
-  <header class="site-header wrap">
+  <header class="site-header wrap" id="yen-page-top">
     <a class="brand" href="#dau" aria-label="Yên Coffee & Tea, về đầu trang"><img src="yen-logo.svg" width="1450" height="585" alt="yên" decoding="async" fetchpriority="high"><span class="brand-subtitle">COFFEE &amp; TEA</span></a>
     <div class="header-mid"><span class="dot"></span> Trạm nghỉ số 000 · Nhân viên đang giả vờ bận</div>
     <nav class="header-actions" aria-label="Điều hướng">
@@ -3211,6 +3258,16 @@ body.yen-stamping-active{overflow:hidden}
       <div class="footer-credit" aria-label="Chuyện hậu trường làm web">
         <span class="footer-credit-stamp" aria-hidden="true">VẪN CHƠI TỐT</span>
         <p><strong>Website này dựng để chơi.</strong> Nhân viên trực ca đã xin phụ cấp vì bị bấm nút quá nhiều.</p>
+      </div>
+      <div class="footer-replay">
+        <div class="footer-replay-copy">
+          <span class="footer-replay-kicker">HẾT TRANG · CHƯA HẾT TRÒ</span>
+          <p>Ủa, xuống tới đây luôn hả?</p>
+        </div>
+        <a class="footer-replay-link" href="#yen-page-top" aria-label="Quay lên đầu trang để chơi tiếp">
+          <span>Quay lên quậy tiếp</span>
+          <span class="footer-replay-arrow" aria-hidden="true">↑</span>
+        </a>
       </div>
       <div class="footer-bottom"><span class="footer-sign"><img src="yen-logo.svg" width="1450" height="585" alt="yên" loading="lazy" decoding="async"><span>COFFEE & TEA</span></span><span class="footer-fineprint">© Yên · Hết trang rồi. Có người vẫn đang canh chiếc ghế trống.</span><button type="button" id="privacy-btn">Trang này nhớ gì về mình?</button></div>
     </div>
