@@ -27,10 +27,9 @@ export function mountPermit({reduced=false,randomValues=[0]}={}){
     };
   }
   const ids=["yen-permit","permit-intro","permit-receipt","permit-stamp","permit-message",
-    "permit-cuc-trigger","permit-receipt-kicker","permit-start","permit-restart",
-    "permit-stamp-performer","permit-stamp-landing","permit-stamp-landing-mobile",
+    "permit-start","permit-restart",
     "permit-out-reason","permit-out-duration","permit-out-note","permit-out-drink",
-    "permit-out-why","permit-share-status","permit-share-img",
+    "permit-share-status","permit-share-img",
     "permit-cinema","permit-cinema-reason","permit-cinema-duration","permit-cinema-status"];
   const nodes=Object.fromEntries(ids.map(id=>[id,makeNode(id)]));
   const timers=[];
