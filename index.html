@@ -4107,67 +4107,76 @@ body.yen-stamping-active{overflow:hidden}
 
     // #31: all illustration and export work happens on the visitor's device.
     function permitImage(){
-      // Downloaded PNG follows the same minimalist paper as the on-page permit.
+      // The downloaded document mirrors the same formal-but-absurd permit.
       const canvas=document.createElement("canvas");
-      canvas.width=1080;canvas.height=1260;
+      canvas.width=1080;canvas.height=1480;
       const ctx=canvas.getContext("2d",{alpha:false});
       if(!ctx)throw new Error("Canvas unavailable");
-      const ink="#2c4e39",subtle="#718475",paper="#fffdf4",red="#a3564d";
-      function rounded(x,y,w,h,r,color){
-        ctx.fillStyle=color;ctx.beginPath();
-        ctx.moveTo(x+r,y);ctx.lineTo(x+w-r,y);
-        ctx.quadraticCurveTo(x+w,y,x+w,y+r);ctx.lineTo(x+w,y+h-r);
-        ctx.quadraticCurveTo(x+w,y+h,x+w-r,y+h);ctx.lineTo(x+r,y+h);
-        ctx.quadraticCurveTo(x,y+h,x,y+h-r);ctx.lineTo(x,y+r);
-        ctx.quadraticCurveTo(x,y,x+r,y);ctx.closePath();ctx.fill();
-      }
+      const ink="#2c4e39",muted="#718475",red="#a3564d";
       function line(y){
-        ctx.strokeStyle="#d4dfd2";ctx.lineWidth=2;
-        ctx.beginPath();ctx.moveTo(116,y);ctx.lineTo(964,y);ctx.stroke();
+        ctx.strokeStyle="#ccd8c8";ctx.lineWidth=2;
+        ctx.beginPath();ctx.moveTo(108,y);ctx.lineTo(973,y);ctx.stroke();
       }
-      function wrap(text,x,y,maxWidth,lineHeight,maxLines){
+      function wrap(text,x,y,width,lineHeight,maxLines){
         let row="",lines=0;
         for(const word of String(text).trim().split(/\s+/)){
           const trial=row?row+" "+word:word;
-          if(row&&ctx.measureText(trial).width>maxWidth){
+          if(row&&ctx.measureText(trial).width>width){
             ctx.fillText(row,x,y);y+=lineHeight;lines++;row=word;
             if(lines>=maxLines)return;
           }else row=trial;
         }
         if(row&&lines<maxLines)ctx.fillText(row,x,y);
       }
-      ctx.fillStyle="#e9eee4";ctx.fillRect(0,0,1080,1260);
-      rounded(60,46,960,1168,26,paper);
-      ctx.strokeStyle="#96b09a";ctx.lineWidth=3;ctx.strokeRect(84,73,912,1112);
-      ctx.fillStyle=subtle;ctx.font='900 24px "Noto Sans",Arial,sans-serif';
-      ctx.fillText("YÊN COFFEE & TEA · SỞ CẤP PHÉP NGHỈ",116,155);
-      ctx.font='900 76px "Noto Serif",Georgia,serif';ctx.fillStyle=ink;
-      ctx.fillText("GIẤY PHÉP",112,277);
-      ctx.fillText("NGHỈ TẠM THỜI",112,364);
-      line(417);
-      ctx.fillStyle=subtle;ctx.font='900 23px "Noto Sans",Arial,sans-serif';ctx.fillText("ĐIỀU 1 · LÝ DO",116,476);
-      ctx.fillStyle=ink;ctx.font='850 37px "Noto Sans",Arial,sans-serif';
-      wrap($("permit-out-reason").textContent,116,530,838,46,3);
-      line(676);
-      ctx.fillStyle=subtle;ctx.font='900 23px "Noto Sans",Arial,sans-serif';ctx.fillText("ĐIỀU 2 · THỜI HẠN",116,732);
-      ctx.fillStyle=ink;ctx.font='850 37px "Noto Sans",Arial,sans-serif';
-      wrap($("permit-out-duration").textContent,116,790,838,47,2);
-      ctx.fillStyle=ink;ctx.font='700 27px "Noto Serif",Georgia,serif';
-      wrap($("permit-out-note").textContent,116,910,815,34,3);
-      ctx.fillStyle=subtle;ctx.font='800 19px "Noto Sans",Arial,sans-serif';
-      ctx.fillText("PHỤ LỤC · CỤC YÊN GỢI Ý:",116,1019);
-      ctx.fillStyle=ink;ctx.font='800 26px "Noto Sans",Arial,sans-serif';
-      wrap($("permit-out-drink").textContent,116,1058,560,31,2);
-      ctx.save();ctx.translate(815,1039);ctx.rotate(-.15);
-      ctx.strokeStyle=red;ctx.lineWidth=6;ctx.beginPath();ctx.arc(0,0,92,0,Math.PI*2);ctx.stroke();
-      ctx.lineWidth=2;ctx.beginPath();ctx.arc(0,0,78,0,Math.PI*2);ctx.stroke();
-      ctx.textAlign="center";ctx.fillStyle=red;
-      ctx.font='900 19px "Noto Sans",Arial,sans-serif';ctx.fillText("CỤC YÊN",0,-35);
-      ctx.font='900 23px "Noto Sans",Arial,sans-serif';ctx.fillText("ĐÃ DUYỆT",0,0);
-      ctx.font='900 20px "Noto Sans",Arial,sans-serif';ctx.fillText("NGHỈ!",0,32);
-      ctx.restore();
-      ctx.fillStyle=subtle;ctx.font='700 19px "Noto Sans",Arial,sans-serif';
-      ctx.fillText("Đã ký, hiện đang nghỉ · Chỉ để vui, không phải giấy nghỉ thật.",116,1160);
+      ctx.fillStyle="#e9eee4";ctx.fillRect(0,0,1080,1480);
+      ctx.fillStyle="#fffdf4";ctx.fillRect(56,46,968,1387);
+      ctx.strokeStyle="#9db29c";ctx.lineWidth=3;ctx.strokeRect(80,73,920,1335);
+      ctx.fillStyle=ink;ctx.font='900 27px "Noto Sans",Arial,sans-serif';
+      ctx.fillText("YÊN COFFEE & TEA",110,137);
+      ctx.font='900 20px "Noto Sans",Arial,sans-serif';
+      ctx.fillText("SỞ CẤP PHÉP NGHỈ",110,171);
+      ctx.fillStyle=muted;ctx.font='700 17px "Noto Sans",Arial,sans-serif';
+      ctx.textAlign="right";ctx.fillText("VĂN BẢN NỘI BỘ",966,154);ctx.textAlign="left";
+      line(198);
+      ctx.fillText("Số: "+$("permit-out-number").textContent,110,237);
+      ctx.textAlign="right";ctx.fillText($("permit-out-date").textContent,970,237);ctx.textAlign="left";
+      ctx.fillStyle=ink;ctx.textAlign="center";
+      ctx.font='750 65px "Noto Serif",Georgia,serif';ctx.fillText("GIẤY PHÉP",540,342);
+      ctx.font='750 60px "Noto Serif",Georgia,serif';ctx.fillText("NGHỈ TẠM THỜI",540,415);
+      ctx.fillStyle=muted;ctx.font='italic 21px "Noto Serif",Georgia,serif';
+      ctx.fillText("(Ban hành theo thủ tục miễn hỏi han)",540,455);ctx.textAlign="left";
+      ctx.fillStyle=ink;ctx.font='500 23px "Noto Serif",Georgia,serif';
+      wrap("Căn cứ nhu cầu nghỉ ngơi có thật và thẩm quyền tự phong của Sở Cấp Phép Nghỉ;",110,519,845,33,2);
+      ctx.textAlign="center";ctx.font='900 25px "Noto Sans",Arial,sans-serif';
+      ctx.fillText("QUYẾT ĐỊNH:",540,611);ctx.textAlign="left";
+      line(643);
+      function article(title,copy,y,maxLines){
+        ctx.fillStyle=ink;ctx.font='900 24px "Noto Sans",Arial,sans-serif';
+        ctx.fillText(title,110,y);
+        ctx.font='500 25px "Noto Sans",Arial,sans-serif';
+        wrap(copy,226,y,735,36,maxLines);
+      }
+      article("Điều 1.","Cho phép nghỉ vì: "+$("permit-out-reason").textContent+".",693,3);
+      line(837);
+      article("Điều 2.","Thời hạn: "+$("permit-out-duration").textContent+".",881,3);
+      line(1018);
+      article("Điều 3.",$("permit-out-note").textContent,1060,3);
+      ctx.fillStyle=muted;ctx.font='700 19px "Noto Sans",Arial,sans-serif';
+      wrap("PHỤ LỤC: Có thể ghé Yên uống "+$("permit-out-drink").textContent+".",110,1200,830,27,2);
+      ctx.save();ctx.translate(318,1315);ctx.rotate(-.13);
+      ctx.strokeStyle=red;ctx.lineWidth=6;ctx.beginPath();ctx.arc(0,0,83,0,Math.PI*2);ctx.stroke();
+      ctx.lineWidth=2;ctx.beginPath();ctx.arc(0,0,73,0,Math.PI*2);ctx.stroke();
+      ctx.fillStyle=red;ctx.textAlign="center";
+      ctx.font='900 17px "Noto Sans",Arial,sans-serif';ctx.fillText("CỤC YÊN",0,-29);
+      ctx.font='900 22px "Noto Sans",Arial,sans-serif';ctx.fillText("ĐÃ DUYỆT",0,1);
+      ctx.font='800 13px "Noto Sans",Arial,sans-serif';ctx.fillText("CHO PHÉP NGHỈ",0,28);ctx.restore();
+      ctx.textAlign="center";ctx.fillStyle=ink;
+      ctx.font='900 18px "Noto Sans",Arial,sans-serif';ctx.fillText("TM. HỘI ĐỒNG NGỒI YÊN",765,1285);
+      ctx.font='italic 42px "Noto Serif",Georgia,serif';ctx.fillText("Cục Yên",765,1347);
+      ctx.fillStyle=muted;ctx.font='700 17px "Noto Sans",Arial,sans-serif';
+      ctx.fillText("(Đã ký, hiện đang nghỉ)",765,1379);
+      ctx.textAlign="left";ctx.font='700 16px "Noto Sans",Arial,sans-serif';
+      ctx.fillText("Chỉ để vui. Không phải giấy phép thật, giấy nghỉ việc hay voucher.",110,1420);
       return canvas.toDataURL("image/png");
     }
     function downloadPermitImage(uri){
