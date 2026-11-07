@@ -14,7 +14,13 @@ test("one tap on the main CTA reveals the randomized paper immediately",()=>{
   assert.equal(nodes["yen-permit"].classList.contains("is-previewing"),true);
 });
 
-test("the result has exactly two actions after stamping",()=>{\n  const segment=html.slice(html.indexOf('class="permit-result-actions"'),html.indexOf('id="permit-share-status"'));\n  assert.equal((segment.match(/<button/g)||[]).length,2);\n  assert.ok(segment.includes('id="permit-restart"'));\n  assert.ok(segment.includes('id="permit-share-img"'));\n  assert.ok(!segment.includes('<a '));\n});
+test("the result has exactly two actions after stamping",()=>{
+  const segment=html.slice(html.indexOf('class="permit-result-actions"'),html.indexOf('id="permit-share-status"'));
+  assert.equal((segment.match(/<button/g)||[]).length,2);
+  assert.ok(segment.includes('id="permit-restart"'));
+  assert.ok(segment.includes('id="permit-share-img"'));
+  assert.ok(!segment.includes('<a '));
+});
 
 test("taps during the animation cannot create another permit",()=>{
   const {nodes,timers}=mountPermit();
