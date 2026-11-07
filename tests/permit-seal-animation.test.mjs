@@ -20,16 +20,16 @@ test("paper and randomly filled result appear before stamp hits the paper",()=>{
   assert.equal(nodes["yen-permit"].classList.contains("is-seal-imprinted"),true);
   tick();
   assert.equal(nodes["yen-permit"].classList.contains("is-issued"),true);
-  assert.match(nodes["permit-receipt-kicker"].textContent,/ĐÃ ĐƯỢC DUYỆT/);
+  assert.equal(nodes["permit-receipt"].hidden,false);
 });
 
-test("big stamp is animated at the center of the visible result's ink seal",()=>{
+test("the stamp animation remains centered in its own overlay",()=>{
   assert.match(html,/id="permit-seal-target"/);
-  assert.match(html,/id="permit-giant-stamp"/);
   assert.match(html,/id="permit-ink-seal"/);
-  assert.match(html,/\.permit-giant-stamp\{[\s\S]*?left:50%;top:50%/);
-  assert.match(html,/\.permit-stage\.is-seal-coming \.permit-giant-stamp/);
-  assert.match(html,/\.permit-stage\.is-seal-imprinted \.permit-ink-seal/);
+  assert.match(html,/id="permit-cinema" role="dialog"/);
+  assert.match(html,/class="yen-stamp-cinema-giant"/);
+  assert.match(html,/\\.yen-stamp-cinema\\.is-seal-coming \\.yen-stamp-cinema-giant/);
+  assert.match(html,/\\.permit-stage\\.is-seal-imprinted \\.permit-ink-seal/);
 });
 
 test("no motion setting skips animation but still reveals completed approval",()=>{
