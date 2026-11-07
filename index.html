@@ -3069,6 +3069,7 @@ body.yen-stamping-active{overflow:hidden}
 .yen-picker-screw:last-child{top:auto;bottom:2px}
 .yen-picker-slot{position:relative;display:flex;justify-content:center;margin:14px auto 0;width:min(76%,285px);height:20px;background:#385e45;border:3px solid #738f75;border-radius:40px;box-shadow:inset 0 4px 3px #213a2a}
 .yen-picker-slot span{position:absolute;top:2px;font:900 7px/1.3 "Noto Sans",Arial,sans-serif;letter-spacing:.08em;color:#dbe4ce}
+.yen-picker-generate[hidden]{display:none!important}
 .yen-picker-generate{
   display:flex;width:100%;align-items:center;justify-content:space-between;gap:11px;
   margin-top:18px;padding:14px 20px;min-height:57px;background:#a5523b;color:#fff9e6;
@@ -4165,7 +4166,7 @@ body.yen-stamping-active{overflow:hidden}
   let selected="batky",isSpinning=false,tick=0,delay=0,lastIndex=-1,current=null;
   function chooseMood(value){
     if(isSpinning||!(value in moodNames))return;
-    selected=value;ticket.hidden=true;machine.classList.remove("is-issued");
+    selected=value;ticket.hidden=true;generate.hidden=false;machine.classList.remove("is-issued");
     reel.textContent="CHỜ LỆNH";
     byId("yen-picker-screen-bottom").textContent="5 MÓN THẬT · KHÔNG BỐC MÓN ẢO";
     byId("yen-picker-generate-label").textContent="BỐC LY HỢP GU";
