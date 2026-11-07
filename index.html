@@ -2968,6 +2968,213 @@ body.yen-stamping-active{overflow:hidden}
   .yen-rewind-journey{display:none!important}
 }
 </style>
+
+<style id="yen-real-drink-picker-v1">
+/* 04: one playful product discovery machine. All five recommendations are real Yên menu items. */
+.yen-picker-section.section{
+  position:relative;isolation:isolate;overflow:clip;padding:clamp(65px,8vw,112px) 0 100px;
+  background:linear-gradient(155deg,#eef1e3 0%,#f7f3e4 56%,#e9eedf 100%);
+}
+.yen-picker-section::before{
+  content:"";position:absolute;inset:0;pointer-events:none;opacity:.28;
+  background-image:radial-gradient(#59765d 1px,transparent 1.5px);
+  background-size:24px 24px;mask-image:linear-gradient(110deg,#000,transparent 65%)
+}
+.yen-picker-old-anchor{position:absolute;top:0;left:0;width:1px;height:1px;pointer-events:none}
+.yen-picker-layout{position:relative;display:grid;grid-template-columns:minmax(0,.94fr) minmax(0,1.06fr);gap:clamp(23px,5vw,82px);align-items:start}
+.yen-picker-intro{padding-top:27px;min-width:0}
+.yen-picker-eyebrow{display:inline-block;color:#54725b!important;font-weight:900!important;letter-spacing:.12em}
+.yen-picker-intro h2{
+  font:800 clamp(37px,4.6vw,66px)/1.13 "Noto Serif",Georgia,serif;
+  letter-spacing:-.045em;color:#2d523d;margin:17px 0 19px;max-width:530px
+}
+.yen-picker-intro h2 em{display:inline;color:#ae7154;font-weight:600;font-style:italic}
+.yen-picker-lead{font:450 clamp(14px,1.45vw,17px)/1.7 "Noto Sans",Arial,sans-serif;color:#47624f;max-width:460px}
+.yen-picker-lead strong{font-weight:850;color:#254d37}
+.yen-picker-choice-heading{display:flex;gap:12px;align-items:center;justify-content:space-between;margin:37px 0 14px;color:#3c684d;font:900 12px/1.4 "Noto Sans",Arial,sans-serif;letter-spacing:.08em}
+.yen-picker-choice-heading small{font:900 9px/1.4 "Noto Sans",Arial,sans-serif;color:#819884}
+.yen-picker-moods{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px;max-width:515px}
+.yen-picker-mood{
+  position:relative;min-width:0;min-height:68px;display:flex;align-items:center;gap:10px;
+  border:1.5px solid #a7bea8;border-radius:17px;
+  background:#fffdf4;color:#3e6048;cursor:pointer;
+  padding:11px 12px;text-align:left;
+  font:850 clamp(11px,1.3vw,14px)/1.3 "Noto Sans",Arial,sans-serif;
+  box-shadow:2px 3px 0 #d5dfca;
+  transition:transform .18s ease,background .18s ease,box-shadow .18s ease,border-color .18s ease
+}
+.yen-picker-mood:hover:not(:disabled){transform:translateY(-3px);box-shadow:3px 6px 0 #cfddc7}
+.yen-picker-mood[aria-pressed="true"]{
+  background:#dcecb6;border-color:#3c7453;color:#2c593f;
+  box-shadow:inset 0 0 0 1px #67936e,3px 4px 0 #a7c49b
+}
+.yen-picker-mood:focus-visible,.yen-picker-generate:focus-visible,.yen-picker-ticket-actions a:focus-visible,.yen-picker-ticket-actions button:focus-visible,.yen-picker-retry:focus-visible{outline:3px solid #af704e;outline-offset:3px}
+.yen-picker-mood:disabled{opacity:.61;cursor:wait}
+.yen-picker-mood-icon{
+  flex:0 0 35px;height:35px;display:grid;place-items:center;
+  font:900 21px/1 "Noto Sans",Arial,sans-serif;
+  color:#527b57;border-radius:12px;background:#e5eddd;
+  transform:rotate(-8deg)
+}
+.yen-picker-mood[aria-pressed="true"] .yen-picker-mood-icon{background:#f9f4d9;color:#a45a43;transform:rotate(6deg)}
+.yen-picker-mood-random .yen-picker-mood-icon{background:#f8e5d9}
+.yen-picker-aside{color:#728777;font:500 11px/1.6 "Noto Sans",Arial,sans-serif;margin:16px 0 0}
+.yen-picker-machine{
+  min-width:0;position:relative;margin-top:4px;padding:15px 16px 21px;
+  border:2px solid #466d51;border-radius:32px 32px 26px 26px;
+  background:linear-gradient(155deg,#d6e5cc,#aecaa9 52%,#98b993 100%);
+  box-shadow:inset 0 4px 9px #fffdf280,inset -7px -9px 13px #61826452,9px 14px 0 #d5ddcc,12px 23px 35px #52664b38
+}
+.yen-picker-machine::before,.yen-picker-machine::after{
+  content:"";position:absolute;bottom:-11px;width:43px;height:13px;border-radius:0 0 8px 8px;background:#44684d;border:1px solid #34543c
+}
+.yen-picker-machine::before{left:28px}.yen-picker-machine::after{right:28px}
+.yen-picker-machine-top{display:flex;justify-content:space-between;gap:8px;align-items:center;padding:2px 10px 13px;font:900 10px/1.4 "Noto Sans",Arial,sans-serif;letter-spacing:.075em;color:#315c42}
+.yen-picker-machine-top i{
+  display:inline-block;width:7px;height:7px;background:#598d62;border-radius:50%;vertical-align:middle;margin-right:5px;box-shadow:0 0 0 3px #e8f1d6
+}
+.yen-picker-machine-badge{color:#fff6db;padding:5px 8px;border-radius:6px;background:#507957;transform:rotate(3deg)}
+.yen-picker-console{
+  position:relative;min-width:0;border:1.5px solid #6a896f;border-radius:21px;
+  background:#fff9e8;padding:clamp(15px,3.2vw,27px);
+  box-shadow:inset 0 2px 7px #46654424,0 4px 0 #729278
+}
+.yen-picker-machine-head{display:flex;align-items:center;gap:15px;margin-bottom:13px}
+.yen-picker-machine-mascot{display:block;flex:0 0 79px;width:79px;height:79px;filter:drop-shadow(0 3px 2px #7595784d)}
+.yen-picker-machine-head span{display:block;font:900 9px/1.4 "Noto Sans",Arial,sans-serif;letter-spacing:.14em;color:#738873;margin-bottom:6px}
+.yen-picker-machine-head strong{font:900 clamp(13px,1.7vw,18px)/1.3 "Noto Sans",Arial,sans-serif;letter-spacing:.015em;color:#3b5a43}
+.yen-picker-machine-head em{color:#a46d55;font-style:normal}
+.yen-picker-window-frame{
+  position:relative;padding:13px;border:3px solid #526f56;border-radius:18px;
+  background:linear-gradient(120deg,#4a6853,#7b9875 40%,#456e4d);
+  box-shadow:inset 2px 3px 6px #263b2e82,0 2px 1px #fff9ec
+}
+.yen-picker-screen{
+  display:grid;place-items:center;text-align:center;min-height:120px;gap:8px;padding:20px 13px;
+  background:#e9eed4;color:#355743;border-radius:9px;
+  border:2px solid #aec3a0;box-shadow:inset 0 0 25px #899a7933;
+  overflow:hidden
+}
+.yen-picker-screen::after{content:"";pointer-events:none;position:absolute;inset:13px;border-radius:9px;background:repeating-linear-gradient(0deg,transparent 0 5px,#20352708 6px);opacity:.6}
+.yen-picker-screen-top,.yen-picker-screen-bottom{
+  font:800 9px/1.45 "Noto Sans",Arial,sans-serif;letter-spacing:.11em;
+  color:#708776
+}
+.yen-picker-screen strong{
+  position:relative;z-index:1;color:#2b573e;
+  font:900 clamp(23px,2.8vw,34px)/1.2 "Noto Sans",Arial,sans-serif;letter-spacing:-.045em;
+  text-wrap:balance;overflow-wrap:anywhere
+}
+.yen-picker-screw{position:absolute;right:4px;top:3px;color:#aec4a6;font-weight:900}
+.yen-picker-screw:last-child{top:auto;bottom:2px}
+.yen-picker-slot{position:relative;display:flex;justify-content:center;margin:14px auto 0;width:min(76%,285px);height:20px;background:#385e45;border:3px solid #738f75;border-radius:40px;box-shadow:inset 0 4px 3px #213a2a}
+.yen-picker-slot span{position:absolute;top:2px;font:900 7px/1.3 "Noto Sans",Arial,sans-serif;letter-spacing:.08em;color:#dbe4ce}
+.yen-picker-generate{
+  display:flex;width:100%;align-items:center;justify-content:space-between;gap:11px;
+  margin-top:18px;padding:14px 20px;min-height:57px;background:#a5523b;color:#fff9e6;
+  border:2px solid #804b38;border-radius:16px;
+  box-shadow:0 5px 0 #e7c3ab;font:900 15px/1.35 "Noto Sans",Arial,sans-serif;letter-spacing:.04em;cursor:pointer;
+  transition:transform .18s ease,box-shadow .18s ease,background .18s ease
+}
+.yen-picker-generate:hover:not(:disabled){transform:translateY(-2px);background:#b26149;box-shadow:0 7px 0 #e7c3ab}
+.yen-picker-generate:active:not(:disabled){transform:translateY(3px);box-shadow:0 2px 0 #e7c3ab}
+.yen-picker-generate:disabled{cursor:wait;opacity:.72}
+.yen-picker-generate-flower{font-size:24px;line-height:1}
+.yen-picker-machine-note{font:700 11px/1.5 "Noto Sans",Arial,sans-serif;color:#3c6649;text-align:center;margin:15px 0 0}
+.yen-picker-status{font:600 11px/1.5 "Noto Sans",Arial,sans-serif;color:#64806a;text-align:center;margin:13px 0 0;min-height:17px}
+.yen-picker-machine.is-scanning .yen-picker-screen{animation:yenPickScreenScan .22s linear infinite alternate}
+.yen-picker-machine.is-scanning .yen-picker-machine-mascot{animation:yenPickMascotShake .22s ease-in-out infinite alternate}
+.yen-picker-machine.is-scanning .yen-picker-window-frame{box-shadow:inset 2px 3px 6px #263b2e82,0 0 0 4px #f5dd8b77}
+.yen-picker-machine.is-scanning .yen-picker-slot{animation:yenPickSlotTap .3s ease-in-out infinite alternate}
+@keyframes yenPickScreenScan{to{background:#f1f4d0;transform:translateY(1px)}}
+@keyframes yenPickMascotShake{to{transform:rotate(5deg) translateY(-2px)}}
+@keyframes yenPickSlotTap{to{transform:translateY(2px)}}
+.yen-picker-ticket[hidden]{display:none!important}
+.yen-picker-ticket{
+  position:relative;margin:-4px 0 5px;padding:20px clamp(15px,2.8vw,25px) 17px;
+  background:#fffcf1;border:1.5px solid #d5c7a5;
+  box-shadow:0 7px 0 #e3d5b5,0 12px 20px #536b4b2f;transform:rotate(-.5deg);
+  clip-path:polygon(0 0,100% 0,100% 96.7%,98% 98%,96% 96.7%,94% 98%,92% 96.7%,90% 98%,88% 96.7%,86% 98%,84% 96.7%,82% 98%,80% 96.7%,78% 98%,76% 96.7%,74% 98%,72% 96.7%,70% 98%,68% 96.7%,66% 98%,64% 96.7%,62% 98%,60% 96.7%,58% 98%,56% 96.7%,54% 98%,52% 96.7%,50% 98%,48% 96.7%,46% 98%,44% 96.7%,42% 98%,40% 96.7%,38% 98%,36% 96.7%,34% 98%,32% 96.7%,30% 98%,28% 96.7%,26% 98%,24% 96.7%,22% 98%,20% 96.7%,18% 98%,16% 96.7%,14% 98%,12% 96.7%,10% 98%,8% 96.7%,6% 98%,4% 96.7%,2% 98%,0 96.7%);
+  padding-bottom:28px
+}
+.yen-picker-machine.is-issued .yen-picker-ticket{animation:yenPickTicketPrint .52s cubic-bezier(.2,.72,.25,1) both}
+@keyframes yenPickTicketPrint{from{opacity:0;transform:translateY(-20px) scale(.96) rotate(1deg)}to{opacity:1;transform:translateY(0) scale(1) rotate(-.5deg)}}
+.yen-picker-ticket-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;padding-bottom:12px;border-bottom:1.5px dashed #cbbba0}
+.yen-picker-ticket-top span{font:900 9px/1.5 "Noto Sans",Arial,sans-serif;color:#4e7457;letter-spacing:.055em}
+.yen-picker-ticket-top span:last-child{text-align:right;color:#a48f75;font-size:7px;max-width:145px}
+.yen-picker-ticket-heading{display:block;font:800 10px/1.5 "Noto Sans",Arial,sans-serif;letter-spacing:.1em;color:#8e795f;margin:20px 0 9px;text-transform:uppercase}
+.yen-picker-ticket-product{display:grid;grid-template-columns:118px minmax(0,1fr);gap:13px;align-items:center;min-height:165px}
+.yen-picker-product-copy{min-width:0}
+.yen-picker-product-copy h3{margin:0 0 10px;font:850 clamp(24px,2.6vw,34px)/1.17 "Noto Serif",Georgia,serif;letter-spacing:-.04em;color:#315743;overflow-wrap:anywhere}
+.yen-picker-product-copy p{margin:0;color:#657c65;font:600 12px/1.56 "Noto Sans",Arial,sans-serif}
+.yen-picker-illustration{position:relative;width:116px;height:166px;display:grid;place-items:center}
+.yen-picker-glass{position:absolute;bottom:13px;left:15px;width:91px;height:118px;overflow:hidden;
+  border:4px solid #54745e;border-top:7px solid #54745e;border-radius:7px 7px 18px 18px;
+  background:#fefdf4;box-shadow:inset 10px 2px 8px #fff8e2ad,5px 5px 0 #b4cbb571;transform:rotate(-4deg)
+}
+.yen-picker-glass:before{content:"";position:absolute;left:7px;top:13px;bottom:13px;width:7px;border-radius:8px;background:#ffffffa8;z-index:3}
+.yen-picker-liquid{
+  position:absolute;left:0;right:0;bottom:0;height:84%;border-radius:18% 18% 0 0;
+  background:linear-gradient(180deg,var(--picker-top,#bdcfa5) 0 42%,var(--picker-bottom,#e6b6b1) 43% 100%)
+}
+.yen-picker-ice{position:absolute;top:30px;right:12px;width:19px;height:18px;border:2px solid #fff9e8a0;border-radius:5px;transform:rotate(19deg)}
+.yen-picker-ice:after{content:"";position:absolute;top:34px;left:-31px;width:17px;height:17px;border:2px solid #fff9e89a;border-radius:5px;transform:rotate(-40deg)}
+.yen-picker-glass-face{position:absolute;left:0;right:0;bottom:24px;text-align:center;color:#3e624e;font:900 22px/1 "Noto Sans",Arial,sans-serif;letter-spacing:2px;transform:rotate(4deg)}
+.yen-picker-straw{position:absolute;right:20px;top:11px;height:110px;width:11px;border:3px solid #51735c;border-radius:6px;transform:rotate(15deg);background:#f3bbaf;z-index:1}
+.yen-picker-fruit{position:absolute;right:7px;top:35px;width:42px;height:42px;border:5px solid #ddad64;border-radius:50%;background:#ffdc92;box-shadow:inset 0 0 0 2px #f5ecb3;transform:rotate(-18deg);opacity:0}
+.yen-picker-illustration[data-drink="matcha"]{--picker-top:#90b58c;--picker-bottom:#e8a7b2}
+.yen-picker-illustration[data-drink="cacao"]{--picker-top:#fff0ce;--picker-bottom:#976853}
+.yen-picker-illustration[data-drink="atiso"]{--picker-top:#e1ca91;--picker-bottom:#bb8359}
+.yen-picker-illustration[data-drink="juice"]{--picker-top:#ffdc95;--picker-bottom:#f2ae57}
+.yen-picker-illustration[data-drink="coldbrew"]{--picker-top:#a26948;--picker-bottom:#69442d}
+.yen-picker-illustration[data-drink="coldbrew"] .yen-picker-fruit{opacity:1}
+.yen-picker-illustration[data-drink="juice"] .yen-picker-fruit{opacity:1;background:#ffde85}
+.yen-picker-why{border-top:1px dashed #d3c4a9;padding-top:12px;margin:6px 0 11px;color:#526f56;font:600 12px/1.6 "Noto Sans",Arial,sans-serif}
+.yen-picker-quip{margin:0 0 15px;padding:10px 13px;background:#e6ecd8;border-radius:7px 16px 16px 16px;color:#486d50;font:750 12px/1.56 "Noto Sans",Arial,sans-serif}
+.yen-picker-ticket-stamp{position:absolute;right:11px;top:52px;width:64px;height:64px;border:3px double #bb7863;border-radius:50%;display:grid;place-content:center;text-align:center;transform:rotate(14deg);color:#b87965;opacity:.75;font:900 7px/1.1 "Noto Sans",Arial,sans-serif;letter-spacing:.03em;pointer-events:none}
+.yen-picker-ticket-stamp strong{font-size:10px;line-height:1.4}
+.yen-picker-ticket-actions{display:flex;gap:8px;flex-wrap:wrap}
+.yen-picker-visit,.yen-picker-save{min-height:43px;display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:10px;padding:10px 12px;text-decoration:none;font:900 11px/1.35 "Noto Sans",Arial,sans-serif;cursor:pointer}
+.yen-picker-visit{flex:1.5;background:#3b6549;color:#fffbed;border:1.5px solid #36573d}
+.yen-picker-visit:hover{color:#fffbed;background:#547b5a}
+.yen-picker-save{flex:1;min-width:94px;border:1.5px solid #b6c6ae;color:#426c4d;background:#f0f4e7}
+.yen-picker-save:hover{background:#e3eed7}
+.yen-picker-retry{margin:12px auto 0;padding:8px;display:block;border:0;background:transparent;color:#6c816f;font:800 11px/1.4 "Noto Sans",Arial,sans-serif;text-decoration:underline;text-underline-offset:4px;cursor:pointer}
+@media(max-width:950px){
+  .yen-picker-layout{grid-template-columns:minmax(0,1fr);max-width:630px;gap:25px}
+  .yen-picker-intro{padding-top:0}
+  .yen-picker-intro h2{max-width:100%;font-size:clamp(36px,7vw,52px)}
+  .yen-picker-choice-heading{margin-top:25px}
+  .yen-picker-machine{margin-top:0}
+}
+@media(max-width:480px){
+  .yen-picker-section.section{padding:62px 0 78px}
+  .yen-picker-moods{gap:8px}
+  .yen-picker-mood{padding:9px;min-height:62px;font-size:11px;gap:7px;border-radius:13px}
+  .yen-picker-mood-icon{flex-basis:29px;height:29px;font-size:19px;border-radius:9px}
+  .yen-picker-machine{padding:10px 10px 16px;border-radius:22px}
+  .yen-picker-console{padding:13px;border-radius:15px}
+  .yen-picker-machine-mascot{width:65px;height:65px;flex-basis:65px}
+  .yen-picker-machine-head strong{font-size:13px}
+  .yen-picker-screen{min-height:108px;padding:15px 8px}
+  .yen-picker-ticket{padding:15px 12px 24px}
+  .yen-picker-ticket-product{grid-template-columns:100px minmax(0,1fr);gap:8px}
+  .yen-picker-illustration{width:100px}
+  .yen-picker-glass{left:8px}.yen-picker-straw{right:13px}.yen-picker-fruit{right:1px}
+  .yen-picker-product-copy h3{font-size:clamp(20px,5.8vw,26px)}
+  .yen-picker-ticket-stamp{width:50px;height:50px;right:10px;top:60px;font-size:6px}
+  .yen-picker-ticket-stamp strong{font-size:8px}
+  .yen-picker-ticket-heading{max-width:calc(100% - 55px)}
+}
+@media(prefers-reduced-motion:reduce){
+  .yen-picker-machine.is-scanning .yen-picker-screen,
+  .yen-picker-machine.is-scanning .yen-picker-machine-mascot,
+  .yen-picker-machine.is-scanning .yen-picker-slot,
+  .yen-picker-machine.is-issued .yen-picker-ticket{animation:none!important}
+  .yen-picker-mood,.yen-picker-generate{transition:none!important}
+}
+</style>
+
 </head>
 <body>
   <!-- Yên doodle icons: hand-drawn, consistent stroke; no icon fonts or external assets -->
@@ -3070,7 +3277,7 @@ body.yen-stamping-active{overflow:hidden}
           <a href="#tam-trang"><span>01</span> Xin nghỉ</a>
           <a href="#buong"><span>02</span> Vòng quay</a>
           <a href="#cuahang"><span>03</span> Tiệm 0đ</a>
-          <a href="#ngoi-yen"><span>04</span> Pha bậy</a>
+          <a href="#ngoi-yen"><span>04</span> Chọn ly</a>
         </div>
       </div>
     </nav>
@@ -3185,110 +3392,77 @@ body.yen-stamping-active{overflow:hidden}
       </div>
       
     </div></section>
-    <section class="section still-section drink-section" id="ngoi-yen" aria-labelledby="still-title"><div class="wrap still-layout drink-layout">
-      <div class="drink-copy reveal">
-        <div class="eyebrow">04 / Phòng pha bậy bạ</div>
-        <h2 class="section-title" id="still-title">Một ly nước<br><i>rất thiếu nghiêm túc.</i></h2>
-        <p class="drink-desc">Chọn topping. Bấm pha. Xem chuyện gì xảy ra.</p>
-        <div class="drink-side-comic" aria-hidden="true"><span>CUỘC HỌP KHẨN CỦA CÁI MUỖNG</span><span>“Thôi khuấy! Mình sắp chóng mặt tới nơi!”</span><svg viewBox="0 0 100 50" fill="none"><path d="M14 11q5-11 14-6 10 8-7 21l-7 13" stroke="currentColor" stroke-width="4" stroke-linecap="round"/><path d="M53 12q12 4 23 3m-20 11q17 4 29-1" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><circle cx="16" cy="13" r="2" fill="currentColor"/><circle cx="24" cy="13" r="2" fill="currentColor"/></svg></div>
-        
-      </div>
-      <div class="drink-machine reveal" id="drink-machine">
-        <div class="drink-hat" aria-hidden="true">✷<small>MÁY PHA BẬY SỐ 004</small></div>
-        <div class="drink-topline"><span>YÊN / MÁY PHA SỐ 004</span><span class="drink-machine-led"><i></i> ĐANG CHỜ CƠ HỘI PHA BẬY</span></div>
-        <div class="drink-machine-header"><div><div class="drink-lab-pre">PHÒNG PHA NƯỚC TƯỞNG TƯỢNG</div><h3>Cục Yên<br><em>đang giả vờ làm barista</em></h3></div><div class="drink-lab-stamp" aria-hidden="true">0%<br><small>KHOA HỌC (CHẮC THẾ)</small></div></div>
-        <div class="drink-toppings" role="group" aria-label="Chọn một món kỳ quặc bỏ vào ly">
-          <button type="button" class="drink-addon" data-addon="may" aria-pressed="false"><svg viewBox="0 0 40 40" fill="none" aria-hidden="true"><path d="M10 27c-8-5-4-16 4-15 4-9 14-8 17 0 11-1 12 17 0 17H13" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M17 34h7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg><span>Thả một đám mây</span></button>
-          <button type="button" class="drink-addon" data-addon="nang" aria-pressed="false"><svg viewBox="0 0 40 40" fill="none" aria-hidden="true"><circle cx="20" cy="20" r="9" stroke="currentColor" stroke-width="3.5"/><path d="M20 3v5m0 24v5M3 20h5m24 0h5M8 8l4 4m16 16 4 4M8 32l4-4m16-16 4-4" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg><span>Vắt một tí nắng</span></button>
-          <button type="button" class="drink-addon" data-addon="tran" aria-pressed="false"><svg viewBox="0 0 40 40" fill="none" aria-hidden="true"><circle cx="12" cy="14" r="5" stroke="currentColor" stroke-width="3"/><circle cx="27" cy="13" r="5" stroke="currentColor" stroke-width="3"/><circle cx="19" cy="29" r="6" stroke="currentColor" stroke-width="3"/><path d="M10 14h4m11 0h4m-10 15h2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span>Rắc trân châu</span></button>
-        </div>
-        <div class="drink-hint" id="drink-hint" aria-live="polite">Không chọn cũng được. Máy bốc đại!</div>
-        <div class="drink-visual" id="drink-stage">
-          <span class="drink-doodle drink-doodle-one" aria-hidden="true">Hí hí! Ai cho cái muỗng cầm lái vậy?</span><span class="drink-doodle drink-doodle-two" id="drink-doodle-two" aria-hidden="true"></span>
-          <button type="button" id="drink-cup-tap" class="drink-cup-tap" aria-label="Chọc cái ly xem nó nói gì">
-            <svg id="drink-illustration" viewBox="0 0 330 255" fill="none" role="presentation">
-            <ellipse cx="162" cy="231" rx="108" ry="12" fill="#314f4540" />
-            <path d="M115 10c15-5 26 1 31 12M220 31c10-13 24-13 30-4" stroke="#587568" stroke-width="4" stroke-linecap="round" opacity=".5"/>
-            <g class="drink-straw" transform="rotate(11 208 118)">
-              <path d="M200 147 221 31q2-8 9-5l22 7" stroke="#385344" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M200 147 221 31q2-8 9-5l22 7" stroke="#f8d2c3" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
-            </g>
-            <g class="drink-glass">
-              <path d="M83 60h162l-17 142q-4 27-35 27h-60q-31 0-35-27L83 60Z" fill="#fffdf1" stroke="#345447" stroke-width="6" stroke-linejoin="round" />
-              <path class="drink-liquid" d="M94 113q35-13 68 1t72-2l-12 92q-4 18-28 18h-61q-23 0-28-19L94 113Z" fill="var(--liquid,#c9d9a4)" />
-              <path class="drink-top-wave" d="M94 113q35-13 68 1t72-2" stroke="#567668" stroke-width="4" stroke-linecap="round" opacity=".58"/>
-              <path d="M106 81h120" stroke="#fff" stroke-width="7" stroke-linecap="round" opacity=".82"/>
-              <g class="drink-ice"><rect x="121" y="120" width="32" height="29" rx="7" transform="rotate(16 121 120)" fill="#fffbed" opacity=".45"/><rect x="180" y="146" width="27" height="26" rx="6" transform="rotate(-18 180 146)" fill="#fffbed" opacity=".36"/></g>
-              <g class="drink-face"><path d="M127 164q8-11 16 0" stroke="#344b41" stroke-width="4.5" stroke-linecap="round"/><path d="M180 164q8-11 16 0" stroke="#344b41" stroke-width="4.5" stroke-linecap="round"/><path d="M151 180q12 13 25 0" stroke="#344b41" stroke-width="4.5" stroke-linecap="round"/><ellipse cx="122" cy="182" rx="11" ry="6" fill="#e7a5a7" opacity=".65"/><ellipse cx="204" cy="182" rx="11" ry="6" fill="#e7a5a7" opacity=".65"/></g>
-              <path d="M105 69q8-2 15 1" stroke="#fff" stroke-width="4" stroke-linecap="round"/>
-            </g>
-            <g class="drink-topping"><path d="M150 59q-11-27 4-33 14-5 18 15 17-8 24 3 8 12-7 17" fill="var(--topping,#f4bdb3)" stroke="#345447" stroke-width="4" stroke-linejoin="round"/><circle cx="167" cy="42" r="4" fill="#365045"/></g>
-            <g class="drink-bubbles"><circle cx="269" cy="118" r="9" stroke="#779889" stroke-width="3"/><circle cx="286" cy="92" r="4" fill="#b7ceb7"/><circle cx="58" cy="116" r="7" stroke="#9bb99f" stroke-width="3"/></g>
-            <path d="m66 50-8-8m0 17-11 2M283 46l8-8m3 20 10 4" stroke="#94aa8f" stroke-width="3" stroke-linecap="round"/>
-          </svg>
-          </button>
-          <div class="drink-fizz" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></div>
-          <div class="drink-whisper" id="drink-whisper" role="status" aria-live="polite">Nè! Thử chạm mình xem, mình có chuyện muốn nói.</div>
-          <span class="drink-tap-hint" aria-hidden="true">↑ Chọc cái ly xem nó cãi gì</span>
-        </div>
-        <div class="drink-result" aria-live="polite" aria-atomic="true"><div class="drink-result-kicker" id="drink-label">PHIẾU PHA NƯỚC SỐ 000</div><h3 id="drink-name">Chưa có ly nào. Cái muỗng đang khởi động.</h3><p id="drink-quip">Cái muỗng chờ tới lượt.</p><span class="drink-result-topping" id="drink-result-topping">TOPPING: CHƯA THẢ GÌ CẢ</span><div class="drink-personality" id="drink-personality" hidden><span class="drink-personality-emblem" id="drink-personality-emblem" aria-hidden="true">?</span><span class="drink-personality-copy" id="drink-personality-copy"></span></div><a class="game-next" id="drink-next-game" href="#mon-that" hidden>Ly tưởng tượng xong rồi. Xem ly thật →</a></div>
-        <button class="drink-generate" id="drink-generate" type="button"><svg class="yen-icon" aria-hidden="true"><use href="#yen-bloom"></use></svg><span id="drink-button-label">PHA BẬY ĐI!</span><svg class="yen-icon" aria-hidden="true"><use href="#yen-arrow"></use></svg></button>
-        <p class="drink-footnote">Ly tưởng tượng thôi, không phải đơn hàng thật.</p>
-      </div>
-    </div></section>
-    <section class="yen-drinks-section" id="mon-that" aria-labelledby="yen-drinks-title">
-      <div class="wrap">
-        <div class="yen-drinks-heading">
-          <span class="eyebrow">MÓN THẬT Ở YÊN</span>
-          <h2 id="yen-drinks-title">Chơi tới đây rồi. <em>Khát chưa?</em></h2>
-          <p>Đây là những ly nước có thật trong menu Yên. Chọn một ly bạn muốn thử nhé.</p>
-        </div>
-        <div class="yen-drinks-grid" role="group" aria-label="Chọn một món bạn muốn thử ở Yên">
-          <button class="yen-drink-card" type="button" data-yen-drink="Matcha dâu" aria-pressed="false">
-            <span class="yen-drink-visual yen-drink-matcha" role="img" aria-label="Minh họa ly matcha dâu hai lớp xanh và hồng">
-              <span class="yen-drink-straw" aria-hidden="true"></span><span class="yen-drink-glass" aria-hidden="true"></span>
-              <span class="yen-drink-art-label">MINH HỌA</span>
-            </span>
-            <span class="yen-drink-info"><strong>Matcha dâu</strong><span>Vị matcha, thêm dâu.</span><span class="yen-drink-pick">Muốn thử ly này <span aria-hidden="true">↗</span></span></span>
-          </button>
-          <button class="yen-drink-card" type="button" data-yen-drink="Cacao cốt dừa" aria-pressed="false">
-            <span class="yen-drink-visual yen-drink-cacao" role="img" aria-label="Minh họa ly cacao màu nâu cùng lớp cốt dừa trắng kem">
-              <span class="yen-drink-straw" aria-hidden="true"></span><span class="yen-drink-glass" aria-hidden="true"></span>
-              <span class="yen-drink-art-label">MINH HỌA</span>
-            </span>
-            <span class="yen-drink-info"><strong>Cacao cốt dừa</strong><span>Cacao thơm, cốt dừa béo.</span><span class="yen-drink-pick">Muốn thử ly này <span aria-hidden="true">↗</span></span></span>
-          </button>
-          <button class="yen-drink-card" type="button" data-yen-drink="Trà atiso đường phèn mật ong" aria-pressed="false">
-            <span class="yen-drink-visual yen-drink-atiso" role="img" aria-label="Minh họa ly trà atiso màu hổ phách">
-              <span class="yen-drink-straw" aria-hidden="true"></span><span class="yen-drink-glass" aria-hidden="true"></span>
-              <span class="yen-drink-art-label">MINH HỌA</span>
-            </span>
-            <span class="yen-drink-info"><strong>Trà atiso đường phèn mật ong</strong><span>Một ly trà dịu nhẹ.</span><span class="yen-drink-pick">Muốn thử ly này <span aria-hidden="true">↗</span></span></span>
-          </button>
-          <button class="yen-drink-card" type="button" data-yen-drink="Nước ép thơm táo" aria-pressed="false">
-            <span class="yen-drink-visual yen-drink-juice" role="img" aria-label="Minh họa ly nước ép trái cây màu vàng cam">
-              <span class="yen-drink-straw" aria-hidden="true"></span><span class="yen-drink-glass" aria-hidden="true"></span>
-              <span class="yen-drink-art-label">MINH HỌA</span>
-            </span>
-            <span class="yen-drink-info"><strong>Nước ép thơm táo</strong><span>Thơm và táo trong một ly.</span><span class="yen-drink-pick">Muốn thử ly này <span aria-hidden="true">↗</span></span></span>
-          </button>
-          <button class="yen-drink-card" type="button" data-yen-drink="Cold Brew Cam Vàng" aria-pressed="false">
-            <span class="yen-drink-visual yen-drink-coldbrew" role="img" aria-label="Minh họa cold brew nâu hổ phách với lát cam vàng">
-              <span class="yen-drink-straw" aria-hidden="true"></span><span class="yen-drink-glass" aria-hidden="true"></span>
-              <span class="yen-drink-orange" aria-hidden="true"></span>
-              <span class="yen-drink-art-label">MINH HỌA</span>
-            </span>
-            <span class="yen-drink-info"><strong>Cold Brew Cam Vàng</strong><span>Cà phê ủ lạnh, thêm vị cam vàng.</span><span class="yen-drink-pick">Muốn thử ly này <span aria-hidden="true">↗</span></span></span>
-          </button>
-        </div>
-        <div class="yen-drinks-footer">
-          <div class="yen-drinks-reaction">
-            <svg id="yen-drinks-mascot" viewBox="0 0 320 320" role="img" aria-label="Cục Yên đang vui vẻ">
-              <use href="/assets/cuc-yen/mascot.svg#cuc-yen-happy"></use>
-            </svg>
-            <p id="yen-drinks-choice" role="status" aria-live="polite">Cục Yên đã nếm thử mấy ly này. Chạm vào một ly để nghe nó kể.</p>
+    <section class="section yen-picker-section" id="ngoi-yen" aria-labelledby="yen-picker-title">
+      <span id="mon-that" class="yen-picker-old-anchor" aria-hidden="true"></span>
+      <div class="wrap yen-picker-layout">
+        <div class="yen-picker-intro reveal">
+          <span class="eyebrow yen-picker-eyebrow">04 / MÁY CHỌN LY</span>
+          <h2 id="yen-picker-title">Không biết<br>uống gì? <em>Để Yên chọn hộ.</em></h2>
+          <p class="yen-picker-lead">Chọn thứ bạn đang thèm. Máy sẽ đề xuất một món <strong>có thật trong menu Yên.</strong> Không cần phải hiểu cái máy đang nghĩ gì.</p>
+          <div class="yen-picker-choice-heading"><span>HÔM NAY BẠN MUỐN...</span><small>CHỌN 1 THÔI</small></div>
+          <div class="yen-picker-moods" role="group" aria-label="Chọn kiểu đồ uống bạn muốn thử">
+            <button type="button" class="yen-picker-mood" data-yen-mood="tinh" aria-pressed="false"><span class="yen-picker-mood-icon" aria-hidden="true">☀</span><span>...tỉnh một chút</span></button>
+            <button type="button" class="yen-picker-mood" data-yen-mood="ngot" aria-pressed="false"><span class="yen-picker-mood-icon" aria-hidden="true">♡</span><span>...ngọt dịu</span></button>
+            <button type="button" class="yen-picker-mood" data-yen-mood="beo" aria-pressed="false"><span class="yen-picker-mood-icon" aria-hidden="true">◕</span><span>...béo thơm</span></button>
+            <button type="button" class="yen-picker-mood" data-yen-mood="nhe" aria-pressed="false"><span class="yen-picker-mood-icon" aria-hidden="true">☁</span><span>...nhẹ nhàng</span></button>
+            <button type="button" class="yen-picker-mood" data-yen-mood="mat" aria-pressed="false"><span class="yen-picker-mood-icon" aria-hidden="true">✳</span><span>...thanh mát</span></button>
+            <button type="button" class="yen-picker-mood yen-picker-mood-random" data-yen-mood="batky" aria-pressed="true"><span class="yen-picker-mood-icon" aria-hidden="true">?</span><span>Máy tự quyết!</span></button>
           </div>
-          <a class="yen-drinks-visit" id="yen-drinks-visit" href="#yen-ngoai-doi">Xem đường đến Yên <svg class="yen-icon" aria-hidden="true" focusable="false"><use href="#yen-arrow"></use></svg></a>
+          <p class="yen-picker-aside">Cục Yên đã thử hết mấy món này. Cục Yên vẫn còn nguyên.</p>
+        </div>
+        <div class="yen-picker-machine reveal" id="yen-picker-machine">
+          <div class="yen-picker-machine-top">
+            <span><i aria-hidden="true"></i> MÁY CHỌN LY · SỐ 004</span>
+            <span class="yen-picker-machine-badge">ĐANG RẢNH</span>
+          </div>
+          <div class="yen-picker-console" aria-label="Máy giới thiệu đồ uống của quán Yên">
+            <div class="yen-picker-machine-head">
+              <svg class="yen-picker-machine-mascot" id="yen-picker-mascot" viewBox="0 0 320 320" role="img" aria-label="Cục Yên đang chờ chọn món"><use href="/assets/cuc-yen/mascot.svg#cuc-yen-cheeky"></use></svg>
+              <div><span>PHÒNG GỢI Ý ĐỒ UỐNG</span><strong>MÁY NÀY CHỌN ĐƯỢC.<br><em>PHA THÌ CHƯA.</em></strong></div>
+            </div>
+            <div class="yen-picker-window-frame">
+              <div class="yen-picker-screen" aria-hidden="true">
+                <span class="yen-picker-screen-top">ĐANG TÌM LY HỢP GU...</span>
+                <strong id="yen-picker-reel">CHỜ LỆNH</strong>
+                <span class="yen-picker-screen-bottom" id="yen-picker-screen-bottom">5 MÓN THẬT · KHÔNG BỐC MÓN ẢO</span>
+              </div>
+              <span class="yen-picker-screw" aria-hidden="true">×</span>
+              <span class="yen-picker-screw" aria-hidden="true">×</span>
+            </div>
+            <div class="yen-picker-slot" aria-hidden="true"><span>↓ CỬA RA CỦA THẺ</span></div>
+            <div id="yen-picker-ticket" class="yen-picker-ticket" hidden>
+              <div class="yen-picker-ticket-top">
+                <span>YÊN COFFEE &amp; TEA</span><span>PHIẾU GỢI Ý · KHÔNG PHẢI HÓA ĐƠN</span>
+              </div>
+              <span class="yen-picker-ticket-heading">Cục Yên chọn cho bạn:</span>
+              <div class="yen-picker-ticket-product">
+                <div class="yen-picker-illustration" id="yen-picker-illustration" data-drink="matcha" role="img" aria-label="Minh họa ly nước được gợi ý">
+                  <span class="yen-picker-straw"></span>
+                  <span class="yen-picker-glass"><span class="yen-picker-liquid"></span><span class="yen-picker-ice"></span><span class="yen-picker-glass-face">•ᴗ•</span></span>
+                  <span class="yen-picker-fruit"></span>
+                </div>
+                <div class="yen-picker-product-copy">
+                  <h3 id="yen-picker-drink-name">Một ly ở Yên</h3>
+                  <p id="yen-picker-drink-desc"></p>
+                </div>
+              </div>
+              <p class="yen-picker-why" id="yen-picker-why"></p>
+              <p class="yen-picker-quip" id="yen-picker-quip"></p>
+              <div class="yen-picker-ticket-stamp" aria-hidden="true">CỤC YÊN<br><strong>ĐỀ CỬ</strong></div>
+              <div class="yen-picker-ticket-actions">
+                <a href="#yen-ngoai-doi" class="yen-picker-visit" id="yen-picker-visit">Ghé Yên thử ly này <span aria-hidden="true">↗</span></a>
+                <button type="button" class="yen-picker-save" id="yen-picker-save">Lưu thẻ <span aria-hidden="true">↓</span></button>
+              </div>
+              <button type="button" class="yen-picker-retry" id="yen-picker-retry">Đổi gu, chọn lại ↻</button>
+            </div>
+            <button type="button" class="yen-picker-generate" id="yen-picker-generate">
+              <span class="yen-picker-generate-flower" aria-hidden="true">✳</span>
+              <span id="yen-picker-generate-label">BỐC LY HỢP GU</span>
+              <span aria-hidden="true">↗</span>
+            </button>
+            <p id="yen-picker-status" class="yen-picker-status" role="status" aria-live="polite">Đang chọn kiểu “máy tự quyết”. Bạn có thể đổi ý.</p>
+          </div>
+          <p class="yen-picker-machine-note">Máy chỉ gợi ý. Nước ngon thì Yên pha ở quán.</p>
         </div>
       </div>
     </section>
@@ -3355,7 +3529,7 @@ body.yen-stamping-active{overflow:hidden}
   <div class="yen-rewind-caption" id="yen-rewind-caption">Đang tua về tập 1...</div>
 </div>
 
-  <dialog id="receipt-dialog" aria-labelledby="receipt-label"><div class="receipt"><button type="button" id="close-receipt" class="receipt-flower-close" aria-label="Đóng biên lai" title="Đóng biên lai"><svg class="yen-icon" aria-hidden="true" focusable="false"><use href="#yen-bloom"></use></svg></button><div class="receipt-head"><img class="receipt-logo" src="yen-logo.svg" width="1450" height="585" alt="yên" decoding="async"><p id="receipt-label">BIÊN LAI 0Đ</p></div><div class="receipt-items"><div class="receipt-row"><span>01 × <span id="receipt-name"></span></span><b>0 ₫</b></div><div class="receipt-row"><span>Tổng cộng</span><b>0 ₫</b></div></div><p class="receipt-quote" id="receipt-quote"></p><div class="receipt-bottom"><p class="irl-receipt-note">Quà vui trên web, không đổi tại quán.</p><a class="game-next" href="#ngoi-yen" id="receipt-next-game">Qua Phòng pha bậy →</a></div></div></dialog>
+  <dialog id="receipt-dialog" aria-labelledby="receipt-label"><div class="receipt"><button type="button" id="close-receipt" class="receipt-flower-close" aria-label="Đóng biên lai" title="Đóng biên lai"><svg class="yen-icon" aria-hidden="true" focusable="false"><use href="#yen-bloom"></use></svg></button><div class="receipt-head"><img class="receipt-logo" src="yen-logo.svg" width="1450" height="585" alt="yên" decoding="async"><p id="receipt-label">BIÊN LAI 0Đ</p></div><div class="receipt-items"><div class="receipt-row"><span>01 × <span id="receipt-name"></span></span><b>0 ₫</b></div><div class="receipt-row"><span>Tổng cộng</span><b>0 ₫</b></div></div><p class="receipt-quote" id="receipt-quote"></p><div class="receipt-bottom"><p class="irl-receipt-note">Quà vui trên web, không đổi tại quán.</p><a class="game-next" href="#ngoi-yen" id="receipt-next-game">Qua Máy chọn ly →</a></div></div></dialog>
   <dialog id="privacy-dialog" aria-labelledby="privacy-label">
     <div class="privacy-card">
       <button class="privacy-close" id="close-privacy" type="button" aria-label="Đóng thông tin riêng tư">×</button>
@@ -3765,122 +3939,6 @@ body.yen-stamping-active{overflow:hidden}
       $('#close-receipt').addEventListener('click',()=>receipt.close());
       $('#receipt-next-game').addEventListener('click',()=>receipt.close());
       receipt.addEventListener('click',e=>{if(e.target===receipt)receipt.close();});
-      // Fictional drinks, each generated locally in RAM. Never a real menu or order.
-      const DRINKS = [{"name":"Cà phê đen tập bơi","quip":"Cà phê nhảy xuống ly, xong mới nhớ mình chính là nước. Đứng hình luôn.","liquid":"#aa8065","topping":"#e0bd8c","whisper":"“Đừng cứu! Cho mình mượn ống hút làm phao!”"},{"name":"Matcha dâu tập lái","quip":"Trái dâu cầm vô-lăng là cái muỗng. Matcha ngồi ghế sau thắt dây an toàn.","liquid":"#afc88e","topping":"#f5afb7","whisper":"“Muỗng chưa có bằng lái đâu nha!”"},{"name":"Cacao cốt dừa đắp chăn","quip":"Cacao kéo lớp cốt dừa lên làm chăn. Cục Yên ghen vì cũng muốn đắp.","liquid":"#b98e75","topping":"#f4e3c6","whisper":"“Suỵt! Đừng đánh thức trái dừa!”"},{"name":"Nước ép thơm táo đi thuyền","quip":"Thơm làm thuyền trưởng, táo cầm mái chèo. Thuyền chìm ngay trong chiếc ly.","liquid":"#f1d17a","topping":"#bcd9a7","whisper":"“Ống hút đâu? Cho làm phao cứu sinh!”"},{"name":"Trà atiso lên ngôi","quip":"Trà atiso đội vương miện lá. Vừa đăng quang đã yêu cầu một chiếc ống hút.","liquid":"#c09da7","topping":"#d4d9a9","whisper":"“Kính chào bệ hạ! Cho thần xin một ngụm.”"},{"name":"Matcha tào phớ đi học","quip":"Tào phớ học môn lắc lư. Thầy giáo là cái muỗng, vừa dạy vừa khuấy.","liquid":"#a8c39d","topping":"#fff3d4","whisper":"“Em tốt nghiệp loại... mềm!”"},{"name":"Ly cà phê mang nhầm dép","quip":"Ly cà phê chỉ đi dép trái. Vẫn tự tin bảo đó là mốt mới.","liquid":"#9c745e","topping":"#f4d6a6","whisper":"“Đợi tí, mình đi kiếm chiếc dép phải.”"},{"name":"Trà trái cây tập làm mây","quip":"Miếng trái cây muốn bay lên. Đá viên giữ chân lại, đòi đi cùng.","liquid":"#e8ac9a","topping":"#e9d5a0","whisper":"“Mây gì mà có cả ống hút vậy?”"},{"name":"Cacao cãi nhau với muỗng","quip":"Cacao giận cái muỗng ba giây. Muỗng khuấy một vòng, cả hai làm hòa.","liquid":"#ad8675","topping":"#ebcbb9","whisper":"“Giận thì giận, vẫn phải khuấy nha!”"},{"name":"Nước ép táo thơm mở concert","quip":"Táo hát chính, thơm đánh trống. Cục Yên ngồi hàng đầu, vỗ tay lệch nhịp.","liquid":"#d7d98d","topping":"#f6c57d","whisper":"“Bài đầu tiên: Uống một ngụm!”"},{"name":"Matcha dâu tập yoga","quip":"Dâu cúi chào lá trà. Cả hai tập quá hăng rồi lộn nhào vào ly.","liquid":"#b4cf9c","topping":"#efb0b0","whisper":"“Tư thế cuối: trái dâu úp ngược!”"},{"name":"Trà atiso ngồi nhầm ghế","quip":"Trà atiso ngồi lên bàn, tự tin bảo: “Ghế mới cao ghê!”","liquid":"#c3a6b0","topping":"#e1d7b4","whisper":"“Cái ghế thật đang đứng cạnh kìa!”"}];
-      const drinkMachine=$('#drink-machine'),drinkBtn=$('#drink-generate');
-      const drinkCup=$('#drink-cup-tap'),drinkHint=$('#drink-hint');
-      const drinkAddons=$$('.drink-addon');
-      const ADDONS={
-        may:{label:'Một nắm mây biết bơi',color:'#d1ddef',topping:'#c3e0e0',hint:'Đã bỏ mây vào ly. Mây hỏi: “Ở đây có Wi-Fi không?”'},
-        nang:{label:'Hai muỗng nắng vàng',color:'#efd48c',topping:'#f7d78b',hint:'Vừa vắt nắng vào ly. Mặt trời kêu: “Nhột!”'},
-        tran:{label:'Trân châu nhảy dây',color:'#d1a4b1',topping:'#e9b3bb',hint:'Trân châu vừa nhảy vào ly. Xin đừng bắt nó tập thêm.'}
-      };
-      const ADDON_ICONS={
-        may:'<svg viewBox="0 0 40 40" fill="none" aria-hidden="true"><path d="M10 27c-8-5-4-16 4-15 4-9 14-8 17 0 11-1 12 17 0 17H13" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M17 34h7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>',
-        nang:'<svg viewBox="0 0 40 40" fill="none" aria-hidden="true"><circle cx="20" cy="20" r="9" stroke="currentColor" stroke-width="3.5"/><path d="M20 3v5m0 24v5M3 20h5m24 0h5M8 8l4 4m16 16 4 4M8 32l4-4m16-16 4-4" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg>',
-        tran:'<svg viewBox="0 0 40 40" fill="none" aria-hidden="true"><circle cx="12" cy="14" r="5" stroke="currentColor" stroke-width="3"/><circle cx="27" cy="13" r="5" stroke="currentColor" stroke-width="3"/><circle cx="19" cy="29" r="6" stroke="currentColor" stroke-width="3"/><path d="M10 14h4m11 0h4m-10 15h2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>'
-      };
-      const FIZZ_PATTERNS={
-        may:['may','may','may','may','may','may'],
-        nang:['nang','nang','nang','nang','nang','nang'],
-        tran:['tran','tran','tran','tran','tran','tran'],
-        mixed:['may','nang','tran','may','nang','tran']
-      };
-      function setDrinkSymbols(flavor){
-        const key=ADDON_ICONS[flavor]?flavor:'may';
-        const pattern=FIZZ_PATTERNS[flavor]||FIZZ_PATTERNS.mixed;
-        $('#drink-doodle-two').innerHTML=ADDON_ICONS[key];
-        $$('.drink-fizz span').forEach((el,i)=>{el.innerHTML=ADDON_ICONS[pattern[i%pattern.length]];});
-      }
-      const cupSays=['Ê! Ai vừa chọc má cái ly thế?','Ống hút là bạn cùng phòng mình. Nó hơi nhiều chuyện.','Mình có đá viên trong bụng. Nên nói chuyện hơi lạnh lùng.','Mình là ly nước đặc biệt. Đặc biệt ở chỗ mình biết cãi.','Đừng cù nữa! Trân châu cười muốn rớt khỏi ly rồi.','Mình muốn làm cái xô, nhưng gia đình bảo cứ làm ly trước đã.'];
-      let drinkBag=[],drinkCount=0,drinkMixTimer=0,drinkTickTimer=0,lastDrink=-1,drinkAddon=null,cupSayIndex=-1,drinkMixing=false;
-      function nextDrink(){
-        if(!drinkBag.length){
-          drinkBag=DRINKS.map((_,i)=>i);
-          for(let i=drinkBag.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[drinkBag[i],drinkBag[j]]=[drinkBag[j],drinkBag[i]];}
-          if(drinkBag.length>1&&drinkBag[drinkBag.length-1]===lastDrink){[drinkBag[0],drinkBag[drinkBag.length-1]]=[drinkBag[drinkBag.length-1],drinkBag[0]];}
-        }
-        lastDrink=drinkBag.pop();return DRINKS[lastDrink];
-      }
-      function pulseCup(type){
-        drinkMachine.classList.remove('is-tickled','is-mixing');void drinkMachine.offsetWidth;
-        drinkMachine.classList.add(type);
-        window.clearTimeout(drinkTickTimer);
-        drinkTickTimer=window.setTimeout(()=>drinkMachine.classList.remove(type),prefersReduced?40:950);
-      }
-      function pickAddon(key){
-        if(drinkMixing)return;
-        drinkAddon=drinkAddon===key?null:key;
-        drinkAddons.forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.addon===drinkAddon)));
-        drinkHint.textContent=drinkAddon?ADDONS[drinkAddon].hint:'Chưa chọn topping? Máy sẽ bốc đại một món nhé!';
-        drinkMachine.style.setProperty('--topping',drinkAddon?ADDONS[drinkAddon].topping:'#f4bdb3');
-        setDrinkSymbols(drinkAddon);
-        pulseCup('is-tickled');
-      }
-      drinkAddons.forEach(b=>b.addEventListener('click',()=>pickAddon(b.dataset.addon)));
-      drinkCup.addEventListener('click',()=>{
-        if(drinkMixing)return;
-        cupSayIndex=(cupSayIndex+1)%cupSays.length;
-        $('#drink-whisper').textContent=cupSays[cupSayIndex];
-        pulseCup('is-tickled');
-      });
-      function resetDrink(){
-        window.clearTimeout(drinkMixTimer);window.clearTimeout(drinkTickTimer);
-        drinkMachine.classList.remove('is-mixing','is-tickled','is-revealing');
-        drinkMachine.style.removeProperty('--liquid');drinkMachine.style.removeProperty('--topping');
-        drinkBag=[];drinkCount=0;lastDrink=-1;drinkAddon=null;cupSayIndex=-1;drinkMixing=false;
-        drinkAddons.forEach(b=>b.setAttribute('aria-pressed','false'));
-        drinkBtn.disabled=false;
-        drinkHint.textContent='Không chọn cũng được. Máy bốc đại!';
-        $('#drink-label').textContent='PHIẾU PHA NƯỚC SỐ 000';
-        $('#drink-name').textContent='Chưa có ly nào. Cái muỗng đang khởi động.';
-        $('#drink-quip').textContent='Cái muỗng chờ tới lượt.';
-        $('#drink-whisper').textContent='Nè! Thử chạm mình xem, mình có chuyện muốn nói.';
-        $('#drink-result-topping').textContent='TOPPING: CHƯA THẢ GÌ CẢ';
-        $('#drink-button-label').textContent='PHA BẬY ĐI!';
-        $('#drink-next-game').hidden=true;
-        $('#drink-personality').hidden=true;
-        setDrinkSymbols(null);
-      }
-      drinkBtn.addEventListener('click',()=>{
-        if(drinkMixing)return;
-        const drink=nextDrink(),flavor=drinkAddon||['may','nang','tran'][Math.floor(Math.random()*3)];
-        const topping=ADDONS[flavor];drinkCount++;drinkMixing=true;drinkBtn.disabled=true;
-        setDrinkSymbols(flavor);
-        drinkMachine.classList.remove('is-tickled','is-revealing');void drinkMachine.offsetWidth;
-        drinkMachine.style.setProperty('--liquid',drink.liquid);drinkMachine.style.setProperty('--topping',topping.topping);
-        drinkMachine.classList.add('is-mixing');
-        $('#drink-whisper').textContent='KHOAN! CÁI LY ĐANG XOAY!';
-        $('#drink-button-label').textContent='ĐANG PHA... CẤM CHỌC CÁI MUỖNG!';
-        drinkHint.textContent='Đang khuấy '+topping.label+'. Cái muỗng bắt đầu muốn xin nghỉ.';
-        window.clearTimeout(drinkMixTimer);
-        drinkMixTimer=window.setTimeout(()=>{
-          drinkMachine.classList.remove('is-mixing');drinkMachine.classList.add('is-revealing');
-          $('#drink-label').textContent='PHIẾU PHA NƯỚC SỐ '+String(drinkCount).padStart(3,'0');
-          $('#drink-name').textContent=drink.name;
-          $('#drink-quip').textContent=drink.quip+' Ly này pha chơi thôi nhé. Muốn uống được thì ghé Yên ngoài đời.';
-          $('#drink-whisper').textContent=drink.whisper;
-          $('#drink-result-topping').textContent='ĐÃ THẢ VÀO LY: '+topping.label;
-          const drinkReactions={may:['sleepy','Nhìn mây trong ly xong buồn ngủ ngang.'],nang:['cheeky','Đội nắng lên đầu, tự nhận mình là đầu bếp.'],tran:['surprised','Trân châu vừa nhảy, có nhân viên giật mình đứng nghiêm.']};
-          const reaction=drinkReactions[flavor];window.YenReaction?.show(document.querySelector('.drink-result'),reaction[0],reaction[1]);
-          $('#drink-button-label').textContent='PHA BẬY THÊM LY NỮA!';
-          drinkHint.textContent='Xong ly '+topping.label+' rồi! Nếm bằng mắt thôi mà cũng thấy ổn.';
-          drinkBtn.disabled=false;drinkMixing=false;
-          $('#drink-next-game').hidden=false;
-          const profiles={
-            may:["~","Ly vừa có mây riêng. Dự báo: 100% khả năng nhìn mà không uống được."],
-            nang:["☼","Ly nắng phiên bản lười: sáng rực nhưng không phải phơi đồ."],
-            tran:["o","Trân châu họp khẩn dưới đáy ly. Không ai có biên bản."]
-          };
-          const profile=profiles[flavor];
-          const souvenir=$('#drink-personality');
-          souvenir.dataset.flavor=flavor;souvenir.hidden=false;
-          $('#drink-personality-emblem').textContent=profile[0];
-          $('#drink-personality-copy').textContent=profile[1];
-          window.setTimeout(()=>drinkMachine.classList.remove('is-revealing'),prefersReduced?40:600);
-        },prefersReduced?20:830);
-      });
-      setDrinkSymbols(null);
       const privacyDialog=$('#privacy-dialog');
       $('#privacy-btn').addEventListener('click',()=>privacyDialog.showModal());
       $('#close-privacy').addEventListener('click',()=>privacyDialog.close());
@@ -4082,44 +4140,174 @@ body.yen-stamping-active{overflow:hidden}
 </script>
   
 
-<script id="yen-real-drinks-script">
-/* Cục Yên's fictional tasting notes; choosing a drink never creates an order or stores data. */
+
+<script id="yen-real-drink-picker-script">
+/* A real-menu-only taste match. Session state stays in memory; no tracking or ordering. */
 (function(){
   "use strict";
-  function init(){
-    const cards=Array.from(document.querySelectorAll(".yen-drink-card[data-yen-drink]"));
-    const status=document.getElementById("yen-drinks-choice");
-    const cta=document.getElementById("yen-drinks-visit");
-    const mascotPose=document.querySelector("#yen-drinks-mascot use");
-    if(!cards.length||!status||!cta)return;
-    const reactions={
-      "Matcha dâu":"Cục Yên nhấp matcha dâu, thấy mình dịu dàng hẳn. Soi gương mới biết mép dính màu hồng.",
-      "Cacao cốt dừa":"Cục Yên uống cacao cốt dừa, thấy êm như được quấn chăn. Suýt nữa xin nghỉ thêm một buổi.",
-      "Trà atiso đường phèn mật ong":"Cục Yên nhấp trà atiso đường phèn mật ong, tự nhiên muốn nói nhỏ lại. Sợ đánh thức cái ly.",
-      "Nước ép thơm táo":"Cục Yên uống nước ép thơm táo, tỉnh táo đến mức định dọn bàn. May mà ý định ấy qua nhanh.",
-      "Cold Brew Cam Vàng":"Cục Yên uống Cold Brew Cam Vàng, tỉnh ngủ ngay. Quay sang hỏi lát cam: 'Ủa, ai cho bạn vào cà phê?'"
-    };
-    cards.forEach(card=>card.addEventListener("click",()=>{
-      cards.forEach(item=>item.setAttribute("aria-pressed",String(item===card)));
-      const name=card.getAttribute("data-yen-drink");
-      status.textContent=reactions[name]||"Cục Yên uống một ngụm, gật gù rồi xin thêm thời gian suy nghĩ.";
-      if(mascotPose){
-        const poseByDrink={
-          "Matcha dâu":"delighted",
-          "Cacao cốt dừa":"sleepy",
-          "Trà atiso đường phèn mật ong":"tea",
-          "Nước ép thơm táo":"happy",
-          "Cold Brew Cam Vàng":"surprised"
-        };
-        const pose=poseByDrink[name]||"front";
-        mascotPose.setAttribute("href","/assets/cuc-yen/mascot.svg#cuc-yen-"+pose);
-        document.getElementById("yen-drinks-mascot").setAttribute("aria-label","Cục Yên: "+name);
-      }
-      cta.firstChild.textContent="Xem đường đến Yên ";
-    }));
+  const byId=id=>document.getElementById(id);
+  const machine=byId("yen-picker-machine"),generate=byId("yen-picker-generate");
+  const reel=byId("yen-picker-reel"),ticket=byId("yen-picker-ticket");
+  const status=byId("yen-picker-status"),illustration=byId("yen-picker-illustration");
+  const mascot=byId("yen-picker-mascot");
+  const moods=Array.from(document.querySelectorAll("[data-yen-mood]"));
+  if(!machine||!generate||!reel||!ticket||!status||!illustration||!moods.length)return;
+  const reduced=window.matchMedia("(prefers-reduced-motion: reduce)");
+  const drinks=[
+    {id:"coldbrew",name:"Cold Brew Cam Vàng",desc:"Cà phê ủ lạnh, thêm vị cam vàng.",why:"Bạn muốn tỉnh một chút. Máy đề cử cà phê ủ lạnh có vị cam vàng.",quip:"Cục Yên bảo: “Tỉnh thôi nha. Đừng tỉnh tới mức nhớ deadline.”",pose:"surprised"},
+    {id:"matcha",name:"Matcha dâu",desc:"Matcha kết hợp cùng dâu.",why:"Bạn muốn vị ngọt dịu. Một ly matcha dâu là gợi ý hợp gu.",quip:"Cục Yên thử một ngụm, nói: “Ngọt thế này thì giận nhau hơi khó.”",pose:"delighted"},
+    {id:"cacao",name:"Cacao cốt dừa",desc:"Cacao thơm, thêm cốt dừa béo.",why:"Bạn đang thèm thứ béo thơm. Cacao cốt dừa hợp với lựa chọn đó.",quip:"Cục Yên uống xong ngồi yên. Lần này là do ngon.",pose:"sleepy"},
+    {id:"atiso",name:"Trà atiso đường phèn mật ong",desc:"Trà atiso với đường phèn và mật ong.",why:"Bạn muốn nhẹ nhàng. Máy chọn một ly trà có vị ngọt dịu.",quip:"Cục Yên bảo: “Ly này có vẻ biết nói nhỏ. Hợp với tôi.”",pose:"tea"},
+    {id:"juice",name:"Nước ép thơm táo",desc:"Nước ép từ thơm và táo.",why:"Bạn muốn thanh mát. Máy đề cử một ly nước ép trái cây.",quip:"Cục Yên nhấp thử. Táo và thơm đều tưởng mình là nhân vật chính.",pose:"happy"}
+  ];
+  const moodToDrink={tinh:0,ngot:1,beo:2,nhe:3,mat:4};
+  const moodNames={tinh:"tỉnh một chút",ngot:"ngọt dịu",beo:"béo thơm",nhe:"nhẹ nhàng",mat:"thanh mát",batky:"máy tự quyết"};
+  let selected="batky",isSpinning=false,tick=0,delay=0,lastIndex=-1,current=null;
+  function chooseMood(value){
+    if(isSpinning||!(value in moodNames))return;
+    selected=value;ticket.hidden=true;machine.classList.remove("is-issued");
+    reel.textContent="CHỜ LỆNH";
+    byId("yen-picker-screen-bottom").textContent="5 MÓN THẬT · KHÔNG BỐC MÓN ẢO";
+    byId("yen-picker-generate-label").textContent="BỐC LY HỢP GU";
+    status.textContent=value==="batky"?"Máy tự chọn một món trong menu Yên.":"Đã chọn kiểu "+moodNames[value]+". Bấm để xem ly hợp gu.";
+    current=null;
+    moods.forEach(btn=>btn.setAttribute("aria-pressed",String(btn.dataset.yenMood===value)));
+    const u=mascot?.querySelector("use");if(u)u.setAttribute("href","/assets/cuc-yen/mascot.svg#cuc-yen-cheeky");
   }
-  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",init,{once:true});
-  else init();
+  moods.forEach(btn=>btn.addEventListener("click",()=>chooseMood(btn.dataset.yenMood)));
+  function pick(){
+    if(selected!=="batky")return moodToDrink[selected];
+    const choices=drinks.map((_,i)=>i).filter(i=>i!==lastIndex);
+    return choices[Math.floor(Math.random()*choices.length)];
+  }
+  function stopAnimation(){
+    window.clearInterval(tick);window.clearTimeout(delay);
+    machine.classList.remove("is-scanning");moods.forEach(btn=>btn.disabled=false);
+    generate.disabled=false;isSpinning=false;
+  }
+  function showResult(index){
+    stopAnimation();
+    lastIndex=index;current=drinks[index];
+    reel.textContent="ĐÃ TÌM THẤY!";
+    byId("yen-picker-screen-bottom").textContent="MÓN CÓ THẬT Ở YÊN";
+    illustration.dataset.drink=current.id;
+    illustration.setAttribute("aria-label","Hình minh họa "+current.name);
+    byId("yen-picker-drink-name").textContent=current.name;
+    byId("yen-picker-drink-desc").textContent=current.desc;
+    byId("yen-picker-why").textContent=current.why;
+    byId("yen-picker-quip").textContent=current.quip;
+    const u=mascot?.querySelector("use");if(u)u.setAttribute("href","/assets/cuc-yen/mascot.svg#cuc-yen-"+current.pose);
+    if(mascot)mascot.setAttribute("aria-label","Cục Yên vừa chọn "+current.name);
+    ticket.hidden=false;machine.classList.add("is-issued");
+    generate.hidden=true;
+    status.textContent="Máy chọn "+current.name+". Món này có thật ở Yên.";
+    if(window.innerWidth<=950){
+      window.requestAnimationFrame(()=>{
+        const bounds=ticket.getBoundingClientRect();
+        if(bounds.bottom>window.innerHeight+50&&bounds.top>0){
+          ticket.scrollIntoView({behavior:reduced.matches?"auto":"smooth",block:"nearest"});
+        }
+      });
+    }
+  }
+  function reset(){
+    if(isSpinning)return;
+    ticket.hidden=true;generate.hidden=false;
+    chooseMood("batky");
+    generate.focus({preventScroll:true});
+  }
+  function start(){
+    if(isSpinning)return;
+    const winning=pick();
+    isSpinning=true;machine.classList.remove("is-issued");
+    machine.classList.add("is-scanning");ticket.hidden=true;
+    generate.disabled=true;generate.hidden=false;
+    moods.forEach(btn=>btn.disabled=true);
+    byId("yen-picker-generate-label").textContent="MÁY ĐANG SUY NGHĨ...";
+    status.textContent="Máy đang chọn một món có thật trong menu...";
+    byId("yen-picker-screen-bottom").textContent="KHÔNG ĐƯỢC HỐI MÁY";
+    let step=0;
+    if(!reduced.matches){
+      tick=window.setInterval(()=>{
+        reel.textContent=drinks[(step++)%drinks.length].name;
+      },98);
+    }
+    delay=window.setTimeout(()=>showResult(winning),reduced.matches?0:1340);
+  }
+  generate.addEventListener("click",start);
+  byId("yen-picker-retry").addEventListener("click",reset);
+  function drawCard(d){
+    const canvas=document.createElement("canvas");canvas.width=1080;canvas.height=1350;
+    const ctx=canvas.getContext("2d");if(!ctx)throw new Error("Không thể tạo ảnh");
+    const colors={matcha:["#91b78a","#e6a2b0"],cacao:["#f6e4c2","#966b4b"],atiso:["#e5d1a2","#b58160"],juice:["#ffdb8d","#efa65b"],coldbrew:["#ae7c54","#6d482f"]}[d.id];
+    ctx.fillStyle="#e4ebd9";ctx.fillRect(0,0,1080,1350);
+    ctx.fillStyle="#fffbed";ctx.fillRect(60,58,960,1234);
+    ctx.strokeStyle="#719276";ctx.lineWidth=6;ctx.strokeRect(80,77,920,1194);
+    ctx.fillStyle="#315e42";ctx.textAlign="left";ctx.font='900 35px "Noto Sans",Arial,sans-serif';
+    ctx.fillText("yên  ·  COFFEE & TEA",122,155);
+    ctx.fillStyle="#8ba18d";ctx.font='800 20px "Noto Sans",Arial,sans-serif';
+    ctx.fillText("MÁY CHỌN LY 004  /  PHIẾU GỢI Ý",123,204);
+    ctx.strokeStyle="#b1c3af";ctx.lineWidth=2;ctx.setLineDash([9,10]);ctx.beginPath();ctx.moveTo(122,240);ctx.lineTo(957,240);ctx.stroke();ctx.setLineDash([]);
+    ctx.fillStyle="#a87757";ctx.font='700 33px "Noto Serif",Georgia,serif';
+    ctx.fillText("Cục Yên chọn cho bạn:",122,308);
+    // Illustration only, not a representation of the actual drink presentation.
+    ctx.save();ctx.translate(540,470);ctx.rotate(-.06);
+    ctx.fillStyle="#849f8860";ctx.beginPath();ctx.ellipse(0,250,155,20,0,0,Math.PI*2);ctx.fill();
+    ctx.fillStyle="#eebaa9";ctx.fillRect(51,-161,20,270);
+    ctx.fillStyle="#4d715c";ctx.fillRect(-125,-88,250,297);
+    ctx.fillStyle="#fffef6";ctx.fillRect(-118,-83,236,279);
+    const g=ctx.createLinearGradient(0,-25,0,220);g.addColorStop(0,colors[0]);g.addColorStop(.48,colors[0]);g.addColorStop(.52,colors[1]);g.addColorStop(1,colors[1]);
+    ctx.fillStyle=g;ctx.fillRect(-111,-12,222,209);
+    ctx.strokeStyle="#fffef7";ctx.lineWidth=11;ctx.beginPath();ctx.moveTo(-88,-61);ctx.lineTo(-88,148);ctx.stroke();
+    ctx.fillStyle="#375844";ctx.font='900 48px "Noto Sans",Arial,sans-serif';ctx.textAlign="center";ctx.fillText("• ᴗ •",0,121);
+    ctx.restore();
+    if(d.id==="coldbrew"||d.id==="juice"){
+      ctx.strokeStyle="#dba54d";ctx.lineWidth=18;ctx.beginPath();ctx.arc(707,386,45,0,Math.PI*2);ctx.stroke();
+    }
+    const lines=(str,maxWidth,font)=>{ctx.font=font;const out=[];let row="";
+      for(const word of str.split(/\s+/)){const next=row?row+" "+word:word;
+        if(ctx.measureText(next).width>maxWidth&&row){out.push(row);row=word;}else row=next;
+      }if(row)out.push(row);return out;
+    };
+    ctx.fillStyle="#315b42";ctx.textAlign="center";
+    const nameLines=lines(d.name,800,'900 58px "Noto Serif",Georgia,serif');
+    let y=790;
+    for(const l of nameLines){ctx.font='900 58px "Noto Serif",Georgia,serif';ctx.fillText(l,540,y);y+=70;}
+    ctx.fillStyle="#597863";ctx.font='600 26px "Noto Sans",Arial,sans-serif';
+    ctx.fillText(d.desc,540,y+7);
+    ctx.strokeStyle="#b9c8aa";ctx.setLineDash([7,9]);ctx.beginPath();ctx.moveTo(122,976);ctx.lineTo(957,976);ctx.stroke();ctx.setLineDash([]);
+    ctx.fillStyle="#41674d";ctx.textAlign="left";
+    const whyLines=lines(d.why,796,'650 27px "Noto Sans",Arial,sans-serif');
+    y=1030;ctx.font='650 27px "Noto Sans",Arial,sans-serif';for(const l of whyLines){ctx.fillText(l,135,y);y+=40;}
+    ctx.fillStyle="#a46a51";ctx.font='900 23px "Noto Sans",Arial,sans-serif';ctx.fillText("LÁNG DÀI · ĐẤT ĐỎ",130,1214);
+    ctx.textAlign="right";ctx.fillText("GHÉ YÊN UỐNG THẬT ↗",948,1214);
+    return canvas.toDataURL("image/png");
+  }
+  byId("yen-picker-save").addEventListener("click",()=>{
+    if(!current)return;
+    let uri;
+    try{uri=drawCard(current);}catch(_){status.textContent="Chưa tạo được ảnh. Bạn vẫn có thể chụp màn hình thẻ.";return;}
+    function download(){
+      const a=document.createElement("a");a.href=uri;a.download="yen-chon-ly-"+current.id+".png";
+      document.body.appendChild(a);a.click();a.remove();
+      status.textContent="Đã tạo thẻ PNG. Nếu iPhone mở ảnh, hãy nhấn giữ để lưu.";
+    }
+    if(typeof File!=="undefined"&&navigator.share&&navigator.canShare){
+      try{
+        const raw=atob(uri.split(",")[1]),bytes=new Uint8Array(raw.length);
+        for(let i=0;i<raw.length;i++)bytes[i]=raw.charCodeAt(i);
+        const file=new File([bytes],"yen-chon-ly-"+current.id+".png",{type:"image/png"});
+        if(navigator.canShare({files:[file]})){
+          navigator.share({files:[file],title:"Cục Yên chọn ly cho tôi"})
+            .then(()=>{status.textContent="Đã mở chia sẻ thẻ gợi ý.";})
+            .catch(err=>{if(err.name!=="AbortError")download();});
+          return;
+        }
+      }catch(_){/* Use local download fallback. */}
+    }
+    download();
+  });
+  chooseMood("batky");
 })();
 </script>
 
