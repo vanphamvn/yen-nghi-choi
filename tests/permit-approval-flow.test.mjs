@@ -8,8 +8,9 @@ test("one tap on the main CTA reveals the randomized paper immediately",()=>{
   nodes["permit-start"].click();
   assert.equal(nodes["permit-receipt"].hidden,false);
   assert.equal(nodes["permit-intro"].hidden,true);
-  assert.equal(nodes["permit-receipt"].focused,true);
-  assert.equal(nodes["permit-receipt"].scrolled,true);
+  assert.equal(nodes["permit-cinema"].hidden,false,"The immersive scene must open");
+  assert.equal(nodes["permit-cinema"].focused,true,"Focus stays on the centered performance");
+  assert.equal(nodes["permit-cinema-reason"].textContent,nodes["permit-out-reason"].textContent);
   assert.equal(nodes["yen-permit"].classList.contains("is-previewing"),true);
 });
 
