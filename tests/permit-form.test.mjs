@@ -8,18 +8,20 @@ test("one click creates a permit, with no form choices or user inputs",()=>{
   assert.ok(!permit.includes('data-permit-field='));
   assert.ok(!permit.includes('id="permit-approve"'));
   assert.ok(permit.includes('id="permit-start"'));
-  assert.ok(permit.includes("BỐC GIẤY PHÉP NGHỈ"));
+  assert.ok(permit.includes("BỐC GIẤY PHÉP"));
   assert.ok(permit.includes('id="permit-restart"'));
+  assert.ok(!permit.includes('class="permit-clerk"'));
+  assert.ok(!permit.includes('id="permit-stamp"'));
+  assert.ok(!permit.includes('id="permit-cuc-trigger"'));
 });
 
-test("random result includes reason, duration, reaction and a real drink suggestion",()=>{
-  const {nodes,getReactionCount}=mountPermit({randomValues:[0]});
+test("random result includes reason, duration and a subtle drink suggestion",()=>{
+  const {nodes}=mountPermit({randomValues:[0]});
   nodes["permit-start"].click();
   assert.equal(nodes["permit-receipt"].hidden,false);
   assert.equal(nodes["permit-out-reason"].textContent,"Não mở 38 tab, tab nào cũng phát nhạc");
   assert.equal(nodes["permit-out-duration"].textContent,"10 phút nữa, hứa bằng Wi-Fi");
   assert.equal(nodes["permit-out-drink"].textContent,"Trà atiso đường phèn mật ong");
-  assert.equal(getReactionCount(),1);
 });
 
 test("replaying generates a different combination even when the RNG repeats",()=>{
