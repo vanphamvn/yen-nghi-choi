@@ -2636,6 +2636,106 @@ body.yen-stamping-active{overflow:hidden}
 }
 
 </style>
+
+<style id="yen-permit-v2">
+/* Stage 1: inviting, illustration-driven one-click counter */
+.permit-section .permit-stage{width:min(100%,790px);max-width:790px}
+.permit-section .permit-sheet{background:#fffdf5;padding:0;overflow:hidden;border:1.5px solid #a4bba2;box-shadow:0 15px 40px #36593b20}
+.permit-section .permit-intro{max-width:none}
+.permit-v2-bar{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:14px 25px;border-bottom:1px solid #e2e8db;font:900 10px/1.4 "Noto Sans",Arial,sans-serif;letter-spacing:.07em;color:#54775b}
+.permit-v2-open{padding:5px 10px;border-radius:99px;background:#e5f1da;color:#527d4f;white-space:nowrap;font-size:9px}
+.permit-v2-open:before{content:"";display:inline-block;background:#75aa69;width:7px;height:7px;border-radius:50%;margin-right:7px}
+.permit-v2-welcome{display:grid;grid-template-columns:1.1fr .9fr;gap:7px;align-items:center;min-height:335px;padding:26px 32px}
+.permit-v2-copy{z-index:2}
+.permit-section .permit-intro h3{font:650 clamp(31px,5vw,48px)/1.19 "Yen Serif","Noto Serif",Georgia,serif;letter-spacing:-.04em;margin:12px 0 14px}
+.permit-section .permit-intro h3 em{color:#548365;font-weight:500;white-space:nowrap}
+.permit-section .permit-intro .permit-v2-copy>p:not(.permit-small-note){font-size:14px;line-height:1.67;max-width:36ch;margin:0;color:#5b7162}
+.permit-section .permit-intro .permit-action.permit-start{min-height:58px;width:min(100%,300px);min-width:0;margin-top:20px;border:1px solid #244f38;border-radius:14px;background:#2c6046;box-shadow:0 5px 0 #b0cdae;color:#fff;font-size:15px;padding:10px 13px 10px 21px}
+.permit-section .permit-intro .permit-action.permit-start:hover{background:#407755;transform:translateY(-2px);box-shadow:0 7px 0 #b0cdae}
+.permit-v2-icon{width:35px;height:35px;border-radius:50%;display:grid;place-items:center;background:#e7f3b6;color:#356046;font-size:23px}
+.permit-section .permit-intro .permit-small-note{margin-top:16px;font-size:11px;max-width:38ch}
+.permit-v2-illustration{height:285px;position:relative;display:grid;place-items:center;isolation:isolate}
+.permit-v2-blob{position:absolute;width:240px;height:230px;max-width:100%;border-radius:55% 45% 54% 46%;background:#f4e5b3;transform:rotate(-12deg)}
+.permit-v2-slip{position:absolute;z-index:1;top:21px;left:50%;transform:translateX(-50%) rotate(7deg);width:172px;height:135px;border:2px solid #6a946e;border-radius:10px;background:#fffef6;box-shadow:5px 6px 0 #d2c193;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;color:#47674f;font:900 12px "Noto Sans",Arial,sans-serif}
+.permit-v2-slip:before{content:"✳";font-size:28px;color:#be8f72}
+.permit-v2-slip small{font-size:10px;color:#91a18b}
+.permit-v2-envelope{position:absolute;z-index:2;bottom:26px;left:50%;transform:translateX(-50%) rotate(-6deg);width:205px;height:120px;border:3px solid #567c61;border-radius:12px;background:#e6b2a2;box-shadow:6px 8px 0 #b99d8e}
+.permit-v2-envelope:before{content:"";position:absolute;inset:0;background:#fad3bc;clip-path:polygon(0 0,50% 52%,100% 0)}
+.permit-v2-envelope:after{content:"";position:absolute;inset:0;background:#edbdab;clip-path:polygon(0 100%,50% 44%,100% 100%);border-radius:0 0 9px 9px}
+.permit-v2-eyes,.permit-v2-mouth{position:absolute;z-index:3;left:50%;transform:translateX(-50%);color:#50624a;font-weight:900}
+.permit-v2-eyes{top:55px;white-space:nowrap;letter-spacing:7px;font-size:22px}.permit-v2-mouth{top:73px;font-size:22px}
+.permit-v2-round{z-index:4;position:absolute;right:0;top:56px;width:77px;height:77px;display:grid;place-items:center;text-align:center;border-radius:50%;border:2px dashed #608c66;background:#e1efbf;transform:rotate(13deg);color:#4c7850;font:900 10px/1.3 "Noto Sans",Arial,sans-serif}
+.permit-v2-spark{position:absolute;top:15px;left:2px;font-size:35px;color:#bb8a6a}
+.permit-v2-footer{display:flex;justify-content:space-between;gap:9px;padding:15px 25px;background:#f2f6e9;border-top:1px dashed #b6c9ad;color:#7a8e79;font:900 9px/1.4 "Noto Sans",Arial,sans-serif;letter-spacing:.07em}
+@keyframes permitV2Float{0%,100%{translate:0 0}50%{translate:0 -6px}}
+@media(prefers-reduced-motion:no-preference){.permit-v2-envelope,.permit-v2-round{animation:permitV2Float 3.5s ease-in-out infinite}.permit-v2-round{animation-delay:1s}}
+/* Stage 2: one giant wooden stamp. No mascot */
+.yen-stamp-cinema-card{width:min(100%,480px)}
+.yen-stamp-cinema-paper{background:#fffaf0}
+.yen-stamp-cinema-scene{height:clamp(215px,35dvh,300px);background:radial-gradient(circle,#fffaf1,#eee7d5);border:1px dashed #d1c0a1}
+.yen-stamp-cinema-target{top:55%;width:135px;height:135px}
+.yen-stamp-cinema-red{font-size:10px;background:#fff0e3;border:6px double #a4544d}
+.yen-stamp-cinema-red strong{font-size:18px;margin:5px 0}
+.yen-stamp-cinema-red small{font-size:9px}
+.yen-stamp-cinema-cuc,.yen-stamp-cinema-tool{display:none!important}
+.yen-stamp-cinema-target .yen-stamp-cinema-giant{left:50%;top:50%;width:165px;height:195px;z-index:8;opacity:0;transform:translate(-50%,-240%)}
+.yen-stamp-cinema.is-seal-coming .yen-stamp-cinema-target .yen-stamp-cinema-giant{animation:permitSoloStamp 1s cubic-bezier(.2,.75,.3,1) both}
+@keyframes permitSoloStamp{0%{opacity:1;transform:translate(-50%,-250%) rotate(-10deg) scale(.9)}35%{opacity:1;transform:translate(-50%,-160%) rotate(-4deg)}65%{opacity:1;transform:translate(-50%,-100%) rotate(0) scale(1.08,.91)}79%{opacity:1;transform:translate(-50%,-114%) rotate(1deg)}100%{opacity:1;transform:translate(-50%,-135%)}}
+.yen-stamp-cinema.is-seal-imprinted .yen-stamp-cinema-giant{opacity:0!important}
+.yen-stamp-cinema-impact{top:25%}
+/* Stage 3: office-legal layout, delightfully absurd wording */
+.permit-section .permit-receipt{padding:26px clamp(19px,4vw,40px) 29px}
+.permit-v2-letterhead{display:flex;justify-content:space-between;gap:10px;border-bottom:2px solid #4b7053;padding-bottom:13px;align-items:start}
+.permit-v2-letterhead strong{font-size:11px;letter-spacing:.045em;line-height:1.55}
+.permit-v2-letterhead small{font-size:8px;letter-spacing:.06em;color:#7f9280;line-height:1.5;text-align:right;max-width:130px}
+.permit-v2-meta{display:flex;flex-wrap:wrap;justify-content:space-between;gap:9px;padding:11px 0 23px;color:#778777;font-size:11px}
+.permit-section .permit-approved-header{display:block;text-align:center;margin-bottom:20px}
+.permit-section .permit-receipt h3{font:700 clamp(28px,5vw,41px)/1.2 "Yen Serif","Noto Serif",Georgia,serif;margin:0 0 6px}
+.permit-section .permit-receipt h3 em{font-style:normal}
+.permit-approved-header p{font-size:11px;color:#7c8a7d;margin:0}
+.permit-v2-basis{font:500 13px/1.7 "Noto Serif",Georgia,serif;margin:0 0 15px}
+.permit-v2-decision{font-size:12px;text-align:center;letter-spacing:.14em;margin:0 0 12px;color:#355742}
+.permit-section .permit-v2-articles{margin:0 0 16px;border-top:1px solid #b6c7b6}
+.permit-section .permit-v2-articles>div{grid-template-columns:65px minmax(0,1fr);padding:11px 0;gap:7px;align-items:baseline}
+.permit-section .permit-v2-articles span{font-size:12px;color:#2d4435;white-space:nowrap}
+.permit-section .permit-v2-articles p{font-size:13px;line-height:1.67;color:#435a48;font-weight:500;margin:0}
+.permit-section .permit-v2-articles strong{color:#2d573e;font-size:13px;font-weight:900}
+.permit-section .permit-drink-note{font:750 11px/1.65 "Noto Sans",Arial,sans-serif;color:#5e765f;background:#eff5e9;border-radius:9px;border:1px solid #dae6d6;padding:11px 13px;margin:0 0 20px}
+.permit-section .permit-drink-note strong{color:#2e6043;font-size:11px}
+.permit-v2-sign-row{display:flex;justify-content:flex-end;align-items:center;gap:20px;min-height:125px}
+.permit-seal-target{display:grid;place-items:center;width:108px;height:108px;flex:none;position:relative}
+.permit-ink-seal{opacity:0;background:transparent;width:105px;height:105px;flex:0 0 105px;font-size:9px;color:#a7534e}
+.permit-ink-seal strong{font-size:15px;margin:5px 0}
+.permit-ink-seal small{font-size:7px}
+.permit-stage.is-issued .permit-ink-seal{opacity:1;animation:permit-stamp-mark .42s ease-out both}
+.permit-v2-sign{text-align:center;display:flex;flex-direction:column;gap:4px;min-width:168px}
+.permit-v2-sign small{font-size:9px;font-weight:900;letter-spacing:.06em}
+.permit-v2-sign strong{font:italic 750 27px "Yen Serif","Noto Serif",Georgia,serif;color:#3e634a}
+.permit-v2-sign em{font-size:10px;color:#899488}
+.permit-section .permit-legal{font-size:10px;line-height:1.6}
+.permit-section .permit-result-actions{display:flex;flex-direction:row;align-items:center;justify-content:space-between;border-top:1px solid #e2e9db;padding-top:16px}
+.permit-section .permit-restart{padding:10px 15px;background:#edf4e8;border:1px solid #8dac92;border-radius:9px;text-decoration:none;align-self:auto}
+.permit-section .permit-share-btn{border:1px solid #315b42;background:#315b42;color:white;padding:11px 16px;border-radius:9px;cursor:pointer}
+@media(max-width:620px){
+  .permit-v2-bar{padding:12px;font-size:9px}
+  .permit-v2-welcome{grid-template-columns:1fr;text-align:center;padding:14px 20px 27px}
+  .permit-v2-illustration{grid-row:1;width:275px;height:185px;margin:-22px auto -12px;transform:scale(.77)}
+  .permit-v2-copy{grid-row:2}
+  .permit-section .permit-intro .permit-v2-copy>p:not(.permit-small-note){margin:auto}
+  .permit-section .permit-intro h3{font-size:clamp(32px,8vw,42px)}
+  .permit-section .permit-intro .permit-action.permit-start{width:100%}
+  .permit-section .permit-intro .permit-small-note{max-width:none}
+  .permit-v2-footer{font-size:8px;padding:12px;display:block;text-align:center}
+  .permit-v2-footer span+span:before{content:" · "}
+  .permit-v2-sign-row{gap:8px}.permit-v2-sign{min-width:140px}
+  .permit-seal-target{width:87px;height:87px}.permit-ink-seal{width:87px;height:87px;flex-basis:87px;font-size:7px}.permit-ink-seal strong{font-size:12px}
+  .permit-section .permit-v2-articles>div{grid-template-columns:58px minmax(0,1fr)}
+  .permit-section .permit-result-actions button{font-size:11px}
+}
+@media(max-width:365px){.permit-v2-letterhead small{max-width:95px}.permit-section .permit-result-actions{flex-direction:column;align-items:stretch}}
+@media(max-height:590px){.yen-stamp-cinema-scene{height:155px}.yen-stamp-cinema-target{transform:translate(-50%,-50%) scale(.78)}}
+@media(prefers-reduced-motion:reduce){.permit-v2-envelope,.permit-v2-round{animation:none!important}.yen-stamp-cinema-giant{display:none!important}}
+</style>
 </head>
 <body>
   <!-- Yên doodle icons: hand-drawn, consistent stroke; no icon fonts or external assets -->
@@ -2752,37 +2852,54 @@ body.yen-stamping-active{overflow:hidden}
       <div class="permit-stage" id="yen-permit">
         <div class="permit-stage-main">
           <div class="permit-sheet" id="permit-sheet">
+
             <div class="permit-intro" id="permit-intro">
-              <div class="permit-sheet-kicker">KHÔNG CẦN ĐIỀN ĐƠN</div>
-              <h3>NGHỈ MỘT<br>CHÚT NHÉ?</h3>
-              <p>Cục Yên tự bốc lý do và đóng mộc cho bạn.</p>
-              <button class="permit-action permit-start" type="button" id="permit-start"><span>BỐC GIẤY PHÉP</span><span aria-hidden="true">↗</span></button>
-              <p class="permit-small-note">Một chạm · Không lưu dữ liệu</p>
-            </div>
-            <div class="permit-receipt" id="permit-receipt" hidden>
-              <div class="permit-approved-header">
-                <h3>GIẤY PHÉP<br>NGHỈ</h3>
-                <div class="permit-seal-target" id="permit-seal-target">
-                  <span class="permit-seal-wait" aria-hidden="true">CHỜ<br>ĐÓNG MỘC</span>
-                  <div class="permit-ink-seal" id="permit-ink-seal" aria-label="Dấu Cục Yên đã duyệt">CỤC YÊN<br><strong>ĐÃ DUYỆT<br>NGHỈ</strong><small>CHO VUI</small></div>
+              <div class="permit-v2-bar"><span>SỞ CẤP PHÉP NGHỈ / QUẦY SỐ 00</span><span class="permit-v2-open">Đang nhận đơn</span></div>
+              <div class="permit-v2-welcome">
+                <div class="permit-v2-copy">
+                  <div class="permit-sheet-kicker">THỦ TỤC MIỄN HỎI HAN</div>
+                  <h3>Hôm nay,<br><em>nghỉ có phép.</em></h3>
+                  <p>Không cần điền đơn. Sở tự nghĩ lý do, tự duyệt và tự đóng mộc cho bạn.</p>
+                  <button type="button" class="permit-action permit-start" id="permit-start"><span>Bốc giấy phép</span><span class="permit-v2-icon" aria-hidden="true">✳</span></button>
+                  <p class="permit-small-note">Một lần bấm. Không nhập tên, không lưu thông tin.</p>
+                </div>
+                <div class="permit-v2-illustration" aria-hidden="true">
+                  <div class="permit-v2-blob"></div>
+                  <div class="permit-v2-slip"><span>ĐƠN XIN NGHỈ</span><small>Đã điền giùm</small></div>
+                  <div class="permit-v2-envelope"><span class="permit-v2-eyes">•　•</span><span class="permit-v2-mouth">⌣</span></div>
+                  <div class="permit-v2-round">KHỎI<br>TRÌNH BÀY</div>
+                  <span class="permit-v2-spark">✳</span>
                 </div>
               </div>
-              <div class="permit-receipt-lines">
-                <div><span>LÝ DO</span><strong id="permit-out-reason"></strong></div>
-                <div><span>NGHỈ ĐẾN</span><strong id="permit-out-duration"></strong></div>
+              <div class="permit-v2-footer"><span>QUY TRÌNH: RẤT TỰ ĐỘNG</span><span>XÁC SUẤT ĐƯỢC DUYỆT: ĐÁNG NGỜ</span></div>
+            </div>
+            <div class="permit-receipt" id="permit-receipt" hidden>
+              <div class="permit-v2-letterhead"><strong>YÊN COFFEE &amp; TEA<br>SỞ CẤP PHÉP NGHỈ</strong><small>VĂN BẢN LƯU HÀNH NỘI BỘ</small></div>
+              <div class="permit-v2-meta"><span>Số: <strong id="permit-out-number">YN/000</strong></span><time id="permit-out-date"></time></div>
+              <div class="permit-approved-header"><h3>GIẤY PHÉP<br><em>NGHỈ TẠM THỜI</em></h3><p>(Ban hành theo thủ tục miễn hỏi han)</p></div>
+              <p class="permit-v2-basis">Căn cứ nhu cầu nghỉ ngơi có thật và thẩm quyền tự phong của Sở Cấp Phép Nghỉ;</p>
+              <h4 class="permit-v2-decision">QUYẾT ĐỊNH:</h4>
+              <div class="permit-receipt-lines permit-v2-articles">
+                <div><span>Điều 1.</span><p>Chấp thuận cho người cầm giấy này tạm ngừng nghiêm túc với lý do: <strong id="permit-out-reason"></strong>.</p></div>
+                <div><span>Điều 2.</span><p>Thời hạn nghỉ được xác định là: <strong id="permit-out-duration"></strong>.</p></div>
+                <div><span>Điều 3.</span><p id="permit-out-note"></p></div>
               </div>
-              <p class="permit-note" id="permit-out-note"></p>
-              <p class="permit-drink-note">CỤC YÊN GỢI Ý: <strong id="permit-out-drink"></strong></p>
-              <p class="permit-legal">Giấy phép cho vui, không phải voucher.</p>
-              <div class="permit-result-actions">
-                <button type="button" class="permit-action permit-restart" id="permit-restart">BỐC LẠI <span aria-hidden="true">↻</span></button>
-                <button class="permit-share-btn" id="permit-share-img" type="button">Lưu ảnh <span aria-hidden="true">↓</span></button>
+              <p class="permit-drink-note">PHỤ LỤC TÙY HỨNG · Có thể ghé Yên uống <strong id="permit-out-drink"></strong> sau khi nghỉ.</p>
+              <div class="permit-v2-sign-row">
+                <div class="permit-seal-target" id="permit-seal-target">
+                  <div class="permit-ink-seal" id="permit-ink-seal" aria-label="Cục Yên đã đóng dấu duyệt">CỤC YÊN<strong>ĐÃ DUYỆT</strong><small>CHO PHÉP NGHỈ</small></div>
+                </div>
+                <div class="permit-v2-sign"><small>TM. HỘI ĐỒNG NGỒI YÊN</small><strong>Cục Yên</strong><em>(Đã ký, hiện đang nghỉ)</em></div>
               </div>
+              <p class="permit-legal">Chỉ để vui. Không phải giấy phép thật, giấy nghỉ việc hay voucher.</p>
+              <div class="permit-result-actions"><button type="button" class="permit-action permit-restart" id="permit-restart">Bốc giấy khác ↻</button><button class="permit-share-btn" id="permit-share-img" type="button">Lưu giấy phép ↓</button></div>
               <p id="permit-share-status" class="permit-share-status" role="status" aria-live="polite" hidden></p>
             </div>
           </div>
         </div>
-        <p class="permit-message" id="permit-message" role="status" aria-live="polite">Bấm bốc giấy phép. Cục Yên sẽ lo phần còn lại.</p>
+        <p class="permit-message" id="permit-message"          </div>
+        </div>
+        <p class="permit-message" id="permit-message" role="status" aria-live="polite">Giấy phép đang nằm trong ngăn kéo. Bốc một tờ nhé.</p>
       </div>
     </section>
 
@@ -3851,10 +3968,11 @@ body.yen-stamping-active{overflow:hidden}
 })();
 </script>
 
-<div class="yen-stamp-cinema" id="permit-cinema" role="dialog" aria-modal="true" aria-label="Cục Yên đang đóng mộc" tabindex="-1" hidden>
+
+<div class="yen-stamp-cinema" id="permit-cinema" role="dialog" aria-modal="true" aria-label="Cảnh đóng mộc duyệt giấy phép nghỉ" tabindex="-1" hidden>
   <div class="yen-stamp-cinema-shade" aria-hidden="true"></div>
   <div class="yen-stamp-cinema-card">
-    <div class="yen-stamp-cinema-tag">CỤC YÊN · QUẦY CẤP PHÉP NGHỈ</div>
+    <div class="yen-stamp-cinema-tag">PHÒNG ĐÓNG MỘC TỰ ĐỘNG · KHÔNG CÓ NHÂN VIÊN</div>
     <div class="yen-stamp-cinema-paper">
       <div class="yen-stamp-cinema-heading">GIẤY PHÉP <em>NGHỈ TẠM THỜI</em></div>
       <div class="yen-stamp-cinema-answers">
@@ -3863,27 +3981,20 @@ body.yen-stamping-active{overflow:hidden}
       </div>
       <div class="yen-stamp-cinema-scene" aria-hidden="true">
         <div class="yen-stamp-cinema-target">
-          <div class="yen-stamp-cinema-outline">CHỜ<br>MỘC</div>
-          <div class="yen-stamp-cinema-red">CỤC YÊN<strong>ĐÃ DUYỆT</strong><small>NGHỈ!</small></div>
-        </div>
-        <svg class="yen-stamp-cinema-cuc" viewBox="0 0 320 320" focusable="false">
-          <use href="/assets/cuc-yen/mascot.svg#cuc-yen-clerk-ready"></use>
-        </svg>
-        <div class="yen-stamp-cinema-tool">
-          <span class="yen-stamp-cinema-tool-handle"></span><span class="yen-stamp-cinema-tool-neck"></span>
-          <span class="yen-stamp-cinema-tool-wood">CỤC<br>YÊN</span><span class="yen-stamp-cinema-tool-base"></span>
-        </div>
-        <div class="yen-stamp-cinema-giant">
-          <span class="yen-stamp-cinema-tool-handle"></span><span class="yen-stamp-cinema-tool-neck"></span>
-          <span class="yen-stamp-cinema-tool-wood">CỤC<br>YÊN</span><span class="yen-stamp-cinema-tool-base"></span>
+          <div class="yen-stamp-cinema-outline">CHỜ<br>DUYỆT</div>
+          <div class="yen-stamp-cinema-red">CỤC YÊN<strong>ĐÃ DUYỆT</strong><small>CHO PHÉP NGHỈ</small></div>
+          <div class="yen-stamp-cinema-giant">
+            <span class="yen-stamp-cinema-tool-handle"></span><span class="yen-stamp-cinema-tool-neck"></span>
+            <span class="yen-stamp-cinema-tool-wood">CỤC<br>YÊN</span><span class="yen-stamp-cinema-tool-base"></span>
+          </div>
         </div>
         <span class="yen-stamp-cinema-impact">CỘP!</span>
       </div>
     </div>
-    <p class="yen-stamp-cinema-caption" id="permit-cinema-status" role="status" aria-live="polite">Giấy phép đang chờ con mộc.</p>
+    <p class="yen-stamp-cinema-caption" id="permit-cinema-status" role="status" aria-live="polite">Đang căn mộc cho đúng ô.</p>
   </div>
 </div>
-<script id="yen-permit-script">
+<script id="yen-permit-script"><script id="yen-permit-script">
 
 /* Sở cấp phép nghỉ của Cục Yên · original vanilla JS, state in RAM only */
 (function(){
@@ -3935,22 +4046,20 @@ body.yen-stamping-active{overflow:hidden}
       if(reduced)return;
       cinemaReason.textContent=fields.reason[values.reason];
       cinemaDuration.textContent=fields.duration[values.duration];
-      cinemaStatus.textContent="Giấy phép đã có. Cục Yên chuẩn bị lấy mộc...";
+      cinemaStatus.textContent="Đang căn mộc cho đúng ô...";
       cinemaScene("is-previewing");
       cinema.hidden=false;
-      document.body?.classList?.add("yen-stamping-active");
+      document.body.classList.add("yen-stamping-active");
       cinema.focus({preventScroll:true});
     }
     function cinemaClose(){
-      cinema.hidden=true;
-      cinemaScene(null);
-      document.body?.classList?.remove("yen-stamping-active");
+      cinema.hidden=true;cinemaScene(null);
+      document.body.classList.remove("yen-stamping-active");
     }
     function randomizePermit(){
       const reasons=Object.keys(fields.reason),durations=Object.keys(fields.duration);
       const options=reasons.length*durations.length;
       let pick=Math.floor(Math.random()*options);
-      // Avoid an identical consecutive result without an unbounded retry loop.
       if(String(pick)===lastCombination)pick=(pick+1)%options;
       lastCombination=String(pick);
       values.reason=reasons[Math.floor(pick/durations.length)];
@@ -3958,69 +4067,43 @@ body.yen-stamping-active{overflow:hidden}
     }
     function issuePermit(){
       if(phase==="stamping")return;
-      // A single click generates the form values and immediately reveals the result.
-      // The giant stamp only arrives after the random result is readable.
       randomizePermit();
-      // All three entry points reveal the approved paper BEFORE any stamp moves.
-      // The red seal appears only at the giant stamp's actual contact with the paper.
       phase="stamping";round++;const thisRound=round;
       window.clearTimeout(pending);
-      
-      const selected=menu[values.reason];
       $("permit-out-reason").textContent=fields.reason[values.reason];
       $("permit-out-duration").textContent=fields.duration[values.duration];
       $("permit-out-note").textContent=notes[values.reason];
-      $("permit-out-drink").textContent=selected.name;
-      intro.hidden=true;receipt.hidden=false;
-      $("permit-share-status").hidden=true;
+      $("permit-out-drink").textContent=menu[values.reason].name;
+      $("permit-out-number").textContent="YN/NG-"+String(round).padStart(3,"0");
+      $("permit-out-date").textContent=new Date().toLocaleDateString("vi-VN");
+      intro.hidden=true;receipt.hidden=false;$("permit-share-status").hidden=true;
       stage.classList.remove("is-issued","is-stamping","is-filing","is-collecting","is-seal-coming","is-seal-imprinted");
       stage.classList.add("is-previewing");
-      receipt.setAttribute("tabindex","-1");
       cinemaOpen();
-      announce("Giấy phép đã hiện giữa màn hình. Cục Yên chuẩn bị lấy mộc!");
-
+      announce("Giấy phép đang được đóng dấu.");
       const active=()=>phase==="stamping"&&thisRound===round;
       function finish(){
         if(!active())return;
         phase="issued";
-        stage.classList.remove("is-previewing","is-collecting","is-seal-coming");
-        stage.classList.add("is-seal-imprinted","is-issued");
-        
+        stage.classList.remove("is-previewing","is-seal-coming");
+        stage.classList.add("is-issued","is-seal-imprinted");
         cinemaClose();
+        receipt.setAttribute("tabindex","-1");
         receipt.focus({preventScroll:true});
         receipt.scrollIntoView({behavior:reduced?"auto":"smooth",block:"start"});
-        announce("CỘP! Giấy phép đã duyệt. Muốn thử vận may nữa thì bốc giấy khác!");
+        announce("CỘP! Đã duyệt. Giấy phép nghỉ đã sẵn sàng.");
       }
-      if(reduced){
-        stage.classList.add("is-seal-imprinted");
-        finish();
-        return;
-      }
-
-      // One cancellable timeout chain. Reset invalidates the round and clears the
-      // current timer, so a previous stamp cannot reappear on a fresh application.
+      if(reduced){finish();return;}
       pending=window.setTimeout(()=>{
         if(!active())return;
-        stage.classList.add("is-collecting");
-        cinemaScene("is-collecting");
-        cinemaStatus.textContent="Cục Yên đang bước qua lấy mộc...";
-        announce("Cục Yên đang bước qua lấy con mộc...");
+        cinemaScene("is-seal-coming");
+        cinemaStatus.textContent="Mộc đang hạ xuống...";
         pending=window.setTimeout(()=>{
           if(!active())return;
-          stage.classList.remove("is-previewing","is-collecting");
-          stage.classList.add("is-seal-coming");
-          cinemaScene("is-seal-coming");
-          cinemaStatus.textContent="Mộc lớn đang nhắm thẳng ô dấu...";
-          announce("Mộc lớn đã được nhấc lên. Nhắm đúng ô tròn trên giấy...");
-          pending=window.setTimeout(()=>{
-            if(!active())return;
-            stage.classList.add("is-seal-imprinted");
-            cinema.classList.add("is-seal-imprinted");
-            cinemaStatus.textContent="CỘP! Đã đóng mộc!";
-            announce("CỘP! Đóng mộc trúng ngay ô dấu đỏ!");
-            pending=window.setTimeout(finish,350);
-          },755);
-        },720);
+          cinema.classList.add("is-seal-imprinted");
+          cinemaStatus.textContent="CỘP! Đã duyệt.";
+          pending=window.setTimeout(finish,800);
+        },650);
       },470);
     }
 
@@ -4059,22 +4142,22 @@ body.yen-stamping-active{overflow:hidden}
       rounded(60,46,960,1168,26,paper);
       ctx.strokeStyle="#96b09a";ctx.lineWidth=3;ctx.strokeRect(84,73,912,1112);
       ctx.fillStyle=subtle;ctx.font='900 24px "Noto Sans",Arial,sans-serif';
-      ctx.fillText("CỤC YÊN · COFFEE & TEA",116,155);
+      ctx.fillText("YÊN COFFEE & TEA · SỞ CẤP PHÉP NGHỈ",116,155);
       ctx.font='900 76px "Noto Serif",Georgia,serif';ctx.fillStyle=ink;
       ctx.fillText("GIẤY PHÉP",112,277);
-      ctx.fillText("NGHỈ",112,364);
+      ctx.fillText("NGHỈ TẠM THỜI",112,364);
       line(417);
-      ctx.fillStyle=subtle;ctx.font='900 23px "Noto Sans",Arial,sans-serif';ctx.fillText("LÝ DO",116,476);
+      ctx.fillStyle=subtle;ctx.font='900 23px "Noto Sans",Arial,sans-serif';ctx.fillText("ĐIỀU 1 · LÝ DO",116,476);
       ctx.fillStyle=ink;ctx.font='850 37px "Noto Sans",Arial,sans-serif';
       wrap($("permit-out-reason").textContent,116,530,838,46,3);
       line(676);
-      ctx.fillStyle=subtle;ctx.font='900 23px "Noto Sans",Arial,sans-serif';ctx.fillText("NGHỈ ĐẾN",116,732);
+      ctx.fillStyle=subtle;ctx.font='900 23px "Noto Sans",Arial,sans-serif';ctx.fillText("ĐIỀU 2 · THỜI HẠN",116,732);
       ctx.fillStyle=ink;ctx.font='850 37px "Noto Sans",Arial,sans-serif';
       wrap($("permit-out-duration").textContent,116,790,838,47,2);
       ctx.fillStyle=ink;ctx.font='700 27px "Noto Serif",Georgia,serif';
       wrap($("permit-out-note").textContent,116,910,815,34,3);
       ctx.fillStyle=subtle;ctx.font='800 19px "Noto Sans",Arial,sans-serif';
-      ctx.fillText("CỤC YÊN GỢI Ý:",116,1019);
+      ctx.fillText("PHỤ LỤC · CỤC YÊN GỢI Ý:",116,1019);
       ctx.fillStyle=ink;ctx.font='800 26px "Noto Sans",Arial,sans-serif';
       wrap($("permit-out-drink").textContent,116,1058,560,31,2);
       ctx.save();ctx.translate(815,1039);ctx.rotate(-.15);
@@ -4086,7 +4169,7 @@ body.yen-stamping-active{overflow:hidden}
       ctx.font='900 20px "Noto Sans",Arial,sans-serif';ctx.fillText("NGHỈ!",0,32);
       ctx.restore();
       ctx.fillStyle=subtle;ctx.font='700 19px "Noto Sans",Arial,sans-serif';
-      ctx.fillText("Chỉ để vui, không phải giấy nghỉ thật hay voucher.",116,1160);
+      ctx.fillText("Đã ký, hiện đang nghỉ · Chỉ để vui, không phải giấy nghỉ thật.",116,1160);
       return canvas.toDataURL("image/png");
     }
     function downloadPermitImage(uri){
