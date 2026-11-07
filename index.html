@@ -977,7 +977,7 @@
 .permit-options button{position:relative;min-width:0;min-height:46px;padding:10px 11px;border:1.5px dashed #8fa990;border-radius:7px;background:#f9f9ef;color:#4b6752;font:850 12px/1.35 "Noto Sans",Arial,sans-serif;text-align:left;cursor:pointer;transition:background .16s,transform .16s,box-shadow .16s,border-color .16s}
 .permit-options button:hover{background:#eaf0e2;transform:translateY(-2px)}
 .permit-options button[aria-pressed=true]{border:2px solid #547855;background:#e4eddc;color:#2e5a3c;padding:9.5px 10.5px;box-shadow:2px 3px 0 #bdccb5;transform:rotate(-.5deg)}
-.permit-options button[aria-pressed=true]:after{content:"✓";position:absolute;right:8px;top:6px;color:#457454;font-weight:900}
+.permit-options button[aria-pressed=true]:after{content:"";position:absolute;right:8px;top:6px;width:13px;height:13px;border:2px solid #457454;border-radius:50%;box-shadow:inset 0 0 0 3px #e7f3b6;background:#457454}
 .permit-field.is-missing{background:#fff0e7;border-radius:8px;outline:2px dashed #be8163;outline-offset:4px}
 .permit-form-bottom{display:flex;justify-content:space-between;gap:8px;padding-top:14px;border-top:2px dashed #aebca6;font:900 10px/1.5 "Noto Sans",Arial,sans-serif;letter-spacing:.045em;color:#6b8671}
 .permit-clerk{position:relative;background:#e6ebd8;border:2px solid #5b765c;border-radius:18px;padding:16px 14px 13px;min-height:440px;box-shadow:4px 6px 0 #a7b89d;transform:rotate(1deg);display:flex;flex-direction:column}
@@ -2657,7 +2657,7 @@ body.yen-stamping-active{overflow:hidden}
 .permit-v2-illustration{height:285px;position:relative;display:grid;place-items:center;isolation:isolate}
 .permit-v2-blob{position:absolute;width:240px;height:230px;max-width:100%;border-radius:55% 45% 54% 46%;background:#f4e5b3;transform:rotate(-12deg)}
 .permit-v2-slip{position:absolute;z-index:1;top:21px;left:50%;transform:translateX(-50%) rotate(7deg);width:172px;height:135px;border:2px solid #6a946e;border-radius:10px;background:#fffef6;box-shadow:5px 6px 0 #d2c193;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;color:#47674f;font:900 12px "Noto Sans",Arial,sans-serif}
-.permit-v2-slip:before{content:"✳";font-size:28px;color:#be8f72}
+.permit-v2-slip:before{content:none;display:none}
 .permit-v2-slip small{font-size:10px;color:#91a18b}
 .permit-v2-envelope{position:absolute;z-index:2;bottom:26px;left:50%;transform:translateX(-50%) rotate(-6deg);width:205px;height:120px;border:3px solid #567c61;border-radius:12px;background:#e6b2a2;box-shadow:6px 8px 0 #b99d8e}
 .permit-v2-envelope:before{content:"";position:absolute;inset:0;background:#fad3bc;clip-path:polygon(0 0,50% 52%,100% 0)}
@@ -2987,6 +2987,26 @@ body.yen-stamping-active{overflow:hidden}
 @media(max-width:410px){.footer-bottom .footer-links{flex-basis:100%;justify-content:flex-start;margin-left:0}.footer-bottom .footer-fineprint{order:4}}
 @media(prefers-reduced-motion:reduce){.footer-tiktok-link{transition:none}}
 </style>
+
+<style id="yen-doodle-icon-system-v1">
+/* Yên icon language: hand-inked strokes and asymmetric little buds. */
+.yen-icon{shape-rendering:geometricPrecision}
+.permit-v2-icon .yen-doodle-bud{width:23px;height:23px;stroke-width:1.7;transform:rotate(-11deg)}
+.permit-v2-slip>.yen-doodle-bud{width:29px;height:29px;flex:none;color:#bb846b;stroke-width:1.65;transform:rotate(7deg)}
+.permit-v2-spark{display:grid;place-items:center;width:35px;height:35px;line-height:1;transform:rotate(-11deg)}
+.permit-v2-spark .yen-doodle-bud{width:35px;height:35px;stroke-width:1.5}
+.yen-playmap-title .yen-icon{width:18px;height:18px;vertical-align:middle;stroke-width:1.8;transform:translateY(3px)}
+.footer-replay-arrow .yen-icon{width:25px;height:25px;stroke-width:1.9}
+.footer-tiktok-link .yen-icon{width:17px;height:17px;stroke-width:1.8}
+.permit-result-actions .yen-icon{width:16px;height:16px;vertical-align:-.23em;stroke-width:1.7}
+.permit-restart .yen-icon,.permit-share-btn .yen-icon{margin-left:6px}
+.permit-section .permit-stage .permit-restart,.permit-section .permit-stage .permit-share-btn{gap:4px}
+#receipt-next-game .yen-icon{width:18px;height:18px;stroke-width:1.75;transition:transform .2s ease}
+#receipt-next-game:hover .yen-icon{transform:translateX(4px) rotate(-5deg)}
+.privacy-close .yen-icon{display:block;width:19px;height:19px;stroke-width:2;pointer-events:none}
+.privacy-close{display:grid;place-items:center}
+@media(prefers-reduced-motion:reduce){#receipt-next-game .yen-icon{transition:none}}
+</style>
 </head>
 <body>
   <!-- Yên doodle icons: hand-drawn, consistent stroke; no icon fonts or external assets -->
@@ -3042,6 +3062,44 @@ body.yen-stamping-active{overflow:hidden}
         <ellipse cx="16.6" cy="6" rx="1.8" ry="2.5" transform="rotate(15 16.6 6)"/>
         <ellipse cx="21.4" cy="9.3" rx="1.6" ry="2.3" transform="rotate(39 21.4 9.3)"/>
       </symbol>
+
+      <!-- Yên micro-icons: asymmetrical ink trails, leaf accents, and no system emoji. -->
+      <symbol id="yen-doodle-bud" viewBox="0 0 28 28">
+        <path d="M13.7 3.1c-2.9 2.8-3.5 5.7-1 9M23.5 8.6c-3.7-.6-6.6.5-8.4 3.4M24.8 19.3c-3-2.7-6-3.3-9.2-2.1M13.6 24.8c1.6-3.4 1.4-6.5-1.2-9M4.4 20.5c3.6-1.5 5.6-3.9 6.1-7.3M3.7 8.9c4 .1 6.6 1.4 8 4.5"/>
+        <path d="M11.4 12.3c1.4-1.2 3.6-1 4.6.5 1.1 1.7.1 3.7-1.7 4.2-2.2.6-4.3-2.3-2.9-4.7Z" fill="currentColor" stroke="none"/>
+        <path d="M22.2 3.2 24 2" stroke-width="1.2"/>
+      </symbol>
+      <symbol id="yen-step-right" viewBox="0 0 28 28">
+        <path d="M3.3 16c6.8-1.2 12.3-1.6 19-1.4"/>
+        <path d="M16.1 8.3c2.4 2.7 4.6 4.9 6.6 6.2-2.3 2.3-4.5 4.4-6.9 6.6"/>
+        <path d="M5.7 10.5c1.3.3 2.2.3 3.1-.2M4 20.5l-1.8.8" stroke-width="1.25"/>
+      </symbol>
+      <symbol id="yen-point-down" viewBox="0 0 28 28">
+        <path d="M4.8 4.3c2.1 7.7 7.6 13.7 17.7 18.2"/>
+        <path d="M13.5 24.1c3-1.3 6.5-1.6 9.1-1.5-.3-3.1-.6-5.4-.1-8.5"/>
+        <path d="m5.3 16.7-2.4.6m7.1 3.2-1.2 2.1" stroke-width="1.3"/>
+      </symbol>
+      <symbol id="yen-little-loop" viewBox="0 0 28 28">
+        <path d="M22.6 12.1c-.4-5.5-4.6-8.8-9.6-8.7C7.9 3.5 4.1 7 4 12.5c-.2 5.4 3.2 9.1 8.6 9.4 3.7.2 6.4-1.1 8.4-3.8"/>
+        <path d="m17.5 4.1 5.3-.6-.7 6.1"/>
+        <path d="M5.8 22.4c1.1.5 2.2.6 3.4.5M21 22.2l1.5-1.1" stroke-width="1.25"/>
+      </symbol>
+      <symbol id="yen-paper-save" viewBox="0 0 28 28">
+        <path d="M8.2 3.5h11.4l2.4 2.9v8.1M8.2 3.5 6 5.6v10.2"/>
+        <path d="M13.8 7.2c.5 4.6.5 7.8.2 11.8m-4.2-4.1 4.1 4.6 4.1-4.5"/>
+        <path d="M5.3 20.5v3.3c0 .7.6 1.2 1.2 1.2h15c.7 0 1.2-.5 1.2-1.2v-3.3"/>
+        <path d="M3.4 17.7l-1.2 1.1" stroke-width="1.2"/>
+      </symbol>
+      <symbol id="yen-upward-curve" viewBox="0 0 28 28">
+        <path d="M7 24c-1.1-7.7 6.8-11.8 10.4-17.8"/>
+        <path d="M9.5 7.8 18.9 4l.2 9.2"/>
+        <path d="M3.2 20.5 2 22.3M23.4 7.8l1.5.5" stroke-width="1.3"/>
+      </symbol>
+      <symbol id="yen-hand-close" viewBox="0 0 28 28">
+        <path d="M6.2 5.6c4.2 4.1 11.8 12 15.1 16.6"/>
+        <path d="M21 5.4c-4 4.6-11.7 12.1-15.4 16.2"/>
+        <path d="m4.2 2.5-1.4-.9m21 22.1 1.3 1.1" stroke-width="1.35"/>
+      </symbol>
     </defs>
   </svg>
 
@@ -3084,7 +3142,7 @@ body.yen-stamping-active{overflow:hidden}
     <div class="ticker" aria-hidden="true"><div class="ticker-track"><div class="ticker-group"><span>Đá viên tập bơi ngửa. Nước bảo: “Ủa, mày đang tan đó!”</span><b class="ticker-flower"><svg class="yen-icon" aria-hidden="true" focusable="false"><use href="#yen-bloom"></use></svg></b><span>Trân châu trốn muỗng. Núp dưới đáy ly mà tưởng không ai thấy.</span><b class="ticker-flower"><svg class="yen-icon" aria-hidden="true" focusable="false"><use href="#yen-bloom"></use></svg></b><span>Ống hút đòi làm sáo. Ly nước nghe xong xin bịt tai.</span><b class="ticker-flower"><svg class="yen-icon" aria-hidden="true" focusable="false"><use href="#yen-bloom"></use></svg></b><span>Miếng chanh cố làm mặt ngầu. Chua quá nên nhăn hết cả mặt.</span><b class="ticker-flower"><svg class="yen-icon" aria-hidden="true" focusable="false"><use href="#yen-bloom"></use></svg></b><span>Cái ly rủ Cục Yên đi làm. Cục Yên giả vờ không nghe.</span><b class="ticker-flower"><svg class="yen-icon" aria-hidden="true" focusable="false"><use href="#yen-bloom"></use></svg></b><span>Ai thả đám mây vào ly? Nó còn đang xin thêm đá.</span><b class="ticker-flower"><svg class="yen-icon" aria-hidden="true" focusable="false"><use href="#yen-bloom"></use></svg></b></div><div class="ticker-group"><span>Đá viên tập bơi ngửa. Nước bảo: “Ủa, mày đang tan đó!”</span><b class="ticker-flower"><svg class="yen-icon" aria-hidden="true" focusable="false"><use href="#yen-bloom"></use></svg></b><span>Trân châu trốn muỗng. Núp dưới đáy ly mà tưởng không ai thấy.</span><b class="ticker-flower"><svg class="yen-icon" aria-hidden="true" focusable="false"><use href="#yen-bloom"></use></svg></b><span>Ống hút đòi làm sáo. Ly nước nghe xong xin bịt tai.</span><b class="ticker-flower"><svg class="yen-icon" aria-hidden="true" focusable="false"><use href="#yen-bloom"></use></svg></b><span>Miếng chanh cố làm mặt ngầu. Chua quá nên nhăn hết cả mặt.</span><b class="ticker-flower"><svg class="yen-icon" aria-hidden="true" focusable="false"><use href="#yen-bloom"></use></svg></b><span>Cái ly rủ Cục Yên đi làm. Cục Yên giả vờ không nghe.</span><b class="ticker-flower"><svg class="yen-icon" aria-hidden="true" focusable="false"><use href="#yen-bloom"></use></svg></b><span>Ai thả đám mây vào ly? Nó còn đang xin thêm đá.</span><b class="ticker-flower"><svg class="yen-icon" aria-hidden="true" focusable="false"><use href="#yen-bloom"></use></svg></b></div></div></div>
     <nav class="yen-playmap" aria-label="Bản đồ ba trò chơi của Cục Yên">
       <div class="wrap yen-playmap-inner">
-        <span class="yen-playmap-title">CHƠI THEO Ý BẠN <span aria-hidden="true">↘</span></span>
+        <span class="yen-playmap-title">CHƠI THEO Ý BẠN <span aria-hidden="true"><svg class="yen-icon" aria-hidden="true" focusable="false"><use href="#yen-point-down"></use></svg></span></span>
         <div class="yen-playmap-links">
           <a href="#tam-trang"><span>01</span> Xin nghỉ</a>
           <a href="#buong"><span>02</span> Vòng quay</a>
@@ -3110,15 +3168,15 @@ body.yen-stamping-active{overflow:hidden}
                   <div class="permit-sheet-kicker">THỦ TỤC MIỄN HỎI HAN</div>
                   <h3>Hôm nay,<br><em>nghỉ có phép.</em></h3>
                   <p>Không cần điền đơn. Sở tự nghĩ lý do, tự duyệt và tự đóng mộc cho bạn.</p>
-                  <button type="button" class="permit-action permit-start" id="permit-start"><span>Bốc giấy phép</span><span class="permit-v2-icon" aria-hidden="true">✳</span></button>
+                  <button type="button" class="permit-action permit-start" id="permit-start"><span>Bốc giấy phép</span><span class="permit-v2-icon" aria-hidden="true"><svg class="yen-icon yen-doodle-bud" aria-hidden="true" focusable="false"><use href="#yen-doodle-bud"></use></svg></span></button>
                   <p class="permit-small-note">Một lần bấm. Không nhập tên, không lưu thông tin.</p>
                 </div>
                 <div class="permit-v2-illustration" aria-hidden="true">
                   <div class="permit-v2-blob"></div>
-                  <div class="permit-v2-slip"><span>ĐƠN XIN NGHỈ</span><small>Đã điền giùm</small></div>
+                  <div class="permit-v2-slip"><svg class="yen-icon yen-doodle-bud" aria-hidden="true" focusable="false"><use href="#yen-doodle-bud"></use></svg><span>ĐƠN XIN NGHỈ</span><small>Đã điền giùm</small></div>
                   <div class="permit-v2-envelope"><span class="permit-v2-eyes">•　•</span><span class="permit-v2-mouth">⌣</span></div>
                   <div class="permit-v2-round">KHỎI<br>TRÌNH BÀY</div>
-                  <span class="permit-v2-spark">✳</span>
+                  <span class="permit-v2-spark" aria-hidden="true"><svg class="yen-icon yen-doodle-bud" aria-hidden="true" focusable="false"><use href="#yen-doodle-bud"></use></svg></span>
                 </div>
               </div>
               <div class="permit-v2-footer"><span>QUY TRÌNH: RẤT TỰ ĐỘNG</span><span>XÁC SUẤT ĐƯỢC DUYỆT: ĐÁNG NGỜ</span></div>
@@ -3140,7 +3198,7 @@ body.yen-stamping-active{overflow:hidden}
                 </div>
                 <div class="permit-v2-sign"><small>TM. HỘI ĐỒNG NGỒI YÊN</small><strong>Cục Yên</strong><em>(Đã ký, hiện đang nghỉ)</em></div>
               </div>
-              <div class="permit-result-actions"><button type="button" class="permit-action permit-restart" id="permit-restart">Bốc giấy khác ↻</button><button class="permit-share-btn" id="permit-share-img" type="button">Lưu giấy phép ↓</button></div>
+              <div class="permit-result-actions"><button type="button" class="permit-action permit-restart" id="permit-restart">Bốc giấy khác <svg class="yen-icon" aria-hidden="true" focusable="false"><use href="#yen-little-loop"></use></svg></button><button class="permit-share-btn" id="permit-share-img" type="button">Lưu giấy phép <svg class="yen-icon" aria-hidden="true" focusable="false"><use href="#yen-paper-save"></use></svg></button></div>
               <p id="permit-share-status" class="permit-share-status" role="status" aria-live="polite" hidden></p>
             </div>
           </div>
@@ -3250,10 +3308,10 @@ body.yen-stamping-active{overflow:hidden}
         </div>
         <a class="footer-replay-link" href="#dau" id="yen-replay-to-top" aria-label="Quay lên đầu trang để chơi tiếp">
           <span>Quay lên quậy tiếp</span>
-          <span class="footer-replay-arrow" aria-hidden="true">↑</span>
+          <span class="footer-replay-arrow" aria-hidden="true"><svg class="yen-icon" aria-hidden="true" focusable="false"><use href="#yen-upward-curve"></use></svg></span>
         </a>
       </div>
-      <div class="footer-bottom"><span class="footer-sign"><img src="yen-logo.svg" width="1450" height="585" alt="yên" loading="lazy" decoding="async"><span>COFFEE & TEA</span></span><span class="footer-fineprint">© Yên · Hết trang rồi. Có người vẫn đang canh chiếc ghế trống.</span><div class="footer-links"><a class="footer-tiktok-link" href="https://www.tiktok.com/@yencafeday" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer" aria-label="Xem TikTok Yên @yencafeday (mở trong tab mới)">TikTok <span aria-hidden="true">↗</span></a><button type="button" id="privacy-btn">Trang này nhớ gì về mình?</button></div></div>
+      <div class="footer-bottom"><span class="footer-sign"><img src="yen-logo.svg" width="1450" height="585" alt="yên" loading="lazy" decoding="async"><span>COFFEE & TEA</span></span><span class="footer-fineprint">© Yên · Hết trang rồi. Có người vẫn đang canh chiếc ghế trống.</span><div class="footer-links"><a class="footer-tiktok-link" href="https://www.tiktok.com/@yencafeday" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer" aria-label="Xem TikTok Yên @yencafeday (mở trong tab mới)">TikTok <svg class="yen-icon" aria-hidden="true" focusable="false"><use href="#yen-arrow"></use></svg></a><button type="button" id="privacy-btn">Trang này nhớ gì về mình?</button></div></div>
     </div>
   </footer>
 
@@ -3267,10 +3325,10 @@ body.yen-stamping-active{overflow:hidden}
   <div class="yen-rewind-caption" id="yen-rewind-caption">Đang tua về tập 1...</div>
 </div>
 
-  <dialog id="receipt-dialog" aria-labelledby="receipt-label"><div class="receipt"><button type="button" id="close-receipt" class="receipt-flower-close" aria-label="Đóng biên lai" title="Đóng biên lai"><svg class="yen-icon" aria-hidden="true" focusable="false"><use href="#yen-bloom"></use></svg></button><div class="receipt-head"><img class="receipt-logo" src="yen-logo.svg" width="1450" height="585" alt="yên" decoding="async"><p id="receipt-label">BIÊN LAI 0Đ</p></div><div class="receipt-items"><div class="receipt-row"><span>01 × <span id="receipt-name"></span></span><b>0 ₫</b></div><div class="receipt-row"><span>Tổng cộng</span><b>0 ₫</b></div></div><p class="receipt-quote" id="receipt-quote"></p><div class="receipt-bottom"><p class="irl-receipt-note">Quà vui trên web, không đổi tại quán.</p><a class="game-next" href="#yen-ngoai-doi" id="receipt-next-game">Ghé Yên ngoài đời →</a></div></div></dialog>
+  <dialog id="receipt-dialog" aria-labelledby="receipt-label"><div class="receipt"><button type="button" id="close-receipt" class="receipt-flower-close" aria-label="Đóng biên lai" title="Đóng biên lai"><svg class="yen-icon" aria-hidden="true" focusable="false"><use href="#yen-bloom"></use></svg></button><div class="receipt-head"><img class="receipt-logo" src="yen-logo.svg" width="1450" height="585" alt="yên" decoding="async"><p id="receipt-label">BIÊN LAI 0Đ</p></div><div class="receipt-items"><div class="receipt-row"><span>01 × <span id="receipt-name"></span></span><b>0 ₫</b></div><div class="receipt-row"><span>Tổng cộng</span><b>0 ₫</b></div></div><p class="receipt-quote" id="receipt-quote"></p><div class="receipt-bottom"><p class="irl-receipt-note">Quà vui trên web, không đổi tại quán.</p><a class="game-next" href="#yen-ngoai-doi" id="receipt-next-game">Ghé Yên ngoài đời <svg class="yen-icon" aria-hidden="true" focusable="false"><use href="#yen-step-right"></use></svg></a></div></div></dialog>
   <dialog id="privacy-dialog" aria-labelledby="privacy-label">
     <div class="privacy-card">
-      <button class="privacy-close" id="close-privacy" type="button" aria-label="Đóng thông tin riêng tư">×</button>
+      <button class="privacy-close" id="close-privacy" type="button" aria-label="Đóng thông tin riêng tư"><svg class="yen-icon" aria-hidden="true" focusable="false"><use href="#yen-hand-close"></use></svg></button>
       <h2 id="privacy-label">Trang này nhớ gì về bạn?</h2>
       <p>Không cần đăng nhập. Các trò chơi chạy ngay trên trình duyệt, không lưu nội dung bạn chọn.</p>
       <p>Máy chủ lưu trữ, dịch vụ phông chữ và Google Maps (khi xem bản đồ) có thể xử lý dữ liệu kỹ thuật như địa chỉ IP theo chính sách riêng.</p>
