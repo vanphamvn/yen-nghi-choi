@@ -3632,15 +3632,13 @@
     function announce(text){notice.textContent=text;}
     function randomizePermit(){
       const reasons=Object.keys(fields.reason),durations=Object.keys(fields.duration);
-      let reason,duration,pair;
-      // No saved data. Avoid repeating the same two-answer combination in a row.
-      do{
-        reason=reasons[Math.floor(Math.random()*reasons.length)];
-        duration=durations[Math.floor(Math.random()*durations.length)];
-        pair=reason+":"+duration;
-      }while(pair===lastCombination);
-      lastCombination=pair;
-      values.reason=reason;values.duration=duration;
+      const options=reasons.length*durations.length;
+      let pick=Math.floor(Math.random()*options);
+      // Avoid an identical consecutive result without an unbounded retry loop.
+      if(String(pick)===lastCombination)pick=(pick+1)%options;
+      lastCombination=String(pick);
+      values.reason=reasons[Math.floor(pick/durations.length)];
+      values.duration=durations[pick%durations.length];
     }
     function issuePermit(){
       if(phase==="stamping")return;
