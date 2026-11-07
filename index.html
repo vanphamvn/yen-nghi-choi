@@ -4097,29 +4097,85 @@ body.yen-stamping-active{overflow:hidden}
     const intro=$("permit-intro"),receipt=$("permit-receipt");
     const stage=$("yen-permit"),notice=$("permit-message");
     const cinema=$("permit-cinema"),cinemaReason=$("permit-cinema-reason"),cinemaDuration=$("permit-cinema-duration"),cinemaStatus=$("permit-cinema-status");
-    const fields={
-      reason:{
-        noise:"Não mở 38 tab, tab nào cũng phát nhạc",
-        deadline:"Deadline dí, mình giả vờ mất sóng",
-        busy:"Việc chưa xong, mood đã tan ca",
-        why:"Pin xã hội còn đúng 1%"
-      },
-      duration:{
-        ten:"10 phút nữa, hứa bằng Wi-Fi",
-        cup:"Hết ly rồi tính, đừng hối",
-        song:"Hết bài này... rồi bài nữa",
-        better:"Khi nào mood chịu hợp tác"
-      }
-    };
-    // Gợi ý món theo cái cớ xin nghỉ, không cần hỏi thêm sở thích đồ uống.
+    // Câu tự viết theo giọng chuyện thường ngày ở Việt Nam. Hạn chế bắt trend quá đà.
+    // Mỗi lý do gợi ý một món có thật trong menu Yên, không tạo đơn hàng.
+    const reasons=[
+      {text:"Thứ Hai đến đúng hẹn, còn tinh thần kẹt ở Chủ nhật",drink:"tea"},
+      {text:"Sếp bảo họp nhanh thôi, tôi kịp già thêm một tuổi",drink:"cacao"},
+      {text:"Vừa nhắn 'dạ vâng', công việc đã đẻ thêm ba đứa",drink:"cacao"},
+      {text:"Câu 'làm giúp anh tí' nở ra thành cả tổ dân phố",drink:"tea"},
+      {text:"Tin nhắn 'em ơi' xuất hiện trước cả chuông báo thức",drink:"cold"},
+      {text:"Mở Excel thấy cuộc đời chia thành ô và cột",drink:"cold"},
+      {text:"Họp xong ai cũng gật đầu, riêng tôi gật vì buồn ngủ",drink:"cold"},
+      {text:"Zalo vừa hiện 'đang nhập...', tôi đã thấy hồi hộp",drink:"tea"},
+      {text:"Đang uống nước thì bị hỏi 'xong chưa em?'",drink:"juice"},
+      {text:"Tờ lịch bảo thứ Bảy, nhóm chat bảo 'nhờ tí nha'",drink:"cacao"},
+      {text:"Mới bật chế độ chăm chỉ, máy tính xin cập nhật",drink:"cold"},
+      {text:"Định trả lời một email, cuối cùng thành người giải cứu dự án",drink:"tea"},
+      {text:"Deadline chưa tới mà đã đứng trước cửa bấm chuông",drink:"cold"},
+      {text:"Bữa nay tính sống chill, lịch họp không đồng ý",drink:"juice"},
+      {text:"Cô bảo 'kiểm tra 15 phút', tim tôi kiểm tra luôn cả buổi",drink:"matcha"},
+      {text:"Thầy vừa nói 'bài này dễ', cả lớp im như giờ chào cờ",drink:"tea"},
+      {text:"Bài tập nhóm có năm người, một người gõ còn bốn người thả tim",drink:"cacao"},
+      {text:"Giờ ra chơi vừa tới, tiếng trống đã đòi lại sân",drink:"juice"},
+      {text:"Sách vở đầy cặp, đầu chỉ chứa tiếng trống tan trường",drink:"matcha"},
+      {text:"Đang học bài thì não tự phát quảng cáo bánh tráng trộn",drink:"matcha"},
+      {text:"Mở vở ra ôn bài, tay lại vẽ con mèo đội nón bảo hiểm",drink:"juice"},
+      {text:"Còn một trang bài tập, nhưng trang đó dài bằng quốc lộ",drink:"tea"},
+      {text:"Mẹ gọi 'con ơi' lần hai, chiếc ghế biết không giữ nổi mình",drink:"cacao"},
+      {text:"Vừa đi chợ về, cả nhà đồng thanh 'quên mua hành rồi'",drink:"juice"},
+      {text:"Tưởng nghỉ trưa, ai ngờ được giao canh nồi cơm",drink:"cacao"},
+      {text:"Bà hàng xóm hỏi 'đi đâu đó?', tôi cần nghỉ để soạn đáp án",drink:"tea"},
+      {text:"Mới ngồi xuống ăn cơm, điện thoại gọi như đặt lịch trước",drink:"juice"},
+      {text:"Hứa tối nay ngủ sớm, tới 11 giờ mới họp bàn thực hiện",drink:"tea"},
+      {text:"Đang phơi đồ thì trời quyết định thử hệ thống tưới tự động",drink:"juice"},
+      {text:"Tự nhủ chỉ lướt điện thoại 5 phút, đồng hồ cười khẩy",drink:"cacao"},
+      {text:"Sáng dậy thấy rất ổn, cho tới khi nhớ ra hôm nay là thứ Hai",drink:"cold"},
+      {text:"Nhiệm vụ hệ thống hôm nay: ngồi yên 10 phút không bị réo tên",drink:"tea"},
+      {text:"Đang tích lũy tài sản, trước mắt tích được một cơn buồn ngủ",drink:"cold"},
+      {text:"Dự án ngủ sớm trở thành dự án ma, chưa rõ ngày khởi công",drink:"cacao"},
+      {text:"Mới khoe một chút bá khí, mở đề bài đã hết khí",drink:"matcha"},
+      {text:"Đủ wow rồi đó, nhưng là tiếng thở dài khi mở hộp thư",drink:"cold"},
+      {text:"Hồi chiều trời mưa, kế hoạch phơi đồ cũng xin nghỉ theo",drink:"juice"},
+      {text:"Nói 'không sao' lần thứ năm, Sở thấy rất có sao",drink:"matcha"},
+      {text:"Đi ngang quán Yên, cái ghế nhìn tôi như người quen lâu năm",drink:"tea"},
+      {text:"Định đi uống nước một xíu, bị câu 'ngồi thêm chút' giữ lại",drink:"matcha"}
+    ];
+    const durations=[
+      "10 phút, tính từ lúc không ai hỏi 'xong chưa?'",
+      "15 phút, không nhận cuộc gọi mở đầu bằng 'em ơi'",
+      "Một ly nước, không tính thời gian ngồi ngắm đá tan",
+      "Hết hai bài nhạc, không tính quảng cáo giữa chừng",
+      "Tới khi câu 'chút xíu thôi' thật sự kết thúc",
+      "Đủ một giấc ngủ trưa, không tính tiếng gọi dậy ăn cơm",
+      "Đến lúc Zalo thôi hiện chữ 'đang nhập...'",
+      "5 phút thật, không phải 5 phút kiểu 'sắp xong rồi'",
+      "Đến khi chiếc ghế hết nhiệm kỳ giữ chân người ngồi",
+      "Ba lần hít thở sâu và một lần ngó trời",
+      "Hết một cái ngáp; nếu ngáp tiếp thì được gia hạn",
+      "30 phút, theo giờ của người đang thong thả",
+      "Tới khi nghe ai đó nói 'nghỉ đi' mà không kèm việc",
+      "Một khoảng đủ để uống trà mà không mở điện thoại",
+      "Đến khi tiếng trống ra chơi vang lên trong lòng",
+      "Hết buổi chiều, nếu lịch họp không có ý kiến khác",
+      "Tới lúc nhớ ra mình đang vội chuyện gì",
+      "12 phút chính xác, theo đồng hồ của Cục Yên",
+      "Đến khi miếng bánh mì cuối cùng được ăn trong yên ổn",
+      "Qua một lần 'ngồi xíu nữa', không được rút ngắn",
+      "Một phiên nghỉ, tự động gia hạn nếu trời đổ mưa",
+      "Hết một bản nhạc, được quyền phát lại điệp khúc",
+      "Đến lúc đầu óc thôi tự mở cuộc họp lúc nửa đêm",
+      "Cho tới khi câu 'để mai tính' được phép có hiệu lực"
+    ];
     const menu={
-      noise:{name:"Trà atiso đường phèn mật ong",why:"Đầu đang mở 38 tab, thử một ly trà dịu nhẹ rồi tính chuyện đóng tab."},
-      deadline:{name:"Cold Brew Cam Vàng",why:"Deadline dí thì Cục Yên đề cử cold brew cam vàng. Uống rồi xử lý tiếp."},
-      busy:{name:"Cacao cốt dừa",why:"Mood đã tan ca, cacao cốt dừa được cử tới làm công tác động viên."},
-      why:{name:"Nước ép thơm táo",why:"Pin xã hội 1%? Cục Yên đề xuất một ly nước ép thơm táo."}
+          "tea": "Trà atiso đường phèn mật ong",
+          "cold": "Cold Brew Cam Vàng",
+          "cacao": "Cacao cốt dừa",
+          "juice": "Nước ép thơm táo",
+          "matcha": "Matcha dâu"
     };
-    const values={reason:null,duration:null};
-    let lastCombination="";
+    const values={reason:"",duration:"",drink:""};
+    let lastReason=-1,lastDuration=-1;
     let phase="intro",round=0,pending=0;
     const reduced=window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     function announce(text){notice.textContent=text;}
@@ -4129,8 +4185,8 @@ body.yen-stamping-active{overflow:hidden}
     }
     function cinemaOpen(){
       if(reduced)return;
-      cinemaReason.textContent=fields.reason[values.reason];
-      cinemaDuration.textContent=fields.duration[values.duration];
+      cinemaReason.textContent=values.reason;
+      cinemaDuration.textContent=values.duration;
       cinemaStatus.textContent="Đang căn mộc cho đúng ô...";
       cinemaScene("is-previewing");
       cinema.hidden=false;
@@ -4142,22 +4198,24 @@ body.yen-stamping-active{overflow:hidden}
       document.body.classList.remove("yen-stamping-active");
     }
     function randomizePermit(){
-      const reasons=Object.keys(fields.reason),durations=Object.keys(fields.duration);
-      const options=reasons.length*durations.length;
-      let pick=Math.floor(Math.random()*options);
-      if(String(pick)===lastCombination)pick=(pick+1)%options;
-      lastCombination=String(pick);
-      values.reason=reasons[Math.floor(pick/durations.length)];
-      values.duration=durations[pick%durations.length];
+      // Không lặp lại ngay lý do hoặc thời hạn ở hai lượt bốc liên tiếp.
+      let i=Math.floor(Math.random()*reasons.length);
+      if(i===lastReason)i=(i+1+Math.floor(Math.random()*(reasons.length-1)))%reasons.length;
+      let j=Math.floor(Math.random()*durations.length);
+      if(j===lastDuration)j=(j+1+Math.floor(Math.random()*(durations.length-1)))%durations.length;
+      lastReason=i;lastDuration=j;
+      values.reason=reasons[i].text;
+      values.duration=durations[j];
+      values.drink=menu[reasons[i].drink];
     }
     function issuePermit(){
       if(phase==="stamping")return;
       randomizePermit();
       phase="stamping";round++;const thisRound=round;
       window.clearTimeout(pending);
-      $("permit-out-reason").textContent=fields.reason[values.reason];
-      $("permit-out-duration").textContent=fields.duration[values.duration];
-      $("permit-out-drink").textContent=menu[values.reason].name;
+      $("permit-out-reason").textContent=values.reason;
+      $("permit-out-duration").textContent=values.duration;
+      $("permit-out-drink").textContent=values.drink;
       $("permit-out-number").textContent="YN/NG-"+String(round).padStart(3,"0");
       $("permit-out-date").textContent=new Date().toLocaleDateString("vi-VN");
       intro.hidden=true;receipt.hidden=false;$("permit-share-status").hidden=true;
