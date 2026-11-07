@@ -3827,6 +3827,7 @@ body.yen-stamping-active{overflow:hidden}
     const intro=$("permit-intro"),receipt=$("permit-receipt");
     const stage=$("yen-permit"),stamp=$("permit-stamp"),notice=$("permit-message");
     const cucTrigger=$("permit-cuc-trigger"),receiptKicker=$("permit-receipt-kicker");
+    const cinema=$("permit-cinema"),cinemaReason=$("permit-cinema-reason"),cinemaDuration=$("permit-cinema-duration"),cinemaStatus=$("permit-cinema-status");
     const performer=$("permit-stamp-performer"),landing=$("permit-stamp-landing"),mobileLanding=$("permit-stamp-landing-mobile");
     // Read real layout geometry so Cục Yên carries the stamp to the paper on
     // desktop and mobile. The ink mark itself remains on the paper.
@@ -3878,6 +3879,25 @@ body.yen-stamping-active{overflow:hidden}
     let phase="intro",round=0,pending=0;
     const reduced=window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     function announce(text){notice.textContent=text;}
+    function cinemaScene(name){
+      cinema.classList.remove("is-previewing","is-collecting","is-seal-coming","is-seal-imprinted");
+      if(name)cinema.classList.add(name);
+    }
+    function cinemaOpen(){
+      if(reduced)return;
+      cinemaReason.textContent=fields.reason[values.reason];
+      cinemaDuration.textContent=fields.duration[values.duration];
+      cinemaStatus.textContent="Giấy phép đã có. Cục Yên chuẩn bị lấy mộc...";
+      cinemaScene("is-previewing");
+      cinema.hidden=false;
+      document.body?.classList?.add("yen-stamping-active");
+      cinema.focus({preventScroll:true});
+    }
+    function cinemaClose(){
+      cinema.hidden=true;
+      cinemaScene(null);
+      document.body?.classList?.remove("yen-stamping-active");
+    }
     function randomizePermit(){
       const reasons=Object.keys(fields.reason),durations=Object.keys(fields.duration);
       const options=reasons.length*durations.length;
@@ -3917,10 +3937,9 @@ body.yen-stamping-active{overflow:hidden}
       $("permit-share-status").hidden=true;
       stage.classList.remove("is-issued","is-stamping","is-filing","is-collecting","is-seal-coming","is-seal-imprinted");
       stage.classList.add("is-previewing");
-      $("permit-receipt").setAttribute("tabindex","-1");
-      receipt.focus({preventScroll:true});
-      receipt.scrollIntoView({behavior:reduced?"auto":"smooth",block:"center"});
-      announce("Giấy phép đã hiện ra. Cục Yên đi lấy mộc để đóng dấu đỏ!");
+      receipt.setAttribute("tabindex","-1");
+      cinemaOpen();
+      announce("Giấy phép đã hiện giữa màn hình. Cục Yên chuẩn bị lấy mộc!");
 
       const active=()=>phase==="stamping"&&thisRound===round;
       function finish(){
@@ -3930,7 +3949,10 @@ body.yen-stamping-active{overflow:hidden}
         stage.classList.add("is-seal-imprinted","is-issued");
         stamp.disabled=false;cucTrigger.disabled=false;
         receiptKicker.textContent="ĐÃ ĐƯỢC DUYỆT · BẢN CHỈ ĐỂ VUI";
-        announce("CỘP! Con dấu đỏ đã được đóng đúng trên giấy. Giấy phép hoàn tất!");
+        cinemaClose();
+        receipt.focus({preventScroll:true});
+        receipt.scrollIntoView({behavior:reduced?"auto":"smooth",block:"start"});
+        announce("CỘP! Giấy phép đã duyệt. Muốn thử vận may nữa thì bốc giấy khác!");
       }
       if(reduced){
         stage.classList.add("is-seal-imprinted");
@@ -3943,15 +3965,21 @@ body.yen-stamping-active{overflow:hidden}
       pending=window.setTimeout(()=>{
         if(!active())return;
         stage.classList.add("is-collecting");
+        cinemaScene("is-collecting");
+        cinemaStatus.textContent="Cục Yên đang bước qua lấy mộc...";
         announce("Cục Yên đang bước qua lấy con mộc...");
         pending=window.setTimeout(()=>{
           if(!active())return;
           stage.classList.remove("is-previewing","is-collecting");
           stage.classList.add("is-seal-coming");
+          cinemaScene("is-seal-coming");
+          cinemaStatus.textContent="Mộc lớn đang nhắm thẳng ô dấu...";
           announce("Mộc lớn đã được nhấc lên. Nhắm đúng ô tròn trên giấy...");
           pending=window.setTimeout(()=>{
             if(!active())return;
             stage.classList.add("is-seal-imprinted");
+            cinema.classList.add("is-seal-imprinted");
+            cinemaStatus.textContent="CỘP! Đã đóng mộc!";
             announce("CỘP! Đóng mộc trúng ngay ô dấu đỏ!");
             pending=window.setTimeout(finish,350);
           },755);
