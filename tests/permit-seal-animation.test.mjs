@@ -28,8 +28,8 @@ test("the stamp animation remains centered in its own overlay",()=>{
   assert.match(html,/id="permit-ink-seal"/);
   assert.match(html,/id="permit-cinema" role="dialog"/);
   assert.match(html,/class="yen-stamp-cinema-giant"/);
-  assert.match(html,/\\.yen-stamp-cinema\\.is-seal-coming \\.yen-stamp-cinema-giant/);
-  assert.match(html,/\\.permit-stage\\.is-seal-imprinted \\.permit-ink-seal/);
+  assert.ok(html.includes(".yen-stamp-cinema.is-seal-coming .yen-stamp-cinema-giant"));
+  assert.ok(html.includes(".permit-stage.is-seal-imprinted .permit-ink-seal"));
 });
 
 test("no motion setting skips animation but still reveals completed approval",()=>{
