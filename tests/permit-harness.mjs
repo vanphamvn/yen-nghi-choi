@@ -30,11 +30,13 @@ export function mountPermit({reduced=false,randomValues=[0]}={}){
     "permit-cuc-trigger","permit-receipt-kicker","permit-start","permit-restart",
     "permit-stamp-performer","permit-stamp-landing","permit-stamp-landing-mobile",
     "permit-out-reason","permit-out-duration","permit-out-note","permit-out-drink",
-    "permit-out-why","permit-share-status","permit-share-img"];
+    "permit-out-why","permit-share-status","permit-share-img",
+    "permit-cinema","permit-cinema-reason","permit-cinema-duration","permit-cinema-status"];
   const nodes=Object.fromEntries(ids.map(id=>[id,makeNode(id)]));
   const timers=[];
   let nextId=0,rngIndex=0,reactions=0;
-  const doc={readyState:"complete",getElementById:id=>nodes[id]||null,addEventListener(){}};
+  const body=makeNode("body");
+  const doc={readyState:"complete",body,getElementById:id=>nodes[id]||null,addEventListener(){}};
   const win={
     matchMedia:q=>({matches:q.includes("prefers-reduced-motion")?reduced:false}),
     setTimeout(fn,delay){const id=++nextId;timers.push({id,fn,delay});return id},
@@ -44,7 +46,7 @@ export function mountPermit({reduced=false,randomValues=[0]}={}){
   const fakeMath={floor:Math.floor,random(){return randomValues[rngIndex++%randomValues.length]}};
   new Function("document","window","navigator","Math",permitScript)(doc,win,{},fakeMath);
   return {
-    nodes,timers,
+    nodes,timers,body,
     tick(){const timer=timers.shift();if(!timer)throw new Error("No timers left");timer.fn();return timer.delay},
     getReactionCount:()=>reactions
   };
