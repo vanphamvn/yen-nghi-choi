@@ -31,11 +31,12 @@ test("one mascot source with regular and staff roles",()=>{
   }
 });
 
-test("permit office no longer contains the old illustrated Cục Yên",()=>{
+test("permit office has no old mascot and the center-stage cinema uses canonical Cục Yên",()=>{
   const permit=html.slice(html.indexOf('<section class="section permit-section'),html.indexOf('<section class="section release-section'));
-  assert.ok(permit.includes('<use href="/assets/cuc-yen/mascot.svg#cuc-yen-clerk-ready"'));
-  assert.ok(permit.includes('class="permit-cuc-yen cuc-yen-model"'));
+  assert.ok(!permit.includes('class="permit-clerk"'),"Obsolete stamp counter returned");
   assert.ok(!permit.includes('fill="#d5e4b0"'),"Old green inline character has returned");
+  assert.ok(html.includes('class="yen-stamp-cinema-cuc"'),"Cục Yên must appear in the immersive stamp scene");
+  assert.ok(html.includes('<use href="/assets/cuc-yen/mascot.svg#cuc-yen-clerk-ready"'),"Cục Yên must use its canonical model");
 });
 
 test("20 cutscenes use canonical mascot symbols and props",()=>{
