@@ -2612,6 +2612,30 @@ body.yen-stamping-active{overflow:hidden}
 }
 
 </style>
+<style id="yen-minimal-permit-final-style">
+
+/* Ensure the only prominent result CTA remains visually primary. */
+.permit-section .permit-stage.is-issued .permit-restart,
+.permit-section .permit-stage .permit-restart{
+  display:inline-flex;align-items:center;justify-content:center;
+  background:#315b44!important;color:#fffef3!important;
+  border:0;border-radius:9px;text-decoration:none;
+  box-shadow:none;min-height:43px;padding:10px 16px
+}
+.permit-section .permit-stage .permit-share-btn{
+  background:transparent!important;color:#5d785f!important;
+  border:0;box-shadow:none;text-decoration:underline;text-underline-offset:4px;
+  width:auto!important;min-height:43px;padding:10px 14px;
+  font-size:12px
+}
+.permit-section .permit-stage .permit-result-actions{
+  visibility:hidden;pointer-events:none
+}
+.permit-section .permit-stage.is-issued .permit-result-actions{
+  visibility:visible;pointer-events:auto
+}
+
+</style>
 </head>
 <body>
   <!-- Yên doodle icons: hand-drawn, consistent stroke; no icon fonts or external assets -->
@@ -4002,74 +4026,67 @@ body.yen-stamping-active{overflow:hidden}
 
     // #31: all illustration and export work happens on the visitor's device.
     function permitImage(){
+      // Downloaded PNG follows the same minimalist paper as the on-page permit.
       const canvas=document.createElement("canvas");
-      canvas.width=1080;canvas.height=1350;
+      canvas.width=1080;canvas.height=1260;
       const ctx=canvas.getContext("2d",{alpha:false});
       if(!ctx)throw new Error("Canvas unavailable");
-      const ink="#294c39",muted="#5d735f",paper="#fffaf0",red="#ab594e";
-      function rounded(x,y,w,h,r,fill,stroke){
-        ctx.beginPath();ctx.moveTo(x+r,y);ctx.lineTo(x+w-r,y);ctx.quadraticCurveTo(x+w,y,x+w,y+r);ctx.lineTo(x+w,y+h-r);ctx.quadraticCurveTo(x+w,y+h,x+w-r,y+h);ctx.lineTo(x+r,y+h);ctx.quadraticCurveTo(x,y+h,x,y+h-r);ctx.lineTo(x,y+r);ctx.quadraticCurveTo(x,y,x+r,y);ctx.closePath();
-        ctx.fillStyle=fill;ctx.fill();if(stroke){ctx.strokeStyle=stroke;ctx.lineWidth=3;ctx.stroke();}
+      const ink="#2c4e39",subtle="#718475",paper="#fffdf4",red="#a3564d";
+      function rounded(x,y,w,h,r,color){
+        ctx.fillStyle=color;ctx.beginPath();
+        ctx.moveTo(x+r,y);ctx.lineTo(x+w-r,y);
+        ctx.quadraticCurveTo(x+w,y,x+w,y+r);ctx.lineTo(x+w,y+h-r);
+        ctx.quadraticCurveTo(x+w,y+h,x+w-r,y+h);ctx.lineTo(x+r,y+h);
+        ctx.quadraticCurveTo(x,y+h,x,y+h-r);ctx.lineTo(x,y+r);
+        ctx.quadraticCurveTo(x,y,x+r,y);ctx.closePath();ctx.fill();
       }
-      function label(t,x,y){ctx.font='800 23px "Noto Sans",Arial,sans-serif';ctx.fillStyle=muted;ctx.fillText(t,x,y);}
-      function wrap(t,x,y,width,lineHeight,maxLines){
-        const words=String(t).trim().split(/\s+/);let line="",drawn=0;
-        for(const word of words){
-          const trial=line?line+" "+word:word;
-          if(ctx.measureText(trial).width>width&&line){
-            ctx.fillText(line,x,y);drawn++;y+=lineHeight;line=word;
-            if(drawn>=maxLines)return y;
-          }else line=trial;
+      function line(y){
+        ctx.strokeStyle="#d4dfd2";ctx.lineWidth=2;
+        ctx.beginPath();ctx.moveTo(116,y);ctx.lineTo(964,y);ctx.stroke();
+      }
+      function wrap(text,x,y,maxWidth,lineHeight,maxLines){
+        let row="",lines=0;
+        for(const word of String(text).trim().split(/\s+/)){
+          const trial=row?row+" "+word:word;
+          if(row&&ctx.measureText(trial).width>maxWidth){
+            ctx.fillText(row,x,y);y+=lineHeight;lines++;row=word;
+            if(lines>=maxLines)return;
+          }else row=trial;
         }
-        if(line&&drawn<maxLines){ctx.fillText(line,x,y);y+=lineHeight;}
-        return y;
+        if(row&&lines<maxLines)ctx.fillText(row,x,y);
       }
-      ctx.fillStyle="#dae8d1";ctx.fillRect(0,0,1080,1350);
-      rounded(58,48,964,1252,32,paper,"#66866a");
-      ctx.strokeStyle="#c6d3be";ctx.lineWidth=2;ctx.setLineDash([8,12]);
-      ctx.strokeRect(84,78,912,1190);ctx.setLineDash([]);
-      ctx.font='900 27px "Noto Sans",Arial,sans-serif';ctx.fillStyle=ink;
-      ctx.fillText("CỤC YÊN · QUẦY SỐ 01",112,140);
-      ctx.font='800 21px "Noto Sans",Arial,sans-serif';ctx.fillStyle=muted;
-      ctx.fillText("GIẤY TỜ KHÔNG CÓ GIÁ TRỊ THẬT",112,178);
-      // The Cục Yên mascot on the export is a small original canvas illustration.
-      ctx.fillStyle="#c8d7a6";ctx.strokeStyle="#4a7654";ctx.lineWidth=7;
-      ctx.beginPath();ctx.ellipse(836,190,104,92,-.13,0,Math.PI*2);ctx.fill();ctx.stroke();
-      ctx.fillStyle=ink;ctx.beginPath();ctx.arc(800,180,7,0,Math.PI*2);ctx.arc(865,180,7,0,Math.PI*2);ctx.fill();
-      ctx.beginPath();ctx.strokeStyle=ink;ctx.lineWidth=5;ctx.arc(832,196,24,.15,Math.PI-.15);ctx.stroke();
-      ctx.strokeStyle="#4a7654";ctx.lineWidth=8;ctx.beginPath();ctx.moveTo(759,224);ctx.lineTo(728,239);ctx.moveTo(917,219);ctx.lineTo(947,231);ctx.stroke();
-      ctx.font='700 75px "Noto Serif",Georgia,serif';ctx.fillStyle=ink;
-      ctx.fillText("GIẤY PHÉP",112,290);ctx.fillText("NGHỈ TẠM THỜI",112,372);
-      ctx.strokeStyle="#6c8a6d";ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(112,404);ctx.lineTo(965,404);ctx.stroke();
-      const entries=[
-        ["LÝ DO", $("permit-out-reason").textContent],
-        ["THỜI HẠN", $("permit-out-duration").textContent]
-      ];
-      entries.forEach(([name,value],i)=>{
-        const y=463+i*96;label(name,112,y);
-        ctx.font='850 34px "Noto Sans",Arial,sans-serif';ctx.fillStyle=ink;
-        wrap(value,354,y,598,40,2);
-        ctx.strokeStyle="#d9e3d3";ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(112,y+27);ctx.lineTo(965,y+27);ctx.stroke();
-      });
-      rounded(112,658,854,181,18,"#eaf0e1");
-      label("CỤC YÊN PHÊ DUYỆT",146,707);
-      ctx.font='700 29px "Noto Serif",Georgia,serif';ctx.fillStyle=ink;
-      wrap($("permit-out-note").textContent,146,756,788,37,3);
-      rounded(112,873,854,145,18,"#f4e6cc");
-      label("GỢI Ý MỘT LY TẠI YÊN",146,921);
-      ctx.font='800 31px "Noto Sans",Arial,sans-serif';ctx.fillStyle=ink;
-      wrap($("permit-out-drink").textContent,146,970,758,39,2);
-      // Ink seal is deliberately below the text cards, never over their content.
-      ctx.save();ctx.translate(845,1192);ctx.rotate(-.12);
-      ctx.strokeStyle=red;ctx.lineWidth=7;ctx.beginPath();ctx.arc(0,0,68,0,Math.PI*2);ctx.stroke();
-      ctx.lineWidth=2;ctx.beginPath();ctx.arc(0,0,56,0,Math.PI*2);ctx.stroke();
-      ctx.textAlign="center";ctx.fillStyle=red;ctx.font='900 19px "Noto Sans",Arial,sans-serif';
-      ctx.fillText("CỤC YÊN",0,-19);ctx.fillText("ĐÃ DUYỆT",0,8);ctx.fillText("CHO VUI",0,35);ctx.restore();
-      ctx.font='800 24px "Noto Sans",Arial,sans-serif';ctx.fillStyle=ink;
-      ctx.fillText("yên  ·  COFFEE & TEA",112,1179);
-      ctx.font='700 20px "Noto Sans",Arial,sans-serif';ctx.fillStyle=muted;
-      ctx.fillText("Chỉ để chơi. Không phải giấy nghỉ thật",112,1220);
-      ctx.fillText("hay phiếu giảm giá, quà tặng.",112,1250);
+      ctx.fillStyle="#e9eee4";ctx.fillRect(0,0,1080,1260);
+      rounded(60,46,960,1168,26,paper);
+      ctx.strokeStyle="#96b09a";ctx.lineWidth=3;ctx.strokeRect(84,73,912,1112);
+      ctx.fillStyle=subtle;ctx.font='900 24px "Noto Sans",Arial,sans-serif';
+      ctx.fillText("CỤC YÊN · COFFEE & TEA",116,155);
+      ctx.font='900 76px "Noto Serif",Georgia,serif';ctx.fillStyle=ink;
+      ctx.fillText("GIẤY PHÉP",112,277);
+      ctx.fillText("NGHỈ",112,364);
+      line(417);
+      ctx.fillStyle=subtle;ctx.font='900 23px "Noto Sans",Arial,sans-serif';ctx.fillText("LÝ DO",116,476);
+      ctx.fillStyle=ink;ctx.font='850 37px "Noto Sans",Arial,sans-serif';
+      wrap($("permit-out-reason").textContent,116,530,838,46,3);
+      line(676);
+      ctx.fillStyle=subtle;ctx.font='900 23px "Noto Sans",Arial,sans-serif';ctx.fillText("NGHỈ ĐẾN",116,732);
+      ctx.fillStyle=ink;ctx.font='850 37px "Noto Sans",Arial,sans-serif';
+      wrap($("permit-out-duration").textContent,116,790,838,47,2);
+      ctx.fillStyle=ink;ctx.font='700 27px "Noto Serif",Georgia,serif';
+      wrap($("permit-out-note").textContent,116,910,815,34,3);
+      ctx.fillStyle=subtle;ctx.font='800 19px "Noto Sans",Arial,sans-serif';
+      ctx.fillText("CỤC YÊN GỢI Ý:",116,1019);
+      ctx.fillStyle=ink;ctx.font='800 26px "Noto Sans",Arial,sans-serif';
+      wrap($("permit-out-drink").textContent,116,1058,560,31,2);
+      ctx.save();ctx.translate(815,1039);ctx.rotate(-.15);
+      ctx.strokeStyle=red;ctx.lineWidth=6;ctx.beginPath();ctx.arc(0,0,92,0,Math.PI*2);ctx.stroke();
+      ctx.lineWidth=2;ctx.beginPath();ctx.arc(0,0,78,0,Math.PI*2);ctx.stroke();
+      ctx.textAlign="center";ctx.fillStyle=red;
+      ctx.font='900 19px "Noto Sans",Arial,sans-serif';ctx.fillText("CỤC YÊN",0,-35);
+      ctx.font='900 23px "Noto Sans",Arial,sans-serif';ctx.fillText("ĐÃ DUYỆT",0,0);
+      ctx.font='900 20px "Noto Sans",Arial,sans-serif';ctx.fillText("NGHỈ!",0,32);
+      ctx.restore();
+      ctx.fillStyle=subtle;ctx.font='700 19px "Noto Sans",Arial,sans-serif';
+      ctx.fillText("Chỉ để vui, không phải giấy nghỉ thật hay voucher.",116,1160);
       return canvas.toDataURL("image/png");
     }
     function downloadPermitImage(uri){
