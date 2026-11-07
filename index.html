@@ -23,6 +23,39 @@
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data:; font-src 'self' https://fonts.gstatic.com; connect-src 'none'; frame-src https://maps.google.com https://www.google.com; form-action 'none'; base-uri 'none'; object-src 'none'">
   <title>Yên Coffee &amp; Tea | Cục Yên ngồi chơi đợi bạn</title>
+  <!-- Cấu hình chương trình đặc biệt: chỉ đổi flag_vongquay thành 1 để bật. -->
+  <script id="yen-feature-flags">
+    // 0 = ẨN toàn bộ chương trình Vòng quay; 1 = HIỆN chương trình.
+    var flag_vongquay = 0;
+    (function(){
+      "use strict";
+      const enabled=flag_vongquay === 1;
+      document.documentElement.classList.toggle("yen-vongquay-on",enabled);
+
+      // Liên kết cũ tới vòng quay sẽ dẫn tới mục tiếp theo khi chương trình tắt.
+      if(!enabled && location.hash==="#buong"){
+        history.replaceState(null,"",location.pathname+location.search+"#cuahang");
+      }
+
+      function updateSections(){
+        const playmap=document.querySelector(".yen-playmap");
+        if(playmap)playmap.setAttribute("aria-label",enabled?"Bản đồ ba trò chơi của Cục Yên":"Bản đồ hai trò chơi của Cục Yên");
+        const shopNav=document.querySelector('.yen-playmap-links a[href="#cuahang"] span');
+        if(shopNav)shopNav.textContent=enabled?"03":"02";
+        const shopTitle=document.getElementById("yen-shop-section-number");
+        if(shopTitle)shopTitle.textContent=(enabled?"03":"02")+" / Quà kỳ cục, giá 0đ";
+        const visitTitle=document.getElementById("yen-visit-section-number");
+        if(visitTitle)visitTitle.textContent=(enabled?"04":"03")+" / GHÉ QUÁN";
+      }
+      if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",updateSections,{once:true});
+      else updateSections();
+    })();
+  </script>
+  <style id="yen-feature-flags-style">
+    /* Ẩn ngay khi tải, không để lộ chương trình hoặc nút dẫn tới vòng quay. */
+    html:not(.yen-vongquay-on) #buong,
+    html:not(.yen-vongquay-on) .vongquay-nav-link{display:none!important}
+  </style>
   <script>
     // Reload should start at the beginning; ordinary section links still work as usual.
     (() => {
@@ -3188,7 +3221,7 @@ body.yen-stamping-active{overflow:hidden}
         <span class="yen-playmap-title">CHƠI THEO Ý BẠN</span>
         <div class="yen-playmap-links">
           <a href="#tam-trang"><span>01</span> Xin nghỉ</a>
-          <a href="#buong"><span>02</span> Vòng quay</a>
+          <a class="vongquay-nav-link" href="#buong"><span>02</span> Vòng quay</a>
           <a href="#cuahang"><span>03</span> Tiệm 0đ</a>
         </div>
       </div>
@@ -3296,7 +3329,7 @@ body.yen-stamping-active{overflow:hidden}
   </div>
 </section>
 <section class="section shop-section" id="cuahang" aria-labelledby="shop-title"><div class="wrap">
-      <div class="section-header reveal"><div><div class="eyebrow">03 / Quà kỳ cục, giá 0đ</div><h2 class="section-title" id="shop-title">Tiệm 0đ.</h2></div><p class="section-aside">Chọn một món. Nhận biên lai 0đ.</p></div>
+      <div class="section-header reveal"><div><div class="eyebrow" id="yen-shop-section-number">03 / Quà kỳ cục, giá 0đ</div><h2 class="section-title" id="shop-title">Tiệm 0đ.</h2></div><p class="section-aside">Chọn một món. Nhận biên lai 0đ.</p></div>
       <div class="shop-grid">
         <article class="product reveal"><div class="product-art"><span class="price-sticker">0₫</span><svg viewBox="0 0 200 180" fill="none" aria-hidden="true"><path d="M101 145c-25-15-54-32-54-61 0-26 30-29 43-15 6-28 57-32 68 0 10 30-16 60-57 76Z" fill="#faf6ec" stroke="#283f36" stroke-width="5"/><path d="M72 101c11-11 17-8 25-1s17 5 30-4" stroke="#283f36" stroke-width="5" stroke-linecap="round"/><path d="M39 38c-5-9-5-17 0-23m113 31c10-11 14-20 11-30" stroke="#283f36" stroke-width="4" stroke-linecap="round"/></svg></div><div class="product-info"><div class="product-label">Hàng hiếm, mà còn hoài</div><h3>Một cái thở phào</h3><p>Một hơi thở phào miễn phí. Không cần gửi trả.</p><button type="button" data-product="tho">Lụm free</button></div></article>
         <article class="product reveal"><div class="product-art"><span class="price-sticker">0₫</span><svg viewBox="0 0 200 180" fill="none" aria-hidden="true"><path d="M100 17 117 73 173 92 117 108 100 164 83 108 27 92 83 73 100 17Z" fill="#fff9e8" stroke="#263e35" stroke-width="5" stroke-linejoin="round"/><circle cx="88" cy="91" r="4" fill="#263e35"/><circle cx="113" cy="91" r="4" fill="#263e35"/><path d="M93 108c5 5 11 5 16 0" stroke="#263e35" stroke-width="3" stroke-linecap="round"/></svg></div><div class="product-info"><div class="product-label">Hỏng thì nhận lại cái khác, vẫn 0đ</div><h3>Một lời khen hơi lạc đề</h3><p>Một lời khen bất ngờ. Không cần làm gì giỏi mới được nhận.</p><button type="button" data-product="khen">Lụm free</button></div></article>
@@ -3308,7 +3341,7 @@ body.yen-stamping-active{overflow:hidden}
     <section class="irl-section" id="yen-ngoai-doi" aria-labelledby="irl-title">
       <div class="wrap irl-wrap">
         <div class="irl-copy">
-          <span class="eyebrow">04 / GHÉ QUÁN</span>
+          <span class="eyebrow" id="yen-visit-section-number">04 / GHÉ QUÁN</span>
           <h2 id="irl-title"><span class="irl-title-lead">Ghé ngồi</span> <em>một chút.</em></h2>
           <p>Cà phê, trà và một góc nghỉ dễ chịu.</p>
         </div>
@@ -3797,6 +3830,7 @@ body.yen-stamping-active{overflow:hidden}
   'use strict';
   function init(){
     const byId=id=>document.getElementById(id);
+    if(typeof flag_vongquay==="undefined" || flag_vongquay !== 1)return;
     const disc=byId('yen-wheel-disc');
     const spinButton=byId('yen-wheel-spin');
     const wheelButton=byId('yen-wheel-tap');
