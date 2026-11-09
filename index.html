@@ -1347,7 +1347,8 @@
 
 
 /* #53: restore the original paper-receipt design; only trim redundant copy. */
-#receipt-dialog{max-height:calc(100dvh - 24px);overflow-y:auto}
+#receipt-dialog{max-height:calc(100dvh - 24px);overflow-y:auto;scrollbar-width:none;-ms-overflow-style:none}
+#receipt-dialog::-webkit-scrollbar{display:none}
 #receipt-dialog .receipt-items{padding:17px 0}
 #receipt-dialog .receipt-quote{margin:18px 0;font-size:clamp(19px,4.9vw,23px);line-height:1.42}
 #receipt-dialog .receipt-bottom .irl-receipt-note{margin:10px 0}
