@@ -401,6 +401,7 @@ function interact() {
     const text=npc.lines[npc.interactions%npc.lines.length];
     npc.interactions++;
     npc.react=1.3;
+    npc.model?.play('talk');
     showMessage(npc.name+': '+text,5);
     return;
   }
@@ -513,6 +514,7 @@ function updateAmbient(dt) {
     npc.group.position.x=npc.x+Math.sin(angle)*.18;
     npc.group.position.z=npc.z+Math.cos(angle*.83)*.16;
     npc.react=Math.max(0,npc.react-dt*1.8);
+    if(npc.react===0) npc.model?.play('idle');
     npc.group.position.y=Math.max(0,Math.sin(angle*1.8)*.025)+npc.react*.14;
     const scale=1+npc.react*.08;
     npc.group.scaling.set(scale,scale,scale);
