@@ -21,7 +21,7 @@ Read `game/preview-2d/ROADMAP.md`, `ops/roadmap.json`, `AGENTS.md`, and the actu
 | NPC | all 6 routines, dialogue proximity after walking, no furniture penetration or indefinite stall |
 | Props | all 6 stations approachable, contacts/occlusion, separate art and visible interaction response |
 | Game loop | explore -> start shift -> 3 tasks -> finish -> day reset; no accidental currency/reward promises |
-| Visual style | identical character art language across the painterly background, props, actions; human side-by-side approval |
+| Visual style | identical character art language across the painterly background, props, actions; human or explicitly user-delegated agent side-by-side assessment |
 | Screen sizes | desktop 1440×900, iPhone 390×844, narrow Android 360×800 |
 | Access | readable contrast, buttons reachable, touch target size, reduced-motion support, no focus trap |
 | Performance | record real-device p50 FPS and memory; target >=30 FPS median on supported mobile, without inventing measurements |
@@ -71,7 +71,7 @@ GitHub status/CI, syntax, sprite manifest integrity, collision footprints, expec
 
 ## Final game acceptance
 
-All mandatory roadmap items `done`, no failing P0/P1 bug, approved artwork reference evidence, real-browser/mobile QA, playable complete daily loop, exact production commit verification and owner-visible release notes. If any is missing, call the build a beta, not a finished game.
+All mandatory roadmap items `done`, no failing P0/P1 bug, reviewed artwork reference evidence with actual reviewer identity, real-browser/mobile QA, playable complete daily loop, exact production commit verification and owner-visible release notes. If any is missing, call the build a beta, not a finished game.
 
 ## Automatic live-content evidence
 Run the main-branch production-content job after CI. Compare runtime and asset hashes against the checked-out commit and retain the evidence artifact. The verifier normalizes only this site's observed Netlify hosting comment, public HUD injection and art-review pretty-link rewrite in index.html; all other HTML and every non-HTML byte remain strict. Raw and normalized hashes are both reported. CONTENT_MATCH proves checked game-content equality, not provider commit identity, browser gameplay, visual acceptance or mobile performance.

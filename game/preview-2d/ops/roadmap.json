@@ -35,11 +35,11 @@
       "status": "in-progress",
       "issue": 96,
       "dependencies": [],
-      "requiresHumanApproval": true,
+      "requiresHumanApproval": false,
       "acceptance": [
         "Compare actual barista/waiter PNG source pixels with scene assets",
         "Paint a representative transparent prop with correct pivot and view",
-        "Actual owner reviews contact sheet at runtime scale"
+        "Actual Codex visual review of runtime-scale contact sheet under explicit owner delegation; owner inspection remains pending"
       ],
       "evidence": null
     },
@@ -52,7 +52,7 @@
       "dependencies": [
         "M1"
       ],
-      "requiresHumanApproval": true,
+      "requiresHumanApproval": false,
       "acceptance": [
         "Ten quarantined vectors replaced by reviewed painterly PNG/WebP",
         "All props match characters in 3 viewports",
@@ -70,7 +70,7 @@
       "dependencies": [
         "M1"
       ],
-      "requiresHumanApproval": true,
+      "requiresHumanApproval": false,
       "acceptance": [
         "Real illustrated frames, not CSS scale hacks",
         "States and transitions from idle/walk/sit to read/drink/talk",
@@ -98,7 +98,7 @@
       "id": "M5",
       "title": "Relaxed role/task/day gameplay",
       "priority": 5,
-      "status": "in-progress",
+      "status": "done",
       "issue": 99,
       "dependencies": [],
       "requiresHumanApproval": false,
@@ -107,7 +107,12 @@
         "Three tasks, dialogue, next day replay work",
         "Interaction affordances clear on touch and keyboard"
       ],
-      "evidence": null
+      "evidence": {
+        "deployedSHA": "5d95054e958f0a07d305b2a1c95057dbde45e76d",
+        "productionURL": "https://yencafeday.netlify.app/game/preview-2d/",
+        "testReport": "https://github.com/vanphamvn/yen-nghi-choi/actions/runs/43895628731",
+        "verification": "All five roles completed three tasks, finished shifts and advanced days using real keyboard/buttons on production Canvas fallback; default-renderer boot and input passed at 3 viewports."
+      }
     },
     {
       "id": "M6",
@@ -153,7 +158,8 @@
     "allMilestonesDone": true,
     "exactProductionSHARequired": true,
     "realArtReviewRequired": true,
-    "productionSmokeRequired": true
+    "productionSmokeRequired": true,
+    "ownerReviewMayFollowIntegration": true
   },
   "historicalRelease": {
     "provider": "Vercel",

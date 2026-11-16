@@ -18,7 +18,7 @@ const props=extract('const SCENE_PROPS=','const SCENE_COLLIDERS=', 'SCENE_PROPS'
 const blocked=(x,y)=>solids.some(c=>c.shape==='rect'
  ?x>c.l&&x<c.r&&y>c.t&&y<c.b:((x-c.x)/c.rx)**2+((y-c.y)/c.ry)**2<1);
 
-test('Architecture and independent props are self-hosted SVG textures',()=>{
+test('frozen SVG baseline and independent raster props remain self-hosted',()=>{
  for(const name of sceneFiles){
   const path='assets/scene/'+name+'.svg';
   assert.ok(existsSync(new URL(path,base)),path);
@@ -39,11 +39,12 @@ test('All six interactive objects have unique sprites and bottom pivot footprint
  assert.equal(props.length,6);
  assert.equal(new Set(props.map(p=>p.id)).size,6);
  for(const prop of props){
-  assert.ok(prop.w>=100&&prop.h>=150,prop.id+' wrong-scale object');
+  if(prop.id==='table')assert.ok(prop.w>=120&&prop.w<=180&&prop.h>=70&&prop.h<=110,'table must remain proportionate to 146px characters');
+  else assert.ok(prop.w>=100&&prop.h>=150,prop.id+' wrong-scale object');
   assert.ok(prop.x>0&&prop.x<=1440&&prop.y>0&&prop.y<=900,prop.id);
   assert.ok(prop.shadow.length===2,prop.id+' missing grounding');
   assert.ok(stations[prop.id],prop.id+' missing station');
-  assert.ok(existsSync(new URL('assets/scene/'+prop.texture+'.svg',base)),prop.id+' missing texture');
+  assert.ok(existsSync(new URL(prop.raster||'assets/scene/'+prop.texture+'.svg',base)),prop.id+' missing texture');
  }
  assert.deepEqual(Object.keys(stations).sort(),props.map(p=>p.id).sort());
  assert.equal(solids.length,5,'door should be passable');
@@ -51,11 +52,12 @@ test('All six interactive objects have unique sprites and bottom pivot footprint
 
 test('Furniture footprints block actors but task points remain accessible',()=>{
  for(const [name,x,y] of [
-  ['counter',1000,540],['table',355,674],['bench',1180,700],
+  ['counter',1000,540],['table',355,704],['bench',1180,700],
   ['scooter',1370,788],['plant',110,632]
  ])assert.equal(blocked(x,y),true,name+' should be solid');
  assert.equal(blocked(600,750),false,'spawn');
  assert.equal(blocked(740,620),false,'free walkway');
+ assert.equal(blocked(450,680),false,'painted table must not retain the old oversized chair collision');
  for(const [id,p] of Object.entries(stations))
   assert.equal(blocked(p.x,p.y),false,id+' interaction point blocked');
 });

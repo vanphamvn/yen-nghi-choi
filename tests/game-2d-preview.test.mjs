@@ -100,7 +100,7 @@ function harness(){
   setAlpha(v){this.alpha=v;return this},
   setStrokeStyle(){return this},setVisible(v){this.visible=v;return this},
   setPosition(x,y){this.x=x;this.y=y;return this},setFlipX(v){this.flipX=v;return this},
-  setAngle(){return this},setTexture(key){this.texture=key;this.anims.isPlaying=false;return this}
+  setAngle(value){this.angle=value;return this},setTexture(key){this.texture=key;this.anims.isPlaying=false;return this}
  }}
  let scene=null;
  class StubScene{
@@ -108,7 +108,7 @@ function harness(){
    this.add={image:sprite,sprite,circle:sprite,ellipse:sprite,text:sprite};
    this.tweens={add(){}};
    this.cameras={main:{setBounds(){},startFollow(){},setZoom(){},shake(){},flash(){}}};
-   this.load={svg(){},image(key,path){assert.match(path,/\.webp$/);assert.ok(['cafe','cafe-foreground'].includes(key));},spritesheet(key,path,opt){assert.equal(opt.frameWidth,256);assert.equal(opt.frameHeight,320)},on(){}};
+   this.load={svg(){},image(key,path){assert.match(path,/\.webp$/);assert.ok(['cafe','cafe-foreground','prop-table-painted'].includes(key));},spritesheet(key,path,opt){assert.equal(opt.frameWidth,256);assert.equal(opt.frameHeight,320)},on(){}};
    this.anims={exists:key=>allAnimations.has(key),create:def=>allAnimations.set(def.key,def)};
    this.input={keyboard:{addKeys(){return{}},on(){},resetKeys(){}}};
    this.scale={width:1200,height:800,on(){}};
@@ -233,4 +233,17 @@ test('touch ownership, menus, focus loss and hidden tabs reset movement safely',
  assert.equal(a.touch.y,0);assert.equal(a.heldKeys.size,0);assert.equal(a.touch.pointer,null);
  down(4);a.heldKeys.add('a');doc.hidden=true;doc.events.visibilitychange();
  assert.equal(a.touch.x,0);assert.equal(a.heldKeys.size,0);assert.equal(keyboardResets,3);
+});
+
+test('starting a new shift restores tabletop details and cancels old prop tweens',()=>{
+ const {api:a,scene}=harness();a.modal(null);
+ const cup=scene.propDetails.get('cup'),book=scene.propDetails.get('book');
+ cup.setVisible(false).setAlpha(0);book.setAngle(-7);
+ let cancelled=0;scene.tweens.killTweensOf=()=>cancelled++;
+ a.startShift();
+ assert.equal(cup.visible,true);assert.equal(cup.alpha,1);assert.equal(book.angle,0);assert.equal(cancelled,4);
+ for(const detail of [cup,book]){
+  assert.ok(detail.x>290&&detail.x<420,'detail should sit within the painted tabletop');
+  assert.ok(detail.y>637&&detail.y<685,'detail must rest on the table surface, not float above it');
+ }
 });
