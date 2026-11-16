@@ -20,7 +20,7 @@
       "reason": "PR #91 vector-gradient visual mismatch; needs painted raster replacement"
     },
     "assets/scene/counter.svg": {
-      "gitBlobSha": "21391f1f6cea3b5572482292a4918bb513aa7c2",
+      "gitBlobSha": "21391f1f6cea3b5572482292a4918bb513aa7c2d",
       "reason": "PR #91 vector-gradient visual mismatch; needs painted raster replacement"
     },
     "assets/scene/table.svg": {
