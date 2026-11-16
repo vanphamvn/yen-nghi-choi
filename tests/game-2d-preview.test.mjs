@@ -142,7 +142,7 @@ test('Preview selects PNG frames and applying role changes the Phaser player',()
  assert.equal(a.state.role,'waiter');
  assert.equal(h.scene.player.texture,'waiter');
  assert.equal(el('overlay').hidden,true);
- h.scene.player.setPosition(520,650);a.interact();
+ h.scene.player.setPosition(375,625);a.interact();
  assert.match(el('dialogue').textContent,/Khách đọc sách/);
  assert.equal(h.scene.player.anims.currentAnim.key,'waiter-interact');
 });
