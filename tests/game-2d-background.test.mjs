@@ -1,70 +1,87 @@
 // node --test tests/game-2d-background.test.mjs
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {readFileSync} from 'node:fs';
+import {readFileSync,existsSync} from 'node:fs';
 import vm from 'node:vm';
 const base=new URL('../game/preview-2d/',import.meta.url);
 const read=path=>readFileSync(new URL(path,base));
 const code=read('game.js').toString('utf8');
-const background=read('assets/cafe-painted.webp');
-const foreground=read('assets/cafe-foreground.webp');
+const sceneFiles=['backdrop','door','counter','table','bench','plant','scooter','cup','book','cushion'];
+const extract=(begin,end,ret)=>{
+ const from=code.indexOf(begin),to=code.indexOf(end,from);
+ assert.ok(from>=0&&to>from,'missing '+begin);
+ return new Function(code.slice(from,to)+'; return '+ret+';')();
+};
+const solids=extract('const SCENE_COLLIDERS=','const stations=', 'SCENE_COLLIDERS');
+const stations=extract('const stations=','const npcs=', 'stations');
+const props=extract('const SCENE_PROPS=','const SCENE_COLLIDERS=', 'SCENE_PROPS');
+const blocked=(x,y)=>solids.some(c=>c.shape==='rect'
+ ?x>c.l&&x<c.r&&y>c.t&&y<c.b:((x-c.x)/c.rx)**2+((y-c.y)/c.ry)**2<1);
 
-test('Raster background is a real self-hosted WebP with a lightweight alpha foreground',()=>{
- for(const [name,buffer] of [['background',background],['foreground',foreground]]){
-  assert.equal(buffer.toString('ascii',0,4),'RIFF',name);
-  assert.equal(buffer.toString('ascii',8,12),'WEBP',name);
-  assert.ok(buffer.length>12000,name+' too small or blank');
-  assert.ok(buffer.length<400000,name+' should be mobile-friendly');
+test('Architecture and independent props are self-hosted SVG textures',()=>{
+ for(const name of sceneFiles){
+  const path='assets/scene/'+name+'.svg';
+  assert.ok(existsSync(new URL(path,base)),path);
+  const svg=read(path).toString('utf8');
+  assert.match(svg,/^<svg xmlns="http:\/\/www\.w3\.org\/2000\/svg"/,name);
+  assert.match(svg,/<\/svg>$/,name);
+  assert.ok(svg.length>700,name+' unexpectedly empty');
  }
- assert.match(code,/load\.image\('cafe','\.\/assets\/cafe-painted\.webp'\)/);
- assert.match(code,/load\.image\('cafe-foreground','\.\/assets\/cafe-foreground\.webp'\)/);
- assert.doesNotMatch(code,/load\.svg\('cafe'/);
- assert.match(code,/'cafe-foreground'\)\.setDisplaySize\(1440,900\)\.setDepth\(950\)/);
+ assert.match(code,/this\.load\.svg\('scene-backdrop'/);
+ assert.match(code,/this\.createProps\(\)/);
+ assert.match(code,/\.setOrigin\(\.5,1\)\.setDepth\(def\.y\)/);
+ assert.doesNotMatch(code,/this\.load\.image\('cafe','\.\/assets\/cafe-painted\.webp'\)/);
+ assert.doesNotMatch(code,/this\.load\.image\('cafe-foreground'/);
  assert.doesNotThrow(()=>new vm.Script(code));
 });
 
-const blocked=(()=>{
- const from=code.indexOf('function blocked(x,y){');
- const to=code.indexOf('function renderInfo(',from);
- assert.ok(from>=0&&to>from,'collision function not found');
- return new Function(code.slice(from,to)+'; return blocked;')();
-})();
-const stations=(()=>{
- const from=code.indexOf('const stations={');
- const to=code.indexOf('const npcs=[',from);
- assert.ok(from>=0&&to>from,'station map not found');
- return new Function(code.slice(from,to)+'; return stations;')();
-})();
-
-test('Painted furniture blocks passage but keeps every task station reachable',()=>{
- assert.equal(blocked(600,750),false,'player spawn');
- assert.equal(blocked(1000,490),true,'service counter');
- assert.equal(blocked(342,618),true,'café table');
- assert.equal(blocked(1180,670),true,'bench');
- assert.equal(blocked(1380,680),true,'delivery bike');
- assert.equal(blocked(740,620),false,'open floor');
- for(const [name,p] of Object.entries(stations)){
-  assert.equal(blocked(p.x,p.y),false,name+' station should be on walkable floor');
+test('All six interactive objects have unique sprites and bottom pivot footprints',()=>{
+ assert.equal(props.length,6);
+ assert.equal(new Set(props.map(p=>p.id)).size,6);
+ for(const prop of props){
+  assert.ok(prop.w>=100&&prop.h>=150,prop.id+' wrong-scale object');
+  assert.ok(prop.x>0&&prop.x<=1440&&prop.y>0&&prop.y<=900,prop.id);
+  assert.ok(prop.shadow.length===2,prop.id+' missing grounding');
+  assert.ok(stations[prop.id],prop.id+' missing station');
+  assert.ok(existsSync(new URL('assets/scene/'+prop.texture+'.svg',base)),prop.id+' missing texture');
  }
+ assert.deepEqual(Object.keys(stations).sort(),props.map(p=>p.id).sort());
+ assert.equal(solids.length,5,'door should be passable');
 });
 
-test('All 6 stations can be approached from the original player spawn',()=>{
- const step=20;
- const start={x:600,y:750};
- const queue=[start],visited=new Set();
- const id=(x,y)=>x+':'+y;
- visited.add(id(start.x,start.y));
+test('Furniture footprints block actors but task points remain accessible',()=>{
+ for(const [name,x,y] of [
+  ['counter',1000,540],['table',355,674],['bench',1180,700],
+  ['scooter',1370,788],['plant',110,632]
+ ])assert.equal(blocked(x,y),true,name+' should be solid');
+ assert.equal(blocked(600,750),false,'spawn');
+ assert.equal(blocked(740,620),false,'free walkway');
+ for(const [id,p] of Object.entries(stations))
+  assert.equal(blocked(p.x,p.y),false,id+' interaction point blocked');
+});
+
+test('Every station can be approached from the original player spawn',()=>{
+ const step=20,start={x:600,y:750},queue=[start],visited=new Set();
+ const key=(x,y)=>x+':'+y;
+ visited.add(key(start.x,start.y));
  for(let i=0;i<queue.length;i++){
   const {x,y}=queue[i];
   for(const [dx,dy] of [[step,0],[-step,0],[0,step],[0,-step]]){
-   const nx=x+dx,ny=y+dy,k=id(nx,ny);
-   if(nx<100||nx>1360||ny<510||ny>840||visited.has(k)||blocked(nx,ny))continue;
+   const nx=x+dx,ny=y+dy,k=key(nx,ny);
+   if(nx<90||nx>1365||ny<507||ny>840||visited.has(k)||blocked(nx,ny))continue;
    visited.add(k);queue.push({x:nx,y:ny});
   }
  }
- assert.ok(queue.length>80,'explorable floor must be contiguous');
- for(const [name,p] of Object.entries(stations)){
-  const near=queue.some(n=>Math.hypot(n.x-p.x,n.y-p.y)<110);
-  assert.ok(near,name+' not reachable from player spawn');
- }
+ assert.ok(queue.length>80,'walkable area must be contiguous');
+ for(const [id,p] of Object.entries(stations))
+  assert.ok(queue.some(n=>Math.hypot(n.x-p.x,n.y-p.y)<110),id+' not reachable');
+});
+
+test('All interactive scenes change visible sprite state',()=>{
+ assert.match(code,/reactProp\(id,next\)/);
+ for(const id of ['counter','table','bench','bike','plant','door'])
+  assert.ok(code.includes("id==='"+id+"'"),id+' missing interaction');
+ assert.match(code,/this\.propDetails\.set\('cup',cup\)/);
+ assert.match(code,/this\.scooterLight\?\.setVisible\(!!next\)/);
+ assert.match(code,/this\.steam\.forEach\(p=>p\.setVisible\(!!next\)\)/);
 });
