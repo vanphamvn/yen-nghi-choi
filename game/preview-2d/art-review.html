@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Yên 2D · Đối chiếu phong cách sprite</title>
+<style>
+:root{color-scheme:light;--ink:#432f2b;--paper:#fbf5e9;--muted:#725d50;--line:#d2b99c;--warn:#92433a}
+*{box-sizing:border-box}body{margin:0;background:#e7dac7;color:var(--ink);font-family:system-ui,-apple-system,sans-serif}
+main{max-width:1240px;margin:auto;padding:28px 18px 60px}
+a{color:#6a4639}h1{font-size:clamp(27px,4vw,44px);line-height:1.2;margin:10px 0 12px}h2{margin:27px 0 12px;font-size:24px}
+p{line-height:1.55;margin:8px 0 14px}.summary{max-width:900px;color:var(--muted)}
+.kicker{text-transform:uppercase;letter-spacing:.11em;font-weight:750;font-size:12px}
+.warning{padding:12px 15px;border:2px solid #b46b60;background:#fae9df;border-radius:12px;color:var(--warn);font-weight:700}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(310px,1fr));gap:15px}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:15px;box-shadow:0 5px 19px #50382812}
+.card h3{font-size:18px;margin:2px 0 3px}.card p{font-size:13px;color:var(--muted);margin:5px 0 0}
+.checker{background-color:#e7d8c3;background-image:linear-gradient(45deg,#f7eddf 25%,transparent 25%),linear-gradient(-45deg,#f7eddf 25%,transparent 25%),linear-gradient(45deg,transparent 75%,#f7eddf 75%),linear-gradient(-45deg,transparent 75%,#f7eddf 75%);background-position:0 0,0 14px,14px -14px,-14px 0;background-size:28px 28px}
+.fig{min-height:248px;border:1px solid #cdb59a;border-radius:12px;padding:10px;display:flex;align-items:flex-end;justify-content:center;gap:12px;overflow:auto}
+.fig--large{min-height:334px}
+.actor{flex:none;width:117px;height:146px;background-image:var(--role);background-position:0 0;background-size:400% 400%;background-repeat:no-repeat;filter:drop-shadow(0 4px 3px #694b3b33)}
+.actor--cat{width:102px;height:127px}
+.asset{display:block;object-fit:contain;object-position:center bottom;height:auto;max-width:none;flex:none}
+.asset--fit{max-width:100%;height:auto}
+.reference{display:flex;justify-content:center;gap:18px;flex-wrap:wrap;padding:21px 12px;border-radius:12px;border:1px solid #c9b196}
+.role{display:flex;align-items:center;flex-direction:column;gap:6px;font-size:13px}
+.role .actor{width:128px;height:160px}
+.labels{display:flex;justify-content:space-between;gap:8px;margin-top:10px;font-size:12px;color:#84624e}
+footer{margin-top:32px;color:var(--muted);font-size:13px}
+@media(max-width:540px){.fig{justify-content:flex-start}.fig--large{min-height:275px}.card{padding:12px}}
+</style>
+</head>
+<body><main>
+<div class="kicker">Yên 2D · Art review / Quy chuẩn đồng nhất</div>
+<h1>Nhân vật và đồ vật: cùng một thế giới?</h1>
+<p class="summary">Bảng đối chiếu trực tiếp sprite nhân vật PNG với các đồ vật SVG đang có trong game. Nhân vật được đặt ở kích thước tương đương khi chơi, cạnh texture đồ vật. Đây là công cụ kiểm tra, <strong>không phải chứng nhận đã đồng nhất phong cách</strong>.</p>
+<div class="warning">CHƯA ĐẠT ART REVIEW: 10 texture SVG của PR #91 đang bị cách ly vì khác nét vẽ/chất liệu với sprite nhân vật. Chúng cần được vẽ lại theo reference PNG, không phải chỉ tô lại hoặc xuất SVG sang PNG.</div>
+<h2>01 · Reference nhân vật (nguồn chuẩn)</h2>
+<div class="reference checker">
+ <div class="role"><div class="actor" style="--role:url('./assets/sprites/barista.png')"></div><strong>Pha chế</strong></div>
+ <div class="role"><div class="actor" style="--role:url('./assets/sprites/waiter.png')"></div><strong>Phục vụ</strong></div>
+ <div class="role"><div class="actor" style="--role:url('./assets/sprites/guard.png')"></div><strong>Bảo vệ</strong></div>
+ <div class="role"><div class="actor" style="--role:url('./assets/sprites/shipper.png')"></div><strong>Giao hàng</strong></div>
+ <div class="role"><div class="actor actor--cat" style="--role:url('./assets/sprites/cat.png')"></div><strong>Mèo</strong></div>
+</div>
+<h2>02 · Props hiện tại bên cạnh nhân vật</h2>
+<div class="grid">
+ <article class="card"><h3>Bàn cà phê</h3><div class="fig checker"><div class="actor" style="--role:url('./assets/sprites/barista.png')"></div><img class="asset" src="./assets/scene/table.svg" width="307" height="214" alt="Bàn SVG hiện tại" loading="lazy"></div><p>Kiểm tra góc nhìn, chất gỗ, nét viền, tỷ lệ và bóng đổ.</p></article>
+ <article class="card"><h3>Ghế dài</h3><div class="fig checker"><div class="actor" style="--role:url('./assets/sprites/waiter.png')"></div><img class="asset" src="./assets/scene/bench.svg" width="310" height="235" alt="Ghế SVG hiện tại" loading="lazy"></div><p>Kiểm tra độ mềm đệm, chi tiết vải và khả năng nhân vật ngồi thực.</p></article>
+ <article class="card"><h3>Quầy pha chế</h3><div class="fig fig--large checker"><div class="actor" style="--role:url('./assets/sprites/barista.png')"></div><img class="asset" src="./assets/scene/counter.svg" width="598" height="310" alt="Quầy SVG hiện tại" loading="lazy"></div><p>Chiều cao tương đối, ánh sáng, thiết bị và nét cọ không khớp.</p></article>
+ <article class="card"><h3>Cửa ra vào</h3><div class="fig fig--large checker"><div class="actor" style="--role:url('./assets/sprites/guard.png')"></div><img class="asset" src="./assets/scene/door.svg" width="215" height="355" alt="Cửa SVG hiện tại" loading="lazy"></div><p>Đối chiếu kích thước, kính, viền và phối cảnh với nhân vật.</p></article>
+ <article class="card"><h3>Chậu cây</h3><div class="fig fig--large checker"><div class="actor" style="--role:url('./assets/sprites/waiter.png')"></div><img class="asset" src="./assets/scene/plant.svg" width="201" height="288" alt="Cây SVG hiện tại" loading="lazy"></div><p>Phiến lá SVG đối xứng thiếu sự biến thiên của art vẽ tay.</p></article>
+ <article class="card"><h3>Xe giao hàng</h3><div class="fig checker"><div class="actor" style="--role:url('./assets/sprites/shipper.png')"></div><img class="asset" src="./assets/scene/scooter.svg" width="188" height="211" alt="Xe SVG hiện tại" loading="lazy"></div><p>Đối chiếu ánh phản chiếu, thể tích bánh xe, góc camera.</p></article>
+ <article class="card"><h3>Ly nước / sách / gối</h3><div class="fig checker"><div class="actor" style="--role:url('./assets/sprites/barista.png')"></div><div style="display:flex;flex-direction:column;align-items:center;gap:8px"><img src="./assets/scene/cup.svg" width="66" height="77" alt="Ly SVG"><img src="./assets/scene/book.svg" width="105" height="62" alt="Sách SVG"><img src="./assets/scene/cushion.svg" width="89" height="62" alt="Gối SVG"></div></div><p>Đồ nhỏ cần nét cọ đồng bộ và kích thước đủ để cầm/tương tác.</p></article>
+ <article class="card"><h3>Background mới</h3><div class="fig checker"><img class="asset asset--fit" src="./assets/scene/backdrop.svg" width="520" height="325" alt="Background SVG" loading="lazy"></div><p>Minh họa kiến trúc SVG không theo cùng ngôn ngữ với nhân vật PNG.</p></article>
+</div>
+<h2>03 · Đối chiếu hai bản background</h2>
+<div class="grid">
+ <article class="card"><h3>Nền WebP vẽ ban đầu</h3><img class="asset asset--fit" src="./assets/cafe-painted.webp" width="560" height="350" alt="Bối cảnh painted trước PR #91" loading="lazy"><p>Mốc tham khảo cũ. Cần so trực tiếp với character art, không mặc định đã được duyệt.</p></article>
+ <article class="card"><h3>Nền SVG thay thế trong PR #91</h3><img class="asset asset--fit" src="./assets/scene/backdrop.svg" width="560" height="350" alt="Nền vector từ PR #91" loading="lazy"><p>Nét vector đều, các khối hình học và gradient rõ. Chưa được duyệt.</p></article>
+</div>
+<footer>Đường dẫn kiểm tra: <a href="./">Quay lại game 2D</a>. Chuẩn thực hiện: <code>.agents/skills/yen-sprite-style/SKILL.md</code>. Chính sách: <code>assets/scene/art-style-policy.json</code>. Không có asset nào mới được công nhận là đúng style chỉ bằng kiểm thử tự động.</footer>
+</main></body></html>
