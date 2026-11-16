@@ -670,24 +670,42 @@ function blocked(x,z) {
   if (Math.hypot(x-6.2,z-3.55)<.77+r) return true;
   return false;
 }
+function updateAmbient(dt) {
+  if (!world || !game || game.phase==='result') return;
+  game.ambientTime+=dt;
+  for (let i=0;i<world.npcs.length;i++) {
+    const npc=world.npcs[i];
+    const angle=game.ambientTime*(npc.kind==='cat'?1.1:.52)+i*1.57;
+    npc.group.position.x=npc.x+Math.sin(angle)*.18;
+    npc.group.position.z=npc.z+Math.cos(angle*.83)*.16;
+    npc.react=Math.max(0,npc.react-dt*1.8);
+    npc.group.position.y=Math.max(0,Math.sin(angle*1.8)*.025)+npc.react*.14;
+    const scale=1+npc.react*.08;
+    npc.group.scale.set(scale,scale,scale);
+    npc.group.rotation.y=-.3+Math.sin(angle*.6)*.23;
+    npc.halo.material.opacity=.27+.13*Math.sin(angle*2);
+  }
+}
 function loop(now) {
   if (!game || !game.playing || !world) return;
   const dt=lastTick?clamp((now-lastTick)/1000,0,.05):0;
   lastTick=now;
-  game.elapsed+=dt;
-  game.powerCooldown=Math.max(0,game.powerCooldown-dt);
-  game.sprint=Math.max(0,game.sprint-dt);
+  if (game.phase==='shift'||game.phase==='ready') game.elapsed+=dt;
+  if (game.phase==='shift') {
+    game.powerCooldown=Math.max(0,game.powerCooldown-dt);
+    game.sprint=Math.max(0,game.sprint-dt);
+    if(game.elapsed>=game.nextEvent) { randomEvent();game.nextEvent+=22; }
+    game.peace=clamp(game.peace-dt*(.045+(5-game.attributes.calm)*.008),0,100);
+  }
   game.messageTime=Math.max(0,game.messageTime-dt);
   if (game.messageTime===0 && game.message) { game.message='';$('event-text').textContent=''; }
-  if (game.elapsed>=game.nextEvent) { randomEvent();game.nextEvent+=22; }
-  // Subtle cost of running a cafe, softened by the player's calmness.
-  game.peace=clamp(game.peace-dt*(.045+(5-game.attributes.calm)*.008),0,100);
+  updateAmbient(dt);
 
   if (game.active) {
     game.active.elapsed+=dt;
     $('action-bar').style.width=clamp(game.active.elapsed/game.active.duration*100,0,100)+'%';
     if (game.active.elapsed>=game.active.duration) completeAction();
-  } else {
+  } else if(game.phase!=='result') {
     const rawX=(pressed.has('d')||pressed.has('arrowright')?1:0)
        -(pressed.has('a')||pressed.has('arrowleft')?1:0)+touchMove.x;
     const rawY=(pressed.has('s')||pressed.has('arrowdown')?1:0)
@@ -707,13 +725,14 @@ function loop(now) {
       world.player.position.y*=.8;
     }
   }
-  // Completing the third task ends the game and disposes the 3D scene.
   if (!game || !game.playing || !world) return;
   const objective=world.indicator;
-  objective.rotation.z=now*.0005;
-  const pulse=1+Math.sin(now*.004)*.08;
-  objective.scale.set(pulse,pulse,pulse);
-  world.markerPole.material.opacity=.12+Math.sin(now*.003)*.045;
+  if(objective.visible) {
+    objective.rotation.z=now*.0005;
+    const pulse=1+Math.sin(now*.004)*.08;
+    objective.scale.set(pulse,pulse,pulse);
+    world.markerPole.material.opacity=.12+Math.sin(now*.003)*.045;
+  }
   // Follow the visitor more closely on narrow screens.
   const aspect=$('scene').clientWidth/Math.max(1,$('scene').clientHeight);
   const follow=aspect<.85?.83:.24;
@@ -722,33 +741,10 @@ function loop(now) {
   world.camera.position.lerp(destination,.09);
   world.camera.lookAt(focus);
   updateHud();
-  if (game.elapsed>=150) { endGame(false);return; }
+  // No automatic game-over: players decide when their shift is complete.
   if (!game.playing || !world) return;
   world.renderer.render(world.scene,world.camera);
   frame=requestAnimationFrame(loop);
-}
-function endGame(completed) {
-  if (!game) return;
-  game.playing=false;
-  cancelAnimationFrame(frame);
-  const done=game.done;
-  const eff=Math.round(game.efficiency);
-  const peace=Math.round(game.peace);
-  $('result-tasks').textContent=done+' / 3';
-  $('result-eff').textContent=eff+'%';
-  $('result-yen').textContent=peace+'%';
-  $('result-title').textContent=completed?'Quán vẫn còn nguyên.':'Hết ca, còn việc.';
-  $('result-message').textContent=completed?
-    'Bạn đã hoàn thành cả ba nhiệm vụ. Đôi khi thế là đủ cho một ngày làm việc.':
-    'Không phải nhiệm vụ nào cũng xong. May mà Yên vẫn mở cửa.';
-  const balance=Math.round(eff*.5+peace*.5);
-  $('result-note').textContent=balance>=80?'Đánh giá: Làm được việc mà vẫn giữ được Yên.':
-    balance>=60?'Đánh giá: Quán chạy được. Cần thêm một chút bình tĩnh.':
-    'Đánh giá: Hình như cả quán cần một giấy phép nghỉ.';
-  $('game').hidden=true;
-  $('result').hidden=false;
-  pressed.clear();resetJoystick();
-  disposeWorld();
 }
 function disposeWorld() {
   cancelAnimationFrame(frame);
@@ -771,20 +767,25 @@ function backToSetup() {
   if (game) game.playing=false;
   pressed.clear();resetJoystick();disposeWorld();
   $('game').hidden=true;$('result').hidden=true;$('setup').hidden=false;
-  $('start-btn').textContent='Vào ca làm việc ↗';
+  $('start-btn').textContent='Vào quán khám phá ↗';
   renderStats();
 }
 $('exit-btn').addEventListener('click',backToSetup);
 $('change-btn').addEventListener('click',backToSetup);
-$('retry-btn').addEventListener('click',() => {backToSetup();startGame();});
-$('interact-btn').addEventListener('click',startAction);
+$('retry-btn').addEventListener('click',nextDay);
+$('shift-btn').addEventListener('click',()=>{
+  if (!game || !world) return;
+  if (game.phase==='explore') startShift();
+  else if (game.phase==='ready') finishShift();
+});
+$('interact-btn').addEventListener('click',interact);
 $('skill-btn').addEventListener('click',usePower);
 window.addEventListener('keydown',event=>{
   const key=event.key.toLowerCase();
   if (!game || !game.playing) return;
   if (['arrowup','arrowdown','arrowleft','arrowright',' '].includes(key)) event.preventDefault();
   pressed.add(key);
-  if (key==='e' && !event.repeat) startAction();
+  if (key==='e' && !event.repeat) interact();
   if (key==='q' && !event.repeat) usePower();
 });
 window.addEventListener('keyup',event=>pressed.delete(event.key.toLowerCase()));
