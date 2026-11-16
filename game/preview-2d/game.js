@@ -105,6 +105,7 @@ const state={
  selectedPreview:'barista',animation:'idle',mute:false
 };
 let world=null,phaserGame=null,elapsedUI=0,activeModal='preview';
+let focusBeforeModal=null;
 let touch={x:0,y:0,pointer:null};
 const heldKeys=new Set();
 let interacting=false;
@@ -175,6 +176,10 @@ function gameTime(){
  return String(Math.floor(m/60)%24).padStart(2,'0')+':'+String(m%60).padStart(2,'0');
 }
 function modal(name){
+ if(name){
+  if(!activeModal)focusBeforeModal=document.activeElement;
+  resetInput();
+ }
  activeModal=name;
  $('overlay').hidden=!name;
  $('overlay').setAttribute('aria-hidden',String(!name));
@@ -189,6 +194,8 @@ function modal(name){
  // Pause game movement while inspecting menus, keep environment alive.
  if(name==='preview')$('close-modal').focus();
  else if(name==='info')$('close-info').focus();
+ else if(name==='result')$('next-day').focus();
+ else {focusBeforeModal?.focus();focusBeforeModal=null;}
 }
 function addLog(message) {
  state.history.unshift({day:state.day,time:gameTime(),text:message});
@@ -438,7 +445,28 @@ function renderInfo(kind){
  }
  modal('info');
 }
-function resetStick(){touch.x=touch.y=0;touch.pointer=null;$('thumb').style.transform='translate(0,0)';}
+function resetStick(){
+ const previous=touch.pointer;
+ touch.x=touch.y=0;touch.pointer=null;$('thumb').style.transform='translate(0,0)';
+ const area=$('stick');
+ if(previous!==null&&area.hasPointerCapture?.(previous))area.releasePointerCapture(previous);
+}
+function resetInput(){
+ heldKeys.clear();resetStick();
+ world?.input?.keyboard?.resetKeys?.();
+}
+function trapModalFocus(event){
+ const panel=$(activeModal==='preview'?'model-modal':activeModal==='info'?'info-modal':'result-modal');
+ const buttons=[...panel.querySelectorAll('button:not([disabled]), a[href], [tabindex="0"]')]
+  .filter(node=>node.getClientRects().length>0);
+ if(!buttons.length)return;
+ const first=buttons[0],last=buttons[buttons.length-1],outside=!panel.contains(document.activeElement);
+ if(event.shiftKey&&(document.activeElement===first||outside)){
+  event.preventDefault();last.focus();
+ }else if(!event.shiftKey&&(document.activeElement===last||outside)){
+  event.preventDefault();first.focus();
+ }
+}
 function bindStick(){
  const area=$('stick'),ring=area.querySelector('.stick-ring');
  const move=e=>{
@@ -449,7 +477,7 @@ function bindStick(){
    $('thumb').style.transform='translate('+Math.round(touch.x*29)+'px,'+Math.round(touch.y*29)+'px)';
  };
  area.addEventListener('pointerdown',e=>{
-   if(activeModal)return;
+   if(activeModal||touch.pointer!==null)return;
    touch.pointer=e.pointerId;area.setPointerCapture?.(e.pointerId);move(e);e.preventDefault();
  });
  area.addEventListener('pointermove',e=>{if(touch.pointer===e.pointerId)move(e)});
@@ -776,6 +804,7 @@ function init(){
  $('overlay').addEventListener('click',e=>{if(e.target===$('overlay')&&activeModal!=='result')modal(null)});
  window.addEventListener('keydown',event=>{
   const key=event.key.toLowerCase();
+  if(key==='tab'&&activeModal){trapModalFocus(event);return;}
   if(['w','a','s','d','arrowup','arrowdown','arrowleft','arrowright'].includes(key)){
    heldKeys.add(key);
    if(!activeModal)event.preventDefault();
@@ -789,7 +818,8 @@ function init(){
   }
  });
  window.addEventListener('keyup',event=>heldKeys.delete(event.key.toLowerCase()));
- window.addEventListener('blur',()=>{heldKeys.clear();resetStick()});
+ window.addEventListener('blur',resetInput);
+ document.addEventListener?.('visibilitychange',()=>{if(document.hidden)resetInput()});
  bindStick();
  setUpSpriteThumbnails();
  selectAnimation('idle');

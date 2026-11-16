@@ -14,3 +14,9 @@ dist/
 # Licensed font binaries stay outside this source archive
 fonts/*.woff2
 fonts/*.woff
+
+# Browser QA development tools and generated evidence
+node_modules/
+playwright-report/
+test-results/
+game/preview-2d/build-info.json

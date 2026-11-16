@@ -1,0 +1,11 @@
+{
+  "name": "yen-nghi-choi",
+  "private": true,
+  "scripts": {
+    "test:game": "node --test game/preview-2d/tests/*.test.mjs tests/game-2d*.test.mjs",
+    "test:browser": "playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.62.1"
+  }
+}

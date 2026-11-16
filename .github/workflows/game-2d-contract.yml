@@ -9,6 +9,9 @@ on:
       - "game/index.html"
       - "netlify.toml"
       - "vercel.json"
+      - "package.json"
+      - "package-lock.json"
+      - "playwright.config.mjs"
       - ".agents/skills/yen-sprite-style/**"
       - ".agents/skills/yen-game-director/**"
       - ".agents/skills/yen-game-release/**"
@@ -21,6 +24,9 @@ on:
       - "game/index.html"
       - "netlify.toml"
       - "vercel.json"
+      - "package.json"
+      - "package-lock.json"
+      - "playwright.config.mjs"
       - ".agents/skills/yen-sprite-style/**"
       - "AGENTS.md"
 
@@ -64,9 +70,34 @@ jobs:
           print('Validated',len(paths),'SVG textures')
           PY
 
+  browser-smoke:
+    needs: sprites-and-routines
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: "22"
+          cache: npm
+      - run: npm ci --ignore-scripts --no-audit --no-fund
+      - run: npx playwright install --with-deps chromium
+      - run: npm run test:browser
+      - name: Save browser screenshots and traces
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: game-browser-qa
+          path: |
+            test-results/
+            playwright-report/
+          retention-days: 7
+
   production-content:
     if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
-    needs: sprites-and-routines
+    needs: [sprites-and-routines, browser-smoke]
     runs-on: ubuntu-latest
     timeout-minutes: 12
     steps:
@@ -89,6 +120,22 @@ jobs:
           echo "Production blocked or stale. See production-content.json. This is not browser or provider SHA verification." >> "$GITHUB_STEP_SUMMARY"
           cat production-content.json
           exit 1
+      - name: Smoke-test actual production in three viewports
+        run: |
+          npm ci --ignore-scripts --no-audit --no-fund
+          npx playwright install --with-deps chromium
+          npm run test:browser
+        env:
+          GAME_BASE_URL: https://yencafeday.netlify.app
+      - name: Save production browser evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: game-production-browser-qa
+          path: |
+            test-results/
+            playwright-report/
+          retention-days: 7
       - name: Save production evidence
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02

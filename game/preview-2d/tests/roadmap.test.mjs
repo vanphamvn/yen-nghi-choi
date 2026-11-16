@@ -19,7 +19,9 @@ test('roadmap is machine-readable, traceable and dependency-safe',()=>{
 });
 
 test('pick M0 first, but keep independent gameplay work available',()=>{
- const result=chooseWork(plan);
+ // Exercise an unshipped baseline even after the actual roadmap advances.
+ const baseline=clone();baseline.stages[0].status='todo';baseline.stages[0].evidence=null;
+ const result=chooseWork(baseline);
  assert.equal(result.next.id,'M0');
  assert.deepEqual(result.ready.map(s=>s.id),['M0','M1','M4','M5','M6']);
  assert.ok(result.blocked.map(s=>s.id).includes('M2'));
@@ -29,6 +31,7 @@ test('pick M0 first, but keep independent gameplay work available',()=>{
 test('detect fake done state and missing release proof',()=>{
  const p=clone();
  p.stages[0].status='done';
+ p.stages[0].evidence=null;
  assert.ok(validateRoadmap(p).some(s=>s.includes('Done without verified release evidence')));
 });
 

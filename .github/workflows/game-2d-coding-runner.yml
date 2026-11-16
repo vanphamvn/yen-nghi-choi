@@ -81,8 +81,8 @@ jobs:
             exit 0
           fi
           if [ -z "$MODEL_KEY" ]; then
-            echo 'BLOCKED: add repository secret OPENAI_API_KEY, then run this workflow on main.' >> "$GITHUB_STEP_SUMMARY"
-            exit 1
+            echo 'PAUSED: API runner has no key. Continue development in ChatGPT Work; QA and production workflows remain active.' >> "$GITHUB_STEP_SUMMARY"
+            exit 0
           fi
           if ! node -e "if(!JSON.parse(require('fs').readFileSync('runner-task.json')).task)process.exit(1)"; then
             echo 'PAUSED: no eligible engineering milestone; inspect roadmap blockers.' >> "$GITHUB_STEP_SUMMARY"

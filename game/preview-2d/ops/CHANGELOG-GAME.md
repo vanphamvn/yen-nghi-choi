@@ -2,6 +2,19 @@
 
 This file records **verified releases**, not PRs mistaken for production. Agents append one entry per deployment or clearly marked blocked attempt. Keep the newest entry at the top.
 
+## 2026-11-16 | NPC routines and verifiable Netlify releases
+
+- Issues / PRs: #95 / #108; #98 / #109.
+- Merged game SHA: `a640958a1ab573a2bff1633c1709b423a26800c5`.
+- Production: Netlify https://yencafeday.netlify.app/game/preview-2d/.
+- Result: SHIPPED for the NPC slice. Provider-generated build metadata matches the merge SHA, production context, main branch and site ID; all runtime and asset content hashes pass.
+- Evidence: https://github.com/vanphamvn/yen-nghi-choi/actions/runs/43889826169.
+- Automated tests: 42 passing; 600-second NPC route simulation, full conversation hold/resume and shift reset; all five roles still complete 3 tasks and advance days.
+- Browser: live production boot, role apply, start shift and contextual Mèo Mướp dialogue observed through UI. Not real-device mobile FPS or full browser traversal.
+- Art: unchanged. No sitting/reading/drinking frames or art approval claimed; legacy SVG style debt remains.
+- Rollback: revert #109 for NPC behavior; legacy renderer remains at /game/3d.html.
+- Next: mobile input/focus safety and repeatable browser checks. M4 remains in progress.
+
 ## 2026-11-16 | Production deployment verification gate
 
 - Issue / PR: #95 / PR pending.
