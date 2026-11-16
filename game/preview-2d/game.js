@@ -31,17 +31,17 @@ const roles={
 };
 const stations={
  door:{x:195,y:716,label:'Lối vào'},
- counter:{x:1118,y:613,label:'Quầy pha chế'},
+ counter:{x:990,y:606,label:'Quầy pha chế'},
  table:{x:465,y:763,label:'Bàn khách'},
  bike:{x:1296,y:757,label:'Xe giao hàng'},
- bench:{x:942,y:787,label:'Ghế dài'},
- plant:{x:231,y:569,label:'Chậu cây'}
+ bench:{x:1040,y:762,label:'Ghế dài'},
+ plant:{x:160,y:565,label:'Chậu cây'}
 };
 const npcs=[
- {id:'reader',role:'reader',x:382,y:620,name:'Khách đọc sách',lines:['Mình vừa đọc tới chương... cái bìa.','Một trang sách và một ly nước. Tạm đủ.']},
+ {id:'reader',role:'reader',x:520,y:650,name:'Khách đọc sách',lines:['Mình vừa đọc tới chương... cái bìa.','Một trang sách và một ly nước. Tạm đủ.']},
  {id:'guest',role:'guest',x:690,y:605,name:'Khách chờ bạn',lines:['Bạn mình bảo năm phút nữa tới.','Mình gọi trước một ly. Kẻ đến sau tự tính.']},
- {id:'guard',role:'guard',x:210,y:675,name:'Chú bảo vệ',lines:['Để xe ngay ngắn là quán đã yên một nửa.','Mèo Mướp trông ghế, tôi trông cửa.']},
- {id:'barista',role:'barista',x:1216,y:584,name:'Bạn pha chế',lines:['Nước ngon cần chút kiên nhẫn.','Máy pha cà phê hôm nay khá dễ bảo.']},
+ {id:'guard',role:'guard',x:150,y:714,name:'Chú bảo vệ',lines:['Để xe ngay ngắn là quán đã yên một nửa.','Mèo Mướp trông ghế, tôi trông cửa.']},
+ {id:'barista',role:'barista',x:995,y:550,name:'Bạn pha chế',lines:['Nước ngon cần chút kiên nhẫn.','Máy pha cà phê hôm nay khá dễ bảo.']},
  {id:'waiter',role:'waiter',x:817,y:647,name:'Bạn phục vụ',lines:['Ngồi đâu cũng được, trừ quầy pha chế.','Để mình dọn lại bàn nhé.']},
  {id:'cat',role:'cat',x:613,y:802,name:'Mèo Mướp',lines:['Meo. (Mướp vừa đồng ý.)','Meo. (Mướp vừa đổi ý.)']}
 ];
@@ -430,11 +430,11 @@ class CafeScene extends Phaser.Scene{
   this.add.image(720,450,'cafe').setDisplaySize(1440,900).setDepth(-50);
   // The background is a painted raster illustration. Typography and depth
   // remain real Phaser elements so they can be localized and occlude actors.
-  const chalk=this.add.text(734,207,'yên',{
+  this.add.text(695,201,'yên',{
     fontFamily:'Georgia,serif',fontSize:'72px',fontStyle:'bold italic',
     color:'#f0d7a6',stroke:'#99754b',strokeThickness:2
   }).setOrigin(.5,.5).setDepth(-30);
-  this.add.text(734,266,'C O F F E E   &   T E A',{
+  this.add.text(695,266,'C O F F E E   &   T E A',{
     fontFamily:'Arial,sans-serif',fontSize:'14px',fontStyle:'bold',
     color:'#f3dfb7'
   }).setOrigin(.5,.5).setDepth(-30);
