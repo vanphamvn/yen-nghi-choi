@@ -41,7 +41,7 @@ test('Preview uses real frames with distinct directional views and animated moda
  for(const clip of ['idle-down','walk-down','idle-right','walk-right','idle-up','walk-up','interact'])
   assert.ok(js.includes("'"+clip+"'"),clip);
  assert.match(js,/paintSpriteFrame/);
- assert.match(html,/16 frame sprite art/);
+ assert.match(html,/Chọn vai ở Yên/);
 });
 
 test('Navigation and gameplay remain present, without tracking',()=>{
