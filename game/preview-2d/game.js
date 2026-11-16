@@ -1,5 +1,5 @@
 /* Yencafeday 2D: layered architecture and depth-sorted interactive prop sprites.
- * Phaser uses independent SVG textures for furniture and PNG actor sheets.
+ * Phaser uses independent reviewed painterly raster prop textures and PNG actor sheets.
  * No login, storage, tracking or real currency.
  */
 (() => {
@@ -30,22 +30,22 @@ const roles={
 };
 // Bottom-centre sprite pivots: proportions follow one shared 1440x900 world.
 const SCENE_PROPS=[
- {id:'door',texture:'door',x:172,y:606,w:215,h:355,shadow:[77,12]},
+ {id:'door',texture:'door-painted',raster:'./assets/scene/door-painted-v1.webp',x:550,y:606,w:215,h:355,shadow:[77,12]},
  {id:'counter',texture:'counter-painted',raster:'./assets/scene/counter-painted-v1.webp',x:1120,y:610,w:360,h:91,shadow:[160,12],layers:{width:768,height:195,frontStart:41,backDepth:500}},
  {id:'table',texture:'table-painted',raster:'./assets/scene/table-painted-v1.webp',x:355,y:723,w:140,h:86,shadow:[61,10]},
- {id:'bench',texture:'bench',x:1220,y:751,w:310,h:235,shadow:[132,18]},
- {id:'plant',texture:'plant',x:110,y:668,w:201,h:288,shadow:[52,13],sway:true},
- {id:'bike',texture:'scooter',x:1360,y:836,w:188,h:211,shadow:[75,12]}
+ {id:'bench',texture:'bench-painted',raster:'./assets/scene/bench-painted-v1.webp',x:1220,y:751,w:310,h:213,shadow:[132,18],layers:{width:652,height:430,frontStart:252,backDepth:675}},
+ {id:'plant',texture:'plant-painted',raster:'./assets/scene/plant-painted-v1.webp',x:110,y:668,w:158,h:217,shadow:[33,10]},
+ {id:'bike',texture:'scooter-painted',raster:'./assets/scene/scooter-painted-v1.webp',x:1360,y:836,w:188,h:207,shadow:[75,12]}
 ];
 const SCENE_COLLIDERS=[
  {id:'counter',shape:'rect',l:940,t:560,r:1300,b:610},
  {id:'table',shape:'ellipse',x:355,y:704,rx:65,ry:28},
  {id:'bench',shape:'rect',l:1104,t:662,r:1372,b:752},
- {id:'bike',shape:'ellipse',x:1370,y:787,rx:52,ry:58},
- {id:'plant',shape:'ellipse',x:110,y:632,rx:43,ry:29}
+ {id:'bike',shape:'ellipse',x:1360,y:817,rx:72,ry:18},
+ {id:'plant',shape:'ellipse',x:110,y:653,rx:30,ry:17}
 ];
 const stations={
- door:{x:195,y:716,label:'Lối vào'},
+ door:{x:535,y:700,label:'Lối vào'},
  counter:{x:990,y:652,label:'Quầy pha chế'},
  table:{x:440,y:744,label:'Bàn khách'},
  bike:{x:1283,y:809,label:'Xe giao hàng'},
@@ -53,24 +53,24 @@ const stations={
  plant:{x:190,y:613,label:'Chậu cây'}
 };
 const npcs=[
- {id:'reader',role:'reader',x:520,y:650,name:'Khách đọc sách',lines:['Mình vừa đọc tới chương... cái bìa.','Một trang sách và một ly nước. Tạm đủ.']},
+ {id:'reader',role:'reader',x:375,y:625,name:'Khách đọc sách',lines:['Mình vừa đọc tới chương... cái bìa.','Một trang sách và một ly nước. Tạm đủ.']},
  {id:'guest',role:'guest',x:690,y:605,name:'Khách chờ bạn',lines:['Bạn mình bảo năm phút nữa tới.','Mình gọi trước một ly. Kẻ đến sau tự tính.']},
- {id:'guard',role:'guard',x:150,y:714,name:'Chú bảo vệ',lines:['Để xe ngay ngắn là quán đã yên một nửa.','Mèo Mướp trông ghế, tôi trông cửa.']},
+ {id:'guard',role:'guard',x:685,y:715,name:'Chú bảo vệ',lines:['Để xe ngay ngắn là quán đã yên một nửa.','Mèo Mướp trông ghế, tôi trông cửa.']},
  {id:'barista',role:'barista',x:995,y:570,name:'Bạn pha chế',lines:['Nước ngon cần chút kiên nhẫn.','Máy pha cà phê hôm nay khá dễ bảo.']},
  {id:'waiter',role:'waiter',x:817,y:647,name:'Bạn phục vụ',lines:['Ngồi đâu cũng được, trừ quầy pha chế.','Để mình dọn lại bàn nhé.']},
  {id:'cat',role:'cat',x:613,y:802,name:'Mèo Mướp',lines:['Meo. (Mướp vừa đồng ý.)','Meo. (Mướp vừa đổi ý.)']}
 ];
 // NPC routes remain on the walkable floor, with deliberate pauses at each stop.
 const NPC_ROUTINES={
- reader:[{x:520,y:650,wait:9,action:true,activity:'Đang nghỉ cạnh bàn sách',destination:'bàn sách'},
-  {x:618,y:745,wait:5,activity:'Đang đi dạo một chút',destination:'lối đi'},
-  {x:520,y:650,wait:11,action:true,activity:'Vừa quay lại bàn sách',destination:'bàn sách'}],
+ reader:[{x:375,y:625,wait:9,action:true,activity:'Đang nghỉ cạnh bàn sách',destination:'bàn sách'},
+  {x:480,y:745,wait:5,activity:'Đang đi dạo một chút',destination:'lối đi'},
+  {x:375,y:625,wait:11,action:true,activity:'Vừa quay lại bàn sách',destination:'bàn sách'}],
  guest:[{x:690,y:605,wait:5,activity:'Đang chờ bạn ở gần quầy',destination:'gần quầy'},
   {x:751,y:701,wait:7,action:true,activity:'Đang nhìn ra lối vào',destination:'lối vào'},
   {x:690,y:605,wait:4,activity:'Đang chờ bạn quay lại',destination:'gần quầy'}],
- guard:[{x:150,y:714,wait:6,action:true,activity:'Đang đón khách',destination:'cửa quán'},
-  {x:270,y:760,wait:4,activity:'Đang kiểm tra lối đi',destination:'lối đi'},
-  {x:158,y:718,wait:7,action:true,activity:'Đã quay lại cửa quán',destination:'cửa quán'}],
+ guard:[{x:685,y:715,wait:6,action:true,activity:'Đang đón khách',destination:'cửa quán'},
+  {x:750,y:760,wait:4,activity:'Đang kiểm tra lối đi',destination:'lối đi'},
+  {x:687,y:718,wait:7,action:true,activity:'Đã quay lại cửa quán',destination:'cửa quán'}],
  barista:[{x:995,y:570,wait:7,action:true,activity:'Đang trực quầy pha chế',destination:'quầy pha chế'}],
  waiter:[{x:817,y:647,wait:4,action:true,activity:'Đang chờ nước từ quầy',destination:'quầy nước'},
   {x:932,y:729,wait:5,action:true,activity:'Đang kiểm tra khu ghế ngồi',destination:'khu ghế ngồi'},
@@ -489,12 +489,11 @@ function bindStick(){
    area.addEventListener(event,e=>{if(touch.pointer===e.pointerId)resetStick()});
 }
 class CafeScene extends Phaser.Scene{
- constructor(){super('YenCafe2D');this.sprites=new Map();this.npcLabels=new Map();this.npcStates=new Map();this.propSprites=new Map();this.propDetails=new Map();this.steam=[];this.lastDirection='down';}
+ constructor(){super('YenCafe2D');this.sprites=new Map();this.npcLabels=new Map();this.npcStates=new Map();this.propSprites=new Map();this.propDetails=new Map();this.propBackLayers=new Map();this.steam=[];this.plantDrops=[];this.lastDirection='down';}
  preload(){
-  this.load.svg('scene-backdrop','./assets/scene/backdrop.svg',{width:1440,height:900});
+  this.load.image('scene-backdrop','./assets/scene/backdrop-painted-v1.png');
   for(const prop of SCENE_PROPS){
-   if(prop.raster)this.load.image('prop-'+prop.texture,prop.raster);
-   else this.load.svg('prop-'+prop.texture,'./assets/scene/'+prop.texture+'.svg');
+   this.load.image('prop-'+prop.texture,prop.raster);
   }
   this.load.image('prop-machine-painted','./assets/scene/machine-painted-v1.webp');
   for(const name of ['cup','book','cushion'])
@@ -572,14 +571,15 @@ class CafeScene extends Phaser.Scene{
    if(def.layers){
     const {width,height,frontStart,backDepth}=def.layers;
     // Shared source and identical transform: no seam drift between rear top and fascia.
-    this.counterTop=this.add.image(def.x,def.y,'prop-'+def.texture)
+    const back=this.add.image(def.x,def.y,'prop-'+def.texture)
      .setDisplaySize(def.w,def.h).setOrigin(.5,1).setDepth(backDepth)
      .setCrop(0,0,width,frontStart);
+    this.propBackLayers.set(def.id,back);
+    if(def.id==='counter')this.counterTop=back; // Backward-compatible counter QA locator.
     sprite.setCrop(0,frontStart,width,height-frontStart);
    }
    this.propSprites.set(def.id,sprite);
-   if(def.sway)this.tweens.add({targets:sprite,angle:{from:-1.5,to:1.5},
-    duration:2600,ease:'Sine.inOut',yoyo:true,repeat:-1});
+   // Painterly props stay registered to a stable base pivot; animate separate effects instead.
   }
   this.counterMachine=this.add.image(1160,534,'prop-machine-painted')
    .setDisplaySize(85,72).setOrigin(.5,1).setDepth(609);
@@ -593,10 +593,14 @@ class CafeScene extends Phaser.Scene{
   this.propDetails.set('cup',cup);
   this.propDetails.set('book',book);
   this.propDetails.set('cushion',cushion);
-  this.scooterLight=this.add.circle(1361,729,18,0xffe39b,.68)
+  this.scooterLight=this.add.circle(1284,714,12,0xffe39b,.5)
    .setDepth(840).setVisible(false);
-  this.tweens.add({targets:this.scooterLight,alpha:.15,scale:1.4,
+  this.tweens.add({targets:this.scooterLight,alpha:.1,scale:1.35,
    duration:650,repeat:-1,yoyo:true,ease:'Sine.inOut'});
+  for(let i=0;i<5;i++){
+   const drop=this.add.circle(80+i*12,498+(i%2)*7,2+(i%3),0xb9e4e5,.85).setDepth(670).setVisible(false);
+   this.plantDrops.push(drop);
+  }
   for(let i=0;i<3;i++){
    const steam=this.add.ellipse(1146+i*14,461+i*3,7,20,0xfff3d3,.28)
     .setDepth(612).setVisible(false);
@@ -656,6 +660,7 @@ class CafeScene extends Phaser.Scene{
  resetProps(){
   this.scooterLight?.setVisible(false);
   this.steam.forEach(p=>p.setVisible(false));
+  this.plantDrops.forEach(p=>{this.tweens.killTweensOf?.(p);p.setVisible(false).setAlpha(.85);});
   const cup=this.propDetails.get('cup');
   const book=this.propDetails.get('book');
   for(const item of [cup,book,this.propDetails.get('cushion'),this.propSprites.get('door')])
@@ -688,9 +693,12 @@ class CafeScene extends Phaser.Scene{
   }else if(id==='bike'){
    this.scooterLight?.setVisible(!!next);
   }else if(id==='plant'){
-   const plant=this.propSprites.get('plant');
-   if(plant)this.tweens.add({targets:plant,scaleY:next?1.04:1,
-    duration:400,yoyo:true,ease:'Sine.inOut'});
+   // Water droplets are a separate interaction layer, not a scale-distorted plant.
+   this.plantDrops.forEach((drop,i)=>{
+    this.tweens.killTweensOf?.(drop);drop.setVisible(!!next).setPosition(80+i*12,498+(i%2)*7).setAlpha(.85);
+    if(next)this.tweens.add({targets:drop,y:555+(i%3)*5,alpha:0,duration:550+i*95,
+       onComplete:()=>drop.setVisible(false)});
+   });
   }else if(id==='door'){
    const door=this.propSprites.get('door');
    if(door)this.tweens.add({targets:door,angle:next?-2:0,duration:340});

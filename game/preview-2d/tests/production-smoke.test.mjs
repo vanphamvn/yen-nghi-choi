@@ -10,7 +10,7 @@ const responses=new Map([
  ['/game/preview-2d/style.css','.scene{width:100%}'],
  ['/game/preview-2d/assets/sprites/manifest.json',JSON.stringify({schemaVersion:1,format:{columns:4,rows:4}})],
  ['/game/preview-2d/assets/sprites/barista.png',png],
- ['/game/preview-2d/assets/scene/backdrop.svg','<svg xmlns="http://www.w3.org/2000/svg"></svg>'],
+ ['/game/preview-2d/assets/scene/backdrop-painted-v1.png',png],
  ['/game/preview-2d/assets/scene/art-style-policy.json',JSON.stringify({styleId:'yen-painted-chibi-v1'})]
 ]);
 const fetchFor=(overrides={})=>async target=>{

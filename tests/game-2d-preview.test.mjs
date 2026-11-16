@@ -109,7 +109,7 @@ function harness(){
    this.add={image:sprite,sprite,circle:sprite,ellipse:sprite,text:sprite};
    this.tweens={add(){}};
    this.cameras={main:{setBounds(){},startFollow(){},setZoom(){},shake(){},flash(){}}};
-   this.load={svg(){},image(key,path){assert.match(path,/\.webp$/);assert.ok(['cafe','cafe-foreground','prop-table-painted','prop-cup','prop-book','prop-cushion','prop-counter-painted','prop-machine-painted'].includes(key));},spritesheet(key,path,opt){assert.equal(opt.frameWidth,256);assert.equal(opt.frameHeight,320)},on(){}};
+   this.load={svg(){},image(key,path){assert.match(path,/\.(webp|png)$/);assert.ok(['scene-backdrop','cafe','cafe-foreground','prop-table-painted','prop-cup','prop-book','prop-cushion','prop-counter-painted','prop-machine-painted','prop-bench-painted','prop-plant-painted','prop-scooter-painted','prop-door-painted'].includes(key));},spritesheet(key,path,opt){assert.equal(opt.frameWidth,256);assert.equal(opt.frameHeight,320)},on(){}};
    this.anims={exists:key=>allAnimations.has(key),create:def=>allAnimations.set(def.key,def)};
    this.input={keyboard:{addKeys(){return{}},on(){},resetKeys(){}}};
    this.scale={width:1200,height:800,on(){}};
@@ -142,7 +142,7 @@ test('Preview selects PNG frames and applying role changes the Phaser player',()
  assert.equal(a.state.role,'waiter');
  assert.equal(h.scene.player.texture,'waiter');
  assert.equal(el('overlay').hidden,true);
- h.scene.player.setPosition(520,650);a.interact();
+ h.scene.player.setPosition(375,625);a.interact();
  assert.match(el('dialogue').textContent,/Khách đọc sách/);
  assert.equal(h.scene.player.anims.currentAnim.key,'waiter-interact');
 });
@@ -217,7 +217,7 @@ test('NPC conversation holds for the displayed line, then resumes and resets nex
  scene.reactNPC('reader');assert.ok(runtime.conversation>0);
  a.startShift();
  assert.equal(runtime.conversation,0);assert.equal(runtime.stop,0);
- assert.equal(sprite.x,520);assert.equal(sprite.y,650);
+ assert.equal(sprite.x,375);assert.equal(sprite.y,625);
 });
 
 test('touch ownership, menus, focus loss and hidden tabs reset movement safely',()=>{
@@ -243,7 +243,7 @@ test('starting a new shift restores tabletop details and cancels old prop tweens
  cup.setVisible(false).setAlpha(0);book.setAngle(-7);
  let cancelled=0;scene.tweens.killTweensOf=()=>cancelled++;
  a.startShift();
- assert.equal(cup.visible,true);assert.equal(cup.alpha,1);assert.equal(book.angle,0);assert.equal(cancelled,4);assert.equal(cushion.x,1168);assert.equal(cushion.angle,0);
+ assert.equal(cup.visible,true);assert.equal(cup.alpha,1);assert.equal(book.angle,0);assert.equal(cancelled,9,'four prop tweens and five independent watering droplets reset');assert.equal(cushion.x,1168);assert.equal(cushion.angle,0);
  for(const detail of [cup,book]){
   assert.ok(detail.x>290&&detail.x<420,'detail should sit within the painted tabletop');
   assert.ok(detail.y>637&&detail.y<685,'detail must rest on the table surface, not float above it');

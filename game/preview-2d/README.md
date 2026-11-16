@@ -102,7 +102,7 @@ Known limits: the sprite props are newly authored vector art in a consistent war
 
 **New safeguards:**
 - Root `AGENTS.md` requires `.agents/skills/yen-sprite-style/SKILL.md` for game art and scene tasks.
-- `assets/scene/art-style-policy.json` freezes the 10 mismatched SVGs as **unapproved legacy debt** (exact Git blob SHA), freezes original character PNGs and historical painted WebPs, and requires human-reviewed side-by-side evidence for each new raster sprite.
+- `assets/scene/art-style-policy.json` freezes the 10 historical vector snapshots in `art-reviews/legacy-svg/` as **unapproved archival comparisons** (exact Git blob SHA), freezes original character PNGs and historical painted WebPs, and requires human-reviewed side-by-side evidence for each new raster sprite.
 - `tools/audit-art-style.mjs` is part of CI; new unreviewed art or modifications to quarantined SVGs fail. `node game/preview-2d/tools/audit-art-style.mjs --strict` additionally fails while mismatched legacy world art remains.
 - `art-review.html` displays real character reference frames beside all current SVG props and both backgrounds, with the explicit “not yet visually approved” label.
 
@@ -115,3 +115,7 @@ The current Phaser 2D scope is tracked in [ROADMAP.md](ROADMAP.md), [machine-rea
 To choose safe next work: `node game/preview-2d/tools/next-work.mjs`. To validate the contract: `node game/preview-2d/tools/next-work.mjs --validate`.
 
 Reusable skills: `.agents/skills/yen-game-director/SKILL.md` (scope and prioritization), `.agents/skills/yen-game-release/SKILL.md` (QA and shipped SHA), `.agents/skills/yen-sprite-style/SKILL.md` (art consistency). Agents can safely ship independent gameplay/QA increments while waiting on owner artistic approval; only a verified production deployment counts as shipped.
+
+## Painted scene release candidate (2026-11-17)
+
+All ten PR #91 vector world textures are archived only under `art-reviews/legacy-svg/`; the live Phaser game now loads the character-anchored painted `backdrop-painted-v1.png` and reviewed raster props. The door station and guard route moved to x≈535 in the game world to avoid overlap with the arched window. Review evidence `art-reviews/architecture-v1/contact-sheet.png` is a local preflight composition, **not** a genuine Phaser screenshot. Real browser evidence, production SHA checks and owner inspection remain separate requirements. Door open/closed alternate artwork and true character sitting animation are tracked work, not claimed finished.

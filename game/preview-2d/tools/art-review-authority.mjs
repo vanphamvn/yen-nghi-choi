@@ -6,7 +6,8 @@ export function reviewAuthorityErrors(entry,policy){
   if(delegation?.enabled!==true||delegation.source!=='explicit-user-instruction'||
      typeof delegation.instruction!=='string'||delegation.instruction.length<20)
    errors.push('Agent review requires explicit recorded user delegation');
-  if(entry.reviewer!=='Codex')errors.push('Agent reviewer must identify itself as Codex');
+  if(!['Codex','ChatGPT GPT-6'].includes(entry.reviewer))
+   errors.push('Agent reviewer must identify the actual delegated assistant, not the owner');
   if(entry.ownerReviewPending!==true)errors.push('Delegated agent review must preserve pending owner review');
   if(entry.reviewAuthority!=='user-delegated')errors.push('Missing user-delegated review authority');
   for(const check of ['brush','lighting','perspective','scale','alpha'])

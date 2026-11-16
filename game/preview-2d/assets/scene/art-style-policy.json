@@ -9,7 +9,7 @@
     "assets/sprites/cat.png"
   ],
   "status": "delegated-agent-review-owner-checks-later",
-  "notes": "Legacy scene SVGs below are NOT style-approved. Frozen only to keep currently published gameplay running until replaced with painterly character-matched PNG/WebP art. The audit prints known debt but fails any newly introduced unreviewed art or edit to frozen vector assets. Historical painted WebP assets are also version-frozen as a non-approved comparison baseline.",
+  "notes": "The ten former vector scene props are archived for provenance only, not loaded by Phaser. Active world art uses reviewed PNG/WebP with delegated agent review and owner inspection pending.",
   "legacyUnapprovedVectors": {
     "assets/scene/backdrop.svg": {
       "gitBlobSha": "704dc5d3ad3ef012201af0326db4cdffc31e55fc",
@@ -196,6 +196,126 @@
         "alpha": "pass"
       },
       "notes": "Actual Codex comparison with canonical PNG front/side and painted table. machine: thin warm contours, painted wood/enamel, upper-left light, mild front perspective. Counter360x91 and machine85x72 retain source aspect; complementary crops allow barista upper body above fascia. Owner inspection pending."
+    },
+    "assets/scene/bench-painted-v1.webp": {
+      "styleStatus": "approved",
+      "styleId": "yen-painted-chibi-v1",
+      "reviewer": "ChatGPT GPT-6",
+      "reviewerType": "agent",
+      "reviewAuthority": "user-delegated",
+      "ownerReviewPending": true,
+      "reviewedOn": "2026-11-17",
+      "runtimeScaleCompared": true,
+      "characterReferences": [
+        "assets/sprites/barista.png",
+        "assets/sprites/waiter.png"
+      ],
+      "proof": "art-reviews/final-five-v1/contact-sheet.png",
+      "gitBlobSha": "a55d433a6bb82aa5d66a469c189e36237d9dc130",
+      "visualChecks": {
+        "brush": "pass",
+        "lighting": "pass",
+        "perspective": "pass",
+        "scale": "pass",
+        "alpha": "pass"
+      },
+      "notes": "Actual character PNGs inspected front/side, contact-sheet and browser scene review required before merging; bench original painted transparent source, distinct from quarantined SVG; user-delegated agent art review, owner checks after integration."
+    },
+    "assets/scene/plant-painted-v1.webp": {
+      "styleStatus": "approved",
+      "styleId": "yen-painted-chibi-v1",
+      "reviewer": "ChatGPT GPT-6",
+      "reviewerType": "agent",
+      "reviewAuthority": "user-delegated",
+      "ownerReviewPending": true,
+      "reviewedOn": "2026-11-17",
+      "runtimeScaleCompared": true,
+      "characterReferences": [
+        "assets/sprites/barista.png",
+        "assets/sprites/waiter.png"
+      ],
+      "proof": "art-reviews/final-five-v1/contact-sheet.png",
+      "gitBlobSha": "d6b64027c79a08e8d6da8049bdf32918e1c65b99",
+      "visualChecks": {
+        "brush": "pass",
+        "lighting": "pass",
+        "perspective": "pass",
+        "scale": "pass",
+        "alpha": "pass"
+      },
+      "notes": "Actual character PNGs inspected front/side, contact-sheet and browser scene review required before merging; plant original painted transparent source, distinct from quarantined SVG; user-delegated agent art review, owner checks after integration."
+    },
+    "assets/scene/scooter-painted-v1.webp": {
+      "styleStatus": "approved",
+      "styleId": "yen-painted-chibi-v1",
+      "reviewer": "ChatGPT GPT-6",
+      "reviewerType": "agent",
+      "reviewAuthority": "user-delegated",
+      "ownerReviewPending": true,
+      "reviewedOn": "2026-11-17",
+      "runtimeScaleCompared": true,
+      "characterReferences": [
+        "assets/sprites/barista.png",
+        "assets/sprites/waiter.png"
+      ],
+      "proof": "art-reviews/final-five-v1/contact-sheet.png",
+      "gitBlobSha": "93e2097101b0daedaa2323e9f18f08ecbdc1ac84",
+      "visualChecks": {
+        "brush": "pass",
+        "lighting": "pass",
+        "perspective": "pass",
+        "scale": "pass",
+        "alpha": "pass"
+      },
+      "notes": "Actual character PNGs inspected front/side, contact-sheet and browser scene review required before merging; scooter original painted transparent source, distinct from quarantined SVG; user-delegated agent art review, owner checks after integration."
+    },
+    "assets/scene/door-painted-v1.webp": {
+      "styleStatus": "approved",
+      "styleId": "yen-painted-chibi-v1",
+      "reviewer": "ChatGPT GPT-6",
+      "reviewerType": "agent",
+      "reviewAuthority": "user-delegated",
+      "ownerReviewPending": true,
+      "reviewedOn": "2026-11-17",
+      "runtimeScaleCompared": true,
+      "characterReferences": [
+        "assets/sprites/barista.png",
+        "assets/sprites/waiter.png"
+      ],
+      "proof": "art-reviews/final-five-v1/contact-sheet.png",
+      "gitBlobSha": "cbf80153f62fff364f02edc96589312d390a1568",
+      "visualChecks": {
+        "brush": "pass",
+        "lighting": "pass",
+        "perspective": "pass",
+        "scale": "pass",
+        "alpha": "pass"
+      },
+      "notes": "Actual character PNGs inspected front/side, contact-sheet and browser scene review required before merging; door original painted transparent source, distinct from quarantined SVG; user-delegated agent art review, owner checks after integration."
+    },
+    "assets/scene/backdrop-painted-v1.png": {
+      "styleStatus": "approved",
+      "styleId": "yen-painted-chibi-v1",
+      "reviewer": "ChatGPT GPT-6",
+      "reviewerType": "agent",
+      "reviewAuthority": "user-delegated",
+      "ownerReviewPending": true,
+      "reviewedOn": "2026-11-17",
+      "runtimeScaleCompared": true,
+      "characterReferences": [
+        "assets/sprites/barista.png",
+        "assets/sprites/waiter.png"
+      ],
+      "proof": "art-reviews/architecture-v1/contact-sheet.png",
+      "gitBlobSha": "5c8e09db7e9c64aac4f13a06b3b2b3275078f5db",
+      "visualChecks": {
+        "brush": "pass",
+        "lighting": "pass",
+        "perspective": "pass",
+        "scale": "pass",
+        "alpha": "pass"
+      },
+      "notes": "Actual barista/waiter front and side frames visually compared at 117x146 world scale with generated painted architecture and an offline composite. Door relocated to empty wall at x550 to avoid overlap with the arched window; furniture remains separate game sprites. Offline composition is not a real Phaser screenshot. Delegated agent review; owner inspection pending."
     }
   },
   "reviewRequirements": {
@@ -225,5 +345,17 @@
     "recordedOn": "2026-11-16",
     "instruction": "ưu tiên tự duyệt artwork trước tôi sẽ kiểm tra sau",
     "scope": "Visual review and staged integration; owner reviews after implementation"
+  },
+  "legacyVectorArchive": {
+    "assets/scene/backdrop.svg": "art-reviews/legacy-svg/backdrop.svg",
+    "assets/scene/door.svg": "art-reviews/legacy-svg/door.svg",
+    "assets/scene/counter.svg": "art-reviews/legacy-svg/counter.svg",
+    "assets/scene/table.svg": "art-reviews/legacy-svg/table.svg",
+    "assets/scene/bench.svg": "art-reviews/legacy-svg/bench.svg",
+    "assets/scene/plant.svg": "art-reviews/legacy-svg/plant.svg",
+    "assets/scene/scooter.svg": "art-reviews/legacy-svg/scooter.svg",
+    "assets/scene/cup.svg": "art-reviews/legacy-svg/cup.svg",
+    "assets/scene/cushion.svg": "art-reviews/legacy-svg/cushion.svg",
+    "assets/scene/book.svg": "art-reviews/legacy-svg/book.svg"
   }
 }

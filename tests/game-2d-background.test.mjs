@@ -18,16 +18,17 @@ const props=extract('const SCENE_PROPS=','const SCENE_COLLIDERS=', 'SCENE_PROPS'
 const blocked=(x,y)=>solids.some(c=>c.shape==='rect'
  ?x>c.l&&x<c.r&&y>c.t&&y<c.b:((x-c.x)/c.rx)**2+((y-c.y)/c.ry)**2<1);
 
-test('frozen SVG baseline and independent raster props remain self-hosted',()=>{
+test('retired SVG history and independent active raster scene remain self-hosted',()=>{
  for(const name of sceneFiles){
-  const path='assets/scene/'+name+'.svg';
+  const path='art-reviews/legacy-svg/'+name+'.svg';
   assert.ok(existsSync(new URL(path,base)),path);
   const svg=read(path).toString('utf8');
   assert.match(svg,/^<svg xmlns="http:\/\/www\.w3\.org\/2000\/svg"/,name);
   assert.match(svg,/<\/svg>$/,name);
   assert.ok(svg.length>700,name+' unexpectedly empty');
  }
- assert.match(code,/this\.load\.svg\('scene-backdrop'/);
+ assert.match(code,/this\.load\.image\('scene-backdrop','\.\/assets\/scene\/backdrop-painted-v1\.png'\)/);
+ assert.doesNotMatch(code,/this\.load\.svg\('scene-backdrop'/);
  assert.match(code,/this\.createProps\(\)/);
  assert.match(code,/\.setOrigin\(\.5,1\)\.setDepth\(def\.y\)/);
  assert.doesNotMatch(code,/this\.load\.image\('cafe','\.\/assets\/cafe-painted\.webp'\)/);
@@ -45,7 +46,7 @@ test('All six interactive objects have unique sprites and bottom pivot footprint
   assert.ok(prop.x>0&&prop.x<=1440&&prop.y>0&&prop.y<=900,prop.id);
   assert.ok(prop.shadow.length===2,prop.id+' missing grounding');
   assert.ok(stations[prop.id],prop.id+' missing station');
-  assert.ok(existsSync(new URL(prop.raster||'assets/scene/'+prop.texture+'.svg',base)),prop.id+' missing texture');
+  assert.ok(prop.raster&&existsSync(new URL(prop.raster,base)),prop.id+' missing raster texture');
  }
  assert.deepEqual(Object.keys(stations).sort(),props.map(p=>p.id).sort());
  assert.equal(solids.length,5,'door should be passable');
@@ -54,7 +55,7 @@ test('All six interactive objects have unique sprites and bottom pivot footprint
 test('Furniture footprints block actors but task points remain accessible',()=>{
  for(const [name,x,y] of [
   ['counter',1000,580],['table',355,704],['bench',1180,700],
-  ['scooter',1370,788],['plant',110,632]
+  ['scooter',1360,817],['plant',110,653]
  ])assert.equal(blocked(x,y),true,name+' should be solid');
  assert.equal(blocked(600,750),false,'spawn');
  assert.equal(blocked(870,550),false,'old oversized counter collision must be retired');
@@ -100,4 +101,26 @@ test('painted interaction details load as raster assets instead of frozen vector
   const policy=JSON.parse(read('assets/scene/art-style-policy.json'));
   assert.equal(policy.approvedArt[rel].ownerReviewPending,true);
  }
+});
+
+
+test('four rebuilt world props use painterly WebP and no SVG texture loads',()=>{
+ const policy=JSON.parse(read('assets/scene/art-style-policy.json'));
+ for(const name of ['bench','plant','scooter','door']){
+  const rel=`assets/scene/${name}-painted-v1.webp`;
+  const bytes=read(rel);assert.equal(bytes.toString('ascii',0,4),'RIFF');
+  assert.equal(bytes.toString('ascii',8,12),'WEBP');
+  const review=policy.approvedArt[rel];assert.equal(review.reviewerType,'agent');
+  assert.equal(review.reviewAuthority,'user-delegated');assert.equal(review.ownerReviewPending,true);
+ }
+ for(const prop of props)assert.ok(prop.raster?.endsWith('.webp'),'world prop still loads SVG: '+prop.id);
+ assert.doesNotMatch(code,/this\.load\.svg\('prop-'\+prop\.texture/);
+});
+
+test('bench has rear occlusion and watering never stretches entire plant sprite',()=>{
+ const bench=props.find(x=>x.id==='bench');assert.ok(bench.layers);
+ assert.ok(bench.layers.backDepth<bench.y);
+ assert.match(code,/this\.propBackLayers\.set\(def\.id,back\)/);
+ assert.match(code,/this\.plantDrops\.forEach/);
+ assert.doesNotMatch(code,/targets:plant,scaleY/);
 });
