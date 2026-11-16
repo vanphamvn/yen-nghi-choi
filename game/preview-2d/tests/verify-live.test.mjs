@@ -3,7 +3,15 @@ import assert from 'node:assert/strict';
 import {mkdtempSync, mkdirSync, writeFileSync, rmSync} from 'node:fs';
 import {tmpdir} from 'node:os';
 import path from 'node:path';
-import {compareLive} from '../tools/verify-live.mjs';
+import {compareLive, normalizeHostHTML} from '../tools/verify-live.mjs';
+
+test('allow only known hosting transforms; retain unexpected scripts and content changes', () => {
+  const source = '<head>\n<a href="./art-review.html" style="color:inherit;text-decoration:underline">Review</a></head>';
+  const hosted = source.replace('href="./art-review.html" style="color:inherit;text-decoration:underline"', "href='/game/preview-2d/art-review' style='color:inherit;text-decoration:underline'") + '<script async src="/.netlify/scripts/hud?variant=public" data-nf-variant="public" data-netlify-site-id="d6a1e807-d067-4b58-ab77-fe0287532606" data-app-host="app.netlify.com" data-account-tier="free"></script>';
+  assert.equal(normalizeHostHTML(hosted), source);
+  assert.notEqual(normalizeHostHTML(hosted+'<script src="/unexpected.js"></script>'),source);
+  assert.notEqual(normalizeHostHTML(hosted.replace('Review','Changed')),source);
+});
 
 test('live gate detects stale assets and HTML fallbacks, accepts exact bytes', async () => {
   const root = mkdtempSync(path.join(tmpdir(), 'yen-live-'));
