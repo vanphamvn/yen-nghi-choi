@@ -74,6 +74,12 @@ for(const [rel,expectedHash] of Object.entries(canonical)){
 }
 const legacy=policy.legacyUnapprovedVectors||{};
 const approved=policy.approvedArt||{};
+const historical=policy.legacyPaintedBackdrops||{};
+for(const [rel,expected] of Object.entries(historical)){
+ const p=resolveExisting(rel);
+ if(p&&blobHash(readFileSync(p))!==expected)
+  errors.push('Historical painted scene changed; submit as approved new art instead: '+rel);
+}
 for(const [rel,entry] of Object.entries(legacy)){
  const p=toAbs(rel);
  if(!p)continue;
