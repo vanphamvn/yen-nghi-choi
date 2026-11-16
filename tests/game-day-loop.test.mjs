@@ -33,15 +33,16 @@ function createHarness() {
     'const position=(x=0,y=0,z=0)=>({x,y,z,set(x,y,z){this.x=x;this.y=y;this.z=z;}});',
     'const color=()=>({value:0,setHex(v){this.value=v;}});',
     'world = {',
+    '  setTint(mesh,hex){mesh.tint=hex;},',
     '  player:{position:position(0,0,4.5),rotation:{y:0}},',
-    '  indicator:{visible:false,position:position()},',
-    '  markerPole:{visible:false,position:position()},',
-    '  nearRing:{visible:false,position:position()},',
+    '  indicator:{isVisible:false,position:position()},',
+    '  markerPole:{isVisible:false,position:position()},',
+    '  nearRing:{isVisible:false,position:position()},',
     '  focusedStation:null,',
-    '  npcs:NPCS.map(n=>({...n,group:{position:position(n.x,0,n.z),rotation:{y:0},scale:{set(){}}},halo:{material:{opacity:0}},interactions:0,react:0})),',
-    '  refs:{machineLight:{material:{color:color()}},tableCup:{visible:true},bikeLamp:{visible:false},',
-    '    benchPillow:{position:{x:2.5}},doorPanel:{material:{color:color()}},',
-    '    plantLeaves:[{scale:{y:1.3,set(x,y,z){this.y=y}},material:{color:color()}}]}',
+    '  npcs:NPCS.map(n=>({...n,group:{position:position(n.x,0,n.z),rotation:{y:0},scaling:{set(){}}},halo:{material:{alpha:0}},interactions:0,react:0})),',
+    '  refs:{machineLight:{tint:0},tableCup:{isVisible:true},bikeLamp:{isVisible:false},',
+    '    benchPillow:{position:{x:2.5}},doorPanel:{tint:0},',
+    '    plantLeaves:[{scaling:{y:.59,set(x,y,z){this.y=y}},tint:0}]}',
     '};',
     'game={role:"cat",attributes:{speed:3,dexterity:3,calm:3,charm:3},',
     '  day:1,phase:"explore",done:0,elapsed:0,ambientTime:0,',
@@ -66,15 +67,16 @@ test('NPC dialogue and props work before a shift, then reset at shift start',()=
   const h=createHarness();
   h.eval('world.player.position.set(-7.6,0,3.2);interact();');
   assert.match(h.eval('game.message'),/Chú bảo vệ/);
+  assert.equal(h.node('game-toast').hidden,false,'Speech toast should show with objectives collapsed');
   assert.equal(h.eval('world.npcs.find(x=>x.id==="npc_guard").interactions'),1);
   h.eval('world.player.position.set(3,0,-2.2);interact();');
   assert.equal(h.eval('game.propState.counter'),1);
-  assert.equal(h.eval('world.refs.machineLight.material.color.value'),0x77c78b);
+  assert.equal(h.eval('world.refs.machineLight.tint'),0x77c78b);
   h.eval('startShift()');
   assert.equal(h.eval('game.phase'),'shift');
   assert.equal(h.eval('world.npcs.find(x=>x.id==="npc_guard").interactions'),0);
   assert.equal(h.eval('game.propState.counter'),0);
-  assert.equal(h.eval('world.refs.machineLight.material.color.value'),0x7f665d);
+  assert.equal(h.eval('world.refs.machineLight.tint'),0x7f665d);
   assert.equal(h.eval('world.player.position.z'),4.5);
 });
 test('completing the third task permits manual shift end but does not force it',()=>{

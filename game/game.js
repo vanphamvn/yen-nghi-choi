@@ -1,6 +1,6 @@
 /* YÊN: Ai đang làm việc? — self-contained 3D minigame.
  * All game state is ephemeral. No accounts, cookies, analytics or rewards.
- * Three.js is loaded only when the visitor enters exploration mode.
+ * Babylon.js is loaded only when the visitor enters exploration mode.
  */
 const $ = id => document.getElementById(id);
 const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
@@ -75,7 +75,9 @@ const PROP_TEXT = {
 };
 let selectedRole = 'cat';
 let stats = { speed: 3, dexterity: 3, calm: 3, charm: 3 };
-let THREE = null;
+let BABYLON = null;
+let ANIME_WORLD = null;
+let engineLoad = null;
 let world = null;
 let game = null;
 let frame = 0;
@@ -125,12 +127,38 @@ renderStats();
 setRole(selectedRole);
 
 function showError() { $('error').hidden = false; $('start-btn').disabled = false; $('start-btn').textContent = 'Vào quán khám phá ↗'; }
+function loadBabylon() {
+  if (window.BABYLON?.Engine) return Promise.resolve(window.BABYLON);
+  if (engineLoad) return engineLoad;
+  engineLoad = new Promise((resolve,reject)=>{
+    const script=document.createElement('script');
+    script.src='https://cdn.jsdelivr.net/npm/babylonjs@9.36.0/babylon.js';
+    script.async=true;
+    script.onload=()=>{
+      if (window.BABYLON?.Engine) resolve(window.BABYLON);
+      else reject(new Error('Babylon.js bundle did not initialize'));
+    };
+    script.onerror=()=>reject(new Error('Could not load Babylon.js'));
+    document.head.appendChild(script);
+  }).catch(error=>{engineLoad=null;throw error;});
+  return engineLoad;
+}
+function setObjectiveOpen(open) {
+  const panel=$('objective-panel');
+  const toggle=$('objective-toggle');
+  panel.hidden=!open;
+  toggle.setAttribute('aria-expanded',String(open));
+  toggle.setAttribute('aria-label',open?'Đóng bảng nhiệm vụ':'Mở bảng nhiệm vụ');
+}
+$('objective-toggle').addEventListener('click',()=>setObjectiveOpen($('objective-panel').hidden));
+
 async function startGame() {
   if (totalStats() !== 12) return;
   $('start-btn').disabled = true;
   $('start-btn').textContent = 'Đang mở cửa quán...';
   try {
-    if (!THREE) THREE = await import('https://cdn.jsdelivr.net/npm/three@0.160.1/build/three.module.js');
+    if (!BABYLON) BABYLON = await loadBabylon();
+    if (!ANIME_WORLD) ANIME_WORLD = await import('./world-babylon.js');
     disposeWorld();
     game = {
       role: selectedRole, attributes: { ...stats }, day: 1, phase: 'explore',
@@ -140,10 +168,12 @@ async function startGame() {
       propState: { door: 0, counter: 0, table: 0, bike: 0, bench: 0, plant: 0 }
     };
     $('setup').hidden = true; $('result').hidden = true; $('game').hidden = false; $('error').hidden = true;
+    setObjectiveOpen(false);
     $('hud-role').textContent = ROLES[game.role].name;
     $('skill-name').textContent = ROLES[game.role].power;
     buildWorld();
     updatePhaseUI();
+    showMessage('Đi dạo một vòng nhé. Muốn bắt đầu ca thì mở Objective ở góc màn hình.',5);
     updateHud();
     lastTick = 0;
     cancelAnimationFrame(frame);
@@ -164,242 +194,12 @@ $('start-btn').addEventListener('click', startGame);
 $('error-back').addEventListener('click', () => { $('error').hidden = true; });
 
 function buildWorld() {
-  const scene = new THREE.Scene();
-  scene.background = new THREE.Color(0xe0e9dc);
-  scene.fog = new THREE.Fog(0xe0e9dc, 35, 58);
-  const container = $('scene');
-  container.textContent = '';
-  const renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: 'low-power' });
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.6));
-  renderer.shadowMap.enabled = true;
-  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-  renderer.outputColorSpace = THREE.SRGBColorSpace;
-  container.appendChild(renderer.domElement);
-  const camera = new THREE.OrthographicCamera(-10, 10, 10, -10, 0.1, 90);
-  camera.position.set(17,22,17);
-  camera.lookAt(0,.2,0);
-  const sun = new THREE.DirectionalLight(0xffffff, 2.4);
-  sun.position.set(-6, 18, 10);
-  sun.castShadow = true; sun.shadow.mapSize.set(1024, 1024);
-  sun.shadow.camera.left = -20; sun.shadow.camera.right = 20;
-  sun.shadow.camera.top = 20; sun.shadow.camera.bottom = -20;
-  sun.shadow.normalBias = .025;
-  scene.add(new THREE.HemisphereLight(0xffffff, 0x9bad91, 2), sun);
-  world = { scene, renderer, camera, player: null, indicator: null, markerPole: null,
-    nearRing: null, focusedStation: null, npcs: [], refs: {} };
-
-  function mesh(geometry, color, parent = scene, metalness = 0) {
-    const material = new THREE.MeshStandardMaterial({ color, roughness: .88, metalness });
-    const item = new THREE.Mesh(geometry, material);
-    item.castShadow = true; item.receiveShadow = true; parent.add(item);
-    return item;
-  }
-  function box(w,h,d,x,y,z,color,parent=scene) {
-    const item = mesh(new THREE.BoxGeometry(w,h,d), color, parent);
-    item.position.set(x,y,z); return item;
-  }
-  function sphere(radius,x,y,z,color,parent=scene) {
-    const item = mesh(new THREE.SphereGeometry(radius, 12, 9), color, parent);
-    item.position.set(x,y,z); return item;
-  }
-  function cylinder(rt,rb,h,x,y,z,color,parent=scene,segments=12) {
-    const item = mesh(new THREE.CylinderGeometry(rt,rb,h,segments),color,parent);
-    item.position.set(x,y,z); return item;
-  }
-  world.helpers = { box, sphere, cylinder };
-
-  // A compact, deliberately open diorama: no imported meshes or asset downloads.
-  box(42,.1,38,0,-.36,0,0xc8d5bf);
-  box(18,.32,14,0,-.12,0,0xe8dec8);
-  box(18,2.5,.28,0,1.05,-7,0xebdfc9);
-  box(.25,2.5,14,-9,1.05,0,0xe8d7c0);
-  box(18,.12,.22,0,2.35,-6.95,0xa1ad91);
-  box(.25,.12,14,-8.96,2.35,0,0xa1ad91);
-  // Long wooden coffee counter with equipment.
-  box(5.5,1.2,1.8,3,.6,-3.7,0x7c9a83);
-  box(5.8,.15,2,3,1.25,-3.7,0xb89570);
-  box(1.2,.9,.72,1.6,1.74,-4.1,0x535d56);
-  box(.95,.18,.4,1.6,2.24,-4.1,0xe5cba4);
-  world.refs.machineLight=sphere(.12,1.17,1.63,-3.69,0x7f665d);
-  cylinder(.31,.31,.14,1.4,1.39,-3.2,0xf4f0e5);
-  cylinder(.36,.3,.17,3.3,1.43,-3.25,0xdbdbcd);
-  cylinder(.28,.28,.15,4.1,1.42,-3.24,0xe2b27e);
-  box(.9,.12,.8,4.55,1.4,-4.1,0xf1e4ca);
-
-  // Four chairs around the round customer table.
-  cylinder(1.28,1.28,.16,-3.25,.91,-1.4,0xc69e7c,scene,18);
-  cylinder(.18,.22,.85,-3.25,.46,-1.4,0x8c7768);
-  world.refs.tableCup=cylinder(.16,.13,.28,-3.25,1.13,-1.4,0xeac6a4);
-  for (const [xx,zz] of [[-5,-1.45],[-1.6,-1.4],[-3.25,-3.1],[-3.2,.25]]) {
-    cylinder(.42,.36,.13,xx,.58,zz,0x9dac91);
-    cylinder(.1,.15,.5,xx,.28,zz,0x9a8a75);
-  }
-  // Visitor bench with cups.
-  box(3.4,.3,1.1,2.5,.55,3.5,0xa67f65);
-  box(3.4,1.05,.21,2.5,1.08,4.07,0x8a6e5a);
-  world.refs.benchPillow=box(.8,.18,.67,2.5,.82,3.62,0xd7c49e);
-  for (const x of [1.2,3.8]) box(.17,.55,.17,x,.24,3.5,0x6e6359);
-  cylinder(.16,.16,.38,2.2,.85,3.4,0xf1e5d0);
-  cylinder(.14,.14,.3,3.2,.83,3.4,0xdde9d5);
-  // Plant corner.
-  cylinder(.64,.48,.9,-6.2,.45,-4.2,0xc78566);
-  world.refs.plantLeaves=[];
-  for (let i=0;i<6;i++) {
-    const a = i * Math.PI / 3;
-    const leaf = sphere(.45,-6.2+Math.cos(a)*.54,1.42+Math.sin(i*2)*.13,-4.2+Math.sin(a)*.54, i%2 ? 0x5d9467 : 0x7ba378);
-    leaf.scale.set(.64,1.3,.6);
-    world.refs.plantLeaves.push(leaf);
-  }
-  cylinder(.13,.16,.78,-6.2,1.0,-4.2,0x608367);
-  // A tiny scooter near the entrance.
-  for (const z of [2.85,4.2]) {
-    const wheel = cylinder(.47,.47,.23,6.2,.45,z,0x3b4944);
-    wheel.rotation.z=Math.PI/2;
-    const hub = sphere(.21,6.2,.45,z,0xe4c2a1);
-    hub.scale.set(.3,1,1);
-  }
-  box(.9,.33,1.7,6.2,.95,3.55,0xd68e66);
-  box(.72,.65,.78,6.2,1.38,3.05,0x9dab83);
-  box(.95,.24,.6,6.2,1.24,3.93,0x6e7569);
-  box(.12,1.05,.12,6.2,1.5,2.8,0x5b6963);
-  box(.95,.1,.12,6.2,2,2.8,0x5b6963);
-  world.refs.bikeLamp=sphere(.17,6.2,1.28,4.1,0xffdf94);
-  world.refs.bikeLamp.visible=false;
-  // Entrance path and arched sign supports.
-  box(3.5,.06,1.7,-6.5,.03,5.7,0xf2e6c7);
-  box(.18,2.5,.18,-7.8,1.25,6.2,0xa37a62);
-  box(.18,2.5,.18,-5.15,1.25,6.2,0xa37a62);
-  world.refs.doorPanel=box(3.0,.45,.2,-6.5,2.45,6.2,0x6d9176);
-  // Hand-made shop sign on back wall.
-  const signCanvas = document.createElement('canvas');
-  signCanvas.width=384;signCanvas.height=128;
-  const context = signCanvas.getContext('2d');
-  context.fillStyle='#315d49';context.fillRect(0,0,384,128);
-  context.fillStyle='#f8f1d9';context.font='italic bold 74px Georgia';context.textAlign='center';
-  context.fillText('yên',192,80);
-  context.font='bold 15px Arial';context.letterSpacing='5px';
-  context.fillText('COFFEE & TEA',192,109);
-  const signTexture = new THREE.CanvasTexture(signCanvas);
-  signTexture.colorSpace = THREE.SRGBColorSpace;
-  const sign = new THREE.Mesh(new THREE.PlaneGeometry(3.8,1.26),
-    new THREE.MeshBasicMaterial({ map: signTexture, side: THREE.DoubleSide }));
-  sign.position.set(-2.25,1.75,-6.81); scene.add(sign);
-  // Visitors, staff and cat are real in-world NPCs, not static silhouettes.
-  for (const descriptor of NPCS) {
-    const actor=new THREE.Group();
-    actor.position.set(descriptor.x,0,descriptor.z);
-    actor.rotation.y=-.3;
-    scene.add(actor);
-    if (descriptor.kind==='cat') {
-      const body=sphere(.4,0,.46,0,descriptor.color,actor); body.scale.set(1,.8,1.25);
-      sphere(.37,0,.94,-.13,descriptor.color,actor);
-      for(const x of [-.25,.25]){
-        const ear=mesh(new THREE.ConeGeometry(.16,.37,4),descriptor.color,actor);
-        ear.position.set(x,1.24,-.12); ear.rotation.y=Math.PI/4;
-        sphere(.055,x*.65,.95,-.49,0x303c34,actor);
-      }
-    } else {
-      cylinder(.29,.35,.82,0,.74,0,descriptor.color,actor);
-      sphere(.34,0,1.45,0,0xe1bea0,actor);
-      for (const x of [-.2,.2]) {
-        cylinder(.13,.15,.44,x,.25,0,0x56645a,actor);
-        sphere(.055,x*.55,1.49,-.34,0x3a4840,actor);
-      }
-      if(descriptor.kind==='staff') {
-        box(.45,.45,.06,0,.86,-.31,0xeee4ce,actor);
-        if(descriptor.id==='npc_guard') cylinder(.34,.34,.14,0,1.79,0,0x395268,actor);
-        if(descriptor.id==='npc_barista') cylinder(.18,.18,.18,0,1.83,0,0xf2eddc,actor);
-      }
-    }
-    const halo=new THREE.Mesh(new THREE.RingGeometry(.47,.57,24),
-      new THREE.MeshBasicMaterial({color:0x769c8a,transparent:true,opacity:.44,side:THREE.DoubleSide}));
-    halo.rotation.x=-Math.PI/2;
-    halo.position.y=.04;
-    actor.add(halo);
-    world.npcs.push({ ...descriptor, group:actor, halo, interactions:0, react:0 });
-  }
-
-  // A distinct procedural avatar for every job.
-  const avatar = new THREE.Group();
-  avatar.position.set(0,0,4.5);
-  scene.add(avatar);
-  const shade = new THREE.Mesh(new THREE.CircleGeometry(.53,20),
-    new THREE.MeshBasicMaterial({color:0x435747,transparent:true,opacity:.15,depthWrite:false}));
-  shade.rotation.x=-Math.PI/2;shade.position.y=.017;avatar.add(shade);
-  const role = ROLES[game.role];
-  if (game.role === 'cat') {
-    const body=sphere(.5,0,.58,0,role.color,avatar); body.scale.set(1.08,.85,1.24);
-    sphere(.45,0,1.18,-.08,role.color,avatar);
-    for (const x of [-.31,.31]) {
-      const ear=mesh(new THREE.ConeGeometry(.22,.46,4),role.color,avatar);
-      ear.position.set(x,1.6,-.08);ear.rotation.y=Math.PI/4;
-    }
-    sphere(.09,-.15,1.23,-.47,0x343c36,avatar);
-    sphere(.09,.15,1.23,-.47,0x343c36,avatar);
-    sphere(.07,0,1.07,-.53,0xe7a9a2,avatar);
-    for (const x of [-.3,.3]) {
-      const paw=sphere(.19,x,.2,-.28,0xc08454,avatar);paw.scale.set(1, .7,1);
-    }
-    const tail=new THREE.CatmullRomCurve3([
-      new THREE.Vector3(0,.55,.4),new THREE.Vector3(.5,.65,.65),
-      new THREE.Vector3(.72,1.2,.55),new THREE.Vector3(.55,1.35,.36)]);
-    const tailMesh=mesh(new THREE.TubeGeometry(tail,12,.1,6,false),role.color,avatar);
-    tailMesh.castShadow=true;
-  } else {
-    for (const x of [-.25,.25]) {
-      cylinder(.19,.18,.65,x,.35,0,0x59645e,avatar);
-      const shoe=sphere(.22,x,.1,-.1,0x344b40,avatar);shoe.scale.set(1,.52,1.35);
-    }
-    const torso=box(.82,.9,.51,0,1.05,0,role.color,avatar);
-    for (const x of [-.55,.55]) {
-      const arm=cylinder(.13,.14,.75,x,1.0,0,0xd9b59b,avatar);
-      arm.rotation.z=x<0?-.17:.17;
-    }
-    sphere(.42,0,1.82,0,0xe4c2a5,avatar);
-    sphere(.1,-.13,1.85,-.39,0x404b46,avatar);
-    sphere(.1,.13,1.85,-.39,0x404b46,avatar);
-    if (game.role === 'guard' || game.role === 'shipper') {
-      cylinder(.45,.45,.18,0,2.17,0,game.role==='guard'?0x324e65:0xf1bd6c,avatar);
-      cylinder(.27,.27,.18,0,2.29,0,game.role==='guard'?0x324e65:0xf1bd6c,avatar);
-    }
-    if (game.role === 'barista') box(.51,.63,.09,0,1.01,-.31,0xe9dfc7,avatar);
-    if (game.role === 'waiter') {
-      const tray=cylinder(.53,.53,.09,-.67,1.45,-.4,0xcdbb9f,avatar);
-      tray.rotation.x=.1;
-    }
-    if (game.role === 'shipper') box(.9,.95,.3,0,1.1,.44,0xe4b371,avatar);
-  }
-  world.player=avatar;
-
-  const ring = new THREE.Mesh(
-    new THREE.TorusGeometry(.9,.08,8,44),
-    new THREE.MeshBasicMaterial({color:0x84c38a,transparent:true,opacity:.93,depthTest:false}));
-  ring.rotation.x=-Math.PI/2;ring.renderOrder=3;scene.add(ring);
-  const marker = new THREE.Mesh(
-    new THREE.CylinderGeometry(.09,.65,1.5,12,1,true),
-    new THREE.MeshBasicMaterial({color:0xb5db9b,transparent:true,opacity:.16,depthWrite:false,side:THREE.DoubleSide}));
-  scene.add(marker);
-  world.indicator=ring;world.markerPole=marker;
-  const nearRing=new THREE.Mesh(new THREE.RingGeometry(.57,.66,28),
-    new THREE.MeshBasicMaterial({color:0xe8c688,transparent:true,opacity:.8,side:THREE.DoubleSide,depthTest:false}));
-  nearRing.rotation.x=-Math.PI/2;
-  nearRing.position.y=.07;nearRing.visible=false;nearRing.renderOrder=4;
-  scene.add(nearRing);world.nearRing=nearRing;
+  world=ANIME_WORLD.createAnimeWorld(BABYLON,$('scene'),game.role,ROLES,NPCS);
   resetEnvironment();
   onResize();
 }
 function onResize() {
-  if (!world) return;
-  const canvas = $('scene');
-  const width=Math.max(1,canvas.clientWidth);
-  const height=Math.max(1,canvas.clientHeight);
-  world.renderer.setSize(width,height,false);
-  const aspect=width/height;
-  const halfW=aspect<.8?8.3:11.9;
-  const halfH=halfW/aspect;
-  const camera=world.camera;
-  camera.left=-halfW;camera.right=halfW;camera.top=halfH;camera.bottom=-halfH;
-  camera.updateProjectionMatrix();
+  if (world) world.resize();
 }
 window.addEventListener('resize',onResize);
 
@@ -414,18 +214,18 @@ function resetEnvironment() {
     npc.react=0;
   }
   const refs=world.refs;
-  refs.machineLight.material.color.setHex(0x7f665d);
-  refs.tableCup.visible=true;
-  refs.bikeLamp.visible=false;
+  world.setTint(refs.machineLight,0x9b9188);
+  refs.tableCup.isVisible=true;
+  refs.bikeLamp.isVisible=false;
   refs.benchPillow.position.x=2.5;
-  refs.doorPanel.material.color.setHex(0x6d9176);
+  world.setTint(refs.doorPanel,0x699f87);
   for (const leaf of refs.plantLeaves) {
-    leaf.scale.set(.64,1.3,.6);
-    leaf.material.color.setHex(0x6d986b);
+    leaf.scaling.set(.33,.59,.24);
+    world.setTint(leaf,0x75ab83);
   }
   world.player.position.set(0,0,4.5);
   world.player.rotation.y=0;
-  world.nearRing.visible=false;
+  world.nearRing.isVisible=false;
 }
 function updateTaskUI() {
   if (!game || !world || game.phase!=='shift') return;
@@ -434,6 +234,7 @@ function updateTaskUI() {
   $('objective-count').textContent='NGÀY '+String(game.day).padStart(2,'0')+' · NHIỆM VỤ '+(game.done+1)+' / 3';
   $('objective-title').textContent=task.title;
   $('objective-desc').textContent=task.text+' Đi tới vòng sáng và chọn Làm nhiệm vụ.';
+  $('objective-pill').textContent=(game.done+1)+'/3';
   const station=STATIONS[task.at];
   world.indicator.position.set(station.x,.13,station.z);
   world.markerPole.position.set(station.x,.83,station.z);
@@ -443,9 +244,10 @@ function updatePhaseUI() {
   if (!game || !world) return;
   $('game').dataset.phase=game.phase;
   $('hud-day').textContent='NGÀY '+String(game.day).padStart(2,'0');
+  $('objective-pill').textContent=game.phase==='explore'?'Khám phá':game.phase==='ready'?'Xong 3/3':game.phase==='result'?'Kết ca':(game.done+1)+'/3';
   $('shift-btn').hidden=game.phase==='shift'||game.phase==='result';
-  world.indicator.visible=game.phase==='shift';
-  world.markerPole.visible=game.phase==='shift';
+  world.indicator.isVisible=game.phase==='shift';
+  world.markerPole.isVisible=game.phase==='shift';
   world.focusedStation=null;
   if (game.phase==='explore') {
     $('objective-count').textContent='NGÀY '+String(game.day).padStart(2,'0')+' · KHÁM PHÁ TỰ DO';
@@ -476,8 +278,10 @@ function startShift() {
   game.powerCooldown=0;game.sprint=0;game.shield=false;game.quickNext=false;
   game.message='';game.messageTime=0;
   $('event-text').textContent='';
+  $('game-toast').hidden=true;
   resetEnvironment();
   updatePhaseUI();
+  setObjectiveOpen(false);
   showMessage('Ca ngày '+game.day+' bắt đầu. Mọi người và đồ dùng đã về đúng vị trí.',4);
 }
 function finishShift() {
@@ -496,6 +300,7 @@ function finishShift() {
     balance>=60?'Quán chạy được. Có thể thêm một chút bình tĩnh.':
     'Có lẽ cả quán muốn xin giấy phép nghỉ.';
   $('result').hidden=false;
+  setObjectiveOpen(false);
   updatePhaseUI();
 }
 function nextDay() {
@@ -507,9 +312,11 @@ function nextDay() {
   game.powerCooldown=0;game.sprint=0;game.shield=false;game.quickNext=false;
   game.message='';game.messageTime=0;
   $('event-text').textContent='';
+  $('game-toast').hidden=true;
   $('result').hidden=true;
   resetEnvironment();
   updatePhaseUI();
+  setObjectiveOpen(false);
   showMessage('Chào ngày '+game.day+'. Quán đã sẵn sàng để khám phá.',4);
 }
 function showMessage(message,seconds=3) {
@@ -517,6 +324,8 @@ function showMessage(message,seconds=3) {
   game.message=message;
   game.messageTime=seconds;
   $('event-text').textContent=message;
+  $('game-toast').textContent=message;
+  $('game-toast').hidden=false;
 }
 function getInteractionCandidate() {
   if (!game || !world || game.phase==='result' || game.active) return null;
@@ -557,7 +366,7 @@ function updateHud() {
   $('target-hint').textContent=game.active?'Đang thực hiện nhiệm vụ...':
     candidate?'Ở gần: '+candidate.name+' · '+candidate.action:
     'Đi gần khách, nhân viên, mèo hoặc vật dụng để tương tác.';
-  world.nearRing.visible=!!candidate && candidate.kind!=='task';
+  world.nearRing.isVisible=!!candidate && candidate.kind!=='task';
   if (candidate && candidate.kind!=='task') world.nearRing.position.set(candidate.x,.075,candidate.z);
   $('skill-btn').disabled=game.phase!=='shift'||game.powerCooldown>0;
   $('skill-cooldown').textContent=game.phase!=='shift'?'Chỉ trong ca':
@@ -579,12 +388,12 @@ function interact() {
   const next=game.propState[id]===0?1:0;
   game.propState[id]=next;
   const refs=world.refs;
-  if(id==='counter') refs.machineLight.material.color.setHex(next?0x77c78b:0x7f665d);
-  if(id==='table') refs.tableCup.visible=!next;
-  if(id==='bike') refs.bikeLamp.visible=!!next;
+  if(id==='counter') world.setTint(refs.machineLight,next?0x77c78b:0x9b9188);
+  if(id==='table') refs.tableCup.isVisible=!next;
+  if(id==='bike') refs.bikeLamp.isVisible=!!next;
   if(id==='bench') refs.benchPillow.position.x=next?2.95:2.5;
-  if(id==='door') refs.doorPanel.material.color.setHex(next?0xdba36e:0x6d9176);
-  if(id==='plant') for(const leaf of refs.plantLeaves) leaf.scale.y=next?1.6:1.3;
+  if(id==='door') world.setTint(refs.doorPanel,next?0xdba36e:0x699f87);
+  if(id==='plant') for(const leaf of refs.plantLeaves) leaf.scaling.y=next?.78:.59;
   showMessage(PROP_TEXT[id][next?0:1],4);
 }
 function startAction() {
@@ -681,9 +490,9 @@ function updateAmbient(dt) {
     npc.react=Math.max(0,npc.react-dt*1.8);
     npc.group.position.y=Math.max(0,Math.sin(angle*1.8)*.025)+npc.react*.14;
     const scale=1+npc.react*.08;
-    npc.group.scale.set(scale,scale,scale);
+    npc.group.scaling.set(scale,scale,scale);
     npc.group.rotation.y=-.3+Math.sin(angle*.6)*.23;
-    npc.halo.material.opacity=.27+.13*Math.sin(angle*2);
+    npc.halo.material.alpha=.27+.13*Math.sin(angle*2);
   }
 }
 function loop(now) {
@@ -698,7 +507,7 @@ function loop(now) {
     game.peace=clamp(game.peace-dt*(.045+(5-game.attributes.calm)*.008),0,100);
   }
   game.messageTime=Math.max(0,game.messageTime-dt);
-  if (game.messageTime===0 && game.message) { game.message='';$('event-text').textContent=''; }
+  if (game.messageTime===0 && game.message) { game.message='';$('event-text').textContent='';$('game-toast').hidden=true; }
   updateAmbient(dt);
 
   if (game.active) {
@@ -727,46 +536,32 @@ function loop(now) {
   }
   if (!game || !game.playing || !world) return;
   const objective=world.indicator;
-  if(objective.visible) {
-    objective.rotation.z=now*.0005;
+  if(objective.isVisible) {
+    objective.rotation.y=now*.0005;
     const pulse=1+Math.sin(now*.004)*.08;
-    objective.scale.set(pulse,pulse,pulse);
-    world.markerPole.material.opacity=.12+Math.sin(now*.003)*.045;
+    objective.scaling.set(pulse,pulse,pulse);
+    world.markerPole.material.alpha=.12+Math.sin(now*.003)*.045;
   }
-  // Follow the visitor more closely on narrow screens.
-  const aspect=$('scene').clientWidth/Math.max(1,$('scene').clientHeight);
-  const follow=aspect<.85?.83:.24;
-  const focus=new THREE.Vector3(world.player.position.x*follow,.2,world.player.position.z*follow);
-  const destination=new THREE.Vector3(focus.x+17,focus.y+22,focus.z+17);
-  world.camera.position.lerp(destination,.09);
-  world.camera.lookAt(focus);
+  // Babylon.js owns the orthographic anime camera, including mobile framing.
+  world.followPlayer(dt);
   updateHud();
   // No automatic game-over: players decide when their shift is complete.
   if (!game.playing || !world) return;
-  world.renderer.render(world.scene,world.camera);
+  world.render();
   frame=requestAnimationFrame(loop);
 }
 function disposeWorld() {
   cancelAnimationFrame(frame);
   if (!world) return;
-  world.scene.traverse(object => {
-    if (object.geometry) object.geometry.dispose();
-    if (object.material) {
-      const materials=Array.isArray(object.material)?object.material:[object.material];
-      for (const mat of materials) {
-        if (mat.map) mat.map.dispose();
-        mat.dispose();
-      }
-    }
-  });
-  world.renderer.dispose();
-  world.renderer.domElement.remove();
+  world.dispose();
   world=null;
 }
 function backToSetup() {
   if (game) game.playing=false;
   pressed.clear();resetJoystick();disposeWorld();
   $('game').hidden=true;$('result').hidden=true;$('setup').hidden=false;
+  setObjectiveOpen(false);
+  $('game-toast').hidden=true;
   $('start-btn').textContent='Vào quán khám phá ↗';
   renderStats();
 }

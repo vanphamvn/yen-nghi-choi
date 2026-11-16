@@ -15,7 +15,7 @@
   <header class="site-top">
     <a class="back-link" href="../" aria-label="Quay về trang Yên">← Về Yên</a>
     <span class="wordmark">yên <small>COFFEE & TEA</small></span>
-    <span class="edition" aria-label="Phiên bản BETA 01">BETA · 01</span>
+    <span class="edition" aria-label="Phiên bản BETA 02">BETA · 02</span>
   </header>
   <main>
     <section id="setup" class="setup-screen" aria-labelledby="setup-title">
@@ -43,7 +43,7 @@
     </section>
 
     <section id="game" class="game-screen" hidden aria-label="Trò chơi 3D">
-      <div id="scene" role="img" aria-label="Mô hình 3D quán Yên với nhân vật và các khu vực tương tác"></div>
+      <div id="scene" role="img" aria-label="Không gian quán Yên 3D phong cách anime với khách hàng, nhân viên và mèo"></div>
       <div class="game-overlay">
         <div class="hud-top">
           <div class="hud-left">
@@ -56,7 +56,9 @@
             <div class="meter"><span>ĐỘ YÊN</span><b id="yen-text">70%</b><div class="meter-track peace"><i id="yen-bar"></i></div></div>
           </div>
         </div>
-        <div class="objective">
+        <div class="objective-shell">
+          <button id="objective-toggle" type="button" class="objective-toggle" aria-expanded="false" aria-controls="objective-panel" aria-label="Mở bảng nhiệm vụ"><span class="objective-toggle-icon" aria-hidden="true">☰</span><span>Objective</span><b id="objective-pill">Khám phá</b><span id="objective-chevron" aria-hidden="true">⌄</span></button>
+          <div class="objective" id="objective-panel" hidden>
           <span class="eyebrow" id="objective-count">NGÀY 01 · KHÁM PHÁ</span>
           <strong id="objective-title">Chưa vào ca. Cứ ngó quanh.</strong>
           <p id="objective-desc">Gặp khách, trò chuyện với nhân viên, chơi với mèo, nghịch đồ trong quán.</p>
@@ -67,7 +69,9 @@
           <p id="target-hint" class="target-hint" aria-live="polite">Đi gần người hoặc vật dụng để tương tác.</p>
           <div class="action-progress" id="action-progress" hidden><i id="action-bar"></i></div>
           <div class="event-text" id="event-text" role="status" aria-live="polite"></div>
+          </div>
         </div>
+        <div id="game-toast" class="game-toast" hidden role="status" aria-live="polite"></div>
         <div class="game-bottom">
           <div class="joystick" id="joystick" aria-label="Điều khiển di chuyển bằng ngón tay">
             <span class="joystick-guide">DI CHUYỂN</span><div class="joystick-ring"><div id="joystick-thumb" class="joystick-thumb"></div></div>
@@ -99,7 +103,7 @@
         </div>
       </div>
     </section>
-    <div id="error" class="error" hidden role="alert"><strong>Không mở được không gian 3D.</strong><p>Hãy kiểm tra kết nối mạng hoặc thử trình duyệt khác. Trò chơi cần WebGL và thư viện 3D tải từ jsDelivr.</p><button id="error-back" type="button">Quay lại</button></div>
+    <div id="error" class="error" hidden role="alert"><strong>Không mở được không gian 3D.</strong><p>Hãy kiểm tra kết nối mạng hoặc thử trình duyệt khác. Trò chơi cần WebGL và Babylon.js. Hãy kiểm tra kết nối mạng.</p><button id="error-back" type="button">Quay lại</button></div>
   </main>
   <script type="module" src="./game.js"></script>
 </body>
