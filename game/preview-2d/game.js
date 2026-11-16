@@ -45,6 +45,16 @@ const npcs=[
  {id:'waiter',role:'waiter',x:817,y:647,name:'Bạn phục vụ',lines:['Ngồi đâu cũng được, trừ quầy pha chế.','Để mình dọn lại bàn nhé.']},
  {id:'cat',role:'cat',x:613,y:802,name:'Mèo Mướp',lines:['Meo. (Mướp vừa đồng ý.)','Meo. (Mướp vừa đổi ý.)']}
 ];
+// NPC routes remain on the walkable floor, with deliberate pauses at each stop.
+const NPC_ROUTINES={
+ reader:[{x:520,y:650,wait:9},{x:618,y:745,wait:5},{x:520,y:650,wait:11}],
+ guest:[{x:690,y:605,wait:5},{x:751,y:701,wait:7},{x:690,y:605,wait:4}],
+ guard:[{x:150,y:714,wait:6},{x:270,y:760,wait:4},{x:158,y:718,wait:7}],
+ barista:[{x:995,y:550,wait:7,action:true}],
+ waiter:[{x:817,y:647,wait:4},{x:932,y:729,wait:5},{x:815,y:650,wait:6}],
+ cat:[{x:613,y:802,wait:8},{x:714,y:803,wait:5},{x:613,y:802,wait:9}]
+};
+const NPC_SPEED={reader:66,guest:59,guard:74,barista:0,waiter:82,cat:52};
 const propDialog={
  door:['Bạn chỉnh lại bảng ở lối vào.','Bảng cửa đã ngay ngắn.'],
  counter:['Máy pha bật đèn và bắt đầu chạy.','Máy pha được nghỉ vài giây.'],
@@ -249,8 +259,10 @@ function nearbyCandidate(){
  const {x,y}=world.player;
  let best=null;
  for(const person of npcs){
-   const dist=Math.hypot(x-person.x,y-person.y);
-   if(dist<130&&(!best||dist<best.dist))best={kind:'npc',name:person.name,id:person.id,x:person.x,y:person.y,dist};
+   const actor=world.sprites.get(person.id);
+   const px=actor?.x??person.x,py=actor?.y??person.y;
+   const dist=Math.hypot(x-px,y-py);
+   if(dist<130&&(!best||dist<best.dist))best={kind:'npc',name:person.name,id:person.id,x:px,y:py,dist};
  }
  for(const [id,p] of Object.entries(stations)){
    const dist=Math.hypot(x-p.x,y-p.y);
@@ -414,7 +426,7 @@ function bindStick(){
    area.addEventListener(event,e=>{if(touch.pointer===e.pointerId)resetStick()});
 }
 class CafeScene extends Phaser.Scene{
- constructor(){super('YenCafe2D');this.sprites=new Map();this.lastDirection='down';}
+ constructor(){super('YenCafe2D');this.sprites=new Map();this.npcLabels=new Map();this.npcStates=new Map();this.lastDirection='down';}
  preload(){
   this.load.image('cafe','./assets/cafe-painted.webp');
   this.load.image('cafe-foreground','./assets/cafe-foreground.webp');
@@ -459,6 +471,8 @@ class CafeScene extends Phaser.Scene{
     color:'#553e32',backgroundColor:'#fff6dfba',
     padding:{left:6,right:6,top:3,bottom:3}
    }).setOrigin(.5,1).setDepth(person.y+2);
+   this.npcLabels.set(person.id,label);
+   this.npcStates.set(person.id,{stop:0,wait:2+(person.x%5),facing:'down',action:0});
   }
   // Painted foliage in front of the camera hides the lower part of actors
   // who walk behind the plants; the world remains one contiguous painting.
@@ -514,6 +528,13 @@ class CafeScene extends Phaser.Scene{
   this.setPlayerRole(state.role);
   this.marker?.setVisible(false);
   this.nearHalo?.setVisible(false);
+  for(const person of npcs){
+   const sprite=this.sprites.get(person.id),runtime=this.npcStates.get(person.id);
+   if(!sprite||!runtime)continue;
+   sprite.setPosition(person.x,person.y).setDepth(person.y);
+   Object.assign(runtime,{stop:0,wait:2+(person.x%5),facing:'down',action:0});
+   playDirectional(sprite,spriteRole(person.role),'down',false);
+  }
  }
  react(){
   if(!this.player)return;
@@ -523,12 +544,61 @@ class CafeScene extends Phaser.Scene{
  reactNPC(id){
   const npc=npcs.find(n=>n.id===id);
   const sprite=this.sprites.get(id);
-  if(npc&&sprite)sprite.play(spriteRole(npc.role)+'-interact',true);
+  if(npc&&sprite){
+   const runtime=this.npcStates.get(id);
+   if(runtime){runtime.action=.8;runtime.wait=Math.max(runtime.wait,1.5);}
+   sprite.play(spriteRole(npc.role)+'-interact',true);
+  }
  }
  reactProp(id,next){
   if(id==='counter')this.cameras.main.shake(125,.001);
   if(id==='plant')this.cameras.main.flash(100,252,230,170);
   if(id==='table'){const npc=this.sprites.get('reader');if(npc)this.tweens.add({targets:npc,angle:next?3:0,duration:150});}
+ }
+ updateNPCs(dt){
+  for(const person of npcs){
+   const sprite=this.sprites.get(person.id),runtime=this.npcStates.get(person.id);
+   if(!sprite||!runtime)continue;
+   const route=NPC_ROUTINES[person.id],role=spriteRole(person.role);
+   if(!route?.length)continue;
+   if(runtime.action>0){
+    runtime.action=Math.max(0,runtime.action-dt);
+   }else if(runtime.wait>0){
+    runtime.wait=Math.max(0,runtime.wait-dt);
+    playDirectional(sprite,role,runtime.facing,false);
+    // A short ambient gesture at longer stops, without interrupting dialogue.
+    if(runtime.wait===0&&route[runtime.stop].action){
+     runtime.action=.7;sprite.play(role+'-interact',true);
+     runtime.wait=route[runtime.stop].wait;
+    }
+   }else{
+    const nextIndex=(runtime.stop+1)%route.length,target=route[nextIndex];
+    const dx=target.x-sprite.x,dy=target.y-sprite.y,dist=Math.hypot(dx,dy);
+    const travel=Math.min(dist,(NPC_SPEED[person.id]||65)*dt);
+    if(dist>0.01){
+     const nx=sprite.x+dx/dist*travel,ny=sprite.y+dy/dist*travel;
+     if(!blocked(nx,ny)||person.id==='barista'){
+      sprite.setPosition(nx,ny);
+      runtime.facing=Math.abs(dy)>Math.abs(dx)?(dy<0?'up':'down'):(dx<0?'left':'right');
+      playDirectional(sprite,role,runtime.facing,true);
+     }else{
+      // Avoid a stalled NPC repeatedly trying to cross furniture.
+      runtime.stop=nextIndex;runtime.wait=target.wait;
+     }
+    }
+    if(dist<=Math.max(1,travel)){
+     sprite.setPosition(target.x,target.y);
+     runtime.stop=nextIndex;runtime.wait=target.wait;
+     playDirectional(sprite,role,runtime.facing,false);
+    }
+   }
+   sprite.setDepth(sprite.y);
+   const label=this.npcLabels.get(person.id);
+   if(label){
+    const height=role==='cat'?130:146;
+    label.setPosition(sprite.x,sprite.y-height).setDepth(sprite.y+2);
+   }
+  }
  }
  update(t,dtMs){
   if(!this.player)return;
@@ -559,11 +629,7 @@ class CafeScene extends Phaser.Scene{
   }else if(this.interactRemaining===0){
    playDirectional(this.player,state.role,this.lastDirection,false);
   }
-  for(const [id,sprite] of this.sprites){
-   const npc=npcs.find(n=>n.id===id);
-   if(sprite.anims&&!sprite.anims.isPlaying&&npc)
-    playDirectional(sprite,spriteRole(npc.role),'down',false);
-  }
+  this.updateNPCs(dt);
   const candidate=nearbyCandidate();
   if(candidate&&!activeModal){
     $('world-hint').hidden=false;
@@ -655,7 +721,8 @@ if(typeof window.location?.search==='string' && window.location.search.includes(
   player:world?.player?{x:Math.round(world.player.x),y:Math.round(world.player.y),
    anim:world.player.anims?.currentAnim?.key}:null,
   near:nearbyCandidate()?.id||null,
-  fps:world?.game?.loop?.actualFps||null
+  fps:world?.game?.loop?.actualFps||null,
+  npcs:world?[...world.sprites].map(([id,s])=>({id,x:Math.round(s.x),y:Math.round(s.y),anim:s.anims?.currentAnim?.key})):[]
  })});
 }
 init();
