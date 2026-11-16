@@ -2,6 +2,18 @@
 
 This file records **verified releases**, not PRs mistaken for production. Agents append one entry per deployment or clearly marked blocked attempt. Keep the newest entry at the top.
 
+## 2026-11-16 | Production deployment verification gate
+
+- Issue / PR: #95 / PR pending.
+- Merged SHA: pending.
+- Actual deployed SHA / provider / domain: Vercel production `yencafeday.vercel.app` reported `4bf4b938` as READY.
+- Result: **BLOCKED**. Newer `main` had `58b33cb0` and Vercel returned build-rate-limit failure; Netlify production SHA could not be independently verified in this environment.
+- Link to playable route: https://yencafeday.vercel.app/game/preview-2d/ (known older release).
+- Automated tests: adding a read-only HTTPS boot/asset smoke and provider SHA gate. This is tooling, not a new release.
+- Browser/mobile tests: not tested in this environment.
+- Art proof/approval: not applicable to release tooling; the ten SVG style debts remain.
+- Follow-up: wait for provider's existing quota to recover or use an explicitly authorized deployment route. Reverify provider SHA and smoke before marking M0 done.
+
 ## Baseline at roadmap creation, 2026-11-16
 
 - Source: `vanphamvn/yen-nghi-choi`
