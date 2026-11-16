@@ -107,3 +107,11 @@ Known limits: the sprite props are newly authored vector art in a consistent war
 - `art-review.html` displays real character reference frames beside all current SVG props and both backgrounds, with the explicit “not yet visually approved” label.
 
 **Important:** A passing CI is not a declaration of stylistic match. The new skill/policy make the mismatch visible and prevent compounding it. The ten legacy vector assets still require redrawing as consistent painterly sprites and owner review; they were **not** silently marked fixed.
+
+## Autonomous game completion roadmap
+
+The current Phaser 2D scope is tracked in [ROADMAP.md](ROADMAP.md), [machine-readable milestones](ops/roadmap.json), and [release journal](ops/CHANGELOG-GAME.md). The project-wide epic is [#94](https://github.com/vanphamvn/yen-nghi-choi/issues/94), with M0–M7 issues and the existing art-remediation issue [#93](https://github.com/vanphamvn/yen-nghi-choi/issues/93).
+
+To choose safe next work: `node game/preview-2d/tools/next-work.mjs`. To validate the contract: `node game/preview-2d/tools/next-work.mjs --validate`.
+
+Reusable skills: `.agents/skills/yen-game-director/SKILL.md` (scope and prioritization), `.agents/skills/yen-game-release/SKILL.md` (QA and shipped SHA), `.agents/skills/yen-sprite-style/SKILL.md` (art consistency). Agents can safely ship independent gameplay/QA increments while waiting on owner artistic approval; only a verified production deployment counts as shipped.
