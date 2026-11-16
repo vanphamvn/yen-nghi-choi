@@ -61,5 +61,12 @@
     ],
     "reviewerMustBeHuman": true,
     "comparisonAtRuntimeScale": true
+  },
+  "canonicalRoleBlobs": {
+    "assets/sprites/barista.png": "c9812d8d7542d9ebf8d8d36960643f0ad1e1bbc1",
+    "assets/sprites/waiter.png": "8e701960f52945ac94a1aebf746d33d0b16f2a13",
+    "assets/sprites/shipper.png": "02044eba997947de0cc5484df99b7558594a03ea",
+    "assets/sprites/guard.png": "30788065e6b2b3fbbd6287d0f22c64cb2e3e2f47",
+    "assets/sprites/cat.png": "b0ee9c6886d90ed31a4628403ca06ea1e51094de"
   }
 }
