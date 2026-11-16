@@ -233,7 +233,7 @@ function updateTaskUI() {
   $('objective-count').textContent='NGÀY '+String(game.day).padStart(2,'0')+' · NHIỆM VỤ '+(game.done+1)+' / 3';
   $('objective-title').textContent=task.title;
   $('objective-desc').textContent=task.text+' Đi tới vòng sáng và chọn Làm nhiệm vụ.';
-  $('objective-pill').textContent=(game.done+1)+' / 3';
+  $('objective-pill').textContent=(game.done+1)+'/3';
   const station=STATIONS[task.at];
   world.indicator.position.set(station.x,.13,station.z);
   world.markerPole.position.set(station.x,.83,station.z);
