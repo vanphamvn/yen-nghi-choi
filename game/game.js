@@ -45,10 +45,10 @@ const STAT_INFO = [
 const STATIONS = {
   door: { x: -6.5, z: 4.4, label: 'Cổng' },
   counter: { x: 3.0, z: -2.2, label: 'Quầy pha chế' },
-  table: { x: -3.2, z: -1.3, label: 'Bàn khách' },
-  bike: { x: 6.2, z: 3.6, label: 'Xe giao hàng' },
-  bench: { x: 2.5, z: 3.6, label: 'Ghế dài' },
-  plant: { x: -6.2, z: -3.9, label: 'Góc cây' }
+  table: { x: -3.2, z: .8, label: 'Bàn khách' },
+  bike: { x: 6.2, z: 5.2, label: 'Xe giao hàng' },
+  bench: { x: 2.5, z: 2.15, label: 'Ghế dài' },
+  plant: { x: -6.2, z: -2.35, label: 'Góc cây' }
 };
 let selectedRole = 'cat';
 let stats = { speed: 3, dexterity: 3, calm: 3, charm: 3 };
@@ -152,6 +152,8 @@ function buildWorld() {
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   container.appendChild(renderer.domElement);
   const camera = new THREE.OrthographicCamera(-10, 10, 10, -10, 0.1, 90);
+  camera.position.set(17,22,17);
+  camera.lookAt(0,.2,0);
   const sun = new THREE.DirectionalLight(0xffffff, 2.4);
   sun.position.set(-6, 18, 10);
   sun.castShadow = true; sun.shadow.mapSize.set(1024, 1024);
@@ -445,6 +447,16 @@ function randomEvent() {
   game.efficiency=clamp(game.efficiency-(7-resistance*.7),0,100);
   showMessage(event+' Bình tĩnh nào.',5);
 }
+function blocked(x,z) {
+  const r=.37;
+  // Let the character slide beside the furniture instead of walking through it.
+  if (Math.abs(x-3)<2.75+r && Math.abs(z+3.7)<.91+r) return true;
+  if (Math.hypot(x+3.25,z+1.4)<1.18+r) return true;
+  if (Math.abs(x-2.5)<1.72+r && Math.abs(z-3.5)<.59+r) return true;
+  if (Math.hypot(x+6.2,z+4.2)<.65+r) return true;
+  if (Math.hypot(x-6.2,z-3.55)<.77+r) return true;
+  return false;
+}
 function loop(now) {
   if (!game || !game.playing || !world) return;
   const dt=lastTick?clamp((now-lastTick)/1000,0,.05):0;
@@ -472,8 +484,10 @@ function loop(now) {
       const sx=rawX/Math.max(1,length),sy=rawY/Math.max(1,length);
       const worldX=(sx+sy)*Math.SQRT1_2,worldZ=(sy-sx)*Math.SQRT1_2;
       const speed=(2.45+game.attributes.speed*.36)*(game.sprint>0?1.75:1);
-      world.player.position.x=clamp(world.player.position.x+worldX*speed*dt,-8.1,8.1);
-      world.player.position.z=clamp(world.player.position.z+worldZ*speed*dt,-6,6.25);
+      const nextX=clamp(world.player.position.x+worldX*speed*dt,-8.1,8.1);
+      if (!blocked(nextX,world.player.position.z)) world.player.position.x=nextX;
+      const nextZ=clamp(world.player.position.z+worldZ*speed*dt,-6,6.25);
+      if (!blocked(world.player.position.x,nextZ)) world.player.position.z=nextZ;
       world.player.rotation.y=Math.atan2(-worldX,-worldZ);
       world.player.position.y=Math.sin(now*.015)*.055;
     } else {
