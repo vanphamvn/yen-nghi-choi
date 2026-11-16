@@ -192,7 +192,7 @@ export function createAnimeWorld(B, container, roleId, roles, npcData) {
   }
 
   // Bar: pastel green panels, wood top, café equipment and menu cards.
-  box(5.45,1.35,1.65,3,.68,-3.72,0x75a18b,true);
+  box(5.45,1.35,1.65,3,.68,-3.72,0x75a18b,null,true);
   box(5.76,.18,1.94,3,1.42,-3.68,0xc68b65,null,true);
   for(const x of [.85,2.08,3.31,4.54]) box(.055,1.09,.05,x,.72,-2.88,0xe4e6c3);
   box(1.18,.82,.65,1.58,1.9,-4.12,0x60756e,null,true);
