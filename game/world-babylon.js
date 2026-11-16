@@ -384,7 +384,59 @@ export function createAnimeWorld(B, container, roleId, roles, npcData) {
   const hero=makeCharacter(roleId,0,4.5,roles[roleId].color,
     roleId==='cat'?'cat':'staff',true);
   const player=hero.root;
-  player.rotation.y=Math.PI*.0;
+  player.rotation.y=0;
+  const fallbackMeshes=player.getChildMeshes(false).slice();
+  let heroClips={};
+  let activeHeroClip=null;
+  let heroInteractLeft=0;
+  let heroLoaded=false;
+  const ROLE_TINT={guard:0x486e7a,shipper:0xc89962,barista:0x598677,waiter:0x868eaf};
+
+  function playHeroClip(name) {
+    const group=heroClips[name]||heroClips.Idle;
+    if(!group || group===activeHeroClip) return;
+    for(const g of Object.values(heroClips)) if(g!==group)g.stop();
+    activeHeroClip=group;
+    group.reset();
+    group.start(name!=='Interact',1,group.from,group.to,false);
+  }
+  function triggerHeroInteract(){
+    if(!heroLoaded) return;
+    heroInteractLeft=1.5;
+    playHeroClip('Interact');
+  }
+  function tickHeroAnimation(dt,moving,working) {
+    if(!heroLoaded)return;
+    heroInteractLeft=Math.max(0,heroInteractLeft-dt);
+    const target=(working||heroInteractLeft>0)?'Interact':moving?'Walk':'Idle';
+    playHeroClip(target);
+  }
+  async function loadHeroGLB() {
+    if(!B.SceneLoader?.ImportMeshAsync) throw new Error('Babylon GLB loader missing');
+    const imported=await B.SceneLoader.ImportMeshAsync(null,'./assets/','yen-barista-v1.glb',scene);
+    const roots=imported.meshes.filter(m=>!m.parent);
+    const assetHolder=new B.TransformNode('yen-barista-holder',scene);
+    assetHolder.parent=player;
+    for(const r of roots)r.parent=assetHolder;
+    for(const mesh of fallbackMeshes)mesh.setEnabled(false);
+    heroClips=Object.fromEntries(imported.animationGroups.map(g=>[g.name,g]));
+    heroLoaded=true;
+    // The original GLB is modeled with Y up, at the player origin.
+    assetHolder.scaling.setAll(.98);
+    // Role-specific apron tint without modifying the original asset file.
+    if(roleId!=='barista'&&roleId!=='cat') {
+      for(const m of imported.meshes){
+        if(!/apron|badge/i.test(m.name)||!m.material)continue;
+        const tintColor=B.Color3.FromHexString('#'+ROLE_TINT[roleId].toString(16).padStart(6,'0'));
+        const material=m.material.clone('yen-'+roleId+'-'+m.name);
+        if(material.albedoColor) material.albedoColor=tintColor;
+        if(material.diffuseColor) material.diffuseColor=tintColor;
+        m.material=material;
+      }
+    }
+    playHeroClip('Idle');
+    return {meshCount:imported.meshes.length,clips:Object.keys(heroClips),loaded:true};
+  }
 
   // Objective marker and nearby interactions. The scene itself has no UI overlay.
   const indicator=B.MeshBuilder.CreateTorus('task-ring',{diameter:1.8,thickness:.105,tessellation:36},scene);
@@ -406,6 +458,8 @@ export function createAnimeWorld(B, container, roleId, roles, npcData) {
   const result={
     engine,scene,camera,canvas,player,npcs,refs,indicator,markerPole,nearRing,
     focusedStation:null,
+    loadHeroGLB, tickHeroAnimation, triggerHeroInteract,
+    get heroLoaded(){return heroLoaded;},
     setTint(mesh,hex){mesh.material=toon(hex);},
     resize(){
       engine.resize();
