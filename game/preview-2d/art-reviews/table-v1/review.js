@@ -2,7 +2,7 @@
 (() => {
  class TableReview extends Phaser.Scene {
   preload(){
-   this.load.svg('backdrop','../../assets/scene/backdrop.svg',{width:1440,height:900});
+   this.load.image('backdrop','../../assets/scene/backdrop-painted-v1.png');
    this.load.spritesheet('barista','../../assets/sprites/barista.png',{frameWidth:256,frameHeight:320,endFrame:15});
    this.load.spritesheet('waiter','../../assets/sprites/waiter.png',{frameWidth:256,frameHeight:320,endFrame:15});
    this.load.image('candidate','./table-candidate.webp');
