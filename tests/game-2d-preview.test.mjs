@@ -82,6 +82,7 @@ function harness(){
  const animUI=['idle','walk','interact'].map(animation=>({dataset:{animation},classList:{toggle(){}},setAttribute(){},addEventListener(){}}));
  const thumbs=roles.map(thumb=>({dataset:{thumb},style:{}}));
  const doc={
+  events:{},hidden:false,addEventListener(n,fn){this.events[n]=fn},
   getElementById:elem,createElement:tag=>({tagName:tag,textContent:'',className:''}),
   querySelectorAll(sel){
    if(sel==='.role-option')return rolesUI;
@@ -109,19 +110,19 @@ function harness(){
    this.cameras={main:{setBounds(){},startFollow(){},setZoom(){},shake(){},flash(){}}};
    this.load={svg(){},image(key,path){assert.match(path,/\.webp$/);assert.ok(['cafe','cafe-foreground'].includes(key));},spritesheet(key,path,opt){assert.equal(opt.frameWidth,256);assert.equal(opt.frameHeight,320)},on(){}};
    this.anims={exists:key=>allAnimations.has(key),create:def=>allAnimations.set(def.key,def)};
-   this.input={keyboard:{addKeys(){return{}},on(){}}};
+   this.input={keyboard:{addKeys(){return{}},on(){},resetKeys(){}}};
    this.scale={width:1200,height:800,on(){}};
   }
  }
  const Phaser={AUTO:1,Scale:{RESIZE:1,CENTER_BOTH:1},Scene:StubScene,
   Game:class{constructor(options){scene=new options.scene[0]();scene.preload();scene.create();}}};
- const win={Phaser,addEventListener(){},setInterval(){}};
+ const win={Phaser,events:{},addEventListener(n,fn){this.events[n]=fn},setInterval(){}};
  const ctx=vm.createContext({window:win,Phaser,document:doc,console});
  const modified=js.replace(/\ninit\(\);\n\}\)\(\);\s*$/,
-  "\nwindow.__api={state,roles,stations,npcs,modal,selectPreviewRole,selectAnimation,setRole,startShift,finishShift,nextDay,interact,finishAction,nearbyCandidate,renderInfo,updateUI,paintPreview};\ninit();\n})();");
+  "\nwindow.__api={state,roles,stations,npcs,touch,heldKeys,modal,selectPreviewRole,selectAnimation,setRole,startShift,finishShift,nextDay,interact,finishAction,nearbyCandidate,renderInfo,updateUI,paintPreview};\ninit();\n})();");
  assert.notEqual(modified,js);
  vm.runInContext(modified,ctx,{filename:'game.js'});
- return {node:elem,api:win.__api,scene,animations:allAnimations};
+ return {node:elem,api:win.__api,scene,animations:allAnimations,events:win.events,document:doc};
 }
 
 test('Preview selects PNG frames and applying role changes the Phaser player',()=>{
@@ -216,4 +217,20 @@ test('NPC conversation holds for the displayed line, then resumes and resets nex
  a.startShift();
  assert.equal(runtime.conversation,0);assert.equal(runtime.stop,0);
  assert.equal(sprite.x,520);assert.equal(sprite.y,650);
+});
+
+test('touch ownership, menus, focus loss and hidden tabs reset movement safely',()=>{
+ const {api:a,node:el,events,document:doc,scene}=harness();
+ const down=id=>el('stick').events.pointerdown({pointerId:id,clientX:100,clientY:50,preventDefault(){}});
+ let keyboardResets=0;scene.input.keyboard.resetKeys=()=>keyboardResets++;
+ a.modal(null);down(1);assert.equal(a.touch.pointer,1);assert.equal(a.touch.x,1);
+ down(2);assert.equal(a.touch.pointer,1,'second finger stole joystick control');
+ el('stick').events.pointercancel({pointerId:2});assert.equal(a.touch.pointer,1);
+ a.heldKeys.add('d');a.modal('info');
+ assert.equal(a.touch.pointer,null);assert.equal(a.touch.x,0);assert.equal(a.heldKeys.size,0);
+ assert.equal(keyboardResets,1);
+ a.modal(null);down(3);a.heldKeys.add('w');events.blur();
+ assert.equal(a.touch.y,0);assert.equal(a.heldKeys.size,0);assert.equal(a.touch.pointer,null);
+ down(4);a.heldKeys.add('a');doc.hidden=true;doc.events.visibilitychange();
+ assert.equal(a.touch.x,0);assert.equal(a.heldKeys.size,0);assert.equal(keyboardResets,3);
 });

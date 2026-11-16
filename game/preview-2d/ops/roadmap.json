@@ -12,7 +12,7 @@
       "id": "M0",
       "title": "Production reliability",
       "priority": 0,
-      "status": "todo",
+      "status": "done",
       "issue": 95,
       "dependencies": [],
       "requiresHumanApproval": false,
@@ -21,7 +21,12 @@
         "Boot and interaction smoke on published 2D route",
         "Rollback route documented"
       ],
-      "evidence": null
+      "evidence": {
+        "deployedSHA": "a640958a1ab573a2bff1633c1709b423a26800c5",
+        "productionURL": "https://yencafeday.netlify.app/game/preview-2d/",
+        "testReport": "https://github.com/vanphamvn/yen-nghi-choi/actions/runs/43889826169",
+        "verification": "Netlify build-environment COMMIT_REF, DEPLOY_ID, production context and site identity matched; runtime/assets matched; live browser start-shift and contextual NPC interaction observed."
+      }
     },
     {
       "id": "M1",
@@ -108,7 +113,7 @@
       "id": "M6",
       "title": "Cross-device QA, accessibility and performance",
       "priority": 6,
-      "status": "todo",
+      "status": "in-progress",
       "issue": 100,
       "dependencies": [],
       "requiresHumanApproval": false,

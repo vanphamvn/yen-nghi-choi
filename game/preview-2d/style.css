@@ -40,3 +40,9 @@
  .pose-bg>.sprite-frame{max-height:250px}
  .animation-film>.mini-frame{max-height:82px}
 }
+
+@media(max-width:710px){
+ .side-btn,.settings-btn,.icon-close,.apply-btn,.animation-tabs button{min-height:44px}
+ .settings-btn,.icon-close{min-width:44px}
+ .controls{bottom:calc(18px + env(safe-area-inset-bottom,0px))}
+}
