@@ -196,6 +196,102 @@
         "alpha": "pass"
       },
       "notes": "Actual Codex comparison with canonical PNG front/side and painted table. machine: thin warm contours, painted wood/enamel, upper-left light, mild front perspective. Counter360x91 and machine85x72 retain source aspect; complementary crops allow barista upper body above fascia. Owner inspection pending."
+    },
+    "assets/scene/bench-painted-v1.webp": {
+      "styleStatus": "approved",
+      "styleId": "yen-painted-chibi-v1",
+      "reviewer": "ChatGPT GPT-6",
+      "reviewerType": "agent",
+      "reviewAuthority": "user-delegated",
+      "ownerReviewPending": true,
+      "reviewedOn": "2026-11-17",
+      "runtimeScaleCompared": true,
+      "characterReferences": [
+        "assets/sprites/barista.png",
+        "assets/sprites/waiter.png"
+      ],
+      "proof": "art-reviews/final-five-v1/contact-sheet.png",
+      "gitBlobSha": "a55d433a6bb82aa5d66a469c189e36237d9dc130",
+      "visualChecks": {
+        "brush": "pass",
+        "lighting": "pass",
+        "perspective": "pass",
+        "scale": "pass",
+        "alpha": "pass"
+      },
+      "notes": "Actual character PNGs inspected front/side, contact-sheet and browser scene review required before merging; bench original painted transparent source, distinct from quarantined SVG; user-delegated agent art review, owner checks after integration."
+    },
+    "assets/scene/plant-painted-v1.webp": {
+      "styleStatus": "approved",
+      "styleId": "yen-painted-chibi-v1",
+      "reviewer": "ChatGPT GPT-6",
+      "reviewerType": "agent",
+      "reviewAuthority": "user-delegated",
+      "ownerReviewPending": true,
+      "reviewedOn": "2026-11-17",
+      "runtimeScaleCompared": true,
+      "characterReferences": [
+        "assets/sprites/barista.png",
+        "assets/sprites/waiter.png"
+      ],
+      "proof": "art-reviews/final-five-v1/contact-sheet.png",
+      "gitBlobSha": "d6b64027c79a08e8d6da8049bdf32918e1c65b99",
+      "visualChecks": {
+        "brush": "pass",
+        "lighting": "pass",
+        "perspective": "pass",
+        "scale": "pass",
+        "alpha": "pass"
+      },
+      "notes": "Actual character PNGs inspected front/side, contact-sheet and browser scene review required before merging; plant original painted transparent source, distinct from quarantined SVG; user-delegated agent art review, owner checks after integration."
+    },
+    "assets/scene/scooter-painted-v1.webp": {
+      "styleStatus": "approved",
+      "styleId": "yen-painted-chibi-v1",
+      "reviewer": "ChatGPT GPT-6",
+      "reviewerType": "agent",
+      "reviewAuthority": "user-delegated",
+      "ownerReviewPending": true,
+      "reviewedOn": "2026-11-17",
+      "runtimeScaleCompared": true,
+      "characterReferences": [
+        "assets/sprites/barista.png",
+        "assets/sprites/waiter.png"
+      ],
+      "proof": "art-reviews/final-five-v1/contact-sheet.png",
+      "gitBlobSha": "93e2097101b0daedaa2323e9f18f08ecbdc1ac84",
+      "visualChecks": {
+        "brush": "pass",
+        "lighting": "pass",
+        "perspective": "pass",
+        "scale": "pass",
+        "alpha": "pass"
+      },
+      "notes": "Actual character PNGs inspected front/side, contact-sheet and browser scene review required before merging; scooter original painted transparent source, distinct from quarantined SVG; user-delegated agent art review, owner checks after integration."
+    },
+    "assets/scene/door-painted-v1.webp": {
+      "styleStatus": "approved",
+      "styleId": "yen-painted-chibi-v1",
+      "reviewer": "ChatGPT GPT-6",
+      "reviewerType": "agent",
+      "reviewAuthority": "user-delegated",
+      "ownerReviewPending": true,
+      "reviewedOn": "2026-11-17",
+      "runtimeScaleCompared": true,
+      "characterReferences": [
+        "assets/sprites/barista.png",
+        "assets/sprites/waiter.png"
+      ],
+      "proof": "art-reviews/final-five-v1/contact-sheet.png",
+      "gitBlobSha": "cbf80153f62fff364f02edc96589312d390a1568",
+      "visualChecks": {
+        "brush": "pass",
+        "lighting": "pass",
+        "perspective": "pass",
+        "scale": "pass",
+        "alpha": "pass"
+      },
+      "notes": "Actual character PNGs inspected front/side, contact-sheet and browser scene review required before merging; door original painted transparent source, distinct from quarantined SVG; user-delegated agent art review, owner checks after integration."
     }
   },
   "reviewRequirements": {

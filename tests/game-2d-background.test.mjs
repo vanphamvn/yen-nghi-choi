@@ -54,7 +54,7 @@ test('All six interactive objects have unique sprites and bottom pivot footprint
 test('Furniture footprints block actors but task points remain accessible',()=>{
  for(const [name,x,y] of [
   ['counter',1000,580],['table',355,704],['bench',1180,700],
-  ['scooter',1370,788],['plant',110,632]
+  ['scooter',1360,817],['plant',110,653]
  ])assert.equal(blocked(x,y),true,name+' should be solid');
  assert.equal(blocked(600,750),false,'spawn');
  assert.equal(blocked(870,550),false,'old oversized counter collision must be retired');
@@ -100,4 +100,26 @@ test('painted interaction details load as raster assets instead of frozen vector
   const policy=JSON.parse(read('assets/scene/art-style-policy.json'));
   assert.equal(policy.approvedArt[rel].ownerReviewPending,true);
  }
+});
+
+
+test('four rebuilt world props use painterly WebP and no SVG texture loads',()=>{
+ const policy=JSON.parse(read('assets/scene/art-style-policy.json'));
+ for(const name of ['bench','plant','scooter','door']){
+  const rel=`assets/scene/${name}-painted-v1.webp`;
+  const bytes=read(rel);assert.equal(bytes.toString('ascii',0,4),'RIFF');
+  assert.equal(bytes.toString('ascii',8,12),'WEBP');
+  const review=policy.approvedArt[rel];assert.equal(review.reviewerType,'agent');
+  assert.equal(review.reviewAuthority,'user-delegated');assert.equal(review.ownerReviewPending,true);
+ }
+ for(const prop of props)assert.ok(prop.raster?.endsWith('.webp'),'world prop still loads SVG: '+prop.id);
+ assert.doesNotMatch(code,/this\.load\.svg\('prop-'\+prop\.texture/);
+});
+
+test('bench has rear occlusion and watering never stretches entire plant sprite',()=>{
+ const bench=props.find(x=>x.id==='bench');assert.ok(bench.layers);
+ assert.ok(bench.layers.backDepth<bench.y);
+ assert.match(code,/this\.propBackLayers\.set\(def\.id,back\)/);
+ assert.match(code,/this\.plantDrops\.forEach/);
+ assert.doesNotMatch(code,/targets:plant,scaleY/);
 });
