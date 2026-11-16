@@ -480,6 +480,8 @@ function loop(now) {
       world.player.position.y*=.8;
     }
   }
+  // Completing the third task ends the game and disposes the 3D scene.
+  if (!game || !game.playing || !world) return;
   const objective=world.indicator;
   objective.rotation.z=now*.0005;
   const pulse=1+Math.sin(now*.004)*.08;
