@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "styleId": "yen-painted-chibi-v1",
+  "referenceRolePaths": [
+    "assets/sprites/barista.png",
+    "assets/sprites/waiter.png",
+    "assets/sprites/guard.png",
+    "assets/sprites/shipper.png",
+    "assets/sprites/cat.png"
+  ],
+  "status": "requires-character-anchored-human-art-review",
+  "notes": "Legacy scene SVGs below are NOT style-approved. Frozen only to keep currently published gameplay running until replaced with painterly character-matched PNG/WebP art. The audit prints known debt but fails any newly introduced unreviewed art or edit to frozen vector assets.",
+  "legacyUnapprovedVectors": {
+    "assets/scene/backdrop.svg": {
+      "gitBlobSha": "704dc5d3ad3ef012201af0326db4cdffc31e55fc",
+      "reason": "PR #91 vector-gradient visual mismatch; needs painted raster replacement"
+    },
+    "assets/scene/door.svg": {
+      "gitBlobSha": "8646eb9ac6b7cfc37fd819388fd8452280fabd56",
+      "reason": "PR #91 vector-gradient visual mismatch; needs painted raster replacement"
+    },
+    "assets/scene/counter.svg": {
+      "gitBlobSha": "21391f1f6cea3b5572482292a4918bb513aa7c2",
+      "reason": "PR #91 vector-gradient visual mismatch; needs painted raster replacement"
+    },
+    "assets/scene/table.svg": {
+      "gitBlobSha": "328f4e92f16b619dc9b3001db18fd95ade683d77",
+      "reason": "PR #91 vector-gradient visual mismatch; needs painted raster replacement"
+    },
+    "assets/scene/bench.svg": {
+      "gitBlobSha": "73988642c58cfc10b91ff3c7827c992d38e0f024",
+      "reason": "PR #91 vector-gradient visual mismatch; needs painted raster replacement"
+    },
+    "assets/scene/plant.svg": {
+      "gitBlobSha": "da6af498808dcaed509772a9a05ffed823dbfd2e",
+      "reason": "PR #91 vector-gradient visual mismatch; needs painted raster replacement"
+    },
+    "assets/scene/scooter.svg": {
+      "gitBlobSha": "f4e1a3b204b3b74e0a3796663bbf9663fc126006",
+      "reason": "PR #91 vector-gradient visual mismatch; needs painted raster replacement"
+    },
+    "assets/scene/cup.svg": {
+      "gitBlobSha": "32463a63e15df9cd7933e5d4f1e037de1a97f82e",
+      "reason": "PR #91 vector-gradient visual mismatch; needs painted raster replacement"
+    },
+    "assets/scene/cushion.svg": {
+      "gitBlobSha": "1a6d67500204cb924c036aa247f12a1c1de8d101",
+      "reason": "PR #91 vector-gradient visual mismatch; needs painted raster replacement"
+    },
+    "assets/scene/book.svg": {
+      "gitBlobSha": "698f9da078e54b3564046b7bdb3377eb95c723fc",
+      "reason": "PR #91 vector-gradient visual mismatch; needs painted raster replacement"
+    }
+  },
+  "approvedArt": {},
+  "reviewRequirements": {
+    "minimumCharacterReferences": 2,
+    "proofImageExtensions": [
+      ".png",
+      ".webp"
+    ],
+    "reviewerMustBeHuman": true,
+    "comparisonAtRuntimeScale": true
+  }
+}
