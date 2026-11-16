@@ -95,3 +95,15 @@ On interaction: the café machine emits steam, table cup is picked up/returned, 
 QA: `node --test tests/game-2d-background.test.mjs game/preview-2d/tests/game-contract.test.mjs` plus SVG XML parsing via Python's standard library. To inspect sprite positions in browser, use `/game/preview-2d/?qa=1` and `window.__yenQA.inspect().props`.
 
 Known limits: the sprite props are newly authored vector art in a consistent warm game palette, not yet an anime-painted raster production atlas. Human sit/stand sprite sheets remain a separate art requirement. Actual mobile screenshot sign-off remains required.
+
+## Art-style cohesion incident / reusable agent skill
+
+**Root cause:** PR #91 authored nine props and one architecture background as independent vector SVGs with hard strokes, simple gradients and geometric shapes, while the canonical role sprites remain hand-drawn anime/chibi RGBA PNGs. The earlier tests verified valid SVG XML, collision, pivots and runtime animation, but never compared art styles at actual gameplay size. Similar colors do not make different render languages coherent.
+
+**New safeguards:**
+- Root `AGENTS.md` requires `.agents/skills/yen-sprite-style/SKILL.md` for game art and scene tasks.
+- `assets/scene/art-style-policy.json` freezes the 10 mismatched SVGs as **unapproved legacy debt** (exact Git blob SHA), freezes original character PNGs and historical painted WebPs, and requires human-reviewed side-by-side evidence for each new raster sprite.
+- `tools/audit-art-style.mjs` is part of CI; new unreviewed art or modifications to quarantined SVGs fail. `node game/preview-2d/tools/audit-art-style.mjs --strict` additionally fails while mismatched legacy world art remains.
+- `art-review.html` displays real character reference frames beside all current SVG props and both backgrounds, with the explicit “not yet visually approved” label.
+
+**Important:** A passing CI is not a declaration of stylistic match. The new skill/policy make the mismatch visible and prevent compounding it. The ten legacy vector assets still require redrawing as consistent painterly sprites and owner review; they were **not** silently marked fixed.
