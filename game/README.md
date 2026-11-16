@@ -1,60 +1,51 @@
-# Yên: Ai đang làm việc? — BETA liên tục theo ngày
+# Yencafeday 3D BETA · 02
 
-Trò chơi 3D tại `/game/` chạy độc lập với website chính. Mỗi người chơi chọn một trong 5 nghề và phân bổ **12 điểm** cho 4 thuộc tính (1–5 điểm mỗi thuộc tính).
+Trò chơi mini web 3D cho **Yên Coffee & Tea**. Thiết kế mới sử dụng **Babylon.js 9.36.0** làm 3D engine thay cho renderer Three.js cũ, với mô hình quán diorama phong cách anime, nhân vật chibi và ánh sáng cel-shading nhiều cấp.
 
-## Luồng chơi
+## Tính năng và trải nghiệm
 
-1. **Vào quán khám phá**: người chơi xuất hiện trong thế giới 3D ở **Ngày 01**, chưa vào ca. Có thể đi tự do, trò chuyện với NPC và tương tác vật dụng; không tính thời gian, không bị trừ điểm, không có sự cố công việc.
-2. **Bắt đầu ca**: người chơi tự bấm nút. NPC và vật dụng được **reset theo ca** (vị trí, hội thoại, trạng thái ly, cây, máy pha, đèn xe, biển, gối). Người chơi về điểm xuất phát. Hiệu suất/Độ Yên và tiến độ nhiệm vụ đặt lại. Bắt đầu đếm thời gian **tăng dần**, không có giới hạn.
-3. **Làm việc**: mỗi nghề có 3 nhiệm vụ, 1 tuyệt chiêu có hồi chiêu, sự cố ngẫu nhiên khi còn đang làm việc. Người chơi vẫn có thể trò chuyện hoặc nghịch đồ giữa các nhiệm vụ.
-4. **Đủ 3 nhiệm vụ**: game chuyển sang trạng thái **Sẵn sàng tan ca** nhưng thế giới 3D không dừng. Người chơi có thể tự do đi lại, chỉ khi bấm **Kết thúc ca** mới xem bảng tổng kết.
-5. **Sang ngày mới**: bấm nút để tăng số ngày, đóng bảng tổng kết và quay lại chế độ khám phá trong **cùng scene 3D**. Có thể chơi tiếp không giới hạn số ngày hoặc đổi nghề để bắt đầu lại từ Ngày 01.
+- Chọn **5 nghề** (Bảo vệ, Shipper, Pha chế, Phục vụ, Mèo cổ vũ); chia **12 điểm** cho 4 thuộc tính.
+- Chế độ **khám phá tự do**: di chuyển qua quán và nói chuyện với 6 NPC (2 khách, 3 nhân viên, 1 mèo), tương tác với 6 khu vực/vật dụng.
+- **Tự bắt đầu ca**, hoàn thành 3 nhiệm vụ theo nghề, tự **kết thúc ca**, xem kết quả và **sang ngày mới** không phá scene. Không giới hạn thời gian hoặc ngày chơi trong phiên.
+- **Objective thu gọn mặc định** thành một nút trạng thái nhỏ: Khám phá / 1/3 / Xong 3/3. Chỉ khi người chơi bấm mới mở bảng. Sau khi vào ca hoặc chuyển ngày, panel tự đóng.
+- Lời thoại NPC và thông báo tương tác hiển thị qua **toast nhỏ phía dưới**, không cần mở Objective.
 
-**Ghi chú:** Tiến trình hiện được lưu trong bộ nhớ của tab trình duyệt. Refresh hoặc đổi nghề sẽ bắt đầu lại từ Ngày 01, không có tài khoản, tracking hay dữ liệu lưu dài hạn.
+## Dựng hình 3D
 
-## Đối tượng có thể tương tác
-
-- **6 NPC:** hai khách, bảo vệ, pha chế, phục vụ và mèo. Các nhân vật có hoạt ảnh chuyển động nhẹ, nhiều câu đối thoại luân phiên, phản ứng sau khi trò chuyện và reset mỗi ca.
-- **6 vật dụng/khu vực:** cổng/biển quán, máy pha, ly trên bàn, đèn xe giao hàng, gối trên ghế dài, cây xanh. Tương tác làm thay đổi trạng thái trực quan (bật/tắt, nhấc/đặt, chỉnh lại, tưới cây).
-- Đi gần vật/người để thấy tên và nút **Khám phá** hoặc **Nói chuyện**. Mỗi nhiệm vụ trong ca có vòng sáng xanh, ưu tiên thao tác **Làm nhiệm vụ** nếu ở sát vị trí đó.
+- `game/world-babylon.js` tạo Babylon `Engine`, `Scene`, camera orthographic, model, trang trí và shader cel-shading 3 cấp.
+- Quán Yên được dựng lại với mái che, cửa sổ, đèn lồng, biển Yên, quầy, máy pha, kệ, bàn ghế, cây cối, lối vào và xe giao nước.
+- Nhân vật chibi 3D có khuôn mặt, tóc, trang phục theo nghề; mèo có tai, mắt và đuôi. Các mô hình dùng geometry tự dựng, không lấy asset có bản quyền bên ngoài.
+- Babylon.js chỉ được **lazy-load khi người dùng bấm Vào quán khám phá**. Bản BETA đang dùng file UMD ghim phiên bản trên jsDelivr; dự án nên chuyển sang bundle self-hosted khi sản phẩm trưởng thành.
+- `game/game.js` chỉ giữ luật chơi, kỹ năng, đối thoại, tương tác, reset và trạng thái ngày; scene và asset 3D nằm trong module riêng.
 
 ## Điều khiển
 
-- Desktop: **WASD / mũi tên** để di chuyển, **E** tương tác, **Q** dùng tuyệt chiêu khi đang làm việc.
-- Mobile: joystick cảm ứng và hai nút **Tương tác / Tuyệt chiêu**.
-- Nút **Bắt đầu ca** và **Kết thúc ca** nằm trong bảng mục tiêu, dùng được cả bàn phím và cảm ứng.
+- Desktop: WASD hoặc phím mũi tên để đi; E tương tác; Q dùng kỹ năng khi làm việc.
+- Mobile: joystick và nút Tương tác / Tuyệt chiêu.
+- Nút **Objective** ở góc trên để mở bảng nhiệm vụ, nơi có nút Bắt đầu ca hoặc Kết thúc ca tùy trạng thái.
 
-## Chạy và kiểm thử
+## Chạy thử và kiểm tra
 
-Dự án tĩnh, không cần npm:
+Dự án tĩnh, không cần bước build:
 
 ```bash
 python -m http.server 8000
-node --test tests/game-smoke.test.mjs tests/game-day-loop.test.mjs
+node --test tests/game-smoke.test.mjs tests/game-day-loop.test.mjs tests/game-anime-ui.test.mjs
 node --check game/game.js
 ```
 
-Mở `http://localhost:8000/game/`. Three.js chỉ tải từ jsDelivr khi người chơi vào quán.
+Mở http://localhost:8000/game/ trong trình duyệt hỗ trợ WebGL.
 
-### QA checklist
+### Kiểm thử trực quan cần thực hiện trước khi coi BETA ổn định
 
-- [ ] Chọn đủ 5 nghề, chia điểm hợp lệ, vào quán ở trạng thái khám phá.
-- [ ] Di chuyển tự do trước ca; bấm E/nút tương tác để nói với 6 NPC và thử 6 vật dụng, quan sát thay đổi hình ảnh.
-- [ ] Thử biến đổi máy pha và bàn, nói chuyện nhiều lần; bấm **Bắt đầu ca** và kiểm tra mọi trạng thái được reset.
-- [ ] Để tab mở trước ca trên 3 phút: không có timeout, không tính điểm hay phát sinh sự cố.
-- [ ] Trong ca, làm 3 nhiệm vụ cho mỗi vai; hoạt động bình thường sau nhiệm vụ cuối và hiện **Kết thúc ca**.
-- [ ] Không thể kết thúc ca trước khi xong 3 nhiệm vụ; có thể tiếp tục đi lại sau khi xong.
-- [ ] Để ca chạy trên 3 phút: thời gian vẫn tăng, không tự kết thúc.
-- [ ] Bấm kết ca, xem điểm, sang ngày 2/3, kiểm tra NPC, đồ vật, HUD và nhiệm vụ reset mà không reload.
-- [ ] Thử thoát và đổi nghề từ màn kết quả, xác nhận trở về Ngày 01.
-- [ ] Trên Android và iOS: joystick, các nút đầu/kết ca, scroll bảng mục tiêu và màn kết ca trong portrait/landscape.
-- [ ] Chặn CDN/WebGL: hiện thông báo lỗi; website Yên vẫn hoạt động.
+- [ ] Trên Chrome/Safari/Firefox: Babylon scene lên hình không trắng/đen, cel-shading và outlines không vỡ, không lỗi shader.
+- [ ] Trên iOS Safari và Chrome Android: kiểm tra tốc độ khung hình, nhiệt máy, joystick và nút tương tác.
+- [ ] Objective mặc định đóng; bấm mở/đóng, scroll nội dung; vẫn đọc được lời thoại NPC khi đóng.
+- [ ] Kiểm thử cả 5 avatar, vị trí xuất hiện, camera theo người chơi, va chạm bàn/quầy/xe.
+- [ ] Bắt đầu ca và tương tác cả 6 loại vật dụng; xác nhận props/NPC reset.
+- [ ] Hoàn thành 3 nhiệm vụ, kết ca và sang nhiều ngày; không mất scene hoặc crash WebGL.
+- [ ] Quay về chọn nhân vật, rồi trở lại game; scene trước đã dispose hoàn chỉnh.
+- [ ] Bật network throttling hoặc chặn CDN; thông báo lỗi xuất hiện thay vì trang trắng.
+- [ ] Xem UI portrait/landscape và màn hình thấp; nút Objective không che joystick và hành động.
 
-**Chưa bao gồm:** Multiplayer, tài khoản, thưởng tại quán thật, model rigged, âm thanh, lưu nhiều phiên chơi.
-
-## Mã nguồn
-
-- `game/index.html`: các màn chọn nhân vật, khám phá, ca làm và kết quả.
-- `game/style.css`: bố cục desktop/mobile, HUD và nhãn ca.
-- `game/game.js`: mô hình 3D, NPC/đồ vật, điều khiển, giao tiếp, reset và vòng lặp ngày.
-- `tests/game-day-loop.test.mjs`: bài kiểm thử logic ngày, NPC, vật dụng và chuyển ca bằng Node VM.
+**Giới hạn:** hình ảnh hiện là mô hình 3D anime tạo bằng code, chưa phải các nhân vật rigged/animation chất lượng studio. Chưa có multiplayer, tài khoản, bảng xếp hạng hay phần thưởng đổi tại quán. Không lưu thông tin cá nhân.
