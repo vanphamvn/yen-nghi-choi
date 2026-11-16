@@ -2,7 +2,7 @@
 # Static website: index.html and /assets, no framework or package install.
 [build]
   publish = "."
-  command = ""
+  command = "node game/preview-2d/tools/write-build-info.mjs"
 
 # Keep the same privacy/security behavior as vercel.json.
 # The café has not approved SEO indexing yet.
