@@ -31,14 +31,14 @@ const roles={
 // Bottom-centre sprite pivots: proportions follow one shared 1440x900 world.
 const SCENE_PROPS=[
  {id:'door',texture:'door',x:172,y:606,w:215,h:355,shadow:[77,12]},
- {id:'counter',texture:'counter',x:1120,y:610,w:598,h:310,shadow:[260,18]},
+ {id:'counter',texture:'counter-painted',raster:'./assets/scene/counter-painted-v1.webp',x:1120,y:610,w:360,h:91,shadow:[160,12],layers:{width:768,height:195,frontStart:41,backDepth:500}},
  {id:'table',texture:'table-painted',raster:'./assets/scene/table-painted-v1.webp',x:355,y:723,w:140,h:86,shadow:[61,10]},
  {id:'bench',texture:'bench',x:1220,y:751,w:310,h:235,shadow:[132,18]},
  {id:'plant',texture:'plant',x:110,y:668,w:201,h:288,shadow:[52,13],sway:true},
  {id:'bike',texture:'scooter',x:1360,y:836,w:188,h:211,shadow:[75,12]}
 ];
 const SCENE_COLLIDERS=[
- {id:'counter',shape:'rect',l:824,t:475,r:1440,b:610},
+ {id:'counter',shape:'rect',l:940,t:560,r:1300,b:610},
  {id:'table',shape:'ellipse',x:355,y:704,rx:65,ry:28},
  {id:'bench',shape:'rect',l:1104,t:662,r:1372,b:752},
  {id:'bike',shape:'ellipse',x:1370,y:787,rx:52,ry:58},
@@ -56,7 +56,7 @@ const npcs=[
  {id:'reader',role:'reader',x:520,y:650,name:'Khách đọc sách',lines:['Mình vừa đọc tới chương... cái bìa.','Một trang sách và một ly nước. Tạm đủ.']},
  {id:'guest',role:'guest',x:690,y:605,name:'Khách chờ bạn',lines:['Bạn mình bảo năm phút nữa tới.','Mình gọi trước một ly. Kẻ đến sau tự tính.']},
  {id:'guard',role:'guard',x:150,y:714,name:'Chú bảo vệ',lines:['Để xe ngay ngắn là quán đã yên một nửa.','Mèo Mướp trông ghế, tôi trông cửa.']},
- {id:'barista',role:'barista',x:995,y:502,name:'Bạn pha chế',lines:['Nước ngon cần chút kiên nhẫn.','Máy pha cà phê hôm nay khá dễ bảo.']},
+ {id:'barista',role:'barista',x:995,y:570,name:'Bạn pha chế',lines:['Nước ngon cần chút kiên nhẫn.','Máy pha cà phê hôm nay khá dễ bảo.']},
  {id:'waiter',role:'waiter',x:817,y:647,name:'Bạn phục vụ',lines:['Ngồi đâu cũng được, trừ quầy pha chế.','Để mình dọn lại bàn nhé.']},
  {id:'cat',role:'cat',x:613,y:802,name:'Mèo Mướp',lines:['Meo. (Mướp vừa đồng ý.)','Meo. (Mướp vừa đổi ý.)']}
 ];
@@ -71,7 +71,7 @@ const NPC_ROUTINES={
  guard:[{x:150,y:714,wait:6,action:true,activity:'Đang đón khách',destination:'cửa quán'},
   {x:270,y:760,wait:4,activity:'Đang kiểm tra lối đi',destination:'lối đi'},
   {x:158,y:718,wait:7,action:true,activity:'Đã quay lại cửa quán',destination:'cửa quán'}],
- barista:[{x:995,y:502,wait:7,action:true,activity:'Đang trực quầy pha chế',destination:'quầy pha chế'}],
+ barista:[{x:995,y:570,wait:7,action:true,activity:'Đang trực quầy pha chế',destination:'quầy pha chế'}],
  waiter:[{x:817,y:647,wait:4,action:true,activity:'Đang chờ nước từ quầy',destination:'quầy nước'},
   {x:932,y:729,wait:5,action:true,activity:'Đang kiểm tra khu ghế ngồi',destination:'khu ghế ngồi'},
   {x:815,y:650,wait:6,activity:'Đang chờ lượt phục vụ tiếp theo',destination:'quầy nước'}],
@@ -496,6 +496,7 @@ class CafeScene extends Phaser.Scene{
    if(prop.raster)this.load.image('prop-'+prop.texture,prop.raster);
    else this.load.svg('prop-'+prop.texture,'./assets/scene/'+prop.texture+'.svg');
   }
+  this.load.image('prop-machine-painted','./assets/scene/machine-painted-v1.webp');
   for(const name of ['cup','book','cushion'])
    this.load.image('prop-'+name,'./assets/scene/'+name+'-painted-v1.webp');
   for(const role of SPRITE_ROLES)
@@ -568,10 +569,20 @@ class CafeScene extends Phaser.Scene{
     .setDepth(def.y-4);
    const sprite=this.add.image(def.x,def.y,'prop-'+def.texture)
     .setDisplaySize(def.w,def.h).setOrigin(.5,1).setDepth(def.y);
+   if(def.layers){
+    const {width,height,frontStart,backDepth}=def.layers;
+    // Shared source and identical transform: no seam drift between rear top and fascia.
+    this.counterTop=this.add.image(def.x,def.y,'prop-'+def.texture)
+     .setDisplaySize(def.w,def.h).setOrigin(.5,1).setDepth(backDepth)
+     .setCrop(0,0,width,frontStart);
+    sprite.setCrop(0,frontStart,width,height-frontStart);
+   }
    this.propSprites.set(def.id,sprite);
    if(def.sway)this.tweens.add({targets:sprite,angle:{from:-1.5,to:1.5},
     duration:2600,ease:'Sine.inOut',yoyo:true,repeat:-1});
   }
+  this.counterMachine=this.add.image(1160,534,'prop-machine-painted')
+   .setDisplaySize(85,72).setOrigin(.5,1).setDepth(609);
   // Small details have their own textures and state, independent of the tables.
   const cup=this.add.image(373,661,'prop-cup').setDisplaySize(24,24)
    .setOrigin(.5,1).setDepth(726);
@@ -587,9 +598,9 @@ class CafeScene extends Phaser.Scene{
   this.tweens.add({targets:this.scooterLight,alpha:.15,scale:1.4,
    duration:650,repeat:-1,yoyo:true,ease:'Sine.inOut'});
   for(let i=0;i<3;i++){
-   const steam=this.add.ellipse(973+i*14,372+i*3,7,20,0xfff3d3,.28)
-    .setDepth(611).setVisible(false);
-   this.tweens.add({targets:steam,y:338+i*3,alpha:0,
+   const steam=this.add.ellipse(1146+i*14,461+i*3,7,20,0xfff3d3,.28)
+    .setDepth(612).setVisible(false);
+   this.tweens.add({targets:steam,y:435+i*3,alpha:0,
     duration:1700+i*220,repeat:-1,yoyo:true});
    this.steam.push(steam);
   }
@@ -866,7 +877,8 @@ if(typeof window.location?.search==='string' && window.location.search.includes(
   fps:world?.game?.loop?.actualFps||null,
   props:world?[...world.propSprites].map(([id,p])=>({id,x:p.x,y:p.y,depth:p.depth,texture:p.texture.key})):[],
   details:world?[...world.propDetails].map(([id,p])=>({id,x:p.x,y:p.y,visible:p.visible,alpha:p.alpha,angle:p.angle,texture:p.texture.key})):[],
-  npcs:world?[...world.sprites].map(([id,s])=>({id,x:Math.round(s.x),y:Math.round(s.y),anim:s.anims?.currentAnim?.key})):[]
+  counterLayers:world?.counterTop?{backDepth:world.counterTop.depth,machine:{x:world.counterMachine.x,y:world.counterMachine.y,depth:world.counterMachine.depth,texture:world.counterMachine.texture.key},steam:world.steam.map(p=>({x:p.x,y:p.y,visible:p.visible}))}:null,
+  npcs:world?[...world.sprites].map(([id,s])=>({id,x:Math.round(s.x),y:Math.round(s.y),anim:s.anims?.currentAnim?.key,depth:s.depth})):[]
  })});
 }
 init();

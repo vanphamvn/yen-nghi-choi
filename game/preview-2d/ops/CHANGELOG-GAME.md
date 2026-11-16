@@ -48,3 +48,12 @@ A green CI badge without a production SHA cannot produce a SHIPPED entry.
 - Remaining after this slice: six active SVG world textures (architecture, door, counter, bench, plant, scooter). Strict art release remains blocked; real mobile device FPS not measured.
 - This entry describes implementation, not a claimed production release. Exact merge SHA, CI and live proof must be recorded in PR/issue after release.
 - Browser gate caught task completion immediately undoing table/bench effects. Fixed completed furniture state persistence until explicit interaction/day reset; regression added. 47 local Node tests now pass. First browser attempt also exposed Phaser's blob-backed image URLs; asset load checks now inspect real successful network responses plus bound texture keys.
+
+
+## 2026-11-17 · #114 counter/machine slice (production pending)
+
+- Previous #117 released af691b72b90beac5e08d1eed6667a7d7a9f33240. Run43914783803 passed Node, browser and actual production jobs:10 browser passed/2 deliberate mobile-long skips; exact Netlify build/content verified.
+- Repaint counter and machine from actual character PNG input. Same counter raster is split into complementary rear-top/front-fascia crops, barista stands between them; machine and steam are independent. Original counter SVG is frozen as history, not used at runtime.
+- Counter360x91, machine85x72 preserve generated source ratios; collider reduced to940..1300,560..610; barista working feet995,570, station unchanged990,652.
+- #118 records actual mobile screenshot clipping/overlap under #100, without claiming real-device QA. Five active legacy world SVGs remain after counter; strict final art audit remains blocked. Owner inspection pending.
+- Exact release SHA and production verdict for this increment must follow in PR/issue after CI.

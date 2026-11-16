@@ -1,10 +1,29 @@
 import {test,expect} from '@playwright/test';
 
+async function walkActorTo(page,x,y){
+ const inspect=()=>page.evaluate(()=>window.__yenQA.inspect());
+  for(const axis of ['x','y']){
+   const target=axis==='x'?x:y;
+   for(let attempts=0;attempts<30;attempts++){
+    const position=(await inspect()).player[axis],distance=target-position;
+    if(Math.abs(distance)<24)break;
+    const key=axis==='x'?(distance>0?'d':'a'):(distance>0?'s':'w');
+    await page.keyboard.down(key);
+    await page.waitForTimeout(Math.min(220,Math.max(25,Math.abs(distance)/225*1000)));
+    await page.keyboard.up(key);
+    // Observe a rendered frame after key release, not a stale pre-keyup sample.
+    await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
+    if(attempts===29)throw Error('Could not walk to '+x+','+y+' along '+axis+'; actual='+JSON.stringify(await inspect()));
+   }
+  }
+ }
+
+
 test('boot, role selection, focus, movement and mobile controls',async({page},testInfo)=>{
  const errors=[];page.on('pageerror',error=>errors.push(error.message));
  const paintedLoads=new Set();page.on('response',response=>{
   const file=new URL(response.url()).pathname.split('/').pop();
-  if(response.ok()&&/^(cup|book|cushion)-painted-v1\.webp$/.test(file))paintedLoads.add(file);
+  if(response.ok()&&/^(cup|book|cushion|counter|machine)-painted-v1\.webp$/.test(file))paintedLoads.add(file);
  });
  await page.goto('/game/preview-2d/?qa=1');
  await expect(page.locator('#scene canvas')).toBeVisible();
@@ -19,6 +38,9 @@ test('boot, role selection, focus, movement and mobile controls',async({page},te
  const inspect=()=>page.evaluate(()=>window.__yenQA.inspect());
  const start=await inspect();
  expect(start.props.find(prop=>prop.id==='table').texture).toBe('prop-table-painted');
+ expect(start.props.find(prop=>prop.id==='counter').texture).toBe('prop-counter-painted');
+ expect(paintedLoads.has('counter-painted-v1.webp')).toBe(true);
+ expect(paintedLoads.has('machine-painted-v1.webp')).toBe(true);
  for(const name of ['cup','book','cushion']){
   const detail=start.details.find(d=>d.id===name);
   expect(paintedLoads.has(name+'-painted-v1.webp')).toBe(true);
@@ -60,22 +82,7 @@ test('all five roles complete a shift through real controls and advance days',as
  await page.goto('/game/preview-2d/?qa=1&canvas=1');
  await expect.poll(()=>page.evaluate(()=>Boolean(window.__yenQA?.inspect().player))).toBe(true);
  const inspect=()=>page.evaluate(()=>window.__yenQA.inspect());
- async function walkTo(x,y){
-  for(const axis of ['x','y']){
-   const target=axis==='x'?x:y;
-   for(let attempts=0;attempts<30;attempts++){
-    const position=(await inspect()).player[axis],distance=target-position;
-    if(Math.abs(distance)<24)break;
-    const key=axis==='x'?(distance>0?'d':'a'):(distance>0?'s':'w');
-    await page.keyboard.down(key);
-    await page.waitForTimeout(Math.min(220,Math.max(25,Math.abs(distance)/225*1000)));
-    await page.keyboard.up(key);
-    // Observe a rendered frame after key release, not a stale pre-keyup sample.
-    await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
-    if(attempts===29)throw Error('Could not walk to '+x+','+y+' along '+axis+'; actual='+JSON.stringify(await inspect()));
-   }
-  }
- }
+ const walkTo=(x,y)=>walkActorTo(page,x,y);
  const paths={
   table:[[600,790],[482,790],[482,762]],
   plant:[[600,790],[190,790],[190,613]],
@@ -134,4 +141,32 @@ test('painted detail reference board is readable and has no missing images',asyn
  expect(await board.evaluate(img=>img.naturalWidth)).toBe(1200);
  expect(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth)).toBe(false);
  await page.screenshot({path:testInfo.outputPath('detail-proof.png'),fullPage:true});
+});
+
+
+test('counter layers, barista and brewing are visible through real controls',async({page},testInfo)=>{
+ test.setTimeout(90000);const errors=[];page.on('pageerror',e=>errors.push(e.message));
+ await page.goto('/game/preview-2d/?qa=1&canvas=1');
+ const inspect=()=>page.evaluate(()=>window.__yenQA.inspect());
+ await expect.poll(async()=>Boolean((await inspect())?.player)).toBe(true);
+ await page.locator('#apply-model').click();await page.locator('#start-shift').click();
+ for(const [x,y]of [[600,790],[790,790],[790,652],[990,652]])await walkActorTo(page,x,y);
+ await expect.poll(async()=>(await inspect()).near).toBe('counter');
+ const before=await inspect(),front=before.props.find(p=>p.id==='counter');
+ const actor=before.npcs.find(p=>p.id==='barista');
+ expect(before.counterLayers.backDepth).toBeLessThan(actor.depth);
+ expect(actor.depth).toBeLessThan(front.depth);
+ expect(actor.y).toBe(570);expect(before.counterLayers.machine.texture).toBe('prop-machine-painted');
+ expect(before.counterLayers.machine.x).toBe(1160);expect(before.counterLayers.machine.y).toBe(534);
+ await page.locator('#interact').click();
+ await expect.poll(async()=>(await inspect()).active).toBe(true);
+ expect((await inspect()).counterLayers.steam.every(p=>p.visible)).toBe(true);
+ await page.screenshot({path:testInfo.outputPath('counter-brewing.png'),fullPage:true});
+ await expect.poll(async()=>(await inspect()).done,{timeout:8000}).toBe(1);
+ expect((await inspect()).counterLayers.steam.every(p=>!p.visible)).toBe(true);
+ await page.goto('/game/preview-2d/art-reviews/counter-v1/');
+ await expect(page.getByRole('heading',{name:'Quầy và máy pha — đối chiếu v1'})).toBeVisible();
+ await expect.poll(()=>page.locator('img').evaluate(img=>img.naturalWidth)).toBe(1200);
+ await page.screenshot({path:testInfo.outputPath('counter-proof.png'),fullPage:true});
+ expect(errors).toEqual([]);
 });

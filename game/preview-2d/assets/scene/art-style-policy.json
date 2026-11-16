@@ -148,6 +148,54 @@
         "alpha": "pass"
       },
       "notes": "Actual agent comparison against barista front/side and waiter PNG plus painted table at runtime scale. cushion: thin warm contour, painted material, upper-left light, transparent edge. Independent runtime state; owner inspection pending."
+    },
+    "assets/scene/counter-painted-v1.webp": {
+      "styleStatus": "approved",
+      "styleId": "yen-painted-chibi-v1",
+      "reviewer": "Codex",
+      "reviewerType": "agent",
+      "reviewAuthority": "user-delegated",
+      "ownerReviewPending": true,
+      "reviewedOn": "2026-11-17",
+      "runtimeScaleCompared": true,
+      "characterReferences": [
+        "assets/sprites/barista.png",
+        "assets/sprites/waiter.png"
+      ],
+      "proof": "art-reviews/counter-v1/contact-sheet.png",
+      "gitBlobSha": "031bf1e180ae0fdcc11a4556275202b4e6a66f38",
+      "visualChecks": {
+        "brush": "pass",
+        "lighting": "pass",
+        "perspective": "pass",
+        "scale": "pass",
+        "alpha": "pass"
+      },
+      "notes": "Actual Codex comparison with canonical PNG front/side and painted table. counter: thin warm contours, painted wood/enamel, upper-left light, mild front perspective. Counter360x91 and machine85x72 retain source aspect; complementary crops allow barista upper body above fascia. Owner inspection pending."
+    },
+    "assets/scene/machine-painted-v1.webp": {
+      "styleStatus": "approved",
+      "styleId": "yen-painted-chibi-v1",
+      "reviewer": "Codex",
+      "reviewerType": "agent",
+      "reviewAuthority": "user-delegated",
+      "ownerReviewPending": true,
+      "reviewedOn": "2026-11-17",
+      "runtimeScaleCompared": true,
+      "characterReferences": [
+        "assets/sprites/barista.png",
+        "assets/sprites/waiter.png"
+      ],
+      "proof": "art-reviews/counter-v1/contact-sheet.png",
+      "gitBlobSha": "55b265817574c0fa64f472bf9509c6dbd267321e",
+      "visualChecks": {
+        "brush": "pass",
+        "lighting": "pass",
+        "perspective": "pass",
+        "scale": "pass",
+        "alpha": "pass"
+      },
+      "notes": "Actual Codex comparison with canonical PNG front/side and painted table. machine: thin warm contours, painted wood/enamel, upper-left light, mild front perspective. Counter360x91 and machine85x72 retain source aspect; complementary crops allow barista upper body above fascia. Owner inspection pending."
     }
   },
   "reviewRequirements": {

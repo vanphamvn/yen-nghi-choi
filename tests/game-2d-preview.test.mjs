@@ -96,7 +96,8 @@ function harness(){
   x,y,visible:true,scale:1,alpha:1,angle:0,
   anims:{currentAnim:null,isPlaying:false},
   play(key){this.anims.currentAnim={key};this.anims.isPlaying=true;return this},
-  setDisplaySize(){return this},setOrigin(){return this},setDepth(){return this},
+  setDisplaySize(w,h){this.displayWidth=w;this.displayHeight=h;return this},setOrigin(){return this},setDepth(depth){this.depth=depth;return this},
+  setCrop(x,y,width,height){this.crop={x,y,width,height};return this},
   setAlpha(v){this.alpha=v;return this},
   setStrokeStyle(){return this},setVisible(v){this.visible=v;return this},
   setPosition(x,y){this.x=x;this.y=y;return this},setFlipX(v){this.flipX=v;return this},
@@ -108,7 +109,7 @@ function harness(){
    this.add={image:sprite,sprite,circle:sprite,ellipse:sprite,text:sprite};
    this.tweens={add(){}};
    this.cameras={main:{setBounds(){},startFollow(){},setZoom(){},shake(){},flash(){}}};
-   this.load={svg(){},image(key,path){assert.match(path,/\.webp$/);assert.ok(['cafe','cafe-foreground','prop-table-painted','prop-cup','prop-book','prop-cushion'].includes(key));},spritesheet(key,path,opt){assert.equal(opt.frameWidth,256);assert.equal(opt.frameHeight,320)},on(){}};
+   this.load={svg(){},image(key,path){assert.match(path,/\.webp$/);assert.ok(['cafe','cafe-foreground','prop-table-painted','prop-cup','prop-book','prop-cushion','prop-counter-painted','prop-machine-painted'].includes(key));},spritesheet(key,path,opt){assert.equal(opt.frameWidth,256);assert.equal(opt.frameHeight,320)},on(){}};
    this.anims={exists:key=>allAnimations.has(key),create:def=>allAnimations.set(def.key,def)};
    this.input={keyboard:{addKeys(){return{}},on(){},resetKeys(){}}};
    this.scale={width:1200,height:800,on(){}};
@@ -261,4 +262,21 @@ test('completed furniture tasks persist until explicit interaction or next day',
  a.interact();assert.equal(a.state.props.table,0);
  assert.deepEqual(changes.at(-1),['table',0]);
  a.state.phase='explore';a.startShift();assert.equal(Object.keys(a.state.props).length,0);
+});
+
+
+test('painted counter has aligned complementary crops and a visible barista between layers',()=>{
+ const {scene}=harness();const front=scene.propSprites.get('counter');
+ const back=scene.counterTop,barista=scene.sprites.get('barista'),machine=scene.counterMachine;
+ assert.equal(front.x,back.x);assert.equal(front.y,back.y);
+ assert.equal(front.displayWidth,back.displayWidth);assert.equal(front.displayHeight,back.displayHeight);
+ assert.equal(back.crop.y,0);assert.equal(back.crop.height,front.crop.y);
+ assert.equal(front.crop.y+front.crop.height,195);assert.equal(front.crop.width,back.crop.width);
+ assert.ok(back.depth<barista.depth&&barista.depth<front.depth,'barista must stand between rear top and fascia');
+ const seam=front.y-front.displayHeight+front.displayHeight*front.crop.y/195;
+ const headTop=barista.y-146;
+ assert.ok(seam-headTop>100,'head and upper torso must remain visible above fascia');
+ assert.ok(barista.y>seam,'fascia must still hide feet');
+ assert.equal(machine.x,1160);assert.equal(machine.y,534);assert.ok(machine.depth<front.depth);
+ assert.ok(scene.steam.every(p=>p.x>1100&&p.x<1210&&p.y<480),'steam belongs above new machine');
 });

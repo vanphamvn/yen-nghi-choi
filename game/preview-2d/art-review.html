@@ -34,8 +34,8 @@ footer{margin-top:32px;color:var(--muted);font-size:13px}
 <body><main>
 <div class="kicker">Yên 2D · Art review / Quy chuẩn đồng nhất</div>
 <h1>Nhân vật và đồ vật: cùng một thế giới?</h1>
-<p class="summary">Bảng đối chiếu trực tiếp sprite nhân vật PNG với các đồ vật SVG đang có trong game. Nhân vật được đặt ở kích thước tương đương khi chơi, cạnh texture đồ vật. Đây là công cụ kiểm tra, <strong>không phải chứng nhận đã đồng nhất phong cách</strong>.</p>
-<div class="warning">CHƯA ĐẠT ART REVIEW: 10 texture SVG của PR #91 đang bị cách ly vì khác nét vẽ/chất liệu với sprite nhân vật. Chúng cần được vẽ lại theo reference PNG, không phải chỉ tô lại hoặc xuất SVG sang PNG.</div>
+<p class="summary">Bảng đối chiếu sprite PNG với các đợt painted mới và lịch sử SVG cần thay. Nhân vật được đặt ở kích thước tương đương khi chơi, cạnh texture đồ vật. Đây là công cụ kiểm tra, <strong>không phải chứng nhận đã đồng nhất phong cách</strong>.</p>
+<div class="warning">CHƯA ĐẠT ART REVIEW: 10 texture SVG lịch sử của PR #91 bị cách ly; hiện còn 5 texture đang dùng trong game vì khác nét vẽ/chất liệu với sprite nhân vật. Chúng cần được vẽ lại theo reference PNG, không phải chỉ tô lại hoặc xuất SVG sang PNG.</div>
 <h2>01 · Reference nhân vật (nguồn chuẩn)</h2>
 <div class="reference checker">
  <div class="role"><div class="actor" style="--role:url('./assets/sprites/barista.png')"></div><strong>Pha chế</strong></div>
@@ -44,7 +44,9 @@ footer{margin-top:32px;color:var(--muted);font-size:13px}
  <div class="role"><div class="actor" style="--role:url('./assets/sprites/shipper.png')"></div><strong>Giao hàng</strong></div>
  <div class="role"><div class="actor actor--cat" style="--role:url('./assets/sprites/cat.png')"></div><strong>Mèo</strong></div>
 </div>
-<h2>02 · Props hiện tại bên cạnh nhân vật</h2>
+<h2>Các đợt painted đã được Codex đánh giá theo uỷ quyền</h2>
+<p>Chủ quán kiểm tra sau. <a href="./art-reviews/table-v1/">Bàn</a> · <a href="./art-reviews/details-v1/">Ly, sách và gối</a> · <a href="./art-reviews/counter-v1/">Quầy và máy pha</a></p>
+<h2>02 · SVG lịch sử để đối chiếu lỗi phong cách</h2>
 <div class="grid">
  <article class="card"><h3>Bàn cà phê</h3><div class="fig checker"><div class="actor" style="--role:url('./assets/sprites/barista.png')"></div><img class="asset" src="./assets/scene/table.svg" width="307" height="214" alt="Bàn SVG hiện tại" loading="lazy"></div><p>Kiểm tra góc nhìn, chất gỗ, nét viền, tỷ lệ và bóng đổ.</p></article>
  <article class="card"><h3>Ghế dài</h3><div class="fig checker"><div class="actor" style="--role:url('./assets/sprites/waiter.png')"></div><img class="asset" src="./assets/scene/bench.svg" width="310" height="235" alt="Ghế SVG hiện tại" loading="lazy"></div><p>Kiểm tra độ mềm đệm, chi tiết vải và khả năng nhân vật ngồi thực.</p></article>
