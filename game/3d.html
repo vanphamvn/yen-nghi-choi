@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#eaeadd">
+  <meta name="description" content="Yên: Ai đang làm việc? Khám phá quán Yên 3D, nhập vai nhân viên hoặc mèo, làm việc và qua nhiều ngày theo nhịp của bạn.">
+  <meta name="robots" content="noindex,nofollow">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self'; img-src 'self' data:; connect-src 'self' https://cdn.jsdelivr.net; font-src 'self'; base-uri 'none'; object-src 'none'; form-action 'none'">
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./style.css">
+  <title>Yên: Ai đang làm việc? | Game 3D</title>
+</head>
+<body>
+  <header class="site-top">
+    <a class="back-link" href="../" aria-label="Quay về trang Yên">← Về Yên</a>
+    <span class="wordmark">yên <small>COFFEE & TEA</small></span>
+    <span class="edition" aria-label="Phiên bản BETA 03">BETA · 03</span>
+  </header>
+  <main>
+    <section id="setup" class="setup-screen" aria-labelledby="setup-title">
+      <div class="intro">
+        <p class="eyebrow">TUYỂN DỤNG BẤT THƯỜNG / YÊN COFFEE & TEA</p>
+        <h1 id="setup-title">Ai đang<br><em>làm việc?</em></h1>
+        <p>Quán đã mở cửa. Đi dạo một vòng, gặp khách và nhân viên, rồi khi nào thích hãy bắt đầu ca.</p>
+        <div class="intro-hint">KHÁM PHÁ TỰ DO · TỰ CHỌN LÚC BẮT ĐẦU CA · NHIỀU NGÀY</div>
+      </div>
+      <div class="creator">
+        <div class="block-heading"><span>01</span><h2>Chọn nghề</h2></div>
+        <div class="role-grid" id="role-grid" role="group" aria-label="Chọn vai trò">
+          <button class="role-card" type="button" data-role="guard" aria-pressed="false"><span class="role-icon">♙</span><strong>Bảo vệ</strong><small>Có mặt trước cả khách.</small></button>
+          <button class="role-card" type="button" data-role="shipper" aria-pressed="false"><span class="role-icon">➤</span><strong>Shipper</strong><small>Hơi nhanh quá mức.</small></button>
+          <button class="role-card" type="button" data-role="barista" aria-pressed="true"><span class="role-icon">◒</span><strong>Pha chế</strong><small>Nhân vật GLB mới · thử nghiệm.</small></button>
+          <button class="role-card" type="button" data-role="waiter" aria-pressed="false"><span class="role-icon">▤</span><strong>Phục vụ</strong><small>Một tay, nhiều việc.</small></button>
+          <button class="role-card" type="button" data-role="cat" aria-pressed="false"><span class="role-icon">ฅ</span><strong>Mèo cổ vũ</strong><small>Model mèo cũ, chưa thay.</small></button>
+        </div>
+        <div class="block-heading stats-heading"><span>02</span><h2>Chia điểm kỹ năng</h2><div class="remaining"><b id="points-left">0</b><small>điểm còn</small></div></div>
+        <div id="stats" class="stats" aria-label="Thuộc tính nhân vật"></div>
+        <div class="special" aria-live="polite"><span>TUYỆT CHIÊU NGHỀ NGHIỆP</span><strong id="power-name">Meo chữa lành</strong><p id="power-desc">Đồng nghiệp nghe mèo kêu là muốn nghỉ ít hơn.</p></div>
+        <button id="start-btn" class="primary" type="button">Vào quán khám phá <span aria-hidden="true">↗</span></button>
+        <p class="fine-print">Không đăng nhập, không lưu điểm, không có quà đổi tại quán.</p>
+      </div>
+    </section>
+
+    <section id="game" class="game-screen" hidden aria-label="Trò chơi 3D">
+      <div id="scene" role="img" aria-label="Không gian quán Yên 3D phong cách anime với khách hàng, nhân viên và mèo"></div>
+      <div class="game-overlay">
+        <div class="hud-top">
+          <div class="hud-left">
+            <span class="hud-role" id="hud-role">Pha chế</span>
+            <span class="hud-day" id="hud-day">NGÀY 01</span>
+            <div class="hud-clock"><span>THỜI GIAN CA</span><b id="clock">00:00</b></div>
+          </div>
+          <div class="meters">
+            <div class="meter"><span>HIỆU SUẤT</span><b id="eff-text">50%</b><div class="meter-track"><i id="eff-bar"></i></div></div>
+            <div class="meter"><span>ĐỘ YÊN</span><b id="yen-text">70%</b><div class="meter-track peace"><i id="yen-bar"></i></div></div>
+          </div>
+        </div>
+        <div class="objective-shell">
+          <button id="objective-toggle" type="button" class="objective-toggle" aria-expanded="false" aria-controls="objective-panel" aria-label="Mở bảng nhiệm vụ"><span class="objective-toggle-icon" aria-hidden="true">☰</span><span>Objective</span><b id="objective-pill">Khám phá</b><span id="objective-chevron" aria-hidden="true">⌄</span></button>
+          <div class="objective" id="objective-panel" hidden>
+          <span class="eyebrow" id="objective-count">NGÀY 01 · KHÁM PHÁ</span>
+          <strong id="objective-title">Chưa vào ca. Cứ ngó quanh.</strong>
+          <p id="objective-desc">Gặp khách, trò chuyện với nhân viên, chơi với mèo, nghịch đồ trong quán.</p>
+          <div class="shift-panel">
+            <span id="shift-state">CHƯA BẮT ĐẦU CA</span>
+            <button id="shift-btn" type="button">Bắt đầu ca ↗</button>
+          </div>
+          <p id="target-hint" class="target-hint" aria-live="polite">Đi gần người hoặc vật dụng để tương tác.</p>
+          <div class="action-progress" id="action-progress" hidden><i id="action-bar"></i></div>
+          <div class="event-text" id="event-text" role="status" aria-live="polite"></div>
+          </div>
+        </div>
+        <div id="game-toast" class="game-toast" hidden role="status" aria-live="polite"></div>
+        <div id="model-status" class="model-status" role="status" aria-live="polite">Đang kiểm tra model nhân vật…</div>
+        <div class="game-bottom">
+          <div class="joystick" id="joystick" aria-label="Điều khiển di chuyển bằng ngón tay">
+            <span class="joystick-guide">DI CHUYỂN</span><div class="joystick-ring"><div id="joystick-thumb" class="joystick-thumb"></div></div>
+          </div>
+          <div class="game-actions">
+            <button class="skill-btn" id="skill-btn" type="button"><span id="skill-name">Meo chữa lành</span><small id="skill-cooldown">Sẵn sàng</small></button>
+            <button class="interact-btn" id="interact-btn" type="button" disabled><span id="interact-label">Tương tác</span><small>PHÍM E</small></button>
+          </div>
+        </div>
+        <p class="keyboard-tip">WASD / mũi tên: di chuyển · E: tương tác · Q: tuyệt chiêu trong ca</p>
+        <button id="exit-btn" class="exit-btn" type="button" aria-label="Thoát về màn hình chọn nhân vật">×</button>
+      </div>
+    </section>
+
+    <section id="result" class="result-screen" hidden aria-labelledby="result-title">
+      <div class="result-card">
+        <p class="eyebrow" id="result-day">NGÀY 01 · BIÊN BẢN KẾT CA</p>
+        <h2 id="result-title">Quán vẫn còn nguyên.</h2>
+        <p id="result-message">Có vẻ đây là một ngày bình thường tại Yên.</p>
+        <div class="result-stats">
+          <div><small>HOÀN THÀNH</small><strong id="result-tasks">3 / 3</strong></div>
+          <div><small>HIỆU SUẤT</small><strong id="result-eff">75%</strong></div>
+          <div><small>ĐỘ YÊN</small><strong id="result-yen">70%</strong></div>
+        </div>
+        <p class="result-note" id="result-note"></p>
+        <div class="result-actions">
+          <button id="retry-btn" class="primary" type="button">Sang ngày mới ↗</button>
+          <button id="change-btn" class="secondary" type="button">Đổi nhân vật</button>
+        </div>
+      </div>
+    </section>
+    <div id="error" class="error" hidden role="alert"><strong>Không mở được không gian 3D.</strong><p>Hãy kiểm tra kết nối mạng hoặc thử trình duyệt khác. Trò chơi cần WebGL và Babylon.js. Hãy kiểm tra kết nối mạng.</p><button id="error-back" type="button">Quay lại</button></div>
+  </main>
+  <script type="module" src="./game.js"></script>
+</body>
+</html>
