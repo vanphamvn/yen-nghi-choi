@@ -1,0 +1,84 @@
+{
+  "schemaVersion": 1,
+  "project": "Yencafeday 3D",
+  "status": "preproduction",
+  "conventions": {
+    "format": "glTF 2.0 binary (.glb) with embedded textures",
+    "upAxis": "Y",
+    "dimensions": "Babylon game meters; normalize scale and ground pivot in export pipeline",
+    "forwardAxis": "Verify in Art Lab; choose a single front-facing axis before P2 approval",
+    "animationClips": [
+      "Idle",
+      "Walk",
+      "Interact"
+    ],
+    "textureColorSpace": "sRGB base color; normal/ORM linear",
+    "licensePolicy": "Asset requires author, source URL, license, commercial-use verification and attribution when applicable",
+    "imageEvidence": [
+      "1440x900 desktop",
+      "390x844 iOS Safari",
+      "360x800 Android Chrome"
+    ]
+  },
+  "assets": [
+    {
+      "id": "hero-barista",
+      "type": "character",
+      "status": "proposed",
+      "path": null,
+      "source": null,
+      "author": null,
+      "license": null,
+      "triangles": null,
+      "bytes": null,
+      "animationClips": [
+        "Idle",
+        "Walk",
+        "Interact"
+      ],
+      "blockingIssue": 75
+    },
+    {
+      "id": "yen-counter-corner",
+      "type": "environment",
+      "status": "proposed",
+      "path": null,
+      "source": null,
+      "author": null,
+      "license": null,
+      "triangles": null,
+      "bytes": null,
+      "animationClips": [],
+      "blockingIssue": 76
+    },
+    {
+      "id": "npc-customer",
+      "type": "character",
+      "status": "proposed",
+      "path": null,
+      "source": null,
+      "author": null,
+      "license": null,
+      "triangles": null,
+      "bytes": null,
+      "animationClips": [
+        "Idle",
+        "Talk"
+      ],
+      "blockingIssue": 77
+    },
+    {
+      "id": "coffee-cup",
+      "type": "prop",
+      "status": "proposed",
+      "path": null,
+      "source": null,
+      "author": null,
+      "license": null,
+      "triangles": null,
+      "bytes": null,
+      "animationClips": [],
+      "blockingIssue": 76
+    }
+  ]
+}
