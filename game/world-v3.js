@@ -362,7 +362,7 @@ export async function createAnimeWorld(B, mount, roleId, roles, descriptors) {
       resize(){
         engine.resize();
         const aspect=mount.clientWidth/Math.max(1,mount.clientHeight);
-        const halfW=aspect<.85?8.4:11.65;
+        const halfW=aspect<.85?6.25:11.65;
         const halfH=halfW/aspect;
         camera.orthoLeft=-halfW;camera.orthoRight=halfW;
         camera.orthoTop=halfH;camera.orthoBottom=-halfH;
@@ -370,7 +370,7 @@ export async function createAnimeWorld(B, mount, roleId, roles, descriptors) {
       },
       followPlayer(){
         const aspect=mount.clientWidth/Math.max(1,mount.clientHeight);
-        const follow=aspect<.85?.87:.32;
+        const follow=aspect<.85?.96:.32;
         const target=new B.Vector3(player.position.x*follow,.84,player.position.z*follow);
         const desired=target.add(new B.Vector3(16,20,18));
         camera.position=B.Vector3.Lerp(camera.position,desired,.085);
