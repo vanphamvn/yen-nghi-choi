@@ -233,6 +233,7 @@ function updateTaskUI() {
   $('objective-count').textContent='NGÀY '+String(game.day).padStart(2,'0')+' · NHIỆM VỤ '+(game.done+1)+' / 3';
   $('objective-title').textContent=task.title;
   $('objective-desc').textContent=task.text+' Đi tới vòng sáng và chọn Làm nhiệm vụ.';
+  $('objective-pill').textContent=(game.done+1)+' / 3';
   const station=STATIONS[task.at];
   world.indicator.position.set(station.x,.13,station.z);
   world.markerPole.position.set(station.x,.83,station.z);
@@ -242,6 +243,7 @@ function updatePhaseUI() {
   if (!game || !world) return;
   $('game').dataset.phase=game.phase;
   $('hud-day').textContent='NGÀY '+String(game.day).padStart(2,'0');
+  $('objective-pill').textContent=game.phase==='explore'?'Khám phá':game.phase==='ready'?'Xong 3/3':game.phase==='result'?'Kết ca':(game.done+1)+'/3';
   $('shift-btn').hidden=game.phase==='shift'||game.phase==='result';
   world.indicator.isVisible=game.phase==='shift';
   world.markerPole.isVisible=game.phase==='shift';
@@ -275,8 +277,10 @@ function startShift() {
   game.powerCooldown=0;game.sprint=0;game.shield=false;game.quickNext=false;
   game.message='';game.messageTime=0;
   $('event-text').textContent='';
+  $('game-toast').hidden=true;
   resetEnvironment();
   updatePhaseUI();
+  setObjectiveOpen(false);
   showMessage('Ca ngày '+game.day+' bắt đầu. Mọi người và đồ dùng đã về đúng vị trí.',4);
 }
 function finishShift() {
@@ -295,6 +299,7 @@ function finishShift() {
     balance>=60?'Quán chạy được. Có thể thêm một chút bình tĩnh.':
     'Có lẽ cả quán muốn xin giấy phép nghỉ.';
   $('result').hidden=false;
+  setObjectiveOpen(false);
   updatePhaseUI();
 }
 function nextDay() {
@@ -306,9 +311,11 @@ function nextDay() {
   game.powerCooldown=0;game.sprint=0;game.shield=false;game.quickNext=false;
   game.message='';game.messageTime=0;
   $('event-text').textContent='';
+  $('game-toast').hidden=true;
   $('result').hidden=true;
   resetEnvironment();
   updatePhaseUI();
+  setObjectiveOpen(false);
   showMessage('Chào ngày '+game.day+'. Quán đã sẵn sàng để khám phá.',4);
 }
 function showMessage(message,seconds=3) {
@@ -316,6 +323,8 @@ function showMessage(message,seconds=3) {
   game.message=message;
   game.messageTime=seconds;
   $('event-text').textContent=message;
+  $('game-toast').textContent=message;
+  $('game-toast').hidden=false;
 }
 function getInteractionCandidate() {
   if (!game || !world || game.phase==='result' || game.active) return null;
@@ -497,7 +506,7 @@ function loop(now) {
     game.peace=clamp(game.peace-dt*(.045+(5-game.attributes.calm)*.008),0,100);
   }
   game.messageTime=Math.max(0,game.messageTime-dt);
-  if (game.messageTime===0 && game.message) { game.message='';$('event-text').textContent=''; }
+  if (game.messageTime===0 && game.message) { game.message='';$('event-text').textContent='';$('game-toast').hidden=true; }
   updateAmbient(dt);
 
   if (game.active) {
@@ -550,6 +559,8 @@ function backToSetup() {
   if (game) game.playing=false;
   pressed.clear();resetJoystick();disposeWorld();
   $('game').hidden=true;$('result').hidden=true;$('setup').hidden=false;
+  setObjectiveOpen(false);
+  $('game-toast').hidden=true;
   $('start-btn').textContent='Vào quán khám phá ↗';
   renderStats();
 }
