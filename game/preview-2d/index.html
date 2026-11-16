@@ -1,78 +1,112 @@
 <!doctype html>
 <html lang="vi">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#f5eddd">
-<meta name="description" content="Yencafeday 2D thử nghiệm: quán Yên anime màu nước với khám phá tự do, NPC và các ca làm việc.">
-<meta name="robots" content="noindex,nofollow">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self'; img-src 'self' data: blob:; connect-src 'self' https://cdn.jsdelivr.net; font-src 'self'; object-src 'none'; base-uri 'none'; frame-ancestors 'none'">
-<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="./style.css">
-<title>Yên 2D | Bản xem trước</title>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+  <meta name="robots" content="noindex, nofollow"/>
+  <meta name="theme-color" content="#49352e"/>
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self'; img-src 'self' data: blob:; connect-src 'self' https://cdn.jsdelivr.net; object-src 'none'; base-uri 'none'"/>
+  <title>Yencafeday 2D · Quán Yên</title>
+  <link rel="stylesheet" href="./style.css"/>
 </head>
 <body>
-<header class="top">
-  <a class="return" href="../">← Game 3D đang chạy</a>
-  <a class="wordmark" href="../../" aria-label="Yên Coffee & Tea">yên <small>COFFEE &amp; TEA</small></a>
-  <span class="preview-pill">BẢN THỬ 2D · CHƯA DUYỆT ART</span>
-</header>
-<main>
-<section class="titlebar">
-  <div><span class="eyebrow">YÊN GAME / THỬ HƯỚNG MỚI</span><h1>Một ngày <em>ở Yên.</em></h1><p>Đi dạo. Nói chuyện. Làm vài việc. Rồi muốn nghỉ lúc nào thì nghỉ.</p></div>
-  <div class="title-meta"><span>PHASER 4</span><span>ANIME 2D</span><span>KHÁM PHÁ TỰ DO</span></div>
-</section>
-<section class="game-frame" id="game-frame">
- <div id="scene" aria-label="Thế giới quán Yên 2D có thể di chuyển và tương tác"></div>
- <div id="setup" class="screen setup" aria-labelledby="setup-title">
-   <div class="setup-card">
-    <p class="eyebrow">CA LÀM VIỆC TỰ NGUYỆN / 2D PREVIEW</p>
-    <h2 id="setup-title">Hôm nay<br><em>bạn làm ai?</em></h2>
-    <p>Thử không gian 2D trước. Nhân vật vector hiện là <strong>placeholder kỹ thuật</strong>, chưa phải bộ sprite màu nước được duyệt.</p>
-    <div id="role-grid" class="roles" role="group" aria-label="Chọn vai trò">
-      <button type="button" class="role selected" data-role="barista" aria-pressed="true"><span>☕</span><strong>Pha chế</strong><small>Chăm ly nước đầu ngày.</small></button>
-      <button type="button" class="role" data-role="waiter" aria-pressed="false"><span>▤</span><strong>Phục vụ</strong><small>Nhớ bàn và khách.</small></button>
-      <button type="button" class="role" data-role="guard" aria-pressed="false"><span>♙</span><strong>Bảo vệ</strong><small>Giữ quán bình yên.</small></button>
-      <button type="button" class="role" data-role="shipper" aria-pressed="false"><span>➤</span><strong>Shipper</strong><small>Đừng giao nhầm nước.</small></button>
-      <button type="button" class="role" data-role="cat" aria-pressed="false"><span>ฅ</span><strong>Mèo cổ vũ</strong><small>Được quyền nằm nghỉ.</small></button>
+<div class="game-app" id="game-app">
+  <header class="topbar">
+    <div class="brand-area">
+      <a class="brand" href="../../" aria-label="Yên Coffee & Tea, về trang chủ">Yên Café Day<small>Day.</small></a>
+      <span class="beta">BETA 2D</span>
     </div>
-    <button id="enter" type="button" class="primary">Vào quán khám phá <span>↗</span></button>
-    <p class="fine">Không đăng nhập, không lưu dữ liệu, không đổi quà tại quán.</p>
-   </div>
- </div>
- <div id="hud" class="hud" hidden>
-   <div class="hud-top"><div class="hud-group"><span class="tag" id="hud-day">NGÀY 01</span><span class="tag" id="hud-role">PHA CHẾ</span><span class="tag" id="hud-phase">KHÁM PHÁ</span></div><div class="hud-group"><span class="tag clock" id="clock">00:00</span><button type="button" id="leave" class="close" aria-label="Đổi nhân vật">×</button></div></div>
-   <div class="objective-wrap">
-    <button id="objective-toggle" type="button" aria-controls="objective-panel" aria-expanded="false"><span>☷ Nhiệm vụ</span><strong id="objective-short">Khám phá</strong><span id="objective-arrow">⌄</span></button>
-    <div id="objective-panel" hidden>
-      <p class="eyebrow" id="objective-count">NGÀY 01 · KHÁM PHÁ</p>
-      <h3 id="objective-title">Đi quanh quán một vòng.</h3>
-      <p id="objective-desc">Nói chuyện với mọi người, nhấn E khi tới gần. Chỉ bắt đầu ca khi bạn thích.</p>
-      <div class="phase-actions"><span id="shift-state">CHƯA BẮT ĐẦU CA</span><button id="shift" type="button">Bắt đầu ca</button></div>
+    <div class="top-center">
+      <div class="hud-chip"><span class="chip-icon" aria-hidden="true">▣</span><span id="top-day">Ngày 1 · Thứ Hai</span></div>
+      <div class="hud-chip"><span class="chip-icon sun" aria-hidden="true">☀</span><span id="top-time">08:30</span></div>
     </div>
-   </div>
-   <div class="nearby" id="nearby" hidden></div>
-   <div class="speech" id="speech" hidden role="status" aria-live="polite"></div>
-   <div class="controls">
-    <div id="stick" class="stick" aria-label="Di chuyển nhân vật bằng joystick"><span>DI CHUYỂN</span><div class="ring"><div id="thumb" class="thumb"></div></div></div>
-    <div class="actions"><button id="power" type="button" class="power">Tuyệt chiêu<small>Q</small></button><button id="interact" type="button" class="interact" disabled>Tương tác<small>E</small></button></div>
-   </div>
- </div>
- <div class="stage-watermark" aria-hidden="true">VECTOR PLACEHOLDERS · ART CHƯA DUYỆT</div>
- <div id="result" class="screen result" hidden>
-   <div class="result-card"><p class="eyebrow" id="result-day">NGÀY 01 · BIÊN BẢN CA</p><h2>Hết việc.<br><em>Chưa hết ngày.</em></h2><p id="result-summary">Một ngày bình thường.</p>
-    <div class="result-stats"><div><small>ĐÃ LÀM</small><strong id="result-tasks">3 / 3</strong></div><div><small>THỜI GIAN</small><strong id="result-time">00:00</strong></div><div><small>ĐỘ YÊN</small><strong id="result-peace">70%</strong></div></div>
-    <button id="next-day" class="primary" type="button">Sang ngày mới ↗</button>
-   </div>
- </div>
- <div id="error" class="screen error" hidden role="alert"><div class="result-card"><h2>Không mở được bản 2D</h2><p>Trò chơi cần Phaser 4 và trình duyệt hỗ trợ Canvas/WebGL. Hãy kiểm tra kết nối mạng.</p></div></div>
-</section>
-<section class="review-strip">
- <div><p class="eyebrow">CỔNG DUYỆT HÌNH ẢNH</p><h2>Chỉ đổi model khi bạn duyệt.</h2><p>Bản này kiểm tra gameplay 2D. Concept màu nước của nhân vật pha chế là một bước riêng. Các sprite vector đang hiển thị chỉ là hình thay thế để kiểm tra điều khiển.</p></div>
- <div class="review-badges"><span>01 · Duyệt concept</span><span>02 · Làm sprite atlas</span><span>03 · Visual QA</span><span>04 · Thay game 3D</span></div>
-</section>
-</main>
-<footer>Yên Coffee &amp; Tea · Láng Dài · 2D prototype · Không ảnh hưởng game production</footer>
+    <div class="top-right" aria-label="Tài nguyên trong game">
+      <div class="hud-chip money" title="Tiền mô phỏng trong game, không phải tiền thật"><span class="chip-icon">●</span><strong id="top-coins">2.450</strong></div>
+      <div class="hud-chip heart" title="Độ yên của quán"><span class="chip-icon">♥</span><strong id="top-hearts">70</strong></div>
+      <div class="hud-chip energy" title="Năng lượng nhân vật"><span class="chip-icon">ϟ</span><strong id="top-energy">100/100</strong></div>
+      <button id="settings-btn" class="settings-btn" type="button" aria-label="Cài đặt" title="Cài đặt">⚙</button>
+    </div>
+  </header>
+
+  <div class="game-body">
+    <div id="scene" class="scene" aria-label="Không gian Yên Coffee & Tea 2D"></div>
+    <div class="sun-glow" aria-hidden="true"></div>
+
+    <nav class="sidebar" aria-label="Menu trò chơi">
+      <button id="start-shift" class="side-btn side-start" type="button"><span class="side-symbol">▶</span><span>Bắt đầu ca</span></button>
+      <button id="finish-shift" class="side-btn side-end" type="button" disabled><span class="side-symbol">⚑</span><span>Kết thúc ca</span></button>
+      <button id="open-preview" class="side-btn side-preview" type="button"><span class="side-symbol">♙</span><span>Xem trước model</span></button>
+      <button id="open-objective" class="side-btn" type="button"><span class="side-symbol">◎</span><span>Objective</span><small id="objective-badge">0/3</small></button>
+      <button id="open-journal" class="side-btn" type="button"><span class="side-symbol">▤</span><span>Nhật ký</span></button>
+      <button id="open-bag" class="side-btn" type="button"><span class="side-symbol">▥</span><span>Túi đồ</span></button>
+    </nav>
+
+    <div class="phase-strip" aria-live="polite"><span id="phase-label">NGÀY 01 · KHÁM PHÁ TỰ DO</span><span id="role-label">Pha chế</span></div>
+    <div id="world-hint" class="world-hint" hidden>Gần quầy pha chế · Nhấn E để tương tác</div>
+    <div id="dialogue" class="dialogue" role="status" aria-live="polite" hidden></div>
+
+    <div class="controls" id="controls">
+      <div class="keyboard-hint"><span><kbd>W</kbd><span class="keyrow"><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd></span></span><span>Di chuyển</span><span><kbd>E</kbd> Tương tác</span><span><kbd>Q</kbd> Tuyệt chiêu</span></div>
+      <div id="stick" class="stick" aria-label="Joystick di chuyển" role="group"><span class="stick-ring"><span id="thumb" class="stick-thumb"></span></span></div>
+      <div class="touch-actions"><button id="power" type="button" disabled>✨<span>Kỹ năng</span></button><button id="interact" type="button" disabled>☕<span>Tương tác</span></button></div>
+    </div>
+
+    <div id="overlay" class="overlay" aria-hidden="false">
+      <section id="model-modal" class="model-modal modal" role="dialog" aria-modal="true" aria-labelledby="preview-title">
+        <header class="modal-heading">
+          <div class="sparkle" aria-hidden="true">✦</div>
+          <div class="modal-heading-text"><h1 id="preview-title">Xem trước model mới (2D)</h1><p>Chọn nhân vật, xem các hướng và hoạt ảnh trước khi áp dụng vào game.</p></div>
+          <button id="close-modal" type="button" class="icon-close" aria-label="Đóng xem trước">×</button>
+        </header>
+        <div class="preview-content">
+          <div id="role-picker" class="role-picker" role="listbox" aria-label="Chọn nhân vật để xem trước">
+            <button class="role-option selected" type="button" data-role="barista" aria-selected="true"><img src="./assets/barista.svg" alt=""/><strong>Pha chế</strong><span>Mới</span></button>
+            <button class="role-option" type="button" data-role="waiter" aria-selected="false"><img src="./assets/waiter.svg" alt=""/><strong>Phục vụ</strong><span>Mới</span></button>
+            <button class="role-option" type="button" data-role="shipper" aria-selected="false"><img src="./assets/shipper.svg" alt=""/><strong>Shipper</strong><span>Mới</span></button>
+            <button class="role-option" type="button" data-role="guard" aria-selected="false"><img src="./assets/guard.svg" alt=""/><strong>Bảo vệ</strong><span>Mới</span></button>
+            <button class="role-option" type="button" data-role="cat" aria-selected="false"><img src="./assets/cat.svg" alt=""/><strong>Mèo cổ vũ</strong><span>Mới</span></button>
+          </div>
+          <div class="model-stage">
+            <div class="model-turnaround" id="model-turnaround">
+              <div class="pose"><div class="pose-bg"><img id="pose-front" src="./assets/barista.svg" alt="Hướng trước"/></div><strong>Trước</strong></div>
+              <div class="pose"><div class="pose-bg"><img id="pose-right" src="./assets/barista.svg" alt="Hướng phải"/></div><strong>Phải</strong></div>
+              <div class="pose"><div class="pose-bg"><img id="pose-back" src="./assets/barista.svg" alt="Hướng sau"/></div><strong>Sau</strong></div>
+              <div class="pose"><div class="pose-bg"><img id="pose-left" src="./assets/barista.svg" alt="Hướng trái"/></div><strong>Trái</strong></div>
+            </div>
+            <div class="anim-head">▣ <strong>Hoạt ảnh</strong><span>Chọn hoạt ảnh để xem nhân vật cử động</span></div>
+            <div class="animation-tabs" role="group" aria-label="Xem thử hoạt ảnh">
+              <button data-animation="idle" class="active" type="button">▶ Idle (Đứng)</button>
+              <button data-animation="walk" type="button">▶ Walk (Đi)</button>
+              <button data-animation="interact" type="button">▶ Interact (Tương tác)</button>
+            </div>
+            <div class="animation-film" id="animation-film" aria-label="Xem trước các khung hoạt ảnh">
+              <img src="./assets/barista.svg" alt="Khung 1"/><img src="./assets/barista.svg" alt="Khung 2"/><img src="./assets/barista.svg" alt="Khung 3"/><img src="./assets/barista.svg" alt="Khung 4"/><img src="./assets/barista.svg" alt="Khung 5"/><img src="./assets/barista.svg" alt="Khung 6"/>
+            </div>
+            <p id="model-note" class="model-note">Bản xem thử sprite 2D. Các hướng và chuyển động đang được hoàn thiện; hình minh họa chất lượng cao trong concept là chuẩn mỹ thuật mục tiêu.</p>
+          </div>
+        </div>
+        <footer class="modal-footer">
+          <div class="criteria"><span>✓ Phong cách anime 2D</span><span>✓ Điều khiển nhân vật</span><span>◌ Sprite animation đang hoàn thiện</span></div>
+          <button id="apply-model" class="apply-btn" type="button">✓ Áp dụng model này</button>
+        </footer>
+      </section>
+
+      <section id="info-modal" class="info-modal modal" role="dialog" aria-modal="true" aria-labelledby="info-title" hidden>
+        <header class="modal-heading"><div class="sparkle">☕</div><div class="modal-heading-text"><h2 id="info-title">Nhiệm vụ</h2><p id="info-intro">Mỗi ngày có chuyện riêng.</p></div><button id="close-info" class="icon-close" aria-label="Đóng" type="button">×</button></header>
+        <div id="info-body" class="info-body"></div>
+        <div class="info-actions"><button id="info-action" type="button" class="apply-btn" hidden>Bắt đầu ca</button></div>
+      </section>
+
+      <section id="result-modal" class="info-modal modal" role="dialog" aria-modal="true" aria-labelledby="result-title" hidden>
+        <header class="modal-heading"><div class="sparkle">✓</div><div class="modal-heading-text"><h2 id="result-title">Hết việc, chưa hết ngày.</h2><p id="result-day">NGÀY 01 · BIÊN BẢN CA</p></div></header>
+        <div class="result-details"><p id="result-summary">Quán hôm nay vẫn còn yên.</p><div><span>Hoàn thành</span><b id="result-tasks">3/3</b></div><div><span>Thời gian</span><b id="result-time">00:00</b></div><div><span>Độ yên</span><b id="result-peace">70%</b></div></div>
+        <button id="next-day" type="button" class="apply-btn">Sang ngày mới →</button>
+      </section>
+    </div>
+    <div id="load-error" class="load-error" hidden role="alert">Phaser không khởi tạo được. Hãy mở trên trình duyệt hỗ trợ WebGL/Canvas và thử tải lại trang.</div>
+  </div>
+  <div class="development-note">Yencafeday 2D · Preview từ concept bạn chọn · Chưa thay game production</div>
+</div>
 <script src="https://cdn.jsdelivr.net/npm/phaser@4.2.1/dist/phaser.min.js" defer></script>
 <script src="./game.js" defer></script>
 </body>
