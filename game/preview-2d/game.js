@@ -65,6 +65,62 @@ let world=null,phaserGame=null,elapsedUI=0,activeModal='preview';
 let touch={x:0,y:0,pointer:null};
 let interacting=false;
 const assetUrl=(role,view='front')=>'./assets/'+role+(role==='cat'||view==='front'?'':'-'+(view==='back'?'back':'side'))+'.svg';
+
+const SPRITE_ROLES=['barista','waiter','shipper','guard','cat'];
+const spriteRole=role=>SPRITE_ROLES.includes(role)?role:(role==='reader'?'waiter':'shipper');
+const sheetUrl=role=>'./assets/sprites/'+spriteRole(role)+'.png';
+const CLIPS={
+ 'idle-down':{frames:[0,1],fps:3},
+ 'walk-down':{frames:[2,3,2,1],fps:8},
+ 'idle-right':{frames:[4,5],fps:3},
+ 'walk-right':{frames:[6,7,6,5],fps:8},
+ 'idle-up':{frames:[8,9],fps:3},
+ 'walk-up':{frames:[10,11,10,9],fps:8},
+ 'interact':{frames:[12,13,14,15],fps:6,once:true}
+};
+let previewTick=0;
+function paintSpriteFrame(node,role,index,mirror=false){
+ if(!node)return;
+ const col=index%4,row=Math.floor(index/4);
+ node.style.backgroundImage='url("'+sheetUrl(role)+'")';
+ node.style.backgroundSize='400% 400%';
+ node.style.backgroundPosition=(col*100/3)+'% '+(row*100/3)+'%';
+ node.style.transform=mirror?'scaleX(-1)':'';
+ node.dataset.frame=String(index);
+}
+function paintPreview(){
+ const role=state.selectedPreview;
+ if(!role)return;
+ const t=previewTick++;
+ const mode=state.animation;
+ for(const [view,dir] of Object.entries({front:'down',right:'right',back:'up',left:'right'})){
+  const clip=mode==='interact'&&view==='front'?CLIPS.interact:CLIPS[(mode==='walk'?'walk':'idle')+'-'+dir];
+  paintSpriteFrame($('pose-'+view),role,clip.frames[t%clip.frames.length],view==='left');
+ }
+ const film=$('animation-film').querySelectorAll('.sprite-frame');
+ const sequence=mode==='interact'?[12,13,14,15,14,12]:
+    mode==='walk'?[2,3,6,7,10,11]:[0,1,4,5,8,9];
+ film.forEach((element,index)=>paintSpriteFrame(element,role,sequence[(index+t)%sequence.length]));
+}
+function setUpSpriteThumbnails(){
+ for(const el of document.querySelectorAll('[data-thumb]'))paintSpriteFrame(el,el.dataset.thumb,0);
+}
+function createRoleAnimations(scene,role){
+ for(const [suffix,def] of Object.entries(CLIPS)){
+  const key=role+'-'+suffix;
+  if(scene.anims.exists(key))continue;
+  scene.anims.create({key,frames:def.frames.map(frame=>({key:role,frame})),
+    frameRate:def.fps,repeat:def.once?0:-1});
+ }
+}
+function playDirectional(sprite,role,direction,moving=false){
+ if(!sprite||!sprite.anims)return;
+ const dir=direction==='up'?'up':direction==='left'||direction==='right'?'right':'down';
+ const key=role+'-'+(moving?'walk':'idle')+'-'+dir;
+ sprite.setFlipX(direction==='left');
+ if(sprite.anims.currentAnim?.key!==key||!sprite.anims.isPlaying)sprite.play(key,true);
+}
+
 const clockText=seconds=>{
  const total=Math.max(0,Math.floor(seconds));
  return String(Math.floor(total/60)).padStart(2,'0')+':'+String(total%60).padStart(2,'0');
@@ -104,39 +160,30 @@ function setRole(role){
 }
 function selectPreviewRole(role){
  if(!roles[role])return;
- state.selectedPreview=role;
+ state.selectedPreview=role;previewTick=0;
  for(const btn of document.querySelectorAll('.role-option')){
-   const selected=btn.dataset.role===role;
-   btn.classList.toggle('selected',selected);
-   btn.setAttribute('aria-selected',String(selected));
+  const selected=btn.dataset.role===role;
+  btn.classList.toggle('selected',selected);
+  btn.setAttribute('aria-selected',String(selected));
  }
- const pictures={front:assetUrl(role),right:assetUrl(role,'right'),
-                back:assetUrl(role,'back'),left:assetUrl(role,'left')};
- for(const [dir,src] of Object.entries(pictures)){
-   const img=$('pose-'+dir);
-   img.src=src;
-   img.style.transform=role==='cat'?'scale(.87)':'';
-   if(dir==='left'&&role!=='cat')img.style.transform='scaleX(-1)';
-   img.alt=roles[role].name+' · '+dir;
- }
- const frames=$('animation-film').querySelectorAll('img');
- for(const frame of frames)frame.src=assetUrl(role);
  $('model-turnaround').dataset.animation=state.animation;
  $('animation-film').dataset.animation=state.animation;
- $('model-note').textContent=role==='cat'
-   ?'Mèo Mướp đang dùng sprite vector 2D riêng. Hoạt ảnh nhiều khung hình sẽ được hoàn thiện sau bước duyệt concept.'
-   :'Bản chơi được dùng sprite vector nhiều hướng. Hình anime màu nước trong concept là mục tiêu hình ảnh, chưa phải atlas hoạt ảnh đã hoàn thiện.';
+ $('model-note').textContent=
+  '16 khung hình PNG nền trong suốt của '+roles[role].name+
+  '. Bốn hướng trước, phải, sau, trái; Idle, Walk và Interact là những frame thật.';
+ paintPreview();
 }
 function selectAnimation(animation){
  if(!['idle','walk','interact'].includes(animation))return;
- state.animation=animation;
+ state.animation=animation;previewTick=0;
  $('model-turnaround').dataset.animation=animation;
  $('animation-film').dataset.animation=animation;
  for(const btn of document.querySelectorAll('[data-animation]')){
-   const on=btn.dataset.animation===animation;
-   btn.classList.toggle('active',on);
-   btn.setAttribute('aria-pressed',String(on));
+  const on=btn.dataset.animation===animation;
+  btn.classList.toggle('active',on);
+  btn.setAttribute('aria-pressed',String(on));
  }
+ paintPreview();
 }
 function updateUI(){
  const label='NGÀY '+String(state.day).padStart(2,'0');
