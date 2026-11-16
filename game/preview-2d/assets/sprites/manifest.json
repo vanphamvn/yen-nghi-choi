@@ -1,0 +1,119 @@
+{
+  "schemaVersion": 1,
+  "title": "Yencafeday 2D hand-drawn chibi sprite pack",
+  "provenance": "Generated for this Yên project; no third-party character asset packs.",
+  "roleAssets": {
+    "barista": {
+      "file": "barista.png",
+      "bytes": 1174290,
+      "sha256": "cbad7e2ca26a71e7aaf284d9f96c153d4fb8ecb30c3bf5fc2a68481a3f4b84e4"
+    },
+    "waiter": {
+      "file": "waiter.png",
+      "bytes": 1064264,
+      "sha256": "7d48e7a903efd02da3fa264c7b82f28597390053b151662015de39a1b554f6fc"
+    },
+    "shipper": {
+      "file": "shipper.png",
+      "bytes": 1071686,
+      "sha256": "c3211e2cf66995d4089c799656296ba94bb88651341f552760aa87d9fd493fa0"
+    },
+    "guard": {
+      "file": "guard.png",
+      "bytes": 1007083,
+      "sha256": "354b78cb89b9485d89a7927802d3689610e0b2bd18d90d9c479d1d6b93fbf4d2"
+    },
+    "cat": {
+      "file": "cat.png",
+      "bytes": 1199437,
+      "sha256": "a3a6e2b2ee32e750bdf43d4b5eb946bd523eb61a7406e1864070f47942251568"
+    }
+  },
+  "format": {
+    "type": "png",
+    "colorMode": "RGBA",
+    "size": [
+      1024,
+      1280
+    ],
+    "columns": 4,
+    "rows": 4,
+    "frameSize": [
+      256,
+      320
+    ],
+    "pivot": {
+      "x": 128,
+      "y": 312
+    },
+    "transparentBackground": true
+  },
+  "animationFrames": {
+    "idle-down": [
+      0,
+      1
+    ],
+    "walk-down": [
+      2,
+      3,
+      2,
+      1
+    ],
+    "idle-right": [
+      4,
+      5
+    ],
+    "walk-right": [
+      6,
+      7,
+      6,
+      5
+    ],
+    "idle-up": [
+      8,
+      9
+    ],
+    "walk-up": [
+      10,
+      11,
+      10,
+      9
+    ],
+    "interact": [
+      12,
+      13,
+      14,
+      15
+    ]
+  },
+  "fps": {
+    "idle-down": 3,
+    "walk-down": 8,
+    "idle-right": 3,
+    "walk-right": 8,
+    "idle-up": 3,
+    "walk-up": 8,
+    "interact": 6
+  },
+  "directions": {
+    "left": {
+      "animation": "right",
+      "flipX": true
+    },
+    "right": {
+      "flipX": false
+    },
+    "up": {
+      "flipX": false
+    },
+    "down": {
+      "flipX": false
+    }
+  },
+  "notes": [
+    "Frames normalized and bottom-center aligned, disconnected background specks removed, low-alpha red/yellow halos reduced.",
+    "Character preview CSS and Phaser both read the same 4x4 PNG sheets; no actor SVG is loaded.",
+    "Guest/reader NPCs temporarily reuse shipper/waiter sprite packs pending bespoke guest art.",
+    "User may retain original 5 source sprite sheets and 80 extracted frame PNGs in project archive."
+  ]
+}
