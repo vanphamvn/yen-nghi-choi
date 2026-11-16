@@ -423,12 +423,19 @@ export function createAnimeWorld(B, container, roleId, roles, npcData) {
     if(roleId==='cat') return {loaded:false,clips:[],reason:'cat avatar preserved'};
     if(!B.SceneLoader?.ImportMeshAsync) throw new Error('Babylon GLB loader missing');
     const imported=await B.SceneLoader.ImportMeshAsync(null,'./assets/','yen-barista-v1.glb',scene);
-    const roots=imported.meshes.filter(m=>!m.parent);
+    const geometry=imported.meshes.filter(mesh=>mesh.getTotalVertices?.()>0);
+    const clips=Object.fromEntries(imported.animationGroups.map(group=>[group.name,group]));
+    const roots=imported.meshes.filter(mesh=>!mesh.parent);
+    if(!geometry.length || !roots.length || !['Idle','Walk','Interact'].every(name=>clips[name])){
+      for(const group of imported.animationGroups)group.stop();
+      for(const mesh of imported.meshes)mesh.dispose();
+      throw new Error('Yên GLB missing visible geometry, scene roots, or required animation clips');
+    }
     const assetHolder=new B.TransformNode('yen-barista-holder',scene);
     assetHolder.parent=player;
-    for(const r of roots)r.parent=assetHolder;
+    for(const root of roots)root.parent=assetHolder;
+    heroClips=clips;
     for(const mesh of fallbackMeshes)mesh.setEnabled(false);
-    heroClips=Object.fromEntries(imported.animationGroups.map(g=>[g.name,g]));
     heroLoaded=true;
     // The original GLB is modeled with Y up, at the player origin.
     assetHolder.scaling.setAll(.98);

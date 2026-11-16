@@ -30,9 +30,9 @@
         <div class="role-grid" id="role-grid" role="group" aria-label="Chọn vai trò">
           <button class="role-card" type="button" data-role="guard" aria-pressed="false"><span class="role-icon">♙</span><strong>Bảo vệ</strong><small>Có mặt trước cả khách.</small></button>
           <button class="role-card" type="button" data-role="shipper" aria-pressed="false"><span class="role-icon">➤</span><strong>Shipper</strong><small>Hơi nhanh quá mức.</small></button>
-          <button class="role-card" type="button" data-role="barista" aria-pressed="false"><span class="role-icon">◒</span><strong>Pha chế</strong><small>Đong cả sự kiên nhẫn.</small></button>
+          <button class="role-card" type="button" data-role="barista" aria-pressed="true"><span class="role-icon">◒</span><strong>Pha chế</strong><small>Nhân vật GLB mới · thử nghiệm.</small></button>
           <button class="role-card" type="button" data-role="waiter" aria-pressed="false"><span class="role-icon">▤</span><strong>Phục vụ</strong><small>Một tay, nhiều việc.</small></button>
-          <button class="role-card" type="button" data-role="cat" aria-pressed="true"><span class="role-icon">ฅ</span><strong>Mèo cổ vũ</strong><small>Chức vụ tự phong.</small></button>
+          <button class="role-card" type="button" data-role="cat" aria-pressed="false"><span class="role-icon">ฅ</span><strong>Mèo cổ vũ</strong><small>Model mèo cũ, chưa thay.</small></button>
         </div>
         <div class="block-heading stats-heading"><span>02</span><h2>Chia điểm kỹ năng</h2><div class="remaining"><b id="points-left">0</b><small>điểm còn</small></div></div>
         <div id="stats" class="stats" aria-label="Thuộc tính nhân vật"></div>
@@ -47,7 +47,7 @@
       <div class="game-overlay">
         <div class="hud-top">
           <div class="hud-left">
-            <span class="hud-role" id="hud-role">Mèo cổ vũ</span>
+            <span class="hud-role" id="hud-role">Pha chế</span>
             <span class="hud-day" id="hud-day">NGÀY 01</span>
             <div class="hud-clock"><span>THỜI GIAN CA</span><b id="clock">00:00</b></div>
           </div>
@@ -72,6 +72,7 @@
           </div>
         </div>
         <div id="game-toast" class="game-toast" hidden role="status" aria-live="polite"></div>
+        <div id="model-status" class="model-status" role="status" aria-live="polite">Đang kiểm tra model nhân vật…</div>
         <div class="game-bottom">
           <div class="joystick" id="joystick" aria-label="Điều khiển di chuyển bằng ngón tay">
             <span class="joystick-guide">DI CHUYỂN</span><div class="joystick-ring"><div id="joystick-thumb" class="joystick-thumb"></div></div>
