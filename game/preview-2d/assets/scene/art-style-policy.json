@@ -8,7 +8,7 @@
     "assets/sprites/shipper.png",
     "assets/sprites/cat.png"
   ],
-  "status": "requires-character-anchored-human-art-review",
+  "status": "delegated-agent-review-owner-checks-later",
   "notes": "Legacy scene SVGs below are NOT style-approved. Frozen only to keep currently published gameplay running until replaced with painterly character-matched PNG/WebP art. The audit prints known debt but fails any newly introduced unreviewed art or edit to frozen vector assets. Historical painted WebP assets are also version-frozen as a non-approved comparison baseline.",
   "legacyUnapprovedVectors": {
     "assets/scene/backdrop.svg": {
@@ -52,15 +52,41 @@
       "reason": "PR #91 vector-gradient visual mismatch; needs painted raster replacement"
     }
   },
-  "approvedArt": {},
+  "approvedArt": {
+    "assets/scene/table-painted-v1.webp": {
+      "styleStatus": "approved",
+      "styleId": "yen-painted-chibi-v1",
+      "reviewer": "Codex",
+      "reviewerType": "agent",
+      "reviewAuthority": "user-delegated",
+      "ownerReviewPending": true,
+      "reviewedOn": "2026-11-16",
+      "runtimeScaleCompared": true,
+      "characterReferences": [
+        "assets/sprites/barista.png",
+        "assets/sprites/waiter.png"
+      ],
+      "proof": "art-reviews/table-v1/contact-sheet.png",
+      "gitBlobSha": "cc21967ec6fdd458994b6d896727ba4ebefd221c",
+      "visualChecks": {
+        "brush": "pass",
+        "lighting": "pass",
+        "perspective": "pass",
+        "scale": "pass",
+        "alpha": "pass"
+      },
+      "notes": "Agent visual evaluation against source PNG pixels and Phaser review scene. Table 140x86 beside 117x146 characters; disconnected near-transparent specks cropped, lossless alpha preserved. This is not owner signoff."
+    }
+  },
   "reviewRequirements": {
     "minimumCharacterReferences": 2,
     "proofImageExtensions": [
       ".png",
       ".webp"
     ],
-    "reviewerMustBeHuman": true,
-    "comparisonAtRuntimeScale": true
+    "reviewerMustBeHuman": false,
+    "comparisonAtRuntimeScale": true,
+    "agentReviewRequiresDelegation": true
   },
   "canonicalRoleBlobs": {
     "assets/sprites/barista.png": "c9812d8d7542d9ebf8d8d36960643f0ad1e1bbc1",
@@ -72,5 +98,12 @@
   "legacyPaintedBackdrops": {
     "assets/cafe-painted.webp": "078422cb2ac716aae3f8944256f2b6a4190fadea",
     "assets/cafe-foreground.webp": "51f21266b9a33caaa8a01f629332d8dfdfa5b502"
+  },
+  "reviewDelegation": {
+    "enabled": true,
+    "source": "explicit-user-instruction",
+    "recordedOn": "2026-11-16",
+    "instruction": "ưu tiên tự duyệt artwork trước tôi sẽ kiểm tra sau",
+    "scope": "Visual review and staged integration; owner reviews after implementation"
   }
 }

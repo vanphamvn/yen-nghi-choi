@@ -30,7 +30,7 @@ Finish a coherent **2D, character-driven café game** featuring painterly chibi 
 5. **Verify** syntax, existing Node tests, new regression tests, collision and input states. When browser testing is available, capture desktop 1440×900 and 390×844, plus 360×800; test 5 role paths and 6 NPC interactions. If the environment lacks a real browser, say so and keep browser sign-off pending.
 6. **Ship** through CI -> PR -> merge -> production deploy check. Confirm exact production SHA and URL; monitor errors. If quota or authorization blocks deploy, use an already authorized deployment channel, but never silently change provider, alias, plan, credential or billing. If no prod channel works, record the blocker and stop labeling the increment shipped.
 7. **Record state** in the issue and `ops/CHANGELOG-GAME.md` with test results, production URL/SHA, residual debt and next action. Edit `ops/roadmap.json` only for actual changes, not wishful completion.
-8. **Continue** with the next vertical slice on subsequent scheduled sessions without requesting repeated prompts. Ask the owner only for a decision that cannot legitimately be made autonomously: exact art approval, real-world branding/claim, privacy or spending, external authorization or acceptance of final artistic direction. Meanwhile switch to independent code/QA items.
+8. **Continue** with the next vertical slice on subsequent scheduled sessions without requesting repeated prompts. Ask the owner only for a decision that cannot legitimately be made autonomously: non-delegated art decisions, real-world branding/claim, privacy or spending, external authorization or acceptance of final artistic direction. Meanwhile switch to independent code/QA items.
 
 ## Prioritization rules
 
@@ -38,7 +38,7 @@ P0 release safety and failing production > P1 blocked visual consistency / game-
 
 ## Stop conditions
 
-A **session** may finish with an independently usable production increment and a concrete verification result. The **game** is finished only when every mandatory ROADMAP milestone is completed *and* the release skill's acceptance checklist passes on a production commit, including owner art acceptance. A draft PR, green tests or a preview alone is not completion.
+A **session** may finish with an independently usable production increment and a concrete verification result. The **game** is finished only when every mandatory ROADMAP milestone is completed *and* the release skill's acceptance checklist passes on a production commit, including actual art-review evidence under the current owner-delegated review policy; never fabricate owner acceptance. A draft PR, green tests or a preview alone is not completion.
 
 ## Communication
 

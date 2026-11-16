@@ -27,7 +27,7 @@ Do not wait until after code has been merged.
 3. **Produce an asset, not a flat mockup.** Generate or paint a matching-quality transparent RGBA prop (or coherent painted full background). Do not use programmatic gradients, geometric SVG primitives, stock icons, clip art, flat CSS or unreviewed vector art as a substitute for painterly game sprites. SVG is permitted for invisible masks, editor guides or interface controls, not as an unreviewed visible world prop.
 4. **Make independent animation states and stable geometry.** Separate interactions into frames/layers (e.g. idle machine, steam; clean table, cup present/removed). Preserve constant canvas and feet/base pivot across frames, keep outlines inside frame bounds, bleed RGB into transparent alpha edges and check for halos. The collision shape matches *ground contact*, not the visible sprite bounding box.
 5. **Create a side-by-side proof sheet** showing at least two character poses plus the new prop/background at *the same runtime scale*, once on a neutral checkerboard and once in the actual scene. Include native resolution and a small-phone crop. Place the evidence under `game/preview-2d/art-reviews/`, not just in a chat message. Use `art-review.html` for the current baseline inspection.
-6. **Human visual review is mandatory.** The project owner checks: shared brushwork/texture, outlines, light/shadow, perspective, saturation, proportions, alpha quality and scene integration. An agent must never self-certify “approved by owner.” Obtain explicit approval for the particular art revision and record the reviewer, date and proof in `assets/scene/art-style-policy.json` under `approvedArt`.
+6. **Use the actual review authority.** Under explicit user delegation (2026-11-16: "ưu tiên tự duyệt artwork trước tôi sẽ kiểm tra sau"), Codex may visually assess and integrate assets before the owner inspects them. Record reviewerType=agent, reviewAuthority=user-delegated, ownerReviewPending=true, actual visual checks, source fingerprint and proof; do not claim owner approval. Without delegation, require a human reviewer. Check: shared brushwork/texture, outlines, light/shadow, perspective, saturation, proportions, alpha quality and scene integration. An agent must never self-certify “approved by owner.” Record the actual agent or human assessment for the particular revision, with reviewer type, date and proof in `assets/scene/art-style-policy.json` under `approvedArt`.
 7. **Run gates:** `node game/preview-2d/tools/audit-art-style.mjs`, `node --test game/preview-2d/tests/art-style-policy.test.mjs`, the NPC/game contract tests, and build/visual checks at 1440×900 and 390×844. `--strict` also refuses the currently quarantined legacy-vector style debt.
 8. **Ship a testable product.** Merge only after CI and user-visible side-by-side QA. Confirm the deployment's exact commit on production and provide its URL. If quota/deploy is blocked, report **not shipped**, never label a PR as production.
 
@@ -38,7 +38,7 @@ Do not wait until after code has been merged.
 - [ ] Consistent outline softness, hand-painted texture, ambient lighting and material response.
 - [ ] Perspective and human-relative dimensions reviewed, with contact-point pivots.
 - [ ] Independent animation frame/layer state, correct alpha edge and foot alignment.
-- [ ] Contact-sheet proof exists; project owner visually approved this exact revision.
+- [ ] Contact-sheet proof exists; actual delegated agent or human review is recorded for this exact revision; owner review status remains explicit.
 - [ ] Policy, CI, gameplay and browser checks pass; release commit verified in production.
 
 ## Existing known mismatch and remediation
@@ -52,4 +52,4 @@ The 10 files `assets/scene/{backdrop,door,counter,table,bench,plant,scooter,cup,
 - [Automated audit](../../../game/preview-2d/tools/audit-art-style.mjs)
 - [Visual comparison board](../../../game/preview-2d/art-review.html)
 
-**Important:** The Node audit checks provenance, art inventory, review evidence, legacy hashes and release prerequisites, **not actual perceptual similarity**. Only human side-by-side visual acceptance can approve the art.
+**Important:** The Node audit checks provenance, art inventory, review evidence, legacy hashes and release prerequisites, **not actual perceptual similarity**. Only an actual human or explicitly delegated agent visual assessment can approve art; a green unit test cannot.

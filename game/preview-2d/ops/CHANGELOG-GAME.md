@@ -2,6 +2,17 @@
 
 This file records **verified releases**, not PRs mistaken for production. Agents append one entry per deployment or clearly marked blocked attempt. Keep the newest entry at the top.
 
+## 2026-11-16 | Role onboarding and complete five-role browser walkthrough
+
+- Issues / PR: #99, #96 / #111.
+- Merged SHA: `5d95054e958f0a07d305b2a1c95057dbde45e76d`.
+- Result: SHIPPED on Netlify; source/build provenance and asset content match.
+- Production evidence: https://github.com/vanphamvn/yen-nghi-choi/actions/runs/43895628731.
+- Browser production: 7 passed, 2 explicitly skipped. All five roles completed three tasks, finished shifts and advanced days via real keyboard/buttons using the supported Canvas fallback. Default-renderer boot/input passed at desktop and both mobile viewport sizes.
+- Long-case CI navigation was stabilized by sampling after key release; software WebGL had about 9 FPS. This is a runner observation, not a physical-device benchmark.
+- No owner approval was invented. The subsequent owner instruction authorizes delegated agent artwork review before later owner inspection.
+- Follow-up: integrate the agent-reviewed reference table and continue replacing quarantined scene artwork.
+
 ## 2026-11-16 | Mobile input and production browser gates
 
 - Issue / PR: #100 / #110.

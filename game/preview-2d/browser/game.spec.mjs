@@ -14,6 +14,7 @@ test('boot, role selection, focus, movement and mobile controls',async({page},te
  await expect(page.locator('#overlay')).toBeHidden();await expect(page.locator('#role-label')).toHaveText('Phục vụ');
  const inspect=()=>page.evaluate(()=>window.__yenQA.inspect());
  const start=await inspect();
+ expect(start.props.find(prop=>prop.id==='table').texture).toBe('prop-table-painted');
  await page.keyboard.down('d');await page.waitForTimeout(220);await page.keyboard.up('d');
  const moved=await inspect();expect(moved.player.x).toBeGreaterThan(start.player.x+10);
  await page.keyboard.down('d');await page.locator('#open-bag').click();
@@ -98,10 +99,10 @@ test('all five roles complete a shift through real controls and advance days',as
  await page.screenshot({path:testInfo.outputPath('five-roles-day-six.png'),fullPage:true});
 });
 
-test('owner review candidate loads separately without replacing game art',async({page})=>{
+test('delegated artwork review evidence loads separately',async({page})=>{
  const errors=[];page.on('pageerror',e=>errors.push(e.message));
  await page.goto('/game/preview-2d/art-reviews/table-v1/');
- await expect(page.getByRole('heading',{name:'Mẫu bàn v1 — chờ anh duyệt'})).toBeVisible();
+ await expect(page.getByRole('heading',{name:'Mẫu bàn v1 — Codex tự đánh giá'})).toBeVisible();
  await expect(page.locator('#review-scene canvas')).toBeVisible();
  await expect(page.locator('#review-scene')).toHaveAttribute('data-ready','true');
  await expect(page.locator('#review-error')).toBeHidden();

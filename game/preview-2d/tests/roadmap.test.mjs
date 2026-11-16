@@ -20,7 +20,10 @@ test('roadmap is machine-readable, traceable and dependency-safe',()=>{
 
 test('pick M0 first, but keep independent gameplay work available',()=>{
  // Exercise an unshipped baseline even after the actual roadmap advances.
- const baseline=clone();baseline.stages[0].status='todo';baseline.stages[0].evidence=null;
+ const baseline=clone();
+ for(const stage of baseline.stages)if(['M0','M1','M4','M5','M6'].includes(stage.id)){
+  stage.status='todo';stage.evidence=null;
+ }
  const result=chooseWork(baseline);
  assert.equal(result.next.id,'M0');
  assert.deepEqual(result.ready.map(s=>s.id),['M0','M1','M4','M5','M6']);
@@ -35,8 +38,9 @@ test('detect fake done state and missing release proof',()=>{
  assert.ok(validateRoadmap(p).some(s=>s.includes('Done without verified release evidence')));
 });
 
-test('require owner approval for art milestones, not an AI placeholder',()=>{
+test('require owner approval when a milestone explicitly retains its human gate',()=>{
  const p=clone();
+ p.stages[1].requiresHumanApproval=true;
  p.stages[1].status='done';
  p.stages[1].evidence={deployedSHA:'a'.repeat(40),productionURL:'https://example.com/game/preview-2d/',testReport:'pass'};
  assert.ok(validateRoadmap(p).some(s=>s.includes('Human acceptance missing')));

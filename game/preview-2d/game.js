@@ -32,14 +32,14 @@ const roles={
 const SCENE_PROPS=[
  {id:'door',texture:'door',x:172,y:606,w:215,h:355,shadow:[77,12]},
  {id:'counter',texture:'counter',x:1120,y:610,w:598,h:310,shadow:[260,18]},
- {id:'table',texture:'table',x:355,y:723,w:307,h:214,shadow:[118,16]},
+ {id:'table',texture:'table-painted',raster:'./assets/scene/table-painted-v1.webp',x:355,y:723,w:140,h:86,shadow:[61,10]},
  {id:'bench',texture:'bench',x:1220,y:751,w:310,h:235,shadow:[132,18]},
  {id:'plant',texture:'plant',x:110,y:668,w:201,h:288,shadow:[52,13],sway:true},
  {id:'bike',texture:'scooter',x:1360,y:836,w:188,h:211,shadow:[75,12]}
 ];
 const SCENE_COLLIDERS=[
  {id:'counter',shape:'rect',l:824,t:475,r:1440,b:610},
- {id:'table',shape:'ellipse',x:355,y:674,rx:130,ry:76},
+ {id:'table',shape:'ellipse',x:355,y:704,rx:65,ry:28},
  {id:'bench',shape:'rect',l:1104,t:662,r:1372,b:752},
  {id:'bike',shape:'ellipse',x:1370,y:787,rx:52,ry:58},
  {id:'plant',shape:'ellipse',x:110,y:632,rx:43,ry:29}
@@ -47,7 +47,7 @@ const SCENE_COLLIDERS=[
 const stations={
  door:{x:195,y:716,label:'Lối vào'},
  counter:{x:990,y:652,label:'Quầy pha chế'},
- table:{x:482,y:762,label:'Bàn khách'},
+ table:{x:440,y:744,label:'Bàn khách'},
  bike:{x:1283,y:809,label:'Xe giao hàng'},
  bench:{x:1040,y:768,label:'Ghế dài'},
  plant:{x:190,y:613,label:'Chậu cây'}
@@ -489,8 +489,10 @@ class CafeScene extends Phaser.Scene{
  constructor(){super('YenCafe2D');this.sprites=new Map();this.npcLabels=new Map();this.npcStates=new Map();this.propSprites=new Map();this.propDetails=new Map();this.steam=[];this.lastDirection='down';}
  preload(){
   this.load.svg('scene-backdrop','./assets/scene/backdrop.svg',{width:1440,height:900});
-  for(const prop of SCENE_PROPS)
-   this.load.svg('prop-'+prop.texture,'./assets/scene/'+prop.texture+'.svg');
+  for(const prop of SCENE_PROPS){
+   if(prop.raster)this.load.image('prop-'+prop.texture,prop.raster);
+   else this.load.svg('prop-'+prop.texture,'./assets/scene/'+prop.texture+'.svg');
+  }
   for(const name of ['cup','book','cushion'])
    this.load.svg('prop-'+name,'./assets/scene/'+name+'.svg');
   for(const role of SPRITE_ROLES)
@@ -568,9 +570,9 @@ class CafeScene extends Phaser.Scene{
     duration:2600,ease:'Sine.inOut',yoyo:true,repeat:-1});
   }
   // Small details have their own textures and state, independent of the tables.
-  const cup=this.add.image(378,618,'prop-cup').setDisplaySize(37,43)
+  const cup=this.add.image(373,661,'prop-cup').setDisplaySize(20,24)
    .setOrigin(.5,1).setDepth(726);
-  const book=this.add.image(306,626,'prop-book').setDisplaySize(63,38)
+  const book=this.add.image(331,662,'prop-book').setDisplaySize(35,22)
    .setOrigin(.5,1).setDepth(727);
   const cushion=this.add.image(1168,670,'prop-cushion').setDisplaySize(69,47)
    .setOrigin(.5,1).setDepth(754);
@@ -641,7 +643,11 @@ class CafeScene extends Phaser.Scene{
   this.scooterLight?.setVisible(false);
   this.steam.forEach(p=>p.setVisible(false));
   const cup=this.propDetails.get('cup');
+  const book=this.propDetails.get('book');
+  for(const item of [cup,book,this.propDetails.get('cushion'),this.propSprites.get('door')])
+   if(item)this.tweens.killTweensOf?.(item);
   if(cup)cup.setVisible(true).setAlpha(1);
+  if(book)book.setAngle(0);
   const pillow=this.propDetails.get('cushion');
   if(pillow)pillow.setPosition(1168,670).setAngle(0);
   const door=this.propSprites.get('door');

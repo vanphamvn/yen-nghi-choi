@@ -55,7 +55,7 @@ PR #91 replaced the previous painted WebP café with `backdrop.svg` and authored
 
 ## Revision process for the 10 quarantined SVGs
 
-Start with **one representative furniture item**, ideally table or counter. Paint a new transparent raster asset explicitly referenced to the barista art. Generate its interaction states; compare at runtime scale; fix perspective and outline until the owner approves. Then approve the method, recreate the remaining props with the same art bible and asset treatment, and finally repaint the architecture layer. Keep old SVGs unchanged until their replacements pass gameplay QA; then remove runtime references and retire the SVG baseline.
+Start with **one representative furniture item**, ideally table or counter. Paint a new transparent raster asset explicitly referenced to the barista art. Generate its interaction states; compare at runtime scale; fix perspective and outline until the actual reviewer accepts it. Explicit user delegation permits agent visual assessment before later owner inspection. Then apply the reviewed method, recreate the remaining props with the same art bible and asset treatment, and finally repaint the architecture layer. Keep old SVGs unchanged until their replacements pass gameplay QA; then remove runtime references and retire the SVG baseline.
 
 ## Release proof
 
@@ -64,6 +64,6 @@ When an art revision is ready, update `art-style-policy.json` with:
 - `styleStatus: "approved"`, `styleId: "yen-painted-chibi-v1"`;
 - at least two real character reference paths;
 - `proof` pointing to an existing PNG/WebP contact sheet;
-- `reviewer` and ISO `reviewedOn` from an **actual human approval**, not the artist/assistant's own assertion.
+- `reviewer` and ISO `reviewedOn` from the **actual review**, distinguishing human approval from user-delegated agent assessment. Agent reviews must set reviewerType=agent, reviewAuthority=user-delegated, ownerReviewPending=true, image fingerprint and individual visual checks.
 
-The automated audit verifies that those records are complete and the files exist, but **cannot determine whether the images look right**. An explicit human visual review is the final art gate.
+The automated audit verifies that those records are complete and the files exist, but **cannot determine whether the images look right**. Never represent an agent assessment as owner acceptance; retain the owner inspection status while using the delegated review authority.

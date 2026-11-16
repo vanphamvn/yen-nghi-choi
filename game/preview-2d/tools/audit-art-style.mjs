@@ -13,6 +13,7 @@ import {createHash} from 'node:crypto';
 import {execFileSync} from 'node:child_process';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
+import {reviewAuthorityErrors} from './art-review-authority.mjs';
 
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const gitRoot=path.resolve(root,'../..');
@@ -126,9 +127,10 @@ function auditApproval(rel,entry){
     (entry.proof||'').includes('..'))
   errors.push('Missing valid visual contact sheet path under art-reviews/: '+rel);
  else imageSignature(entry.proof);
- if(typeof entry.reviewer!=='string'||entry.reviewer.trim().length<3||
-    /^(ai|bot|gpt|agent|assistant|unknown|self)$/i.test(entry.reviewer.trim()))
-  errors.push('Human reviewer name required (not agent self-approval): '+rel);
+ for(const error of reviewAuthorityErrors(entry,policy))errors.push(error+': '+rel);
+ if(!/^[a-f0-9]{40}$/.test(entry.gitBlobSha||''))errors.push('Reviewed artwork fingerprint required: '+rel);
+ if(entry.gitBlobSha&&existsSync(path.join(root,rel))&&repositoryBlobHash(rel,path.join(root,rel))!==entry.gitBlobSha)
+  errors.push('Reviewed artwork bytes changed: '+rel);
  const date=Date.parse(entry.reviewedOn||'');
  if(!/^\d{4}-\d{2}-\d{2}$/.test(entry.reviewedOn||'')||!Number.isFinite(date))
   errors.push('Valid YYYY-MM-DD reviewedOn required: '+rel);
