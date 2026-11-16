@@ -2,6 +2,7 @@ import {readFileSync, readdirSync} from 'node:fs';
 import {createHash} from 'node:crypto';
 import {fileURLToPath} from 'node:url';
 import path from 'node:path';
+import {verifyBuildInfo} from './write-build-info.mjs';
 
 export const digest = value => createHash('sha256').update(value).digest('hex');
 // Normalize only transformations observed on this site's Netlify production.
@@ -42,6 +43,13 @@ export async function compareLive(root, base, fetcher = fetch) {
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   const root = path.resolve('game/preview-2d');
   const report = await compareLive(root, 'https://yencafeday.netlify.app/game/preview-2d/');
+  try {
+    const response=await fetch('https://yencafeday.netlify.app/game/preview-2d/build-info.json?verify='+process.env.GITHUB_SHA,
+      {signal:AbortSignal.timeout(15000),redirect:'error',cache:'no-store'});
+    if(!response.ok)throw Error('Build metadata HTTP '+response.status);
+    report.buildInfo=await response.json();
+    if(!verifyBuildInfo(report.buildInfo,process.env.GITHUB_SHA))throw Error('Production build provenance is missing, stale or from a preview');
+  } catch(error) {report.status='BLOCKED';report.provenanceError=error.message;}
   console.log(JSON.stringify(report, null, 2));
   if (report.status !== 'CONTENT_MATCH') process.exitCode = 1;
 }
