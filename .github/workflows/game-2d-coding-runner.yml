@@ -1,0 +1,199 @@
+name: Game 2D coding runner
+on:
+  workflow_dispatch:
+    inputs:
+      plan_only:
+        description: Check readiness without calling the model
+        type: boolean
+        default: false
+  push:
+    paths:
+      - .github/workflows/game-2d-coding-runner.yml
+      - .github/codex/**
+  pull_request:
+    paths:
+      - .github/workflows/game-2d-coding-runner.yml
+      - .github/codex/**
+  workflow_run:
+    workflows: [Game 2D sprite contract]
+    types: [completed]
+    branches: [main]
+
+permissions:
+  contents: read
+  pull-requests: read
+concurrency:
+  group: game-2d-coding-runner
+  cancel-in-progress: false
+
+jobs:
+  readiness:
+    if: >-
+      (github.event_name == 'push' || github.event_name == 'pull_request') ||
+      (github.ref == 'refs/heads/main' && github.event_name == 'workflow_dispatch') ||
+      (github.event_name == 'workflow_run' &&
+       github.event.workflow_run.conclusion == 'success' &&
+       github.event.workflow_run.head_branch == 'main' &&
+       github.event.workflow_run.head_repository.full_name == github.repository)
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      code: ${{ steps.ready.outputs.code }}
+      sha: ${{ steps.source.outputs.sha }}
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+          ref: ${{ (github.event_name == 'push' || github.event_name == 'pull_request') && github.sha || 'main' }}
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '22'
+      - id: source
+        run: echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+      - name: Test runner boundary and select eligible work
+        run: |
+          node --test .github/codex/runner.test.mjs
+          node game/preview-2d/tools/next-work.mjs --validate
+          node .github/codex/runner.mjs plan
+      - id: ready
+        name: Check credentials and existing work without exposing secrets
+        env:
+          MODEL_KEY: ${{ secrets.OPENAI_API_KEY }}
+          GH_TOKEN: ${{ github.token }}
+          EVENT: ${{ github.event_name }}
+          SOURCE_REF: ${{ github.ref }}
+          PLAN_ONLY: ${{ inputs.plan_only }}
+          PAUSED: ${{ vars.GAME_CODING_PAUSED }}
+          VERIFIED_SHA: ${{ github.event.workflow_run.head_sha }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          echo 'code=false' >> "$GITHUB_OUTPUT"
+          if { [ "$EVENT" = push ] && [ "$SOURCE_REF" != refs/heads/main ]; } || [ "$EVENT" = pull_request ] || [ "$PLAN_ONLY" = true ]; then
+            echo 'Runner configuration validated; no model call requested.' >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+          if [ "$PAUSED" = true ]; then
+            echo 'PAUSED: GAME_CODING_PAUSED=true.' >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+          if [ "$EVENT" = workflow_run ] && [ "$(git rev-parse HEAD)" != "$VERIFIED_SHA" ]; then
+            echo 'PAUSED: main has advanced beyond the verified production run.' >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+          if [ -z "$MODEL_KEY" ]; then
+            echo 'BLOCKED: add repository secret OPENAI_API_KEY, then run this workflow on main.' >> "$GITHUB_STEP_SUMMARY"
+            exit 1
+          fi
+          if ! node -e "if(!JSON.parse(require('fs').readFileSync('runner-task.json')).task)process.exit(1)"; then
+            echo 'PAUSED: no eligible engineering milestone; inspect roadmap blockers.' >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+          gh pr list --state open --limit 100 --json headRefName > "$RUNNER_TEMP/open-prs.json"
+          if node -e "const p=JSON.parse(require('fs').readFileSync(process.argv[1]));process.exit(p.some(x=>x.headRefName.startsWith('autopilot/game-'))?0:1)" "$RUNNER_TEMP/open-prs.json"; then
+            echo 'PAUSED: an autopilot/game-* PR already awaits review.' >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+          echo 'code=true' >> "$GITHUB_OUTPUT"
+
+  code:
+    needs: readiness
+    if: needs.readiness.outputs.code == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          ref: ${{ needs.readiness.outputs.sha }}
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '22'
+      - name: Prepare trusted diff guard and task
+        run: |
+          cp .github/codex/runner.mjs "$RUNNER_TEMP/trusted-runner.mjs"
+          node .github/codex/runner.mjs plan
+      - name: Implement one engineering slice
+        uses: openai/codex-action@bdf19a4a223ec2549a3e2274a0cf61556bc07675
+        with:
+          openai-api-key: ${{ secrets.OPENAI_API_KEY }}
+          prompt-file: .github/codex/implement.md
+          output-file: codex-report.md
+          sandbox: workspace-write
+          safety-strategy: drop-sudo
+          allow-bots: true
+      - name: Validate actual changes before publication
+        run: |
+          mkdir -p "$RUNNER_TEMP/coding-output"
+          cp codex-report.md "$RUNNER_TEMP/coding-output/report.md"
+          rm runner-task.json codex-report.md
+          git add -A
+          node "$RUNNER_TEMP/trusted-runner.mjs" check
+          node --check game/preview-2d/game.js
+          node game/preview-2d/tools/audit-art-style.mjs
+          node game/preview-2d/tools/next-work.mjs --validate
+          node --test game/preview-2d/tests/*.test.mjs tests/game-2d*.test.mjs
+          git diff --cached --check
+          git diff --cached --binary > "$RUNNER_TEMP/coding-output/change.patch"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: game-coding-patch
+          path: ${{ runner.temp }}/coding-output/
+          retention-days: 1
+          if-no-files-found: error
+
+  publish:
+    needs: [readiness, code]
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: write
+      pull-requests: write
+      actions: write
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          ref: ${{ needs.readiness.outputs.sha }}
+          persist-credentials: false
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: game-coding-patch
+          path: ${{ runner.temp }}/coding-output
+      - name: Revalidate patch with trusted main-branch code
+        run: |
+          cp .github/codex/runner.mjs "$RUNNER_TEMP/trusted-runner.mjs"
+          git apply --index --check "$RUNNER_TEMP/coding-output/change.patch"
+          git apply --index "$RUNNER_TEMP/coding-output/change.patch"
+          node "$RUNNER_TEMP/trusted-runner.mjs" check
+          git diff --cached --check
+      - name: Publish one draft PR and explicitly trigger CI
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          BASE_SHA: ${{ needs.readiness.outputs.sha }}
+        run: |
+          current=$(gh api "repos/$GH_REPO/git/ref/heads/main" --jq .object.sha)
+          if [ "$current" != "$BASE_SHA" ]; then
+            echo 'BLOCKED: main moved during coding; rerun against fresh source.' >> "$GITHUB_STEP_SUMMARY"
+            exit 1
+          fi
+          branch="autopilot/game-$GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT"
+          git switch -c "$branch"
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'feat(game): implement validated roadmap engineering slice'
+          gh auth setup-git
+          git push origin "$branch"
+          {
+            echo 'Automated engineering slice. Review behavior, tests and manual scenario before marking ready.'
+            echo
+            cat "$RUNNER_TEMP/coding-output/report.md"
+            echo
+            echo "Runner evidence: https://github.com/$GH_REPO/actions/runs/$GITHUB_RUN_ID"
+            echo 'Production verification remains required after merge.'
+          } > "$RUNNER_TEMP/pr-body.md"
+          gh pr create --draft --base main --head "$branch" --title 'Game 2D: automated engineering slice' --body-file "$RUNNER_TEMP/pr-body.md" > "$RUNNER_TEMP/pr-url.txt"
+          cat "$RUNNER_TEMP/pr-url.txt" >> "$GITHUB_STEP_SUMMARY"
+          gh workflow run game-2d-contract.yml --ref "$branch"
+          echo 'Draft PR created; game CI dispatched explicitly because GITHUB_TOKEN pushes do not trigger push/PR workflows.' >> "$GITHUB_STEP_SUMMARY"
