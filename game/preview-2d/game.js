@@ -30,7 +30,7 @@ const roles={
 };
 // Bottom-centre sprite pivots: proportions follow one shared 1440x900 world.
 const SCENE_PROPS=[
- {id:'door',texture:'door-painted',raster:'./assets/scene/door-painted-v1.webp',x:172,y:606,w:215,h:355,shadow:[77,12]},
+ {id:'door',texture:'door-painted',raster:'./assets/scene/door-painted-v1.webp',x:550,y:606,w:215,h:355,shadow:[77,12]},
  {id:'counter',texture:'counter-painted',raster:'./assets/scene/counter-painted-v1.webp',x:1120,y:610,w:360,h:91,shadow:[160,12],layers:{width:768,height:195,frontStart:41,backDepth:500}},
  {id:'table',texture:'table-painted',raster:'./assets/scene/table-painted-v1.webp',x:355,y:723,w:140,h:86,shadow:[61,10]},
  {id:'bench',texture:'bench-painted',raster:'./assets/scene/bench-painted-v1.webp',x:1220,y:751,w:310,h:213,shadow:[132,18],layers:{width:652,height:430,frontStart:252,backDepth:675}},
@@ -45,7 +45,7 @@ const SCENE_COLLIDERS=[
  {id:'plant',shape:'ellipse',x:110,y:653,rx:30,ry:17}
 ];
 const stations={
- door:{x:195,y:716,label:'Lối vào'},
+ door:{x:535,y:700,label:'Lối vào'},
  counter:{x:990,y:652,label:'Quầy pha chế'},
  table:{x:440,y:744,label:'Bàn khách'},
  bike:{x:1283,y:809,label:'Xe giao hàng'},
@@ -55,7 +55,7 @@ const stations={
 const npcs=[
  {id:'reader',role:'reader',x:520,y:650,name:'Khách đọc sách',lines:['Mình vừa đọc tới chương... cái bìa.','Một trang sách và một ly nước. Tạm đủ.']},
  {id:'guest',role:'guest',x:690,y:605,name:'Khách chờ bạn',lines:['Bạn mình bảo năm phút nữa tới.','Mình gọi trước một ly. Kẻ đến sau tự tính.']},
- {id:'guard',role:'guard',x:150,y:714,name:'Chú bảo vệ',lines:['Để xe ngay ngắn là quán đã yên một nửa.','Mèo Mướp trông ghế, tôi trông cửa.']},
+ {id:'guard',role:'guard',x:535,y:714,name:'Chú bảo vệ',lines:['Để xe ngay ngắn là quán đã yên một nửa.','Mèo Mướp trông ghế, tôi trông cửa.']},
  {id:'barista',role:'barista',x:995,y:570,name:'Bạn pha chế',lines:['Nước ngon cần chút kiên nhẫn.','Máy pha cà phê hôm nay khá dễ bảo.']},
  {id:'waiter',role:'waiter',x:817,y:647,name:'Bạn phục vụ',lines:['Ngồi đâu cũng được, trừ quầy pha chế.','Để mình dọn lại bàn nhé.']},
  {id:'cat',role:'cat',x:613,y:802,name:'Mèo Mướp',lines:['Meo. (Mướp vừa đồng ý.)','Meo. (Mướp vừa đổi ý.)']}
@@ -68,9 +68,9 @@ const NPC_ROUTINES={
  guest:[{x:690,y:605,wait:5,activity:'Đang chờ bạn ở gần quầy',destination:'gần quầy'},
   {x:751,y:701,wait:7,action:true,activity:'Đang nhìn ra lối vào',destination:'lối vào'},
   {x:690,y:605,wait:4,activity:'Đang chờ bạn quay lại',destination:'gần quầy'}],
- guard:[{x:150,y:714,wait:6,action:true,activity:'Đang đón khách',destination:'cửa quán'},
-  {x:270,y:760,wait:4,activity:'Đang kiểm tra lối đi',destination:'lối đi'},
-  {x:158,y:718,wait:7,action:true,activity:'Đã quay lại cửa quán',destination:'cửa quán'}],
+ guard:[{x:535,y:714,wait:6,action:true,activity:'Đang đón khách',destination:'cửa quán'},
+  {x:620,y:760,wait:4,activity:'Đang kiểm tra lối đi',destination:'lối đi'},
+  {x:540,y:718,wait:7,action:true,activity:'Đã quay lại cửa quán',destination:'cửa quán'}],
  barista:[{x:995,y:570,wait:7,action:true,activity:'Đang trực quầy pha chế',destination:'quầy pha chế'}],
  waiter:[{x:817,y:647,wait:4,action:true,activity:'Đang chờ nước từ quầy',destination:'quầy nước'},
   {x:932,y:729,wait:5,action:true,activity:'Đang kiểm tra khu ghế ngồi',destination:'khu ghế ngồi'},
@@ -491,7 +491,7 @@ function bindStick(){
 class CafeScene extends Phaser.Scene{
  constructor(){super('YenCafe2D');this.sprites=new Map();this.npcLabels=new Map();this.npcStates=new Map();this.propSprites=new Map();this.propDetails=new Map();this.propBackLayers=new Map();this.steam=[];this.plantDrops=[];this.lastDirection='down';}
  preload(){
-  this.load.svg('scene-backdrop','./assets/scene/backdrop.svg',{width:1440,height:900});
+  this.load.image('scene-backdrop','./assets/scene/backdrop-painted-v1.png');
   for(const prop of SCENE_PROPS){
    this.load.image('prop-'+prop.texture,prop.raster);
   }

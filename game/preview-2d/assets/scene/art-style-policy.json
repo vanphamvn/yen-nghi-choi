@@ -9,7 +9,7 @@
     "assets/sprites/cat.png"
   ],
   "status": "delegated-agent-review-owner-checks-later",
-  "notes": "Legacy scene SVGs below are NOT style-approved. Frozen only to keep currently published gameplay running until replaced with painterly character-matched PNG/WebP art. The audit prints known debt but fails any newly introduced unreviewed art or edit to frozen vector assets. Historical painted WebP assets are also version-frozen as a non-approved comparison baseline.",
+  "notes": "The ten former vector scene props are archived for provenance only, not loaded by Phaser. Active world art uses reviewed PNG/WebP with delegated agent review and owner inspection pending.",
   "legacyUnapprovedVectors": {
     "assets/scene/backdrop.svg": {
       "gitBlobSha": "704dc5d3ad3ef012201af0326db4cdffc31e55fc",
@@ -292,6 +292,30 @@
         "alpha": "pass"
       },
       "notes": "Actual character PNGs inspected front/side, contact-sheet and browser scene review required before merging; door original painted transparent source, distinct from quarantined SVG; user-delegated agent art review, owner checks after integration."
+    },
+    "assets/scene/backdrop-painted-v1.png": {
+      "styleStatus": "approved",
+      "styleId": "yen-painted-chibi-v1",
+      "reviewer": "ChatGPT GPT-6",
+      "reviewerType": "agent",
+      "reviewAuthority": "user-delegated",
+      "ownerReviewPending": true,
+      "reviewedOn": "2026-11-17",
+      "runtimeScaleCompared": true,
+      "characterReferences": [
+        "assets/sprites/barista.png",
+        "assets/sprites/waiter.png"
+      ],
+      "proof": "art-reviews/architecture-v1/contact-sheet.png",
+      "gitBlobSha": "5c8e09db7e9c64aac4f13a06b3b2b3275078f5db",
+      "visualChecks": {
+        "brush": "pass",
+        "lighting": "pass",
+        "perspective": "pass",
+        "scale": "pass",
+        "alpha": "pass"
+      },
+      "notes": "Actual barista/waiter front and side frames visually compared at 117x146 world scale with generated painted architecture and an offline composite. Door relocated to empty wall at x550 to avoid overlap with the arched window; furniture remains separate game sprites. Offline composition is not a real Phaser screenshot. Delegated agent review; owner inspection pending."
     }
   },
   "reviewRequirements": {
@@ -321,5 +345,17 @@
     "recordedOn": "2026-11-16",
     "instruction": "ưu tiên tự duyệt artwork trước tôi sẽ kiểm tra sau",
     "scope": "Visual review and staged integration; owner reviews after implementation"
+  },
+  "legacyVectorArchive": {
+    "assets/scene/backdrop.svg": "art-reviews/legacy-svg/backdrop.svg",
+    "assets/scene/door.svg": "art-reviews/legacy-svg/door.svg",
+    "assets/scene/counter.svg": "art-reviews/legacy-svg/counter.svg",
+    "assets/scene/table.svg": "art-reviews/legacy-svg/table.svg",
+    "assets/scene/bench.svg": "art-reviews/legacy-svg/bench.svg",
+    "assets/scene/plant.svg": "art-reviews/legacy-svg/plant.svg",
+    "assets/scene/scooter.svg": "art-reviews/legacy-svg/scooter.svg",
+    "assets/scene/cup.svg": "art-reviews/legacy-svg/cup.svg",
+    "assets/scene/cushion.svg": "art-reviews/legacy-svg/cushion.svg",
+    "assets/scene/book.svg": "art-reviews/legacy-svg/book.svg"
   }
 }
