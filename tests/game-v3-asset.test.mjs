@@ -56,7 +56,7 @@ test('new asset stays local and all five roles remain usable',()=>{
   assert.match(game,/babylonjs-loaders@9\.36\.0/);
   assert.match(scene,/ImportMeshAsync\(null,'\.\/assets\/','yen-barista-v1\.glb'/);
   assert.match(scene,/if\(roleId==='cat'\)/);
-  assert.match(scene,/playHeroClip\('Walk'\)/);
+  assert.match(scene,/playHeroClip\(target\)/);
   assert.match(scene,/triggerHeroInteract/);
   assert.match(game,/tickHeroAnimation/);
   assert.match(page,/BETA · 03/);
