@@ -85,6 +85,17 @@ jobs:
       - run: npm ci --ignore-scripts --no-audit --no-fund
       - run: npx playwright install --with-deps chromium
       - run: npm run test:browser
+      - name: Export isolated game source for character-anchored visual QA
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: game-reference-snapshot
+          path: |
+            game/preview-2d/
+            tests/game-2d*.test.mjs
+            package.json
+            package-lock.json
+            playwright.config.mjs
+          retention-days: 1
       - name: Save browser screenshots and traces
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
