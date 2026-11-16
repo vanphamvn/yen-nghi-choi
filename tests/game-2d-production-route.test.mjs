@@ -11,7 +11,8 @@ const game = read('game/preview-2d/game.js');
 test('The production game entry point redirects to the new 2D game', () => {
   assert.match(home,/<meta http-equiv="refresh" content="0;url=\.\/preview-2d\/"/);
   assert.match(home,/href="\.\/preview-2d\/"/);
-  assert.match(home,/href="\.\/3d\.html"/);
+  // Netlify Pretty URLs may rewrite ./3d.html to /game/3d in deployed HTML.
+  assert.match(home,/href=["'](?:\.\/3d\.html|\/game\/3d)["']/);
   assert.match(home,/Yencafeday 2D/);
 });
 
