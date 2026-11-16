@@ -80,6 +80,8 @@ const references=new Set(policy.referenceRolePaths||[]);
 const canonical=policy.canonicalRoleBlobs||{};
 if(Object.keys(canonical).length<5)errors.push('Missing canonical PNG blob fingerprints');
 for(const [rel,expectedHash] of Object.entries(canonical)){
+ if(!/^[a-f0-9]{40}$/.test(expectedHash))
+  errors.push('Invalid 40-hex canonical sprite blob: '+rel);
  if(!references.has(rel))errors.push('Non-reference sprite locked: '+rel);
  const p=resolveExisting(rel);
  if(!p)continue;
@@ -91,11 +93,15 @@ const legacy=policy.legacyUnapprovedVectors||{};
 const approved=policy.approvedArt||{};
 const historical=policy.legacyPaintedBackdrops||{};
 for(const [rel,expected] of Object.entries(historical)){
+ if(!/^[a-f0-9]{40}$/.test(expected))
+  errors.push('Invalid 40-hex historical art blob: '+rel);
  const p=resolveExisting(rel);
  if(p&&repositoryBlobHash(rel,p)!==expected)
   errors.push('Historical painted scene changed; submit as approved new art instead: '+rel);
 }
 for(const [rel,entry] of Object.entries(legacy)){
+ if(!/^[a-f0-9]{40}$/.test(entry.gitBlobSha))
+  errors.push('Invalid 40-hex quarantined SVG blob: '+rel);
  const p=toAbs(rel);
  if(!p)continue;
  if(!existsSync(p))continue; // Can retire a legacy SVG after replacing runtime references.
