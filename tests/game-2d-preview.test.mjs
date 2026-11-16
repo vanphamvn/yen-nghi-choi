@@ -96,6 +96,7 @@ function harness(){
   anims:{currentAnim:null,isPlaying:false},
   play(key){this.anims.currentAnim={key};this.anims.isPlaying=true;return this},
   setDisplaySize(){return this},setOrigin(){return this},setDepth(){return this},
+  setAlpha(v){this.alpha=v;return this},
   setStrokeStyle(){return this},setVisible(v){this.visible=v;return this},
   setPosition(x,y){this.x=x;this.y=y;return this},setFlipX(v){this.flipX=v;return this},
   setAngle(){return this},setTexture(key){this.texture=key;this.anims.isPlaying=false;return this}

@@ -72,3 +72,9 @@ GitHub status/CI, syntax, sprite manifest integrity, collision footprints, expec
 ## Final game acceptance
 
 All mandatory roadmap items `done`, no failing P0/P1 bug, approved artwork reference evidence, real-browser/mobile QA, playable complete daily loop, exact production commit verification and owner-visible release notes. If any is missing, call the build a beta, not a finished game.
+
+## Automatic live-content evidence
+
+The `production-content` job runs after successful main-branch contract checks and waits for the already linked Netlify deployment. It compares SHA-256 hashes of index.html, game.js, style.css and every PNG/WebP/SVG/JSON under the 2D assets directory against the checked-out commit. HTTP 200 fallback pages, stale sprites, redirects and failed downloads fail the gate. Evidence is retained as `game-production-content` for 14 days.
+
+Run `node game/preview-2d/tools/verify-live.mjs` to reproduce. A `CONTENT_MATCH` result proves equality of the checked game files at observation time; it is not provider deployment-SHA verification, browser gameplay QA, visual approval, or real-device performance evidence. Continue using the provider SHA gate and the QA matrix above for final release acceptance. The workflow does not deploy or write game features and needs no new hosting secret.

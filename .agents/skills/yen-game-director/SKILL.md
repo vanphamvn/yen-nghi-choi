@@ -43,3 +43,11 @@ A **session** may finish with an independently usable production increment and a
 ## Communication
 
 Report in Vietnamese, concise, with: gameplay change, PR, CI, exact prod status and test URL, blocker (if any), remaining scope, next milestone. Avoid ungrounded claims of visual quality. If scheduled execution cannot access GitHub or a deploy tool, report that limitation; do not pretend background coding happened.
+
+## Event-driven delivery contract
+
+Use the existing `game-2d-contract.yml` workflow on every relevant push and pull request. Inspect both `sprites-and-routines` and `production-content` after merging to main. Download the production evidence artifact on failure; fix deployment freshness before reporting a release.
+
+Actions runs validation and live-content verification; it does not author features, generate art, or start a coding agent. Continue implementation in the active coding session, selecting the next eligible roadmap item after each verified increment. Do not describe a recurring checker as continuous autonomous development. Do not add hourly or daily schedules as a substitute for the user's request to work continuously now.
+
+Keep work bounded and recoverable: one branch per slice, no overlapping edits to the same work item, no self-triggering commits or unbounded workflow recursion. Reconcile a moved main branch before merging. Never bypass branch protection or auto-approve art. A missing coding runner or credential is an explicit blocker to unattended feature authoring.

@@ -1,10 +1,14 @@
 name: Game 2D sprite contract
 on:
+  workflow_dispatch:
   push:
     paths:
       - "game/preview-2d/**"
       - ".github/workflows/game-2d-contract.yml"
-      - "tests/game-2d-background.test.mjs"
+      - "tests/game-2d*.test.mjs"
+      - "game/index.html"
+      - "netlify.toml"
+      - "vercel.json"
       - ".agents/skills/yen-sprite-style/**"
       - ".agents/skills/yen-game-director/**"
       - ".agents/skills/yen-game-release/**"
@@ -13,9 +17,16 @@ on:
     paths:
       - "game/preview-2d/**"
       - ".github/workflows/game-2d-contract.yml"
-      - "tests/game-2d-background.test.mjs"
+      - "tests/game-2d*.test.mjs"
+      - "game/index.html"
+      - "netlify.toml"
+      - "vercel.json"
       - ".agents/skills/yen-sprite-style/**"
       - "AGENTS.md"
+
+concurrency:
+  group: game-2d-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 permissions:
   contents: read
@@ -30,13 +41,13 @@ jobs:
           persist-credentials: false
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
-          node-version: "20"
+          node-version: "22"
       - name: Parse game runtime
         run: node --check game/preview-2d/game.js
       - name: Enforce sprite art provenance and style review
         run: node game/preview-2d/tools/audit-art-style.mjs
       - name: Verify sprite atlas, NPC routes, layered scene and art gate
-        run: node --test game/preview-2d/tests/game-contract.test.mjs tests/game-2d-background.test.mjs game/preview-2d/tests/art-style-policy.test.mjs
+        run: node --test game/preview-2d/tests/*.test.mjs tests/game-2d*.test.mjs
       - name: Validate autonomous game roadmap and selection
         run: |
           node game/preview-2d/tools/next-work.mjs --validate
@@ -52,3 +63,36 @@ jobs:
           for path in paths: ET.parse(path)
           print('Validated',len(paths),'SVG textures')
           PY
+
+  production-content:
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    needs: sprites-and-routines
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: "22"
+      - name: Wait for linked Netlify deployment and verify every game asset
+        run: |
+          for attempt in $(seq 1 12); do
+            if node game/preview-2d/tools/verify-live.mjs > production-content.json; then
+              echo "Production runtime and asset bytes match $GITHUB_SHA" >> "$GITHUB_STEP_SUMMARY"
+              echo "https://yencafeday.netlify.app/game/preview-2d/" >> "$GITHUB_STEP_SUMMARY"
+              exit 0
+            fi
+            sleep 15
+          done
+          echo "Production blocked or stale. See production-content.json. This is not browser or provider SHA verification." >> "$GITHUB_STEP_SUMMARY"
+          cat production-content.json
+          exit 1
+      - name: Save production evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: game-production-content
+          path: production-content.json
+          retention-days: 14
