@@ -85,7 +85,7 @@ for(const [rel,entry] of Object.entries(legacy)){
  if(!p)continue;
  if(!existsSync(p))continue; // Can retire a legacy SVG after replacing runtime references.
  const actual=blobHash(readFileSync(p));
- if(actual!==entry.gitBlobSha)errors.push('Quarantined vector modified. Replace with reviewed raster art instead: '+rel);
+ if(actual!==entry.gitBlobSha)errors.push('Quarantined vector modified ('+actual+' vs '+entry.gitBlobSha+'). Replace with reviewed raster art instead: '+rel);
  warnings.push('NOT STYLE APPROVED (legacy vector): '+rel);
 }
 function auditApproval(rel,entry){
