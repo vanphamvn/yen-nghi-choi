@@ -15,7 +15,7 @@ A guest can walk into a cozy Yên café, choose a character, see a room that use
 | ID | Gate | Work to deliver | Acceptance proof |
 | --- | --- | --- | --- |
 | M0 | Release reliability | Confirm a working production deployment pipeline (Vercel quota currently implicated), aligned routes/aliases, safe rollback and smoke tests | production `READY`, matched SHA, game boot + interaction URL |
-| M1 | Art foundation | inspect real chibi PNGs, produce character-vs-prop contact sheet at runtime scale, approve one painted reference prop and art spec | actual reference images, proof board, explicit owner art approval |
+| M1 | Art foundation | inspect real chibi PNGs, produce character-vs-prop contact sheet at runtime scale, approve one painted reference prop and art spec | actual reference images, proof board, actual delegated Codex art review; owner checks later |
 | M2 | Cohesive sprite scene | redraw 10 quarantined vector world assets as painterly raster sprites; consistent perspective, alpha, pivots, occlusion, collision, states | strict art gate, screenshot review at 3 viewports, six prop interactions |
 | M3 | Character activities | dedicated sitting, standing-up, drinking, reading, talking frames, correct animations for NPCs and player | real frames for all claimed poses, stable feet, transitions and tests |
 | M4 | NPC life simulation | believable paths, pauses, sitting areas, purposeful actions, conversation that reflects current context, safe route replanning | 6 NPCs follow routines for an entire day, player interaction stays in sync |
@@ -23,7 +23,7 @@ A guest can walk into a cozy Yên café, choose a character, see a room that use
 | M6 | UX, accessibility, performance | touch-friendly UX, keyboard and screen-reader semantics, reduced motion, texture budget and mobile performance | real 1440×900, 390×844, 360×800 QA with recorded evidence |
 | M7 | Release candidate | regression, privacy/branding review, owner art acceptance, P0/P1 closure, rollback and published build | complete release checklist, exact production SHA, playable domain |
 
-M0 must be tackled first to recover a shipping path. M1 is the visual design dependency for M2/M3. M4/M5/M6 can be improved in independent releases while waiting for art sign-off. M7 requires M0 through M6. The status files distinguish `todo`, `in-progress`, `blocked` and `done`; no unchecked claim of success.
+M0 must be tackled first to recover a shipping path. M1 is the visual design dependency for M2/M3. M1 shipped in #112 under explicit delegated review; M2 proceeds via #113–#116. M4/M5/M6 can be improved independently. M7 requires M0 through M6. The status files distinguish `todo`, `in-progress`, `blocked` and `done`; no unchecked claim of success.
 
 ## Rules for independent completion without additional prompts
 
@@ -48,3 +48,7 @@ M0 must be tackled first to recover a shipping path. M1 is the visual design dep
 **For a slice:** visible player change, acceptance test(s), no known P0 crash, PR merge, verified production SHA and playable link. If deployment blocked, status = blocked/not shipped.
 
 **For the full game:** all M0–M7 acceptance gates, approved unified art style, all advertised actions genuinely animated, NPC routines and correct interaction, responsive/accessible/mobile QA, complete playable loop, and stable production release. Scope growth beyond this MVP requires a new recorded decision, not silent invention.
+
+## Current asset queue (2026-11-16)
+
+Table shipped in #112. #113 cup/book/cushion; #114 counter/machine; #115 bench/plant/scooter; #116 door/backdrop. Art is not complete until all active legacy world vectors are replaced and strict audit passes. Codex reviews under explicit delegation, owner inspection remains pending.

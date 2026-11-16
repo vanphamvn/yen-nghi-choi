@@ -24,6 +24,7 @@ test('pick M0 first, but keep independent gameplay work available',()=>{
  for(const stage of baseline.stages)if(['M0','M1','M4','M5','M6'].includes(stage.id)){
   stage.status='todo';stage.evidence=null;
  }
+ baseline.stages.find(s=>s.id==='M2').status='blocked';
  const result=chooseWork(baseline);
  assert.equal(result.next.id,'M0');
  assert.deepEqual(result.ready.map(s=>s.id),['M0','M1','M4','M5','M6']);
@@ -57,5 +58,6 @@ test('selection advances to next milestone only with real evidence',()=>{
  p.stages[0].status='done';
  p.stages[0].evidence={deployedSHA:'a'.repeat(40),productionURL:'https://example.com/game/preview-2d/',testReport:'smoke-pass'};
  assert.deepEqual(validateRoadmap(p),[]);
+ p.stages[1].status='todo';p.stages[1].evidence=null;
  assert.equal(chooseWork(p).next.id,'M1');
 });

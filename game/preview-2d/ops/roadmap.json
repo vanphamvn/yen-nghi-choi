@@ -32,7 +32,7 @@
       "id": "M1",
       "title": "Character-anchored painterly art contract",
       "priority": 1,
-      "status": "in-progress",
+      "status": "done",
       "issue": 96,
       "dependencies": [],
       "requiresHumanApproval": false,
@@ -41,13 +41,18 @@
         "Paint a representative transparent prop with correct pivot and view",
         "Actual Codex visual review of runtime-scale contact sheet under explicit owner delegation; owner inspection remains pending"
       ],
-      "evidence": null
+      "evidence": {
+        "deployedSHA": "b12e1236287928932a5d11f578c453c8070cdc51",
+        "productionURL": "https://yencafeday.netlify.app/game/preview-2d/",
+        "testReport": "https://github.com/vanphamvn/yen-nghi-choi/actions/runs/43898668854",
+        "verification": "Painted table, actual reference contact sheet and delegated Codex visual assessment shipped in #112. Exact production SHA/assets and full five-role browser walkthrough passed; owner inspection remains pending."
+      }
     },
     {
       "id": "M2",
       "title": "Replace unapproved SVG scene assets",
       "priority": 2,
-      "status": "blocked",
+      "status": "in-progress",
       "issue": 93,
       "dependencies": [
         "M1"
@@ -59,7 +64,12 @@
         "Strict art audit passes"
       ],
       "evidence": null,
-      "blocker": "Requires approved art vertical slice from M1"
+      "workIssues": [
+        113,
+        114,
+        115,
+        116
+      ]
     },
     {
       "id": "M3",

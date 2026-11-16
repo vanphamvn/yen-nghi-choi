@@ -87,3 +87,15 @@ test('All interactive scenes change visible sprite state',()=>{
  assert.match(code,/this\.scooterLight\?\.setVisible\(!!next\)/);
  assert.match(code,/this\.steam\.forEach\(p=>p\.setVisible\(!!next\)\)/);
 });
+
+
+test('painted interaction details load as raster assets instead of frozen vector props',()=>{
+ assert.doesNotMatch(code,/this\.load\.svg\('prop-'\+name/);
+ for(const name of ['cup','book','cushion']){
+  const rel='assets/scene/'+name+'-painted-v1.webp';const bytes=read(rel);
+  assert.equal(bytes.toString('ascii',0,4),'RIFF');
+  assert.equal(bytes.toString('ascii',8,12),'WEBP');
+  const policy=JSON.parse(read('assets/scene/art-style-policy.json'));
+  assert.equal(policy.approvedArt[rel].ownerReviewPending,true);
+ }
+});

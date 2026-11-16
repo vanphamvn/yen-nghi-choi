@@ -2,6 +2,10 @@ import {test,expect} from '@playwright/test';
 
 test('boot, role selection, focus, movement and mobile controls',async({page},testInfo)=>{
  const errors=[];page.on('pageerror',error=>errors.push(error.message));
+ const paintedLoads=new Set();page.on('response',response=>{
+  const file=new URL(response.url()).pathname.split('/').pop();
+  if(response.ok()&&/^(cup|book|cushion)-painted-v1\.webp$/.test(file))paintedLoads.add(file);
+ });
  await page.goto('/game/preview-2d/?qa=1');
  await expect(page.locator('#scene canvas')).toBeVisible();
  await expect.poll(()=>page.evaluate(()=>Boolean(window.__yenQA?.inspect().player))).toBe(true);
@@ -15,6 +19,12 @@ test('boot, role selection, focus, movement and mobile controls',async({page},te
  const inspect=()=>page.evaluate(()=>window.__yenQA.inspect());
  const start=await inspect();
  expect(start.props.find(prop=>prop.id==='table').texture).toBe('prop-table-painted');
+ for(const name of ['cup','book','cushion']){
+  const detail=start.details.find(d=>d.id===name);
+  expect(paintedLoads.has(name+'-painted-v1.webp')).toBe(true);
+  expect(detail.texture).toBe('prop-'+name);
+  expect(detail.visible).toBe(true);
+ }
  await page.keyboard.down('d');await page.waitForTimeout(220);await page.keyboard.up('d');
  const moved=await inspect();expect(moved.player.x).toBeGreaterThan(start.player.x+10);
  await page.keyboard.down('d');await page.locator('#open-bag').click();
@@ -89,12 +99,17 @@ test('all five roles complete a shift through real controls and advance days',as
    await expect.poll(async()=>(await inspect()).near).toBe(id);
    await page.locator('#interact').click();
    await expect.poll(async()=>(await inspect()).done,{timeout:8000}).toBe(index+1);
+   if(role==='waiter'&&id==='table')await expect.poll(async()=>(await inspect()).details.find(d=>d.id==='cup').visible).toBe(false);
+   if(role==='waiter'&&id==='bench')await expect.poll(async()=>Math.round((await inspect()).details.find(d=>d.id==='cushion').x)).toBe(1197);
    previous=paths[id];
   }
   await expect(page.locator('#finish-shift')).toBeEnabled();await page.locator('#finish-shift').click();
   await expect(page.locator('#result-tasks')).toHaveText('3/3');await page.locator('#next-day').click();
   day++;await expect(page.locator('#top-day')).toContainText('Ngày '+day+' ·');
-  expect((await inspect()).phase).toBe('explore');
+  const reset=await inspect();expect(reset.phase).toBe('explore');
+  expect(reset.details.find(d=>d.id==='cup').visible).toBe(true);
+  expect(reset.details.find(d=>d.id==='book').angle).toBe(0);
+  expect(reset.details.find(d=>d.id==='cushion').x).toBe(1168);
  }
  await page.screenshot({path:testInfo.outputPath('five-roles-day-six.png'),fullPage:true});
 });
@@ -109,4 +124,14 @@ test('delegated artwork review evidence loads separately',async({page})=>{
  await expect(page.locator('img')).toBeVisible();
  await expect.poll(()=>page.locator('img').evaluate(img=>img.naturalWidth)).toBeGreaterThan(0);
  expect(errors).toEqual([]);
+});
+
+
+test('painted detail reference board is readable and has no missing images',async({page},testInfo)=>{
+ await page.goto('/game/preview-2d/art-reviews/details-v1/');
+ await expect(page.getByRole('heading',{name:'Ly, sách và gối — đối chiếu v1'})).toBeVisible();
+ const board=page.locator('#detail-proof');await expect(board).toBeVisible();
+ expect(await board.evaluate(img=>img.naturalWidth)).toBe(1200);
+ expect(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth)).toBe(false);
+ await page.screenshot({path:testInfo.outputPath('detail-proof.png'),fullPage:true});
 });
