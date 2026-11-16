@@ -2,6 +2,10 @@ import {test,expect} from '@playwright/test';
 
 test('boot, role selection, focus, movement and mobile controls',async({page},testInfo)=>{
  const errors=[];page.on('pageerror',error=>errors.push(error.message));
+ const paintedLoads=new Set();page.on('response',response=>{
+  const file=new URL(response.url()).pathname.split('/').pop();
+  if(response.ok()&&/^(cup|book|cushion)-painted-v1\.webp$/.test(file))paintedLoads.add(file);
+ });
  await page.goto('/game/preview-2d/?qa=1');
  await expect(page.locator('#scene canvas')).toBeVisible();
  await expect.poll(()=>page.evaluate(()=>Boolean(window.__yenQA?.inspect().player))).toBe(true);
@@ -17,7 +21,8 @@ test('boot, role selection, focus, movement and mobile controls',async({page},te
  expect(start.props.find(prop=>prop.id==='table').texture).toBe('prop-table-painted');
  for(const name of ['cup','book','cushion']){
   const detail=start.details.find(d=>d.id===name);
-  expect(detail.source).toContain('/assets/scene/'+name+'-painted-v1.webp');
+  expect(paintedLoads.has(name+'-painted-v1.webp')).toBe(true);
+  expect(detail.texture).toBe('prop-'+name);
   expect(detail.visible).toBe(true);
  }
  await page.keyboard.down('d');await page.waitForTimeout(220);await page.keyboard.up('d');

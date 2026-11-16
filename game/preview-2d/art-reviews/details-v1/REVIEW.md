@@ -31,3 +31,7 @@ claim new seated or page-turn animation frames. Runtime screenshots at three vie
 are captured by browser CI; actual production verdict belongs in the release PR/issue.
 
 Six active world SVGs remain. Strict art release is still blocked, not completed.
+
+Browser regression exposed immediate undo at task completion: table/bench now keep
+their completed state until explicit interaction or day reset. Asset network responses
+are checked because Phaser exposes blob URLs for decoded image sources.

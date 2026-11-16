@@ -248,3 +248,17 @@ test('starting a new shift restores tabletop details and cancels old prop tweens
   assert.ok(detail.y>637&&detail.y<685,'detail must rest on the table surface, not float above it');
  }
 });
+
+
+test('completed furniture tasks persist until explicit interaction or next day',()=>{
+ const {api:a,scene}=harness();a.modal(null);a.setRole('waiter');a.startShift();
+ const changes=[];scene.reactProp=(id,next)=>changes.push([id,next]);
+ const station=a.stations.table;scene.player.setPosition(station.x,station.y);
+ a.interact();a.finishAction();
+ assert.equal(a.state.done,1);assert.equal(a.state.props.table,1);
+ assert.deepEqual(changes,[['table',1]],'task completion must not undo cleaned table');
+ // The next task is counter, so interacting with table now restores it explicitly.
+ a.interact();assert.equal(a.state.props.table,0);
+ assert.deepEqual(changes.at(-1),['table',0]);
+ a.state.phase='explore';a.startShift();assert.equal(Object.keys(a.state.props).length,0);
+});

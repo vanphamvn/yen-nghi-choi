@@ -47,3 +47,4 @@ A green CI badge without a production SHA cannot produce a SHIPPED entry.
 - Normalized source <=384 px per edge; runtime cup24x24/book35x17/cushion69x47 to avoid source distortion. Contact sheet and prompt provenance in art-reviews/details-v1.
 - Remaining after this slice: six active SVG world textures (architecture, door, counter, bench, plant, scooter). Strict art release remains blocked; real mobile device FPS not measured.
 - This entry describes implementation, not a claimed production release. Exact merge SHA, CI and live proof must be recorded in PR/issue after release.
+- Browser gate caught task completion immediately undoing table/bench effects. Fixed completed furniture state persistence until explicit interaction/day reset; regression added. 47 local Node tests now pass. First browser attempt also exposed Phaser's blob-backed image URLs; asset load checks now inspect real successful network responses plus bound texture keys.

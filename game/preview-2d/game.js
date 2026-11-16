@@ -355,7 +355,10 @@ function interact(){
 function finishAction(){
  if(state.phase!=='shift'||!state.active)return;
  const name=state.active.task;
- world?.reactProp(state.active.at,0);
+ // Keep completed furniture changes until the next interaction or day reset.
+ const at=state.active.at;
+ if(at==='table'||at==='bench')state.props[at]=1;
+ else world?.reactProp(at,0);
  state.active=null;state.done++;
  state.energy=clamp(state.energy-10,0,100);
  state.peace=clamp(state.peace+5,0,100);
@@ -862,7 +865,7 @@ if(typeof window.location?.search==='string' && window.location.search.includes(
   near:nearbyCandidate()?.id||null,
   fps:world?.game?.loop?.actualFps||null,
   props:world?[...world.propSprites].map(([id,p])=>({id,x:p.x,y:p.y,depth:p.depth,texture:p.texture.key})):[],
-  details:world?[...world.propDetails].map(([id,p])=>({id,x:p.x,y:p.y,visible:p.visible,alpha:p.alpha,angle:p.angle,texture:p.texture.key,source:p.texture.getSourceImage()?.src})):[],
+  details:world?[...world.propDetails].map(([id,p])=>({id,x:p.x,y:p.y,visible:p.visible,alpha:p.alpha,angle:p.angle,texture:p.texture.key})):[],
   npcs:world?[...world.sprites].map(([id,s])=>({id,x:Math.round(s.x),y:Math.round(s.y),anim:s.anims?.currentAnim?.key})):[]
  })});
 }
