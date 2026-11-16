@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="215" height="355" viewBox="0 0 215 355"><defs>
+<linearGradient id="wood" x2="0.25" y2="1"><stop stop-color="#dca97a"/><stop offset=".5" stop-color="#b77c52"/><stop offset="1" stop-color="#875338"/></linearGradient>
+<linearGradient id="dark" x2="0" y2="1"><stop stop-color="#775444"/><stop offset="1" stop-color="#4c352c"/></linearGradient>
+<linearGradient id="leaf" x2=".3" y2="1"><stop stop-color="#9bae74"/><stop offset="1" stop-color="#466e50"/></linearGradient>
+<linearGradient id="cream" x2="0" y2="1"><stop stop-color="#fff3d8"/><stop offset="1" stop-color="#dfc59e"/></linearGradient>
+<linearGradient id="glass" x2="0" y2="1"><stop stop-color="#c6e0cb"/><stop offset=".6" stop-color="#e3e7cb"/><stop offset="1" stop-color="#edc79b"/></linearGradient>
+<linearGradient id="floor" x2=".15" y2="1"><stop stop-color="#ddbb96"/><stop offset="1" stop-color="#b88464"/></linearGradient>
+<radialGradient id="sun"><stop stop-color="#fff7c8" stop-opacity=".72"/><stop offset="1" stop-color="#fff4c5" stop-opacity="0"/></radialGradient>
+</defs>
+<path d="M8 345V91Q8 10 105 10Q206 10 206 91V345Z" fill="#624935" stroke="#5c3f2c" stroke-width="10"/>
+<path d="M25 339V91Q25 28 106 28Q191 28 191 91V339Z" fill="url(#wood)" stroke="#e4b980" stroke-width="6"/>
+<path d="M49 94Q49 46 106 47Q164 47 166 94V205H49Z" fill="url(#glass)" stroke="#f6d9ad" stroke-width="9"/>
+<path d="M107 47V209M50 142H167" stroke="#c39462" stroke-width="9"/>
+<path d="M26 233H190M27 305H190" stroke="#eac492" stroke-width="7" opacity=".7"/>
+<ellipse cx="166" cy="263" rx="9" ry="11" fill="#f1d59b" stroke="#765236" stroke-width="3"/>
+<path d="M4 348H211" stroke="#6f523e" stroke-width="12" stroke-linecap="round"/>
+<rect x="68" y="197" width="78" height="34" rx="7" fill="#f5e3b7" stroke="#755847" stroke-width="4"/>
+<text x="107" y="219" text-anchor="middle" font-size="17" font-family="Georgia,serif" fill="#6a553d">MỞ CỬA</text>
+</svg>
