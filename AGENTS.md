@@ -11,3 +11,11 @@ Never mark game art as visually approved based only on successful unit tests or 
 Run `node game/preview-2d/tools/audit-art-style.mjs` and the game contract tests for any game-art or sprite pipeline change. For finished art releases, also run `node game/preview-2d/tools/audit-art-style.mjs --strict` and address all blocking style debt. Create an actual contact sheet with at least two reference character poses and each new prop at runtime scale, secure owner's visual signoff, and record approved art evidence.
 
 For user-facing gameplay changes, a GitHub PR is **not** a finished production release. Verify exact commit and READY status of the production target, provide the playable URL, or explicitly report deployment blocked.
+
+## Autonomous Game Yên completion
+
+For any game development session, first read `.agents/skills/yen-game-director/SKILL.md`, `game/preview-2d/ROADMAP.md`, and `game/preview-2d/ops/roadmap.json`. Select the next eligible issue using `node game/preview-2d/tools/next-work.mjs`. Use `.agents/skills/yen-game-release/SKILL.md` for every game-affecting PR and release. Apply the existing `yen-sprite-style` skill on every art task.
+
+Each session should deliver the smallest independently usable production increment with verified SHA and working URL. If deployment is blocked by quota, permissions, branch protection, or browser availability, record the blocker and continue on an independent eligible task at the next scheduled session. Never fabricate owner art signoff, deployed code, FPS metrics, or user actions. Never repurpose old Babylon/GLB/3D issues as current Phaser 2D scope.
+
+Automated sessions are allowed to advance safe, preapproved engineering tasks, tests and GitHub issues without repeated prompts. Account upgrades, external payments, production provider/domain changes, personal-data collection and exact final art sign-off still require actual user authorization.
