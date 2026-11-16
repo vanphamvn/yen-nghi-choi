@@ -532,6 +532,7 @@ function loop(now) {
   game.messageTime=Math.max(0,game.messageTime-dt);
   if (game.messageTime===0 && game.message) { game.message='';$('event-text').textContent='';$('game-toast').hidden=true; }
   updateAmbient(dt);
+  world.animateEnvironment?.(dt);
 
   if (game.active) {
     game.active.elapsed+=dt;
