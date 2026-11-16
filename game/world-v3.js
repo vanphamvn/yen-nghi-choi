@@ -9,7 +9,7 @@ export async function createAnimeWorld(B, mount, roleId, roles, descriptors) {
   const canvas = document.createElement('canvas');
   canvas.className='yen-world-canvas';
   canvas.setAttribute('aria-label','Quán Yên 3D: nhân vật hoạt hình và nội thất có thể tương tác');
-  canvas.style.cssText='width:100%;height:100%;display:block;touch-action:none;outline:none';
+  // Canvas styling lives in game/style.css so a strict CSP does not reject inline styles.
   mount.replaceChildren(canvas);
   let engine=null, scene=null;
   const imported=[];
