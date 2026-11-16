@@ -76,7 +76,7 @@ test('NPC dialogue and props work before a shift, then reset at shift start',()=
   assert.equal(h.eval('game.phase'),'shift');
   assert.equal(h.eval('world.npcs.find(x=>x.id==="npc_guard").interactions'),0);
   assert.equal(h.eval('game.propState.counter'),0);
-  assert.equal(h.eval('world.refs.machineLight.tint'),0x7f665d);
+  assert.equal(h.eval('world.refs.machineLight.tint'),0x9b9188);
   assert.equal(h.eval('world.player.position.z'),4.5);
 });
 test('completing the third task permits manual shift end but does not force it',()=>{
