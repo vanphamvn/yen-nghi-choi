@@ -49,10 +49,17 @@ test('game is separate from main website and does not track visitors',()=>{
   assert.ok(html.includes('href="../"'),'Game should link back home');
   assert.ok(html.includes('noindex,nofollow'),'New preview should remain unindexed');
   assert.ok(!/localStorage|sessionStorage|document\.cookie|sendBeacon|google-analytics|gtag\(/i.test(js));
-  assert.ok(js.includes("import('https://cdn.jsdelivr.net/npm/three@0.160.1/build/three.module.js')"));
+  assert.ok(js.includes("babylonjs@9.36.0/babylon.js"),'Babylon engine must lazy-load from a pinned version');
+  assert.ok(js.includes("import('./world-babylon.js')"),'Anime world module should be lazy-loaded');
   assert.ok(js.includes('if (!game || !game.playing || !world) return;'),'Game animation must stop safely after cleanup');
 });
 
 test('game JavaScript is syntactically valid',()=>{
   assert.doesNotThrow(()=>new vm.Script(js,{filename:'game/game.js'}));
+  const world=readFileSync(new URL('../game/world-babylon.js',import.meta.url),'utf8');
+  assert.doesNotThrow(()=>new vm.Script(world.replace('export function createAnimeWorld','function createAnimeWorld'),{filename:'world-babylon.js'}));
+  assert.ok(world.includes('yenAnimeFragmentShader'),'Anime renderer must use a cel-shading shader');
+  assert.ok(html.includes('id="objective-panel" hidden'),'Objective should start closed');
+  assert.ok(html.includes('id="objective-toggle"')&&html.includes('aria-expanded="false"'));
+  assert.ok(html.includes('id="game-toast"'),'NPC dialogue should not require opening objectives');
 });
