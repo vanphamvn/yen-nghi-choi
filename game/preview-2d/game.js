@@ -577,7 +577,11 @@ function init(){
  $('overlay').addEventListener('click',e=>{if(e.target===$('overlay')&&activeModal!=='result')modal(null)});
  window.addEventListener('blur',resetStick);
  bindStick();
+ setUpSpriteThumbnails();
  selectAnimation('idle');
+ // Animate the preview using the exact 16 PNG frames, not CSS bob/one static SVG.
+ if(typeof window.setInterval==='function')
+   window.setInterval(()=>{if(activeModal==='preview')paintPreview();},165);
  if(!window.Phaser?.Game||!window.Phaser?.Scene){
    $('load-error').hidden=false;return;
  }
