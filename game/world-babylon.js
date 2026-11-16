@@ -419,6 +419,8 @@ export function createAnimeWorld(B, container, roleId, roles, npcData) {
     playHeroClip(target);
   }
   async function loadHeroGLB() {
+    // The cat is a distinct animal role; never replace it with a human avatar.
+    if(roleId==='cat') return {loaded:false,clips:[],reason:'cat avatar preserved'};
     if(!B.SceneLoader?.ImportMeshAsync) throw new Error('Babylon GLB loader missing');
     const imported=await B.SceneLoader.ImportMeshAsync(null,'./assets/','yen-barista-v1.glb',scene);
     const roots=imported.meshes.filter(m=>!m.parent);
@@ -440,6 +442,17 @@ export function createAnimeWorld(B, container, roleId, roles, npcData) {
         if(material.diffuseColor) material.diffuseColor=tintColor;
         m.material=material;
       }
+    }
+    // Distinct role props help preserve visual identity with a single shared base rig.
+    if(roleId==='guard'){
+      cylinder(.43,.43,.15,0,2.32,0,0x456b78,player,true);
+      cylinder(.31,.31,.20,0,2.43,0,0x456b78,player);
+    } else if(roleId==='shipper'){
+      box(.66,.82,.28,0,1.02,-.40,0xe9b56d,player,true);
+      box(.42,.18,.10,0,1.32,-.57,0xf8e8c4,player);
+    } else if(roleId==='waiter'){
+      cylinder(.43,.43,.07,-.73,1.38,.31,0xc9b49a,player);
+      cylinder(.13,.11,.24,-.84,1.54,.31,0xf4e6d0,player);
     }
     playHeroClip('Idle');
     return {meshCount:imported.meshes.length,clips:Object.keys(heroClips),loaded:true};
