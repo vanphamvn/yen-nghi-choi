@@ -57,7 +57,7 @@ test('all five roles complete a shift through real controls and advance days',as
     await page.keyboard.down(key);
     await page.waitForTimeout(Math.min(350,Math.max(65,Math.abs(distance)/225*1000)));
     await page.keyboard.up(key);
-    if(attempts===29)throw Error('Could not walk to '+x+','+y+' along '+axis);
+    if(attempts===29)throw Error('Could not walk to '+x+','+y+' along '+axis+'; actual='+JSON.stringify(await inspect()));
    }
   }
  }
@@ -78,6 +78,7 @@ test('all five roles complete a shift through real controls and advance days',as
   await page.locator('#start-shift').click();
   let previous=[];
   for(const [index,id]of stations.entries()){
+   console.log('Walkthrough',role,'task',index+1,id,JSON.stringify((await inspect()).player));
    for(const [x,y]of [...previous].reverse().slice(1))await walkTo(x,y);
    for(const [x,y]of paths[id])await walkTo(x,y);
    await expect.poll(async()=>(await inspect()).near).toBe(id);
