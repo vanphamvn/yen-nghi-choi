@@ -217,7 +217,7 @@ test('NPC conversation holds for the displayed line, then resumes and resets nex
  scene.reactNPC('reader');assert.ok(runtime.conversation>0);
  a.startShift();
  assert.equal(runtime.conversation,0);assert.equal(runtime.stop,0);
- assert.equal(sprite.x,520);assert.equal(sprite.y,650);
+ assert.equal(sprite.x,375);assert.equal(sprite.y,625);
 });
 
 test('touch ownership, menus, focus loss and hidden tabs reset movement safely',()=>{
