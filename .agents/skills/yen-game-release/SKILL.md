@@ -48,6 +48,12 @@ Use actual results only. If a test environment cannot perform a test, mark **not
 5. After deployment, check first-load and one interactive smoke scenario on the deployed URL, not only local source. Record browser test limitations.
 6. Restore previous verified production deployment if a release is clearly broken, only where rollback access and authorization exist.
 
+## Read-only production smoke verification
+
+Use `node game/preview-2d/tools/production-smoke.mjs --url https://yencafeday.vercel.app/game/preview-2d/ --expected-sha <MAIN_SHA> --deployed-sha <PROVIDER_SHA>` after inspecting the actual deployment record. SHA values must be full 40-character commit IDs. The script checks the HTML, JavaScript, CSS, sprite manifest, barista PNG, scene texture and art-style policy over HTTPS. A Vercel "READY" result for a stale SHA still fails.
+
+For hosts where deployment SHA metadata cannot be obtained, use `--smoke-only`, but its successful status is **SMOKE_PASS_UNVERIFIED_SHA**, not a verified release. Never treat it as proof that `main` shipped. This is a network/asset smoke check, not a real browser or visual QA.
+
 ## What can be automated
 
 GitHub status/CI, syntax, sprite manifest integrity, collision footprints, expected asset presence, prompt/skill references, roadmap schema, deployment SHA comparisons and smoke HTTP checks when tools permit. Do **not** claim perceptual style matching, natural dialogue, true mobile FPS or owner approval based on static tests.
