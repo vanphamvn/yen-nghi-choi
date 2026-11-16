@@ -10,7 +10,7 @@ export function normalizeHostHTML(value) {
   return value.toString()
     .replace(/<!-- This site is hosted on Netlify\. Anyone can build and deploy a site\n     like this one for free: https:\/\/netlify\.new\/\?[^\n]*\n     Netlify hosting facts for this site: static\/SSR served via Netlify Edge\. -->\n/, '')
     .replace('<script async src="/.netlify/scripts/hud?variant=public" data-nf-variant="public" data-netlify-site-id="d6a1e807-d067-4b58-ab77-fe0287532606" data-app-host="app.netlify.com" data-account-tier="free"></script>', '')
-    .replace("href='/game/preview-2d/art-review' style='color:inherit;text-decoration:underline'", 'href="./art-review.html" style="color:inherit;text-decoration:underline"');
+    .replace("href='/game/preview-2d/art-review' style='color:inherit;text-decoration:underline'", 'href="./art-review.html" style="color:inherit;text-decoration:underline"').trimEnd();
 }
 export async function compareLive(root, base, fetcher = fetch) {
   const files = ['index.html', 'game.js', 'style.css'];
