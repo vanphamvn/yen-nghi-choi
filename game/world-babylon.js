@@ -202,6 +202,12 @@ export function createAnimeWorld(B, container, roleId, roles, npcData) {
   const machineLight=sphere(.12,.12,.12,1.08,1.89,-3.75,0x9b9188);
   cylinder(.46,.40,.14,3.75,1.61,-3.35,0xf7d6ac);
   cylinder(.29,.23,.40,4.4,1.7,-3.31,0xf5efdf);
+  const steam=[];
+  for(let i=0;i<3;i++){
+    const vapor=sphere(.09,.18,.07,4.4+(i-1)*.12,2.06+i*.2,-3.31,0xfff5e7);
+    vapor.material=flat(0xfff5e7,.30-i*.06);
+    steam.push(vapor);
+  }
   tube([[4.4,1.85,-3.3],[4.57,1.85,-3.28],[4.58,1.60,-3.22]],.05,0xd39d84);
   for (let i=0;i<5;i++) cylinder(.18,.18,.22,3.0+i*.33,1.63,-4.06,[0xebc5a2,0xc9b2a4,0xa7c4ad][i%3]);
   sign('MENU',1.7,.65,5.44,2.35,-4.82,'#426857','#fff8d9');
@@ -217,6 +223,10 @@ export function createAnimeWorld(B, container, roleId, roles, npcData) {
     cylinder(.48,.44,.15,x,.6,z,i%2?0x95b8ae:0xe4ae9f);
     cylinder(.1,.12,.6,x,.3,z,0xb49a7d);
     if(i<2)box(.83,.66,.12,x,1.03,z+(i===0?-.35:.35),i%2?0x95b8ae:0xe4ae9f);
+  }
+  // Contact shadows anchor the props on the tiled floor.
+  for(const [px,pz,rr] of [[3,-3.65,3.1],[-3.25,-1.4,1.9],[2.5,3.5,1.9],[6.2,3.6,1.1]]){
+    disc(px,pz,rr,0x526c5b,.13);
   }
   // Soft bench, cushion, side table and paper cups.
   box(3.55,.35,1.12,2.5,.60,3.5,0xa6826d,null,true);
@@ -250,22 +260,19 @@ export function createAnimeWorld(B, container, roleId, roles, npcData) {
         i%2?0x74a88a:0x9cc398);
     }
   }
-  // Cherry blossom branches hang from the rear garden wall.
-  for(const [px,pz] of [[-5,-6.54],[1.8,-6.56],[6.1,-6.56]]){
-    tube([[px,2.8,pz],[px+.3,3.07,pz+.30],[px+.75,3.34,pz+.36]],.055,0x95745f);
-    for(let i=0;i<6;i++){
-      const a=i*2.4;
-      sphere(.13,.11,.13,px+.48+Math.cos(a)*.22,3.13+Math.sin(a)*.25,pz+.31,
-        i%2?0xf5c2cb:0xffe2ce);
+  // Local garden: hanging vines and restrained café string lights, not generic anime Japan décor.
+  for(const [px,pz] of [[-6.2,-6.62],[.1,-6.62],[6.4,-6.62]]){
+    tube([[px,2.8,pz],[px+.18,2.5,pz+.2],[px+.1,2.15,pz+.29]],.055,0x77926c);
+    for(let i=0;i<5;i++){
+      const yy=2.56-i*.13;
+      sphere(.17,.095,.12,px+(i%2?-.14:.13),yy,pz+.24,
+        i%2?0x8fba8a:0x5e9c75);
     }
   }
-  // Paper lanterns across café front with warm cores.
-  tube([[-8,3.0,2],[-3,2.9,2],[2,3.04,2],[7,2.92,2]],.025,0x9c8871);
-  for(let i=0;i<6;i++){
-    const x=-7.3+i*2.5;
-    tube([[x,3,2],[x,2.62,2]],.025,0x9c8871);
-    sphere(.27,.34,.27,x,2.43,2,i%2?0xffd5be:0xffe3a8,null,true);
-    cylinder(.04,.07,.16,x,2.04,2,0xd3a981);
+  tube([[-8,3.02,2],[-3,2.94,2],[2,3.02,2],[7,2.92,2]],.022,0x897967);
+  for(let i=0;i<9;i++){
+    const x=-7.5+i*1.8;
+    sphere(.075,.095,.075,x,2.85,2,0xffe9af);
   }
   // Entrance sign with two little timber posts.
   box(3.9,.08,1.65,-6.5,.02,5.7,0xe9d5b0);
@@ -384,7 +391,84 @@ export function createAnimeWorld(B, container, roleId, roles, npcData) {
   const hero=makeCharacter(roleId,0,4.5,roles[roleId].color,
     roleId==='cat'?'cat':'staff',true);
   const player=hero.root;
-  player.rotation.y=Math.PI*.0;
+  player.rotation.y=0;
+  const fallbackMeshes=player.getChildMeshes(false).slice();
+  let heroClips={};
+  let activeHeroClip=null;
+  let heroInteractLeft=0;
+  let heroLoaded=false;
+  const ROLE_TINT={guard:0x486e7a,shipper:0xc89962,barista:0x598677,waiter:0x868eaf};
+
+  function playHeroClip(name) {
+    const group=heroClips[name]||heroClips.Idle;
+    if(!group || group===activeHeroClip) return;
+    for(const g of Object.values(heroClips)) if(g!==group)g.stop();
+    activeHeroClip=group;
+    group.reset();
+    group.start(name!=='Interact',1,group.from,group.to,false);
+  }
+  function triggerHeroInteract(){
+    if(!heroLoaded) return;
+    heroInteractLeft=1.5;
+    playHeroClip('Interact');
+  }
+  function tickHeroAnimation(dt,moving,working) {
+    if(!heroLoaded)return;
+    heroInteractLeft=Math.max(0,heroInteractLeft-dt);
+    const target=(working||heroInteractLeft>0)?'Interact':moving?'Walk':'Idle';
+    playHeroClip(target);
+  }
+  async function loadHeroGLB() {
+    // The cat is a distinct animal role; never replace it with a human avatar.
+    if(roleId==='cat') return {loaded:false,clips:[],reason:'cat avatar preserved'};
+    if(!B.SceneLoader?.ImportMeshAsync) throw new Error('Babylon GLB loader missing');
+    const imported=await B.SceneLoader.ImportMeshAsync(null,'./assets/','yen-barista-v1.glb',scene);
+    const roots=imported.meshes.filter(m=>!m.parent);
+    const assetHolder=new B.TransformNode('yen-barista-holder',scene);
+    assetHolder.parent=player;
+    for(const r of roots)r.parent=assetHolder;
+    for(const mesh of fallbackMeshes)mesh.setEnabled(false);
+    heroClips=Object.fromEntries(imported.animationGroups.map(g=>[g.name,g]));
+    heroLoaded=true;
+    // The original GLB is modeled with Y up, at the player origin.
+    assetHolder.scaling.setAll(.98);
+    // Role-specific apron tint without modifying the original asset file.
+    if(roleId!=='barista'&&roleId!=='cat') {
+      for(const m of imported.meshes){
+        if(!/apron|badge/i.test(m.name)||!m.material)continue;
+        const tintColor=B.Color3.FromHexString('#'+ROLE_TINT[roleId].toString(16).padStart(6,'0'));
+        const material=m.material.clone('yen-'+roleId+'-'+m.name);
+        if(material.albedoColor) material.albedoColor=tintColor;
+        if(material.diffuseColor) material.diffuseColor=tintColor;
+        m.material=material;
+      }
+    }
+    // Distinct role props help preserve visual identity with a single shared base rig.
+    if(roleId==='guard'){
+      cylinder(.43,.43,.15,0,2.32,0,0x456b78,player,true);
+      cylinder(.31,.31,.20,0,2.43,0,0x456b78,player);
+    } else if(roleId==='shipper'){
+      box(.66,.82,.28,0,1.02,-.40,0xe9b56d,player,true);
+      box(.42,.18,.10,0,1.32,-.57,0xf8e8c4,player);
+    } else if(roleId==='waiter'){
+      cylinder(.43,.43,.07,-.73,1.38,.31,0xc9b49a,player);
+      cylinder(.13,.11,.24,-.84,1.54,.31,0xf4e6d0,player);
+    }
+    playHeroClip('Idle');
+    return {meshCount:imported.meshes.length,clips:Object.keys(heroClips),loaded:true};
+  }
+
+  // Scene atmosphere updates independently of the work-shift timer.
+  let environmentClock=0;
+  function animateEnvironment(dt){
+    environmentClock+=Math.max(0,dt);
+    for(let i=0;i<steam.length;i++){
+      const vapor=steam[i],phase=environmentClock*.65+i*.9;
+      vapor.position.y=2.07+i*.17+Math.sin(phase)*.09;
+      vapor.position.x=4.4+(i-1)*.12+Math.sin(phase*.67)*.06;
+      vapor.material.alpha=.17+Math.sin(phase)*.07;
+    }
+  }
 
   // Objective marker and nearby interactions. The scene itself has no UI overlay.
   const indicator=B.MeshBuilder.CreateTorus('task-ring',{diameter:1.8,thickness:.105,tessellation:36},scene);
@@ -406,12 +490,15 @@ export function createAnimeWorld(B, container, roleId, roles, npcData) {
   const result={
     engine,scene,camera,canvas,player,npcs,refs,indicator,markerPole,nearRing,
     focusedStation:null,
+    loadHeroGLB, tickHeroAnimation, triggerHeroInteract, animateEnvironment,
+    get heroLoaded(){return heroLoaded;},
     setTint(mesh,hex){mesh.material=toon(hex);},
     resize(){
       engine.resize();
       const width=Math.max(1,container.clientWidth),height=Math.max(1,container.clientHeight);
       const aspect=width/height;
-      const halfW=aspect<.8?8.2:11.65;
+      // Zoom closer so hero silhouettes remain readable on mobile.
+      const halfW=aspect<.8?4.75:8.6;
       const halfH=halfW/aspect;
       camera.orthoLeft=-halfW;camera.orthoRight=halfW;
       camera.orthoTop=halfH;camera.orthoBottom=-halfH;
@@ -419,7 +506,7 @@ export function createAnimeWorld(B, container, roleId, roles, npcData) {
     },
     followPlayer(dt=1){
       const aspect=container.clientWidth/Math.max(1,container.clientHeight);
-      const follow=aspect<.85?.82:.28;
+      const follow=aspect<.85?.96:.55;
       const target=new B.Vector3(player.position.x*follow,.55,player.position.z*follow);
       const destination=target.add(new B.Vector3(18,23,19));
       camera.position=B.Vector3.Lerp(camera.position,destination,.085);
