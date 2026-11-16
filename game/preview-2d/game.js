@@ -1,6 +1,6 @@
-/* Yencafeday 2D: full gameplay vertical slice based on reference mockup.
- * Phaser 4 rendering; cohesive 2D UI and role/art preview before applying.
- * Assets currently original vector sprite placeholders, not approved handpainted frames.
+/* Yencafeday 2D: illustrated café game with PNG actors and raster scene art.
+ * Phaser 4 renders a painted café backdrop, transparent foreground plants,
+ * and real 4x4 character sprite animations, preserving accessible HTML UI.
  * No login, storage, tracking or real currency.
  */
 (() => {
@@ -31,17 +31,17 @@ const roles={
 };
 const stations={
  door:{x:195,y:716,label:'Lối vào'},
- counter:{x:1118,y:613,label:'Quầy pha chế'},
+ counter:{x:990,y:606,label:'Quầy pha chế'},
  table:{x:465,y:763,label:'Bàn khách'},
  bike:{x:1296,y:757,label:'Xe giao hàng'},
- bench:{x:942,y:787,label:'Ghế dài'},
- plant:{x:231,y:569,label:'Chậu cây'}
+ bench:{x:1040,y:762,label:'Ghế dài'},
+ plant:{x:160,y:565,label:'Chậu cây'}
 };
 const npcs=[
- {id:'reader',role:'reader',x:382,y:620,name:'Khách đọc sách',lines:['Mình vừa đọc tới chương... cái bìa.','Một trang sách và một ly nước. Tạm đủ.']},
+ {id:'reader',role:'reader',x:520,y:650,name:'Khách đọc sách',lines:['Mình vừa đọc tới chương... cái bìa.','Một trang sách và một ly nước. Tạm đủ.']},
  {id:'guest',role:'guest',x:690,y:605,name:'Khách chờ bạn',lines:['Bạn mình bảo năm phút nữa tới.','Mình gọi trước một ly. Kẻ đến sau tự tính.']},
- {id:'guard',role:'guard',x:210,y:675,name:'Chú bảo vệ',lines:['Để xe ngay ngắn là quán đã yên một nửa.','Mèo Mướp trông ghế, tôi trông cửa.']},
- {id:'barista',role:'barista',x:1216,y:584,name:'Bạn pha chế',lines:['Nước ngon cần chút kiên nhẫn.','Máy pha cà phê hôm nay khá dễ bảo.']},
+ {id:'guard',role:'guard',x:150,y:714,name:'Chú bảo vệ',lines:['Để xe ngay ngắn là quán đã yên một nửa.','Mèo Mướp trông ghế, tôi trông cửa.']},
+ {id:'barista',role:'barista',x:995,y:550,name:'Bạn pha chế',lines:['Nước ngon cần chút kiên nhẫn.','Máy pha cà phê hôm nay khá dễ bảo.']},
  {id:'waiter',role:'waiter',x:817,y:647,name:'Bạn phục vụ',lines:['Ngồi đâu cũng được, trừ quầy pha chế.','Để mình dọn lại bàn nhé.']},
  {id:'cat',role:'cat',x:613,y:802,name:'Mèo Mướp',lines:['Meo. (Mướp vừa đồng ý.)','Meo. (Mướp vừa đổi ý.)']}
 ];
@@ -344,11 +344,15 @@ function tick(dt){
  }
 }
 function blocked(x,y){
- // Obstacles correspond to paintings of counter, table and sofa.
- return x<195&&y<599||
-   (x>763&&x<1350&&y<567)||
-   (x>330&&x<594&&y>644&&y<724)||
-   (x>800&&x<1134&&y>684&&y<735);
+ // Illustrated background collision map, in native 1440x900 world coordinates.
+ // Stations are deliberately reachable from the front/side of each furnishing.
+ const inRect=(l,t,r,b)=>x>l&&x<r&&y>t&&y<b;
+ const ellipse=(cx,cy,rx,ry)=>((x-cx)/rx)**2+((y-cy)/ry)**2<1;
+ return inRect(810,0,1440,578) ||       // Wooden counter and pastry case
+        ellipse(342,618,180,107) ||     // Café table and chairs
+        inRect(1100,604,1380,746) ||   // Cushioned bench
+        inRect(1345,635,1440,804) ||   // Delivery scooter
+        inRect(0,0,125,597);           // Potted foreground plants
 }
 function renderInfo(kind){
  const title={objective:'Objective',journal:'Nhật ký ở Yên',bag:'Túi đồ',settings:'Cài đặt'}[kind];
@@ -412,7 +416,8 @@ function bindStick(){
 class CafeScene extends Phaser.Scene{
  constructor(){super('YenCafe2D');this.sprites=new Map();this.lastDirection='down';}
  preload(){
-  this.load.svg('cafe','./assets/cafe.svg',{width:1440,height:900});
+  this.load.image('cafe','./assets/cafe-painted.webp');
+  this.load.image('cafe-foreground','./assets/cafe-foreground.webp');
   for(const role of SPRITE_ROLES)
    this.load.spritesheet(role,sheetUrl(role),{frameWidth:256,frameHeight:320,endFrame:15});
   this.load.on('loaderror',file=>{
@@ -423,6 +428,23 @@ class CafeScene extends Phaser.Scene{
  create(){
   world=this;
   this.add.image(720,450,'cafe').setDisplaySize(1440,900).setDepth(-50);
+  // The background is a painted raster illustration. Typography and depth
+  // remain real Phaser elements so they can be localized and occlude actors.
+  this.add.text(695,201,'yên',{
+    fontFamily:'Georgia,serif',fontSize:'72px',fontStyle:'bold italic',
+    color:'#f0d7a6',stroke:'#99754b',strokeThickness:2
+  }).setOrigin(.5,.5).setDepth(-30);
+  this.add.text(695,266,'C O F F E E   &   T E A',{
+    fontFamily:'Arial,sans-serif',fontSize:'14px',fontStyle:'bold',
+    color:'#f3dfb7'
+  }).setOrigin(.5,.5).setDepth(-30);
+  // Soft particles float in the sunlight. No camera-coupled interface effects.
+  for(let i=0;i<11;i++){
+    const px=125+(i*59)%460, py=347+(i*71)%300;
+    const mote=this.add.circle(px,py,1.6+(i%3),0xfff3c9,.22).setDepth(-10);
+    this.tweens.add({targets:mote,alpha:.02,y:py-22-(i%4)*5,
+      duration:2600+i*173,delay:i*197,repeat:-1,yoyo:true,ease:'Sine.inOut'});
+  }
   this.cameras.main.setBounds(0,0,1440,900);
   for(const role of SPRITE_ROLES)createRoleAnimations(this,role);
   for(const person of npcs){
@@ -438,6 +460,9 @@ class CafeScene extends Phaser.Scene{
     padding:{left:6,right:6,top:3,bottom:3}
    }).setOrigin(.5,1).setDepth(person.y+2);
   }
+  // Painted foliage in front of the camera hides the lower part of actors
+  // who walk behind the plants; the world remains one contiguous painting.
+  this.add.image(720,450,'cafe-foreground').setDisplaySize(1440,900).setDepth(950);
   this.player=this.add.sprite(600,750,'barista',0)
    .setDisplaySize(117,146).setOrigin(.5,1).setDepth(756);
   this.playerRole='barista';
@@ -450,8 +475,8 @@ class CafeScene extends Phaser.Scene{
   this.tweens.add({targets:this.marker,scale:1.15,alpha:.62,yoyo:true,repeat:-1,duration:820});
   const smoke=[];
   for(let i=0;i<3;i++){
-    const vap=this.add.ellipse(1035+i*29,291+i*12,11,26,0xfff6df,.25).setDepth(350);
-    this.tweens.add({targets:vap,y:245+i*10,alpha:0,yoyo:true,repeat:-1,duration:1500+i*200});
+    const vap=this.add.ellipse(1087+i*27,340+i*11,10,21,0xfff6df,.23).setDepth(350);
+    this.tweens.add({targets:vap,y:309+i*7,alpha:0,yoyo:true,repeat:-1,duration:1500+i*200});
     smoke.push(vap);
   }
   this.cameras.main.startFollow(this.player,true,.085,.085);

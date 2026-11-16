@@ -106,7 +106,7 @@ function harness(){
    this.add={image:sprite,sprite,circle:sprite,ellipse:sprite,text:sprite};
    this.tweens={add(){}};
    this.cameras={main:{setBounds(){},startFollow(){},setZoom(){},shake(){},flash(){}}};
-   this.load={svg(){},spritesheet(key,path,opt){assert.equal(opt.frameWidth,256);assert.equal(opt.frameHeight,320)},on(){}};
+   this.load={svg(){},image(key,path){assert.match(path,/\.webp$/);assert.ok(['cafe','cafe-foreground'].includes(key));},spritesheet(key,path,opt){assert.equal(opt.frameWidth,256);assert.equal(opt.frameHeight,320)},on(){}};
    this.anims={exists:key=>allAnimations.has(key),create:def=>allAnimations.set(def.key,def)};
    this.input={keyboard:{addKeys(){return{}},on(){}}};
    this.scale={width:1200,height:800,on(){}};
@@ -139,7 +139,7 @@ test('Preview selects PNG frames and applying role changes the Phaser player',()
  assert.equal(a.state.role,'waiter');
  assert.equal(h.scene.player.texture,'waiter');
  assert.equal(el('overlay').hidden,true);
- h.scene.player.setPosition(382,620);a.interact();
+ h.scene.player.setPosition(520,650);a.interact();
  assert.match(el('dialogue').textContent,/Khách đọc sách/);
  assert.equal(h.scene.player.anims.currentAnim.key,'waiter-interact');
 });
