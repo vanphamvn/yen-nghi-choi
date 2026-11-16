@@ -6,6 +6,8 @@ on:
       - ".github/workflows/game-2d-contract.yml"
       - "tests/game-2d-background.test.mjs"
       - ".agents/skills/yen-sprite-style/**"
+      - ".agents/skills/yen-game-director/**"
+      - ".agents/skills/yen-game-release/**"
       - "AGENTS.md"
   pull_request:
     paths:
@@ -35,6 +37,10 @@ jobs:
         run: node game/preview-2d/tools/audit-art-style.mjs
       - name: Verify sprite atlas, NPC routes, layered scene and art gate
         run: node --test game/preview-2d/tests/game-contract.test.mjs tests/game-2d-background.test.mjs game/preview-2d/tests/art-style-policy.test.mjs
+      - name: Validate autonomous game roadmap and selection
+        run: |
+          node game/preview-2d/tools/next-work.mjs --validate
+          node --test game/preview-2d/tests/roadmap.test.mjs
       - name: Check sprite SVG XML
         run: |
           python3 - <<'PY'
