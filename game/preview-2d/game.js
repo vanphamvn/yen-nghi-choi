@@ -275,6 +275,7 @@ function interact(){
    updateMarker();
    speech('Đang làm: '+state.active.task,2);
  }else if(nearby.kind==='npc'){
+   world?.reactNPC(nearby.id);
    const npc=npcs.find(n=>n.id===nearby.id);
    const idx=state.dialogues[nearby.id]||0;
    state.dialogues[nearby.id]=idx+1;
@@ -403,36 +404,39 @@ function bindStick(){
    area.addEventListener(event,e=>{if(touch.pointer===e.pointerId)resetStick()});
 }
 class CafeScene extends Phaser.Scene{
- constructor(){super('YenCafe2D');this.sprites=new Map();this.lastDirection='front';}
+ constructor(){super('YenCafe2D');this.sprites=new Map();this.lastDirection='down';}
  preload(){
   this.load.svg('cafe','./assets/cafe.svg',{width:1440,height:900});
-  for(const r of ['barista','waiter','shipper','guard','cat','guest','reader']){
-    this.load.svg(r+'-front',assetUrl(r),{width:r==='cat'?220:200,height:r==='cat'?230:290});
-    if(r!=='cat'){
-      this.load.svg(r+'-side',assetUrl(r,'side'),{width:200,height:290});
-      this.load.svg(r+'-back',assetUrl(r,'back'),{width:200,height:290});
-    }
-  }
+  for(const role of SPRITE_ROLES)
+   this.load.spritesheet(role,sheetUrl(role),{frameWidth:256,frameHeight:320,endFrame:15});
+  this.load.on('loaderror',file=>{
+   console.error('Yencafeday failed to load sprite asset:',file?.key,file?.src);
+   $('load-error').hidden=false;
+  });
  }
  create(){
   world=this;
   this.add.image(720,450,'cafe').setDisplaySize(1440,900).setDepth(-50);
   this.cameras.main.setBounds(0,0,1440,900);
+  for(const role of SPRITE_ROLES)createRoleAnimations(this,role);
   for(const person of npcs){
-    const isCat=person.role==='cat';
-    const sprite=this.add.image(person.x,person.y,person.role+'-front')
-      .setDisplaySize(isCat?90:101,isCat?95:142).setOrigin(.5,1).setDepth(person.y);
-    this.sprites.set(person.id,sprite);
-    const label=this.add.text(person.x,person.y-(isCat?102:149),person.name,{
-      fontFamily:'Trebuchet MS, Arial',fontSize:'15px',fontStyle:'bold',
-      color:'#553e32',backgroundColor:'#fff6dfba',
-      padding:{left:6,right:6,top:3,bottom:3}
-    }).setOrigin(.5,1).setDepth(person.y+2);
-    this.tweens.add({targets:sprite,y:person.y-3,duration:1800+(this.sprites.size*70),yoyo:true,repeat:-1,ease:'Sine.inOut'});
+   const asset=spriteRole(person.role);
+   const isCat=asset==='cat';
+   const sprite=this.add.sprite(person.x,person.y,asset,0)
+    .setDisplaySize(isCat?102:109,isCat?127:138).setOrigin(.5,1).setDepth(person.y);
+   playDirectional(sprite,asset,'down',false);
+   this.sprites.set(person.id,sprite);
+   const label=this.add.text(person.x,person.y-(isCat?130:146),person.name,{
+    fontFamily:'Trebuchet MS, Arial',fontSize:'15px',fontStyle:'bold',
+    color:'#553e32',backgroundColor:'#fff6dfba',
+    padding:{left:6,right:6,top:3,bottom:3}
+   }).setOrigin(.5,1).setDepth(person.y+2);
   }
-  this.player=this.add.image(600,750,'barista-front')
-    .setDisplaySize(115,161).setOrigin(.5,1).setDepth(756);
+  this.player=this.add.sprite(600,750,'barista',0)
+   .setDisplaySize(117,146).setOrigin(.5,1).setDepth(756);
   this.playerRole='barista';
+  this.interactRemaining=0;
+  playDirectional(this.player,'barista','down',false);
   this.marker=this.add.circle(0,0,42,0xffeab1,.19).setStrokeStyle(5,0xffd17a,.93)
    .setDepth(1200).setVisible(false);
   this.nearHalo=this.add.circle(0,0,43,0xfff2cd,.12).setStrokeStyle(4,0xffd995,.8)
@@ -468,22 +472,30 @@ class CafeScene extends Phaser.Scene{
  setPlayerRole(role){
   if(!this.player||!roles[role])return;
   this.playerRole=role;
-  this.lastDirection='front';
-  this.player.setTexture(role+'-front');
-  this.player.setDisplaySize(role==='cat'?103:114,role==='cat'?112:161);
+  this.lastDirection='down';
+  this.interactRemaining=0;
+  this.player.setTexture(role,0);
+  this.player.setDisplaySize(role==='cat'?110:117,role==='cat'?137:146);
+  playDirectional(this.player,role,'down',false);
  }
  resetWorld(){
   if(!this.player)return;
   this.player.setPosition(601,753).setDepth(758).setFlipX(false);
   this.player.setAngle(0);
-  this.lastDirection='front';
+  this.lastDirection='down';
   this.setPlayerRole(state.role);
   this.marker?.setVisible(false);
   this.nearHalo?.setVisible(false);
  }
  react(){
   if(!this.player)return;
-  this.tweens.add({targets:this.player,scaleY:state.role==='cat'?.50:.56,duration:135,yoyo:true});
+  this.interactRemaining=.76;
+  this.player.play(state.role+'-interact',true);
+ }
+ reactNPC(id){
+  const npc=npcs.find(n=>n.id===id);
+  const sprite=this.sprites.get(id);
+  if(npc&&sprite)sprite.play(spriteRole(npc.role)+'-interact',true);
  }
  reactProp(id,next){
   if(id==='counter')this.cameras.main.shake(125,.001);
@@ -499,23 +511,27 @@ class CafeScene extends Phaser.Scene{
   let dy=Number(Boolean(this.keyboard.S?.isDown||this.keyboard.DOWN?.isDown))
        -Number(Boolean(this.keyboard.W?.isDown||this.keyboard.UP?.isDown))+touch.y;
   const n=Math.hypot(dx,dy);
-  if(!activeModal&&['explore','shift','ready'].includes(state.phase)&&n>.08&&!state.active){
-    dx/=Math.max(n,1);dy/=Math.max(n,1);
-    const speed=state.sprint>0?332:225;
-    const x=clamp(this.player.x+dx*speed*dt,90,1365);
-    const y=clamp(this.player.y+dy*speed*dt,507,840);
-    if(!blocked(x,this.player.y))this.player.x=x;
-    if(!blocked(this.player.x,y))this.player.y=y;
-    let direction=Math.abs(dy)>.52?(dy<0?'back':'front'):'side';
-    if(state.role==='cat')direction='front';
-    if(direction!==this.lastDirection){
-      this.player.setTexture(state.role+'-'+direction);
-      this.lastDirection=direction;
-    }
-    this.player.setFlipX(dx<-.1&&direction==='side');
-    this.player.angle=Math.sin(t*.024)*2.4;
-    this.player.setDepth(this.player.y+3);
-  }else this.player.angle*=.88;
+  this.interactRemaining=Math.max(0,this.interactRemaining-dt);
+  if(!activeModal&&['explore','shift','ready'].includes(state.phase)
+     &&n>.08&&!state.active&&this.interactRemaining===0){
+   dx/=Math.max(n,1);dy/=Math.max(n,1);
+   const speed=state.sprint>0?332:225;
+   const x=clamp(this.player.x+dx*speed*dt,90,1365);
+   const y=clamp(this.player.y+dy*speed*dt,507,840);
+   if(!blocked(x,this.player.y))this.player.x=x;
+   if(!blocked(this.player.x,y))this.player.y=y;
+   const direction=Math.abs(dy)>.52?(dy<0?'up':'down'):(dx<0?'left':'right');
+   this.lastDirection=direction;
+   playDirectional(this.player,state.role,direction,true);
+   this.player.setDepth(this.player.y+3);
+  }else if(this.interactRemaining===0){
+   playDirectional(this.player,state.role,this.lastDirection,false);
+  }
+  for(const [id,sprite] of this.sprites){
+   const npc=npcs.find(n=>n.id===id);
+   if(sprite.anims&&!sprite.anims.isPlaying&&npc)
+    playDirectional(sprite,spriteRole(npc.role),'down',false);
+  }
   const candidate=nearbyCandidate();
   if(candidate&&!activeModal){
     $('world-hint').hidden=false;
