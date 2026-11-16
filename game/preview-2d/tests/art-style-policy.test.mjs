@@ -28,9 +28,12 @@ test('all known bad world SVG textures are frozen but not falsely approved',()=>
  assert.equal(policy.styleId,'yen-painted-chibi-v1');
  assert.equal(Object.keys(policy.legacyUnapprovedVectors).length,10);
  assert.equal(Object.keys(policy.canonicalRoleBlobs).length,5);
+ for(const sha of Object.values(policy.canonicalRoleBlobs))
+  assert.match(sha,/^[0-9a-f]{40}$/);
  assert.deepEqual(Object.keys(policy.approvedArt),[]);
  for(const file of Object.keys(policy.legacyUnapprovedVectors)){
    assert.equal(path.extname(file),'.svg');
+   assert.match(policy.legacyUnapprovedVectors[file].gitBlobSha,/^[0-9a-f]{40}$/,file+' has malformed SHA');
    assert.ok(existsSync(path.join(game,file)),file);
    assert.ok(!policy.approvedArt[file],file+' cannot be approved');
  }
