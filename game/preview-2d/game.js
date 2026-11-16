@@ -137,6 +137,11 @@ function modal(name){
  $('model-modal').hidden=name!=='preview';
  $('info-modal').hidden=name!=='info';
  $('result-modal').hidden=name!=='result';
+ if(name==='preview'){
+   const allowed=state.phase==='explore';
+   $('apply-model').disabled=!allowed;
+   $('apply-model').textContent=allowed?'✓ Áp dụng model này':'Đổi vai khi đang khám phá';
+ }
  // Pause game movement while inspecting menus, keep environment alive.
  if(name==='preview')$('close-modal').focus();
  else if(name==='info')$('close-info').focus();
@@ -561,6 +566,7 @@ function init(){
   if(phase==='explore')startShift();else if(phase==='ready')finishShift();
  });
  $('apply-model').addEventListener('click',()=>{
+  if(state.phase!=='explore')return;
   setRole(state.selectedPreview);
   state.inventory[0]='Ly nước của '+roles[state.role].name;
   addLog('Đổi vai sang '+roles[state.role].name+'.');
