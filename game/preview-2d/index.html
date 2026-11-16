@@ -55,23 +55,23 @@
       <section id="model-modal" class="model-modal modal" role="dialog" aria-modal="true" aria-labelledby="preview-title">
         <header class="modal-heading">
           <div class="sparkle" aria-hidden="true">✦</div>
-          <div class="modal-heading-text"><h1 id="preview-title">Xem trước model mới (2D)</h1><p>Chọn nhân vật, xem các hướng và hoạt ảnh trước khi áp dụng vào game.</p></div>
+          <div class="modal-heading-text"><h1 id="preview-title">Xem trước sprite art mới (2D)</h1><p>16 frame sprite art/nhân vật · Idle / Walk / Interact · áp dụng trực tiếp vào game.</p></div>
           <button id="close-modal" type="button" class="icon-close" aria-label="Đóng xem trước">×</button>
         </header>
         <div class="preview-content">
           <div id="role-picker" class="role-picker" role="listbox" aria-label="Chọn nhân vật để xem trước">
-            <button class="role-option selected" type="button" data-role="barista" aria-selected="true"><img src="./assets/barista.svg" alt=""/><strong>Pha chế</strong><span>Mới</span></button>
-            <button class="role-option" type="button" data-role="waiter" aria-selected="false"><img src="./assets/waiter.svg" alt=""/><strong>Phục vụ</strong><span>Mới</span></button>
-            <button class="role-option" type="button" data-role="shipper" aria-selected="false"><img src="./assets/shipper.svg" alt=""/><strong>Shipper</strong><span>Mới</span></button>
-            <button class="role-option" type="button" data-role="guard" aria-selected="false"><img src="./assets/guard.svg" alt=""/><strong>Bảo vệ</strong><span>Mới</span></button>
-            <button class="role-option" type="button" data-role="cat" aria-selected="false"><img src="./assets/cat.svg" alt=""/><strong>Mèo cổ vũ</strong><span>Mới</span></button>
+            <button class="role-option selected" type="button" data-role="barista" aria-selected="true"><span class="sprite-thumb" data-thumb="barista" aria-hidden="true"></span><strong>Pha chế</strong><span>Mới</span></button>
+            <button class="role-option" type="button" data-role="waiter" aria-selected="false"><span class="sprite-thumb" data-thumb="waiter" aria-hidden="true"></span><strong>Phục vụ</strong><span>Mới</span></button>
+            <button class="role-option" type="button" data-role="shipper" aria-selected="false"><span class="sprite-thumb" data-thumb="shipper" aria-hidden="true"></span><strong>Shipper</strong><span>Mới</span></button>
+            <button class="role-option" type="button" data-role="guard" aria-selected="false"><span class="sprite-thumb" data-thumb="guard" aria-hidden="true"></span><strong>Bảo vệ</strong><span>Mới</span></button>
+            <button class="role-option" type="button" data-role="cat" aria-selected="false"><span class="sprite-thumb" data-thumb="cat" aria-hidden="true"></span><strong>Mèo cổ vũ</strong><span>Mới</span></button>
           </div>
           <div class="model-stage">
             <div class="model-turnaround" id="model-turnaround">
-              <div class="pose"><div class="pose-bg"><img id="pose-front" src="./assets/barista.svg" alt="Hướng trước"/></div><strong>Trước</strong></div>
-              <div class="pose"><div class="pose-bg"><img id="pose-right" src="./assets/barista.svg" alt="Hướng phải"/></div><strong>Phải</strong></div>
-              <div class="pose"><div class="pose-bg"><img id="pose-back" src="./assets/barista.svg" alt="Hướng sau"/></div><strong>Sau</strong></div>
-              <div class="pose"><div class="pose-bg"><img id="pose-left" src="./assets/barista.svg" alt="Hướng trái"/></div><strong>Trái</strong></div>
+              <div class="pose"><div class="pose-bg"><span id="pose-front" class="sprite-frame" role="img" aria-label="Hướng trước"></span></div><strong>Trước</strong></div>
+              <div class="pose"><div class="pose-bg"><span id="pose-right" class="sprite-frame" role="img" aria-label="Hướng phải"></span></div><strong>Phải</strong></div>
+              <div class="pose"><div class="pose-bg"><span id="pose-back" class="sprite-frame" role="img" aria-label="Hướng sau"></span></div><strong>Sau</strong></div>
+              <div class="pose"><div class="pose-bg"><span id="pose-left" class="sprite-frame" role="img" aria-label="Hướng trái"></span></div><strong>Trái</strong></div>
             </div>
             <div class="anim-head">▣ <strong>Hoạt ảnh</strong><span>Chọn hoạt ảnh để xem nhân vật cử động</span></div>
             <div class="animation-tabs" role="group" aria-label="Xem thử hoạt ảnh">
@@ -79,14 +79,19 @@
               <button data-animation="walk" type="button">▶ Walk (Đi)</button>
               <button data-animation="interact" type="button">▶ Interact (Tương tác)</button>
             </div>
-            <div class="animation-film" id="animation-film" aria-label="Xem trước các khung hoạt ảnh">
-              <img src="./assets/barista.svg" alt="Khung 1"/><img src="./assets/barista.svg" alt="Khung 2"/><img src="./assets/barista.svg" alt="Khung 3"/><img src="./assets/barista.svg" alt="Khung 4"/><img src="./assets/barista.svg" alt="Khung 5"/><img src="./assets/barista.svg" alt="Khung 6"/>
+            <div class="animation-film" id="animation-film" aria-label="Các khung hình thật của sprite animation">
+              <span class="sprite-frame mini-frame" role="img" aria-label="Khung 1"></span>
+              <span class="sprite-frame mini-frame" role="img" aria-label="Khung 2"></span>
+              <span class="sprite-frame mini-frame" role="img" aria-label="Khung 3"></span>
+              <span class="sprite-frame mini-frame" role="img" aria-label="Khung 4"></span>
+              <span class="sprite-frame mini-frame" role="img" aria-label="Khung 5"></span>
+              <span class="sprite-frame mini-frame" role="img" aria-label="Khung 6"></span>
             </div>
             <p id="model-note" class="model-note">Bản xem thử sprite 2D. Các hướng và chuyển động đang được hoàn thiện; hình minh họa chất lượng cao trong concept là chuẩn mỹ thuật mục tiêu.</p>
           </div>
         </div>
         <footer class="modal-footer">
-          <div class="criteria"><span>✓ Phong cách anime 2D</span><span>✓ Điều khiển nhân vật</span><span>◌ Sprite animation đang hoàn thiện</span></div>
+          <div class="criteria"><span>✓ Phong cách anime 2D</span><span>✓ Điều khiển nhân vật</span><span>✓ Sprite animation thật · 16 frame</span></div>
           <button id="apply-model" class="apply-btn" type="button">✓ Áp dụng model này</button>
         </footer>
       </section>
