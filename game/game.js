@@ -78,6 +78,7 @@ let stats = { speed: 3, dexterity: 3, calm: 3, charm: 3 };
 let BABYLON = null;
 let ANIME_WORLD = null;
 let engineLoad = null;
+let loadingVersion=0;
 let world = null;
 let game = null;
 let frame = 0;
@@ -127,21 +128,33 @@ renderStats();
 setRole(selectedRole);
 
 function showError() { $('error').hidden = false; $('start-btn').disabled = false; $('start-btn').textContent = 'Vào quán khám phá ↗'; }
+function loadScript(src) {
+  return new Promise((resolve,reject)=>{
+    const element=document.createElement('script');
+    element.src=src;element.async=true;
+    element.onload=resolve;
+    element.onerror=()=>reject(new Error('Không thể tải thư viện 3D: '+src));
+    document.head.appendChild(element);
+  });
+}
 function loadBabylon() {
-  if (window.BABYLON?.Engine) return Promise.resolve(window.BABYLON);
+  if (window.BABYLON?.__yenLoadersReady) return Promise.resolve(window.BABYLON);
   if (engineLoad) return engineLoad;
-  engineLoad = new Promise((resolve,reject)=>{
-    const script=document.createElement('script');
-    script.src='https://cdn.jsdelivr.net/npm/babylonjs@9.36.0/babylon.js';
-    script.async=true;
-    script.onload=()=>{
-      if (window.BABYLON?.Engine) resolve(window.BABYLON);
-      else reject(new Error('Babylon.js bundle did not initialize'));
-    };
-    script.onerror=()=>reject(new Error('Could not load Babylon.js'));
-    document.head.appendChild(script);
-  }).catch(error=>{engineLoad=null;throw error;});
+  engineLoad=(async()=>{
+    if (!window.BABYLON?.Engine) {
+      await loadScript('https://cdn.jsdelivr.net/npm/babylonjs@9.36.0/babylon.js');
+    }
+    if (!window.BABYLON?.Engine) throw new Error('Babylon.js engine không khởi tạo');
+    // Local GLBs are served from /game/assets/; the loader itself is version pinned.
+    await loadScript('https://cdn.jsdelivr.net/npm/babylonjs-loaders@9.36.0/babylonjs.loaders.min.js');
+    window.BABYLON.__yenLoadersReady=true;
+    return window.BABYLON;
+  })().catch(error=>{engineLoad=null;throw error;});
   return engineLoad;
+}
+function usingClassic(){
+  return typeof location!=='undefined' &&
+    new URLSearchParams(location.search).has('classic');
 }
 function setObjectiveOpen(open) {
   const panel=$('objective-panel');
@@ -154,11 +167,13 @@ $('objective-toggle').addEventListener('click',()=>setObjectiveOpen($('objective
 
 async function startGame() {
   if (totalStats() !== 12) return;
+  const token=++loadingVersion;
   $('start-btn').disabled = true;
-  $('start-btn').textContent = 'Đang mở cửa quán...';
+  $('start-btn').textContent = 'Đang chuẩn bị quán...';
   try {
     if (!BABYLON) BABYLON = await loadBabylon();
-    if (!ANIME_WORLD) ANIME_WORLD = await import('./world-babylon.js');
+    ANIME_WORLD=usingClassic()?await import('./world-babylon.js'):
+      await import('./world-v3.js');
     disposeWorld();
     game = {
       role: selectedRole, attributes: { ...stats }, day: 1, phase: 'explore',
@@ -171,7 +186,10 @@ async function startGame() {
     setObjectiveOpen(false);
     $('hud-role').textContent = ROLES[game.role].name;
     $('skill-name').textContent = ROLES[game.role].power;
-    buildWorld();
+    $('render-loading').hidden=false;
+    await buildWorld();
+    if(token!==loadingVersion) {disposeWorld();return;}
+    $('render-loading').hidden=true;
     updatePhaseUI();
     showMessage('Đi dạo một vòng nhé. Muốn bắt đầu ca thì mở Objective ở góc màn hình.',5);
     updateHud();
@@ -181,6 +199,7 @@ async function startGame() {
   } catch (error) {
     console.error('Could not start the Yên 3D game', error);
     disposeWorld();
+    $('render-loading').hidden=true;
     $('game').hidden = true; $('setup').hidden = false;
     showError();
   } finally {
@@ -193,8 +212,9 @@ async function startGame() {
 $('start-btn').addEventListener('click', startGame);
 $('error-back').addEventListener('click', () => { $('error').hidden = true; });
 
-function buildWorld() {
-  world=ANIME_WORLD.createAnimeWorld(BABYLON,$('scene'),game.role,ROLES,NPCS);
+async function buildWorld() {
+  const built=await ANIME_WORLD.createAnimeWorld(BABYLON,$('scene'),game.role,ROLES,NPCS);
+  world=built;
   resetEnvironment();
   onResize();
 }
@@ -213,15 +233,15 @@ function resetEnvironment() {
     npc.interactions=0;
     npc.react=0;
   }
-  const refs=world.refs;
-  world.setTint(refs.machineLight,0x9b9188);
-  refs.tableCup.isVisible=true;
-  refs.bikeLamp.isVisible=false;
-  refs.benchPillow.position.x=2.5;
-  world.setTint(refs.doorPanel,0x699f87);
-  for (const leaf of refs.plantLeaves) {
-    leaf.scaling.set(.33,.59,.24);
-    world.setTint(leaf,0x75ab83);
+  if(typeof world.resetInteractive==='function') world.resetInteractive();
+  else {
+    const refs=world.refs;
+    world.setTint(refs.machineLight,0x9b9188);
+    refs.tableCup.isVisible=true;
+    refs.bikeLamp.isVisible=false;
+    refs.benchPillow.position.x=2.5;
+    world.setTint(refs.doorPanel,0x699f87);
+    for(const leaf of refs.plantLeaves)leaf.scaling.set(.33,.59,.24);
   }
   world.player.position.set(0,0,4.5);
   world.player.rotation.y=0;
@@ -387,13 +407,16 @@ function interact() {
   const id=candidate.id;
   const next=game.propState[id]===0?1:0;
   game.propState[id]=next;
-  const refs=world.refs;
-  if(id==='counter') world.setTint(refs.machineLight,next?0x77c78b:0x9b9188);
-  if(id==='table') refs.tableCup.isVisible=!next;
-  if(id==='bike') refs.bikeLamp.isVisible=!!next;
-  if(id==='bench') refs.benchPillow.position.x=next?2.95:2.5;
-  if(id==='door') world.setTint(refs.doorPanel,next?0xdba36e:0x699f87);
-  if(id==='plant') for(const leaf of refs.plantLeaves) leaf.scaling.y=next?.78:.59;
+  if(typeof world.setPropState==='function') world.setPropState(id,next);
+  else {
+    const refs=world.refs;
+    if(id==='counter') world.setTint(refs.machineLight,next?0x77c78b:0x9b9188);
+    if(id==='table') refs.tableCup.isVisible=!next;
+    if(id==='bike') refs.bikeLamp.isVisible=!!next;
+    if(id==='bench') refs.benchPillow.position.x=next?2.95:2.5;
+    if(id==='door') world.setTint(refs.doorPanel,next?0xdba36e:0x699f87);
+    if(id==='plant') for(const leaf of refs.plantLeaves) leaf.scaling.y=next?.78:.59;
+  }
   showMessage(PROP_TEXT[id][next?0:1],4);
 }
 function startAction() {
@@ -408,6 +431,7 @@ function startAction() {
   if(task.at===roleBoost[game.role]) duration*=.7;
   if(game.quickNext) { duration=.28;game.quickNext=false; }
   game.active={elapsed:0,duration};
+  world.playAction?.();
   $('action-progress').hidden=false;
   $('action-bar').style.width='0%';
   showMessage('Đang thực hiện: '+task.title,2);
@@ -415,6 +439,7 @@ function startAction() {
 function completeAction() {
   if (!game || game.phase!=='shift') return;
   game.active=null;
+  world.setMotion?.('idle');
   $('action-progress').hidden=true;
   const roleBonus=game.role==='cat'?4:game.role==='barista'?5:3;
   game.efficiency=clamp(game.efficiency+7+roleBonus+(game.attributes.dexterity-3)*2,0,100);
@@ -521,6 +546,7 @@ function loop(now) {
        -(pressed.has('w')||pressed.has('arrowup')?1:0)+touchMove.y;
     const length=Math.hypot(rawX,rawY);
     if (length>.06) {
+      world.setMotion?.('walk');
       const sx=rawX/Math.max(1,length),sy=rawY/Math.max(1,length);
       const worldX=(sx+sy)*Math.SQRT1_2,worldZ=(sy-sx)*Math.SQRT1_2;
       const speed=(2.45+game.attributes.speed*.36)*(game.sprint>0?1.75:1);
@@ -531,6 +557,7 @@ function loop(now) {
       world.player.rotation.y=Math.atan2(-worldX,-worldZ);
       world.player.position.y=Math.sin(now*.015)*.055;
     } else {
+      world.setMotion?.('idle');
       world.player.position.y*=.8;
     }
   }
@@ -557,9 +584,11 @@ function disposeWorld() {
   world=null;
 }
 function backToSetup() {
+  loadingVersion++;
   if (game) game.playing=false;
   pressed.clear();resetJoystick();disposeWorld();
   $('game').hidden=true;$('result').hidden=true;$('setup').hidden=false;
+  $('render-loading').hidden=true;
   setObjectiveOpen(false);
   $('game-toast').hidden=true;
   $('start-btn').textContent='Vào quán khám phá ↗';
