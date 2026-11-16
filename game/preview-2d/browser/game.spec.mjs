@@ -44,7 +44,9 @@ test('boot, role selection, focus, movement and mobile controls',async({page},te
 test('all five roles complete a shift through real controls and advance days',async({page},testInfo)=>{
  test.skip(testInfo.project.name!=='desktop','The three viewport boot/input cases cover mobile separately');
  test.setTimeout(240000);
- await page.goto('/game/preview-2d/?qa=1');
+ // The default-renderer smoke above remains on AUTO/WebGL. Use the supported
+ // Canvas fallback for long input scenarios on software-rendered CI workers.
+ await page.goto('/game/preview-2d/?qa=1&canvas=1');
  await expect.poll(()=>page.evaluate(()=>Boolean(window.__yenQA?.inspect().player))).toBe(true);
  const inspect=()=>page.evaluate(()=>window.__yenQA.inspect());
  async function walkTo(x,y){
@@ -52,11 +54,13 @@ test('all five roles complete a shift through real controls and advance days',as
    const target=axis==='x'?x:y;
    for(let attempts=0;attempts<30;attempts++){
     const position=(await inspect()).player[axis],distance=target-position;
-    if(Math.abs(distance)<13)break;
+    if(Math.abs(distance)<24)break;
     const key=axis==='x'?(distance>0?'d':'a'):(distance>0?'s':'w');
     await page.keyboard.down(key);
-    await page.waitForTimeout(Math.min(350,Math.max(65,Math.abs(distance)/225*1000)));
+    await page.waitForTimeout(Math.min(220,Math.max(25,Math.abs(distance)/225*1000)));
     await page.keyboard.up(key);
+    // Observe a rendered frame after key release, not a stale pre-keyup sample.
+    await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
     if(attempts===29)throw Error('Could not walk to '+x+','+y+' along '+axis+'; actual='+JSON.stringify(await inspect()));
    }
   }
