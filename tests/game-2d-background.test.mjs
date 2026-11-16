@@ -18,16 +18,17 @@ const props=extract('const SCENE_PROPS=','const SCENE_COLLIDERS=', 'SCENE_PROPS'
 const blocked=(x,y)=>solids.some(c=>c.shape==='rect'
  ?x>c.l&&x<c.r&&y>c.t&&y<c.b:((x-c.x)/c.rx)**2+((y-c.y)/c.ry)**2<1);
 
-test('frozen SVG baseline and independent raster props remain self-hosted',()=>{
+test('retired SVG history and independent active raster scene remain self-hosted',()=>{
  for(const name of sceneFiles){
-  const path='assets/scene/'+name+'.svg';
+  const path='art-reviews/legacy-svg/'+name+'.svg';
   assert.ok(existsSync(new URL(path,base)),path);
   const svg=read(path).toString('utf8');
   assert.match(svg,/^<svg xmlns="http:\/\/www\.w3\.org\/2000\/svg"/,name);
   assert.match(svg,/<\/svg>$/,name);
   assert.ok(svg.length>700,name+' unexpectedly empty');
  }
- assert.match(code,/this\.load\.svg\('scene-backdrop'/);
+ assert.match(code,/this\.load\.image\('scene-backdrop','\.\/assets\/scene\/backdrop-painted-v1\.png'\)/);
+ assert.doesNotMatch(code,/this\.load\.svg\('scene-backdrop'/);
  assert.match(code,/this\.createProps\(\)/);
  assert.match(code,/\.setOrigin\(\.5,1\)\.setDepth\(def\.y\)/);
  assert.doesNotMatch(code,/this\.load\.image\('cafe','\.\/assets\/cafe-painted\.webp'\)/);
@@ -45,7 +46,7 @@ test('All six interactive objects have unique sprites and bottom pivot footprint
   assert.ok(prop.x>0&&prop.x<=1440&&prop.y>0&&prop.y<=900,prop.id);
   assert.ok(prop.shadow.length===2,prop.id+' missing grounding');
   assert.ok(stations[prop.id],prop.id+' missing station');
-  assert.ok(existsSync(new URL(prop.raster||'assets/scene/'+prop.texture+'.svg',base)),prop.id+' missing texture');
+  assert.ok(prop.raster&&existsSync(new URL(prop.raster,base)),prop.id+' missing raster texture');
  }
  assert.deepEqual(Object.keys(stations).sort(),props.map(p=>p.id).sort());
  assert.equal(solids.length,5,'door should be passable');

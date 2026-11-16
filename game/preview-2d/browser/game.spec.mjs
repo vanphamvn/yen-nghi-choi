@@ -23,7 +23,7 @@ test('boot, role selection, focus, movement and mobile controls',async({page},te
  const errors=[];page.on('pageerror',error=>errors.push(error.message));
  const paintedLoads=new Set();page.on('response',response=>{
   const file=new URL(response.url()).pathname.split('/').pop();
-  if(response.ok()&&/^(cup|book|cushion|counter|machine)-painted-v1\.webp$/.test(file))paintedLoads.add(file);
+  if(response.ok()&&/^(cup|book|cushion|counter|machine|bench|plant|scooter|door)-painted-v1\.webp$|^backdrop-painted-v1\.png$/.test(file))paintedLoads.add(file);
  });
  await page.goto('/game/preview-2d/?qa=1');
  await expect(page.locator('#scene canvas')).toBeVisible();
@@ -39,6 +39,9 @@ test('boot, role selection, focus, movement and mobile controls',async({page},te
  const start=await inspect();
  expect(start.props.find(prop=>prop.id==='table').texture).toBe('prop-table-painted');
  expect(start.props.find(prop=>prop.id==='counter').texture).toBe('prop-counter-painted');
+ for(const [id,texture] of [['door','prop-door-painted'],['bench','prop-bench-painted'],['plant','prop-plant-painted'],['bike','prop-scooter-painted']])
+  expect(start.props.find(prop=>prop.id===id).texture).toBe(texture);
+ expect(paintedLoads.has('backdrop-painted-v1.png')).toBe(true);
  expect(paintedLoads.has('counter-painted-v1.webp')).toBe(true);
  expect(paintedLoads.has('machine-painted-v1.webp')).toBe(true);
  for(const name of ['cup','book','cushion']){
@@ -89,7 +92,7 @@ test('all five roles complete a shift through real controls and advance days',as
   counter:[[600,790],[790,790],[790,652],[990,652]],
   bench:[[600,790],[1040,790],[1040,768]],
   bike:[[600,790],[1040,790],[1040,809],[1283,809]],
-  door:[[600,790],[195,790],[195,716]]
+  door:[[600,790],[535,790],[535,700]]
  };
  const tasks={barista:['counter','plant','counter'],waiter:['table','counter','bench'],
   shipper:['counter','bike','door'],guard:['door','table','bench'],cat:['plant','table','bench']};

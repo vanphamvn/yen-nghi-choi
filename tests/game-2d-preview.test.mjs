@@ -109,7 +109,7 @@ function harness(){
    this.add={image:sprite,sprite,circle:sprite,ellipse:sprite,text:sprite};
    this.tweens={add(){}};
    this.cameras={main:{setBounds(){},startFollow(){},setZoom(){},shake(){},flash(){}}};
-   this.load={svg(){},image(key,path){assert.match(path,/\.webp$/);assert.ok(['cafe','cafe-foreground','prop-table-painted','prop-cup','prop-book','prop-cushion','prop-counter-painted','prop-machine-painted','prop-bench-painted','prop-plant-painted','prop-scooter-painted','prop-door-painted'].includes(key));},spritesheet(key,path,opt){assert.equal(opt.frameWidth,256);assert.equal(opt.frameHeight,320)},on(){}};
+   this.load={svg(){},image(key,path){assert.match(path,/\.(webp|png)$/);assert.ok(['scene-backdrop','cafe','cafe-foreground','prop-table-painted','prop-cup','prop-book','prop-cushion','prop-counter-painted','prop-machine-painted','prop-bench-painted','prop-plant-painted','prop-scooter-painted','prop-door-painted'].includes(key));},spritesheet(key,path,opt){assert.equal(opt.frameWidth,256);assert.equal(opt.frameHeight,320)},on(){}};
    this.anims={exists:key=>allAnimations.has(key),create:def=>allAnimations.set(def.key,def)};
    this.input={keyboard:{addKeys(){return{}},on(){},resetKeys(){}}};
    this.scale={width:1200,height:800,on(){}};

@@ -37,7 +37,9 @@ test('all known bad world SVG textures are frozen but not falsely approved',()=>
  for(const file of Object.keys(policy.legacyUnapprovedVectors)){
    assert.equal(path.extname(file),'.svg');
    assert.match(policy.legacyUnapprovedVectors[file].gitBlobSha,/^[0-9a-f]{40}$/,file+' has malformed SHA');
-   assert.ok(existsSync(path.join(game,file)),file);
+   assert.equal(existsSync(path.join(game,file)),false,file+' still in active scene');
+   const archived=policy.legacyVectorArchive[file];
+   assert.ok(existsSync(path.join(game,archived)),file+' historical reference missing');
    assert.ok(!policy.approvedArt[file],file+' cannot be approved');
  }
 });
@@ -55,19 +57,19 @@ test('visual comparison board references both character and unapproved scene tex
  const html=readFileSync(path.join(game,'art-review.html'),'utf8');
  assert.match(html,/barista\.png/);
  assert.match(html,/waiter\.png/);
- assert.match(html,/assets\/scene\/table\.svg/);
- assert.match(html,/assets\/scene\/backdrop\.svg/);
- assert.match(html,/CHƯA ĐẠT ART REVIEW/);
+ assert.match(html,/art-reviews\/legacy-svg\/table\.svg/);
+ assert.match(html,/assets\/scene\/backdrop-painted-v1\.png/);
+ assert.match(html,/ĐÃ THAY TOÀN BỘ SVG RUNTIME/);
 });
 
-test('CI process gate passes on frozen known debt, strict sign-off rejects it',()=>{
+test('normal and strict art gates pass after vector history is archived',()=>{
  const normal=spawnSync(process.execPath,[audit],{encoding:'utf8'});
  assert.equal(normal.status,0,'baseline audit must pass: '+normal.stderr);
  assert.match(normal.stdout,/Yên art gate PASSED/);
- assert.match(normal.stderr,/NOT STYLE APPROVED/);
+ assert.doesNotMatch(normal.stderr,/NOT STYLE APPROVED/);
  const strict=spawnSync(process.execPath,[audit,'--strict'],{encoding:'utf8'});
- assert.equal(strict.status,1,'strict must block known mismatched art');
- assert.match(strict.stderr,/Strict art release blocked/);
+ assert.equal(strict.status,0,'strict gate must accept reviewed raster-only scene');
+ assert.match(strict.stdout,/Yên art gate PASSED/);
 });
 
 test('audit rejects a newly introduced unreviewed visible SVG sprite',()=>{
