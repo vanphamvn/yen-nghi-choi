@@ -1,4 +1,4 @@
-# Yencafeday 3D BETA · 02
+# Yencafeday 3D BETA · 03
 
 Trò chơi mini web 3D cho **Yên Coffee & Tea**. Thiết kế mới sử dụng **Babylon.js 9.36.0** làm 3D engine thay cho renderer Three.js cũ, với mô hình quán diorama phong cách anime, nhân vật chibi và ánh sáng cel-shading nhiều cấp.
 
@@ -49,3 +49,16 @@ Mở http://localhost:8000/game/ trong trình duyệt hỗ trợ WebGL.
 - [ ] Xem UI portrait/landscape và màn hình thấp; nút Objective không che joystick và hành động.
 
 **Giới hạn:** hình ảnh hiện là mô hình 3D anime tạo bằng code, chưa phải các nhân vật rigged/animation chất lượng studio. Chưa có multiplayer, tài khoản, bảng xếp hạng hay phần thưởng đổi tại quán. Không lưu thông tin cá nhân.
+
+## BETA 03 · Self-hosted hero GLB + animation integration
+
+- `game/assets/yen-barista-v1.glb` is an original, self-hosted 339,828-byte glTF 2.0 file with `Idle`, `Walk`, `Interact` animation clips and detailed chibi-style facial/clothing components.
+- Babylon.js GLB loader is pinned to v9.36.0 and loaded only after entering the game. If GLB fails, procedural fallback remains playable.
+- The human roles use a shared animated barista base with role-specific colors and accessory silhouettes (guard hat, shipper backpack, waiter tray). The cat remains a distinct feline avatar.
+- `world-babylon.js` handles the animated character, a closer mobile camera, contact-shadow stage dressing and moving steam from the café counter.
+- The existing loop, NPC interactions, start/end shift, next day, mobile controls and collapsed Objective remain unchanged.
+- The new model is articulated using transform-node animation, **not a production-quality skinned/rigged Blender asset**. Visual QA with actual browser screenshots and mobile FPS is still required before calling art direction complete.
+- Asset provenance and limitations: [assets/ASSET_LICENSES.md](./assets/ASSET_LICENSES.md).
+- New structural regression: `node --test tests/game-v3-asset.test.mjs`.
+
+**Production release policy:** This BETA 03 remains clearly marked as a work in progress. It improves playable character presentation but does not close art issues #74–#78; the more ambitious artist-approved model and environment remain in the roadmap. Source-level tests cannot substitute for human visual approval.
