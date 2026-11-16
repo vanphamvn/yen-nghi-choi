@@ -507,7 +507,8 @@ class CafeScene extends Phaser.Scene{
  }
  update(t,dtMs){
   if(!this.player)return;
-  const dt=Math.min(dtMs/1000,.06);
+  // Preserve real-time movement if rendering falls below 30 FPS.
+  const dt=Math.min(dtMs/1000,.30);
   tick(dt);
   let dx=Number(Boolean(heldKeys.has('d')||heldKeys.has('arrowright')||this.keyboard.D?.isDown||this.keyboard.RIGHT?.isDown))
        -Number(Boolean(heldKeys.has('a')||heldKeys.has('arrowleft')||this.keyboard.A?.isDown||this.keyboard.LEFT?.isDown))+touch.x;
@@ -519,10 +520,13 @@ class CafeScene extends Phaser.Scene{
      &&n>.08&&!state.active&&this.interactRemaining===0){
    dx/=Math.max(n,1);dy/=Math.max(n,1);
    const speed=state.sprint>0?332:225;
-   const x=clamp(this.player.x+dx*speed*dt,90,1365);
-   const y=clamp(this.player.y+dy*speed*dt,507,840);
-   if(!blocked(x,this.player.y))this.player.x=x;
-   if(!blocked(this.player.x,y))this.player.y=y;
+   const travel=speed*dt,steps=Math.max(1,Math.ceil(travel/22));
+   for(let step=0;step<steps;step++){
+    const x=clamp(this.player.x+dx*travel/steps,90,1365);
+    const y=clamp(this.player.y+dy*travel/steps,507,840);
+    if(!blocked(x,this.player.y))this.player.x=x;
+    if(!blocked(this.player.x,y))this.player.y=y;
+   }
    const direction=Math.abs(dy)>.52?(dy<0?'up':'down'):(dx<0?'left':'right');
    this.lastDirection=direction;
    playDirectional(this.player,state.role,direction,true);
@@ -606,7 +610,7 @@ function init(){
  }
  try{
   phaserGame=new Phaser.Game({
-    type:Phaser.AUTO,
+    type:typeof window.location?.search==='string'&&window.location.search.includes('canvas=1')?Phaser.CANVAS:Phaser.AUTO,
     parent:'scene',
     width:1200,height:800,
     backgroundColor:'#e6c39b',
@@ -625,7 +629,8 @@ if(typeof window.location?.search==='string' && window.location.search.includes(
   modal:activeModal,held:[...heldKeys],
   player:world?.player?{x:Math.round(world.player.x),y:Math.round(world.player.y),
    anim:world.player.anims?.currentAnim?.key}:null,
-  near:nearbyCandidate()?.id||null
+  near:nearbyCandidate()?.id||null,
+  fps:world?.game?.loop?.actualFps||null
  })});
 }
 init();
