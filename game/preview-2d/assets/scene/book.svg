@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="105" height="62" viewBox="0 0 105 62"><defs>
+<linearGradient id="wood" x2="0.25" y2="1"><stop stop-color="#dca97a"/><stop offset=".5" stop-color="#b77c52"/><stop offset="1" stop-color="#875338"/></linearGradient>
+<linearGradient id="dark" x2="0" y2="1"><stop stop-color="#775444"/><stop offset="1" stop-color="#4c352c"/></linearGradient>
+<linearGradient id="leaf" x2=".3" y2="1"><stop stop-color="#9bae74"/><stop offset="1" stop-color="#466e50"/></linearGradient>
+<linearGradient id="cream" x2="0" y2="1"><stop stop-color="#fff3d8"/><stop offset="1" stop-color="#dfc59e"/></linearGradient>
+<linearGradient id="glass" x2="0" y2="1"><stop stop-color="#c6e0cb"/><stop offset=".6" stop-color="#e3e7cb"/><stop offset="1" stop-color="#edc79b"/></linearGradient>
+<linearGradient id="floor" x2=".15" y2="1"><stop stop-color="#ddbb96"/><stop offset="1" stop-color="#b88464"/></linearGradient>
+<radialGradient id="sun"><stop stop-color="#fff7c8" stop-opacity=".72"/><stop offset="1" stop-color="#fff4c5" stop-opacity="0"/></radialGradient>
+</defs>
+<ellipse cx="53" cy="54" rx="44" ry="5" fill="#49362f" opacity=".15"/>
+<path d="M10 10Q28 1 53 13Q76 0 95 10V53Q71 41 53 53Q30 42 10 52Z" fill="#e9d4ad" stroke="#89694e" stroke-width="5"/>
+<path d="M53 13V52" stroke="#bd9776" stroke-width="5"/>
+<path d="M19 20Q33 15 45 22M19 32Q32 27 45 35M61 22Q78 15 88 20M61 34Q74 29 88 31" fill="none" stroke="#c09e79" stroke-width="3"/>
+</svg>
