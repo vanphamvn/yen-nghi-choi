@@ -185,7 +185,8 @@ function buildWorld() {
   sun.shadow.camera.top = 20; sun.shadow.camera.bottom = -20;
   sun.shadow.normalBias = .025;
   scene.add(new THREE.HemisphereLight(0xffffff, 0x9bad91, 2), sun);
-  world = { scene, renderer, camera, player: null, indicator: null, markerPole: null, focusedStation: null };
+  world = { scene, renderer, camera, player: null, indicator: null, markerPole: null,
+    nearRing: null, focusedStation: null, npcs: [], refs: {} };
 
   function mesh(geometry, color, parent = scene, metalness = 0) {
     const material = new THREE.MeshStandardMaterial({ color, roughness: .88, metalness });
@@ -219,6 +220,7 @@ function buildWorld() {
   box(5.8,.15,2,3,1.25,-3.7,0xb89570);
   box(1.2,.9,.72,1.6,1.74,-4.1,0x535d56);
   box(.95,.18,.4,1.6,2.24,-4.1,0xe5cba4);
+  world.refs.machineLight=sphere(.12,1.17,1.63,-3.69,0x7f665d);
   cylinder(.31,.31,.14,1.4,1.39,-3.2,0xf4f0e5);
   cylinder(.36,.3,.17,3.3,1.43,-3.25,0xdbdbcd);
   cylinder(.28,.28,.15,4.1,1.42,-3.24,0xe2b27e);
@@ -227,6 +229,7 @@ function buildWorld() {
   // Four chairs around the round customer table.
   cylinder(1.28,1.28,.16,-3.25,.91,-1.4,0xc69e7c,scene,18);
   cylinder(.18,.22,.85,-3.25,.46,-1.4,0x8c7768);
+  world.refs.tableCup=cylinder(.16,.13,.28,-3.25,1.13,-1.4,0xeac6a4);
   for (const [xx,zz] of [[-5,-1.45],[-1.6,-1.4],[-3.25,-3.1],[-3.2,.25]]) {
     cylinder(.42,.36,.13,xx,.58,zz,0x9dac91);
     cylinder(.1,.15,.5,xx,.28,zz,0x9a8a75);
@@ -234,15 +237,18 @@ function buildWorld() {
   // Visitor bench with cups.
   box(3.4,.3,1.1,2.5,.55,3.5,0xa67f65);
   box(3.4,1.05,.21,2.5,1.08,4.07,0x8a6e5a);
+  world.refs.benchPillow=box(.8,.18,.67,2.5,.82,3.62,0xd7c49e);
   for (const x of [1.2,3.8]) box(.17,.55,.17,x,.24,3.5,0x6e6359);
   cylinder(.16,.16,.38,2.2,.85,3.4,0xf1e5d0);
   cylinder(.14,.14,.3,3.2,.83,3.4,0xdde9d5);
   // Plant corner.
   cylinder(.64,.48,.9,-6.2,.45,-4.2,0xc78566);
+  world.refs.plantLeaves=[];
   for (let i=0;i<6;i++) {
     const a = i * Math.PI / 3;
     const leaf = sphere(.45,-6.2+Math.cos(a)*.54,1.42+Math.sin(i*2)*.13,-4.2+Math.sin(a)*.54, i%2 ? 0x5d9467 : 0x7ba378);
     leaf.scale.set(.64,1.3,.6);
+    world.refs.plantLeaves.push(leaf);
   }
   cylinder(.13,.16,.78,-6.2,1.0,-4.2,0x608367);
   // A tiny scooter near the entrance.
@@ -257,11 +263,13 @@ function buildWorld() {
   box(.95,.24,.6,6.2,1.24,3.93,0x6e7569);
   box(.12,1.05,.12,6.2,1.5,2.8,0x5b6963);
   box(.95,.1,.12,6.2,2,2.8,0x5b6963);
+  world.refs.bikeLamp=sphere(.17,6.2,1.28,4.1,0xffdf94);
+  world.refs.bikeLamp.visible=false;
   // Entrance path and arched sign supports.
   box(3.5,.06,1.7,-6.5,.03,5.7,0xf2e6c7);
   box(.18,2.5,.18,-7.8,1.25,6.2,0xa37a62);
   box(.18,2.5,.18,-5.15,1.25,6.2,0xa37a62);
-  box(3.0,.45,.2,-6.5,2.45,6.2,0x6d9176);
+  world.refs.doorPanel=box(3.0,.45,.2,-6.5,2.45,6.2,0x6d9176);
   // Hand-made shop sign on back wall.
   const signCanvas = document.createElement('canvas');
   signCanvas.width=384;signCanvas.height=128;
@@ -276,16 +284,39 @@ function buildWorld() {
   const sign = new THREE.Mesh(new THREE.PlaneGeometry(3.8,1.26),
     new THREE.MeshBasicMaterial({ map: signTexture, side: THREE.DoubleSide }));
   sign.position.set(-2.25,1.75,-6.81); scene.add(sign);
-  // Guest silhouettes at the table.
-  createHumanNPC(-3.9,.1,-.4,0xd8a998);
-  createHumanNPC(-2.0,.1,-2.0,0x9dafa3);
-  function createHumanNPC(x,y,z,color) {
-    const group=new THREE.Group();group.position.set(x,y,z);scene.add(group);
-    const body = cylinder(.31,.36,.7,0,.6,0,color,group);
-    sphere(.32,0,1.27,0,0xeac7ab,group);
-    cylinder(.15,.14,.36,-.19,.17,0,0x6a776b,group);
-    cylinder(.15,.14,.36,.19,.17,0,0x6a776b,group);
-    group.rotation.y = .6;
+  // Visitors, staff and cat are real in-world NPCs, not static silhouettes.
+  for (const descriptor of NPCS) {
+    const actor=new THREE.Group();
+    actor.position.set(descriptor.x,0,descriptor.z);
+    actor.rotation.y=-.3;
+    scene.add(actor);
+    if (descriptor.kind==='cat') {
+      const body=sphere(.4,0,.46,0,descriptor.color,actor); body.scale.set(1,.8,1.25);
+      sphere(.37,0,.94,-.13,descriptor.color,actor);
+      for(const x of [-.25,.25]){
+        const ear=mesh(new THREE.ConeGeometry(.16,.37,4),descriptor.color,actor);
+        ear.position.set(x,1.24,-.12); ear.rotation.y=Math.PI/4;
+        sphere(.055,x*.65,.95,-.49,0x303c34,actor);
+      }
+    } else {
+      cylinder(.29,.35,.82,0,.74,0,descriptor.color,actor);
+      sphere(.34,0,1.45,0,0xe1bea0,actor);
+      for (const x of [-.2,.2]) {
+        cylinder(.13,.15,.44,x,.25,0,0x56645a,actor);
+        sphere(.055,x*.55,1.49,-.34,0x3a4840,actor);
+      }
+      if(descriptor.kind==='staff') {
+        box(.45,.45,.06,0,.86,-.31,0xeee4ce,actor);
+        if(descriptor.id==='npc_guard') cylinder(.34,.34,.14,0,1.79,0,0x395268,actor);
+        if(descriptor.id==='npc_barista') cylinder(.18,.18,.18,0,1.83,0,0xf2eddc,actor);
+      }
+    }
+    const halo=new THREE.Mesh(new THREE.RingGeometry(.47,.57,24),
+      new THREE.MeshBasicMaterial({color:0x769c8a,transparent:true,opacity:.44,side:THREE.DoubleSide}));
+    halo.rotation.x=-Math.PI/2;
+    halo.position.y=.04;
+    actor.add(halo);
+    world.npcs.push({ ...descriptor, group:actor, halo, interactions:0, react:0 });
   }
 
   // A distinct procedural avatar for every job.
@@ -349,6 +380,12 @@ function buildWorld() {
     new THREE.MeshBasicMaterial({color:0xb5db9b,transparent:true,opacity:.16,depthWrite:false,side:THREE.DoubleSide}));
   scene.add(marker);
   world.indicator=ring;world.markerPole=marker;
+  const nearRing=new THREE.Mesh(new THREE.RingGeometry(.57,.66,28),
+    new THREE.MeshBasicMaterial({color:0xe8c688,transparent:true,opacity:.8,side:THREE.DoubleSide,depthTest:false}));
+  nearRing.rotation.x=-Math.PI/2;
+  nearRing.position.y=.07;nearRing.visible=false;nearRing.renderOrder=4;
+  scene.add(nearRing);world.nearRing=nearRing;
+  resetEnvironment();
   onResize();
 }
 function onResize() {
