@@ -143,6 +143,19 @@ function loadBabylon() {
   }).catch(error=>{engineLoad=null;throw error;});
   return engineLoad;
 }
+let assetLoaderPromise=null;
+function loadBabylonAssetLoader(){
+  if(assetLoaderPromise)return assetLoaderPromise;
+  assetLoaderPromise=new Promise((resolve,reject)=>{
+    const script=document.createElement('script');
+    script.src='https://cdn.jsdelivr.net/npm/babylonjs-loaders@9.36.0/babylonjs.loaders.min.js';
+    script.async=true;
+    script.onload=resolve;
+    script.onerror=()=>reject(new Error('Could not load Babylon GLB loader'));
+    document.head.appendChild(script);
+  }).catch(error=>{assetLoaderPromise=null;throw error;});
+  return assetLoaderPromise;
+}
 function setObjectiveOpen(open) {
   const panel=$('objective-panel');
   const toggle=$('objective-toggle');
@@ -158,6 +171,7 @@ async function startGame() {
   $('start-btn').textContent = 'Đang mở cửa quán...';
   try {
     if (!BABYLON) BABYLON = await loadBabylon();
+    await loadBabylonAssetLoader();
     if (!ANIME_WORLD) ANIME_WORLD = await import('./world-babylon.js');
     disposeWorld();
     game = {
@@ -172,8 +186,15 @@ async function startGame() {
     $('hud-role').textContent = ROLES[game.role].name;
     $('skill-name').textContent = ROLES[game.role].power;
     buildWorld();
+    try {
+      const asset=await world.loadHeroGLB();
+      console.info('Yên hero asset ready:',asset.clips);
+    } catch(assetError) {
+      console.error('Yên hero GLB fallback:',assetError);
+      showMessage('Mô hình mới chưa tải được. Game vẫn chơi được với nhân vật dự phòng.',6);
+    }
     updatePhaseUI();
-    showMessage('Đi dạo một vòng nhé. Muốn bắt đầu ca thì mở Objective ở góc màn hình.',5);
+    if(!game.message)showMessage('Đi dạo một vòng nhé. Mở Objective để bắt đầu ca.',5);
     updateHud();
     lastTick = 0;
     cancelAnimationFrame(frame);
@@ -376,6 +397,7 @@ function interact() {
   const candidate=getInteractionCandidate();
   if (!candidate) return;
   if (candidate.kind==='task') { startAction(); return; }
+  world.triggerHeroInteract?.();
   if (candidate.kind==='npc') {
     const npc=candidate.target;
     const text=npc.lines[npc.interactions%npc.lines.length];
@@ -408,6 +430,7 @@ function startAction() {
   if(task.at===roleBoost[game.role]) duration*=.7;
   if(game.quickNext) { duration=.28;game.quickNext=false; }
   game.active={elapsed:0,duration};
+  world.triggerHeroInteract?.();
   $('action-progress').hidden=false;
   $('action-bar').style.width='0%';
   showMessage('Đang thực hiện: '+task.title,2);
@@ -542,7 +565,11 @@ function loop(now) {
     objective.scaling.set(pulse,pulse,pulse);
     world.markerPole.material.alpha=.12+Math.sin(now*.003)*.045;
   }
-  // Babylon.js owns the orthographic anime camera, including mobile framing.
+  // GLB clips follow actual movement/work, while exploration remains continuous.
+  world.tickHeroAnimation?.(dt,
+    Math.hypot(touchMove.x,touchMove.y)>.07 ||
+      ['w','a','s','d','arrowup','arrowdown','arrowleft','arrowright'].some(key=>pressed.has(key)),
+    !!game.active);
   world.followPlayer(dt);
   updateHud();
   // No automatic game-over: players decide when their shift is complete.
