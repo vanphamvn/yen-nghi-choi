@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#e6e9d9">
+<meta name="robots" content="noindex,nofollow">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self'; img-src 'self' blob: data:; connect-src 'self' blob: https://cdn.jsdelivr.net; worker-src blob:; object-src 'none'; base-uri 'none'; form-action 'none'">
+<title>Art Lab · Yencafeday 3D</title>
+<link rel="stylesheet" href="./style.css">
+<script defer src="https://cdn.jsdelivr.net/npm/babylonjs@9.36.0/babylon.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/babylonjs-loaders@9.36.0/babylonjs.loaders.min.js"></script>
+<script defer src="./app.js"></script>
+</head>
+<body>
+<header class="topbar"><a href="../">← Game Yên</a><span class="wordmark">yên<span>COFFEE & TEA</span></span><span class="tag">ART LAB · P0</span></header>
+<main>
+<section class="intro">
+  <p class="eyebrow">HẬU TRƯỜNG / CHẤT LƯỢNG HÌNH ẢNH</p>
+  <h1>Trước khi đẹp,<br><em>phải nhìn thật.</em></h1>
+  <p>Phòng kiểm tra model GLB và hoạt ảnh của Yencafeday. Chỉ mở file trên thiết bị của bạn, không tải model lên máy chủ.</p>
+  <div class="intro-meta"><span>01 nhân vật</span><span>01 góc quán</span><span>01 tương tác đạt chuẩn</span></div>
+</section>
+<section class="workspace" aria-label="Kiểm thử model 3D">
+  <div class="viewer-wrap">
+    <div class="viewer-top"><span class="view-id">3D / MODEL REVIEW</span><span id="render-state" class="render-state" role="status">Đang khởi tạo WebGL</span></div>
+    <canvas id="renderCanvas" aria-label="Khung xem mô hình 3D có thể xoay và phóng to" tabindex="0"></canvas>
+    <div class="viewer-help">Kéo để xoay · Cuộn/chụm hai ngón để phóng to · Không có model thì hiển thị sân khấu trống</div>
+    <div class="viewer-bottom"><span id="asset-name">CHƯA CÓ MODEL</span><span id="camera-view">Perspective</span></div>
+  </div>
+  <aside class="inspector">
+    <div class="inspector-head"><span class="eyebrow">PHÒNG DUYỆT MODEL</span><h2>Kiểm tra asset</h2></div>
+    <label for="asset-file" class="upload-button">Chọn model GLB <span aria-hidden="true">↗</span></label>
+    <input type="file" id="asset-file" accept=".glb,model/gltf-binary">
+    <p class="tiny">Chỉ hỗ trợ <strong>.glb tự chứa dữ liệu</strong> (không hỗ trợ .gltf kèm file rời). Dung lượng tối đa 40 MB.</p>
+    <div id="file-dropzone" class="dropzone" tabindex="0" role="button" aria-label="Kéo thả hoặc bấm để chọn file GLB">Thả file GLB tại đây<br><small>hoặc nhấn để chọn file</small></div>
+    <p id="asset-error" role="alert" class="error" hidden></p>
+    <div class="form-field">
+      <label for="animation">Hoạt ảnh trong model</label>
+      <select id="animation"><option value="">Chưa có model</option></select>
+    </div>
+    <div class="form-field">
+      <label for="camera-preset">Góc quan sát</label>
+      <select id="camera-preset"><option value="front">Chính diện</option><option value="three-quarter" selected>Góc 3/4</option><option value="side">Ngang</option><option value="back">Sau lưng</option></select>
+    </div>
+    <div class="actions"><button id="reset-camera" type="button">Đặt lại camera</button><button id="capture" type="button">Chụp ảnh PNG</button></div>
+    <div class="stats" aria-label="Số liệu render">
+      <div><span>FPS (trung vị)</span><b id="fps">–</b></div>
+      <div><span>Mesh</span><b id="meshes">0</b></div>
+      <div><span>Triangles</span><b id="triangles">0</b></div>
+      <div><span>Animation</span><b id="clips">0</b></div>
+      <div><span>Asset</span><b id="asset-bytes">–</b></div>
+      <div><span>Draw calls*</span><b id="drawcalls">–</b></div>
+    </div>
+    <p class="tiny">*Draw calls chỉ hiện nếu engine hỗ trợ counter. FPS được đo trên chính thiết bị đang mở trang. Không đồng nghĩa với FPS của toàn bộ game.</p>
+  </aside>
+</section>
+<section class="review">
+  <div><p class="eyebrow">CỔNG NGHIỆM THU</p><h2>Đủ đẹp để đưa vào game chưa?</h2><p>Chưa có model được duyệt. Một bản deploy xanh không có nghĩa là visual QA đã đạt.</p></div>
+  <div class="checklist">
+    <label><input type="checkbox"> Silhouette đọc được ở kích thước nhỏ trên điện thoại</label>
+    <label><input type="checkbox"> Mặt, tóc, quần áo, vật liệu và góc quay nhất quán</label>
+    <label><input type="checkbox"> Idle / walk / interact chạy mượt, không trượt chân</label>
+    <label><input type="checkbox"> Screenshot thực tế desktop + iOS + Android</label>
+    <label><input type="checkbox"> Nguồn asset, giấy phép thương mại và tác giả rõ ràng</label>
+  </div>
+</section>
+<footer>Yencafeday · Art Lab P0 · Không lưu file, không gửi dữ liệu, không chấm điểm tự động</footer>
+</main>
+</body>
+</html>
