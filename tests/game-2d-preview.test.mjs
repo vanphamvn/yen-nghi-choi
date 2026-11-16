@@ -108,7 +108,7 @@ function harness(){
    this.add={image:sprite,sprite,circle:sprite,ellipse:sprite,text:sprite};
    this.tweens={add(){}};
    this.cameras={main:{setBounds(){},startFollow(){},setZoom(){},shake(){},flash(){}}};
-   this.load={svg(){},image(key,path){assert.match(path,/\.webp$/);assert.ok(['cafe','cafe-foreground','prop-table-painted'].includes(key));},spritesheet(key,path,opt){assert.equal(opt.frameWidth,256);assert.equal(opt.frameHeight,320)},on(){}};
+   this.load={svg(){},image(key,path){assert.match(path,/\.webp$/);assert.ok(['cafe','cafe-foreground','prop-table-painted','prop-cup','prop-book','prop-cushion'].includes(key));},spritesheet(key,path,opt){assert.equal(opt.frameWidth,256);assert.equal(opt.frameHeight,320)},on(){}};
    this.anims={exists:key=>allAnimations.has(key),create:def=>allAnimations.set(def.key,def)};
    this.input={keyboard:{addKeys(){return{}},on(){},resetKeys(){}}};
    this.scale={width:1200,height:800,on(){}};
@@ -238,10 +238,11 @@ test('touch ownership, menus, focus loss and hidden tabs reset movement safely',
 test('starting a new shift restores tabletop details and cancels old prop tweens',()=>{
  const {api:a,scene}=harness();a.modal(null);
  const cup=scene.propDetails.get('cup'),book=scene.propDetails.get('book');
+ const cushion=scene.propDetails.get('cushion');cushion.setPosition(1197,670).setAngle(-8);
  cup.setVisible(false).setAlpha(0);book.setAngle(-7);
  let cancelled=0;scene.tweens.killTweensOf=()=>cancelled++;
  a.startShift();
- assert.equal(cup.visible,true);assert.equal(cup.alpha,1);assert.equal(book.angle,0);assert.equal(cancelled,4);
+ assert.equal(cup.visible,true);assert.equal(cup.alpha,1);assert.equal(book.angle,0);assert.equal(cancelled,4);assert.equal(cushion.x,1168);assert.equal(cushion.angle,0);
  for(const detail of [cup,book]){
   assert.ok(detail.x>290&&detail.x<420,'detail should sit within the painted tabletop');
   assert.ok(detail.y>637&&detail.y<685,'detail must rest on the table surface, not float above it');

@@ -76,6 +76,78 @@
         "alpha": "pass"
       },
       "notes": "Agent visual evaluation against source PNG pixels and Phaser review scene. Table 140x86 beside 117x146 characters; disconnected near-transparent specks cropped, lossless alpha preserved. This is not owner signoff."
+    },
+    "assets/scene/cup-painted-v1.webp": {
+      "styleStatus": "approved",
+      "styleId": "yen-painted-chibi-v1",
+      "reviewer": "Codex",
+      "reviewerType": "agent",
+      "reviewAuthority": "user-delegated",
+      "ownerReviewPending": true,
+      "reviewedOn": "2026-11-16",
+      "runtimeScaleCompared": true,
+      "characterReferences": [
+        "assets/sprites/barista.png",
+        "assets/sprites/waiter.png"
+      ],
+      "proof": "art-reviews/details-v1/contact-sheet.png",
+      "gitBlobSha": "67811862727e8e464c502c80ed518a59dc44e132",
+      "visualChecks": {
+        "brush": "pass",
+        "lighting": "pass",
+        "perspective": "pass",
+        "scale": "pass",
+        "alpha": "pass"
+      },
+      "notes": "Actual agent comparison against barista front/side and waiter PNG plus painted table at runtime scale. cup: thin warm contour, painted material, upper-left light, transparent edge. Independent runtime state; owner inspection pending."
+    },
+    "assets/scene/book-painted-v1.webp": {
+      "styleStatus": "approved",
+      "styleId": "yen-painted-chibi-v1",
+      "reviewer": "Codex",
+      "reviewerType": "agent",
+      "reviewAuthority": "user-delegated",
+      "ownerReviewPending": true,
+      "reviewedOn": "2026-11-16",
+      "runtimeScaleCompared": true,
+      "characterReferences": [
+        "assets/sprites/barista.png",
+        "assets/sprites/waiter.png"
+      ],
+      "proof": "art-reviews/details-v1/contact-sheet.png",
+      "gitBlobSha": "68a19cfabf88a7fa542fccb17d44c8ab1d51d9d7",
+      "visualChecks": {
+        "brush": "pass",
+        "lighting": "pass",
+        "perspective": "pass",
+        "scale": "pass",
+        "alpha": "pass"
+      },
+      "notes": "Actual agent comparison against barista front/side and waiter PNG plus painted table at runtime scale. book: thin warm contour, painted material, upper-left light, transparent edge. Independent runtime state; owner inspection pending."
+    },
+    "assets/scene/cushion-painted-v1.webp": {
+      "styleStatus": "approved",
+      "styleId": "yen-painted-chibi-v1",
+      "reviewer": "Codex",
+      "reviewerType": "agent",
+      "reviewAuthority": "user-delegated",
+      "ownerReviewPending": true,
+      "reviewedOn": "2026-11-16",
+      "runtimeScaleCompared": true,
+      "characterReferences": [
+        "assets/sprites/barista.png",
+        "assets/sprites/waiter.png"
+      ],
+      "proof": "art-reviews/details-v1/contact-sheet.png",
+      "gitBlobSha": "11c1a988f7a02277428359e728d9f246b8b45cda",
+      "visualChecks": {
+        "brush": "pass",
+        "lighting": "pass",
+        "perspective": "pass",
+        "scale": "pass",
+        "alpha": "pass"
+      },
+      "notes": "Actual agent comparison against barista front/side and waiter PNG plus painted table at runtime scale. cushion: thin warm contour, painted material, upper-left light, transparent edge. Independent runtime state; owner inspection pending."
     }
   },
   "reviewRequirements": {

@@ -1,0 +1,65 @@
+{
+  "cup": {
+    "generatedSource": "exec-1b40087b-b07c-44e1-b6c5-3741717386f4.png",
+    "sourceSize": [
+      1145,
+      1374
+    ],
+    "cropBounds": [
+      270,
+      369,
+      916,
+      998
+    ],
+    "normalizedSize": [
+      384,
+      374
+    ],
+    "runtimeSize": [
+      24,
+      24
+    ]
+  },
+  "book": {
+    "generatedSource": "exec-e3d9e690-f50e-4f7e-8b2f-6d921aa96999.png",
+    "sourceSize": [
+      1584,
+      993
+    ],
+    "cropBounds": [
+      177,
+      185,
+      1400,
+      780
+    ],
+    "normalizedSize": [
+      384,
+      188
+    ],
+    "runtimeSize": [
+      35,
+      17
+    ]
+  },
+  "cushion": {
+    "generatedSource": "exec-9159f74d-ee04-4521-b3a2-e753ae4572ce.png",
+    "sourceSize": [
+      1520,
+      1035
+    ],
+    "cropBounds": [
+      308,
+      210,
+      1196,
+      825
+    ],
+    "normalizedSize": [
+      384,
+      267
+    ],
+    "runtimeSize": [
+      69,
+      47
+    ]
+  }
+}

@@ -2,42 +2,6 @@
 
 This file records **verified releases**, not PRs mistaken for production. Agents append one entry per deployment or clearly marked blocked attempt. Keep the newest entry at the top.
 
-## 2026-11-16 | Role onboarding and complete five-role browser walkthrough
-
-- Issues / PR: #99, #96 / #111.
-- Merged SHA: `5d95054e958f0a07d305b2a1c95057dbde45e76d`.
-- Result: SHIPPED on Netlify; source/build provenance and asset content match.
-- Production evidence: https://github.com/vanphamvn/yen-nghi-choi/actions/runs/43895628731.
-- Browser production: 7 passed, 2 explicitly skipped. All five roles completed three tasks, finished shifts and advanced days via real keyboard/buttons using the supported Canvas fallback. Default-renderer boot/input passed at desktop and both mobile viewport sizes.
-- Long-case CI navigation was stabilized by sampling after key release; software WebGL had about 9 FPS. This is a runner observation, not a physical-device benchmark.
-- No owner approval was invented. The subsequent owner instruction authorizes delegated agent artwork review before later owner inspection.
-- Follow-up: integrate the agent-reviewed reference table and continue replacing quarantined scene artwork.
-
-## 2026-11-16 | Mobile input and production browser gates
-
-- Issue / PR: #100 / #110.
-- Merged SHA: `ae11ea39ff62937f5b6334d64fd6c510b56abb38`.
-- Result: SHIPPED. Netlify build provenance and runtime/asset hashes matched the merge; production browser checks passed.
-- Evidence: https://github.com/vanphamvn/yen-nghi-choi/actions/runs/43891612260.
-- Node regression: 43 pass. Browser: 3/3 viewport scenarios passed both checkout and real production at 1440x900, 390x844 and 360x800.
-- Verified: role selection, focus wrap/restore, keyboard/joystick movement, menu input reset, shift start, no horizontal overflow and no page exceptions.
-- These are emulated viewport checks, not physical-device FPS measurements. M6 remains in progress.
-- The unused API coding runner now pauses without failure when no key exists. Development remains in ChatGPT Work; scheduled QA stays read-only.
-- Follow-up: real-control five-role day walkthrough and owner review of the reference table.
-
-## 2026-11-16 | NPC routines and verifiable Netlify releases
-
-- Issues / PRs: #95 / #108; #98 / #109.
-- Merged game SHA: `a640958a1ab573a2bff1633c1709b423a26800c5`.
-- Production: Netlify https://yencafeday.netlify.app/game/preview-2d/.
-- Result: SHIPPED for the NPC slice. Provider-generated build metadata matches the merge SHA, production context, main branch and site ID; all runtime and asset content hashes pass.
-- Evidence: https://github.com/vanphamvn/yen-nghi-choi/actions/runs/43889826169.
-- Automated tests: 42 passing; 600-second NPC route simulation, full conversation hold/resume and shift reset; all five roles still complete 3 tasks and advance days.
-- Browser: live production boot, role apply, start shift and contextual Mèo Mướp dialogue observed through UI. Not real-device mobile FPS or full browser traversal.
-- Art: unchanged. No sitting/reading/drinking frames or art approval claimed; legacy SVG style debt remains.
-- Rollback: revert #109 for NPC behavior; legacy renderer remains at /game/3d.html.
-- Next: mobile input/focus safety and repeatable browser checks. M4 remains in progress.
-
 ## 2026-11-16 | Production deployment verification gate
 
 - Issue / PR: #95 / PR pending.
@@ -74,3 +38,12 @@ This file records **verified releases**, not PRs mistaken for production. Agents
 - Error, rollback or follow-up:
 
 A green CI badge without a production SHA cannot produce a SHIPPED entry.
+
+
+## 2026-11-16 · #113 painted interaction details (production pending)
+
+- Prior release #112 verified at b12e1236287928932a5d11f578c453c8070cdc51, Netlify production; run 43898668854 passed exact content/build provenance and 7 browser cases (2 mobile long-walkthrough skips). M1 complete under explicit delegated review, not owner signoff.
+- Create #113–#116 as child slices of #93/#94. Replace cup/book/cushion with actual referenced painted RGBA assets, independent detail state preserved.
+- Normalized source <=384 px per edge; runtime cup24x24/book35x17/cushion69x47 to avoid source distortion. Contact sheet and prompt provenance in art-reviews/details-v1.
+- Remaining after this slice: six active SVG world textures (architecture, door, counter, bench, plant, scooter). Strict art release remains blocked; real mobile device FPS not measured.
+- This entry describes implementation, not a claimed production release. Exact merge SHA, CI and live proof must be recorded in PR/issue after release.
