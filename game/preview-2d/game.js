@@ -1,6 +1,5 @@
-/* Yencafeday 2D: illustrated café game with PNG actors and raster scene art.
- * Phaser 4 renders a painted café backdrop, transparent foreground plants,
- * and real 4x4 character sprite animations, preserving accessible HTML UI.
+/* Yencafeday 2D: layered architecture and depth-sorted interactive prop sprites.
+ * Phaser uses independent SVG textures for furniture and PNG actor sheets.
  * No login, storage, tracking or real currency.
  */
 (() => {
@@ -29,19 +28,35 @@ const roles={
   {at:'table',title:'Ghép nhóm với khách',detail:'Tới gần bàn và kêu meo.'},
   {at:'bench',title:'Nằm nghỉ đúng chỗ',detail:'Đến ghế dài, hoàn thành ca của mèo.'}]}
 };
+// Bottom-centre sprite pivots: proportions follow one shared 1440x900 world.
+const SCENE_PROPS=[
+ {id:'door',texture:'door',x:172,y:606,w:215,h:355,shadow:[77,12]},
+ {id:'counter',texture:'counter',x:1120,y:610,w:598,h:310,shadow:[260,18]},
+ {id:'table',texture:'table',x:355,y:723,w:307,h:214,shadow:[118,16]},
+ {id:'bench',texture:'bench',x:1220,y:751,w:310,h:235,shadow:[132,18]},
+ {id:'plant',texture:'plant',x:110,y:668,w:201,h:288,shadow:[52,13],sway:true},
+ {id:'bike',texture:'scooter',x:1360,y:836,w:188,h:211,shadow:[75,12]}
+];
+const SCENE_COLLIDERS=[
+ {id:'counter',shape:'rect',l:824,t:475,r:1440,b:610},
+ {id:'table',shape:'ellipse',x:355,y:674,rx:130,ry:76},
+ {id:'bench',shape:'rect',l:1104,t:662,r:1372,b:752},
+ {id:'bike',shape:'ellipse',x:1370,y:787,rx:52,ry:58},
+ {id:'plant',shape:'ellipse',x:110,y:632,rx:43,ry:29}
+];
 const stations={
  door:{x:195,y:716,label:'Lối vào'},
- counter:{x:990,y:606,label:'Quầy pha chế'},
- table:{x:465,y:763,label:'Bàn khách'},
- bike:{x:1296,y:757,label:'Xe giao hàng'},
- bench:{x:1040,y:762,label:'Ghế dài'},
- plant:{x:160,y:565,label:'Chậu cây'}
+ counter:{x:990,y:652,label:'Quầy pha chế'},
+ table:{x:482,y:762,label:'Bàn khách'},
+ bike:{x:1283,y:809,label:'Xe giao hàng'},
+ bench:{x:1040,y:768,label:'Ghế dài'},
+ plant:{x:190,y:613,label:'Chậu cây'}
 };
 const npcs=[
  {id:'reader',role:'reader',x:520,y:650,name:'Khách đọc sách',lines:['Mình vừa đọc tới chương... cái bìa.','Một trang sách và một ly nước. Tạm đủ.']},
  {id:'guest',role:'guest',x:690,y:605,name:'Khách chờ bạn',lines:['Bạn mình bảo năm phút nữa tới.','Mình gọi trước một ly. Kẻ đến sau tự tính.']},
  {id:'guard',role:'guard',x:150,y:714,name:'Chú bảo vệ',lines:['Để xe ngay ngắn là quán đã yên một nửa.','Mèo Mướp trông ghế, tôi trông cửa.']},
- {id:'barista',role:'barista',x:995,y:550,name:'Bạn pha chế',lines:['Nước ngon cần chút kiên nhẫn.','Máy pha cà phê hôm nay khá dễ bảo.']},
+ {id:'barista',role:'barista',x:995,y:502,name:'Bạn pha chế',lines:['Nước ngon cần chút kiên nhẫn.','Máy pha cà phê hôm nay khá dễ bảo.']},
  {id:'waiter',role:'waiter',x:817,y:647,name:'Bạn phục vụ',lines:['Ngồi đâu cũng được, trừ quầy pha chế.','Để mình dọn lại bàn nhé.']},
  {id:'cat',role:'cat',x:613,y:802,name:'Mèo Mướp',lines:['Meo. (Mướp vừa đồng ý.)','Meo. (Mướp vừa đổi ý.)']}
 ];
@@ -50,7 +65,7 @@ const NPC_ROUTINES={
  reader:[{x:520,y:650,wait:9},{x:618,y:745,wait:5},{x:520,y:650,wait:11}],
  guest:[{x:690,y:605,wait:5},{x:751,y:701,wait:7},{x:690,y:605,wait:4}],
  guard:[{x:150,y:714,wait:6},{x:270,y:760,wait:4},{x:158,y:718,wait:7}],
- barista:[{x:995,y:550,wait:7,action:true}],
+ barista:[{x:995,y:502,wait:7,action:true}],
  waiter:[{x:817,y:647,wait:4},{x:932,y:729,wait:5},{x:815,y:650,wait:6}],
  cat:[{x:613,y:802,wait:8},{x:714,y:803,wait:5},{x:613,y:802,wait:9}]
 };
@@ -356,15 +371,10 @@ function tick(dt){
  }
 }
 function blocked(x,y){
- // Illustrated background collision map, in native 1440x900 world coordinates.
- // Stations are deliberately reachable from the front/side of each furnishing.
- const inRect=(l,t,r,b)=>x>l&&x<r&&y>t&&y<b;
- const ellipse=(cx,cy,rx,ry)=>((x-cx)/rx)**2+((y-cy)/ry)**2<1;
- return inRect(810,0,1440,578) ||       // Wooden counter and pastry case
-        ellipse(342,618,180,107) ||     // Café table and chairs
-        inRect(1100,604,1380,746) ||   // Cushioned bench
-        inRect(1345,635,1440,804) ||   // Delivery scooter
-        inRect(0,0,125,597);           // Potted foreground plants
+ // Collision checks physical sprite footprints, not colors in a painted image.
+ return SCENE_COLLIDERS.some(c=>c.shape==='rect'
+  ?x>c.l&&x<c.r&&y>c.t&&y<c.b
+  :((x-c.x)/c.rx)**2+((y-c.y)/c.ry)**2<1);
 }
 function renderInfo(kind){
  const title={objective:'Objective',journal:'Nhật ký ở Yên',bag:'Túi đồ',settings:'Cài đặt'}[kind];
@@ -426,10 +436,13 @@ function bindStick(){
    area.addEventListener(event,e=>{if(touch.pointer===e.pointerId)resetStick()});
 }
 class CafeScene extends Phaser.Scene{
- constructor(){super('YenCafe2D');this.sprites=new Map();this.npcLabels=new Map();this.npcStates=new Map();this.lastDirection='down';}
+ constructor(){super('YenCafe2D');this.sprites=new Map();this.npcLabels=new Map();this.npcStates=new Map();this.propSprites=new Map();this.propDetails=new Map();this.steam=[];this.lastDirection='down';}
  preload(){
-  this.load.image('cafe','./assets/cafe-painted.webp');
-  this.load.image('cafe-foreground','./assets/cafe-foreground.webp');
+  this.load.svg('scene-backdrop','./assets/scene/backdrop.svg',{width:1440,height:900});
+  for(const prop of SCENE_PROPS)
+   this.load.svg('prop-'+prop.texture,'./assets/scene/'+prop.texture+'.svg');
+  for(const name of ['cup','book','cushion'])
+   this.load.svg('prop-'+name,'./assets/scene/'+name+'.svg');
   for(const role of SPRITE_ROLES)
    this.load.spritesheet(role,sheetUrl(role),{frameWidth:256,frameHeight:320,endFrame:15});
   this.load.on('loaderror',file=>{
@@ -439,17 +452,8 @@ class CafeScene extends Phaser.Scene{
  }
  create(){
   world=this;
-  this.add.image(720,450,'cafe').setDisplaySize(1440,900).setDepth(-50);
-  // The background is a painted raster illustration. Typography and depth
-  // remain real Phaser elements so they can be localized and occlude actors.
-  this.add.text(695,201,'yên',{
-    fontFamily:'Georgia,serif',fontSize:'72px',fontStyle:'bold italic',
-    color:'#f0d7a6',stroke:'#99754b',strokeThickness:2
-  }).setOrigin(.5,.5).setDepth(-30);
-  this.add.text(695,266,'C O F F E E   &   T E A',{
-    fontFamily:'Arial,sans-serif',fontSize:'14px',fontStyle:'bold',
-    color:'#f3dfb7'
-  }).setOrigin(.5,.5).setDepth(-30);
+  // Pure architecture + ground: all furniture lives in independent sprite layers.
+  this.add.image(720,450,'scene-backdrop').setDisplaySize(1440,900).setDepth(-1000);
   // Soft particles float in the sunlight. No camera-coupled interface effects.
   for(let i=0;i<11;i++){
     const px=125+(i*59)%460, py=347+(i*71)%300;
@@ -458,6 +462,7 @@ class CafeScene extends Phaser.Scene{
       duration:2600+i*173,delay:i*197,repeat:-1,yoyo:true,ease:'Sine.inOut'});
   }
   this.cameras.main.setBounds(0,0,1440,900);
+  this.createProps();
   for(const role of SPRITE_ROLES)createRoleAnimations(this,role);
   for(const person of npcs){
    const asset=spriteRole(person.role);
@@ -474,9 +479,6 @@ class CafeScene extends Phaser.Scene{
    this.npcLabels.set(person.id,label);
    this.npcStates.set(person.id,{stop:0,wait:2+(person.x%5),facing:'down',action:0});
   }
-  // Painted foliage in front of the camera hides the lower part of actors
-  // who walk behind the plants; the world remains one contiguous painting.
-  this.add.image(720,450,'cafe-foreground').setDisplaySize(1440,900).setDepth(950);
   this.player=this.add.sprite(600,750,'barista',0)
    .setDisplaySize(117,146).setOrigin(.5,1).setDepth(756);
   this.playerRole='barista';
@@ -528,6 +530,7 @@ class CafeScene extends Phaser.Scene{
   this.setPlayerRole(state.role);
   this.marker?.setVisible(false);
   this.nearHalo?.setVisible(false);
+  this.resetProps();
   for(const person of npcs){
    const sprite=this.sprites.get(person.id),runtime=this.npcStates.get(person.id);
    if(!sprite||!runtime)continue;
@@ -722,6 +725,7 @@ if(typeof window.location?.search==='string' && window.location.search.includes(
    anim:world.player.anims?.currentAnim?.key}:null,
   near:nearbyCandidate()?.id||null,
   fps:world?.game?.loop?.actualFps||null,
+  props:world?[...world.propSprites].map(([id,p])=>({id,x:p.x,y:p.y,depth:p.depth,texture:p.texture.key})):[],
   npcs:world?[...world.sprites].map(([id,s])=>({id,x:Math.round(s.x),y:Math.round(s.y),anim:s.anims?.currentAnim?.key})):[]
  })});
 }
