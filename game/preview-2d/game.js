@@ -303,7 +303,8 @@ function interact(){
  if(!nearby)return;
  world?.react();
  if(nearby.kind==='task'){
-   state.active={elapsed:0,duration:state.quick?.6:2.1,task:task().title};
+   world?.reactProp(nearby.id,1);
+   state.active={elapsed:0,duration:state.quick?.6:2.1,task:task().title,at:nearby.id};
    state.quick=false;
    updateMarker();
    speech('Đang làm: '+state.active.task,2);
@@ -327,6 +328,7 @@ function interact(){
 function finishAction(){
  if(state.phase!=='shift'||!state.active)return;
  const name=state.active.task;
+ world?.reactProp(state.active.at,0);
  state.active=null;state.done++;
  state.energy=clamp(state.energy-10,0,100);
  state.peace=clamp(state.peace+5,0,100);
@@ -505,6 +507,40 @@ class CafeScene extends Phaser.Scene{
   selectPreviewRole(state.selectedPreview);
   modal('preview');
  }
+ createProps(){
+  // These are genuine independently drawn scene objects, not visual hotspots
+  // painted into a non-interactive background.
+  for(const def of SCENE_PROPS){
+   this.add.ellipse(def.x,def.y-4,def.shadow[0]*2,def.shadow[1]*2,0x4a342d,.17)
+    .setDepth(def.y-4);
+   const sprite=this.add.image(def.x,def.y,'prop-'+def.texture)
+    .setDisplaySize(def.w,def.h).setOrigin(.5,1).setDepth(def.y);
+   this.propSprites.set(def.id,sprite);
+   if(def.sway)this.tweens.add({targets:sprite,angle:{from:-1.5,to:1.5},
+    duration:2600,ease:'Sine.inOut',yoyo:true,repeat:-1});
+  }
+  // Small details have their own textures and state, independent of the tables.
+  const cup=this.add.image(378,618,'prop-cup').setDisplaySize(37,43)
+   .setOrigin(.5,1).setDepth(726);
+  const book=this.add.image(306,626,'prop-book').setDisplaySize(63,38)
+   .setOrigin(.5,1).setDepth(727);
+  const cushion=this.add.image(1168,670,'prop-cushion').setDisplaySize(69,47)
+   .setOrigin(.5,1).setDepth(754);
+  this.propDetails.set('cup',cup);
+  this.propDetails.set('book',book);
+  this.propDetails.set('cushion',cushion);
+  this.scooterLight=this.add.circle(1361,729,18,0xffe39b,.68)
+   .setDepth(840).setVisible(false);
+  this.tweens.add({targets:this.scooterLight,alpha:.15,scale:1.4,
+   duration:650,repeat:-1,yoyo:true,ease:'Sine.inOut'});
+  for(let i=0;i<3;i++){
+   const steam=this.add.ellipse(973+i*14,372+i*3,7,20,0xfff3d3,.28)
+    .setDepth(611).setVisible(false);
+   this.tweens.add({targets:steam,y:338+i*3,alpha:0,
+    duration:1700+i*220,repeat:-1,yoyo:true});
+   this.steam.push(steam);
+  }
+ }
  bindInputs(){
   this.keyboard=this.input.keyboard?.addKeys('W,A,S,D,UP,DOWN,LEFT,RIGHT')||{};
  }
@@ -553,10 +589,44 @@ class CafeScene extends Phaser.Scene{
    sprite.play(spriteRole(npc.role)+'-interact',true);
   }
  }
+ resetProps(){
+  this.scooterLight?.setVisible(false);
+  this.steam.forEach(p=>p.setVisible(false));
+  const cup=this.propDetails.get('cup');
+  if(cup)cup.setVisible(true).setAlpha(1);
+  const pillow=this.propDetails.get('cushion');
+  if(pillow)pillow.setPosition(1168,670).setAngle(0);
+  const door=this.propSprites.get('door');
+  if(door)door.setAngle(0);
+ }
  reactProp(id,next){
-  if(id==='counter')this.cameras.main.shake(125,.001);
-  if(id==='plant')this.cameras.main.flash(100,252,230,170);
-  if(id==='table'){const npc=this.sprites.get('reader');if(npc)this.tweens.add({targets:npc,angle:next?3:0,duration:150});}
+  // Changing game state visibly changes object sprites.
+  if(id==='counter'){
+   this.steam.forEach(p=>p.setVisible(!!next));
+   this.cameras.main.shake(90,.0007);
+  }else if(id==='table'){
+   const cup=this.propDetails.get('cup');
+   if(cup){
+    if(!next)cup.setVisible(true);
+    this.tweens.add({targets:cup,alpha:next?0:1,
+     duration:220,onComplete:()=>cup.setVisible(!next)});
+   }
+   const book=this.propDetails.get('book');
+   if(book)this.tweens.add({targets:book,angle:next?-7:0,duration:250});
+  }else if(id==='bench'){
+   const pillow=this.propDetails.get('cushion');
+   if(pillow)this.tweens.add({targets:pillow,x:next?1197:1168,
+      angle:next?9:0,duration:330,ease:'Sine.inOut'});
+  }else if(id==='bike'){
+   this.scooterLight?.setVisible(!!next);
+  }else if(id==='plant'){
+   const plant=this.propSprites.get('plant');
+   if(plant)this.tweens.add({targets:plant,scaleY:next?1.04:1,
+    duration:400,yoyo:true,ease:'Sine.inOut'});
+  }else if(id==='door'){
+   const door=this.propSprites.get('door');
+   if(door)this.tweens.add({targets:door,angle:next?-2:0,duration:340});
+  }
  }
  updateNPCs(dt){
   for(const person of npcs){
