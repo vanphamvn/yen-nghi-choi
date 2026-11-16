@@ -28,3 +28,15 @@
 .result-card{max-height:calc(100dvh - 100px);overflow:auto}
 @media(max-width:820px){.hud-left{gap:5px}.hud-day{padding:10px 8px}.objective{top:115px}}
 @media(max-width:520px){.hud-left{float:none;display:flex;justify-content:flex-start;gap:5px;position:relative;z-index:1}.hud-role{display:none}.hud-day{padding:7px 8px;font-size:10px;height:37px}.hud-clock{height:37px;flex-direction:row;align-items:center;gap:6px;padding:6px 8px}.hud-clock b{font-size:15px}.hud-clock span{font-size:7px;max-width:42px;line-height:1.1}.hud-top{display:flex;flex-direction:column;gap:4px}.meters{justify-content:flex-start}.meter{height:36px;width:130px;grid-template-columns:1fr auto;padding:4px 8px;gap:0}.meter-track{height:4px}.meter span{font-size:7px}.meter b{font-size:10px}.objective{top:96px;max-height:min(45dvh,270px)}.objective strong{font-size:18px}.objective p{margin-top:5px}.shift-panel{margin-top:7px;padding-top:7px;gap:4px}.shift-panel button{min-height:36px;font-size:11px;padding:7px 10px}.shift-panel>span{font-size:8px}.target-hint{padding:6px 8px}.result-screen{inset:56px 0 0}.result-card{max-height:calc(100dvh - 80px)}.game-screen .interact-btn{min-width:0;max-width:100px}}
+
+
+/* BETA 02: Objectives are an opt-in overlay, never an opaque permanent panel. */
+.objective-shell{position:absolute;left:18px;top:104px;width:min(320px,calc(100% - 36px));pointer-events:none;z-index:2}
+.objective-shell .objective-toggle{pointer-events:auto;display:flex;align-items:center;gap:9px;max-width:100%;min-height:44px;padding:9px 13px;border-radius:15px;border:1px solid rgba(53,93,74,.27);background:rgba(255,253,243,.93);backdrop-filter:blur(12px);box-shadow:0 6px 22px #1d38231a;color:#315b49;font-weight:850;font-size:13px}
+.objective-toggle-icon{font-size:15px}.objective-shell .objective-toggle b{max-width:130px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#6b826d;background:#e8eedf;padding:4px 7px;border-radius:9px;font-size:10px}
+#objective-chevron{font-size:16px;transition:transform .15s}
+.objective-shell .objective-toggle[aria-expanded="true"] #objective-chevron{transform:rotate(180deg)}
+.objective-shell .objective{pointer-events:auto;position:relative;top:auto;left:auto;width:100%;margin-top:8px;max-height:min(57dvh,390px);overflow:auto;border-radius:17px;background:rgba(255,254,247,.96);box-shadow:0 12px 34px #263e3228}
+.game-screen .objective-shell .objective[hidden]{display:none!important}
+@media(max-width:820px){.objective-shell{top:78px;left:10px;width:min(315px,calc(100% - 20px))}}
+@media(max-width:520px){.objective-shell{top:97px;left:9px;width:min(300px,calc(100% - 18px))}.objective-shell .objective-toggle{min-height:39px;padding:7px 10px;font-size:12px}.objective-shell .objective{max-height:min(43dvh,265px)}}
