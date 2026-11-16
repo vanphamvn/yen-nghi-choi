@@ -50,6 +50,29 @@ const STATIONS = {
   bench: { x: 2.5, z: 2.15, label: 'Ghế dài' },
   plant: { x: -6.2, z: -2.35, label: 'Góc cây' }
 };
+// The same café can be explored indefinitely; NPCs and items have their own reactions.
+const NPCS = [
+  { id:'guest_minh', name:'Khách đang đọc sách', kind:'customer', x:-4.85, z:-.15, color:0xc99380,
+    lines:['Mình đến đọc hai trang sách. Đọc được đúng một dòng.', 'Cà phê chưa nguội mà thời gian đã trôi mất rồi.'] },
+  { id:'guest_lan', name:'Khách chờ bạn', kind:'customer', x:-1.75, z:.25, color:0x9dafa3,
+    lines:['Bạn mình nói năm phút nữa tới. Câu này nghe quen không?', 'Tớ gọi nước trước hay đợi người hay trễ nhỉ?'] },
+  { id:'npc_guard', name:'Chú bảo vệ', kind:'staff', x:-7.6, z:3.2, color:0x436378,
+    lines:['Xe cứ để ngay ngắn, còn chuyện buồn thì để ngoài cổng.', 'Chú bảo vệ cái quán. Con mèo bảo vệ cái ghế.'] },
+  { id:'npc_barista', name:'Bạn pha chế', kind:'staff', x:6.65, z:-1.1, color:0x648a6c,
+    lines:['Cà phê đen dễ làm. Khó là đoán khách đang muốn tâm sự.', 'Đá trong ly cần lạnh. Người pha thì không nhất thiết.'] },
+  { id:'npc_waiter', name:'Bạn phục vụ', kind:'staff', x:.65, z:1.2, color:0x8c97b0,
+    lines:['Mình đang học cách nhớ bàn. Hôm nay hơi nhiều bàn.', 'Khách hỏi nhà vệ sinh đâu. Mình đã chỉ đúng ngay lần hai.'] },
+  { id:'npc_cat', name:'Mèo Mướp', kind:'cat', x:-5.85, z:1.05, color:0xd7a373,
+    lines:['Meo. (Mướp chậm rãi chớp mắt.)', 'Mướp cho phép bạn vuốt ve. Trong vòng hai giây.'] }
+];
+const PROP_TEXT = {
+  door: ['Bạn chỉnh lại biển trước cổng. Một ngày bỗng có vẻ ngay ngắn hơn.', 'Biển đã thẳng. Vẫn có người hỏi đây là quán gì.'],
+  counter: ['Máy pha kêu bíp. Hôm nay máy đồng ý hợp tác.', 'Tắt máy pha một chút. Tiếng ồn cũng được tan ca.'],
+  table: ['Bạn nhấc ly khỏi bàn. Mặt bàn bất ngờ rộng ra.', 'Đặt chiếc ly về chỗ cũ. Bàn lại có việc để làm.'],
+  bike: ['Đèn xe bật sáng. Chưa ai yêu cầu giao hàng.', 'Bạn tắt đèn xe. Xe có vẻ hài lòng.'],
+  bench: ['Bạn chỉnh lại chiếc gối. Ghế dài trông hiếu khách hơn.', 'Chiếc gối trở về vị trí đầu tiên.'],
+  plant: ['Bạn tưới cây. Cây không cảm ơn nhưng lá có vẻ vui.', 'Bạn nhìn kỹ hơn. Cây vẫn đang làm rất tốt công việc của nó.']
+};
 let selectedRole = 'cat';
 let stats = { speed: 3, dexterity: 3, calm: 3, charm: 3 };
 let THREE = null;
@@ -101,7 +124,7 @@ document.querySelectorAll('.role-card').forEach(button =>
 renderStats();
 setRole(selectedRole);
 
-function showError() { $('error').hidden = false; $('start-btn').disabled = false; $('start-btn').textContent = 'Vào ca làm việc ↗'; }
+function showError() { $('error').hidden = false; $('start-btn').disabled = false; $('start-btn').textContent = 'Vào quán khám phá ↗'; }
 async function startGame() {
   if (totalStats() !== 12) return;
   $('start-btn').disabled = true;
@@ -110,16 +133,17 @@ async function startGame() {
     if (!THREE) THREE = await import('https://cdn.jsdelivr.net/npm/three@0.160.1/build/three.module.js');
     disposeWorld();
     game = {
-      role: selectedRole, attributes: { ...stats }, elapsed: 0, done: 0,
-      efficiency: 50, peace: 70, active: null, playing: true,
-      nextEvent: 22, powerCooldown: 0, sprint: 0,
-      shield: false, quickNext: false, message: '', messageTime: 0
+      role: selectedRole, attributes: { ...stats }, day: 1, phase: 'explore',
+      elapsed: 0, ambientTime: 0, done: 0, efficiency: 50, peace: 70,
+      active: null, playing: true, nextEvent: 22, powerCooldown: 0, sprint: 0,
+      shield: false, quickNext: false, message: '', messageTime: 0,
+      propState: { door: 0, counter: 0, table: 0, bike: 0, bench: 0, plant: 0 }
     };
     $('setup').hidden = true; $('result').hidden = true; $('game').hidden = false; $('error').hidden = true;
     $('hud-role').textContent = ROLES[game.role].name;
     $('skill-name').textContent = ROLES[game.role].power;
     buildWorld();
-    updateTaskUI();
+    updatePhaseUI();
     updateHud();
     lastTick = 0;
     cancelAnimationFrame(frame);
@@ -131,7 +155,7 @@ async function startGame() {
     showError();
   } finally {
     if (!$('setup').hidden) {
-      $('start-btn').textContent = 'Vào ca làm việc ↗';
+      $('start-btn').textContent = 'Vào quán khám phá ↗';
       $('start-btn').disabled = totalStats() !== 12;
     }
   }
