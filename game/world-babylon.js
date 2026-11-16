@@ -145,6 +145,8 @@ export function createAnimeWorld(B, container, roleId, roles, npcData) {
     material.disableLighting=true;material.backFaceCulling=false;
     const plane=B.MeshBuilder.CreatePlane('sign-'+seq,{width,height,sideOrientation:B.Mesh.DOUBLESIDE},scene);
     plane.material=material;plane.position.set(x,y,z);
+    // Babylon planes face -Z by default; the café camera views the sign from +Z.
+    plane.rotation.y=Math.PI;
     return plane;
   }
   const palette={
