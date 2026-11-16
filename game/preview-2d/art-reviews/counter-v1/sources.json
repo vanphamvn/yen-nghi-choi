@@ -1,0 +1,45 @@
+{
+  "counter": {
+    "source": "exec-30c9d5eb-160f-4729-92e8-5b116599823e.png",
+    "sourceSize": [
+      1983,
+      793
+    ],
+    "bounds": [
+      33,
+      200,
+      1950,
+      682
+    ],
+    "normalizedSize": [
+      768,
+      195
+    ],
+    "frontStart": 41,
+    "runtimeSize": [
+      360,
+      91
+    ]
+  },
+  "machine": {
+    "source": "exec-2bb50558-e4df-40ed-9bcb-762d6a51b89e.png",
+    "sourceSize": [
+      1381,
+      1139
+    ],
+    "bounds": [
+      144,
+      112,
+      1233,
+      1035
+    ],
+    "normalizedSize": [
+      256,
+      217
+    ],
+    "runtimeSize": [
+      85,
+      72
+    ]
+  }
+}
