@@ -1,17 +1,17 @@
 # Yencafeday 2D · Visual game remake (reference-driven)
 
-> **Status:** playable reference-style preview; **five imported 4×4 anime sprite sheets are now playable**; the illustrated café backdrop remains vector and visual sign-off is pending. The user-provided screenshot with a wood-and-green café, dark top HUD, left action menu and model-preview modal is the primary layout/art-direction reference.
+> **Status:** playable reference-style preview; **five imported 4×4 anime sprite sheets are now playable**; the café now uses a generated hand-painted WebP with separate transparent plant foreground; on-device visual sign-off remains pending. The user-provided screenshot with a wood-and-green café, dark top HUD, left action menu and model-preview modal is the primary layout/art-direction reference.
 
 ## Live preview
 
 - Netlify PR preview: https://deploy-preview-87--yencafeday.netlify.app/game/preview-2d/
 - GitHub draft PR: https://github.com/vanphamvn/yen-nghi-choi/pull/87
-- Existing production 3D game remains at `/game/` until actual visual approval and migration gate.
+- Production `/game/` now uses Phaser 2D; the Babylon 3D rollback remains available at `/game/3d.html`.
 
 ## Implemented
 
 **Page appearance and playable UX**
-- Full-bleed hand-drawn vector café background with textured tile floor, warm afternoon lighting, green vines, espresso machine, counter, cake display, tables, bench, scooter, brand sign.
+- Self-hosted 1440×900 illustrated WebP café interior with warm afternoon lighting, vines, espresso machine, pastries, tables, bench and scooter. Foreground leaf mask is a separate transparent WebP layer for actor occlusion.
 - Reference-style chocolate-dark top HUD with day, game clock, simulated coins, peacefulness and energy.
 - Left vertical menu: **Bắt đầu ca**, **Kết thúc ca**, **Xem trước model**, **Objective**, **Nhật ký**, **Túi đồ**; functional contextual states.
 - Right-side model-preview modal: five selectable roles, 4 directions (front/right/back/left) for human roles, actual PNG-frame Idle/Walk/Interact cycling from 16-frame sprite sheets, six preview poses, role apply.
@@ -29,7 +29,7 @@
 
 ## Art production gap
 
-The illustrated reference is **not** the current image texture itself. The game now uses **real RGBA PNG sprite art** for all playable roles and NPCs, sourced from the five user-approved/generated 4×4 sheets. The café scenery remains a project-owned scalable vector illustration. The screenshot is still an art-direction reference, not a pixel-perfect recreation.
+The illustrated reference is **not** the current image texture itself. The game now uses **real RGBA PNG sprite art** for all playable roles and NPCs, sourced from the five user-approved/generated 4×4 sheets. The café scenery is now a self-hosted 1440×900 painted WebP illustration, with a separate transparent foreground foliage texture. The screenshot is still an art-direction reference, not a pixel-perfect recreation.
 
 The next art iteration should add **dedicated customer NPC sprite art**, refined foreground occlusion, and visual QA screenshots. Reader/guest NPCs temporarily reuse the existing five role packs, though no actor SVG is loaded by Phaser.
 
@@ -54,7 +54,9 @@ preview-2d/
   index.html             # real interactive HUD and preview modal
   style.css              # reference-inspired layout and responsiveness
   game.js                # Phaser scene + game logic + UI state machine
-  assets/cafe.svg        # original café stage painting (vector)
+  assets/cafe.svg        # legacy original vector stage (kept for rollback)
+  assets/cafe-painted.webp # new 1440×900 raster scene art
+  assets/cafe-foreground.webp # alpha-cut foreground foliage for depth
   assets/sprites/*.png   # five original anime character spritesheets, 1024×1280 RGBA
   assets/sprites/manifest.json # roles, frame mapping, SHA-256, provenance
   assets/*.svg           # legacy authoring assets; no longer loaded for actors
@@ -72,3 +74,14 @@ Related work: [Epic #84](https://github.com/vanphamvn/yen-nghi-choi/issues/84), 
 - NPC reader/guest temporarily reuse existing role sprites (waiter/shipper) pending bespoke customer art.
 - Dedicated extracted frame PNGs are available in the downloadable sprite pack for editing. Runtime intentionally uses sheets rather than 80 network requests.
 - Verify on mobile and desktop before replacing the 3D production route.
+
+## Painted café scene integration (16/11/2026)
+
+- The scene is now rendered from `assets/cafe-painted.webp` (1440×900, ~206 KiB), **not generated with SVG primitives**. It is an original AI-assisted illustration created for Yên, with a warm anime storybook look.
+- `assets/cafe-foreground.webp` (1440×900 transparent, ~36 KiB) restores plants in front of actors for depth. The underlying café scene is full-bleed; the foreground occlusion texture is drawn at depth 950. Character sprites use their feet y-coordinate for depth sorting.
+- The chalkboard says **yên / COFFEE & TEA** in localized Phaser text so it remains editable and crisp rather than text baked into the illustration.
+- The collision map was adapted to the new furniture layout: counter, elliptical table, bench, scooter and planted left edge. Station coordinates now point to reachable floor by relevant props. `tests/game-2d-background.test.mjs` checks 6/6 stations and walkable connectivity.
+- Original `assets/cafe.svg` is retained for future rollback, but no longer loaded by Phaser.
+- **Known limitations:** This is one main painted scene with a transparent foliage layer, not a fully tiled/multilayer 2D map. Some furniture is painted into the background rather than animated objects. Real browser screenshot and mobile FPS QA remain necessary.
+
+Source imagery was generated specifically for this project, not copied from a third-party game asset pack.
