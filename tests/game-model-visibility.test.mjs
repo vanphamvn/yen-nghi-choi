@@ -80,7 +80,7 @@ test('successful GLB import is reported persistently',async()=>{
 test('cat selection explicitly reports legacy model, without attempting human GLB',async()=>{
   const h=harness({role:'cat'});
   await h.start();
-  assert.equal(h.calls,1);
+  assert.equal(h.calls,0);
   assert.equal(h.node('model-status').dataset.asset,'legacy');
   assert.match(h.node('model-status').textContent,/Mèo: mô hình cũ/);
 });
