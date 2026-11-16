@@ -44,3 +44,19 @@
 /* NPC speech / prop feedback can be read with Objectives closed. */
 .game-toast{position:absolute;left:50%;bottom:161px;transform:translateX(-50%);z-index:4;max-width:min(460px,calc(100% - 35px));width:max-content;border:1px solid #f0d6b7;border-radius:17px;background:rgba(255,250,232,.95);box-shadow:0 8px 23px #41533f22;padding:12px 17px;color:#355c4a;font-size:13px;line-height:1.55;font-weight:700;text-align:center;pointer-events:none;backdrop-filter:blur(8px)}
 @media(max-width:520px){.game-toast{bottom:139px;max-width:calc(100% - 24px);font-size:11px;padding:9px 12px}}
+
+/* BETA 03: asset-driven 3D staging, graceful loading and an uncluttered HUD. */
+.game-screen{background:radial-gradient(ellipse at 46% 26%,#e3f0e6,#a4c1b4)}
+#scene{background:#cfddd0}
+#scene canvas{display:block}
+.render-loading{position:absolute;inset:0;z-index:8;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:9px;background:linear-gradient(145deg,#e1efdded,#f8f1dfed);color:#2d5944;text-align:center;padding:24px}
+.render-loading strong{font:600 clamp(23px,4vw,36px)/1.2 Georgia,serif;letter-spacing:-.04em}
+.render-loading span{font-size:13px;color:#64816c}
+.loading-coffee{font:italic bold 47px Georgia,serif;letter-spacing:-.1em;color:#538267;animation:yen-loading 2.4s ease-in-out infinite}
+@keyframes yen-loading{0%,100%{opacity:1;transform:translateY(0)}50%{opacity:.6;transform:translateY(-8px)}}
+.classic-link{display:inline-block;margin-left:12px;color:#315d49;text-decoration:underline;text-underline-offset:4px;font-weight:800;font-size:12px}
+.game-screen .hud-top,.game-screen .objective-toggle{box-shadow:0 8px 30px #32483c19}
+.game-screen .game-overlay{pointer-events:none}
+.game-screen .hud-top,.game-screen .objective-shell,.game-screen .game-bottom,.game-screen .exit-btn{pointer-events:auto}
+@media(max-width:520px){.render-loading strong{font-size:23px}.render-loading span{font-size:11px}.game-screen .hud-top{padding-right:43px}.game-screen .objective-shell{z-index:4}.game-screen .game-toast{z-index:5}}
+@media(prefers-reduced-motion:reduce){.loading-coffee{animation:none}}
