@@ -1,6 +1,6 @@
 /* YÊN: Ai đang làm việc? — self-contained 3D minigame.
  * All game state is ephemeral. No accounts, cookies, analytics or rewards.
- * Three.js is loaded only when the visitor starts a shift.
+ * Three.js is loaded only when the visitor enters exploration mode.
  */
 const $ = id => document.getElementById(id);
 const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
