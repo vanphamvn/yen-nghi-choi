@@ -1,0 +1,161 @@
+{
+  "schemaVersion": 1,
+  "project": "Yên Coffee & Tea 2D Phaser",
+  "repo": "vanphamvn/yen-nghi-choi",
+  "root": "game/preview-2d",
+  "ownerEpic": 94,
+  "lastPlanned": "2026-11-16",
+  "status": "in-development",
+  "releasePolicy": "A milestone is not shipped without verified production commit and playable URL",
+  "stages": [
+    {
+      "id": "M0",
+      "title": "Production reliability",
+      "priority": 0,
+      "status": "todo",
+      "issue": 95,
+      "dependencies": [],
+      "requiresHumanApproval": false,
+      "acceptance": [
+        "Exact SHA matched on real prod alias",
+        "Boot and interaction smoke on published 2D route",
+        "Rollback route documented"
+      ],
+      "evidence": null
+    },
+    {
+      "id": "M1",
+      "title": "Character-anchored painterly art contract",
+      "priority": 1,
+      "status": "todo",
+      "issue": 96,
+      "dependencies": [],
+      "requiresHumanApproval": true,
+      "acceptance": [
+        "Compare actual barista/waiter PNG source pixels with scene assets",
+        "Paint a representative transparent prop with correct pivot and view",
+        "Actual owner reviews contact sheet at runtime scale"
+      ],
+      "evidence": null
+    },
+    {
+      "id": "M2",
+      "title": "Replace unapproved SVG scene assets",
+      "priority": 2,
+      "status": "blocked",
+      "issue": 93,
+      "dependencies": [
+        "M1"
+      ],
+      "requiresHumanApproval": true,
+      "acceptance": [
+        "Ten quarantined vectors replaced by reviewed painterly PNG/WebP",
+        "All props match characters in 3 viewports",
+        "Strict art audit passes"
+      ],
+      "evidence": null,
+      "blocker": "Requires approved art vertical slice from M1"
+    },
+    {
+      "id": "M3",
+      "title": "Real character sit/stand/drink/read/talk",
+      "priority": 3,
+      "status": "blocked",
+      "issue": 97,
+      "dependencies": [
+        "M1"
+      ],
+      "requiresHumanApproval": true,
+      "acceptance": [
+        "Real illustrated frames, not CSS scale hacks",
+        "States and transitions from idle/walk/sit to read/drink/talk",
+        "Anchors, collisions, layers and animation tested"
+      ],
+      "evidence": null,
+      "blocker": "Requires approved seated/interaction artwork matching characters"
+    },
+    {
+      "id": "M4",
+      "title": "Purposeful NPC routines and safe navigation",
+      "priority": 4,
+      "status": "todo",
+      "issue": 98,
+      "dependencies": [],
+      "requiresHumanApproval": false,
+      "acceptance": [
+        "All six NPCs have a safe deterministic day routine",
+        "No indefinite furniture stall, interaction tracks current position",
+        "Gameplay and runtime tests; verified production slice"
+      ],
+      "evidence": null
+    },
+    {
+      "id": "M5",
+      "title": "Relaxed role/task/day gameplay",
+      "priority": 5,
+      "status": "todo",
+      "issue": 99,
+      "dependencies": [],
+      "requiresHumanApproval": false,
+      "acceptance": [
+        "All five roles playable start-to-finish",
+        "Three tasks, dialogue, next day replay work",
+        "Interaction affordances clear on touch and keyboard"
+      ],
+      "evidence": null
+    },
+    {
+      "id": "M6",
+      "title": "Cross-device QA, accessibility and performance",
+      "priority": 6,
+      "status": "todo",
+      "issue": 100,
+      "dependencies": [],
+      "requiresHumanApproval": false,
+      "acceptance": [
+        "Recorded desktop and 2 mobile viewport captures",
+        "Keyboard/touch/focus/reduced motion assertions",
+        "Measured device FPS and memory; no P0/P1"
+      ],
+      "evidence": null
+    },
+    {
+      "id": "M7",
+      "title": "Final release acceptance",
+      "priority": 7,
+      "status": "blocked",
+      "issue": 101,
+      "dependencies": [
+        "M0",
+        "M1",
+        "M2",
+        "M3",
+        "M4",
+        "M5",
+        "M6"
+      ],
+      "requiresHumanApproval": true,
+      "acceptance": [
+        "All mandatory milestones have evidence",
+        "Art owner-approved, strict policy green",
+        "Final prod SHA verified, game URL playable, rollback documented"
+      ],
+      "evidence": null,
+      "blocker": "All earlier milestones must be done"
+    }
+  ],
+  "minimumCompletion": {
+    "allMilestonesDone": true,
+    "exactProductionSHARequired": true,
+    "realArtReviewRequired": true,
+    "productionSmokeRequired": true
+  },
+  "historicalRelease": {
+    "provider": "Vercel",
+    "alias": "yencafeday.vercel.app",
+    "verifiedSHA": "4bf4b938eb413d4963f9b806c97dcd71e1f74e8b",
+    "verifiedOn": "2026-11-16",
+    "staleAgainstMain": true,
+    "note": "Historical observation only; always recheck current deployment. Vercel quota caused blocked newer releases."
+  }
+}
