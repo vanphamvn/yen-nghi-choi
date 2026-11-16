@@ -213,18 +213,18 @@ function resetEnvironment() {
     npc.react=0;
   }
   const refs=world.refs;
-  refs.machineLight.material.color.setHex(0x7f665d);
-  refs.tableCup.visible=true;
-  refs.bikeLamp.visible=false;
+  world.setTint(refs.machineLight,0x9b9188);
+  refs.tableCup.isVisible=true;
+  refs.bikeLamp.isVisible=false;
   refs.benchPillow.position.x=2.5;
-  refs.doorPanel.material.color.setHex(0x6d9176);
+  world.setTint(refs.doorPanel,0x699f87);
   for (const leaf of refs.plantLeaves) {
-    leaf.scale.set(.64,1.3,.6);
-    leaf.material.color.setHex(0x6d986b);
+    leaf.scaling.set(.33,.59,.24);
+    world.setTint(leaf,0x75ab83);
   }
   world.player.position.set(0,0,4.5);
   world.player.rotation.y=0;
-  world.nearRing.visible=false;
+  world.nearRing.isVisible=false;
 }
 function updateTaskUI() {
   if (!game || !world || game.phase!=='shift') return;
@@ -243,8 +243,8 @@ function updatePhaseUI() {
   $('game').dataset.phase=game.phase;
   $('hud-day').textContent='NGÀY '+String(game.day).padStart(2,'0');
   $('shift-btn').hidden=game.phase==='shift'||game.phase==='result';
-  world.indicator.visible=game.phase==='shift';
-  world.markerPole.visible=game.phase==='shift';
+  world.indicator.isVisible=game.phase==='shift';
+  world.markerPole.isVisible=game.phase==='shift';
   world.focusedStation=null;
   if (game.phase==='explore') {
     $('objective-count').textContent='NGÀY '+String(game.day).padStart(2,'0')+' · KHÁM PHÁ TỰ DO';
@@ -356,7 +356,7 @@ function updateHud() {
   $('target-hint').textContent=game.active?'Đang thực hiện nhiệm vụ...':
     candidate?'Ở gần: '+candidate.name+' · '+candidate.action:
     'Đi gần khách, nhân viên, mèo hoặc vật dụng để tương tác.';
-  world.nearRing.visible=!!candidate && candidate.kind!=='task';
+  world.nearRing.isVisible=!!candidate && candidate.kind!=='task';
   if (candidate && candidate.kind!=='task') world.nearRing.position.set(candidate.x,.075,candidate.z);
   $('skill-btn').disabled=game.phase!=='shift'||game.powerCooldown>0;
   $('skill-cooldown').textContent=game.phase!=='shift'?'Chỉ trong ca':
@@ -378,12 +378,12 @@ function interact() {
   const next=game.propState[id]===0?1:0;
   game.propState[id]=next;
   const refs=world.refs;
-  if(id==='counter') refs.machineLight.material.color.setHex(next?0x77c78b:0x7f665d);
-  if(id==='table') refs.tableCup.visible=!next;
-  if(id==='bike') refs.bikeLamp.visible=!!next;
+  if(id==='counter') world.setTint(refs.machineLight,next?0x77c78b:0x9b9188);
+  if(id==='table') refs.tableCup.isVisible=!next;
+  if(id==='bike') refs.bikeLamp.isVisible=!!next;
   if(id==='bench') refs.benchPillow.position.x=next?2.95:2.5;
-  if(id==='door') refs.doorPanel.material.color.setHex(next?0xdba36e:0x6d9176);
-  if(id==='plant') for(const leaf of refs.plantLeaves) leaf.scale.y=next?1.6:1.3;
+  if(id==='door') world.setTint(refs.doorPanel,next?0xdba36e:0x699f87);
+  if(id==='plant') for(const leaf of refs.plantLeaves) leaf.scaling.y=next?.78:.59;
   showMessage(PROP_TEXT[id][next?0:1],4);
 }
 function startAction() {
@@ -480,9 +480,9 @@ function updateAmbient(dt) {
     npc.react=Math.max(0,npc.react-dt*1.8);
     npc.group.position.y=Math.max(0,Math.sin(angle*1.8)*.025)+npc.react*.14;
     const scale=1+npc.react*.08;
-    npc.group.scale.set(scale,scale,scale);
+    npc.group.scaling.set(scale,scale,scale);
     npc.group.rotation.y=-.3+Math.sin(angle*.6)*.23;
-    npc.halo.material.opacity=.27+.13*Math.sin(angle*2);
+    npc.halo.material.alpha=.27+.13*Math.sin(angle*2);
   }
 }
 function loop(now) {
@@ -526,40 +526,24 @@ function loop(now) {
   }
   if (!game || !game.playing || !world) return;
   const objective=world.indicator;
-  if(objective.visible) {
-    objective.rotation.z=now*.0005;
+  if(objective.isVisible) {
+    objective.rotation.y=now*.0005;
     const pulse=1+Math.sin(now*.004)*.08;
-    objective.scale.set(pulse,pulse,pulse);
-    world.markerPole.material.opacity=.12+Math.sin(now*.003)*.045;
+    objective.scaling.set(pulse,pulse,pulse);
+    world.markerPole.material.alpha=.12+Math.sin(now*.003)*.045;
   }
-  // Follow the visitor more closely on narrow screens.
-  const aspect=$('scene').clientWidth/Math.max(1,$('scene').clientHeight);
-  const follow=aspect<.85?.83:.24;
-  const focus=new THREE.Vector3(world.player.position.x*follow,.2,world.player.position.z*follow);
-  const destination=new THREE.Vector3(focus.x+17,focus.y+22,focus.z+17);
-  world.camera.position.lerp(destination,.09);
-  world.camera.lookAt(focus);
+  // Babylon.js owns the orthographic anime camera, including mobile framing.
+  world.followPlayer(dt);
   updateHud();
   // No automatic game-over: players decide when their shift is complete.
   if (!game.playing || !world) return;
-  world.renderer.render(world.scene,world.camera);
+  world.render();
   frame=requestAnimationFrame(loop);
 }
 function disposeWorld() {
   cancelAnimationFrame(frame);
   if (!world) return;
-  world.scene.traverse(object => {
-    if (object.geometry) object.geometry.dispose();
-    if (object.material) {
-      const materials=Array.isArray(object.material)?object.material:[object.material];
-      for (const mat of materials) {
-        if (mat.map) mat.map.dispose();
-        mat.dispose();
-      }
-    }
-  });
-  world.renderer.dispose();
-  world.renderer.domElement.remove();
+  world.dispose();
   world=null;
 }
 function backToSetup() {
