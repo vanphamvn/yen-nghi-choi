@@ -85,3 +85,13 @@ Related work: [Epic #84](https://github.com/vanphamvn/yen-nghi-choi/issues/84), 
 - **Known limitations:** This is one main painted scene with a transparent foliage layer, not a fully tiled/multilayer 2D map. Some furniture is painted into the background rather than animated objects. Real browser screenshot and mobile FPS QA remain necessary.
 
 Source imagery was generated specifically for this project, not copied from a third-party game asset pack.
+
+## Layered prop sprite scene (16/11/2026)
+
+The preview now uses a **new architecture-only 1440×900 SVG backdrop** instead of drawing furniture into `cafe-painted.webp`. Six independent transparent Phaser SVG textures represent the door, counter, round table, bench, potted plant and delivery scooter. Cup, book and cushion are independent child sprites. Every major prop has a bottom-centre pivot, anchored world dimensions, contact shadow, individual depth and a collision footprint with reachable interaction stations.
+
+On interaction: the café machine emits steam, table cup is picked up/returned, book tilts, bench cushion shifts, scooter headlamp switches on, door tilts and leaves react. NPC/character PNG sheets and existing gameplay remain. The old WebP scene files are retained in the repo for visual fallback, but are not loaded by the new runtime.
+
+QA: `node --test tests/game-2d-background.test.mjs game/preview-2d/tests/game-contract.test.mjs` plus SVG XML parsing via Python's standard library. To inspect sprite positions in browser, use `/game/preview-2d/?qa=1` and `window.__yenQA.inspect().props`.
+
+Known limits: the sprite props are newly authored vector art in a consistent warm game palette, not yet an anime-painted raster production atlas. Human sit/stand sprite sheets remain a separate art requirement. Actual mobile screenshot sign-off remains required.

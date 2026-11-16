@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="89" height="62" viewBox="0 0 89 62"><defs>
+<linearGradient id="wood" x2="0.25" y2="1"><stop stop-color="#dca97a"/><stop offset=".5" stop-color="#b77c52"/><stop offset="1" stop-color="#875338"/></linearGradient>
+<linearGradient id="dark" x2="0" y2="1"><stop stop-color="#775444"/><stop offset="1" stop-color="#4c352c"/></linearGradient>
+<linearGradient id="leaf" x2=".3" y2="1"><stop stop-color="#9bae74"/><stop offset="1" stop-color="#466e50"/></linearGradient>
+<linearGradient id="cream" x2="0" y2="1"><stop stop-color="#fff3d8"/><stop offset="1" stop-color="#dfc59e"/></linearGradient>
+<linearGradient id="glass" x2="0" y2="1"><stop stop-color="#c6e0cb"/><stop offset=".6" stop-color="#e3e7cb"/><stop offset="1" stop-color="#edc79b"/></linearGradient>
+<linearGradient id="floor" x2=".15" y2="1"><stop stop-color="#ddbb96"/><stop offset="1" stop-color="#b88464"/></linearGradient>
+<radialGradient id="sun"><stop stop-color="#fff7c8" stop-opacity=".72"/><stop offset="1" stop-color="#fff4c5" stop-opacity="0"/></radialGradient>
+</defs>
+<path d="M12 13Q6 5 30 5H69Q86 6 80 19L79 44Q81 55 66 55H18Q5 50 9 37Z" fill="#dfba85" stroke="#9d785b" stroke-width="6"/>
+<path d="M24 14Q33 31 20 43M67 16Q56 31 68 43" stroke="#ffe0a6" stroke-width="4" fill="none" opacity=".65"/>
+</svg>

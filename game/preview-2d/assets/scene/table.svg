@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="307" height="214" viewBox="0 0 307 214"><defs>
+<linearGradient id="wood" x2="0.25" y2="1"><stop stop-color="#dca97a"/><stop offset=".5" stop-color="#b77c52"/><stop offset="1" stop-color="#875338"/></linearGradient>
+<linearGradient id="dark" x2="0" y2="1"><stop stop-color="#775444"/><stop offset="1" stop-color="#4c352c"/></linearGradient>
+<linearGradient id="leaf" x2=".3" y2="1"><stop stop-color="#9bae74"/><stop offset="1" stop-color="#466e50"/></linearGradient>
+<linearGradient id="cream" x2="0" y2="1"><stop stop-color="#fff3d8"/><stop offset="1" stop-color="#dfc59e"/></linearGradient>
+<linearGradient id="glass" x2="0" y2="1"><stop stop-color="#c6e0cb"/><stop offset=".6" stop-color="#e3e7cb"/><stop offset="1" stop-color="#edc79b"/></linearGradient>
+<linearGradient id="floor" x2=".15" y2="1"><stop stop-color="#ddbb96"/><stop offset="1" stop-color="#b88464"/></linearGradient>
+<radialGradient id="sun"><stop stop-color="#fff7c8" stop-opacity=".72"/><stop offset="1" stop-color="#fff4c5" stop-opacity="0"/></radialGradient>
+</defs>
+<ellipse cx="151" cy="190" rx="127" ry="15" fill="#4a352e" opacity=".17"/>
+<path d="M115 98L104 189M189 97L201 190M139 114V191M165 114V191" stroke="#79513f" stroke-width="15" stroke-linecap="round"/>
+<path d="M29 104Q14 146 32 179L80 184Q97 165 92 138L70 111Z" fill="#9b8067" stroke="#664939" stroke-width="7"/>
+<path d="M230 108Q217 149 230 178L277 178Q293 154 282 131L262 109Z" fill="#9b8067" stroke="#664939" stroke-width="7"/>
+<path d="M24 96Q24 56 57 48Q92 50 101 89L87 118H35Z" fill="#acc29d" stroke="#674e3e" stroke-width="8"/>
+<path d="M221 93Q228 58 256 55Q282 59 290 96L281 117H229Z" fill="#acc29d" stroke="#674e3e" stroke-width="8"/>
+<ellipse cx="153" cy="111" rx="115" ry="54" fill="#70513f" stroke="#5f4436" stroke-width="9"/>
+<ellipse cx="153" cy="100" rx="116" ry="51" fill="url(#wood)" stroke="#e1b78a" stroke-width="7"/>
+<ellipse cx="153" cy="95" rx="102" ry="39" fill="#e8bd8f" opacity=".23"/>
+<path d="M61 101Q146 128 248 92" stroke="#fff2c6" stroke-width="5" fill="none" opacity=".4"/>
+<ellipse cx="154" cy="145" rx="79" ry="15" fill="#5b3e32" opacity=".15"/>
+</svg>

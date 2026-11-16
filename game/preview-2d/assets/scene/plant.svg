@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="201" height="288" viewBox="0 0 201 288"><defs>
+<linearGradient id="wood" x2="0.25" y2="1"><stop stop-color="#dca97a"/><stop offset=".5" stop-color="#b77c52"/><stop offset="1" stop-color="#875338"/></linearGradient>
+<linearGradient id="dark" x2="0" y2="1"><stop stop-color="#775444"/><stop offset="1" stop-color="#4c352c"/></linearGradient>
+<linearGradient id="leaf" x2=".3" y2="1"><stop stop-color="#9bae74"/><stop offset="1" stop-color="#466e50"/></linearGradient>
+<linearGradient id="cream" x2="0" y2="1"><stop stop-color="#fff3d8"/><stop offset="1" stop-color="#dfc59e"/></linearGradient>
+<linearGradient id="glass" x2="0" y2="1"><stop stop-color="#c6e0cb"/><stop offset=".6" stop-color="#e3e7cb"/><stop offset="1" stop-color="#edc79b"/></linearGradient>
+<linearGradient id="floor" x2=".15" y2="1"><stop stop-color="#ddbb96"/><stop offset="1" stop-color="#b88464"/></linearGradient>
+<radialGradient id="sun"><stop stop-color="#fff7c8" stop-opacity=".72"/><stop offset="1" stop-color="#fff4c5" stop-opacity="0"/></radialGradient>
+</defs>
+<path d="M100 243Q96 172 101 58M100 175Q52 144 46 97M100 138Q154 117 160 75M98 195Q142 179 157 139" fill="none" stroke="#5f7650" stroke-width="13" stroke-linecap="round"/>
+<g fill="url(#leaf)" stroke="#4d7456" stroke-width="3">
+<ellipse cx="84" cy="70" rx="26" ry="59" transform="rotate(-21 84 70)"/>
+<ellipse cx="124" cy="84" rx="27" ry="56" transform="rotate(26 124 84)"/>
+<ellipse cx="49" cy="105" rx="22" ry="52" transform="rotate(-53 49 105)"/>
+<ellipse cx="161" cy="105" rx="25" ry="52" transform="rotate(52 161 105)"/>
+<ellipse cx="61" cy="159" rx="23" ry="55" transform="rotate(-66 61 159)"/>
+<ellipse cx="145" cy="153" rx="24" ry="55" transform="rotate(61 145 153)"/>
+<ellipse cx="96" cy="38" rx="22" ry="43"/>
+</g>
+<g fill="none" stroke="#d9e3b8" stroke-width="3" opacity=".6"><path d="M84 36L85 108M122 46L115 117M29 92L78 122M167 76L135 138M31 148L86 169M170 143L114 185"/></g>
+<path d="M45 217H155L144 275Q101 288 61 275Z" fill="#b97850" stroke="#815540" stroke-width="8"/>
+<path d="M45 218H155" stroke="#e0ab79" stroke-width="12" stroke-linecap="round"/>
+<path d="M61 247Q101 270 140 245" fill="none" stroke="#eeb789" stroke-width="5" opacity=".6"/>
+</svg>
