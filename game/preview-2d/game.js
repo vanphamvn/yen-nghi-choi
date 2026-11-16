@@ -63,6 +63,7 @@ const state={
 };
 let world=null,phaserGame=null,elapsedUI=0,activeModal='preview';
 let touch={x:0,y:0,pointer:null};
+const heldKeys=new Set();
 let interacting=false;
 const assetUrl=(role,view='front')=>'./assets/'+role+(role==='cat'||view==='front'?'':'-'+(view==='back'?'back':'side'))+'.svg';
 
@@ -465,9 +466,6 @@ class CafeScene extends Phaser.Scene{
  }
  bindInputs(){
   this.keyboard=this.input.keyboard?.addKeys('W,A,S,D,UP,DOWN,LEFT,RIGHT')||{};
-  this.input.keyboard?.on('keydown-E',()=>interact());
-  this.input.keyboard?.on('keydown-Q',()=>usePower());
-  this.input.keyboard?.on('keydown-ESC',()=>{if(activeModal&&activeModal!=='result')modal(null);else modal('preview')});
  }
  setZoom(){
   // Cover the viewport with café art; crop beyond the camera rather than exposing blank borders.
@@ -511,10 +509,10 @@ class CafeScene extends Phaser.Scene{
   if(!this.player)return;
   const dt=Math.min(dtMs/1000,.06);
   tick(dt);
-  let dx=Number(Boolean(this.keyboard.D?.isDown||this.keyboard.RIGHT?.isDown))
-       -Number(Boolean(this.keyboard.A?.isDown||this.keyboard.LEFT?.isDown))+touch.x;
-  let dy=Number(Boolean(this.keyboard.S?.isDown||this.keyboard.DOWN?.isDown))
-       -Number(Boolean(this.keyboard.W?.isDown||this.keyboard.UP?.isDown))+touch.y;
+  let dx=Number(Boolean(heldKeys.has('d')||heldKeys.has('arrowright')||this.keyboard.D?.isDown||this.keyboard.RIGHT?.isDown))
+       -Number(Boolean(heldKeys.has('a')||heldKeys.has('arrowleft')||this.keyboard.A?.isDown||this.keyboard.LEFT?.isDown))+touch.x;
+  let dy=Number(Boolean(heldKeys.has('s')||heldKeys.has('arrowdown')||this.keyboard.S?.isDown||this.keyboard.DOWN?.isDown))
+       -Number(Boolean(heldKeys.has('w')||heldKeys.has('arrowup')||this.keyboard.W?.isDown||this.keyboard.UP?.isDown))+touch.y;
   const n=Math.hypot(dx,dy);
   this.interactRemaining=Math.max(0,this.interactRemaining-dt);
   if(!activeModal&&['explore','shift','ready'].includes(state.phase)
@@ -581,7 +579,22 @@ function init(){
  for(const button of document.querySelectorAll('[data-animation]'))
    button.addEventListener('click',()=>selectAnimation(button.dataset.animation));
  $('overlay').addEventListener('click',e=>{if(e.target===$('overlay')&&activeModal!=='result')modal(null)});
- window.addEventListener('blur',resetStick);
+ window.addEventListener('keydown',event=>{
+  const key=event.key.toLowerCase();
+  if(['w','a','s','d','arrowup','arrowdown','arrowleft','arrowright'].includes(key)){
+   heldKeys.add(key);
+   if(!activeModal)event.preventDefault();
+  }else if(key==='e'&&!event.repeat&&!activeModal){
+   event.preventDefault();interact();
+  }else if(key==='q'&&!event.repeat&&!activeModal){
+   event.preventDefault();usePower();
+  }else if(key==='escape'&&!event.repeat){
+   if(activeModal&&activeModal!=='result')modal(null);
+   else if(!activeModal)modal('preview');
+  }
+ });
+ window.addEventListener('keyup',event=>heldKeys.delete(event.key.toLowerCase()));
+ window.addEventListener('blur',()=>{heldKeys.clear();resetStick()});
  bindStick();
  setUpSpriteThumbnails();
  selectAnimation('idle');
@@ -605,6 +618,15 @@ function init(){
   console.error('Yencafeday Phaser failed',e);
   $('load-error').hidden=false;
  }
+}
+if(typeof window.location?.search==='string' && window.location.search.includes('qa=1')){
+ window.__yenQA=Object.freeze({inspect:()=>({
+  phase:state.phase,role:state.role,done:state.done,active:!!state.active,
+  modal:activeModal,held:[...heldKeys],
+  player:world?.player?{x:Math.round(world.player.x),y:Math.round(world.player.y),
+   anim:world.player.anims?.currentAnim?.key}:null,
+  near:nearbyCandidate()?.id||null
+ })});
 }
 init();
 })();
