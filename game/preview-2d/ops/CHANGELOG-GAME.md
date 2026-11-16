@@ -2,6 +2,18 @@
 
 This file records **verified releases**, not PRs mistaken for production. Agents append one entry per deployment or clearly marked blocked attempt. Keep the newest entry at the top.
 
+## 2026-11-16 | Mobile input and production browser gates
+
+- Issue / PR: #100 / #110.
+- Merged SHA: `ae11ea39ff62937f5b6334d64fd6c510b56abb38`.
+- Result: SHIPPED. Netlify build provenance and runtime/asset hashes matched the merge; production browser checks passed.
+- Evidence: https://github.com/vanphamvn/yen-nghi-choi/actions/runs/43891612260.
+- Node regression: 43 pass. Browser: 3/3 viewport scenarios passed both checkout and real production at 1440x900, 390x844 and 360x800.
+- Verified: role selection, focus wrap/restore, keyboard/joystick movement, menu input reset, shift start, no horizontal overflow and no page exceptions.
+- These are emulated viewport checks, not physical-device FPS measurements. M6 remains in progress.
+- The unused API coding runner now pauses without failure when no key exists. Development remains in ChatGPT Work; scheduled QA stays read-only.
+- Follow-up: real-control five-role day walkthrough and owner review of the reference table.
+
 ## 2026-11-16 | NPC routines and verifiable Netlify releases
 
 - Issues / PRs: #95 / #108; #98 / #109.

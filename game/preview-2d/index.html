@@ -35,8 +35,8 @@
     <nav class="sidebar" aria-label="Menu trò chơi">
       <button id="start-shift" class="side-btn side-start" type="button"><span class="side-symbol">▶</span><span>Bắt đầu ca</span></button>
       <button id="finish-shift" class="side-btn side-end" type="button" disabled><span class="side-symbol">⚑</span><span>Kết thúc ca</span></button>
-      <button id="open-preview" class="side-btn side-preview" type="button"><span class="side-symbol">♙</span><span>Xem trước model</span></button>
-      <button id="open-objective" class="side-btn" type="button"><span class="side-symbol">◎</span><span>Objective</span><small id="objective-badge">0/3</small></button>
+      <button id="open-preview" class="side-btn side-preview" type="button"><span class="side-symbol">♙</span><span>Chọn vai</span></button>
+      <button id="open-objective" class="side-btn" type="button"><span class="side-symbol">◎</span><span>Việc trong ca</span><small id="objective-badge">0/3</small></button>
       <button id="open-journal" class="side-btn" type="button"><span class="side-symbol">▤</span><span>Nhật ký</span></button>
       <button id="open-bag" class="side-btn" type="button"><span class="side-symbol">▥</span><span>Túi đồ</span></button>
     </nav>
@@ -55,7 +55,7 @@
       <section id="model-modal" class="model-modal modal" role="dialog" aria-modal="true" aria-labelledby="preview-title">
         <header class="modal-heading">
           <div class="sparkle" aria-hidden="true">✦</div>
-          <div class="modal-heading-text"><h1 id="preview-title">Xem trước sprite art mới (2D)</h1><p>16 frame sprite art/nhân vật · Idle / Walk / Interact · áp dụng trực tiếp vào game.</p></div>
+          <div class="modal-heading-text"><h1 id="preview-title">Chọn vai ở Yên</h1><p>Mỗi vai có ba việc nhỏ. Cứ đi dạo trước, làm việc sau.</p></div>
           <button id="close-modal" type="button" class="icon-close" aria-label="Đóng xem trước">×</button>
         </header>
         <div class="preview-content">
@@ -73,11 +73,11 @@
               <div class="pose"><div class="pose-bg"><span id="pose-back" class="sprite-frame" role="img" aria-label="Hướng sau"></span></div><strong>Sau</strong></div>
               <div class="pose"><div class="pose-bg"><span id="pose-left" class="sprite-frame" role="img" aria-label="Hướng trái"></span></div><strong>Trái</strong></div>
             </div>
-            <div class="anim-head">▣ <strong>Hoạt ảnh</strong><span>Chọn hoạt ảnh để xem nhân vật cử động</span></div>
+            <div class="anim-head">▣ <strong>Thử cử động</strong><span>Đứng chơi, đi dạo, chào một cái.</span></div>
             <div class="animation-tabs" role="group" aria-label="Xem thử hoạt ảnh">
-              <button data-animation="idle" class="active" type="button">▶ Idle (Đứng)</button>
-              <button data-animation="walk" type="button">▶ Walk (Đi)</button>
-              <button data-animation="interact" type="button">▶ Interact (Tương tác)</button>
+              <button data-animation="idle" class="active" type="button">Đứng chơi</button>
+              <button data-animation="walk" type="button">Đi dạo</button>
+              <button data-animation="interact" type="button">Chào một cái</button>
             </div>
             <div class="animation-film" id="animation-film" aria-label="Các khung hình thật của sprite animation">
               <span class="sprite-frame mini-frame" role="img" aria-label="Khung 1"></span>
@@ -87,12 +87,12 @@
               <span class="sprite-frame mini-frame" role="img" aria-label="Khung 5"></span>
               <span class="sprite-frame mini-frame" role="img" aria-label="Khung 6"></span>
             </div>
-            <p id="model-note" class="model-note">Bản xem thử sprite 2D. Các hướng và chuyển động đang được hoàn thiện; hình minh họa chất lượng cao trong concept là chuẩn mỹ thuật mục tiêu.</p>
+            <p id="model-note" class="model-note">Pha vài ly nước, chăm chậu cây, rồi nghỉ một chút.</p>
           </div>
         </div>
         <footer class="modal-footer">
-          <div class="criteria"><span>✓ Phong cách anime 2D</span><span>✓ Điều khiển nhân vật</span><span>✓ Sprite animation thật · 16 frame</span></div>
-          <button id="apply-model" class="apply-btn" type="button">✓ Áp dụng model này</button>
+          <div class="criteria"><span>Đi dạo trước</span><span>Làm khi muốn</span><span>Không tính giờ</span></div>
+          <button id="apply-model" class="apply-btn" type="button">Vào quán với vai này</button>
         </footer>
       </section>
 

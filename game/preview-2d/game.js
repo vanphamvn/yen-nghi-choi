@@ -189,7 +189,7 @@ function modal(name){
  if(name==='preview'){
    const allowed=state.phase==='explore';
    $('apply-model').disabled=!allowed;
-   $('apply-model').textContent=allowed?'✓ Áp dụng model này':'Đổi vai khi đang khám phá';
+   $('apply-model').textContent=allowed?'Vào quán với vai này':'Đổi vai khi đang khám phá';
  }
  // Pause game movement while inspecting menus, keep environment alive.
  if(name==='preview')$('close-modal').focus();
@@ -224,9 +224,10 @@ function selectPreviewRole(role){
  }
  $('model-turnaround').dataset.animation=state.animation;
  $('animation-film').dataset.animation=state.animation;
- $('model-note').textContent=
-  '16 khung hình PNG nền trong suốt của '+roles[role].name+
-  '. Bốn hướng trước, phải, sau, trái; Idle, Walk và Interact là những frame thật.';
+ const descriptions={barista:'Pha vài ly nước, chăm chậu cây, rồi nghỉ một chút.',
+  waiter:'Dọn bàn, nhận nước và ghé khu ghế ngồi.',shipper:'Nhận đơn, kiểm tra xe và giao nước ở cửa quán.',
+  guard:'Đón khách, chọn chỗ ngồi và giữ lối đi thông thoáng.',cat:'Đi dạo, ghé thăm mọi người và meo một tiếng.'};
+ $('model-note').textContent=descriptions[role];
  paintPreview();
 }
 function selectAnimation(animation){
@@ -405,7 +406,7 @@ function blocked(x,y){
   :((x-c.x)/c.rx)**2+((y-c.y)/c.ry)**2<1);
 }
 function renderInfo(kind){
- const title={objective:'Objective',journal:'Nhật ký ở Yên',bag:'Túi đồ',settings:'Cài đặt'}[kind];
+ const title={objective:'Việc trong ca',journal:'Nhật ký ở Yên',bag:'Túi đồ',settings:'Cách chơi'}[kind];
  $('info-title').textContent=title||'Quán Yên';
  const body=$('info-body');
  body.replaceChildren();
@@ -441,7 +442,7 @@ function renderInfo(kind){
    $('info-intro').textContent='Bản 2D đang thử nghiệm.';
    add('h3','Cách chơi');
    add('p','WASD hoặc phím mũi tên: đi lại. E: tương tác. Q: kỹ năng khi vào ca.');
-   add('p','Bản này dùng sprite minh họa thử nghiệm, chưa phải sprite atlas anime cuối.');
+   add('p','Bạn có thể khám phá trước ca, làm ba việc nhỏ, rồi tự chọn lúc kết ca và sang ngày mới.');
  }
  modal('info');
 }
@@ -761,7 +762,8 @@ class CafeScene extends Phaser.Scene{
   const candidate=nearbyCandidate();
   if(candidate&&!activeModal){
     $('world-hint').hidden=false;
-    $('world-hint').textContent=(candidate.kind==='task'?'Nhiệm vụ: ':'E · ')+candidate.name;
+    const touchHint=window.matchMedia?.('(pointer: coarse)').matches;
+    $('world-hint').textContent=(candidate.kind==='task'?'Nhiệm vụ: ':touchHint?'Chạm Tương tác · ':'E · ')+candidate.name;
     this.nearHalo.setPosition(candidate.x,candidate.y+14).setVisible(true);
   }else{
     $('world-hint').hidden=true;this.nearHalo.setVisible(false);
@@ -806,6 +808,7 @@ function init(){
   const key=event.key.toLowerCase();
   if(key==='tab'&&activeModal){trapModalFocus(event);return;}
   if(['w','a','s','d','arrowup','arrowdown','arrowleft','arrowright'].includes(key)){
+   if(activeModal)return;
    heldKeys.add(key);
    if(!activeModal)event.preventDefault();
   }else if(key==='e'&&!event.repeat&&!activeModal){
