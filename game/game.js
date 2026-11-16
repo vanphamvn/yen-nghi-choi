@@ -73,7 +73,7 @@ const PROP_TEXT = {
   bench: ['Bạn chỉnh lại chiếc gối. Ghế dài trông hiếu khách hơn.', 'Chiếc gối trở về vị trí đầu tiên.'],
   plant: ['Bạn tưới cây. Cây không cảm ơn nhưng lá có vẻ vui.', 'Bạn nhìn kỹ hơn. Cây vẫn đang làm rất tốt công việc của nó.']
 };
-let selectedRole = 'cat';
+let selectedRole = 'barista';
 let stats = { speed: 3, dexterity: 3, calm: 3, charm: 3 };
 let BABYLON = null;
 let ANIME_WORLD = null;
@@ -171,7 +171,7 @@ async function startGame() {
   $('start-btn').textContent = 'Đang mở cửa quán...';
   try {
     if (!BABYLON) BABYLON = await loadBabylon();
-    await loadBabylonAssetLoader();
+    if (selectedRole!=='cat') await loadBabylonAssetLoader();
     if (!ANIME_WORLD) ANIME_WORLD = await import('./world-babylon.js');
     disposeWorld();
     game = {
@@ -186,12 +186,26 @@ async function startGame() {
     $('hud-role').textContent = ROLES[game.role].name;
     $('skill-name').textContent = ROLES[game.role].power;
     buildWorld();
-    try {
-      const asset=await world.loadHeroGLB();
-      console.info('Yên hero asset ready:',asset.clips);
-    } catch(assetError) {
-      console.error('Yên hero GLB fallback:',assetError);
-      showMessage('Mô hình mới chưa tải được. Game vẫn chơi được với nhân vật dự phòng.',6);
+    const modelState=$('model-status');
+    if(game.role==='cat'){
+      modelState.dataset.asset='legacy';
+      modelState.textContent='Mèo: mô hình cũ (chưa nâng cấp)';
+      showMessage('Vai Mèo hiện vẫn dùng mô hình cũ. Chọn Pha chế để xem nhân vật GLB mới.',6);
+    } else {
+      modelState.dataset.asset='loading';
+      modelState.textContent='Đang tải nhân vật GLB mới…';
+      try {
+        const asset=await world.loadHeroGLB();
+        if(!asset?.loaded)throw new Error('Model returned an unconfirmed load state');
+        modelState.dataset.asset='glb';
+        modelState.textContent='Đã tải model GLB mới · '+ROLES[game.role].name;
+        console.info('Yên hero GLB loaded:',{role:game.role,clips:asset.clips,meshes:asset.meshCount});
+      } catch(assetError) {
+        console.error('Yên hero GLB could not load, legacy fallback active:',assetError);
+        modelState.dataset.asset='fallback';
+        modelState.textContent='Lỗi tải GLB · đang dùng model cũ';
+        showMessage('Tải nhân vật mới thất bại. Game đang hiện model cũ. Hãy thử tải lại trang.',7);
+      }
     }
     updatePhaseUI();
     if(!game.message)showMessage('Đi dạo một vòng nhé. Mở Objective để bắt đầu ca.',5);
