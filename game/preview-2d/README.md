@@ -1,43 +1,62 @@
-# Yencafeday 2D · Vertical slice preview
+# Yencafeday 2D · Visual game remake (reference-driven)
 
-> **Cảnh báo mỹ thuật:** Route này là **prototype Phaser 4**. Hình nhân vật vector và nội thất đang dùng để kiểm tra gameplay. Concept anime màu nước chất lượng cao được tạo để người dùng xem trước, **chưa chốt thành sprite atlas** và chưa tích hợp vào game.
+> **Status:** playable reference-style preview; **NOT the final hand-painted anime sprite pack**. The user-provided screenshot with a wood-and-green café, dark top HUD, left action menu and model-preview modal is the primary layout/art-direction reference.
 
-## Cách xem
+## Live preview
 
-Preview: \`/game/preview-2d/\` trên Netlify deploy preview của PR #87. **Không sửa /game/** đang chạy, không thay link từ trang chủ.
+- Netlify PR preview: https://deploy-preview-87--yencafeday.netlify.app/game/preview-2d/
+- GitHub draft PR: https://github.com/vanphamvn/yen-nghi-choi/pull/87
+- Existing production 3D game remains at `/game/` until actual visual approval and migration gate.
 
-Chọn một trong 5 vai (Pha chế, Phục vụ, Bảo vệ, Shipper, Mèo cổ vũ), chọn Vào quán khám phá. Đi bằng WASD/mũi tên hoặc joystick trên điện thoại, đến gần NPC hoặc 6 vị trí quán, nhấn **E** hoặc **Tương tác**. Mở Nhiệm vụ để **Bắt đầu ca**, làm đủ 3 việc theo nghề, **Kết thúc ca**, rồi **Sang ngày mới**. Không đếm ngược thời hạn. Q hoặc Tuyệt chiêu dùng khi đang làm việc. Nhân vật, NPC, props được reset mỗi ngày.
+## Implemented
 
-## Động cơ và asset
+**Page appearance and playable UX**
+- Full-bleed hand-drawn vector café background with textured tile floor, warm afternoon lighting, green vines, espresso machine, counter, cake display, tables, bench, scooter, brand sign.
+- Reference-style chocolate-dark top HUD with day, game clock, simulated coins, peacefulness and energy.
+- Left vertical menu: **Bắt đầu ca**, **Kết thúc ca**, **Xem trước model**, **Objective**, **Nhật ký**, **Túi đồ**; functional contextual states.
+- Right-side model-preview modal: five selectable roles, 4 directions (front/right/back/left) for human roles, animated CSS idle/walk/interact *motions* over single-frame illustrations, six preview poses, role apply.
+- Mobile responsive: compact top HUD, horizontally scrollable menu, full-width model modal, joystick and two buttons.
+- Character movement changes front/side/back textures by actual direction. **This is not yet per-direction multi-frame animation**. Cat retains its own silhouette.
 
-- Phaser 4.2.1, cố định phiên bản tải từ jsDelivr.
-- Tất cả SVG trong \`assets/\` là bản vector thử nghiệm do dự án tạo mới; không dùng asset từ nguồn thương mại không rõ quyền. Các ảnh concept trong chat chưa được export thành asset WebGL có hướng đi/bộ frame chính xác.
-- Bối cảnh \`cafe.svg\` rộng 1440×900 cho góc quán 2D. Character placeholders \`barista.svg\`, \`guard.svg\`, \`shipper.svg\`, \`waiter.svg\`, \`guest.svg\`, \`reader.svg\`, \`cat.svg\`.
-- 5 vai và 6 NPC, nhiệm vụ và hoạt động theo một state machine nhỏ ở \`game.js\`. Objective chỉ mở khi nhấn, độc lập giao diện HUD, trạng thái trong RAM.
-- Browser mobile camera theo người chơi, điều khiển pointer, không tài khoản/cookies/localStorage.
+**Gameplay**
+- Phaser **v4.2.1** (pinned CDN) with 2D world, foreground actors and camera following the player.
+- Five playable roles: barista, waiter, guard, shipper, cat.
+- Six NPCs with rotating dialogue and six environmental interaction stations.
+- Explore freely before shifts, start shift manually, do three role-specific tasks, manually end after completion, review simulated rewards and continue to unlimited next days.
+- WASD/arrows, E interact, Q ability, and touch joystick + action/skill buttons.
+- Journal and bag persist only in **in-memory tab state**; no cookies/accounts/saved progress/no real rewards.
+- Model preview opens on first load to match reference. **Close** or **Apply** to start walking.
 
-## Giới hạn demo (được biết)
+## Art production gap
 
-- Character placeholders là **ảnh SVG một frame**, nên chuyển động đi tạm dùng sway/tween. **Không phải spritesheet/animation thật.**
-- Concept được duyệt rồi mới vẽ sprite atlas front/back/left/right + idle/walk/interact, cả NPC và mèo. Không dùng hình mock UI làm game texture.
-- Layer collision là hình chữ nhật đơn giản; game chính cần tile collision/pathing/foreground occlusion và NPC routines.
-- Chưa có screenshot trình duyệt WebGL thật trong môi trường hiện tại, chưa đo FPS iPhone/Android. CI xanh không phải visual QA.
-- Game 3D hiện tại vẫn nguyên vẹn tại \`/game/\`, PR preview giữ **draft**.
+The illustrated reference is **not** the current image texture itself. The game uses project-owned, separate vector illustrations so UI and entities can be interacted with. The high-quality anime portrait from the reference is the target for production sprite art, not a finished integrated sprite.
 
-## QA tối thiểu cần duyệt trước khi đổi route production
+The next art iteration must replace the temporary vector characters/background with an approved **hand-painted 2D asset pack**, with transparent four-direction sprites, consistent face and clothing, actual idle/walk/interact frame sets, scene depth/foreground occlusion and visually verified screenshots.
 
-- [ ] Art direction được người dùng duyệt, chủ yếu nhân vật chibi và bối cảnh quán Việt Nam.
-- [ ] Các sprite atlas thật dùng cùng style, không dính viền giấy, alpha sạch, trọn bộ 4 hướng.
-- [ ] Idle/Walk/Interact có 4–8 frame hoặc animation skeleton 2D, không méo mặt/tay.
-- [ ] Screenshot 1440×900 desktop, 390×844 iOS Safari, 360×800 Android Chrome.
-- [ ] Median >=30 FPS ở Android thử nghiệm, camera, touch, controls không che nhân vật.
-- [ ] Test 5 vai, 6 NPC, 6 props, 3 nhiệm vụ mỗi vai, vòng chơi nhiều ngày.
-- [ ] Provenance, kích thước texture, network offline behavior, rollback plan.
-- [ ] Người dùng xác nhận thay \`/game/\` trên prod.
+The screenshot itself cannot be pasted into Phaser as the whole background because its buttons, modal, and characters would become noninteractive, duplicated pixels. These elements must remain real UI/animated sprites.
 
-## Links
+## Acceptance criteria before switching `/game/`
 
-- [Epic #84](https://github.com/vanphamvn/yen-nghi-choi/issues/84)
-- [Playable vertical slice #85](https://github.com/vanphamvn/yen-nghi-choi/issues/85)
-- [Art/animation approval #86](https://github.com/vanphamvn/yen-nghi-choi/issues/86)
-- [Draft PR #87](https://github.com/vanphamvn/yen-nghi-choi/pull/87)
+- [x] Functional preview with major reference UI hierarchy recreated
+- [x] Character direction art for all humans (front, side, back) and five roles
+- [x] Logic tested for 5 roles, 6 NPCs, day-loop, UI
+- [ ] User approves actual runtime visual design (not only reference artwork)
+- [ ] Replace placeholder SVGs with hand-painted/animated production sprites
+- [ ] Browser screenshot test desktop 1440×900, iPhone 390×844, Android 360×800
+- [ ] Mobile 30 FPS median target measured on a real device
+- [ ] Fix blocking visual/gameplay defects and check accessibility
+- [ ] Explicit sign-off on production route replacement
+
+## File overview
+
+```text
+preview-2d/
+  index.html             # real interactive HUD and preview modal
+  style.css              # reference-inspired layout and responsiveness
+  game.js                # Phaser scene + game logic + UI state machine
+  assets/cafe.svg        # original café stage painting (vector)
+  assets/*-{side,back}.svg # directional actor artwork
+  assets/*.svg           # characters / cat
+```
+
+Related work: [Epic #84](https://github.com/vanphamvn/yen-nghi-choi/issues/84), [Gameplay #85](https://github.com/vanphamvn/yen-nghi-choi/issues/85), [Art approval #86](https://github.com/vanphamvn/yen-nghi-choi/issues/86).
