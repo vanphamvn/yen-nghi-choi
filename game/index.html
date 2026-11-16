@@ -23,7 +23,7 @@
         <p class="eyebrow">TUYỂN DỤNG BẤT THƯỜNG / YÊN COFFEE & TEA</p>
         <h1 id="setup-title">Ai đang<br><em>làm việc?</em></h1>
         <p>Quán có khách. Mọi người có nghề. Riêng con mèo vẫn đang cân nhắc.</p>
-        <div class="intro-hint">CHẾ ĐỘ 1 NGƯỜI · 3 NHIỆM VỤ · KHOẢNG 3 PHÚT</div>
+        <div class="intro-hint">KHÁM PHÁ TỰ DO · TỰ CHỌN LÚC BẮT ĐẦU CA · NHIỀU NGÀY</div>
       </div>
       <div class="creator">
         <div class="block-heading"><span>01</span><h2>Chọn nghề</h2></div>
@@ -37,7 +37,7 @@
         <div class="block-heading stats-heading"><span>02</span><h2>Chia điểm kỹ năng</h2><div class="remaining"><b id="points-left">0</b><small>điểm còn</small></div></div>
         <div id="stats" class="stats" aria-label="Thuộc tính nhân vật"></div>
         <div class="special" aria-live="polite"><span>TUYỆT CHIÊU NGHỀ NGHIỆP</span><strong id="power-name">Meo chữa lành</strong><p id="power-desc">Đồng nghiệp nghe mèo kêu là muốn nghỉ ít hơn.</p></div>
-        <button id="start-btn" class="primary" type="button">Vào ca làm việc <span aria-hidden="true">↗</span></button>
+        <button id="start-btn" class="primary" type="button">Vào quán khám phá <span aria-hidden="true">↗</span></button>
         <p class="fine-print">Không đăng nhập, không lưu điểm, không có quà đổi tại quán.</p>
       </div>
     </section>
@@ -48,7 +48,8 @@
         <div class="hud-top">
           <div class="hud-left">
             <span class="hud-role" id="hud-role">Mèo cổ vũ</span>
-            <div class="hud-clock"><span>HẾT CA SAU</span><b id="clock">02:30</b></div>
+            <span class="hud-day" id="hud-day">NGÀY 01</span>
+            <div class="hud-clock"><span>THỜI GIAN CA</span><b id="clock">00:00</b></div>
           </div>
           <div class="meters">
             <div class="meter"><span>HIỆU SUẤT</span><b id="eff-text">50%</b><div class="meter-track"><i id="eff-bar"></i></div></div>
@@ -56,9 +57,14 @@
           </div>
         </div>
         <div class="objective">
-          <span class="eyebrow" id="objective-count">NHIỆM VỤ 1 / 3</span>
-          <strong id="objective-title">Đang tìm việc...</strong>
-          <p id="objective-desc">Đi tới vòng sáng để tương tác.</p>
+          <span class="eyebrow" id="objective-count">NGÀY 01 · KHÁM PHÁ</span>
+          <strong id="objective-title">Chưa vào ca. Cứ ngó quanh.</strong>
+          <p id="objective-desc">Gặp khách, trò chuyện với nhân viên, chơi với mèo, nghịch đồ trong quán.</p>
+          <div class="shift-panel">
+            <span id="shift-state">CHƯA BẮT ĐẦU CA</span>
+            <button id="shift-btn" type="button">Bắt đầu ca ↗</button>
+          </div>
+          <p id="target-hint" class="target-hint" aria-live="polite">Đi gần người hoặc vật dụng để tương tác.</p>
           <div class="action-progress" id="action-progress" hidden><i id="action-bar"></i></div>
           <div class="event-text" id="event-text" role="status" aria-live="polite"></div>
         </div>
@@ -68,17 +74,17 @@
           </div>
           <div class="game-actions">
             <button class="skill-btn" id="skill-btn" type="button"><span id="skill-name">Meo chữa lành</span><small id="skill-cooldown">Sẵn sàng</small></button>
-            <button class="interact-btn" id="interact-btn" type="button" disabled>Tương tác <small>PHÍM E</small></button>
+            <button class="interact-btn" id="interact-btn" type="button" disabled><span id="interact-label">Tương tác</span><small>PHÍM E</small></button>
           </div>
         </div>
-        <p class="keyboard-tip">WASD / phím mũi tên để đi · E tương tác · Q dùng tuyệt chiêu</p>
+        <p class="keyboard-tip">WASD / mũi tên: di chuyển · E: tương tác · Q: tuyệt chiêu trong ca</p>
         <button id="exit-btn" class="exit-btn" type="button" aria-label="Thoát về màn hình chọn nhân vật">×</button>
       </div>
     </section>
 
     <section id="result" class="result-screen" hidden aria-labelledby="result-title">
       <div class="result-card">
-        <p class="eyebrow">BIÊN BẢN KẾT THÚC CA</p>
+        <p class="eyebrow" id="result-day">NGÀY 01 · BIÊN BẢN KẾT CA</p>
         <h2 id="result-title">Quán vẫn còn nguyên.</h2>
         <p id="result-message">Có vẻ đây là một ngày bình thường tại Yên.</p>
         <div class="result-stats">
@@ -88,8 +94,8 @@
         </div>
         <p class="result-note" id="result-note"></p>
         <div class="result-actions">
-          <button id="retry-btn" class="primary" type="button">Làm ca khác</button>
-          <button id="change-btn" class="secondary" type="button">Đổi nghề</button>
+          <button id="retry-btn" class="primary" type="button">Sang ngày mới ↗</button>
+          <button id="change-btn" class="secondary" type="button">Đổi nhân vật</button>
         </div>
       </div>
     </section>

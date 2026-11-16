@@ -1,6 +1,6 @@
 /* YÊN: Ai đang làm việc? — self-contained 3D minigame.
  * All game state is ephemeral. No accounts, cookies, analytics or rewards.
- * Three.js is loaded only when the visitor starts a shift.
+ * Three.js is loaded only when the visitor enters exploration mode.
  */
 const $ = id => document.getElementById(id);
 const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
@@ -49,6 +49,29 @@ const STATIONS = {
   bike: { x: 6.2, z: 5.2, label: 'Xe giao hàng' },
   bench: { x: 2.5, z: 2.15, label: 'Ghế dài' },
   plant: { x: -6.2, z: -2.35, label: 'Góc cây' }
+};
+// The same café can be explored indefinitely; NPCs and items have their own reactions.
+const NPCS = [
+  { id:'guest_minh', name:'Khách đang đọc sách', kind:'customer', x:-4.85, z:-.15, color:0xc99380,
+    lines:['Mình đến đọc hai trang sách. Đọc được đúng một dòng.', 'Cà phê chưa nguội mà thời gian đã trôi mất rồi.'] },
+  { id:'guest_lan', name:'Khách chờ bạn', kind:'customer', x:-1.75, z:.25, color:0x9dafa3,
+    lines:['Bạn mình nói năm phút nữa tới. Câu này nghe quen không?', 'Tớ gọi nước trước hay đợi người hay trễ nhỉ?'] },
+  { id:'npc_guard', name:'Chú bảo vệ', kind:'staff', x:-7.6, z:3.2, color:0x436378,
+    lines:['Xe cứ để ngay ngắn, còn chuyện buồn thì để ngoài cổng.', 'Chú bảo vệ cái quán. Con mèo bảo vệ cái ghế.'] },
+  { id:'npc_barista', name:'Bạn pha chế', kind:'staff', x:6.65, z:-1.1, color:0x648a6c,
+    lines:['Cà phê đen dễ làm. Khó là đoán khách đang muốn tâm sự.', 'Đá trong ly cần lạnh. Người pha thì không nhất thiết.'] },
+  { id:'npc_waiter', name:'Bạn phục vụ', kind:'staff', x:.65, z:1.2, color:0x8c97b0,
+    lines:['Mình đang học cách nhớ bàn. Hôm nay hơi nhiều bàn.', 'Khách hỏi nhà vệ sinh đâu. Mình đã chỉ đúng ngay lần hai.'] },
+  { id:'npc_cat', name:'Mèo Mướp', kind:'cat', x:-5.85, z:1.05, color:0xd7a373,
+    lines:['Meo. (Mướp chậm rãi chớp mắt.)', 'Mướp cho phép bạn vuốt ve. Trong vòng hai giây.'] }
+];
+const PROP_TEXT = {
+  door: ['Bạn chỉnh lại biển trước cổng. Một ngày bỗng có vẻ ngay ngắn hơn.', 'Biển đã thẳng. Vẫn có người hỏi đây là quán gì.'],
+  counter: ['Máy pha kêu bíp. Hôm nay máy đồng ý hợp tác.', 'Tắt máy pha một chút. Tiếng ồn cũng được tan ca.'],
+  table: ['Bạn nhấc ly khỏi bàn. Mặt bàn bất ngờ rộng ra.', 'Đặt chiếc ly về chỗ cũ. Bàn lại có việc để làm.'],
+  bike: ['Đèn xe bật sáng. Chưa ai yêu cầu giao hàng.', 'Bạn tắt đèn xe. Xe có vẻ hài lòng.'],
+  bench: ['Bạn chỉnh lại chiếc gối. Ghế dài trông hiếu khách hơn.', 'Chiếc gối trở về vị trí đầu tiên.'],
+  plant: ['Bạn tưới cây. Cây không cảm ơn nhưng lá có vẻ vui.', 'Bạn nhìn kỹ hơn. Cây vẫn đang làm rất tốt công việc của nó.']
 };
 let selectedRole = 'cat';
 let stats = { speed: 3, dexterity: 3, calm: 3, charm: 3 };
@@ -101,7 +124,7 @@ document.querySelectorAll('.role-card').forEach(button =>
 renderStats();
 setRole(selectedRole);
 
-function showError() { $('error').hidden = false; $('start-btn').disabled = false; $('start-btn').textContent = 'Vào ca làm việc ↗'; }
+function showError() { $('error').hidden = false; $('start-btn').disabled = false; $('start-btn').textContent = 'Vào quán khám phá ↗'; }
 async function startGame() {
   if (totalStats() !== 12) return;
   $('start-btn').disabled = true;
@@ -110,16 +133,17 @@ async function startGame() {
     if (!THREE) THREE = await import('https://cdn.jsdelivr.net/npm/three@0.160.1/build/three.module.js');
     disposeWorld();
     game = {
-      role: selectedRole, attributes: { ...stats }, elapsed: 0, done: 0,
-      efficiency: 50, peace: 70, active: null, playing: true,
-      nextEvent: 22, powerCooldown: 0, sprint: 0,
-      shield: false, quickNext: false, message: '', messageTime: 0
+      role: selectedRole, attributes: { ...stats }, day: 1, phase: 'explore',
+      elapsed: 0, ambientTime: 0, done: 0, efficiency: 50, peace: 70,
+      active: null, playing: true, nextEvent: 22, powerCooldown: 0, sprint: 0,
+      shield: false, quickNext: false, message: '', messageTime: 0,
+      propState: { door: 0, counter: 0, table: 0, bike: 0, bench: 0, plant: 0 }
     };
     $('setup').hidden = true; $('result').hidden = true; $('game').hidden = false; $('error').hidden = true;
     $('hud-role').textContent = ROLES[game.role].name;
     $('skill-name').textContent = ROLES[game.role].power;
     buildWorld();
-    updateTaskUI();
+    updatePhaseUI();
     updateHud();
     lastTick = 0;
     cancelAnimationFrame(frame);
@@ -131,7 +155,7 @@ async function startGame() {
     showError();
   } finally {
     if (!$('setup').hidden) {
-      $('start-btn').textContent = 'Vào ca làm việc ↗';
+      $('start-btn').textContent = 'Vào quán khám phá ↗';
       $('start-btn').disabled = totalStats() !== 12;
     }
   }
@@ -161,7 +185,8 @@ function buildWorld() {
   sun.shadow.camera.top = 20; sun.shadow.camera.bottom = -20;
   sun.shadow.normalBias = .025;
   scene.add(new THREE.HemisphereLight(0xffffff, 0x9bad91, 2), sun);
-  world = { scene, renderer, camera, player: null, indicator: null, markerPole: null, focusedStation: null };
+  world = { scene, renderer, camera, player: null, indicator: null, markerPole: null,
+    nearRing: null, focusedStation: null, npcs: [], refs: {} };
 
   function mesh(geometry, color, parent = scene, metalness = 0) {
     const material = new THREE.MeshStandardMaterial({ color, roughness: .88, metalness });
@@ -195,6 +220,7 @@ function buildWorld() {
   box(5.8,.15,2,3,1.25,-3.7,0xb89570);
   box(1.2,.9,.72,1.6,1.74,-4.1,0x535d56);
   box(.95,.18,.4,1.6,2.24,-4.1,0xe5cba4);
+  world.refs.machineLight=sphere(.12,1.17,1.63,-3.69,0x7f665d);
   cylinder(.31,.31,.14,1.4,1.39,-3.2,0xf4f0e5);
   cylinder(.36,.3,.17,3.3,1.43,-3.25,0xdbdbcd);
   cylinder(.28,.28,.15,4.1,1.42,-3.24,0xe2b27e);
@@ -203,6 +229,7 @@ function buildWorld() {
   // Four chairs around the round customer table.
   cylinder(1.28,1.28,.16,-3.25,.91,-1.4,0xc69e7c,scene,18);
   cylinder(.18,.22,.85,-3.25,.46,-1.4,0x8c7768);
+  world.refs.tableCup=cylinder(.16,.13,.28,-3.25,1.13,-1.4,0xeac6a4);
   for (const [xx,zz] of [[-5,-1.45],[-1.6,-1.4],[-3.25,-3.1],[-3.2,.25]]) {
     cylinder(.42,.36,.13,xx,.58,zz,0x9dac91);
     cylinder(.1,.15,.5,xx,.28,zz,0x9a8a75);
@@ -210,15 +237,18 @@ function buildWorld() {
   // Visitor bench with cups.
   box(3.4,.3,1.1,2.5,.55,3.5,0xa67f65);
   box(3.4,1.05,.21,2.5,1.08,4.07,0x8a6e5a);
+  world.refs.benchPillow=box(.8,.18,.67,2.5,.82,3.62,0xd7c49e);
   for (const x of [1.2,3.8]) box(.17,.55,.17,x,.24,3.5,0x6e6359);
   cylinder(.16,.16,.38,2.2,.85,3.4,0xf1e5d0);
   cylinder(.14,.14,.3,3.2,.83,3.4,0xdde9d5);
   // Plant corner.
   cylinder(.64,.48,.9,-6.2,.45,-4.2,0xc78566);
+  world.refs.plantLeaves=[];
   for (let i=0;i<6;i++) {
     const a = i * Math.PI / 3;
     const leaf = sphere(.45,-6.2+Math.cos(a)*.54,1.42+Math.sin(i*2)*.13,-4.2+Math.sin(a)*.54, i%2 ? 0x5d9467 : 0x7ba378);
     leaf.scale.set(.64,1.3,.6);
+    world.refs.plantLeaves.push(leaf);
   }
   cylinder(.13,.16,.78,-6.2,1.0,-4.2,0x608367);
   // A tiny scooter near the entrance.
@@ -233,11 +263,13 @@ function buildWorld() {
   box(.95,.24,.6,6.2,1.24,3.93,0x6e7569);
   box(.12,1.05,.12,6.2,1.5,2.8,0x5b6963);
   box(.95,.1,.12,6.2,2,2.8,0x5b6963);
+  world.refs.bikeLamp=sphere(.17,6.2,1.28,4.1,0xffdf94);
+  world.refs.bikeLamp.visible=false;
   // Entrance path and arched sign supports.
   box(3.5,.06,1.7,-6.5,.03,5.7,0xf2e6c7);
   box(.18,2.5,.18,-7.8,1.25,6.2,0xa37a62);
   box(.18,2.5,.18,-5.15,1.25,6.2,0xa37a62);
-  box(3.0,.45,.2,-6.5,2.45,6.2,0x6d9176);
+  world.refs.doorPanel=box(3.0,.45,.2,-6.5,2.45,6.2,0x6d9176);
   // Hand-made shop sign on back wall.
   const signCanvas = document.createElement('canvas');
   signCanvas.width=384;signCanvas.height=128;
@@ -252,16 +284,39 @@ function buildWorld() {
   const sign = new THREE.Mesh(new THREE.PlaneGeometry(3.8,1.26),
     new THREE.MeshBasicMaterial({ map: signTexture, side: THREE.DoubleSide }));
   sign.position.set(-2.25,1.75,-6.81); scene.add(sign);
-  // Guest silhouettes at the table.
-  createHumanNPC(-3.9,.1,-.4,0xd8a998);
-  createHumanNPC(-2.0,.1,-2.0,0x9dafa3);
-  function createHumanNPC(x,y,z,color) {
-    const group=new THREE.Group();group.position.set(x,y,z);scene.add(group);
-    const body = cylinder(.31,.36,.7,0,.6,0,color,group);
-    sphere(.32,0,1.27,0,0xeac7ab,group);
-    cylinder(.15,.14,.36,-.19,.17,0,0x6a776b,group);
-    cylinder(.15,.14,.36,.19,.17,0,0x6a776b,group);
-    group.rotation.y = .6;
+  // Visitors, staff and cat are real in-world NPCs, not static silhouettes.
+  for (const descriptor of NPCS) {
+    const actor=new THREE.Group();
+    actor.position.set(descriptor.x,0,descriptor.z);
+    actor.rotation.y=-.3;
+    scene.add(actor);
+    if (descriptor.kind==='cat') {
+      const body=sphere(.4,0,.46,0,descriptor.color,actor); body.scale.set(1,.8,1.25);
+      sphere(.37,0,.94,-.13,descriptor.color,actor);
+      for(const x of [-.25,.25]){
+        const ear=mesh(new THREE.ConeGeometry(.16,.37,4),descriptor.color,actor);
+        ear.position.set(x,1.24,-.12); ear.rotation.y=Math.PI/4;
+        sphere(.055,x*.65,.95,-.49,0x303c34,actor);
+      }
+    } else {
+      cylinder(.29,.35,.82,0,.74,0,descriptor.color,actor);
+      sphere(.34,0,1.45,0,0xe1bea0,actor);
+      for (const x of [-.2,.2]) {
+        cylinder(.13,.15,.44,x,.25,0,0x56645a,actor);
+        sphere(.055,x*.55,1.49,-.34,0x3a4840,actor);
+      }
+      if(descriptor.kind==='staff') {
+        box(.45,.45,.06,0,.86,-.31,0xeee4ce,actor);
+        if(descriptor.id==='npc_guard') cylinder(.34,.34,.14,0,1.79,0,0x395268,actor);
+        if(descriptor.id==='npc_barista') cylinder(.18,.18,.18,0,1.83,0,0xf2eddc,actor);
+      }
+    }
+    const halo=new THREE.Mesh(new THREE.RingGeometry(.47,.57,24),
+      new THREE.MeshBasicMaterial({color:0x769c8a,transparent:true,opacity:.44,side:THREE.DoubleSide}));
+    halo.rotation.x=-Math.PI/2;
+    halo.position.y=.04;
+    actor.add(halo);
+    world.npcs.push({ ...descriptor, group:actor, halo, interactions:0, react:0 });
   }
 
   // A distinct procedural avatar for every job.
@@ -325,6 +380,12 @@ function buildWorld() {
     new THREE.MeshBasicMaterial({color:0xb5db9b,transparent:true,opacity:.16,depthWrite:false,side:THREE.DoubleSide}));
   scene.add(marker);
   world.indicator=ring;world.markerPole=marker;
+  const nearRing=new THREE.Mesh(new THREE.RingGeometry(.57,.66,28),
+    new THREE.MeshBasicMaterial({color:0xe8c688,transparent:true,opacity:.8,side:THREE.DoubleSide,depthTest:false}));
+  nearRing.rotation.x=-Math.PI/2;
+  nearRing.position.y=.07;nearRing.visible=false;nearRing.renderOrder=4;
+  scene.add(nearRing);world.nearRing=nearRing;
+  resetEnvironment();
   onResize();
 }
 function onResize() {
@@ -342,19 +403,114 @@ function onResize() {
 }
 window.addEventListener('resize',onResize);
 
+function resetEnvironment() {
+  if (!game || !world) return;
+  game.ambientTime=0;
+  game.propState={ door:0, counter:0, table:0, bike:0, bench:0, plant:0 };
+  for (const npc of world.npcs) {
+    npc.group.position.set(npc.x,0,npc.z);
+    npc.group.rotation.y=-.3;
+    npc.interactions=0;
+    npc.react=0;
+  }
+  const refs=world.refs;
+  refs.machineLight.material.color.setHex(0x7f665d);
+  refs.tableCup.visible=true;
+  refs.bikeLamp.visible=false;
+  refs.benchPillow.position.x=2.5;
+  refs.doorPanel.material.color.setHex(0x6d9176);
+  for (const leaf of refs.plantLeaves) {
+    leaf.scale.set(.64,1.3,.6);
+    leaf.material.color.setHex(0x6d986b);
+  }
+  world.player.position.set(0,0,4.5);
+  world.player.rotation.y=0;
+  world.nearRing.visible=false;
+}
 function updateTaskUI() {
-  if (!game || !game.playing) return;
+  if (!game || !world || game.phase!=='shift') return;
   const task=ROLES[game.role].tasks[game.done];
   if (!task) return;
-  $('objective-count').textContent='NHIỆM VỤ '+(game.done+1)+' / 3';
+  $('objective-count').textContent='NGÀY '+String(game.day).padStart(2,'0')+' · NHIỆM VỤ '+(game.done+1)+' / 3';
   $('objective-title').textContent=task.title;
-  $('objective-desc').textContent=task.text + ' Đi tới vòng sáng rồi bấm Tương tác.';
-  if (world) {
-    const station=STATIONS[task.at];
-    world.indicator.position.set(station.x,.13,station.z);
-    world.markerPole.position.set(station.x,.83,station.z);
-    world.focusedStation=station;
+  $('objective-desc').textContent=task.text+' Đi tới vòng sáng và chọn Làm nhiệm vụ.';
+  const station=STATIONS[task.at];
+  world.indicator.position.set(station.x,.13,station.z);
+  world.markerPole.position.set(station.x,.83,station.z);
+  world.focusedStation=station;
+}
+function updatePhaseUI() {
+  if (!game || !world) return;
+  $('game').dataset.phase=game.phase;
+  $('hud-day').textContent='NGÀY '+String(game.day).padStart(2,'0');
+  $('shift-btn').hidden=game.phase==='shift'||game.phase==='result';
+  world.indicator.visible=game.phase==='shift';
+  world.markerPole.visible=game.phase==='shift';
+  world.focusedStation=null;
+  if (game.phase==='explore') {
+    $('objective-count').textContent='NGÀY '+String(game.day).padStart(2,'0')+' · KHÁM PHÁ TỰ DO';
+    $('objective-title').textContent='Cứ chơi trước, làm sau.';
+    $('objective-desc').textContent='Nói chuyện với khách, nhân viên, mèo hoặc thử các vật dụng. Khi nào thích thì bắt đầu ca.';
+    $('shift-state').textContent='CHƯA BẮT ĐẦU CA';
+    $('shift-btn').textContent='Bắt đầu ca ↗';
+    $('shift-btn').disabled=false;
+  } else if (game.phase==='shift') {
+    $('shift-state').textContent='ĐANG TRONG CA';
+    updateTaskUI();
+  } else if (game.phase==='ready') {
+    $('objective-count').textContent='NGÀY '+String(game.day).padStart(2,'0')+' · ĐÃ XONG CÔNG VIỆC';
+    $('objective-title').textContent='Ba việc đã xong.';
+    $('objective-desc').textContent='Bạn vẫn có thể ở lại chơi, trò chuyện hoặc kết thúc ca để qua ngày mới.';
+    $('shift-state').textContent='SẴN SÀNG TAN CA';
+    $('shift-btn').textContent='Kết thúc ca ↗';
+    $('shift-btn').disabled=false;
   }
+  $('action-progress').hidden=!game.active;
+  updateHud();
+}
+function startShift() {
+  if (!game || game.phase!=='explore' || !world) return;
+  game.phase='shift';
+  game.done=0;game.elapsed=0;game.nextEvent=22;
+  game.efficiency=50;game.peace=70;game.active=null;
+  game.powerCooldown=0;game.sprint=0;game.shield=false;game.quickNext=false;
+  game.message='';game.messageTime=0;
+  $('event-text').textContent='';
+  resetEnvironment();
+  updatePhaseUI();
+  showMessage('Ca ngày '+game.day+' bắt đầu. Mọi người và đồ dùng đã về đúng vị trí.',4);
+}
+function finishShift() {
+  if (!game || game.phase!=='ready') return;
+  game.phase='result';
+  pressed.clear();resetJoystick();
+  const eff=Math.round(game.efficiency),peace=Math.round(game.peace);
+  $('result-day').textContent='NGÀY '+String(game.day).padStart(2,'0')+' · BIÊN BẢN KẾT CA';
+  $('result-tasks').textContent=game.done+' / 3';
+  $('result-eff').textContent=eff+'%';
+  $('result-yen').textContent=peace+'%';
+  $('result-title').textContent='Quán vẫn còn nguyên.';
+  $('result-message').textContent='Ca làm việc đã kết thúc theo quyết định của bạn. Ngày mới đang chờ phía trước.';
+  const balance=Math.round((eff+peace)/2);
+  $('result-note').textContent=balance>=80?'Làm được việc mà vẫn giữ được Yên.':
+    balance>=60?'Quán chạy được. Có thể thêm một chút bình tĩnh.':
+    'Có lẽ cả quán muốn xin giấy phép nghỉ.';
+  $('result').hidden=false;
+  updatePhaseUI();
+}
+function nextDay() {
+  if (!game || game.phase!=='result' || !world) return;
+  game.day++;
+  game.phase='explore';
+  game.done=0;game.elapsed=0;game.active=null;
+  game.efficiency=50;game.peace=70;
+  game.powerCooldown=0;game.sprint=0;game.shield=false;game.quickNext=false;
+  game.message='';game.messageTime=0;
+  $('event-text').textContent='';
+  $('result').hidden=true;
+  resetEnvironment();
+  updatePhaseUI();
+  showMessage('Chào ngày '+game.day+'. Quán đã sẵn sàng để khám phá.',4);
 }
 function showMessage(message,seconds=3) {
   if (!game) return;
@@ -362,53 +518,110 @@ function showMessage(message,seconds=3) {
   game.messageTime=seconds;
   $('event-text').textContent=message;
 }
+function getInteractionCandidate() {
+  if (!game || !world || game.phase==='result' || game.active) return null;
+  const {x,z}=world.player.position;
+  let choice=null;
+  function consider(kind,id,name,targetX,targetZ,target,action) {
+    const distance=Math.hypot(x-targetX,z-targetZ);
+    if (distance>2.05 || (choice && choice.distance<=distance)) return;
+    choice={kind,id,name,x:targetX,z:targetZ,target,action,distance};
+  }
+  for (const npc of world.npcs) {
+    consider('npc',npc.id,npc.name,npc.group.position.x,npc.group.position.z,npc,'Nói chuyện');
+  }
+  for (const [id,station] of Object.entries(STATIONS)) {
+    consider('prop',id,station.label,station.x,station.z,station,'Khám phá');
+  }
+  if (game.phase==='shift' && game.done<3) {
+    const task=ROLES[game.role].tasks[game.done];
+    const station=STATIONS[task.at];
+    const distance=Math.hypot(x-station.x,z-station.z);
+    if (distance<=1.95 && (!choice || distance<=choice.distance+.25)) {
+      return {kind:'task',id:task.at,name:task.title,x:station.x,z:station.z,target:station,action:'Làm nhiệm vụ',distance};
+    }
+  }
+  return choice;
+}
 function updateHud() {
-  if (!game) return;
-  const seconds=Math.ceil(Math.max(0,150-game.elapsed));
+  if (!game || !world) return;
+  const seconds=Math.floor(game.elapsed);
   $('clock').textContent=String(Math.floor(seconds/60)).padStart(2,'0')+':'+String(seconds%60).padStart(2,'0');
   $('eff-text').textContent=Math.round(game.efficiency)+'%';
   $('yen-text').textContent=Math.round(game.peace)+'%';
   $('eff-bar').style.width=clamp(game.efficiency,0,100)+'%';
   $('yen-bar').style.width=clamp(game.peace,0,100)+'%';
-  const distance=world&&world.focusedStation?
-    Math.hypot(world.player.position.x-world.focusedStation.x,world.player.position.z-world.focusedStation.z):100;
-  $('interact-btn').disabled=distance>1.95 || !!game.active;
-  $('interact-btn').firstChild.textContent=game.active?'Đang làm... ':'Tương tác ';
-  $('skill-btn').disabled=game.powerCooldown>0;
-  $('skill-cooldown').textContent=game.powerCooldown>0?
-    Math.ceil(game.powerCooldown)+' giây':'Sẵn sàng';
+  const candidate=getInteractionCandidate();
+  $('interact-btn').disabled=!candidate;
+  $('interact-label').textContent=game.active?'Đang làm...':candidate?candidate.action:'Tương tác';
+  $('target-hint').textContent=game.active?'Đang thực hiện nhiệm vụ...':
+    candidate?'Ở gần: '+candidate.name+' · '+candidate.action:
+    'Đi gần khách, nhân viên, mèo hoặc vật dụng để tương tác.';
+  world.nearRing.visible=!!candidate && candidate.kind!=='task';
+  if (candidate && candidate.kind!=='task') world.nearRing.position.set(candidate.x,.075,candidate.z);
+  $('skill-btn').disabled=game.phase!=='shift'||game.powerCooldown>0;
+  $('skill-cooldown').textContent=game.phase!=='shift'?'Chỉ trong ca':
+    game.powerCooldown>0?Math.ceil(game.powerCooldown)+' giây':'Sẵn sàng';
+}
+function interact() {
+  const candidate=getInteractionCandidate();
+  if (!candidate) return;
+  if (candidate.kind==='task') { startAction(); return; }
+  if (candidate.kind==='npc') {
+    const npc=candidate.target;
+    const text=npc.lines[npc.interactions%npc.lines.length];
+    npc.interactions++;
+    npc.react=1.3;
+    showMessage(npc.name+': '+text,5);
+    return;
+  }
+  const id=candidate.id;
+  const next=game.propState[id]===0?1:0;
+  game.propState[id]=next;
+  const refs=world.refs;
+  if(id==='counter') refs.machineLight.material.color.setHex(next?0x77c78b:0x7f665d);
+  if(id==='table') refs.tableCup.visible=!next;
+  if(id==='bike') refs.bikeLamp.visible=!!next;
+  if(id==='bench') refs.benchPillow.position.x=next?2.95:2.5;
+  if(id==='door') refs.doorPanel.material.color.setHex(next?0xdba36e:0x6d9176);
+  if(id==='plant') for(const leaf of refs.plantLeaves) leaf.scale.y=next?1.6:1.3;
+  showMessage(PROP_TEXT[id][next?0:1],4);
 }
 function startAction() {
-  if (!game || !game.playing || game.active || !world || !world.focusedStation) return;
-  const station=world.focusedStation;
+  if (!game || game.phase!=='shift' || game.active || !world) return;
+  const task=ROLES[game.role].tasks[game.done];
+  if (!task) return;
+  const station=STATIONS[task.at];
   const distance=Math.hypot(world.player.position.x-station.x,world.player.position.z-station.z);
   if (distance>1.95) { showMessage('Đến gần vòng sáng hơn một chút.'); return; }
-  const roleBoost={
-    guard:'door',shipper:'bike',barista:'counter',waiter:'table',cat:'plant'
-  };
-  const task=ROLES[game.role].tasks[game.done];
+  const roleBoost={guard:'door',shipper:'bike',barista:'counter',waiter:'table',cat:'plant'};
   let duration=clamp(3.2-(game.attributes.dexterity*.38),.75,3.0);
-  if (task.at===roleBoost[game.role]) duration*=.7;
-  if (game.quickNext) { duration=.28; game.quickNext=false; }
+  if(task.at===roleBoost[game.role]) duration*=.7;
+  if(game.quickNext) { duration=.28;game.quickNext=false; }
   game.active={elapsed:0,duration};
   $('action-progress').hidden=false;
   $('action-bar').style.width='0%';
   showMessage('Đang thực hiện: '+task.title,2);
 }
 function completeAction() {
-  if (!game) return;
+  if (!game || game.phase!=='shift') return;
   game.active=null;
   $('action-progress').hidden=true;
   const roleBonus=game.role==='cat'?4:game.role==='barista'?5:3;
   game.efficiency=clamp(game.efficiency+7+roleBonus+(game.attributes.dexterity-3)*2,0,100);
   game.peace=clamp(game.peace+4+(game.attributes.charm-2)*2+(game.role==='cat'?5:0),0,100);
   game.done++;
-  if (game.done===3) { endGame(true); return; }
-  showMessage('Xong một việc. Quán vẫn tiếp tục mở cửa.',3);
-  updateTaskUI();
+  if (game.done===3) {
+    game.phase='ready';
+    updatePhaseUI();
+    showMessage('Xong cả ba việc! Bạn tự quyết định lúc kết thúc ca.',6);
+  } else {
+    showMessage('Xong một việc. Quán vẫn tiếp tục mở cửa.',3);
+    updateTaskUI();
+  }
 }
 function usePower() {
-  if (!game || !game.playing || game.powerCooldown>0) return;
+  if (!game || game.phase!=='shift' || game.powerCooldown>0) return;
   game.powerCooldown=25;
   switch(game.role) {
     case 'guard':
@@ -457,24 +670,42 @@ function blocked(x,z) {
   if (Math.hypot(x-6.2,z-3.55)<.77+r) return true;
   return false;
 }
+function updateAmbient(dt) {
+  if (!world || !game || game.phase==='result') return;
+  game.ambientTime+=dt;
+  for (let i=0;i<world.npcs.length;i++) {
+    const npc=world.npcs[i];
+    const angle=game.ambientTime*(npc.kind==='cat'?1.1:.52)+i*1.57;
+    npc.group.position.x=npc.x+Math.sin(angle)*.18;
+    npc.group.position.z=npc.z+Math.cos(angle*.83)*.16;
+    npc.react=Math.max(0,npc.react-dt*1.8);
+    npc.group.position.y=Math.max(0,Math.sin(angle*1.8)*.025)+npc.react*.14;
+    const scale=1+npc.react*.08;
+    npc.group.scale.set(scale,scale,scale);
+    npc.group.rotation.y=-.3+Math.sin(angle*.6)*.23;
+    npc.halo.material.opacity=.27+.13*Math.sin(angle*2);
+  }
+}
 function loop(now) {
   if (!game || !game.playing || !world) return;
   const dt=lastTick?clamp((now-lastTick)/1000,0,.05):0;
   lastTick=now;
-  game.elapsed+=dt;
-  game.powerCooldown=Math.max(0,game.powerCooldown-dt);
-  game.sprint=Math.max(0,game.sprint-dt);
+  if (game.phase==='shift'||game.phase==='ready') game.elapsed+=dt;
+  if (game.phase==='shift') {
+    game.powerCooldown=Math.max(0,game.powerCooldown-dt);
+    game.sprint=Math.max(0,game.sprint-dt);
+    if(game.elapsed>=game.nextEvent) { randomEvent();game.nextEvent+=22; }
+    game.peace=clamp(game.peace-dt*(.045+(5-game.attributes.calm)*.008),0,100);
+  }
   game.messageTime=Math.max(0,game.messageTime-dt);
   if (game.messageTime===0 && game.message) { game.message='';$('event-text').textContent=''; }
-  if (game.elapsed>=game.nextEvent) { randomEvent();game.nextEvent+=22; }
-  // Subtle cost of running a cafe, softened by the player's calmness.
-  game.peace=clamp(game.peace-dt*(.045+(5-game.attributes.calm)*.008),0,100);
+  updateAmbient(dt);
 
   if (game.active) {
     game.active.elapsed+=dt;
     $('action-bar').style.width=clamp(game.active.elapsed/game.active.duration*100,0,100)+'%';
     if (game.active.elapsed>=game.active.duration) completeAction();
-  } else {
+  } else if(game.phase!=='result') {
     const rawX=(pressed.has('d')||pressed.has('arrowright')?1:0)
        -(pressed.has('a')||pressed.has('arrowleft')?1:0)+touchMove.x;
     const rawY=(pressed.has('s')||pressed.has('arrowdown')?1:0)
@@ -494,13 +725,14 @@ function loop(now) {
       world.player.position.y*=.8;
     }
   }
-  // Completing the third task ends the game and disposes the 3D scene.
   if (!game || !game.playing || !world) return;
   const objective=world.indicator;
-  objective.rotation.z=now*.0005;
-  const pulse=1+Math.sin(now*.004)*.08;
-  objective.scale.set(pulse,pulse,pulse);
-  world.markerPole.material.opacity=.12+Math.sin(now*.003)*.045;
+  if(objective.visible) {
+    objective.rotation.z=now*.0005;
+    const pulse=1+Math.sin(now*.004)*.08;
+    objective.scale.set(pulse,pulse,pulse);
+    world.markerPole.material.opacity=.12+Math.sin(now*.003)*.045;
+  }
   // Follow the visitor more closely on narrow screens.
   const aspect=$('scene').clientWidth/Math.max(1,$('scene').clientHeight);
   const follow=aspect<.85?.83:.24;
@@ -509,33 +741,10 @@ function loop(now) {
   world.camera.position.lerp(destination,.09);
   world.camera.lookAt(focus);
   updateHud();
-  if (game.elapsed>=150) { endGame(false);return; }
+  // No automatic game-over: players decide when their shift is complete.
   if (!game.playing || !world) return;
   world.renderer.render(world.scene,world.camera);
   frame=requestAnimationFrame(loop);
-}
-function endGame(completed) {
-  if (!game) return;
-  game.playing=false;
-  cancelAnimationFrame(frame);
-  const done=game.done;
-  const eff=Math.round(game.efficiency);
-  const peace=Math.round(game.peace);
-  $('result-tasks').textContent=done+' / 3';
-  $('result-eff').textContent=eff+'%';
-  $('result-yen').textContent=peace+'%';
-  $('result-title').textContent=completed?'Quán vẫn còn nguyên.':'Hết ca, còn việc.';
-  $('result-message').textContent=completed?
-    'Bạn đã hoàn thành cả ba nhiệm vụ. Đôi khi thế là đủ cho một ngày làm việc.':
-    'Không phải nhiệm vụ nào cũng xong. May mà Yên vẫn mở cửa.';
-  const balance=Math.round(eff*.5+peace*.5);
-  $('result-note').textContent=balance>=80?'Đánh giá: Làm được việc mà vẫn giữ được Yên.':
-    balance>=60?'Đánh giá: Quán chạy được. Cần thêm một chút bình tĩnh.':
-    'Đánh giá: Hình như cả quán cần một giấy phép nghỉ.';
-  $('game').hidden=true;
-  $('result').hidden=false;
-  pressed.clear();resetJoystick();
-  disposeWorld();
 }
 function disposeWorld() {
   cancelAnimationFrame(frame);
@@ -558,20 +767,25 @@ function backToSetup() {
   if (game) game.playing=false;
   pressed.clear();resetJoystick();disposeWorld();
   $('game').hidden=true;$('result').hidden=true;$('setup').hidden=false;
-  $('start-btn').textContent='Vào ca làm việc ↗';
+  $('start-btn').textContent='Vào quán khám phá ↗';
   renderStats();
 }
 $('exit-btn').addEventListener('click',backToSetup);
 $('change-btn').addEventListener('click',backToSetup);
-$('retry-btn').addEventListener('click',() => {backToSetup();startGame();});
-$('interact-btn').addEventListener('click',startAction);
+$('retry-btn').addEventListener('click',nextDay);
+$('shift-btn').addEventListener('click',()=>{
+  if (!game || !world) return;
+  if (game.phase==='explore') startShift();
+  else if (game.phase==='ready') finishShift();
+});
+$('interact-btn').addEventListener('click',interact);
 $('skill-btn').addEventListener('click',usePower);
 window.addEventListener('keydown',event=>{
   const key=event.key.toLowerCase();
   if (!game || !game.playing) return;
   if (['arrowup','arrowdown','arrowleft','arrowright',' '].includes(key)) event.preventDefault();
   pressed.add(key);
-  if (key==='e' && !event.repeat) startAction();
+  if (key==='e' && !event.repeat) interact();
   if (key==='q' && !event.repeat) usePower();
 });
 window.addEventListener('keyup',event=>pressed.delete(event.key.toLowerCase()));
