@@ -169,3 +169,51 @@ test('Five playable roles complete all 3 tasks and advance days',()=>{
  assert.ok(el('info-body').children.length>0);
  a.renderInfo('bag');assert.equal(el('info-title').textContent,'Túi đồ');
 });
+
+test('all six NPC routines repeat with gestures and no walking through furniture',()=>{
+ const {scene}=harness();
+ const blocked=vm.runInNewContext(js.replace(/\ninit\(\);\n\}\)\(\);\s*$/,'\nreturn blocked;\n})();'),{window:{},Phaser:{Scene:class{}}});
+ const observed=new Map();
+ for(const [id,sprite]of scene.sprites){
+  const item={positions:new Set(),stops:new Set(),gestures:0};observed.set(id,item);
+  const original=sprite.play;
+  sprite.play=function(key){if(key.endsWith('-interact'))item.gestures++;return original.call(this,key)};
+ }
+ // Six hundred seconds of deterministic routine simulation, without real waits.
+ for(let frame=0;frame<2400;frame++){
+  scene.updateNPCs(.25);
+  for(const [id,sprite]of scene.sprites){
+   const item=observed.get(id);item.positions.add(Math.round(sprite.x)+','+Math.round(sprite.y));
+   item.stops.add(scene.npcStates.get(id).stop);
+   if(id!=='barista'){
+    assert.equal(blocked(sprite.x,sprite.y),false,id+' crossed a furniture footprint');
+   }
+  }
+ }
+ for(const [id,item]of observed){
+  assert.ok(item.gestures>=2,id+' never repeats its stop action');
+  if(id==='barista')assert.equal(item.positions.size,1,'barista stays at the work station');
+  else{
+   assert.equal(item.stops.size,3,id+' stalled before completing its route');
+   assert.ok(item.positions.size>10,id+' did not walk between stops');
+  }
+ }
+});
+
+test('NPC conversation holds for the displayed line, then resumes and resets next shift',()=>{
+ const {api:a,node:el,scene}=harness();a.modal(null);
+ const sprite=scene.sprites.get('reader'),runtime=scene.npcStates.get('reader');
+ scene.player.setPosition(sprite.x,sprite.y);runtime.wait=1;
+ a.interact();
+ assert.match(el('dialogue').textContent,/Khách đọc sách · Đang nghỉ cạnh bàn sách/);
+ const position={x:sprite.x,y:sprite.y};
+ for(let i=0;i<44;i++)scene.updateNPCs(.1);
+ assert.deepEqual({x:sprite.x,y:sprite.y},position,'speaker wandered away mid-sentence');
+ assert.equal(runtime.wait,1,'conversation must not consume the scheduled stop');
+ for(let i=0;i<50;i++)scene.updateNPCs(.1);
+ assert.ok(Math.hypot(sprite.x-position.x,sprite.y-position.y)>10,'speaker did not resume route');
+ scene.reactNPC('reader');assert.ok(runtime.conversation>0);
+ a.startShift();
+ assert.equal(runtime.conversation,0);assert.equal(runtime.stop,0);
+ assert.equal(sprite.x,520);assert.equal(sprite.y,650);
+});

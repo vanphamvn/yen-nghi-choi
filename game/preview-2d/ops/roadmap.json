@@ -78,7 +78,7 @@
       "id": "M4",
       "title": "Purposeful NPC routines and safe navigation",
       "priority": 4,
-      "status": "todo",
+      "status": "in-progress",
       "issue": 98,
       "dependencies": [],
       "requiresHumanApproval": false,

@@ -62,14 +62,32 @@ const npcs=[
 ];
 // NPC routes remain on the walkable floor, with deliberate pauses at each stop.
 const NPC_ROUTINES={
- reader:[{x:520,y:650,wait:9},{x:618,y:745,wait:5},{x:520,y:650,wait:11}],
- guest:[{x:690,y:605,wait:5},{x:751,y:701,wait:7},{x:690,y:605,wait:4}],
- guard:[{x:150,y:714,wait:6},{x:270,y:760,wait:4},{x:158,y:718,wait:7}],
- barista:[{x:995,y:502,wait:7,action:true}],
- waiter:[{x:817,y:647,wait:4},{x:932,y:729,wait:5},{x:815,y:650,wait:6}],
- cat:[{x:613,y:802,wait:8},{x:714,y:803,wait:5},{x:613,y:802,wait:9}]
+ reader:[{x:520,y:650,wait:9,action:true,activity:'Đang nghỉ cạnh bàn sách',destination:'bàn sách'},
+  {x:618,y:745,wait:5,activity:'Đang đi dạo một chút',destination:'lối đi'},
+  {x:520,y:650,wait:11,action:true,activity:'Vừa quay lại bàn sách',destination:'bàn sách'}],
+ guest:[{x:690,y:605,wait:5,activity:'Đang chờ bạn ở gần quầy',destination:'gần quầy'},
+  {x:751,y:701,wait:7,action:true,activity:'Đang nhìn ra lối vào',destination:'lối vào'},
+  {x:690,y:605,wait:4,activity:'Đang chờ bạn quay lại',destination:'gần quầy'}],
+ guard:[{x:150,y:714,wait:6,action:true,activity:'Đang đón khách',destination:'cửa quán'},
+  {x:270,y:760,wait:4,activity:'Đang kiểm tra lối đi',destination:'lối đi'},
+  {x:158,y:718,wait:7,action:true,activity:'Đã quay lại cửa quán',destination:'cửa quán'}],
+ barista:[{x:995,y:502,wait:7,action:true,activity:'Đang trực quầy pha chế',destination:'quầy pha chế'}],
+ waiter:[{x:817,y:647,wait:4,action:true,activity:'Đang chờ nước từ quầy',destination:'quầy nước'},
+  {x:932,y:729,wait:5,action:true,activity:'Đang kiểm tra khu ghế ngồi',destination:'khu ghế ngồi'},
+  {x:815,y:650,wait:6,activity:'Đang chờ lượt phục vụ tiếp theo',destination:'quầy nước'}],
+ cat:[{x:613,y:802,wait:8,action:true,activity:'Đang canh chiếc ghế trống',destination:'góc nghỉ'},
+  {x:714,y:803,wait:5,activity:'Đang khám phá lối đi',destination:'lối đi'},
+  {x:613,y:802,wait:9,action:true,activity:'Vừa quay về góc quen',destination:'góc nghỉ'}]
 };
 const NPC_SPEED={reader:66,guest:59,guard:74,barista:0,waiter:82,cat:52};
+const NPC_TALK_SECONDS=4.5;
+function npcActivity(id){
+ const route=NPC_ROUTINES[id],runtime=world?.npcStates.get(id);
+ if(!route?.length||!runtime)return '';
+ const stopped=runtime.wait>0||runtime.action>0||route.length===1;
+ return stopped?route[runtime.stop].activity:
+  'Đang đi tới '+route[(runtime.stop+1)%route.length].destination;
+}
 const propDialog={
  door:['Bạn chỉnh lại bảng ở lối vào.','Bảng cửa đã ngay ngắn.'],
  counter:['Máy pha bật đèn và bắt đầu chạy.','Máy pha được nghỉ vài giây.'],
@@ -309,12 +327,13 @@ function interact(){
    updateMarker();
    speech('Đang làm: '+state.active.task,2);
  }else if(nearby.kind==='npc'){
+   const context=npcActivity(nearby.id);
    world?.reactNPC(nearby.id);
    const npc=npcs.find(n=>n.id===nearby.id);
    const idx=state.dialogues[nearby.id]||0;
    state.dialogues[nearby.id]=idx+1;
-   const line=npc.name+': '+npc.lines[idx%npc.lines.length];
-   speech(line,4.5);addLog('Nói chuyện với '+npc.name+'.');
+   const line=npc.name+(context?' · '+context:'')+': '+npc.lines[idx%npc.lines.length];
+   speech(line,NPC_TALK_SECONDS);addLog('Nói chuyện với '+npc.name+'.');
    state.peace=clamp(state.peace+1,0,100);
  }else{
    const n=state.props[nearby.id]||0;
@@ -479,7 +498,7 @@ class CafeScene extends Phaser.Scene{
     padding:{left:6,right:6,top:3,bottom:3}
    }).setOrigin(.5,1).setDepth(person.y+2);
    this.npcLabels.set(person.id,label);
-   this.npcStates.set(person.id,{stop:0,wait:2+(person.x%5),facing:'down',action:0});
+   this.npcStates.set(person.id,{stop:0,wait:NPC_ROUTINES[person.id][0].wait,facing:'down',action:0,conversation:0});
   }
   this.player=this.add.sprite(600,750,'barista',0)
    .setDisplaySize(117,146).setOrigin(.5,1).setDepth(756);
@@ -571,7 +590,7 @@ class CafeScene extends Phaser.Scene{
    const sprite=this.sprites.get(person.id),runtime=this.npcStates.get(person.id);
    if(!sprite||!runtime)continue;
    sprite.setPosition(person.x,person.y).setDepth(person.y);
-   Object.assign(runtime,{stop:0,wait:2+(person.x%5),facing:'down',action:0});
+   Object.assign(runtime,{stop:0,wait:NPC_ROUTINES[person.id][0].wait,facing:'down',action:0,conversation:0});
    playDirectional(sprite,spriteRole(person.role),'down',false);
   }
  }
@@ -585,7 +604,7 @@ class CafeScene extends Phaser.Scene{
   const sprite=this.sprites.get(id);
   if(npc&&sprite){
    const runtime=this.npcStates.get(id);
-   if(runtime){runtime.action=.8;runtime.wait=Math.max(runtime.wait,1.5);}
+   if(runtime){runtime.action=.8;runtime.conversation=NPC_TALK_SECONDS;}
    sprite.play(spriteRole(npc.role)+'-interact',true);
   }
  }
@@ -634,7 +653,13 @@ class CafeScene extends Phaser.Scene{
    if(!sprite||!runtime)continue;
    const route=NPC_ROUTINES[person.id],role=spriteRole(person.role);
    if(!route?.length)continue;
-   if(runtime.action>0){
+   if(runtime.conversation>0){
+    // Keep the speaker in place until their displayed line has finished.
+    // Preserve the route's remaining wait instead of restarting its schedule.
+    runtime.conversation=Math.max(0,runtime.conversation-dt);
+    runtime.action=Math.max(0,runtime.action-dt);
+    if(runtime.action===0)playDirectional(sprite,role,runtime.facing,false);
+   }else if(runtime.action>0){
     runtime.action=Math.max(0,runtime.action-dt);
    }else if(runtime.wait>0){
     runtime.wait=Math.max(0,runtime.wait-dt);
@@ -642,7 +667,9 @@ class CafeScene extends Phaser.Scene{
     // A short ambient gesture at longer stops, without interrupting dialogue.
     if(runtime.wait===0&&route[runtime.stop].action){
      runtime.action=.7;sprite.play(role+'-interact',true);
-     runtime.wait=route[runtime.stop].wait;
+     // A moving actor gestures once, then departs. Re-arming this wait for
+     // multi-stop routes would trap every action-bearing NPC at its first stop.
+     if(route.length===1)runtime.wait=route[runtime.stop].wait;
     }
    }else{
     const nextIndex=(runtime.stop+1)%route.length,target=route[nextIndex];
