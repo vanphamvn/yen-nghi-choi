@@ -80,5 +80,232 @@
       "animationClips": [],
       "blockingIssue": 76
     }
-  ]
+  ],
+  "v3": {
+    "status": "licensed-assets-in-visual-qa",
+    "license": "CC0-1.0",
+    "commercialUse": true,
+    "shippedVersion": "BETA 03",
+    "upstreamRepo": "https://github.com/Hidencod/tge-assets",
+    "sourceCatalog": "https://github.com/Hidencod/tge-assets/blob/main/catalog.json",
+    "originalPublisher": "Kenney",
+    "assets": [
+      {
+        "id": "character-female-a",
+        "kind": "animated-character",
+        "path": "game/assets/v3/characters/character-female-a.glb",
+        "upstream": "https://github.com/Hidencod/tge-assets/blob/main/packs/mini-characters/character-female-a.glb",
+        "source": "https://kenney.nl/assets/mini-characters",
+        "author": "Kenney",
+        "license": "CC0-1.0",
+        "blobSha": "dc94d308984605963779180b8cb891f5aac04fc4",
+        "visualApproval": "pending",
+        "copyrightVerified": "CC0 source and pack published"
+      },
+      {
+        "id": "character-female-b",
+        "kind": "animated-character",
+        "path": "game/assets/v3/characters/character-female-b.glb",
+        "upstream": "https://github.com/Hidencod/tge-assets/blob/main/packs/mini-characters/character-female-b.glb",
+        "source": "https://kenney.nl/assets/mini-characters",
+        "author": "Kenney",
+        "license": "CC0-1.0",
+        "blobSha": "176fabdacad758ec267d7ab8e81f206936a25a38",
+        "visualApproval": "pending",
+        "copyrightVerified": "CC0 source and pack published"
+      },
+      {
+        "id": "character-female-c",
+        "kind": "animated-character",
+        "path": "game/assets/v3/characters/character-female-c.glb",
+        "upstream": "https://github.com/Hidencod/tge-assets/blob/main/packs/mini-characters/character-female-c.glb",
+        "source": "https://kenney.nl/assets/mini-characters",
+        "author": "Kenney",
+        "license": "CC0-1.0",
+        "blobSha": "5f34730fa680acc1cb2bd957008c95e71cb91b7c",
+        "visualApproval": "pending",
+        "copyrightVerified": "CC0 source and pack published"
+      },
+      {
+        "id": "character-male-a",
+        "kind": "animated-character",
+        "path": "game/assets/v3/characters/character-male-a.glb",
+        "upstream": "https://github.com/Hidencod/tge-assets/blob/main/packs/mini-characters/character-male-a.glb",
+        "source": "https://kenney.nl/assets/mini-characters",
+        "author": "Kenney",
+        "license": "CC0-1.0",
+        "blobSha": "b752cc09ffe99ec901c8b731a4dc77903a96b4e7",
+        "visualApproval": "pending",
+        "copyrightVerified": "CC0 source and pack published"
+      },
+      {
+        "id": "character-male-b",
+        "kind": "animated-character",
+        "path": "game/assets/v3/characters/character-male-b.glb",
+        "upstream": "https://github.com/Hidencod/tge-assets/blob/main/packs/mini-characters/character-male-b.glb",
+        "source": "https://kenney.nl/assets/mini-characters",
+        "author": "Kenney",
+        "license": "CC0-1.0",
+        "blobSha": "d007708fdcec68d32668852276a83bf5307f98db",
+        "visualApproval": "pending",
+        "copyrightVerified": "CC0 source and pack published"
+      },
+      {
+        "id": "character-male-c",
+        "kind": "animated-character",
+        "path": "game/assets/v3/characters/character-male-c.glb",
+        "upstream": "https://github.com/Hidencod/tge-assets/blob/main/packs/mini-characters/character-male-c.glb",
+        "source": "https://kenney.nl/assets/mini-characters",
+        "author": "Kenney",
+        "license": "CC0-1.0",
+        "blobSha": "8add211babadcf4a72484430850675b2e9704b53",
+        "visualApproval": "pending",
+        "copyrightVerified": "CC0 source and pack published"
+      },
+      {
+        "id": "animal-cat",
+        "kind": "animated-character",
+        "path": "game/assets/v3/characters/animal-cat.glb",
+        "upstream": "https://github.com/Hidencod/tge-assets/blob/main/packs/cube-pets/animal-cat.glb",
+        "source": "https://kenney.nl/assets/cube-pets",
+        "author": "Kenney",
+        "license": "CC0-1.0",
+        "blobSha": "b934c411fb00375081ed4a7a4179e5e989b71c38",
+        "visualApproval": "pending",
+        "copyrightVerified": "CC0 source and pack published"
+      },
+      {
+        "id": "kitchenbar",
+        "kind": "environment-prop",
+        "path": "game/assets/v3/props/kitchenbar.glb",
+        "upstream": "https://github.com/Hidencod/tge-assets/blob/main/packs/furniture-kit/kitchenbar.glb",
+        "source": "https://kenney.nl/assets/furniture-kit",
+        "author": "Kenney",
+        "license": "CC0-1.0",
+        "blobSha": "4202f2783d43c45b6b06cb9d4a083ae1aa6c0a1a",
+        "visualApproval": "pending",
+        "copyrightVerified": "CC0 source and pack published"
+      },
+      {
+        "id": "kitchencoffeemachine",
+        "kind": "environment-prop",
+        "path": "game/assets/v3/props/kitchencoffeemachine.glb",
+        "upstream": "https://github.com/Hidencod/tge-assets/blob/main/packs/furniture-kit/kitchencoffeemachine.glb",
+        "source": "https://kenney.nl/assets/furniture-kit",
+        "author": "Kenney",
+        "license": "CC0-1.0",
+        "blobSha": "f10641b44f34270570796a6115e524b53a4ecb71",
+        "visualApproval": "pending",
+        "copyrightVerified": "CC0 source and pack published"
+      },
+      {
+        "id": "table",
+        "kind": "environment-prop",
+        "path": "game/assets/v3/props/table.glb",
+        "upstream": "https://github.com/Hidencod/tge-assets/blob/main/packs/furniture-kit/table.glb",
+        "source": "https://kenney.nl/assets/furniture-kit",
+        "author": "Kenney",
+        "license": "CC0-1.0",
+        "blobSha": "8add1baf8a97bd813524a441c947a9e1457f4b13",
+        "visualApproval": "pending",
+        "copyrightVerified": "CC0 source and pack published"
+      },
+      {
+        "id": "chairmodernframecushion",
+        "kind": "environment-prop",
+        "path": "game/assets/v3/props/chairmodernframecushion.glb",
+        "upstream": "https://github.com/Hidencod/tge-assets/blob/main/packs/furniture-kit/chairmodernframecushion.glb",
+        "source": "https://kenney.nl/assets/furniture-kit",
+        "author": "Kenney",
+        "license": "CC0-1.0",
+        "blobSha": "b46a0fd4ef015dcc93eff76375b257e5d4315e61",
+        "visualApproval": "pending",
+        "copyrightVerified": "CC0 source and pack published"
+      },
+      {
+        "id": "chairrounded",
+        "kind": "environment-prop",
+        "path": "game/assets/v3/props/chairrounded.glb",
+        "upstream": "https://github.com/Hidencod/tge-assets/blob/main/packs/furniture-kit/chairrounded.glb",
+        "source": "https://kenney.nl/assets/furniture-kit",
+        "author": "Kenney",
+        "license": "CC0-1.0",
+        "blobSha": "f0b8e91011a1d664e4e4e40afdae8a82b3637a48",
+        "visualApproval": "pending",
+        "copyrightVerified": "CC0 source and pack published"
+      },
+      {
+        "id": "benchcushion",
+        "kind": "environment-prop",
+        "path": "game/assets/v3/props/benchcushion.glb",
+        "upstream": "https://github.com/Hidencod/tge-assets/blob/main/packs/furniture-kit/benchcushion.glb",
+        "source": "https://kenney.nl/assets/furniture-kit",
+        "author": "Kenney",
+        "license": "CC0-1.0",
+        "blobSha": "56380ad9d2f78b45ddacf1163d00fe2c48c11a5e",
+        "visualApproval": "pending",
+        "copyrightVerified": "CC0 source and pack published"
+      },
+      {
+        "id": "plantsmall1",
+        "kind": "environment-prop",
+        "path": "game/assets/v3/props/plantsmall1.glb",
+        "upstream": "https://github.com/Hidencod/tge-assets/blob/main/packs/furniture-kit/plantsmall1.glb",
+        "source": "https://kenney.nl/assets/furniture-kit",
+        "author": "Kenney",
+        "license": "CC0-1.0",
+        "blobSha": "6c64ddaef49e831446cf673d9d8c6c37e446928b",
+        "visualApproval": "pending",
+        "copyrightVerified": "CC0 source and pack published"
+      },
+      {
+        "id": "bookcaseopen",
+        "kind": "environment-prop",
+        "path": "game/assets/v3/props/bookcaseopen.glb",
+        "upstream": "https://github.com/Hidencod/tge-assets/blob/main/packs/furniture-kit/bookcaseopen.glb",
+        "source": "https://kenney.nl/assets/furniture-kit",
+        "author": "Kenney",
+        "license": "CC0-1.0",
+        "blobSha": "9a0cce7691e94277f3409719e9e68c910c25aa2c",
+        "visualApproval": "pending",
+        "copyrightVerified": "CC0 source and pack published"
+      },
+      {
+        "id": "cup-coffee",
+        "kind": "environment-prop",
+        "path": "game/assets/v3/props/cup-coffee.glb",
+        "upstream": "https://github.com/Hidencod/tge-assets/blob/main/packs/food-kit/cup-coffee.glb",
+        "source": "https://kenney.nl/assets/food-kit",
+        "author": "Kenney",
+        "license": "CC0-1.0",
+        "blobSha": "37cff52a462ec1c843ba8abe0ac45e0e7905af50",
+        "visualApproval": "pending",
+        "copyrightVerified": "CC0 source and pack published"
+      },
+      {
+        "id": "mug",
+        "kind": "environment-prop",
+        "path": "game/assets/v3/props/mug.glb",
+        "upstream": "https://github.com/Hidencod/tge-assets/blob/main/packs/food-kit/mug.glb",
+        "source": "https://kenney.nl/assets/food-kit",
+        "author": "Kenney",
+        "license": "CC0-1.0",
+        "blobSha": "b8675756a4703267505cf10a1e5ee8c27cad2394",
+        "visualApproval": "pending",
+        "copyrightVerified": "CC0 source and pack published"
+      },
+      {
+        "id": "tree-default",
+        "kind": "environment-prop",
+        "path": "game/assets/v3/props/tree-default.glb",
+        "upstream": "https://github.com/Hidencod/tge-assets/blob/main/packs/nature-kit/tree-default.glb",
+        "source": "https://kenney.nl/assets/nature-kit",
+        "author": "Kenney",
+        "license": "CC0-1.0",
+        "blobSha": "13247443438a210c252d3324c511aba3cb3b392a",
+        "visualApproval": "pending",
+        "copyrightVerified": "CC0 source and pack published"
+      }
+    ]
+  }
 }
