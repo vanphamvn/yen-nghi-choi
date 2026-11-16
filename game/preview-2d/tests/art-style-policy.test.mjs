@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {readFileSync,existsSync} from 'node:fs';
+import {readFileSync,existsSync,writeFileSync,unlinkSync} from 'node:fs';
 import {spawnSync} from 'node:child_process';
 import {fileURLToPath} from 'node:url';
 import path from 'node:path';
@@ -53,4 +53,17 @@ test('CI process gate passes on frozen known debt, strict sign-off rejects it',(
  const strict=spawnSync(process.execPath,[audit,'--strict'],{encoding:'utf8'});
  assert.equal(strict.status,1,'strict must block known mismatched art');
  assert.match(strict.stderr,/Strict art release blocked/);
+});
+
+test('audit rejects a newly introduced unreviewed visible SVG sprite',()=>{
+ const rogue=path.join(game,'assets/scene/__style_gate_probe.svg');
+ assert.equal(existsSync(rogue),false,'test probe collision');
+ try{
+  writeFileSync(rogue,'<svg xmlns="http://www.w3.org/2000/svg"/>\n');
+  const result=spawnSync(process.execPath,[audit],{encoding:'utf8'});
+  assert.equal(result.status,1,'unreviewed vector art must fail CI');
+  assert.match(result.stderr,/Unregistered new or replacement sprite: assets\/scene\/__style_gate_probe.svg/);
+ }finally{
+  if(existsSync(rogue))unlinkSync(rogue);
+ }
 });
