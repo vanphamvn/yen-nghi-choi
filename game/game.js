@@ -403,19 +403,114 @@ function onResize() {
 }
 window.addEventListener('resize',onResize);
 
+function resetEnvironment() {
+  if (!game || !world) return;
+  game.ambientTime=0;
+  game.propState={ door:0, counter:0, table:0, bike:0, bench:0, plant:0 };
+  for (const npc of world.npcs) {
+    npc.group.position.set(npc.x,0,npc.z);
+    npc.group.rotation.y=-.3;
+    npc.interactions=0;
+    npc.react=0;
+  }
+  const refs=world.refs;
+  refs.machineLight.material.color.setHex(0x7f665d);
+  refs.tableCup.visible=true;
+  refs.bikeLamp.visible=false;
+  refs.benchPillow.position.x=2.5;
+  refs.doorPanel.material.color.setHex(0x6d9176);
+  for (const leaf of refs.plantLeaves) {
+    leaf.scale.set(.64,1.3,.6);
+    leaf.material.color.setHex(0x6d986b);
+  }
+  world.player.position.set(0,0,4.5);
+  world.player.rotation.y=0;
+  world.nearRing.visible=false;
+}
 function updateTaskUI() {
-  if (!game || !game.playing) return;
+  if (!game || !world || game.phase!=='shift') return;
   const task=ROLES[game.role].tasks[game.done];
   if (!task) return;
-  $('objective-count').textContent='NHIỆM VỤ '+(game.done+1)+' / 3';
+  $('objective-count').textContent='NGÀY '+String(game.day).padStart(2,'0')+' · NHIỆM VỤ '+(game.done+1)+' / 3';
   $('objective-title').textContent=task.title;
-  $('objective-desc').textContent=task.text + ' Đi tới vòng sáng rồi bấm Tương tác.';
-  if (world) {
-    const station=STATIONS[task.at];
-    world.indicator.position.set(station.x,.13,station.z);
-    world.markerPole.position.set(station.x,.83,station.z);
-    world.focusedStation=station;
+  $('objective-desc').textContent=task.text+' Đi tới vòng sáng và chọn Làm nhiệm vụ.';
+  const station=STATIONS[task.at];
+  world.indicator.position.set(station.x,.13,station.z);
+  world.markerPole.position.set(station.x,.83,station.z);
+  world.focusedStation=station;
+}
+function updatePhaseUI() {
+  if (!game || !world) return;
+  $('game').dataset.phase=game.phase;
+  $('hud-day').textContent='NGÀY '+String(game.day).padStart(2,'0');
+  $('shift-btn').hidden=game.phase==='shift'||game.phase==='result';
+  world.indicator.visible=game.phase==='shift';
+  world.markerPole.visible=game.phase==='shift';
+  world.focusedStation=null;
+  if (game.phase==='explore') {
+    $('objective-count').textContent='NGÀY '+String(game.day).padStart(2,'0')+' · KHÁM PHÁ TỰ DO';
+    $('objective-title').textContent='Cứ chơi trước, làm sau.';
+    $('objective-desc').textContent='Nói chuyện với khách, nhân viên, mèo hoặc thử các vật dụng. Khi nào thích thì bắt đầu ca.';
+    $('shift-state').textContent='CHƯA BẮT ĐẦU CA';
+    $('shift-btn').textContent='Bắt đầu ca ↗';
+    $('shift-btn').disabled=false;
+  } else if (game.phase==='shift') {
+    $('shift-state').textContent='ĐANG TRONG CA';
+    updateTaskUI();
+  } else if (game.phase==='ready') {
+    $('objective-count').textContent='NGÀY '+String(game.day).padStart(2,'0')+' · ĐÃ XONG CÔNG VIỆC';
+    $('objective-title').textContent='Ba việc đã xong.';
+    $('objective-desc').textContent='Bạn vẫn có thể ở lại chơi, trò chuyện hoặc kết thúc ca để qua ngày mới.';
+    $('shift-state').textContent='SẴN SÀNG TAN CA';
+    $('shift-btn').textContent='Kết thúc ca ↗';
+    $('shift-btn').disabled=false;
   }
+  $('action-progress').hidden=!game.active;
+  updateHud();
+}
+function startShift() {
+  if (!game || game.phase!=='explore' || !world) return;
+  game.phase='shift';
+  game.done=0;game.elapsed=0;game.nextEvent=22;
+  game.efficiency=50;game.peace=70;game.active=null;
+  game.powerCooldown=0;game.sprint=0;game.shield=false;game.quickNext=false;
+  game.message='';game.messageTime=0;
+  $('event-text').textContent='';
+  resetEnvironment();
+  updatePhaseUI();
+  showMessage('Ca ngày '+game.day+' bắt đầu. Mọi người và đồ dùng đã về đúng vị trí.',4);
+}
+function finishShift() {
+  if (!game || game.phase!=='ready') return;
+  game.phase='result';
+  pressed.clear();resetJoystick();
+  const eff=Math.round(game.efficiency),peace=Math.round(game.peace);
+  $('result-day').textContent='NGÀY '+String(game.day).padStart(2,'0')+' · BIÊN BẢN KẾT CA';
+  $('result-tasks').textContent=game.done+' / 3';
+  $('result-eff').textContent=eff+'%';
+  $('result-yen').textContent=peace+'%';
+  $('result-title').textContent='Quán vẫn còn nguyên.';
+  $('result-message').textContent='Ca làm việc đã kết thúc theo quyết định của bạn. Ngày mới đang chờ phía trước.';
+  const balance=Math.round((eff+peace)/2);
+  $('result-note').textContent=balance>=80?'Làm được việc mà vẫn giữ được Yên.':
+    balance>=60?'Quán chạy được. Có thể thêm một chút bình tĩnh.':
+    'Có lẽ cả quán muốn xin giấy phép nghỉ.';
+  $('result').hidden=false;
+  updatePhaseUI();
+}
+function nextDay() {
+  if (!game || game.phase!=='result' || !world) return;
+  game.day++;
+  game.phase='explore';
+  game.done=0;game.elapsed=0;game.active=null;
+  game.efficiency=50;game.peace=70;
+  game.powerCooldown=0;game.sprint=0;game.shield=false;game.quickNext=false;
+  game.message='';game.messageTime=0;
+  $('event-text').textContent='';
+  $('result').hidden=true;
+  resetEnvironment();
+  updatePhaseUI();
+  showMessage('Chào ngày '+game.day+'. Quán đã sẵn sàng để khám phá.',4);
 }
 function showMessage(message,seconds=3) {
   if (!game) return;
@@ -423,53 +518,110 @@ function showMessage(message,seconds=3) {
   game.messageTime=seconds;
   $('event-text').textContent=message;
 }
+function getInteractionCandidate() {
+  if (!game || !world || game.phase==='result' || game.active) return null;
+  const {x,z}=world.player.position;
+  let choice=null;
+  function consider(kind,id,name,targetX,targetZ,target,action) {
+    const distance=Math.hypot(x-targetX,z-targetZ);
+    if (distance>2.05 || (choice && choice.distance<=distance)) return;
+    choice={kind,id,name,x:targetX,z:targetZ,target,action,distance};
+  }
+  for (const npc of world.npcs) {
+    consider('npc',npc.id,npc.name,npc.group.position.x,npc.group.position.z,npc,'Nói chuyện');
+  }
+  for (const [id,station] of Object.entries(STATIONS)) {
+    consider('prop',id,station.label,station.x,station.z,station,'Khám phá');
+  }
+  if (game.phase==='shift' && game.done<3) {
+    const task=ROLES[game.role].tasks[game.done];
+    const station=STATIONS[task.at];
+    const distance=Math.hypot(x-station.x,z-station.z);
+    if (distance<=1.95 && (!choice || distance<=choice.distance+.25)) {
+      return {kind:'task',id:task.at,name:task.title,x:station.x,z:station.z,target:station,action:'Làm nhiệm vụ',distance};
+    }
+  }
+  return choice;
+}
 function updateHud() {
-  if (!game) return;
-  const seconds=Math.ceil(Math.max(0,150-game.elapsed));
+  if (!game || !world) return;
+  const seconds=Math.floor(game.elapsed);
   $('clock').textContent=String(Math.floor(seconds/60)).padStart(2,'0')+':'+String(seconds%60).padStart(2,'0');
   $('eff-text').textContent=Math.round(game.efficiency)+'%';
   $('yen-text').textContent=Math.round(game.peace)+'%';
   $('eff-bar').style.width=clamp(game.efficiency,0,100)+'%';
   $('yen-bar').style.width=clamp(game.peace,0,100)+'%';
-  const distance=world&&world.focusedStation?
-    Math.hypot(world.player.position.x-world.focusedStation.x,world.player.position.z-world.focusedStation.z):100;
-  $('interact-btn').disabled=distance>1.95 || !!game.active;
-  $('interact-btn').firstChild.textContent=game.active?'Đang làm... ':'Tương tác ';
-  $('skill-btn').disabled=game.powerCooldown>0;
-  $('skill-cooldown').textContent=game.powerCooldown>0?
-    Math.ceil(game.powerCooldown)+' giây':'Sẵn sàng';
+  const candidate=getInteractionCandidate();
+  $('interact-btn').disabled=!candidate;
+  $('interact-label').textContent=game.active?'Đang làm...':candidate?candidate.action:'Tương tác';
+  $('target-hint').textContent=game.active?'Đang thực hiện nhiệm vụ...':
+    candidate?'Ở gần: '+candidate.name+' · '+candidate.action:
+    'Đi gần khách, nhân viên, mèo hoặc vật dụng để tương tác.';
+  world.nearRing.visible=!!candidate && candidate.kind!=='task';
+  if (candidate && candidate.kind!=='task') world.nearRing.position.set(candidate.x,.075,candidate.z);
+  $('skill-btn').disabled=game.phase!=='shift'||game.powerCooldown>0;
+  $('skill-cooldown').textContent=game.phase!=='shift'?'Chỉ trong ca':
+    game.powerCooldown>0?Math.ceil(game.powerCooldown)+' giây':'Sẵn sàng';
+}
+function interact() {
+  const candidate=getInteractionCandidate();
+  if (!candidate) return;
+  if (candidate.kind==='task') { startAction(); return; }
+  if (candidate.kind==='npc') {
+    const npc=candidate.target;
+    const text=npc.lines[npc.interactions%npc.lines.length];
+    npc.interactions++;
+    npc.react=1.3;
+    showMessage(npc.name+': '+text,5);
+    return;
+  }
+  const id=candidate.id;
+  const next=game.propState[id]===0?1:0;
+  game.propState[id]=next;
+  const refs=world.refs;
+  if(id==='counter') refs.machineLight.material.color.setHex(next?0x77c78b:0x7f665d);
+  if(id==='table') refs.tableCup.visible=!next;
+  if(id==='bike') refs.bikeLamp.visible=!!next;
+  if(id==='bench') refs.benchPillow.position.x=next?2.95:2.5;
+  if(id==='door') refs.doorPanel.material.color.setHex(next?0xdba36e:0x6d9176);
+  if(id==='plant') for(const leaf of refs.plantLeaves) leaf.scale.y=next?1.6:1.3;
+  showMessage(PROP_TEXT[id][next?0:1],4);
 }
 function startAction() {
-  if (!game || !game.playing || game.active || !world || !world.focusedStation) return;
-  const station=world.focusedStation;
+  if (!game || game.phase!=='shift' || game.active || !world) return;
+  const task=ROLES[game.role].tasks[game.done];
+  if (!task) return;
+  const station=STATIONS[task.at];
   const distance=Math.hypot(world.player.position.x-station.x,world.player.position.z-station.z);
   if (distance>1.95) { showMessage('Đến gần vòng sáng hơn một chút.'); return; }
-  const roleBoost={
-    guard:'door',shipper:'bike',barista:'counter',waiter:'table',cat:'plant'
-  };
-  const task=ROLES[game.role].tasks[game.done];
+  const roleBoost={guard:'door',shipper:'bike',barista:'counter',waiter:'table',cat:'plant'};
   let duration=clamp(3.2-(game.attributes.dexterity*.38),.75,3.0);
-  if (task.at===roleBoost[game.role]) duration*=.7;
-  if (game.quickNext) { duration=.28; game.quickNext=false; }
+  if(task.at===roleBoost[game.role]) duration*=.7;
+  if(game.quickNext) { duration=.28;game.quickNext=false; }
   game.active={elapsed:0,duration};
   $('action-progress').hidden=false;
   $('action-bar').style.width='0%';
   showMessage('Đang thực hiện: '+task.title,2);
 }
 function completeAction() {
-  if (!game) return;
+  if (!game || game.phase!=='shift') return;
   game.active=null;
   $('action-progress').hidden=true;
   const roleBonus=game.role==='cat'?4:game.role==='barista'?5:3;
   game.efficiency=clamp(game.efficiency+7+roleBonus+(game.attributes.dexterity-3)*2,0,100);
   game.peace=clamp(game.peace+4+(game.attributes.charm-2)*2+(game.role==='cat'?5:0),0,100);
   game.done++;
-  if (game.done===3) { endGame(true); return; }
-  showMessage('Xong một việc. Quán vẫn tiếp tục mở cửa.',3);
-  updateTaskUI();
+  if (game.done===3) {
+    game.phase='ready';
+    updatePhaseUI();
+    showMessage('Xong cả ba việc! Bạn tự quyết định lúc kết thúc ca.',6);
+  } else {
+    showMessage('Xong một việc. Quán vẫn tiếp tục mở cửa.',3);
+    updateTaskUI();
+  }
 }
 function usePower() {
-  if (!game || !game.playing || game.powerCooldown>0) return;
+  if (!game || game.phase!=='shift' || game.powerCooldown>0) return;
   game.powerCooldown=25;
   switch(game.role) {
     case 'guard':
