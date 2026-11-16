@@ -21,7 +21,7 @@ const CHECKS=[
  ['stylesheet','style.css','text'],
  ['spriteManifest','assets/sprites/manifest.json','json'],
  ['characterPNG','assets/sprites/barista.png','png'],
- ['sceneBackground','assets/scene/backdrop.svg','svg'],
+ ['sceneBackground','assets/scene/backdrop-painted-v1.png','png'],
  ['artPolicy','assets/scene/art-style-policy.json','json']
 ];
 

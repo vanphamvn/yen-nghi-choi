@@ -110,6 +110,17 @@ for(const [rel,entry] of Object.entries(legacy)){
  if(actual!==entry.gitBlobSha)errors.push('Quarantined vector modified ('+actual+' vs '+entry.gitBlobSha+'). Replace with reviewed raster art instead: '+rel);
  warnings.push('NOT STYLE APPROVED (legacy vector): '+rel);
 }
+const archive=policy.legacyVectorArchive||{};
+if(Object.keys(archive).length!==Object.keys(legacy).length)
+ errors.push('Archived SVG count must match original legacy inventory');
+for(const [old,archived] of Object.entries(archive)){
+ if(!legacy[old]){errors.push('Unexpected archived vector: '+old);continue;}
+ const p=resolveExisting(archived);
+ if(p&&repositoryBlobHash(archived,p)!==legacy[old].gitBlobSha)
+  errors.push('Historical SVG archive differs from frozen original: '+old);
+ if(existsSync(path.join(root,old)))
+  errors.push('Retired SVG still present in active scene: '+old);
+}
 function auditApproval(rel,entry){
  if(!entry||typeof entry!=='object'){
   errors.push('Malformed art approval: '+rel);return;

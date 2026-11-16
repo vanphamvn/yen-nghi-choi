@@ -60,14 +60,18 @@ jobs:
           node --test game/preview-2d/tests/roadmap.test.mjs
       - name: Verify production release smoke contract
         run: node --test game/preview-2d/tests/production-smoke.test.mjs
+      - name: Strict art raster-only gate
+        run: node game/preview-2d/tools/audit-art-style.mjs --strict
       - name: Check sprite SVG XML
         run: |
           python3 - <<'PY'
           import glob, xml.etree.ElementTree as ET
           paths=glob.glob('game/preview-2d/assets/scene/*.svg')
-          assert len(paths)>=10, 'missing independent prop textures'
-          for path in paths: ET.parse(path)
-          print('Validated',len(paths),'SVG textures')
+          assert not paths, 'active scene SVGs remain: '+str(paths)
+          archived=glob.glob('game/preview-2d/art-reviews/legacy-svg/*.svg')
+          assert len(archived)==10, 'historical SVG archive incomplete'
+          for path in archived: ET.parse(path)
+          print('Checked 10 archived vectors and zero active scene SVGs')
           PY
 
   browser-smoke:
