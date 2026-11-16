@@ -4,9 +4,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#eaeadd">
-  <meta name="description" content="Yên: Ai đang làm việc? Trò chơi 3D một ca làm việc kỳ lạ tại Yên Coffee & Tea.">
+  <meta name="description" content="Yencafeday BETA 03: chơi một ngày ở quán Yên với nhân vật hoạt hình 3D có animation, khách, nhân viên và mèo.">
   <meta name="robots" content="noindex,nofollow">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self'; img-src 'self' data:; connect-src 'self' https://cdn.jsdelivr.net; font-src 'self'; base-uri 'none'; object-src 'none'; form-action 'none'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self'; img-src 'self' data: blob:; connect-src 'self' blob: https://cdn.jsdelivr.net; worker-src blob:; font-src 'self'; base-uri 'none'; object-src 'none'; form-action 'none'">
   <link rel="icon" href="../favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="./style.css">
   <title>Yên: Ai đang làm việc? | Game 3D</title>
@@ -15,15 +15,15 @@
   <header class="site-top">
     <a class="back-link" href="../" aria-label="Quay về trang Yên">← Về Yên</a>
     <span class="wordmark">yên <small>COFFEE & TEA</small></span>
-    <span class="edition" aria-label="Phiên bản BETA 02">BETA · 02</span>
+    <span class="edition" aria-label="Phiên bản BETA 03">BETA · 03</span>
   </header>
   <main>
     <section id="setup" class="setup-screen" aria-labelledby="setup-title">
       <div class="intro">
         <p class="eyebrow">TUYỂN DỤNG BẤT THƯỜNG / YÊN COFFEE & TEA</p>
         <h1 id="setup-title">Ai đang<br><em>làm việc?</em></h1>
-        <p>Quán có khách. Mọi người có nghề. Riêng con mèo vẫn đang cân nhắc.</p>
-        <div class="intro-hint">KHÁM PHÁ TỰ DO · TỰ CHỌN LÚC BẮT ĐẦU CA · NHIỀU NGÀY</div>
+        <p>Đi dạo trong quán, trò chuyện với khách, thử làm một ca hoặc chẳng làm gì cả. Mèo vẫn đang cân nhắc.</p>
+        <div class="intro-hint">NHÂN VẬT 3D CÓ HOẠT ẢNH · KHÁM PHÁ TỰ DO · NHIỀU NGÀY</div>
       </div>
       <div class="creator">
         <div class="block-heading"><span>01</span><h2>Chọn nghề</h2></div>
@@ -43,7 +43,12 @@
     </section>
 
     <section id="game" class="game-screen" hidden aria-label="Trò chơi 3D">
-      <div id="scene" role="img" aria-label="Không gian quán Yên 3D phong cách anime với khách hàng, nhân viên và mèo"></div>
+      <div id="scene" role="img" aria-label="Quán Yên 3D với nhân vật có hoạt ảnh, khách, nhân viên và mèo"></div>
+      <div id="render-loading" class="render-loading" hidden role="status" aria-live="polite">
+        <div class="loading-coffee" aria-hidden="true">yên</div>
+        <strong>Đang mở cửa quán...</strong>
+        <span>Đang chuẩn bị nhân vật, nội thất và hoạt ảnh.</span>
+      </div>
       <div class="game-overlay">
         <div class="hud-top">
           <div class="hud-left">
@@ -103,7 +108,7 @@
         </div>
       </div>
     </section>
-    <div id="error" class="error" hidden role="alert"><strong>Không mở được không gian 3D.</strong><p>Hãy kiểm tra kết nối mạng hoặc thử trình duyệt khác. Trò chơi cần WebGL và Babylon.js. Hãy kiểm tra kết nối mạng.</p><button id="error-back" type="button">Quay lại</button></div>
+    <div id="error" class="error" hidden role="alert"><strong>Không mở được không gian 3D.</strong><p>Hãy kiểm tra kết nối mạng hoặc thử trình duyệt khác. Trò chơi cần WebGL và hỗ trợ tải model GLB. Kiểm tra kết nối hoặc mở bản 3D cũ.</p><button id="error-back" type="button">Quay lại</button><a href="./?classic=1" class="classic-link">Mở bản 3D cũ</a></div>
   </main>
   <script type="module" src="./game.js"></script>
 </body>

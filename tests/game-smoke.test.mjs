@@ -14,7 +14,7 @@ const extract=(before,after)=>{
   return js.slice(start+before.length,end).trim();
 };
 const roles=vm.runInNewContext('('+extract('const ROLES = ',';\nconst STAT_INFO')+')');
-const stations=vm.runInNewContext('('+extract('const STATIONS = ',';\nlet selectedRole')+')');
+const stations=vm.runInNewContext('('+extract('const STATIONS = ',';\n// The same café')+')');
 
 test('game exposes five distinct playable roles',()=>{
   assert.deepEqual(Object.keys(roles).sort(),['barista','cat','guard','shipper','waiter']);
