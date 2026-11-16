@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="188" height="211" viewBox="0 0 188 211"><defs>
+<linearGradient id="wood" x2="0.25" y2="1"><stop stop-color="#dca97a"/><stop offset=".5" stop-color="#b77c52"/><stop offset="1" stop-color="#875338"/></linearGradient>
+<linearGradient id="dark" x2="0" y2="1"><stop stop-color="#775444"/><stop offset="1" stop-color="#4c352c"/></linearGradient>
+<linearGradient id="leaf" x2=".3" y2="1"><stop stop-color="#9bae74"/><stop offset="1" stop-color="#466e50"/></linearGradient>
+<linearGradient id="cream" x2="0" y2="1"><stop stop-color="#fff3d8"/><stop offset="1" stop-color="#dfc59e"/></linearGradient>
+<linearGradient id="glass" x2="0" y2="1"><stop stop-color="#c6e0cb"/><stop offset=".6" stop-color="#e3e7cb"/><stop offset="1" stop-color="#edc79b"/></linearGradient>
+<linearGradient id="floor" x2=".15" y2="1"><stop stop-color="#ddbb96"/><stop offset="1" stop-color="#b88464"/></linearGradient>
+<radialGradient id="sun"><stop stop-color="#fff7c8" stop-opacity=".72"/><stop offset="1" stop-color="#fff4c5" stop-opacity="0"/></radialGradient>
+</defs>
+<ellipse cx="93" cy="193" rx="81" ry="12" fill="#402e28" opacity=".2"/>
+<circle cx="48" cy="174" r="26" fill="#3c3936" stroke="#6d5c50" stroke-width="6"/>
+<circle cx="144" cy="174" r="26" fill="#3c3936" stroke="#6d5c50" stroke-width="6"/>
+<circle cx="48" cy="174" r="11" fill="#bab4a0"/>
+<circle cx="144" cy="174" r="11" fill="#bab4a0"/>
+<path d="M56 171L78 126L130 126L143 172" fill="none" stroke="#5c5149" stroke-width="13" stroke-linecap="round"/>
+<path d="M43 113Q42 82 79 76H122Q146 83 144 109L135 154H60Z" fill="#8b9c78" stroke="#4d594a" stroke-width="8"/>
+<path d="M79 78L76 127H126L124 80" fill="#cfb790" opacity=".4"/>
+<path d="M56 111Q102 120 143 111" fill="none" stroke="#e3d2ac" stroke-width="5"/>
+<path d="M78 70V25Q78 15 91 15H138M136 15V52" fill="none" stroke="#5b4b40" stroke-width="11" stroke-linecap="round"/>
+<rect x="68" y="33" width="89" height="42" rx="8" fill="#8c5d45" stroke="#624b3c" stroke-width="7"/>
+<path d="M79 44H145M79 56H145" stroke="#d6aa7d" stroke-width="5"/>
+<ellipse cx="98" cy="106" rx="25" ry="18" fill="#f5d995" stroke="#b58f5b" stroke-width="6"/>
+<ellipse cx="98" cy="106" rx="12" ry="9" fill="#fef2c5"/>
+<path d="M48 161H153" stroke="#6a4b3f" stroke-width="7" stroke-linecap="round"/>
+</svg>
