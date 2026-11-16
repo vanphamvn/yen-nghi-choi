@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 290">
+<defs><linearGradient id="hair" x1="0" x2=".7" y2="1"><stop stop-color="#a47e64"/><stop offset=".45" stop-color="#3b4653"/><stop offset="1" stop-color="#553c34"/></linearGradient><linearGradient id="face" x1="0" x2="1" y2=".8"><stop stop-color="#ffeed3"/><stop offset="1" stop-color="#edbea0"/></linearGradient><linearGradient id="cloth" x1="0" x2="1" y2="1"><stop stop-color="#fff4dc"/><stop offset="1" stop-color="#c4dadb"/></linearGradient><linearGradient id="apron" x1=".2" x2=".9" y2="1"><stop stop-color="#9eaa89"/><stop offset=".75" stop-color="#467486"/><stop offset="1" stop-color="#486a58"/></linearGradient><filter id="shadow"><feDropShadow dx="0" dy="4" stdDeviation="3" flood-color="#514237" flood-opacity=".25"/></filter></defs>
+<ellipse cx="100" cy="274" rx="60" ry="10" fill="#4e6050" opacity=".15"/>
+<g stroke="#665347" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round" filter="url(#shadow)">
+<!-- shoes and trousers -->
+<path d="M68 216L70 268Q82 274 90 268L96 226ZM108 225L113 269Q128 273 136 265L131 214Z" fill="#586878"/>
+<path d="M71 260Q56 270 59 279L94 279Q97 267 89 264Z" fill="#624d40"/><path d="M113 260Q106 272 108 279L146 279Q148 267 134 264Z" fill="#624d40"/>
+<path d="M68 275h28M111 275h32" stroke="#dac2a0" stroke-width="2"/>
+<!-- arms, torso and sleeves -->
+<path d="M72 155Q42 158 39 206Q42 218 53 213L79 188Z" fill="url(#cloth)"/>
+<path d="M129 156Q159 154 165 207Q162 220 151 215L124 189Z" fill="url(#cloth)"/>
+<path d="M41 196Q33 212 45 220Q56 217 56 207L54 198Z" fill="url(#face)"/>
+<path d="M148 198Q143 215 156 221Q167 215 161 199Z" fill="url(#face)"/>
+<path d="M67 158Q97 147 130 157L143 212Q130 241 68 236L59 204Z" fill="url(#cloth)"/>
+<!-- neck and apron -->
+<path d="M91 142V162L108 166L115 143Z" fill="url(#face)"/>
+<path d="M74 164L84 175L92 160L115 161L127 172L137 164L135 222Q112 243 68 232L64 211Z" fill="url(#apron)"/>
+<path d="M85 169L78 149M121 170L130 148" fill="none" stroke="#4c6256" stroke-width="6"/>
+<path d="M82 200Q98 206 116 202L119 222Q102 229 80 220Z" fill="#76947a" stroke="#5a775f" stroke-width="2"/>
+<path d="M91 212l8 4 9-6" stroke="#e4d6b1" stroke-width="2" fill="none"/>
+<circle cx="106" cy="178" r="8" fill="#f0db9e" stroke="#ad956b" stroke-width="2"/>
+<!-- hair rear -->
+<path d="M51 86Q40 30 89 26Q156 15 161 86L169 139Q150 157 127 145L71 148Q41 150 42 126Z" fill="url(#hair)"/>
+<!-- ears and face -->
+<path d="M45 97Q31 85 34 109Q37 123 50 116M153 97Q168 86 169 109Q165 122 155 116" fill="#f0c09f"/>
+<path d="M48 81Q48 35 101 32Q153 30 156 84Q160 125 138 144Q118 155 98 156Q65 152 52 128Z" fill="url(#face)"/>
+<path d="M48 116Q41 142 59 147Q71 145 72 131M145 122Q148 148 166 142Q174 128 158 113" fill="url(#hair)"/>
+<!-- eyebrows -->
+<path d="M65 95Q78 89 86 93M117 93Q130 89 140 95" stroke="#704b3f" stroke-width="3" fill="none"/>
+<!-- anime eyes -->
+<ellipse cx="78" cy="110" rx="13" ry="17" fill="#fff8e8" stroke="#7d594c" stroke-width="3"/>
+<ellipse cx="127" cy="110" rx="13" ry="17" fill="#fff8e8" stroke="#7d594c" stroke-width="3"/>
+<ellipse cx="79" cy="113" rx="8" ry="12" fill="#6b544c" stroke="none"/><ellipse cx="126" cy="113" rx="8" ry="12" fill="#6b544c" stroke="none"/>
+<ellipse cx="76" cy="108" rx="3" ry="5" fill="#fff5e8" stroke="none"/><ellipse cx="123" cy="108" rx="3" ry="5" fill="#fff5e8" stroke="none"/>
+<path d="M66 100L60 97M135 100L143 97" stroke="#704b3f" stroke-width="2"/>
+<ellipse cx="63" cy="131" rx="12" ry="5.5" fill="#e9a4a0" stroke="none" opacity=".54"/><ellipse cx="140" cy="131" rx="12" ry="5.5" fill="#e9a4a0" stroke="none" opacity=".54"/>
+<path d="M98 131l4-1M95 139Q103 144 111 138" fill="none" stroke="#b77765" stroke-width="2"/>
+<!-- fringe sculpt -->
+<path d="M49 86Q43 36 88 29Q143 17 162 78Q150 82 139 64Q129 81 113 70Q98 84 82 75Q67 92 49 86Z" fill="url(#hair)"/>
+<path d="M65 56Q82 38 105 40M115 38Q135 44 146 59" fill="none" stroke="#ceaa8c" stroke-width="4" opacity=".65"/>
+<!-- flower accessory -->
+<g transform="translate(57 59)" stroke="#baa184" stroke-width="1.6"><ellipse cx="0" cy="-10" rx="6" ry="10" fill="#bfd4d4"/><ellipse cx="0" cy="10" rx="6" ry="10" fill="#bfd4d4"/><ellipse cx="-10" cy="0" rx="10" ry="6" fill="#bfd4d4"/><ellipse cx="10" cy="0" rx="10" ry="6" fill="#bfd4d4"/><circle r="5" fill="#dfb36b"/></g>
+</g>
+</svg>
