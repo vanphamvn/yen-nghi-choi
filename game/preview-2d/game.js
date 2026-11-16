@@ -414,8 +414,9 @@ class CafeScene extends Phaser.Scene{
   this.input.keyboard?.on('keydown-ESC',()=>{if(activeModal&&activeModal!=='result')modal(null);else modal('preview')});
  }
  setZoom(){
-  const ratio=Math.min(this.scale.width/1160,this.scale.height/820);
-  this.cameras.main.setZoom(clamp(ratio,.65,1.3));
+  // Cover the viewport with café art; crop beyond the camera rather than exposing blank borders.
+  const ratio=Math.max(this.scale.width/1440,this.scale.height/900);
+  this.cameras.main.setZoom(clamp(ratio,.60,1.45));
  }
  setPlayerRole(role){
   if(!this.player||!roles[role])return;
