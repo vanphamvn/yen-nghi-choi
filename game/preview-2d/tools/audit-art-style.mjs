@@ -10,10 +10,12 @@
  */
 import {readFileSync,readdirSync,existsSync} from 'node:fs';
 import {createHash} from 'node:crypto';
+import {execFileSync} from 'node:child_process';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
+const gitRoot=path.resolve(root,'../..');
 const policyPath=path.join(root,'assets/scene/art-style-policy.json');
 const policy=JSON.parse(readFileSync(policyPath,'utf8'));
 const errors=[];
@@ -34,6 +36,19 @@ const toAbs=rel=>{
 function blobHash(b){
   const prefix=Buffer.concat([Buffer.from('blob '+b.length),Buffer.from([0])]);
   return createHash('sha1').update(prefix).update(b).digest('hex');
+}
+function repositoryBlobHash(rel,abs){
+ // Check the indexed canonical blob; raw file hashes can differ after checkout
+ // filters (notably .gitattributes eol=lf on SVG) even for an unchanged file.
+ try{
+  const gitPath=path.relative(gitRoot,abs).split(path.sep).join('/');
+  const raw=execFileSync('git',['ls-files','-s','--',gitPath],{
+   cwd:gitRoot,encoding:'utf8',stdio:['ignore','pipe','ignore']
+  });
+  const match=raw.match(/^[0-9]{6} ([0-9a-f]{40}) [0-3]\t/);
+  if(match)return match[1];
+ }catch{ /* Portable archive without .git: use physical bytes. */ }
+ return blobHash(readFileSync(abs));
 }
 const resolveExisting=(rel)=>{
  const p=toAbs(rel);
@@ -69,7 +84,7 @@ for(const [rel,expectedHash] of Object.entries(canonical)){
  const p=resolveExisting(rel);
  if(!p)continue;
  imageSignature(rel);
- const actual=blobHash(readFileSync(p));
+ const actual=repositoryBlobHash(rel,p);
  if(actual!==expectedHash)errors.push('Canonical character sheet changed without a new approved style version: '+rel);
 }
 const legacy=policy.legacyUnapprovedVectors||{};
@@ -77,7 +92,7 @@ const approved=policy.approvedArt||{};
 const historical=policy.legacyPaintedBackdrops||{};
 for(const [rel,expected] of Object.entries(historical)){
  const p=resolveExisting(rel);
- if(p&&blobHash(readFileSync(p))!==expected)
+ if(p&&repositoryBlobHash(rel,p)!==expected)
   errors.push('Historical painted scene changed; submit as approved new art instead: '+rel);
 }
 for(const [rel,entry] of Object.entries(legacy)){
