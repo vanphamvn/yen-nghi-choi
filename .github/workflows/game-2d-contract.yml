@@ -1,0 +1,29 @@
+name: Game 2D sprite contract
+on:
+  push:
+    paths:
+      - "game/preview-2d/**"
+      - ".github/workflows/game-2d-contract.yml"
+  pull_request:
+    paths:
+      - "game/preview-2d/**"
+      - ".github/workflows/game-2d-contract.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  sprites-and-routines:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: "20"
+      - name: Parse game runtime
+        run: node --check game/preview-2d/game.js
+      - name: Verify sprite atlas and NPC routes
+        run: node --test game/preview-2d/tests/game-contract.test.mjs
