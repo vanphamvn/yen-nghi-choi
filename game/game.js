@@ -173,6 +173,7 @@ async function startGame() {
     $('skill-name').textContent = ROLES[game.role].power;
     buildWorld();
     updatePhaseUI();
+    showMessage('Đi dạo một vòng nhé. Muốn bắt đầu ca thì mở Objective ở góc màn hình.',5);
     updateHud();
     lastTick = 0;
     cancelAnimationFrame(frame);
