@@ -9,7 +9,7 @@
     "assets/sprites/cat.png"
   ],
   "status": "requires-character-anchored-human-art-review",
-  "notes": "Legacy scene SVGs below are NOT style-approved. Frozen only to keep currently published gameplay running until replaced with painterly character-matched PNG/WebP art. The audit prints known debt but fails any newly introduced unreviewed art or edit to frozen vector assets.",
+  "notes": "Legacy scene SVGs below are NOT style-approved. Frozen only to keep currently published gameplay running until replaced with painterly character-matched PNG/WebP art. The audit prints known debt but fails any newly introduced unreviewed art or edit to frozen vector assets. Historical painted WebP assets are also version-frozen as a non-approved comparison baseline.",
   "legacyUnapprovedVectors": {
     "assets/scene/backdrop.svg": {
       "gitBlobSha": "704dc5d3ad3ef012201af0326db4cdffc31e55fc",
@@ -68,5 +68,9 @@
     "assets/sprites/shipper.png": "02044eba997947de0cc5484df99b7558594a03ea",
     "assets/sprites/guard.png": "30788065e6b2b3fbbd6287d0f22c64cb2e3e2f47",
     "assets/sprites/cat.png": "b0ee9c6886d90ed31a4628403ca06ea1e51094de"
+  },
+  "legacyPaintedBackdrops": {
+    "assets/cafe-painted.webp": "078422cb2ac716aae3f8944256f2b6a4190fadea",
+    "assets/cafe-foreground.webp": "51f21266b9a33caaa8a01f629332d8dfdfa5b502"
   }
 }
