@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="900" viewBox="0 0 1440 900"><defs>
+<linearGradient id="wood" x2="0.25" y2="1"><stop stop-color="#dca97a"/><stop offset=".5" stop-color="#b77c52"/><stop offset="1" stop-color="#875338"/></linearGradient>
+<linearGradient id="dark" x2="0" y2="1"><stop stop-color="#775444"/><stop offset="1" stop-color="#4c352c"/></linearGradient>
+<linearGradient id="leaf" x2=".3" y2="1"><stop stop-color="#9bae74"/><stop offset="1" stop-color="#466e50"/></linearGradient>
+<linearGradient id="cream" x2="0" y2="1"><stop stop-color="#fff3d8"/><stop offset="1" stop-color="#dfc59e"/></linearGradient>
+<linearGradient id="glass" x2="0" y2="1"><stop stop-color="#c6e0cb"/><stop offset=".6" stop-color="#e3e7cb"/><stop offset="1" stop-color="#edc79b"/></linearGradient>
+<linearGradient id="floor" x2=".15" y2="1"><stop stop-color="#ddbb96"/><stop offset="1" stop-color="#b88464"/></linearGradient>
+<radialGradient id="sun"><stop stop-color="#fff7c8" stop-opacity=".72"/><stop offset="1" stop-color="#fff4c5" stop-opacity="0"/></radialGradient>
+</defs>
+<rect width="1440" height="900" fill="#ead7ba"/>
+<rect x="0" y="0" width="1440" height="487" fill="url(#cream)"/>
+<rect x="0" y="0" width="1440" height="110" fill="#bf9a74"/>
+<path d="M0 108H1440" stroke="#765742" stroke-width="17"/>
+<path d="M0 128H1440" stroke="#fff0cc" stroke-width="9" opacity=".7"/>
+<path d="M0 475H1440V900H0Z" fill="url(#floor)"/>
+<path d="M0 475H1440V498H0Z" fill="#927355" opacity=".9"/>
+<path d="M0 497H1440" stroke="#ffefd0" stroke-width="4" opacity=".6"/>
+<path d="M720 487L-160 900M720 487L235 900M720 487L604 900M720 487L887 900M720 487L1275 900M720 487L1600 900" fill="none" stroke="#8e684e" stroke-width="3" opacity=".25"/>
+<path d="M0 548H1440M0 614H1440M0 696H1440M0 796H1440" fill="none" stroke="#9c7356" stroke-width="4" opacity=".23"/>
+<path d="M0 570H1440M0 755H1440" fill="none" stroke="#fff3d7" stroke-width="3" opacity=".25"/>
+<path d="M275 620Q335 576 430 611L570 733Q452 772 290 720Z" fill="#d5ad7c" opacity=".37"/>
+<ellipse cx="1080" cy="719" rx="315" ry="125" fill="#fff0c5" opacity=".19"/>
+<rect x="295" y="154" width="415" height="321" rx="21" fill="#6b5c47" stroke="#b18a5f" stroke-width="11"/>
+<rect x="311" y="170" width="382" height="288" rx="10" fill="url(#glass)"/>
+<path d="M498 166V462M304 322H700" stroke="#f6deab" stroke-width="18"/>
+<path d="M497 167V462M305 321H698" stroke="#9e7755" stroke-width="4"/>
+<path d="M313 380Q389 320 486 365T696 374V460H313Z" fill="#9daa80" opacity=".5"/>
+<path d="M322 425Q413 360 484 406T686 405V454H322Z" fill="#6e9a75" opacity=".65"/>
+<g opacity=".5" stroke="#f8f1cc" stroke-width="6"><path d="M341 177L319 254M369 178L346 264M532 178L513 252"/></g>
+<path d="M267 145Q498 119 722 144" fill="none" stroke="#fff6dd" stroke-width="5" opacity=".7"/>
+<rect x="747" y="153" width="320" height="247" rx="16" fill="#765a48" stroke="#c99b6c" stroke-width="11"/>
+<rect x="766" y="174" width="282" height="208" rx="7" fill="#3d5b4a"/>
+<text x="907" y="260" text-anchor="middle" font-size="78" font-style="italic" font-family="Georgia,serif" fill="#f2deac">yên</text>
+<text x="907" y="300" text-anchor="middle" font-size="17" font-family="Arial,sans-serif" letter-spacing="5" fill="#f5e7c7">COFFEE &amp; TEA</text>
+<path d="M790 344Q844 330 869 345T947 341T1021 342" stroke="#c4d3a7" fill="none" stroke-width="3"/>
+<g stroke="#846748" stroke-width="8"><path d="M85 0V145M575 0V141M1165 0V144"/></g>
+<g><path d="M54 145H118L103 205Q85 218 69 205Z" fill="#e9c482" stroke="#967046" stroke-width="6"/>
+<path d="M546 141H606L590 204Q575 217 559 202Z" fill="#f0cc8b" stroke="#967046" stroke-width="6"/>
+<path d="M1135 145H1196L1181 202Q1166 214 1151 203Z" fill="#eac181" stroke="#967046" stroke-width="6"/></g>
+<g opacity=".33"><circle cx="86" cy="219" r="132" fill="url(#sun)"/><circle cx="576" cy="224" r="165" fill="url(#sun)"/><circle cx="1165" cy="217" r="168" fill="url(#sun)"/></g>
+<rect x="0" y="445" width="1440" height="30" fill="#a58666" opacity=".45"/>
+<path d="M1210 100Q1200 162 1254 182T1283 253" stroke="#5f7e56" fill="none" stroke-width="12" stroke-linecap="round"/>
+<g fill="#79986b"><ellipse cx="1220" cy="155" rx="25" ry="13" transform="rotate(25 1220 155)"/><ellipse cx="1260" cy="194" rx="26" ry="13" transform="rotate(-30 1260 194)"/><ellipse cx="1286" cy="238" rx="25" ry="13" transform="rotate(28 1286 238)"/></g>
+<rect x="0" y="0" width="1440" height="900" fill="#ffd8a4" opacity=".035"/>
+</svg>
