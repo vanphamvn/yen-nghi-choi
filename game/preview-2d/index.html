@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5eddd">
+<meta name="description" content="Yencafeday 2D thử nghiệm: quán Yên anime màu nước với khám phá tự do, NPC và các ca làm việc.">
+<meta name="robots" content="noindex,nofollow">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self'; img-src 'self' data: blob:; connect-src 'self' https://cdn.jsdelivr.net; font-src 'self'; object-src 'none'; base-uri 'none'; frame-ancestors 'none'">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="./style.css">
+<title>Yên 2D | Bản xem trước</title>
+</head>
+<body>
+<header class="top">
+  <a class="return" href="../">← Game 3D đang chạy</a>
+  <a class="wordmark" href="../../" aria-label="Yên Coffee & Tea">yên <small>COFFEE &amp; TEA</small></a>
+  <span class="preview-pill">BẢN THỬ 2D · CHƯA DUYỆT ART</span>
+</header>
+<main>
+<section class="titlebar">
+  <div><span class="eyebrow">YÊN GAME / THỬ HƯỚNG MỚI</span><h1>Một ngày <em>ở Yên.</em></h1><p>Đi dạo. Nói chuyện. Làm vài việc. Rồi muốn nghỉ lúc nào thì nghỉ.</p></div>
+  <div class="title-meta"><span>PHASER 4</span><span>ANIME 2D</span><span>KHÁM PHÁ TỰ DO</span></div>
+</section>
+<section class="game-frame" id="game-frame">
+ <div id="scene" aria-label="Thế giới quán Yên 2D có thể di chuyển và tương tác"></div>
+ <div id="setup" class="screen setup" aria-labelledby="setup-title">
+   <div class="setup-card">
+    <p class="eyebrow">CA LÀM VIỆC TỰ NGUYỆN / 2D PREVIEW</p>
+    <h2 id="setup-title">Hôm nay<br><em>bạn làm ai?</em></h2>
+    <p>Thử không gian 2D trước. Nhân vật vector hiện là <strong>placeholder kỹ thuật</strong>, chưa phải bộ sprite màu nước được duyệt.</p>
+    <div id="role-grid" class="roles" role="group" aria-label="Chọn vai trò">
+      <button type="button" class="role selected" data-role="barista" aria-pressed="true"><span>☕</span><strong>Pha chế</strong><small>Chăm ly nước đầu ngày.</small></button>
+      <button type="button" class="role" data-role="waiter" aria-pressed="false"><span>▤</span><strong>Phục vụ</strong><small>Nhớ bàn và khách.</small></button>
+      <button type="button" class="role" data-role="guard" aria-pressed="false"><span>♙</span><strong>Bảo vệ</strong><small>Giữ quán bình yên.</small></button>
+      <button type="button" class="role" data-role="shipper" aria-pressed="false"><span>➤</span><strong>Shipper</strong><small>Đừng giao nhầm nước.</small></button>
+      <button type="button" class="role" data-role="cat" aria-pressed="false"><span>ฅ</span><strong>Mèo cổ vũ</strong><small>Được quyền nằm nghỉ.</small></button>
+    </div>
+    <button id="enter" type="button" class="primary">Vào quán khám phá <span>↗</span></button>
+    <p class="fine">Không đăng nhập, không lưu dữ liệu, không đổi quà tại quán.</p>
+   </div>
+ </div>
+ <div id="hud" class="hud" hidden>
+   <div class="hud-top"><div class="hud-group"><span class="tag" id="hud-day">NGÀY 01</span><span class="tag" id="hud-role">PHA CHẾ</span><span class="tag" id="hud-phase">KHÁM PHÁ</span></div><div class="hud-group"><span class="tag clock" id="clock">00:00</span><button type="button" id="leave" class="close" aria-label="Đổi nhân vật">×</button></div></div>
+   <div class="objective-wrap">
+    <button id="objective-toggle" type="button" aria-controls="objective-panel" aria-expanded="false"><span>☷ Nhiệm vụ</span><strong id="objective-short">Khám phá</strong><span id="objective-arrow">⌄</span></button>
+    <div id="objective-panel" hidden>
+      <p class="eyebrow" id="objective-count">NGÀY 01 · KHÁM PHÁ</p>
+      <h3 id="objective-title">Đi quanh quán một vòng.</h3>
+      <p id="objective-desc">Nói chuyện với mọi người, nhấn E khi tới gần. Chỉ bắt đầu ca khi bạn thích.</p>
+      <div class="phase-actions"><span id="shift-state">CHƯA BẮT ĐẦU CA</span><button id="shift" type="button">Bắt đầu ca</button></div>
+    </div>
+   </div>
+   <div class="nearby" id="nearby" hidden></div>
+   <div class="speech" id="speech" hidden role="status" aria-live="polite"></div>
+   <div class="controls">
+    <div id="stick" class="stick" aria-label="Di chuyển nhân vật bằng joystick"><span>DI CHUYỂN</span><div class="ring"><div id="thumb" class="thumb"></div></div></div>
+    <div class="actions"><button id="power" type="button" class="power">Tuyệt chiêu<small>Q</small></button><button id="interact" type="button" class="interact" disabled>Tương tác<small>E</small></button></div>
+   </div>
+ </div>
+ <div class="stage-watermark" aria-hidden="true">VECTOR PLACEHOLDERS · ART CHƯA DUYỆT</div>
+ <div id="result" class="screen result" hidden>
+   <div class="result-card"><p class="eyebrow" id="result-day">NGÀY 01 · BIÊN BẢN CA</p><h2>Hết việc.<br><em>Chưa hết ngày.</em></h2><p id="result-summary">Một ngày bình thường.</p>
+    <div class="result-stats"><div><small>ĐÃ LÀM</small><strong id="result-tasks">3 / 3</strong></div><div><small>THỜI GIAN</small><strong id="result-time">00:00</strong></div><div><small>ĐỘ YÊN</small><strong id="result-peace">70%</strong></div></div>
+    <button id="next-day" class="primary" type="button">Sang ngày mới ↗</button>
+   </div>
+ </div>
+ <div id="error" class="screen error" hidden role="alert"><div class="result-card"><h2>Không mở được bản 2D</h2><p>Trò chơi cần Phaser 4 và trình duyệt hỗ trợ Canvas/WebGL. Hãy kiểm tra kết nối mạng.</p></div></div>
+</section>
+<section class="review-strip">
+ <div><p class="eyebrow">CỔNG DUYỆT HÌNH ẢNH</p><h2>Chỉ đổi model khi bạn duyệt.</h2><p>Bản này kiểm tra gameplay 2D. Concept màu nước của nhân vật pha chế là một bước riêng. Các sprite vector đang hiển thị chỉ là hình thay thế để kiểm tra điều khiển.</p></div>
+ <div class="review-badges"><span>01 · Duyệt concept</span><span>02 · Làm sprite atlas</span><span>03 · Visual QA</span><span>04 · Thay game 3D</span></div>
+</section>
+</main>
+<footer>Yên Coffee &amp; Tea · Láng Dài · 2D prototype · Không ảnh hưởng game production</footer>
+<script src="https://cdn.jsdelivr.net/npm/phaser@4.2.1/dist/phaser.min.js" defer></script>
+<script src="./game.js" defer></script>
+</body>
+</html>
