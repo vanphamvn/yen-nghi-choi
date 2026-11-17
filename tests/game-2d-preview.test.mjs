@@ -194,7 +194,10 @@ test('all six NPC routines repeat with gestures and no walking through furniture
  }
  for(const [id,item]of observed){
   assert.ok(item.gestures>=2,id+' never repeats its stop action');
-  if(id==='barista')assert.equal(item.positions.size,1,'barista stays at the work station');
+  if(id==='barista'||id==='guard'){
+   assert.equal(item.positions.size,1,id+' stays at the assigned post');
+   assert.equal(item.stops.size,1,id+' has a stationary routine');
+  }
   else{
    assert.equal(item.stops.size,3,id+' stalled before completing its route');
    assert.ok(item.positions.size>10,id+' did not walk between stops');
