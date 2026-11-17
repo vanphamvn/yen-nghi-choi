@@ -52,10 +52,12 @@ const stations={
  bench:{x:1040,y:768,label:'Ghế dài'},
  plant:{x:190,y:613,label:'Chậu cây'}
 };
+// Stand beside the entrance, leaving the doorway and its interaction point clear.
+const GUARD_POST={x:710,y:630};
 const npcs=[
  {id:'reader',role:'reader',x:375,y:625,name:'Khách đọc sách',lines:['Mình vừa đọc tới chương... cái bìa.','Một trang sách và một ly nước. Tạm đủ.']},
  {id:'guest',role:'guest',x:690,y:605,name:'Khách chờ bạn',lines:['Bạn mình bảo năm phút nữa tới.','Mình gọi trước một ly. Kẻ đến sau tự tính.']},
- {id:'guard',role:'guard',x:685,y:715,name:'Chú bảo vệ',lines:['Để xe ngay ngắn là quán đã yên một nửa.','Mèo Mướp trông ghế, tôi trông cửa.']},
+ {id:'guard',role:'guard',...GUARD_POST,name:'Chú bảo vệ',lines:['Để xe ngay ngắn là quán đã yên một nửa.','Mèo Mướp trông ghế, tôi trông cửa.']},
  {id:'barista',role:'barista',x:995,y:570,name:'Bạn pha chế',lines:['Nước ngon cần chút kiên nhẫn.','Máy pha cà phê hôm nay khá dễ bảo.']},
  {id:'waiter',role:'waiter',x:817,y:647,name:'Bạn phục vụ',lines:['Ngồi đâu cũng được, trừ quầy pha chế.','Để mình dọn lại bàn nhé.']},
  {id:'cat',role:'cat',x:613,y:802,name:'Mèo Mướp',lines:['Meo. (Mướp vừa đồng ý.)','Meo. (Mướp vừa đổi ý.)']}
@@ -68,9 +70,7 @@ const NPC_ROUTINES={
  guest:[{x:690,y:605,wait:5,activity:'Đang chờ bạn ở gần quầy',destination:'gần quầy'},
   {x:751,y:701,wait:7,action:true,activity:'Đang nhìn ra lối vào',destination:'lối vào'},
   {x:690,y:605,wait:4,activity:'Đang chờ bạn quay lại',destination:'gần quầy'}],
- guard:[{x:685,y:715,wait:6,action:true,activity:'Đang đón khách',destination:'cửa quán'},
-  {x:750,y:760,wait:4,activity:'Đang kiểm tra lối đi',destination:'lối đi'},
-  {x:687,y:718,wait:7,action:true,activity:'Đã quay lại cửa quán',destination:'cửa quán'}],
+ guard:[{...GUARD_POST,wait:7,action:true,activity:'Đang đứng đón khách cạnh cửa',destination:'cửa quán'}],
  barista:[{x:995,y:570,wait:7,action:true,activity:'Đang trực quầy pha chế',destination:'quầy pha chế'}],
  waiter:[{x:817,y:647,wait:4,action:true,activity:'Đang chờ nước từ quầy',destination:'quầy nước'},
   {x:932,y:729,wait:5,action:true,activity:'Đang kiểm tra khu ghế ngồi',destination:'khu ghế ngồi'},
