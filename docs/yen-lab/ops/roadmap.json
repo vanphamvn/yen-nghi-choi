@@ -181,12 +181,13 @@
       "priority": "P0",
       "title": "UI components & tokens",
       "kind": "design",
-      "status": "todo",
+      "status": "done",
       "depends_on": [
         "F02",
         "F04"
       ],
-      "issue_url": "https://github.com/vanphamvn/yen-nghi-choi/issues/130"
+      "issue_url": "https://github.com/vanphamvn/yen-nghi-choi/issues/130",
+      "evidence": "PR #173 squash-merged as 26059f1. lab/game.css shared per-game screen (paper sheet, ink-word controls per owner decision 19/11, data-state/data-when contract) + docs/yen-lab/game-kit.html demo of 6 states; contract in docs/yen-lab/GAME-SCREEN.md. foundation CI green on 8275ad9; 62/62 lab Playwright desktop+emulated touch incl. 22 new (touch/keyboard state walk, focus, no storage, no pill styling, reduced motion, AA contrast all states, 320–1440 no clipping/≥44px/one-line words). Independent agent review: no P0/P1, 4 P2 fixed before merge. Netlify production verified: build-info commitSha=26059f1; /lab/game.css, kit, /lab/ 200; real-browser check on deploy preview 360px and production stopped state. Not verified: physical devices, screen readers; owner visual review pending. No game released."
     },
     {
       "key": "F07",
