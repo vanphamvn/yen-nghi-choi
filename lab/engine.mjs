@@ -33,13 +33,20 @@ export function createSession(options) {
   let elapsedBefore = 0;   // ms accumulated before the current running stretch
   let runningSince = 0;    // clock value when the current running stretch began
   let timer = null;        // the single pending timeout
-  let plannedAt = 0;       // clock value that timer is aiming for
-  
+  let plannedAt = 0;       // clock value that timer is aiming for (always set while running)
+  let lastKey = '';        // round:step last announced, so an early timer never emits a fake step
   let lastTransitionAt = -Infinity;
   let error = null;
+  let destroyed = false;
 
   const total = () => rounds * roundMs;
-  const elapsed = () => Math.min(total(), elapsedBefore + (state === 'running' ? o.now() - runningSince : 0));
+  // Time credited for the current running stretch. If the clock is far past the planned boundary, the device
+  // slept or the page was frozen: count only up to that boundary, never the time away (whoever notices first,
+  // the late timer or a pause/stop/hidden event).
+  const away = () => o.now() - plannedAt > o.maxLateMs;
+  const stretch = () => state === 'running' ? Math.max(0, (away() ? plannedAt : o.now()) - runningSince) : 0;
+  const elapsed = () => Math.min(total(), elapsedBefore + stretch());
+  const keyOf = p => `${p.round}:${p.stepIndex}`;
 
   function position(ms = elapsed()) {
     const done = ms >= total();
@@ -80,18 +87,12 @@ export function createSession(options) {
   function tick() {
     timer = null;
     if (state !== 'running') return;
-    const late = o.now() - plannedAt;
-    if (late > o.maxLateMs) {
-      // Time away, not time practised: keep progress only up to the planned boundary, then wait for the person.
-      // (transition() adds now − runningSince, so shift runningSince to count only up to plannedAt.)
-      runningSince = o.now() - (plannedAt - runningSince);
-      transition('paused', 'suspended');
-      return;
-    }
+    // Completion first: a late timer on the last boundary means the game is over, not suspended.
     if (elapsed() >= total()) { finish(); return; }
-    // The timeout only ever fires at a step boundary, so every tick is a new step (or a new round).
-    reason = 'step';
-    emit();
+    if (away()) { transition('paused', 'suspended'); return; } // wait for the person; time away not counted
+    const key = keyOf(position());
+    if (key !== lastKey) { lastKey = key; reason = 'step'; emit(); }
+    // (a timer may fire a hair early by performance.now; then we simply re-arm for the remainder, silently)
     arm();
   }
 
@@ -102,13 +103,13 @@ export function createSession(options) {
   }
 
   function transition(next, why) {
-    if (state === 'running') elapsedBefore = Math.min(total(), elapsedBefore + (o.now() - runningSince));
+    if (state === 'running') elapsedBefore = Math.min(total(), elapsedBefore + stretch());
     state = next;
     reason = why;
     lastTransitionAt = o.now();
     if (next === 'running') runningSince = o.now();
     clearTimer();
-
+    if (next === 'running') { plannedAt = o.now(); lastKey = keyOf(position()); }
     emit();
     if (state === 'running') arm();
   }
@@ -116,6 +117,7 @@ export function createSession(options) {
   const guarded = () => o.now() - lastTransitionAt < o.guardMs;
 
   function fail(e) {
+    if (state === 'running') elapsedBefore = Math.min(total(), elapsedBefore + stretch());
     clearTimer();
     error = e instanceof Error ? e : new Error(String(e));
     state = 'error';
@@ -128,7 +130,7 @@ export function createSession(options) {
     snapshot,
     get state() { return state; },
     /** idle → running. Ignored in any other state (no double start). */
-    start() { if (state !== 'idle' || guarded()) return false; elapsedBefore = 0; error = null; transition('running', 'start'); return true; },
+    start() { if (destroyed || state !== 'idle' || guarded()) return false; elapsedBefore = 0; error = null; transition('running', 'start'); return true; },
     /** running → paused. */
     pause(why = 'pause') { if (state !== 'running' || (why === 'pause' && guarded())) return false; transition('paused', why); return true; },
     /** paused → running. Only ever called by the person; nothing in the engine resumes on its own. */
@@ -136,12 +138,13 @@ export function createSession(options) {
     /** running | paused → stopped, immediately, never debounced and never confirmed. */
     stop() { if (state !== 'running' && state !== 'paused') return false; transition('stopped', 'stop'); return true; },
     /** anything → idle; forgets progress. */
-    reset(why = 'reset') { clearTimer(); state = 'idle'; reason = why; elapsedBefore = 0; error = null; lastTransitionAt = o.now(); emit(); return true; },
+    reset(why = 'reset') { if (destroyed) return false; clearTimer(); state = 'idle'; reason = why; elapsedBefore = 0; error = null; lastTransitionAt = o.now(); emit(); return true; },
     /** Choose how many rounds before starting (e.g. 3–6). Ignored once started. */
-    setRounds(n) { if (state !== 'idle') return false; rounds = validateRounds(n); emit(); return true; },
+    setRounds(n) { if (destroyed || state !== 'idle') return false; rounds = validateRounds(n); emit(); return true; },
     fail,
-    /** Stop all timers and listeners for good (page teardown). */
-    destroy() { clearTimer(); state = 'idle'; },
+    /** Stop the timer for good (page teardown); the session refuses to start again. Lifecycle listeners are
+     *  removed by the function bindPageLifecycle() returns. */
+    destroy() { clearTimer(); destroyed = true; state = 'idle'; reason = 'destroyed'; return true; },
   });
 }
 

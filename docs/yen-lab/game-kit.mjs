@@ -34,8 +34,10 @@ if (game) {
       reflect.hidden = false;
       say(SAYS[s.reason] || '');
       // The pressed word disappears in the new state: move focus to the new main word, never to <body>.
-      // Not for automatic changes (hidden/suspended/finished) while the person may be reading elsewhere.
-      if (focus && ['start', 'pause', 'resume', 'stop', 'reset'].includes(s.reason)) {
+      // Automatic changes (hidden/suspended/finished) only move focus if it sat on a word that just disappeared.
+      const active = document.activeElement;
+      const stranded = game.contains(active) && active !== document.body && active.offsetParent === null;
+      if (focus && (['start', 'pause', 'resume', 'stop', 'reset'].includes(s.reason) || stranded)) {
         const next = [...game.querySelectorAll('#game-controls .ink-word')].find(el => el.offsetParent !== null);
         if (next) next.focus();
       }

@@ -241,3 +241,17 @@ test('reduced motion: the engine still paces and completes (no animation depende
   await expect(page.locator('#game')).toHaveAttribute('data-state', 'complete');
   await context.close();
 });
+
+test('automatic pause moves focus off the word that disappeared (never strands it on <body>)', async ({ page }) => {
+  await blockExternal(page);
+  await page.clock.install();
+  await page.goto(KIT);
+  await page.getByRole('button', { name: 'bắt đầu' }).click();
+  await expect(page.getByRole('button', { name: 'tạm dừng' })).toBeFocused();
+  await page.evaluate(() => {
+    Object.defineProperty(document, 'visibilityState', { configurable: true, get: () => 'hidden' });
+    document.dispatchEvent(new Event('visibilitychange'));
+  });
+  await expect(page.locator('#game')).toHaveAttribute('data-state', 'paused');
+  await expect(page.getByRole('button', { name: 'tiếp tục' })).toBeFocused();
+});

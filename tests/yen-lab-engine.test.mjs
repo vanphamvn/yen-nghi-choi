@@ -174,6 +174,73 @@ test('page lifecycle: hidden pauses (bypassing the tap guard), never resumes; pa
   assert.deepEqual(Object.keys(listeners), []);
 });
 
+test('review: a late timer on the final boundary completes instead of suspending', () => {
+  const { session, advance, last } = rig({ steps: [{ id: 'a', ms: 1000 }], rounds: 1 });
+  session.start();
+  advance(6000, 5000);
+  assert.equal(session.state, 'complete');
+  assert.equal(last().reason, 'finished');
+  assert.equal(session.snapshot().elapsed, 1000);
+});
+
+test('review: time away is not counted when a pause or stop arrives before the late timer', () => {
+  for (const act of [s => s.pause('hidden'), s => s.stop(), s => s.fail(new Error('x'))]) {
+    const { session, clock } = rig();
+    session.start();
+    clock.set(clock.get() + 60_000); // device slept; no timer has run yet
+    assert.equal(session.snapshot().elapsed, 4000, 'running snapshot is capped at the planned boundary');
+    act(session);
+    assert.equal(session.snapshot().elapsed, 4000);
+  }
+});
+
+test('review: a timer firing a hair early re-arms silently without a fake step', () => {
+  const { session, timers, changes, clock } = rig();
+  session.start();
+  const before = changes.length;
+  const [[k, v]] = [...timers];
+  timers.delete(k);
+  clock.set(v.at - 1); // fires 1 ms before the boundary
+  v.fn();
+  assert.equal(changes.length, before, 'no emit');
+  assert.equal(timers.size, 1, 're-armed for the remaining 1 ms');
+});
+
+test('review: calling session methods from inside onChange leaves exactly one timer or none', () => {
+  let session;
+  const r = rig({ onChange: s => { if (s.reason === 'step') session.stop(); } });
+  session = r.session;
+  session.start();
+  r.advance(4000);
+  assert.equal(session.state, 'stopped');
+  assert.equal(r.timers.size, 0);
+});
+
+test('review: destroy() is final and fail() keeps the running time', () => {
+  const a = rig();
+  a.session.start();
+  a.advance(2500);
+  a.session.fail(new Error('x'));
+  assert.equal(a.session.snapshot().elapsed, 2500);
+  const b = rig();
+  b.session.start();
+  b.session.destroy();
+  b.advance(1000);
+  assert.equal(b.session.start(), false);
+  assert.equal(b.session.reset(), false);
+  assert.equal(b.timers.size, 0);
+});
+
+test('lifecycle: freeze pauses too', () => {
+  const { session } = rig();
+  const listeners = {};
+  const target = () => ({ addEventListener: (n, f) => { listeners[n] = f; }, removeEventListener: () => {} });
+  bindPageLifecycle(session, { doc: Object.assign(target(), { visibilityState: 'visible' }), win: target() });
+  session.start();
+  listeners.freeze();
+  assert.equal(session.state, 'paused');
+});
+
 test('STATES matches the CSS data-state contract', () => {
   assert.deepEqual(STATES, ['idle', 'running', 'paused', 'complete', 'stopped', 'error']);
 });
