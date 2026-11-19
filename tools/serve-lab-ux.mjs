@@ -16,7 +16,7 @@ createServer(async (req, res) => {
     let target = resolve(root, name);
     if (target !== root.replace(/[\\/]$/, '') && !target.startsWith(rootPrefix)) { res.writeHead(403).end(); return; }
     if ((await stat(target)).isDirectory()) {
-      if (!url.pathname.endsWith('/')) { res.writeHead(301, { Location: url.pathname + '/' + url.search }).end(); return; }
+      if (!url.pathname.endsWith('/')) { res.writeHead(301, { Location: '/' + name.replace(/^\/+/, '').replace(/\/+$/, '') + '/' + url.search }).end(); return; }
       target = resolve(target, 'index.html');
     }
     send(res, 200, target, await readFile(target));

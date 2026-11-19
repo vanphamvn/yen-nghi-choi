@@ -42,6 +42,10 @@ test('hero, three needs, release-status list, safety note and way back to Yên',
   await expect(page.getByRole('link', { name: 'Nguồn phương pháp' })).toBeVisible();
 
   // Unreleased tools are labelled and never dead links or buttons.
+  // Deferred routines (e.g. G02 Căng rồi thả, pending protocol review) are not listed at all.
+  await expect(page.locator('[data-tool="release"]')).toHaveCount(0);
+  // Needs are informational until M3: no controls inside them either.
+  await expect(page.locator('[data-need] a, [data-need] button, [data-need] [tabindex]')).toHaveCount(0);
   const coming = page.locator('[data-tool][data-status="coming"]');
   expect(await coming.count()).toBeGreaterThan(0);
   for (const item of await coming.all()) {
@@ -76,10 +80,16 @@ test('homepage link stays hidden until flag_yenlab, then supports back/forward',
   await expect(link).toBeHidden(); // Gate M1 (#134) not passed yet.
   expect(await page.evaluate(() => window.flag_yenlab)).toBe(0);
   // Existing homepage sections remain intact.
-  for (const id of ['#tam-trang', '#cuahang', '#yen-ngoai-doi']) await expect(page.locator(id)).toBeAttached();
+  for (const id of ['#mascot', '#tam-trang', '#cuahang', '#yen-ngoai-doi', '.irl-map']) await expect(page.locator(id).first()).toBeAttached();
 
-  // Simulate the release flip (flag_yenlab = 1) and use the real link.
-  await page.evaluate(() => document.documentElement.classList.add('yen-lab-on'));
+  // Flip the real flag (flag_yenlab = 1) in the served source so the toggle code itself is exercised.
+  await page.route('**/127.0.0.1:4189/', async route => {
+    const res = await route.fetch();
+    const body = (await res.text()).replace('var flag_yenlab = 0;', 'var flag_yenlab = 1;');
+    await route.fulfill({ response: res, body });
+  });
+  await page.goto('/');
+  expect(await page.evaluate(() => window.flag_yenlab)).toBe(1);
   await expect(link).toBeVisible();
   await link.click();
   await expect(page).toHaveURL(/\/lab\/$/);
@@ -100,6 +110,13 @@ for (const width of WIDTHS) {
       .map(el => ({ text: el.textContent.trim(), h: el.getBoundingClientRect().height }))
       .filter(x => x.h < 44));
     expect(small).toEqual([]);
+    // Regression (PR #167 browser check): Vietnamese header links must not wrap to two lines at 320px.
+    const wrapped = await page.evaluate(() => [...document.querySelectorAll('.lab-nav a')]
+      .filter(el => el.getBoundingClientRect().height > parseFloat(getComputedStyle(el).lineHeight) * 1.5 + 8 && el.getClientRects().length > 0)
+      .map(el => el.textContent.trim()));
+    expect(wrapped).toEqual([]);
+    const lines = await page.evaluate(() => [...document.querySelectorAll('.lab-nav a')].map(el => { const r = document.createRange(); r.selectNodeContents(el); return r.getClientRects().length; }));
+    expect(lines.every(n => n === 1)).toBe(true);
     await testInfo.attach(`lab-${width}`, { body: await page.screenshot({ fullPage: true }), contentType: 'image/png' });
   });
 }
