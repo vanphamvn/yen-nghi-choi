@@ -61,6 +61,14 @@ test('hero, three needs, release-status list, house rules and way back to Yên',
   }
   const released = await page.locator('[data-tool][data-status="released"]').count();
   await expect(page.locator('#lab-release-status')).toHaveAttribute('data-released-count', String(released));
+  // Released games are a single real link to their own screen (G01 #142: /lab/tho/).
+  for (const item of await page.locator('[data-tool][data-status="released"]').all()) {
+    const href = await item.locator('a').getAttribute('href');
+    expect(href).toMatch(/^\/lab\/[a-z-]+\/$/);
+    expect((await page.request.get(href)).status()).toBe(200);
+    await expect(item.getByText('sắp có')).toHaveCount(0);
+  }
+  expect(released).toBeGreaterThanOrEqual(1);
 
   // Close by button, Escape and tapping outside; focus returns to the book each time.
   await page.getByRole('button', { name: 'Gấp sổ lại' }).click();

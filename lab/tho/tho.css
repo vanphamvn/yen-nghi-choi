@@ -1,0 +1,27 @@
+/* Thở cùng Yên (G01, #142): only what the shared game screen (lab/game.css) does not already provide. */
+
+/* Choices before starting: small ink words with a quiet label, no chips or pills. */
+.tho-options { --show: block; margin: 4px auto 0; max-width: 30em; }
+.tho-option-row { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 0 6px; }
+.tho-option-row .game-words { margin-top: 0; gap: 0 2px; }
+.tho-option-label { font: italic 400 15px/1.4 var(--serif); color: var(--muted); min-width: 4.2em; text-align: right; }
+.tho-pace-hint { font-size: 15px; color: var(--muted); margin-top: 2px; min-height: 1.5em; }
+
+/* Seconds left in the current phase: the text guide that works without any animation. */
+.tho-seconds { --show: block; margin-top: 2px; font-size: 15px; font-weight: 500; color: var(--muted); min-height: 1.5em; }
+
+/* Cục Yên breathes by scale only (transform), driven by the Web Animations API from the engine clock. */
+#tho-buddy { transform-origin: 50% 70%; will-change: transform; transition: none; } /* the breath animation owns transform */
+
+/* Phones: before starting, the choices, caution and "bắt đầu" matter more than the picture; keep them in the first screen. */
+@media (max-width: 767px) {
+  .game[data-state="idle"] .game-stage { width: min(100%, 132px); margin: 6px auto 4px; }
+  .game[data-state="idle"] .game-head h1 { font-size: 28px; }
+  .game[data-state="idle"] .game-lede { font-size: 15px; margin-top: 2px; }
+  .game[data-state="idle"] .game-note { margin-top: 4px; font-size: 14px; }
+  .game[data-state="idle"] .game-words#game-controls { margin-top: 4px; }
+}
+
+@media (max-width: 359px) {
+  .tho-option-label { min-width: 0; text-align: center; flex-basis: 100%; }
+}
