@@ -23,7 +23,7 @@ test('direct URL, reload and trailing-slash redirect load the Lab shell', async 
   await expect(page.getByRole('heading', { level: 1, name: 'Yên Lab' })).toBeVisible();
   await expect(page.locator('.room-sign-sub')).toContainText('beta');
   await expect(page.getByRole('button', { name: 'Chọc Cục Yên một cái' })).toBeVisible();
-  await expect(page.getByText('Chán thì nghỉ, không ai giục.')).toBeVisible();
+  await expect(page.locator('.room-plaque')).toContainText('không lưu gì');
   await expect(page.locator('main')).toHaveCount(1);
   await page.reload();
   await expect(page.getByRole('heading', { level: 1, name: 'Yên Lab' })).toBeVisible();
@@ -38,7 +38,7 @@ test('hero, three needs, release-status list, house rules and way back to Yên',
   await blockExternal(page);
   await page.goto(LAB);
   await expect(page.locator('[data-need]')).toHaveCount(3);
-  await expect(page.getByRole('heading', { name: 'Nội quy của Cục Yên' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Nội quy', exact: true })).toBeVisible();
   await expect(page.getByText('không thay thế tư vấn hoặc điều trị chuyên môn')).toBeVisible();
   await expect(page.getByRole('link', { name: 'Nguồn phương pháp' })).toBeVisible();
 
@@ -55,7 +55,7 @@ test('hero, three needs, release-status list, house rules and way back to Yên',
   }
   const released = await page.locator('[data-tool][data-status="released"]').count();
   await expect(page.locator('#lab-release-status')).toHaveAttribute('data-released-count', String(released));
-  await expect(page.locator('[data-tool] button, [data-need] button, .board button, .shelf button')).toHaveCount(0);
+  await expect(page.locator('[data-tool] button, [data-need] button, .room-board button, .room-shelf button')).toHaveCount(0);
 
   // Không JS cần thiết: page has no scripts at all in the route shell.
   // Only the page's own small script, served from /lab/.
@@ -84,14 +84,14 @@ test('room playthings: poke Cục Yên and switch the lamp, keyboard included, n
 
   const lamp = page.getByRole('button', { name: 'Tắt đèn' });
   await lamp.click();
-  await expect(page.locator('#lab-room')).toHaveClass(/is-dim/);
+  await expect(page.locator('[data-room]')).toHaveClass(/is-dim/);
   await expect(page.getByRole('button', { name: 'Bật đèn' })).toBeVisible();
   await page.getByRole('button', { name: 'Bật đèn' }).press('Space');
-  await expect(page.locator('#lab-room')).not.toHaveClass(/is-dim/);
+  await expect(page.locator('[data-room]')).not.toHaveClass(/is-dim/);
 
   expect(await page.evaluate(() => [localStorage.length, sessionStorage.length, document.cookie])).toEqual([0, 0, '']);
   await page.reload(); // Nothing remembered: lamp back on, first line again.
-  await expect(page.locator('#lab-room')).not.toHaveClass(/is-dim/);
+  await expect(page.locator('[data-room]')).not.toHaveClass(/is-dim/);
   await expect(says).toHaveText(first);
 });
 

@@ -1,14 +1,14 @@
 // Yên Lab room: two tiny playthings. No storage, no network, nothing remembered after leaving.
 (() => {
   'use strict';
-  const room = document.getElementById('lab-room');
+  const room = document.querySelector('[data-room]');
   const buddy = document.getElementById('buddy');
   const says = document.getElementById('buddy-says');
   const lamp = document.getElementById('lamp-switch');
   if (!room || !buddy || !says || !lamp) return;
 
   const lines = [
-    'Ghế này trống nè. Ngồi đi, khỏi gọi món cũng được.',
+    'Ghế này trống nè. Ngồi đi.',
     'Mình đang giả vờ bận đó. Đừng nói ai nha.',
     'Trà còn nóng. Không cần uống, ngửi thôi cũng được.',
     'Hôm nay quầy không có hạn chót. Mai cũng không.',
