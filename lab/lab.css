@@ -1,18 +1,26 @@
-/* Yên Lab · route shell (LAB-F05). Tokens follow DESIGN.md; components grow in LAB-F06. */
+/* Yên Lab · route shell (LAB-F05). "A quiet corner of the café": tokens from DESIGN.md,
+   visual language borrowed from the homepage (Cục Yên, paper notes, offset paper shadows, italic green accents). */
 :root {
   color-scheme: light;
   --paper: #f7f3e9;
+  --paper-deep: #efe8d6;
+  --card: #fffaf0;
   --ink: #243c35;
   --muted: #5f7065;
   --green: #2e5a46;
   --lime: #dbe78d;
+  --pink: #f6b4a6;
   --lavender: #dfd9f5;
   --butter: #f4d98a;
+  --sage: #cbd9c2;
   --white: #ffffff;
   --focus: #a64b1d;
-  --line: #243c3533;
+  --line: rgba(36, 60, 53, .19);
+  --paper-shadow: 5px 6px 0 var(--sage);
+  --soft-shadow: 0 18px 55px rgba(35, 57, 43, .10);
   --radius-sm: 12px;
   --radius-md: 20px;
+  --radius-lg: 28px;
   --sans: "Noto Sans", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
   --serif: "Noto Serif", Georgia, "Times New Roman", serif;
 }
@@ -21,15 +29,19 @@
 html { -webkit-text-size-adjust: 100%; }
 body {
   margin: 0;
-  background: var(--paper);
   color: var(--ink);
   font: 400 16px/1.6 var(--sans);
   overflow-wrap: break-word;
+  background:
+    radial-gradient(60rem 36rem at 85% -6rem, #fbf2d9 0%, rgba(251, 242, 217, 0) 70%),
+    var(--paper);
 }
-h1, h2, h3, p, ul { margin: 0; }
-img { display: block; max-width: 100%; height: auto; }
+h1, h2, h3, p, ul, figure { margin: 0; }
+img, svg { display: block; max-width: 100%; }
+img { height: auto; }
 a { color: inherit; text-underline-offset: 4px; }
-a:focus-visible { outline: 3px solid var(--focus); outline-offset: 4px; border-radius: 4px; }
+a:focus-visible { outline: 3px solid var(--focus); outline-offset: 4px; border-radius: 6px; }
+em { font-style: italic; color: var(--green); font-weight: 400; }
 
 .lab-wrap {
   width: 100%;
@@ -44,99 +56,178 @@ a:focus-visible { outline: 3px solid var(--focus); outline-offset: 4px; border-r
 }
 .lab-skip:focus { top: 12px; }
 
-/* Header */
+/* Header — same brand lockup as the homepage */
 .lab-header {
-  display: flex; align-items: center; justify-content: space-between; gap: 16px;
-  padding-top: 16px; padding-bottom: 16px;
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding-top: 14px; padding-bottom: 14px;
 }
-.lab-brand { display: inline-flex; align-items: center; min-height: 44px; }
-.lab-brand img { width: 88px; }
+.lab-brand { display: inline-flex; flex-direction: column; justify-content: center; min-height: 44px; text-decoration: none; }
+.lab-brand img { width: 84px; }
+.lab-brand-sub { font-size: 8px; font-weight: 800; letter-spacing: .2em; color: #8a4a35; margin: -2px 0 0 4px; }
 .lab-nav { display: flex; align-items: center; gap: 4px; }
 .lab-nav a {
   display: inline-flex; align-items: center; min-height: 44px; padding: 0 12px;
-  font-weight: 600; text-decoration: none; border-radius: 999px; white-space: nowrap;
+  font-size: 15px; font-weight: 700; text-decoration: none; border-radius: 999px; white-space: nowrap;
 }
 .lab-nav a:hover { text-decoration: underline; }
-.lab-nav .lab-nav-home { border: 1.5px solid var(--ink); }
+.lab-nav .lab-nav-home { border: 1.5px solid var(--ink); background: var(--card); }
+.lab-nav .lab-nav-home:hover { background: var(--lime); text-decoration: none; }
 
-/* Hero */
-.lab-hero { padding: 24px 0 32px; }
+/* Hero — Cục Yên is the focal point */
+.lab-hero {
+  display: grid; gap: 8px; align-items: center;
+  padding-top: 8px; padding-bottom: 24px;
+}
 .lab-badge {
-  display: inline-block; margin-bottom: 12px; padding: 2px 12px;
-  background: var(--lime); border-radius: 999px; font-size: 14px; font-weight: 700;
+  display: inline-block; padding: 3px 12px; transform: rotate(-2deg);
+  background: var(--lime); border: 1.5px solid var(--ink); border-radius: 999px;
+  font-size: 14px; font-weight: 700;
 }
 .lab-hero h1 {
-  font: 500 clamp(40px, 11vw, 72px)/1.1 var(--serif);
+  font: 500 clamp(52px, 15vw, 104px)/1.08 var(--serif);
+  letter-spacing: -.025em;
+  margin: 14px 0 2px;
+}
+.lab-accent {
+  font: italic 400 clamp(26px, 7vw, 40px)/1.2 var(--serif);
+  color: var(--green);
   margin-bottom: 16px;
 }
-.lab-lead { font-size: clamp(18px, 4.6vw, 22px); line-height: 1.45; max-width: 32ch; margin-bottom: 8px; }
+.lab-lead { font-size: 18px; font-weight: 600; line-height: 1.5; max-width: 30ch; margin-bottom: 8px; }
 .lab-sub, .lab-muted { color: var(--muted); }
-.lab-sub { max-width: 52ch; }
+.lab-sub { max-width: 46ch; }
 
-h2 { font: 500 26px/1.25 var(--serif); margin-bottom: 8px; }
-h3 { font: 700 20px/1.3 var(--sans); }
+.lab-hero-art { position: relative; justify-self: center; width: min(78vw, 340px); order: -1; }
+.lab-hero-glow {
+  aspect-ratio: 1; border-radius: 50%;
+  background: radial-gradient(circle at 50% 45%, #fdf6e3 0%, #f3e6c4 62%, rgba(243, 230, 196, 0) 72%);
+  display: grid; place-items: center;
+}
+.lab-mascot { width: 86%; height: auto; aspect-ratio: 1; }
+.lab-note {
+  position: absolute; right: -4px; bottom: 6%;
+  max-width: 13.5em; padding: 10px 14px;
+  background: var(--card); border: 1.5px solid var(--ink); border-radius: 14px;
+  box-shadow: 3px 4px 0 var(--sage);
+  transform: rotate(2.5deg);
+  font: italic 400 15px/1.45 var(--serif);
+}
 
-/* Needs: informational only until each group has a released tool (M3). */
-.lab-needs, .lab-tools, .lab-safety { padding: 24px 0; border-top: 1px solid var(--line); }
-.lab-needs > .lab-muted, .lab-tools > .lab-muted { max-width: 60ch; margin-bottom: 16px; }
+/* Section headings, numbered like the homepage ("01 / …") */
+.lab-body { display: grid; gap: 20px; padding-bottom: 48px; }
+.lab-kicker {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 14px; font-weight: 700; color: var(--green); margin-bottom: 6px;
+}
+.lab-kicker span {
+  display: inline-grid; place-items: center; min-width: 32px; height: 26px; padding: 0 6px;
+  background: var(--ink); color: var(--white); border-radius: 8px; font-size: 13px;
+}
+h2 { font: 500 clamp(30px, 8vw, 46px)/1.15 var(--serif); letter-spacing: -.02em; margin-bottom: 10px; }
+h3 { font: 600 22px/1.3 var(--serif); }
+
+/* Needs — pastel paper tags, informational only until M3 */
+.lab-needs { padding-top: 24px; }
+.lab-needs > .lab-muted { max-width: 56ch; margin-bottom: 18px; }
 .lab-need-list, .lab-tool-list, .lab-safety-list { list-style: none; padding: 0; }
-.lab-need-list { display: grid; gap: 8px; }
+.lab-need-list { display: flex; flex-wrap: wrap; gap: 12px 10px; }
 .lab-need {
-  display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap;
-  min-height: 48px; padding: 8px 16px; border: 1px dashed var(--muted); border-radius: var(--radius-sm);
+  display: inline-flex; align-items: center; gap: 10px; min-height: 48px;
+  padding: 8px 8px 8px 16px; border: 1.5px solid var(--ink); border-radius: 999px;
 }
-.lab-need-name { font-weight: 600; }
-.lab-chip {
-  display: inline-block; padding: 0 10px; border-radius: 999px;
-  background: var(--white); border: 1px solid var(--muted); color: var(--ink);
-  font-size: 14px; font-weight: 600; line-height: 1.7; white-space: nowrap;
+.lab-need--mind { background: var(--lavender); transform: rotate(-1deg); }
+.lab-need--body { background: #fbd7cd; transform: rotate(.8deg); }
+.lab-need--pleasant { background: #e8efb4; transform: rotate(-.6deg); }
+.lab-need-name { font-weight: 700; }
+.lab-need-soon {
+  padding: 1px 10px; border-radius: 999px; background: rgba(255, 255, 255, .7);
+  font-size: 14px; font-weight: 600; white-space: nowrap;
 }
 
-/* Tool list: "coming" items are plain text, never dead links or buttons. */
-.lab-tool-list { display: grid; gap: 16px; }
+/* Menu card — the café's "thực đơn nghỉ" */
+.lab-menu {
+  margin-top: 16px; padding: 28px 20px 12px;
+  background: var(--card); border: 1.5px solid var(--ink); border-radius: var(--radius-lg);
+  box-shadow: var(--paper-shadow), var(--soft-shadow);
+}
+.lab-menu > .lab-muted { max-width: 56ch; margin-bottom: 8px; }
 .lab-tool {
-  display: grid; gap: 8px; align-content: start;
-  padding: 20px; border: 1px solid var(--line); border-radius: var(--radius-md); background: #fbf8f1;
+  display: grid; gap: 10px;
+  padding: 20px 0; border-top: 1.5px dashed var(--line);
 }
-.lab-tool .lab-chip { justify-self: start; }
-.lab-tool p { max-width: 36ch; }
-.lab-tool-foot { color: var(--muted); font-size: 14px; }
+.lab-tool:first-child { border-top: 0; }
+.lab-tool-main p { color: var(--muted); max-width: 40ch; margin-top: 4px; }
+.lab-tool-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; }
+.lab-tool-size { font-size: 14px; font-weight: 600; color: var(--green); }
+.lab-chip {
+  display: inline-block; padding: 1px 12px; border-radius: 999px;
+  background: var(--butter); border: 1px solid #c9a94e; color: var(--ink);
+  font-size: 14px; font-weight: 700; line-height: 1.7; white-space: nowrap;
+}
 
-/* Safety */
+/* Safety — a small taped paper slip, always readable (16px) */
+.lab-safety {
+  position: relative; margin-top: 20px; padding: 28px 22px 22px;
+  background: #fbf7ec; border: 1px solid var(--line); border-radius: 6px;
+  box-shadow: 0 10px 30px rgba(35, 57, 43, .07);
+}
+.lab-safety::before {
+  content: ""; position: absolute; top: -11px; left: 50%; width: 92px; height: 22px;
+  transform: translateX(-50%) rotate(-2deg);
+  background: rgba(219, 231, 141, .75); border-radius: 3px;
+}
+.lab-safety h2 { font-size: 26px; }
 .lab-safety-list { display: grid; gap: 8px; margin-bottom: 16px; }
-.lab-safety-list li { padding-left: 20px; position: relative; max-width: 64ch; }
+.lab-safety-list li { position: relative; padding-left: 22px; max-width: 64ch; }
 .lab-safety-list li::before {
-  content: ""; position: absolute; left: 4px; top: .65em;
-  width: 7px; height: 7px; border-radius: 50%; background: var(--green);
+  content: ""; position: absolute; left: 4px; top: .62em;
+  width: 8px; height: 8px; border-radius: 50%; background: var(--green);
 }
+.lab-source a { color: var(--ink); font-weight: 600; }
 
-/* Footer */
-.lab-footer { padding-top: 32px; padding-bottom: max(40px, env(safe-area-inset-bottom)); border-top: 1px solid var(--line); }
-.lab-footer > p { margin-bottom: 16px; }
+/* Footer — invitation to the real café, on the dark green the homepage uses */
+.lab-footer { background: var(--ink); color: var(--paper); margin-top: 16px; }
+.lab-footer-inner {
+  display: grid; gap: 8px; align-items: center;
+  padding-top: 36px; padding-bottom: max(40px, env(safe-area-inset-bottom));
+}
+.lab-footer-mascot { width: 120px; height: 120px; }
+.lab-footer-title { font: 500 clamp(28px, 7.5vw, 40px)/1.2 var(--serif); margin-bottom: 8px; }
+.lab-footer-title em { color: var(--lime); }
+.lab-footer-text { color: #dbe2d6; max-width: 46ch; margin-bottom: 20px; }
 .lab-footer-links { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 20px; }
-.lab-footer-links a:not(.lab-button) { display: inline-flex; align-items: center; min-height: 44px; font-weight: 600; }
+.lab-footer-links a:not(.lab-button) { display: inline-flex; align-items: center; min-height: 44px; font-weight: 700; }
+.lab-footer a:focus-visible { outline-color: var(--butter); }
 .lab-button {
   display: inline-flex; align-items: center; justify-content: center;
-  min-height: 48px; padding: 8px 24px; border-radius: 999px;
-  background: var(--ink); color: var(--white); font-weight: 700; text-decoration: none;
-  transition: background-color 160ms ease-out;
+  min-height: 48px; padding: 8px 26px; border-radius: 999px;
+  background: var(--lime); color: var(--ink); font-weight: 800; text-decoration: none;
+  box-shadow: 0 5px 0 #8fa86f;
+  transition: transform 160ms ease-out, box-shadow 160ms ease-out;
 }
-.lab-button:hover { background: var(--green); }
+.lab-button:hover { transform: translateY(-2px); box-shadow: 0 7px 0 #8fa86f; }
+.lab-button:active { transform: translateY(3px); box-shadow: 0 2px 0 #8fa86f; }
 
 @media (max-width: 359px) {
   .lab-header { gap: 8px; }
   .lab-brand img { width: 72px; }
   .lab-nav a { padding: 0 10px; }
+  .lab-note { right: -8px; font-size: 14px; }
 }
 
 @media (min-width: 768px) {
-  .lab-header { padding-top: 24px; padding-bottom: 24px; }
+  .lab-header { padding-top: 22px; padding-bottom: 22px; }
   .lab-brand img { width: 104px; }
-  .lab-hero { padding: 48px 0 56px; }
-  .lab-needs, .lab-tools, .lab-safety { padding: 40px 0; }
-  .lab-need-list { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-  .lab-tool-list { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-  h2 { font-size: 32px; }
+  .lab-hero { grid-template-columns: 1.1fr .9fr; gap: 32px; padding-top: 24px; padding-bottom: 48px; }
+  .lab-hero-art { order: 0; width: min(100%, 420px); }
+  .lab-note { right: 0; bottom: 10%; }
+  .lab-body { gap: 32px; padding-bottom: 72px; }
+  .lab-menu { padding: 40px 40px 20px; }
+  .lab-tool { grid-template-columns: 1fr auto; align-items: center; gap: 24px; padding: 24px 0; }
+  .lab-tool-meta { justify-content: flex-end; }
+  .lab-safety { padding: 36px 40px 28px; width: 100%; max-width: 760px; justify-self: center; }
+  .lab-footer-inner { grid-template-columns: auto 1fr; gap: 32px; padding-top: 48px; padding-bottom: 56px; }
+  .lab-footer-mascot { width: 160px; height: 160px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

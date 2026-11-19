@@ -21,7 +21,8 @@ test('direct URL, reload and trailing-slash redirect load the Lab shell', async 
   expect(response.status()).toBe(200);
   await expect(page).toHaveTitle(/Yên Lab/);
   await expect(page.getByRole('heading', { level: 1, name: 'Yên Lab' })).toBeVisible();
-  await expect(page.getByText('Beta', { exact: true })).toBeVisible();
+  await expect(page.locator('.lab-badge')).toContainText('Beta');
+  await expect(page.getByRole('img', { name: 'Cục Yên ngồi cầm ly trà' })).toBeVisible();
   await expect(page.getByText('Thử một bài ngắn. Dừng lúc nào cũng được.')).toBeVisible();
   await expect(page.locator('main')).toHaveCount(1);
   await page.reload();

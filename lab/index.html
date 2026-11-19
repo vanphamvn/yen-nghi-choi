@@ -15,67 +15,94 @@
 <body>
   <a class="lab-skip" href="#lab-main">Đến nội dung</a>
   <header class="lab-header lab-wrap">
-    <a class="lab-brand" href="/" aria-label="Về website Yên Coffee &amp; Tea"><img src="/yen-logo.svg" width="1450" height="585" alt="yên"></a>
+    <a class="lab-brand" href="/" aria-label="Về website Yên Coffee &amp; Tea"><img src="/yen-logo.svg" width="1450" height="585" alt="yên"><span class="lab-brand-sub" aria-hidden="true">COFFEE &amp; TEA</span></a>
     <nav class="lab-nav" aria-label="Điều hướng Yên Lab">
       <a href="/#yen-ngoai-doi">Ghé quán</a>
       <a class="lab-nav-home" href="/">Về Yên</a>
     </nav>
   </header>
 
-  <main id="lab-main" class="lab-wrap">
-    <section class="lab-hero" aria-labelledby="lab-title">
-      <p class="lab-badge">Beta</p>
-      <h1 id="lab-title">Yên Lab</h1>
-      <p class="lab-lead">Thử một bài ngắn. Dừng lúc nào cũng được.</p>
-      <p class="lab-sub">Một bài thực hành ngắn để bạn thử. Không phải công cụ chẩn đoán hay điều trị.</p>
+  <main id="lab-main">
+    <section class="lab-hero lab-wrap" aria-labelledby="lab-title">
+      <div class="lab-hero-copy">
+        <p class="lab-badge">Góc nghỉ · Beta</p>
+        <h1 id="lab-title">Yên Lab</h1>
+        <p class="lab-accent">Ngồi xuống chút đã.</p>
+        <p class="lab-lead">Thử một bài ngắn. Dừng lúc nào cũng được.</p>
+        <p class="lab-sub">Một bài thực hành ngắn để bạn thử. Không phải công cụ chẩn đoán hay điều trị.</p>
+      </div>
+      <figure class="lab-hero-art">
+        <div class="lab-hero-glow">
+          <svg class="lab-mascot" viewBox="0 0 320 320" role="img" aria-label="Cục Yên ngồi cầm ly trà"><use href="/assets/cuc-yen/mascot.svg#cuc-yen-tea"></use></svg>
+        </div>
+        <figcaption class="lab-note">Ở đây không ai chấm điểm, cũng không ai giục.</figcaption>
+      </figure>
     </section>
 
-    <section class="lab-needs" aria-labelledby="needs-title" data-testid="lab-needs">
-      <h2 id="needs-title">Bạn muốn thử gì?</h2>
-      <p class="lab-muted">Chọn theo nhu cầu sẽ mở khi mỗi nhóm có bài thực hành chạy được. Đây chỉ là cách tìm bài.</p>
-      <ul class="lab-need-list">
-        <li class="lab-need" data-need="mind"><span class="lab-need-name">Đầu óc nhiều chuyện</span><span class="lab-chip">Sắp có</span></li>
-        <li class="lab-need" data-need="body"><span class="lab-need-name">Người đang căng</span><span class="lab-chip">Sắp có</span></li>
-        <li class="lab-need" data-need="pleasant"><span class="lab-need-name">Muốn một điều dễ chịu</span><span class="lab-chip">Sắp có</span></li>
-      </ul>
-    </section>
+    <div class="lab-wrap lab-body">
+      <section class="lab-needs" aria-labelledby="needs-title" data-testid="lab-needs">
+        <p class="lab-kicker"><span>01</span> Hôm nay</p>
+        <h2 id="needs-title">Bạn muốn thử <em>gì?</em></h2>
+        <p class="lab-muted">Chọn theo nhu cầu sẽ mở khi mỗi nhóm có bài thực hành chạy được. Đây chỉ là cách tìm bài.</p>
+        <ul class="lab-need-list">
+          <li class="lab-need lab-need--mind" data-need="mind"><span class="lab-need-name">Đầu óc nhiều chuyện</span><span class="lab-need-soon">Sắp có</span></li>
+          <li class="lab-need lab-need--body" data-need="body"><span class="lab-need-name">Người đang căng</span><span class="lab-need-soon">Sắp có</span></li>
+          <li class="lab-need lab-need--pleasant" data-need="pleasant"><span class="lab-need-name">Muốn một điều dễ chịu</span><span class="lab-need-soon">Sắp có</span></li>
+        </ul>
+      </section>
 
-    <section class="lab-tools" aria-labelledby="tools-title">
-      <h2 id="tools-title">Các bài</h2>
-      <p class="lab-muted" id="lab-release-status" data-released-count="0">Chưa có bài nào mở. Thở cùng Yên sẽ là bài đầu tiên, sau khi qua kiểm tra.</p>
-      <ul class="lab-tool-list" data-testid="lab-tool-list">
-        <li class="lab-tool" data-tool="breath" data-status="coming">
-          <span class="lab-chip">Sắp có</span>
-          <h3>Thở cùng Yên</h3>
-          <p>Thử thở nhẹ theo nhịp, trong mức dễ chịu.</p>
-          <p class="lab-tool-foot">Khoảng 1 phút</p>
-        </li>
-        <li class="lab-tool" data-tool="small" data-status="coming">
-          <span class="lab-chip">Sắp có</span>
-          <h3>Ba điều nhỏ xíu</h3>
-          <p>Có điều nhỏ nào bạn muốn giữ lại hôm nay?</p>
-          <p class="lab-tool-foot">Đang hoàn thiện</p>
-        </li>
-      </ul>
-    </section>
+      <section class="lab-menu" aria-labelledby="tools-title">
+        <p class="lab-kicker"><span>02</span> Thực đơn nghỉ</p>
+        <h2 id="tools-title">Các bài</h2>
+        <p class="lab-muted" id="lab-release-status" data-released-count="0">Chưa có bài nào mở. Thở cùng Yên sẽ là bài đầu tiên, sau khi qua kiểm tra.</p>
+        <ul class="lab-tool-list" data-testid="lab-tool-list">
+          <li class="lab-tool" data-tool="breath" data-status="coming">
+            <div class="lab-tool-main">
+              <h3>Thở cùng Yên</h3>
+              <p>Thử thở nhẹ theo nhịp, trong mức dễ chịu.</p>
+            </div>
+            <div class="lab-tool-meta">
+              <span class="lab-tool-size">Khoảng 1 phút</span>
+              <span class="lab-chip">Sắp có · đang pha</span>
+            </div>
+          </li>
+          <li class="lab-tool" data-tool="small" data-status="coming">
+            <div class="lab-tool-main">
+              <h3>Ba điều nhỏ xíu</h3>
+              <p>Có điều nhỏ nào bạn muốn giữ lại hôm nay?</p>
+            </div>
+            <div class="lab-tool-meta">
+              <span class="lab-tool-size">Vài phút</span>
+              <span class="lab-chip">Sắp có · đang pha</span>
+            </div>
+          </li>
+        </ul>
+      </section>
 
-    <section class="lab-safety" aria-labelledby="safety-title">
-      <h2 id="safety-title">Trước khi thử</h2>
-      <ul class="lab-safety-list">
-        <li>Bài thực hành tự nguyện, không thay thế tư vấn hoặc điều trị chuyên môn.</li>
-        <li>Nếu thấy khó chịu, cứ dừng. Không cần làm hết bài.</li>
-        <li>Không lưu hoặc gửi lựa chọn và nội dung bạn nhập. Rời bài là xóa. Trang này không dùng cookie.</li>
-      </ul>
-      <p class="lab-muted">Nghiên cứu nói về kỹ thuật nền; bản thực hành này chưa được kiểm chứng hiệu quả riêng. <a href="https://github.com/vanphamvn/yen-nghi-choi/blob/main/docs/yen-lab/EVIDENCE.md" rel="noopener noreferrer" referrerpolicy="no-referrer">Nguồn phương pháp</a></p>
-    </section>
+      <section class="lab-safety" aria-labelledby="safety-title">
+        <h2 id="safety-title">Trước khi thử</h2>
+        <ul class="lab-safety-list">
+          <li>Bài thực hành tự nguyện, không thay thế tư vấn hoặc điều trị chuyên môn.</li>
+          <li>Nếu thấy khó chịu, cứ dừng. Không cần làm hết bài.</li>
+          <li>Không lưu hoặc gửi lựa chọn và nội dung bạn nhập. Rời bài là xóa. Trang này không dùng cookie.</li>
+        </ul>
+        <p class="lab-muted lab-source">Nghiên cứu nói về kỹ thuật nền; bản thực hành này chưa được kiểm chứng hiệu quả riêng. <a href="https://github.com/vanphamvn/yen-nghi-choi/blob/main/docs/yen-lab/EVIDENCE.md" rel="noopener noreferrer" referrerpolicy="no-referrer">Nguồn phương pháp</a></p>
+      </section>
+    </div>
   </main>
 
-  <footer class="lab-footer lab-wrap">
-    <p>Muốn nghỉ thật thì ghé Yên Coffee &amp; Tea ở Láng Dài, Đất Đỏ.</p>
-    <nav class="lab-footer-links" aria-label="Rời Yên Lab">
-      <a class="lab-button" href="/">Về Yên</a>
-      <a href="/#yen-ngoai-doi">Xem đường tới quán</a>
-    </nav>
+  <footer class="lab-footer">
+    <div class="lab-wrap lab-footer-inner">
+      <svg class="lab-footer-mascot" viewBox="0 0 320 320" aria-hidden="true" focusable="false"><use href="/assets/cuc-yen/mascot.svg#cuc-yen-coffee"></use></svg>
+      <div>
+        <p class="lab-footer-title">Muốn nghỉ thật thì <em>ghé quán.</em></p>
+        <p class="lab-footer-text">Yên Coffee &amp; Tea ở Láng Dài, Đất Đỏ. Có ghế, có ly, có Cục Yên giả vờ bận.</p>
+        <nav class="lab-footer-links" aria-label="Rời Yên Lab">
+          <a class="lab-button" href="/">Về Yên</a>
+          <a href="/#yen-ngoai-doi">Xem đường tới quán</a>
+        </nav>
+      </div>
+    </div>
   </footer>
 </body>
 </html>
