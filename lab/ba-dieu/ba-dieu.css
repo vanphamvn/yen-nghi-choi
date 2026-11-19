@@ -1,0 +1,64 @@
+/* Ba điều nhỏ xíu (G14, #155): only what the shared game screen (lab/game.css) does not already provide. */
+
+/* Three paper slips to write on: café notepad strips, ink outline + a little offset shadow like the sheet itself. */
+.ba-slips { --show: grid; gap: 10px; width: min(100%, 26em); margin: 14px auto 0; }
+.ba-slip {
+  display: flex; align-items: center; gap: 10px;
+  padding: 6px 12px 6px 10px; background: var(--white);
+  border: 1.5px solid var(--ink); border-radius: 6px 10px 8px 12px; box-shadow: 3px 4px 0 #d9e3d2;
+}
+.ba-slip:nth-child(2) { transform: rotate(-.6deg); }
+.ba-slip:nth-child(3) { transform: rotate(.5deg); }
+.ba-num { font: italic 600 20px/1 var(--serif); color: var(--green); min-width: 1ch; }
+.ba-slip input {
+  flex: 1; min-width: 0; min-height: 44px; padding: 4px 2px;
+  border: 0; background: transparent; color: var(--ink);
+  font: 400 17px/1.4 var(--sans); /* ≥16px so iOS Safari does not zoom in on focus */
+}
+.ba-slip input:focus { outline: none; }
+.ba-slip:focus-within { outline: 3px solid var(--focus); outline-offset: 3px; }
+
+/* Suggestions: small ink words with a quiet label, same pattern as the other games' choices. */
+.ba-ideas { --show: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 0 6px; max-width: 30em; margin: 8px auto 0; }
+.ba-ideas .game-words { margin-top: 0; gap: 0 2px; }
+.ba-ideas-label { font: italic 400 15px/1.4 var(--serif); color: var(--muted); }
+
+/* The kept notes after "xong": the same slips, now just paper with words on it. */
+.ba-notes { --show: grid; gap: 10px; width: min(100%, 24em); margin: 14px auto 0; padding: 0; list-style: none; }
+.ba-notes li {
+  padding: 10px 14px; background: var(--white); text-align: left;
+  border: 1.5px solid var(--ink); border-radius: 6px 10px 8px 12px; box-shadow: 3px 4px 0 #d9e3d2;
+  font: italic 500 18px/1.45 var(--serif); color: var(--ink); overflow-wrap: anywhere;
+  animation: ba-note-in 260ms ease-out both;
+}
+.ba-notes li:nth-child(2) { transform: rotate(-.6deg); animation-delay: 80ms; }
+.ba-notes li:nth-child(3) { transform: rotate(.5deg); animation-delay: 160ms; }
+@keyframes ba-note-in { from { opacity: 0; translate: 0 6px; } to { opacity: 1; translate: 0 0; } }
+.ba-after { margin-top: 12px; }
+
+/* While writing, the words matter more than the picture (and the phone keyboard needs the room). */
+.game[data-state="running"] .ba-stage { display: none; }
+.game[data-state="running"] .game-cue { margin-top: 10px; font-size: clamp(20px, 5.4vw, 26px); }
+
+/* Phones: keep the caution, privacy line and "bắt đầu" in the first screen. */
+@media (max-width: 767px) {
+  .game[data-state="idle"] .game-stage { width: min(100%, 150px); margin: 8px auto 4px; }
+  .game[data-state="running"] .game-head .game-lede { display: none; }
+  /* writing: slips, suggestions and "xong" in one screen; the privacy line was shown before starting and stays in the footer */
+  .game[data-state="running"] .game-head h1 { font-size: 26px; }
+  .game[data-state="running"] .game-cue { margin-top: 4px; font-size: 19px; }
+  .game[data-state="running"] .ba-private { display: none; }
+  .game[data-state="running"] .ba-slips { gap: 8px; margin-top: 10px; }
+  .game[data-state="running"] .ba-ideas { margin-top: 4px; }
+  .game[data-state="running"] #game-controls { margin-top: 6px; }
+  .ba-slip { padding-top: 2px; padding-bottom: 2px; }
+}
+
+@media (max-width: 359px) {
+  .ba-ideas .ink-word--small { font-size: 16px; padding: 4px 5px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ba-notes li { animation: none; }
+  .ba-slip, .ba-notes li { transform: none !important; }
+}
