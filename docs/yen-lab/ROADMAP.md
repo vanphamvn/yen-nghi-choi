@@ -136,3 +136,11 @@ Không dùng copy như “đã được khoa học chứng minh giúp bạn hế
 - Khi code xong, cập nhật task trạng thái trong `ops/roadmap.json` thành `in-progress`/`blocked`/`done` **chỉ theo chứng cứ**. Luôn reconcile GitHub issue/PR trước khi chọn việc.
 - Những issue cũ #37/#38 có thể tái sử dụng QA và nghiên cứu khách, **không** đóng/chuyển hướng mà chưa xem scope hiện hữu.
 - Roadmap được đặt trong nhánh docs/PR riêng; **tạo ticket và tài liệu không đồng nghĩa triển khai**. Không tự khởi động lịch chạy background hay trả phí.
+
+## 10. Active coordination · 19/11/2026
+
+One coordinator selects eligible work, delegates isolated implementation and independent QA, and reconciles issue/roadmap state. Continue during an active session without repeated prompts; complete at least one actual ticket per implementation prompt with acceptance and test evidence. See AGENTS.md for the execution contract. This is not a background schedule.
+
+- F01 / #125 completed: PR #163, runner freeze and CI, 12 superseded Phaser issues triaged as not_planned, old QA automation disabled, actual homepage browser smoke passed. Exact provider revision and full homepage regression are not asserted.
+- F02 / #126 completed: PR #123 merged and design audit passed.
+- F03 / #127 and F04 / #128 remain in progress; no /lab/ Alpha release claimed.

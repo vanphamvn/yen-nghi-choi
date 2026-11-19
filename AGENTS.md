@@ -6,6 +6,16 @@ The owner **stopped the Yên Phaser 2D game initiative** and replaced its priori
 
 Well-being mini tools must have clear start/stop, accessible reduced-motion fallback and no unauthorized health-data capture. Scientific references support only the underlying techniques unless the custom game itself has been tested.
 
+## Active Yên Lab coordination (owner decision 2026-11-19)
+
+Use one coordinator agent for the active Yên Lab roadmap. The coordinator reads live issues/PRs and `docs/yen-lab/ops/roadmap.json`, selects work whose dependencies are satisfied, and assigns separate file ownership to implementation and independent QA agents. Keep integration, status reconciliation and release decisions with the coordinator; avoid concurrent edits to shared roadmap files.
+
+During an active session, continue from one completed ticket to the next eligible ticket without asking the owner to repeat the prompt. Each implementation prompt session must complete at least one real roadmap ticket against its acceptance criteria, record actual tests/PR/SHA evidence and close it on GitHub. Do not create artificial tickets or close incomplete work to satisfy the minimum. If all eligible work is externally blocked, document the specific blocker and completed investigation honestly.
+
+For source changes: branch → implement → independent review and relevant tests → PR → green CI → merge. User-facing release tickets additionally require actual browser checks and exact production SHA/URL. A docs-only foundation ticket does not imply a runtime release. Reconcile issue state and roadmap status after integration.
+
+This is a working-session loop, not a scheduled automation or a promise of unattended execution after a turn ends. Do not create paid jobs, background services or schedules unless separately requested. Preserve the stopped Phaser initiative.
+
 ---
 
 # Yên repository agent instructions
