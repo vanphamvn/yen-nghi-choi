@@ -80,6 +80,7 @@ test('one guest visit: room → book → all three games → back to the room, n
   await page.clock.install();
   await page.goto('/lab/');
   await shot(page, '0-room');
+  expect(await page.evaluate(() => [window.__labSound, document.querySelectorAll('audio, video').length])).toEqual([{ audioContext: 0, mediaPlay: 0, speech: 0, vibrate: 0 }, 0]);
 
   for (const game of GAMES) {
     await expect(page).toHaveURL(/\/lab\/$/);
@@ -92,6 +93,7 @@ test('one guest visit: room → book → all three games → back to the room, n
     await expect(page).toHaveURL(new RegExp(game.path.replace(/\//g, '\\/') + '$'));
     await playThrough(page, game, { clock: true });
     expect(await page.evaluate(() => window.__labSound)).toEqual({ audioContext: 0, mediaPlay: 0, speech: 0, vibrate: 0 });
+    expect(await page.evaluate(() => document.querySelectorAll('audio, video').length)).toBe(0); // autoplay needs no play()
     const home = page.locator('main.game').getByRole('link', { name: 'về góc ngồi chơi', exact: true });
     if (test.info().project.use.hasTouch) await home.tap(); else await home.click();
   }
@@ -113,13 +115,20 @@ test('Ba điều nhỏ xíu: typed words never leave the page and are gone after
   await tap(page, 'xong');
   await expect(page.getByText(MARKER, { exact: true })).toBeVisible();
 
-  // Leave the way a guest would, to another game, then come back with the browser's back button.
+  // The real wipe: the page's own pagehide handler (what a browser fires when the page goes into the back/forward
+  // cache) must remove the words from the live document before it is frozen. textContent also sees hidden nodes.
+  const wordsLeft = () => page.evaluate(() => document.body.textContent + [...document.querySelectorAll('input, textarea')].map(i => i.value).join('|'));
+  await page.evaluate(() => dispatchEvent(new PageTransitionEvent('pagehide', { persisted: true })));
+  expect(await wordsLeft()).not.toContain(MARKER);
+  await expect(page.locator('main.game')).toHaveAttribute('data-state', 'idle');
+
+  // Then leave the way a guest would and come back with the back button. Playwright's browsers run without a
+  // back/forward cache, so this part proves the page comes back clean from a reload, not from the cache.
   await page.goto('/lab/tho/');
   await page.goBack();
   await expect(page).toHaveURL(/\/lab\/ba-dieu\/$/);
   await expect(page.locator('main.game')).toHaveAttribute('data-state', 'idle');
-  const onPage = await page.evaluate(() => document.body.innerText + [...document.querySelectorAll('input, textarea')].map(i => i.value).join('|'));
-  expect(onPage).not.toContain(MARKER);
+  expect(await wordsLeft()).not.toContain(MARKER);
   await page.goForward();
   await page.goBack();
   expect(await page.evaluate(() => [...document.querySelectorAll('input')].map(i => i.value).join(''))).toBe('');
