@@ -14,7 +14,7 @@ During an active session, continue from one completed ticket to the next eligibl
 
 For source changes: branch → implement → independent review and relevant tests → PR → green CI → merge. User-facing release tickets additionally require actual browser checks and exact production SHA/URL. A docs-only foundation ticket does not imply a runtime release. Reconcile issue state and roadmap status after integration.
 
-This is a working-session loop, not a scheduled automation or a promise of unattended execution after a turn ends. Do not create paid jobs, background services or schedules unless separately requested. Preserve the stopped Phaser initiative.
+The owner separately authorized a background coordinator on 2026-11-19. The enabled task “Điều phối Yên Lab” resumes the loop hourly (the supported maximum frequency), using live repository state and the same acceptance/release gates. Check active runs and open PRs before assigning work to avoid overlapping mutations. Scheduled execution is not an always-running process and an enabled task is not proof that a run succeeded. Do not create additional schedules, paid jobs or services without a new request. Preserve the stopped Phaser initiative.
 
 ---
 
