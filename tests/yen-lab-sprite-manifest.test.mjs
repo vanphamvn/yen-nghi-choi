@@ -27,3 +27,10 @@ test('page flip atlas dimensions and frames are declared coherently',()=>{
  assert.equal(manifest.book.frameHeight,410);
  assert.equal(manifest.book.loop,false);
 });
+test('page flip atlas pixel size matches the declared grid',()=>{
+ const file=readFileSync(join(root,manifest.book.atlas));
+ assert.equal(file.toString('ascii',12,16),'VP8X','atlas must be an extended WebP with a canvas header');
+ const width=file.readUIntLE(24,3)+1,height=file.readUIntLE(27,3)+1;
+ assert.equal(width,manifest.book.columns*manifest.book.frameWidth);
+ assert.equal(height,manifest.book.rows*manifest.book.frameHeight);
+});

@@ -200,3 +200,22 @@ button { font: inherit; color: inherit; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { transition: none !important; animation: none !important; }
 }
+
+/* Book page-turn sprite, #187. The original book.webp stays as the fallback when AVIF cannot decode.
+   Sprite is 8 frames, 320×208 px each, arranged left-to-right on one 2560×208 atlas. */
+.menu-book-art { position: relative; }
+.menu-book-art.is-enhanced { aspect-ratio: 320 / 208; }
+.menu-book-art.is-enhanced > img { display: none; }
+.menu-flip-frame { display: none; position: absolute; inset: 0; background-image: url("/lab/assets/book-flip.avif"); background-position: 0% 0%; background-size: 800% 100%; background-repeat: no-repeat; filter: drop-shadow(0 18px 24px rgba(30, 20, 10, .35)); }
+.menu-book-art.is-enhanced .menu-flip-frame { display: block; }
+.menu .menu-page[data-spread="2"] { display: none; }
+.menu[data-page="2"] .menu-page[data-spread="1"] { display: none; }
+.menu[data-page="2"] .menu-page[data-spread="2"] { display: flex; }
+.menu.is-turning .menu-page { visibility: hidden; }
+/* Invisible page-corner hit areas over the painted book: tap the lower right corner to turn forward, lower left to go back.
+   Only the keyboard focus ring is drawn; there is no visible button chrome. */
+.menu-corner { position: absolute; bottom: 4%; width: 22%; min-width: 48px; height: 34%; min-height: 48px; padding: 0; border: 0; border-radius: 14px; background: none; cursor: pointer; z-index: 2; }
+.menu-corner--prev { left: 3%; }
+.menu-corner--next { right: 3%; }
+.menu-corner:disabled { display: none; }
+.menu-corner:focus-visible { outline: 3px solid #f4d98a; outline-offset: 2px; }

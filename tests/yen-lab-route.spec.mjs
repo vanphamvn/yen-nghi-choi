@@ -54,8 +54,8 @@ test('hero, three needs, release-status list, house rules and way back to Yên',
 
   // Deferred routines are not listed; unreleased games are labelled and never dead links/buttons.
   await expect(page.locator('[data-tool="release"]')).toHaveCount(0);
+  // (there may be none: once every listed game is released, the book simply has no "sắp có" line)
   const coming = page.locator('[data-tool][data-status="coming"]');
-  expect(await coming.count()).toBeGreaterThan(0);
   for (const item of await coming.all()) {
     await expect(item.getByText('sắp có')).toBeVisible();
     await expect(item.locator('a, button, [role="button"], [tabindex]')).toHaveCount(0);
