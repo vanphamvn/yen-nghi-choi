@@ -14,6 +14,11 @@ async function probe(page) {
       obj[key] = function (...args) { hits.push(label); return orig.apply(this, args); };
     };
     for (const k of ['setItem', 'getItem', 'removeItem', 'clear']) spy(Storage.prototype, k, `storage.${k}`);
+    // Any touch of a storage object counts, including `localStorage.key = value`, IndexedDB, Cache API, cookieStore.
+    for (const name of ['localStorage', 'sessionStorage', 'indexedDB', 'caches', 'cookieStore']) {
+      const d = Object.getOwnPropertyDescriptor(window, name) || Object.getOwnPropertyDescriptor(Object.getPrototypeOf(window), name);
+      if (d && d.get) Object.defineProperty(window, name, { configurable: true, get() { hits.push(`storage:${name}`); return d.get.call(window); } });
+    }
     const cookie = Object.getOwnPropertyDescriptor(Document.prototype, 'cookie');
     Object.defineProperty(document, 'cookie', { configurable: true, get() { hits.push('cookie.get'); return cookie.get.call(document); }, set(v) { hits.push('cookie.set'); cookie.set.call(document, v); } });
     spy(window, 'fetch', 'fetch');
@@ -53,13 +58,19 @@ async function playKit(page) {
 test('no storage, cookies, network, device, audio or URL state during real Lab flows', async ({ page }) => {
   const requests = await probe(page);
   await page.clock.install();
+  await page.goto('/lab/');
+  const historyStart = await page.evaluate(() => history.length);
   await playRoom(page);
   expect(await page.evaluate(() => window.__labProbe)).toEqual([]);
   await playKit(page);
   expect(await page.evaluate(() => window.__labProbe)).toEqual([]);
-  expect(await page.evaluate(() => [location.search, location.hash, history.length <= 3])).toEqual(['', '', true]);
+  // Only page loads add history entries (re-loading /lab/ replaces its entry; the kit adds one); nothing a guest
+  // does is pushed into the URL.
+  expect(await page.evaluate(() => [location.search, location.hash])).toEqual(['', '']);
+  expect(await page.evaluate(() => history.length)).toBe(historyStart + 1);
   // Only same-origin GETs of static files, never a body (nothing a guest picks or types leaves the page).
-  const offenders = requests.filter(r => !r.url.startsWith(ORIGIN) || r.method !== 'GET' || r.body);
+  // …and never with a query string, which could smuggle a choice into server logs (e.g. img.src = '/x.webp?m=' + mood).
+  const offenders = requests.filter(r => !r.url.startsWith(ORIGIN) || r.method !== 'GET' || r.body || new URL(r.url).search);
   expect(offenders).toEqual([]);
   expect(requests.filter(r => /\.(json|php)|\/api\//.test(r.url))).toEqual([]);
 });
@@ -93,20 +104,22 @@ for (const path of PAGES) {
     // A way back to the room or to Yên is always present.
     expect(await page.locator('a[href="/lab/"], a[href="/"]').count()).toBeGreaterThan(0);
     // Keyboard: every focus stop shows a visible outline.
+    const focusable = await page.evaluate(() => [...document.querySelectorAll('a[href], button:not([disabled])')].filter(el => el.offsetParent !== null).length);
     const seen = new Set();
-    for (let i = 0; i < 25; i++) {
+    for (let i = 0; i < focusable + 3; i++) {
       await page.keyboard.press('Tab');
       const info = await page.evaluate(() => {
         const el = document.activeElement;
         if (!el || el === document.body) return null;
+        // index in document order identifies the element exactly (no collapsing of look-alike controls)
         const s = getComputedStyle(el);
-        return { key: el.outerHTML.slice(0, 60), outline: s.outlineStyle !== 'none' && parseFloat(s.outlineWidth) >= 2, inDialog: !!el.closest('dialog') };
+        return { key: [...document.querySelectorAll('*')].indexOf(el), html: el.outerHTML.slice(0, 60), outline: s.outlineStyle !== 'none' && parseFloat(s.outlineWidth) >= 2 };
       });
       if (!info || seen.has(info.key)) continue;
       seen.add(info.key);
-      expect(info.outline, info.key).toBe(true);
+      expect(info.outline, info.html).toBe(true);
     }
-    expect(seen.size).toBeGreaterThan(2);
+    expect(seen.size).toBe(focusable); // every visible control is reachable by Tab
   });
 }
 
@@ -115,10 +128,13 @@ test('reduced motion: no animation or transition anywhere in the room while play
   const page = await context.newPage();
   await page.goto('/lab/');
   await page.getByRole('button', { name: 'Chọc Cục Yên một cái' }).click();
-  const moving = await page.evaluate(() => [...document.querySelectorAll('*')].filter(el => {
-    const s = getComputedStyle(el);
-    return (s.animationName !== 'none' && parseFloat(s.animationDuration) > 0) || parseFloat(s.transitionDuration) > 0;
-  }).map(el => el.className));
+  const moving = await page.evaluate(() => {
+    const any = list => list.split(',').some(v => parseFloat(v) > 0); // every value of e.g. "0s, 1s"
+    return [...document.querySelectorAll('*')].flatMap(el => [null, '::before', '::after'].map(pseudo => {
+      const s = getComputedStyle(el, pseudo);
+      return (s.animationName !== 'none' && any(s.animationDuration)) || any(s.transitionDuration) ? `${el.className}${pseudo || ''}` : null;
+    })).filter(Boolean);
+  });
   expect(moving).toEqual([]);
   await context.close();
 });

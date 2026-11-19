@@ -17,9 +17,9 @@ const failures = [];
 const fail = (file, msg) => failures.push(`${file}: ${msg}`);
 
 // Pages and scripts that make up Yên Lab (the kit page is the reference game screen).
-const labFiles = walk('lab').filter(f => !f.includes('/assets/'));
+const labFiles = walk('lab');
 const pages = [...labFiles.filter(f => f.endsWith('.html')), 'docs/yen-lab/game-kit.html'];
-const scripts = [...labFiles.filter(f => /\.m?js$/.test(f)), 'docs/yen-lab/game-kit.mjs'];
+const scripts = [...labFiles.filter(f => /\.(m?js|cjs)$/.test(f)), 'docs/yen-lab/game-kit.mjs']; // assets/ included
 
 // 1 · HTTP headers for /lab/* on both hosts.
 const toml = read('netlify.toml');
@@ -59,12 +59,14 @@ const FORBIDDEN = [
   [/document\.cookie|cookieStore/, 'cookies'],
   [/\bfetch\s*\(|XMLHttpRequest|sendBeacon|WebSocket|EventSource|RTCPeerConnection/, 'network request'],
   [/getUserMedia|mediaDevices|geolocation|DeviceMotion|DeviceOrientation|Notification\.request|navigator\.permissions/, 'device permission'],
-  [/new\s+Audio\b|\.play\s*\(|AudioContext|speechSynthesis/, 'audio (must be user-started and reviewed first)'],
-  [/history\.(push|replace)State|location\.(hash|search)\s*=/, 'state in URL/history'],
-  [/\beval\s*\(|new\s+Function\s*\(|innerHTML\s*=/, 'dynamic code / HTML injection'],
+  [/new\s+Audio\b|AudioContext|speechSynthesis|createElement\(\s*['"`](audio|video)|\.autoplay\s*=/, 'audio/video (must be user-started and reviewed first)'],
+  [/history\.(push|replace)State|location\.(href|hash|search|pathname)\s*\+?=|location\.(assign|replace)\s*\(/, 'state in URL/history'],
+  [/new\s+Image\s*\(|\.(src|href|srcset)\s*\+?=\s*[^;\n]*[+`]|setAttribute\(\s*['"](src|href|srcset)['"]\s*,\s*[^)]*[+`]/, 'dynamic resource URL (could carry data in a query string)'],
+  [/\beval\s*\(|new\s+Function\s*\(|(inner|outer)HTML\s*\+?=|insertAdjacentHTML|document\.write/, 'dynamic code / HTML injection'],
 ];
 for (const file of scripts) {
-  const code = read(file).replace(/\/\/.*$/gm, '').replace(/\/\*[\s\S]*?\*\//g, ''); // ignore comments
+  // Ignore comments, but only real ones: `//` at line start or after whitespace, so 'https://…' strings stay scanned.
+  const code = read(file).replace(/\/\*[\s\S]*?\*\//g, '').replace(/(^|\s)\/\/.*$/gm, '$1');
   for (const [re, what] of FORBIDDEN) if (re.test(code)) fail(file, `forbidden: ${what} (${code.match(re)[0]})`);
 }
 
@@ -81,6 +83,7 @@ for (const file of pages) {
 }
 // Every Lab page states the non-treatment line somewhere visible.
 for (const file of pages) if (!/không thay thế tư vấn hoặc điều trị chuyên môn/.test(read(file))) fail(file, 'missing non-treatment line');
+for (const file of pages) if (!/>Nguồn phương pháp</.test(read(file))) fail(file, 'missing "Nguồn phương pháp" link');
 
 if (failures.length) {
   console.error(`Yên Lab privacy baseline FAILED (${failures.length}):\n- ` + failures.join('\n- '));
