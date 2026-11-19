@@ -1,0 +1,71 @@
+---
+name: yen-ui-craft
+description: Design, build, review and visually QA Yên Coffee & Tea's static website and evidence-informed Yên Lab beta mini tools, enforcing DESIGN.md, accessibility, responsive behavior and safe, purposeful motion.
+---
+
+# Yên UI Craft — Codex / Claude
+
+Use this **before** any work on the homepage, site copy, Cục Yên web interactions, a new `lab/` mini tool, CSS, animation, mobile UX or visual QA. This is the active web-interface skill from 2026-11-19.
+
+## Project boundaries
+
+- Repository: `vanphamvn/yen-nghi-choi`, existing website at root, predominantly static HTML/CSS/JS. Do not convert it to React simply to use a component gallery.
+- **New priority:** link the existing Yên website to a **Yên Lab Beta** page with multiple short, evidence-informed calming exercises. The former `game/preview-2d/` Phaser initiative is **paused**; do not autonomously resume its roadmap or replace the website with that game. Old game skills remain archival and are used only if the owner explicitly reactivates the game.
+- Do not claim Yên Lab or any custom mini game itself is clinically validated. Underlying breathing, muscle relaxation, mindfulness or emotion-labeling methods have varying evidence strength; reference and qualify claims individually.
+- No account, cookies, data storage, API key, microphone/camera or medical profiling without explicit authorization. No performance scoreboard or mandatory daily use.
+
+## Read before editing
+
+1. `AGENTS.md`, `DESIGN.md`, existing `index.html` and intended page/feature source.
+2. `references/QA-CHECKLIST.md` for the release gates.
+3. `references/RESEARCH-NOTES.md` for what the 12 public UI repositories do and **which parts are unsuitable** for Yên.
+4. Existing tests, `playwright.config.mjs`, Netlify/Vercel deployment and relevant open PRs/issues. Respect the current CSP and zero-build approach.
+
+## Workflow
+
+### 1. Observe, then brief
+
+Open the current page in an actual browser where available. Capture desktop (1440×900), iPhone-like (390×844), small Android (360×800), and 320px width if text changes. Inspect real content, focus states, overlays, typography, loading and interactions. Record observed vs inferred facts. Define one screen/interaction, its user job, success criterion, content truth and what stays unchanged.
+
+### 2. Design with a persistent identity
+
+Use `DESIGN.md` as the authority for palette, typography, geometry, voice and motion. Derive a page-specific style brief: primary action, single visual focal point, layout, major states, touch affordances, stop/exit, and fallback. Reuse the **existing** Yên mark and Cục Yên web personality. Do not borrow a brand from Awesome DESIGN.md or generate random "premium" gradients. New visual direction needs a reason tied to Yên.
+
+### 3. Build the smallest complete interaction
+
+Implement semantic HTML/CSS/vanilla JS. Prefer reusable small patterns and accessible controls. One action should cause one visible state change; a mini tool must really work, not just animate a mock preview. Use real Vietnamese copy. Provide finite interaction states: idle, active, pause/stop, complete, reset and error/reduced-motion where applicable. Keep the UI usable with low-end phones, and without sound.
+
+**Motion decision tree:** CSS transitions for simple feedback; Web Animations API for small coordinated interactions; GSAP only after demonstrable timeline complexity and a justified bundle trade-off. Do not add React Bits, WebGL/Canvas UI or 3D Scroll World to a vanilla site by default. Always offer `prefers-reduced-motion` and graceful static fallback. No scrolljacking.
+
+### 4. Critique and audit, separately
+
+Borrow the *methods*, not copied rule files: Impeccable's critique/polish, Hallmark's hard floor, Taste Skill's browser gate, Emil Kowalski's animation discipline and Google DESIGN.md's structured tokens.
+
+Two passes:
+- **Critique:** hierarchy, contrast, clarity, originality, brand cohesion, restraint, inappropriate visual noise, readable copy.
+- **Audit:** broken routes, overflow, tap targets, focus visibility, keyboard order, dialog dismissal, voiceover labels, reduced-motion, network errors, CSP, scripting off, performance and touch/landscape behavior.
+
+Record each actionable finding with severity P0/P1/P2 and a location. Fix P0/P1 before release.
+
+### 5. Verify and ship honestly
+
+Run `node tools/audit-ui-design.mjs`, the relevant existing Node tests, and Playwright browser tests for the affected page; add a regression test for each fixed defect. Inspect screenshots at real browser scale, not just screenshots of code. Use a feature branch → PR → CI → merge only when checks are green → verify deployed revision and production URL. If no real browser or deploy confirmation is available, report it explicitly. No false claims of "visually approved", 60fps, production deployment, or owner signoff.
+
+## Non-negotiable accessibility and trust
+
+- WCAG AA contrast; visible keyboard focus; semantic labels; 44×44px touch targets; Vietnamese legibility; no clipped text at 320px.
+- Avoid trapping users inside overlays or preventing scrolling; respect iOS safe areas and touch input.
+- Never hide instructions behind hover, animation, voice or color alone.
+- No autoplay audio, flicker, flashing or forced timed goals. Users can stop any exercise.
+- Reflection input stays local to the current page and is optional; do not persist it.
+- Present effects as **possible user experiences**, not medical outcomes. Provide a quiet exit path.
+
+## Mini-game acceptance template
+
+For each new Yên Lab tool, record: **name and goal**, underlying technique and source, intended audience / cautions, 1–5 minute loop, full interaction states, reduced-motion equivalent, accessibility controls, privacy behavior, mobile screenshots, browser test evidence and deployment SHA. A calming animation without real interaction does **not** meet the game/tool acceptance criterion.
+
+## Deliverable and reporting
+
+Return the exact changed paths, PR/commit, meaningful test results, real screenshots or URLs when available, limitations and deployment status. Avoid a generic UI quality score without inspection evidence.
+
+**References:** `references/RESEARCH-NOTES.md` and `references/QA-CHECKLIST.md`. External repos are inspiration and research, not silently installed packages or automatic permission to copy source.
