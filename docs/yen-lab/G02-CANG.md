@@ -23,7 +23,7 @@ Trang: `/lab/cang/` · Mã: `lab/cang/` (HTML, `cang.css`, `cang.mjs`) trên mà
 | Âm thanh | Không có. |
 | Riêng tư | Lựa chọn chỉ trong bộ nhớ trang; phản hồi không lưu, không gửi. `tests/yen-lab-privacy.spec.mjs` chơi trọn một lượt (bỏ chọn, tạm dừng, bỏ qua, hoàn tất, phản hồi): không storage/cookie/mạng/URL. |
 | Kiểm tra | `tests/yen-lab-cang.spec.mjs` (17 bài × desktop + chạm giả lập; thêm iPhone 15 WebKit và Pixel 7 khi `LAB_UX_DEVICES=1`): nhịp 5/20 giây theo đồng hồ giả, 2 lần mỗi chỗ, thứ tự chỗ, hoàn tất 3:20; bỏ qua khi chạy và khi tạm dừng; bỏ chọn chỗ, không chọn chỗ nào thì “bắt đầu” bị khóa; chế độ chỉ thả lỏng không có câu gồng và không co; animation theo đồng hồ và đóng băng khi dừng; ẩn trang → tạm dừng, không chạy bù; reduced motion; bàn phím + chạm; trình đọc màn hình; 320 px; lưu ý + “bắt đầu” trong màn hình đầu ở 320/360/390; guard giao thức (gồng ≤ 5 giây, thả dài hơn gồng, không chữ “nín/hết sức/cổ/ngón chân”). Engine: 4 unit test `skipTo`. Smoke 5 khung + byte-identity production; privacy runtime + tĩnh. |
-| Phát hành | Link trong thực đơn (sổ) ở `/lab/`. Cổng Core Beta 3 là #135. SHA production: ghi trong #143 sau khi merge. |
+| Phát hành | Link trong thực đơn (sổ) ở `/lab/`. **Đã phát hành:** PR #183 → `8da36e7` trên https://yencafeday.netlify.app/lab/cang/ (deployed smoke run 44525688827, 29/29). Cổng Core Beta 3 là #135. |
 
 ## Review nội dung và an toàn
 
