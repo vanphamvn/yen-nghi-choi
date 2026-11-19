@@ -5,7 +5,7 @@ description: Existing Yên brand applied to a playful, low-stimulation, mobile-f
 colors:
   paper: "#f7f3e9"
   ink: "#243c35"
-  muted: "#61746a"
+  muted: "#5f7065"
   green: "#2e5a46"
   lime: "#dbe78d"
   pink: "#f6b4a6"
@@ -79,9 +79,9 @@ Primary Yên Lab journey: **arrive → choose what you need → play one 1–5 m
 
 ## Colors
 
-The palette above reproduces the current site's primary color values (`--paper`, `--ink`, `--ink-muted`, `--green`, `--lime`, `--pink`, `--lav`, `--butter`). Prefer paper and ink as the dominant pair, green for primary affordances, and accents only when they clarify state.
+The palette above follows the current site's primary colors (`--paper`, `--ink`, `--green`, `--lime`, `--pink`, `--lav`, `--butter`). **Accessibility correction:** the existing site's `--ink-muted: #61746a` contrasts at approximately 4.497:1 on paper, narrowly below 4.5:1. Yên Lab uses the safer `muted: #5f7065` token; update legacy CSS in a dedicated, visually checked UI PR rather than silently changing production now. Prefer paper and ink as the dominant pair, green for primary affordances, and accents only when they clarify state.
 
-Never rely on color alone. Check text contrast at actual rendered sizes: WCAG AA at least 4.5:1 for normal text, 3:1 for large text and meaningful UI boundaries. The existing `--ink-muted` on `--paper` must be rechecked whenever edited.
+Never rely on color alone. Check text contrast at actual rendered sizes: WCAG AA at least 4.5:1 for normal text, 3:1 for large text and meaningful UI boundaries. The new `muted` token passes the contrast check, but all rendered text must still be verified.
 
 ## Typography and Vietnamese copy
 
