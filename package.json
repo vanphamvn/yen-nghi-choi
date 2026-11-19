@@ -3,7 +3,8 @@
   "private": true,
   "scripts": {
     "test:game": "node --test game/preview-2d/tests/*.test.mjs tests/game-2d*.test.mjs",
-    "test:browser": "playwright test"
+    "test:browser": "playwright test",
+    "test:design": "node tools/audit-ui-design.mjs"
   },
   "devDependencies": {
     "@playwright/test": "1.62.1"

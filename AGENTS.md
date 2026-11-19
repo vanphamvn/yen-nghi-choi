@@ -1,3 +1,13 @@
+# Active web/UI direction (owner decision 2026-11-19)
+
+The owner **stopped the Yên Phaser 2D game initiative** and replaced its priority with a lightweight **Yên Lab Beta** page linked from the Yên website, offering optional, evidence-informed interactive calming tools. Do **not** autonomously resume the Phaser roadmap, build sprites, or run continuous game delivery. Preserve existing game files and historical instructions for archival/reference use only, unless the owner explicitly reactivates that game.
+
+**Required for website/UI work:** read `DESIGN.md`, `.agents/skills/yen-ui-craft/SKILL.md`, and its QA checklist before changing the homepage, Yên Lab UI, typography, CSS, web animations or responsive behavior. Claude Code can discover the equivalent entrypoint in `.claude/skills/yen-ui-craft/SKILL.md`. Keep the existing static site and its brand identity; do not introduce heavy UI frameworks by default. Check visual behavior in real browsers and never claim a production deploy without verifying its commit/URL.
+
+Well-being mini tools must have clear start/stop, accessible reduced-motion fallback and no unauthorized health-data capture. Scientific references support only the underlying techniques unless the custom game itself has been tested.
+
+---
+
 # Yên repository agent instructions
 
 ## Art-direction gate (required)
@@ -12,7 +22,7 @@ Run `node game/preview-2d/tools/audit-art-style.mjs` and the game contract tests
 
 For user-facing gameplay changes, a GitHub PR is **not** a finished production release. Verify exact commit and READY status of the production target, provide the playable URL, or explicitly report deployment blocked.
 
-## Autonomous Game Yên completion
+## Archived autonomous Game Yên completion (only if owner reactivates the 2D game)
 
 For any game development session, first read `.agents/skills/yen-game-director/SKILL.md`, `game/preview-2d/ROADMAP.md`, and `game/preview-2d/ops/roadmap.json`. Select the next eligible issue using `node game/preview-2d/tools/next-work.mjs`. Use `.agents/skills/yen-game-release/SKILL.md` for every game-affecting PR and release. Apply the existing `yen-sprite-style` skill on every art task.
 
