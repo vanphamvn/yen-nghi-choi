@@ -108,6 +108,13 @@ button { font: inherit; color: inherit; }
 .menu-page h2 { font: italic 600 clamp(16px, 4.2vw, 24px)/1.2 var(--serif); color: var(--green); margin-bottom: 4px; }
 .menu-page li { font: 600 clamp(15px, 4vw, 22px)/1.25 var(--serif); text-wrap: balance; }
 .menu-page li span { display: block; font: italic 400 clamp(14px, 3.4vw, 17px)/1.4 var(--serif); color: #8a4a35; }
+/* A released game is a link written on the page: the only tappable part of the open book besides the book itself. */
+.menu-page a {
+  pointer-events: auto; display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 2px 6px;
+  color: inherit; text-decoration: underline; text-decoration-thickness: 1.5px; text-underline-offset: 6px;
+  text-decoration-color: rgba(59, 42, 24, .35); border-radius: 8px;
+}
+.menu-page a:hover, .menu-page a:focus-visible { text-decoration-color: currentColor; color: var(--green); }
 .menu-noscript { text-align: center; padding: 16px 20px; font: italic 16px/1.5 var(--serif); }
 
 /* Cục Yên sitting on the bench */

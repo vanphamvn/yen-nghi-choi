@@ -32,7 +32,7 @@
 .game-head h1 { font: italic 600 clamp(28px, 8vw, 36px)/1.2 var(--serif); color: var(--green); }
 .game-head h1:focus { outline: none; }
 .game-head h1:focus-visible { outline: 3px solid var(--focus); outline-offset: 4px; border-radius: 6px; }
-.game-lede { margin-top: 6px; font: italic 400 16px/1.5 var(--serif); color: var(--muted); }
+.game-lede { margin-top: 6px; font: italic 400 16px/1.5 var(--serif); color: var(--muted); text-wrap: balance; }
 
 /* Stage: the one visual focal point. Games draw here (painted sprite, shape, words…).
    Decorative only (aria-hidden); the cue + progress text below carry the meaning. */

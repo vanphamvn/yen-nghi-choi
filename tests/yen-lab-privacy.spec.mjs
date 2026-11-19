@@ -2,7 +2,7 @@
 // Instruments storage, network, device and audio APIs before any page script runs, then drives real flows.
 import { test, expect } from '@playwright/test';
 
-const PAGES = ['/lab/', '/docs/yen-lab/game-kit.html'];
+const PAGES = ['/lab/', '/lab/tho/', '/docs/yen-lab/game-kit.html'];
 const ORIGIN = 'http://127.0.0.1:4189';
 
 async function probe(page) {
@@ -55,6 +55,15 @@ async function playKit(page) {
   await tap('bỏ qua');
 }
 
+async function playTho(page) {
+  await page.goto('/lab/tho/');
+  const tap = async name => { await page.clock.runFor(400); await page.getByRole('button', { name, exact: true }).click(); };
+  await tap('vừa'); await tap('3 phút'); await tap('bắt đầu'); await page.clock.runFor(8000);
+  await tap('tạm dừng'); await tap('tiếp tục'); await page.clock.runFor(4 * 60_000);
+  await expect(page.locator('#game')).toHaveAttribute('data-state', 'complete');
+  await tap('dễ chịu hơn'); await tap('làm lại');
+}
+
 test('no storage, cookies, network, device, audio or URL state during real Lab flows', async ({ page }) => {
   const requests = await probe(page);
   await page.clock.install();
@@ -64,10 +73,12 @@ test('no storage, cookies, network, device, audio or URL state during real Lab f
   expect(await page.evaluate(() => window.__labProbe)).toEqual([]);
   await playKit(page);
   expect(await page.evaluate(() => window.__labProbe)).toEqual([]);
-  // Only page loads add history entries (re-loading /lab/ replaces its entry; the kit adds one); nothing a guest
+  await playTho(page);
+  expect(await page.evaluate(() => window.__labProbe)).toEqual([]);
+  // Only page loads add history entries (re-loading /lab/ replaces its entry; kit and game add one each); nothing a guest
   // does is pushed into the URL.
   expect(await page.evaluate(() => [location.search, location.hash])).toEqual(['', '']);
-  expect(await page.evaluate(() => history.length)).toBe(historyStart + 1);
+  expect(await page.evaluate(() => history.length)).toBe(historyStart + 2);
   // Only same-origin GETs of static files, never a body (nothing a guest picks or types leaves the page).
   // …and never with a query string, which could smuggle a choice into server logs (e.g. img.src = '/x.webp?m=' + mood).
   const offenders = requests.filter(r => !r.url.startsWith(ORIGIN) || r.method !== 'GET' || r.body || new URL(r.url).search);
