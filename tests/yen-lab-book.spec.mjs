@@ -61,7 +61,7 @@ for (const width of [320, 360, 390, 768, 1440]) {
       await expect(page.locator('#lab-menu')).toHaveAttribute('data-page', String(pageNum));
       const info = await page.evaluate(() => {
         const m = document.getElementById('lab-menu').getBoundingClientRect();
-        const buttons = [...document.querySelectorAll('.menu-turn-nav button')].map(b => b.getBoundingClientRect().height);
+        const buttons = [...document.querySelectorAll('.menu-corner:not(:disabled)')].map(b => b.getBoundingClientRect().height);
         return { fits: m.left >= -1 && m.right <= innerWidth + 1, targets: buttons, overflow: document.documentElement.scrollWidth > innerWidth };
       });
       expect(info.fits).toBe(true);

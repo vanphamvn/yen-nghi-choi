@@ -212,14 +212,10 @@ button { font: inherit; color: inherit; }
 .menu[data-page="2"] .menu-page[data-spread="1"] { display: none; }
 .menu[data-page="2"] .menu-page[data-spread="2"] { display: flex; }
 .menu.is-turning .menu-page { visibility: hidden; }
-.menu-coming-note { margin-top: 10px; font: italic 400 clamp(14px, 3.3vw, 16px)/1.35 var(--serif); }
-.menu-turn-nav { display: flex; align-items: center; justify-content: space-between; gap: 4px; width: 100%; margin: 6px auto 0; color: #fffaf0; font: 700 14px/1.4 var(--sans); }
-.menu-turn-nav button { min-width: 44px; min-height: 48px; padding: 8px 10px; border: 1.5px solid var(--ink); border-radius: 12px; background: var(--card); color: var(--ink); font: 700 15px/1.4 var(--sans); cursor: pointer; }
-.menu-turn-nav button:disabled { opacity: .48; cursor: default; }
-.menu-turn-nav button:not(:disabled):hover { background: var(--lime); }
-.menu-turn-nav button:focus-visible { outline: 3px solid #f4d98a; outline-offset: 3px; }
-.menu-turn-nav #menu-page-number { text-shadow: 0 2px 5px #302214; white-space: nowrap; }
-@media (max-width: 359px) {
-  .menu-turn-nav button { font-size: 14px; padding: 8px 5px; }
-  .menu-turn-nav #menu-page-number { font-size: 13px; }
-}
+/* Invisible page-corner hit areas over the painted book: tap the lower right corner to turn forward, lower left to go back.
+   Only the keyboard focus ring is drawn; there is no visible button chrome. */
+.menu-corner { position: absolute; bottom: 4%; width: 22%; min-width: 48px; height: 34%; min-height: 48px; padding: 0; border: 0; border-radius: 14px; background: none; cursor: pointer; z-index: 2; }
+.menu-corner--prev { left: 3%; }
+.menu-corner--next { right: 3%; }
+.menu-corner:disabled { display: none; }
+.menu-corner:focus-visible { outline: 3px solid #f4d98a; outline-offset: 2px; }

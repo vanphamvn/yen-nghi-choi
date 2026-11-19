@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content">
+  <meta name="theme-color" content="#f7f3e9">
+  <meta name="robots" content="noindex, nofollow, noarchive">
+  <meta name="referrer" content="no-referrer">
+  <meta name="description" content="Ba điều nhỏ xíu: một trò nhỏ để ghi lại vài điều nhỏ của hôm nay, không lưu ở đâu cả.">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; font-src 'none'; connect-src 'none'; frame-src 'none'; form-action 'none'; base-uri 'none'; object-src 'none'">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="stylesheet" href="/lab/lab.css">
+  <link rel="stylesheet" href="/lab/game.css">
+  <link rel="stylesheet" href="/lab/ba-dieu/ba-dieu.css">
+  <script type="module" src="/lab/ba-dieu/ba-dieu.mjs"></script>
+  <title>Ba điều nhỏ xíu · Yên Lab | Yên Coffee &amp; Tea</title>
+</head>
+<body>
+  <!-- G14 (#155): three good things, none required. Copy per docs/yen-lab/SAFETY.md "Reflection, gratitude and sensory tasks".
+       Text stays in this page's memory only: no form element (Enter can never put it in a URL), no storage, wiped on stop/reset/leave. -->
+  <a class="lab-skip" href="#game-title">Đến nội dung</a>
+  <header class="lab-header lab-wrap">
+    <a class="lab-brand" href="/" aria-label="Về website Yên Coffee &amp; Tea"><img src="/yen-logo.svg" width="1450" height="585" alt="yên"><span class="lab-brand-sub" aria-hidden="true">COFFEE &amp; TEA</span></a>
+    <nav class="lab-nav" aria-label="Điều hướng Yên Lab">
+      <a class="lab-nav-home" href="/lab/">Góc ngồi chơi</a>
+    </nav>
+  </header>
+
+  <main class="game" id="game" data-state="idle" data-game="ba-dieu" aria-labelledby="game-title">
+    <img class="game-backdrop" src="/lab/assets/room-backdrop.jpg" width="1586" height="992" alt="" decoding="async">
+    <article class="game-sheet">
+      <header class="game-head">
+        <h1 id="game-title" tabindex="-1">Ba điều nhỏ xíu</h1>
+        <p class="game-lede">Có điều nhỏ nào bạn muốn giữ lại hôm nay?</p>
+      </header>
+
+      <div class="game-stage ba-stage" aria-hidden="true">
+        <img src="/lab/assets/cuc-yen-tea.webp" width="480" height="480" alt="" decoding="async">
+      </div>
+
+      <p class="game-cue" data-when="running" id="game-cue">Viết vài chữ, hoặc chọn gợi ý</p>
+
+      <div class="ba-slips" data-when="running" role="group" aria-labelledby="game-cue">
+        <label class="ba-slip"><span class="ba-num" aria-hidden="true">1</span><span class="lab-sr">Điều nhỏ thứ nhất</span><input id="ba-1" type="text" maxlength="60" autocomplete="off" autocapitalize="sentences" spellcheck="false" enterkeyhint="next"></label>
+        <label class="ba-slip"><span class="ba-num" aria-hidden="true">2</span><span class="lab-sr">Điều nhỏ thứ hai, không bắt buộc</span><input id="ba-2" type="text" maxlength="60" autocomplete="off" autocapitalize="sentences" spellcheck="false" enterkeyhint="next"></label>
+        <label class="ba-slip"><span class="ba-num" aria-hidden="true">3</span><span class="lab-sr">Điều nhỏ thứ ba, không bắt buộc</span><input id="ba-3" type="text" maxlength="60" autocomplete="off" autocapitalize="sentences" spellcheck="false" enterkeyhint="done"></label>
+      </div>
+
+      <div class="ba-ideas" data-when="running">
+        <span class="ba-ideas-label" id="ba-ideas-label">gợi ý</span>
+        <div class="game-words" role="group" aria-labelledby="ba-ideas-label">
+          <button class="ink-word ink-word--small" type="button" data-idea>ly trà ấm</button>
+          <button class="ink-word ink-word--small" type="button" data-idea>một câu chào</button>
+          <button class="ink-word ink-word--small" type="button" data-idea>được ngồi yên</button>
+          <button class="ink-word ink-word--small" type="button" data-idea>trời hôm nay</button>
+          <button class="ink-word ink-word--small" type="button" data-idea>bữa ăn ngon</button>
+          <button class="ink-word ink-word--small" type="button" data-idea>một bài hát</button>
+        </div>
+      </div>
+
+      <p class="game-note" data-when="idle">Một điều cũng được. Hôm nay không nghĩ ra điều gì cũng được.</p>
+      <p class="game-note ba-private" data-when="idle running">Chữ bạn viết chỉ ở trên trang này, không gửi, không lưu; rời đi là mất.</p>
+      <p class="game-note" data-when="error">Trò chưa chạy được. Thử lại hoặc về góc ngồi chơi nhé.</p>
+
+      <div class="game-result" data-when="complete stopped">
+        <p class="game-result-line" data-when="complete" id="ba-result-line" tabindex="-1">Đây là những điều nhỏ của bạn.</p>
+        <ul class="ba-notes" data-when="complete" id="ba-notes" aria-labelledby="ba-result-line"></ul>
+        <p class="game-note ba-after" data-when="complete" id="ba-after">Không cần làm gì thêm với chúng. Bấm “xóa và làm lại” hoặc rời đi là chúng biến mất.</p>
+        <p class="game-result-line" data-when="stopped">Mình dừng ở đây nhé. Chữ đã xóa.</p>
+      </div>
+
+      <div class="game-words" id="game-controls" role="group" aria-label="Điều khiển trò">
+        <button class="ink-word ink-word--lead" type="button" data-act="start" data-when="idle" disabled>bắt đầu</button>
+        <button class="ink-word ink-word--lead" type="button" data-act="done" data-when="running">xong</button>
+        <button class="ink-word ink-word--small" type="button" data-act="none" data-when="running">hôm nay chưa có điều gì</button>
+        <button class="ink-word" type="button" data-act="stop" data-when="running">dừng hẳn</button>
+        <button class="ink-word ink-word--lead" type="button" data-act="again" data-when="complete stopped error">xóa và làm lại</button>
+        <a class="ink-word" href="/lab/" data-when="idle complete stopped error">về góc ngồi chơi</a>
+      </div>
+
+      <p class="game-whisper" id="game-whisper" role="status" aria-live="polite"></p>
+    </article>
+    <noscript><p class="game-note">Trò này cần JavaScript. Không có nó, bạn vẫn có thể nghĩ thầm một điều nhỏ của hôm nay; không nghĩ ra điều gì cũng được. <a href="/lab/">Về góc ngồi chơi</a>.</p></noscript>
+  </main>
+
+  <footer class="lab-footer">
+    <div class="lab-wrap lab-footer-inner">
+      <img class="lab-door" src="/lab/assets/door.webp" width="160" height="268" alt="" decoding="async" loading="lazy">
+      <nav class="lab-footer-links" aria-label="Rời Yên Lab">
+        <a class="lab-button" href="/">Về Yên</a>
+        <a href="/#yen-ngoai-doi">Ghé quán thật</a>
+      </nav>
+      <p class="lab-fineprint">Một trò nhỏ để thử, không thay thế tư vấn hoặc điều trị chuyên môn. Nghiên cứu nói về việc ghi lại những điều biết ơn; bản thực hành này chưa được kiểm chứng hiệu quả riêng. Không cookie, rời đi là quên. <a href="https://github.com/vanphamvn/yen-nghi-choi/blob/main/docs/yen-lab/EVIDENCE.md" rel="noopener noreferrer" referrerpolicy="no-referrer">Nguồn phương pháp</a></p>
+    </div>
+  </footer>
+</body>
+</html>
