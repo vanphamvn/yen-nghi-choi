@@ -1,6 +1,6 @@
 # Yên Lab Beta · Product Roadmap
 
-**Trạng thái:** Planned · **Ngày quyết định:** 19/11/2026 · **Epic:** [#124](https://github.com/vanphamvn/yen-nghi-choi/issues/124) · **Source:** `vanphamvn/yen-nghi-choi`
+**Trạng thái:** M0 in progress · **Ngày quyết định:** 19/11/2026 · **Epic:** [#124](https://github.com/vanphamvn/yen-nghi-choi/issues/124) · **Source:** `vanphamvn/yen-nghi-choi`
 
 > **QUYẾT ĐỊNH ĐÃ CHỐT:** Ngưng phát triển Game Yên Phaser 2D, giữ source cũ để lưu trữ. Website Yên sẽ dẫn đến `/lab/`, một bộ mini tools thực hành ngắn giúp khách có cơ hội thư giãn và nhận biết trạng thái của mình. **Nghiên cứu hỗ trợ phương pháp không đồng nghĩa đã chứng minh chính mini game có hiệu quả.**
 
@@ -136,4 +136,3 @@ Không dùng copy như “đã được khoa học chứng minh giúp bạn hế
 - Khi code xong, cập nhật task trạng thái trong `ops/roadmap.json` thành `in-progress`/`blocked`/`done` **chỉ theo chứng cứ**. Luôn reconcile GitHub issue/PR trước khi chọn việc.
 - Những issue cũ #37/#38 có thể tái sử dụng QA và nghiên cứu khách, **không** đóng/chuyển hướng mà chưa xem scope hiện hữu.
 - Roadmap được đặt trong nhánh docs/PR riêng; **tạo ticket và tài liệu không đồng nghĩa triển khai**. Không tự khởi động lịch chạy background hay trả phí.
-

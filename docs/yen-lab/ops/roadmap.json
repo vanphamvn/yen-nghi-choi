@@ -2,7 +2,7 @@
   "schema_version": 1,
   "project": "Yên Lab Beta",
   "owner_decision_date": "2026-11-19",
-  "status": "planned",
+  "status": "in-progress",
   "source_of_truth": "docs/yen-lab/ROADMAP.md",
   "epic_issue": 124,
   "website": "https://yencafeday.netlify.app/",
@@ -14,7 +14,7 @@
       "requirement": "CI pass + reviewed merge; feature implementation must use active DESIGN.md and skill"
     }
   ],
-  "notes": "All statuses todo as of creation, not a claim that code is shipped. Native GitHub milestones have not been created. Dependency lists are planning relations, not an automatically enforced GitHub Projects graph.",
+  "notes": "M0 implementation started 2026-11-19 with separate foundation, research, UX and independent QA agents. PR #123 merged. Work in progress is not a production release.",
   "gates": [
     {
       "id": "M0",
@@ -116,7 +116,7 @@
       "priority": "P0",
       "title": "Dừng game Phaser và triage issue/workflow",
       "kind": "platform",
-      "status": "todo",
+      "status": "in-progress",
       "depends_on": [],
       "issue_url": "https://github.com/vanphamvn/yen-nghi-choi/issues/125"
     },
@@ -127,9 +127,10 @@
       "priority": "P0",
       "title": "Hoàn tất skill PR #123",
       "kind": "governance",
-      "status": "todo",
+      "status": "done",
       "depends_on": [],
-      "issue_url": "https://github.com/vanphamvn/yen-nghi-choi/issues/126"
+      "issue_url": "https://github.com/vanphamvn/yen-nghi-choi/issues/126",
+      "evidence": "PR #123 merged at 173670191ccf33f32ba688f6dce24752a52aab59; active DESIGN.md and UI skill verified on main."
     },
     {
       "key": "F03",
@@ -138,7 +139,7 @@
       "priority": "P0",
       "title": "Research matrix & safety",
       "kind": "research",
-      "status": "todo",
+      "status": "in-progress",
       "depends_on": [],
       "issue_url": "https://github.com/vanphamvn/yen-nghi-choi/issues/127"
     },
@@ -149,7 +150,7 @@
       "priority": "P1",
       "title": "Information architecture & microcopy",
       "kind": "design",
-      "status": "todo",
+      "status": "in-progress",
       "depends_on": [
         "F03"
       ],
