@@ -52,7 +52,10 @@
     <!-- The menu: the same painted book, opened big. Games are written on its pages. -->
     <dialog class="menu" id="lab-menu" aria-labelledby="menu-title">
       <div class="menu-book">
-        <img class="menu-book-art" src="/lab/assets/book.webp" width="384" height="188" alt="" decoding="async">
+        <button class="menu-book-art" id="menu-close" type="button">
+          <img src="/lab/assets/book.webp" width="384" height="188" alt="" decoding="async">
+          <span class="lab-sr">Gấp sổ lại</span>
+        </button>
         <div class="menu-page menu-page--left">
           <h2 id="menu-title">Thực đơn</h2>
           <ul data-testid="lab-tool-list">
@@ -64,7 +67,6 @@
             <li class="lab-tool" data-tool="small" data-status="coming">Ba điều nhỏ xíu<span>sắp có</span></li>
           </ul>
         </div>
-        <button class="menu-close" id="menu-close" type="button">Gấp sổ</button>
       </div>
       <p class="lab-sr" id="lab-release-status" data-released-count="0">Chưa có trò nào mở.</p>
     </dialog>

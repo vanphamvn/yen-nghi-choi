@@ -47,7 +47,9 @@ test('hero, three needs, release-status list, house rules and way back to Yên',
   await book.click();
   await expect(menu).toBeVisible();
   await expect(page.getByRole('dialog', { name: 'Thực đơn' })).toBeVisible();
-  await expect(page.getByRole('button', { name: 'Gấp sổ' })).toBeFocused();
+  await expect(page.getByRole('button', { name: 'Gấp sổ lại' })).toBeFocused();
+  // No visible close button or tag: the open book itself closes the menu.
+  await expect(page.locator('.menu-close')).toHaveCount(0);
 
   // Deferred routines are not listed; unreleased games are labelled and never dead links/buttons.
   await expect(page.locator('[data-tool="release"]')).toHaveCount(0);
@@ -61,7 +63,7 @@ test('hero, three needs, release-status list, house rules and way back to Yên',
   await expect(page.locator('#lab-release-status')).toHaveAttribute('data-released-count', String(released));
 
   // Close by button, Escape and tapping outside; focus returns to the book each time.
-  await page.getByRole('button', { name: 'Gấp sổ' }).click();
+  await page.getByRole('button', { name: 'Gấp sổ lại' }).click();
   await expect(menu).toBeHidden();
   await expect(book).toBeFocused();
   await book.press('Enter');
