@@ -118,10 +118,14 @@
       });
 
       // The original painted image remains visible on unsupported browsers or failed asset requests.
-      const image = new Image();
-      image.onload = () => { assetReady = true; close.classList.add('is-enhanced'); };
-      image.onerror = () => { assetReady = false; close.classList.remove('is-enhanced'); };
-      image.src = '/lab/assets/book-flip.avif';
+      const image = document.getElementById('menu-sprite-probe');
+      if (image) {
+        const ready = () => { assetReady = true; close.classList.add('is-enhanced'); };
+        const failed = () => { assetReady = false; close.classList.remove('is-enhanced'); };
+        image.addEventListener('load', ready);
+        image.addEventListener('error', failed);
+        if (image.complete) (image.naturalWidth > 0 ? ready : failed)();
+      }
       showSpread(1);
     }
 
