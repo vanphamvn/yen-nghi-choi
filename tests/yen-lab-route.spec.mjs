@@ -75,6 +75,10 @@ test('hero, three needs, release-status list, house rules and way back to Yên',
   await page.mouse.click(5, 5); // outside the book, on the backdrop
   await expect(menu).toBeHidden();
 
+  // Regression: iOS WebKit drops gradients/patterns referenced through an external <use>, which made Cục Yên
+  // transparent on iPhone. Lab must use the raster sprite, never <use href=".../mascot.svg#...">.
+  await expect(page.locator('use[href*="mascot.svg"]')).toHaveCount(0);
+  expect(await page.locator('#buddy img').evaluate(img => img.complete && img.naturalWidth > 0)).toBe(true);
   // Only the page's own small script, served from /lab/.
   expect(await page.locator('script').evaluateAll(list => list.map(s => new URL(s.src, location.href).pathname))).toEqual(['/lab/lab.js']);
 
