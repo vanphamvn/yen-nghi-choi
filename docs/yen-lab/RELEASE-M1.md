@@ -1,6 +1,6 @@
 # Yên Lab · M1 Playable Alpha release (LAB-F10, #134)
 
-Ngày: 19/11/2026 · Cổng M1: **homepage → `/lab/` → Thở cùng Yên**. Trạng thái phát hành, SHA và URL production: ghi trong #134 sau khi merge và deployed smoke chạy xong.
+Ngày: 19/11/2026 · Cổng M1: **homepage → `/lab/` → Thở cùng Yên**. **Đã phát hành:** PR #181 → `4a6a9c4` trên https://yencafeday.netlify.app/ (deployed smoke run 44519031989, 22/22).
 
 ## Thay đổi trong bản phát hành
 
@@ -23,7 +23,7 @@ Ngày: 19/11/2026 · Cổng M1: **homepage → `/lab/` → Thở cùng Yên**. T
 | Screen reader | ⚠️ một phần | Nhãn, live region, thông báo pha có test tự động; **chưa nghe thử bằng VoiceOver/TalkBack thật** |
 | P0/P1 | ✅ 0 mở về code | Review độc lập từng PR đã sửa hết P0/P1 code trước khi merge (PR này: viền focus khi gấp sổ, số liệu ghi chú). Còn mở: kiểm tra trên điện thoại thật là tiêu chí của #134 mà agent không tự làm được. |
 | Copy riêng tư / bằng chứng | ✅ | SAFETY.md nguyên văn; check tĩnh chặn câu hứa hẹn sức khỏe; EVIDENCE G01 re-review 1–5 phút |
-| SHA + URL production, rollback dễ | sau merge | Workflow deployed smoke ghi SHA; xem phần Rollback |
+| SHA + URL production, rollback dễ | ✅ | `build-info.json` production = `4a6a9c493de5da6b95db0bd615c26d6f66e7feaa` (deploy `6afee38910ead3184f22adb6`); deployed smoke run 44519031989 22/22; homepage production hiện link Yên Lab; rollback bên dưới |
 
 ## Ảnh (giả lập, 1×)
 
