@@ -8,7 +8,7 @@ export default defineConfig({
   testMatch: 'yen-lab-smoke.spec.mjs',
   outputDir: 'test-results/lab-smoke/artifacts',
   timeout: 45_000,
-  retries: process.env.CI && !local ? 1 : 0, // one retry only for network hiccups against a live site
+  retries: 0, // a release record must not hide a flaky pass; re-run the workflow instead
   reporter: [['list'], ['html', { outputFolder: 'playwright-report/lab-smoke', open: 'never' }], ['json', { outputFile: 'test-results/lab-smoke/results.json' }]],
   use: {
     screenshot: 'only-on-failure', video: 'retain-on-failure', trace: 'retain-on-failure',

@@ -10,6 +10,9 @@ on:
       - lab/**
       - docs/yen-lab/game-kit.*
       - netlify.toml
+      - yen-logo.svg
+      - favicon.svg
+      - game/preview-2d/tools/write-build-info.mjs
       - tests/yen-lab-smoke.spec.mjs
       - playwright.lab-smoke.config.mjs
       - .github/workflows/yen-lab-deployed-smoke.yml
@@ -19,6 +22,9 @@ on:
       - lab/**
       - docs/yen-lab/game-kit.*
       - netlify.toml
+      - yen-logo.svg
+      - favicon.svg
+      - game/preview-2d/tools/write-build-info.mjs
       - tests/yen-lab-smoke.spec.mjs
       - playwright.lab-smoke.config.mjs
       - .github/workflows/yen-lab-deployed-smoke.yml
@@ -27,18 +33,20 @@ permissions:
   contents: read
 concurrency:
   group: yen-lab-deployed-smoke-${{ github.event.pull_request.number || github.ref }}
-  cancel-in-progress: true
+  # Superseded PR pushes may be cancelled; production runs never are (each one is a release record).
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 jobs:
   smoke:
     runs-on: ubuntu-latest
     timeout-minutes: 25
     env:
-      LAB_EXPECT_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+      TRIGGER_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
       LAB_BASE_URL: ${{ github.event_name == 'pull_request' && format('https://deploy-preview-{0}--yencafeday.netlify.app', github.event.pull_request.number) || 'https://yencafeday.netlify.app' }}
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
         with:
-          ref: ${{ env.LAB_EXPECT_SHA }}
+          ref: ${{ env.TRIGGER_SHA }}
+          fetch-depth: 0
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
         with:
           node-version: '22'
@@ -51,16 +59,28 @@ jobs:
           else
             npx playwright install --with-deps chromium
           fi
-      - name: Wait for the deploy to serve this exact commit
+          npx playwright install ffmpeg  # video of failures
+      - name: Wait for the deploy to serve this commit
         shell: bash
         run: |
+          # PR: the preview must serve the PR head exactly. main: production must serve this commit or a later main
+          # commit that contains it (another merge may land meanwhile); we then test and record what is actually live.
+          # Manual run: test whatever production serves now.
           for i in $(seq 1 60); do
             sha=$(curl -fsS -H 'cache-control: no-cache' "$LAB_BASE_URL/game/preview-2d/build-info.json?t=$i" | node -pe 'JSON.parse(require("fs").readFileSync(0)).commitSha' 2>/dev/null || true)
-            echo "attempt $i: $LAB_BASE_URL serves ${sha:-nothing}"
-            [ "$sha" = "$LAB_EXPECT_SHA" ] && exit 0
+            echo "attempt $i: $LAB_BASE_URL serves ${sha:-nothing}, expecting $TRIGGER_SHA"
+            if [ "$sha" = "$TRIGGER_SHA" ]; then echo "LAB_EXPECT_SHA=$sha" >> "$GITHUB_ENV"; exit 0; fi
+            if [ -n "$sha" ] && [ "${{ github.event_name }}" != "pull_request" ]; then
+              git fetch -q origin main || true
+              if [ "${{ github.event_name }}" = "workflow_dispatch" ] || { git cat-file -e "$sha^{commit}" 2>/dev/null && git merge-base --is-ancestor "$TRIGGER_SHA" "$sha"; }; then
+                git checkout -q "$sha"
+                echo "LAB_EXPECT_SHA=$sha" >> "$GITHUB_ENV"
+                echo "Live commit $sha contains $TRIGGER_SHA (or manual run): testing what is live"; exit 0
+              fi
+            fi
             sleep 15
           done
-          echo "::error::$LAB_BASE_URL never served $LAB_EXPECT_SHA within 15 minutes"; exit 1
+          echo "::error::$LAB_BASE_URL never served $TRIGGER_SHA (or a main commit containing it) within 15 minutes"; exit 1
       - name: Smoke the deployed Lab
         id: smoke
         run: npx playwright test --config playwright.lab-smoke.config.mjs
@@ -71,7 +91,7 @@ jobs:
           {
             echo "### Yên Lab deployed smoke: ${{ steps.smoke.outcome }}"
             echo "- URL: $LAB_BASE_URL/lab/"
-            echo "- Expected commit: \`$LAB_EXPECT_SHA\`"
+            echo "- Tested commit: \`${LAB_EXPECT_SHA:-none}\` (run triggered by \`$TRIGGER_SHA\`)"
             if [ -f test-results/lab-smoke/provenance.json ]; then
               node -e 'const p=require("./test-results/lab-smoke/provenance.json");console.log(`- Served commit: \`${p.commitSha}\` · context ${p.context} · deploy ${p.deployId}\n- Browser: ${p.browser}\n- Checked: ${p.checkedAt}`)'
             fi

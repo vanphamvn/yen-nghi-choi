@@ -74,6 +74,8 @@ jobs:
           else
             npx playwright install --with-deps chromium
           fi
+      - name: Install ffmpeg for failure videos
+        run: npx playwright install ffmpeg
       - name: Exercise prototype and /lab/ route (emulated touch and keyboard)
         run: npx playwright test --config playwright.lab-ux.config.mjs
       - name: Lab smoke on the fixture server (5 viewports, links, assets, overlays, game flow)

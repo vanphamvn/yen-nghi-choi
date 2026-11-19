@@ -2,7 +2,8 @@
 // one game start/pause/stop/reset, reduced motion. Runs against the local fixture server (PR CI) or, with
 // LAB_BASE_URL set, against a deployed site; LAB_EXPECT_SHA then pins the exact build (release gate).
 import { test, expect } from '@playwright/test';
-import { mkdirSync, writeFileSync, readFileSync } from 'node:fs';
+import { mkdirSync, writeFileSync, readFileSync, readdirSync } from 'node:fs';
+import { createHash } from 'node:crypto';
 
 const BASE = process.env.LAB_BASE_URL || 'http://127.0.0.1:4189';
 const ORIGIN = new URL(BASE).origin;
@@ -15,34 +16,53 @@ const VIEWPORTS = [[320, 640], [360, 800], [390, 844], [768, 1024], [1440, 900]]
 
 test.use({ baseURL: BASE });
 
+// Deployed sites: Netlify injects its own tooling (production toolbar /.netlify/scripts/hud, deploy-preview drawer
+// /.netlify/scripts/cdp). It is host UI, not Lab code: block it in the test browser so it can neither draw over the
+// page nor log its CSP errors. The provenance test below pins that these are the only injections.
+const blockHostTooling = target => target.route('**/.netlify/scripts/**', route => route.abort());
+test.beforeEach(async ({ page }) => { if (process.env.LAB_BASE_URL) await blockHostTooling(page); });
+
+// The only tolerated console errors, both caused by Netlify's injected markup, never by Lab code:
+//  - Chrome reporting our own block of the tooling script above;
+//  - on deploy previews, the CSP blocking the drawer's style="position:fixed" (identified by that exact hash).
+const PREVIEW_DIV_STYLE_HASH = createHash('sha256').update('position:fixed').digest('base64');
+const isHostNoise = m =>
+  (m.location().url.includes('/.netlify/scripts/') && m.text().startsWith('Failed to load resource')) ||
+  (/deploy-preview-\d+--/.test(BASE) && m.text().includes(`'sha256-${PREVIEW_DIV_STYLE_HASH}'`));
+
 function watch(page) {
   const problems = [];
   page.on('pageerror', e => problems.push(`pageerror: ${e.message}`));
-  // Netlify injects its toolbar script (/.netlify/scripts/hud) into every production page; it renders in an
-  // about:srcdoc iframe whose inline code our CSP blocks. Lab pages have no iframes (static check forbids them), so
-  // errors from about:srcdoc are the host's, not ours. The provenance test pins that this is the only injection.
-  page.on('console', m => { if (m.type() === 'error' && m.location().url !== 'about:srcdoc') problems.push(`console: ${m.text()}`); });
+  page.on('console', m => { if (m.type() === 'error' && !isHostNoise(m)) problems.push(`console: ${m.text()} @ ${m.location().url}`); });
   page.on('response', r => { if (r.url().startsWith(ORIGIN) && r.status() >= 400) problems.push(`${r.status()} ${r.url()}`); });
-  page.on('requestfailed', r => { if (r.url().startsWith(ORIGIN)) problems.push(`failed ${r.url()} ${r.failure()?.errorText}`); });
+  page.on('requestfailed', r => { if (r.url().startsWith(ORIGIN) && !r.url().includes('/.netlify/scripts/')) problems.push(`failed ${r.url()} ${r.failure()?.errorText}`); });
   return problems;
 }
 
-// Known host injections on Netlify: a hosting comment after <head> and the toolbar script before </body>.
+// Known host injections on Netlify, matched exactly: production adds a hosting comment after <head> and the toolbar
+// script before </body>; deploy previews add the drawer <div> before </body>.
 const NETLIFY_INJECTIONS = [
-  /\n?<!-- This site is hosted on Netlify\.[\s\S]*?-->/,
-  /\n?<script async src="\/\.netlify\/scripts\/hud\?[^"]*"[^>]*><\/script>/,
+  /\n?<!-- This site is hosted on Netlify\. Anyone can build[^>]*?-->/,
+  /\n?<script async src="\/\.netlify\/scripts\/hud\?variant=public" data-nf-variant="public" data-netlify-site-id="[0-9a-f-]+" data-app-host="app\.netlify\.com" data-account-tier="[a-z]+"><\/script>/,
+  /\n?<div data-netlify-deploy-id="[0-9a-f]+" data-netlify-site-id="[0-9a-f-]+" data-vcs="github" style="position:fixed">\s*<!-- This div is automatically inserted by Netlify for all Deploy Preview URLs\. -->\s*<script async src="\/\.netlify\/scripts\/cdp"><\/script>\s*<\/div>/,
 ];
 
 test('provenance: deployed Lab files are byte-identical to this commit, apart from known host injections', async ({ request }) => {
   test.skip(!process.env.LAB_BASE_URL || !EXPECT_SHA, 'needs a deployed site and LAB_EXPECT_SHA with that commit checked out');
-  const files = [...PAGES.map(p => p.endsWith('/') ? p + 'index.html' : p), '/lab/lab.css', '/lab/lab.js', '/lab/game.css', '/lab/engine.mjs', '/docs/yen-lab/game-kit.mjs'];
+  const text = [...PAGES.map(p => p.endsWith('/') ? p + 'index.html' : p), '/lab/lab.css', '/lab/lab.js', '/lab/game.css', '/lab/engine.mjs', '/docs/yen-lab/game-kit.mjs'];
+  const binary = [...readdirSync('lab/assets').filter(f => !f.endsWith('.md')).map(f => `/lab/assets/${f}`), '/yen-logo.svg', '/favicon.svg'];
   const diffs = [];
-  for (const file of files) {
+  for (const file of text) {
     const live = await (await request.get(file.replace(/index\.html$/, ''), { headers: { 'cache-control': 'no-cache' } })).text();
-    const cleaned = NETLIFY_INJECTIONS.reduce((text, re) => text.replace(re, ''), live);
+    const cleaned = NETLIFY_INJECTIONS.reduce((t, re) => t.replace(re, ''), live);
     if (cleaned !== readFileSync('.' + file, 'utf8')) diffs.push(file);
   }
+  for (const file of binary) {
+    const live = await (await request.get(file, { headers: { 'cache-control': 'no-cache' } })).body();
+    if (!live.equals(readFileSync('.' + file))) diffs.push(file);
+  }
   expect(diffs).toEqual([]);
+  expect(text.length + binary.length).toBeGreaterThan(12);
 });
 
 test('provenance: the deployed build is the expected commit (only against a deployed site)', async ({ request, browser }) => {
@@ -76,16 +96,21 @@ for (const [width, height] of VIEWPORTS) {
         await page.evaluate(() => scrollTo(0, 0));
         const broken = await page.locator('img').evaluateAll(list => list.filter(i => !i.complete || i.naturalWidth === 0).map(i => i.src));
         expect(broken).toEqual([]);
-        // Each visible control is the topmost thing at its own centre (no overlay, bubble or sticky bar on top).
-        const covered = await page.evaluate(() => [...document.querySelectorAll('a[href], button')].filter(el => {
-          // first line box: a link wrapped over two lines has a gap at the centre of its bounding box
-          const r = el.getClientRects()[0];
-          if (el.offsetParent === null || !r || r.width === 0 || el.closest('.lab-skip')) return false;
-          const x = r.left + r.width / 2, y = r.top + r.height / 2;
-          if (y < 0 || y > innerHeight || x < 0 || x > innerWidth) return false; // off-screen: checked when scrolled
-          const top = document.elementFromPoint(x, y);
-          return top && top !== el && !el.contains(top);
-        }).map(el => el.textContent.trim() || el.outerHTML.slice(0, 60)));
+        // Each visible control (including fixed ones) is the topmost thing at its own centre once scrolled into view:
+        // no overlay, bubble or sticky bar on top of it.
+        const covered = await page.evaluate(() => {
+          const out = [];
+          for (const el of document.querySelectorAll('a[href], button')) {
+            if (el.closest('.lab-skip') || el.closest('dialog:not([open])') || getComputedStyle(el).visibility === 'hidden' || !el.getClientRects().length) continue;
+            el.scrollIntoView({ block: 'center', inline: 'center', behavior: 'instant' });
+            const r = el.getClientRects()[0]; // first line box: a wrapped link has a gap at its bounding-box centre
+            if (r.width === 0) continue;
+            const top = document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2);
+            if (top && top !== el && !el.contains(top)) out.push(el.textContent.trim() || el.outerHTML.slice(0, 60));
+          }
+          scrollTo(0, 0);
+          return out;
+        });
         expect(covered).toEqual([]);
         expect(problems).toEqual([]);
         await testInfo.attach(`${path.replace(/\W+/g, '_')}-${width}`, { body: await page.screenshot({ fullPage: true }), contentType: 'image/png' });
@@ -122,6 +147,7 @@ for (const game of GAMES) {
     await tap('tạm dừng');
     await expect(g).toHaveAttribute('data-state', 'paused');
     await tap('tiếp tục');
+    await expect(g).toHaveAttribute('data-state', 'running');
     await tap('dừng hẳn');
     await expect(g).toHaveAttribute('data-state', 'stopped');
     await tap('làm lại');
@@ -135,6 +161,7 @@ for (const game of GAMES) {
 
   test(`${game.label}: reduced motion still completes, with nothing moving`, async ({ browser }) => {
     const context = await browser.newContext({ reducedMotion: 'reduce', baseURL: BASE });
+    if (process.env.LAB_BASE_URL) await blockHostTooling(context);
     const page = await context.newPage();
     await page.clock.install();
     await page.goto(game.path);
