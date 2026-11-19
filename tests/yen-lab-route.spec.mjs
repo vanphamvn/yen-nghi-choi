@@ -47,7 +47,8 @@ test('hero, three needs, release-status list, house rules and way back to Yên',
   await book.click();
   await expect(menu).toBeVisible();
   await expect(page.getByRole('dialog', { name: 'Thực đơn' })).toBeVisible();
-  await expect(page.getByRole('button', { name: 'Gấp sổ lại' })).toBeFocused();
+  // Opened by mouse/tap: focus sits on the dialog itself (no ring drawn around the book on iPhone WebKit).
+  await expect(menu).toBeFocused();
   // No visible close button or tag: the open book itself closes the menu.
   await expect(page.locator('.menu-close')).toHaveCount(0);
 
@@ -76,6 +77,7 @@ test('hero, three needs, release-status list, house rules and way back to Yên',
   await expect(book).toBeFocused();
   await book.press('Enter');
   await expect(menu).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Gấp sổ lại' })).toBeFocused(); // keyboard open: close control focused
   await page.keyboard.press('Escape');
   await expect(menu).toBeHidden();
   await expect(book).toBeFocused();
@@ -133,32 +135,49 @@ test('unknown Lab paths return the site 404 with a way home', async ({ page }) =
   await expect(page.getByRole('link', { name: 'Về trang chủ Yên' })).toBeVisible();
 });
 
-test('homepage link stays hidden until flag_yenlab, then supports back/forward', async ({ page }) => {
+test('M1 (#134): homepage link is on, ≥44px, leads to a playable game; back/forward; rollback flag hides it', async ({ page }) => {
   await blockExternal(page);
+  await page.clock.install();
   await page.goto('/');
+  expect(await page.evaluate(() => window.flag_yenlab)).toBe(1);
   const link = page.locator('a.yen-lab-link');
   await expect(link).toHaveCount(1);
   await expect(link).toHaveAttribute('href', '/lab/');
-  await expect(link).toBeHidden(); // Gate M1 (#134) not passed yet.
-  expect(await page.evaluate(() => window.flag_yenlab)).toBe(0);
+  await expect(link).toBeVisible();
+  // Regression from PR #167 review: inline 13px text links were < 44px tall on phones (game link shares the style).
+  for (const box of await page.locator('a.yen-game-link').evaluateAll(l => l.map(a => a.getBoundingClientRect().height))) expect(box).toBeGreaterThanOrEqual(44);
   // Existing homepage sections remain intact.
   for (const id of ['#mascot', '#tam-trang', '#cuahang', '#yen-ngoai-doi', '.irl-map']) await expect(page.locator(id).first()).toBeAttached();
 
-  // Flip the real flag (flag_yenlab = 1) in the served source so the toggle code itself is exercised.
-  await page.route('**/127.0.0.1:4189/', async route => {
-    const res = await route.fetch();
-    const body = (await res.text()).replace('var flag_yenlab = 0;', 'var flag_yenlab = 1;');
-    await route.fulfill({ response: res, body });
-  });
-  await page.goto('/');
-  expect(await page.evaluate(() => window.flag_yenlab)).toBe(1);
-  await expect(link).toBeVisible();
+  // Homepage → room → book → Thở cùng Yên → really plays, no login.
   await link.click();
+  await expect(page).toHaveURL(/\/lab\/$/);
+  await page.getByRole('button', { name: 'Mở thực đơn trò chơi' }).click();
+  await page.getByRole('link', { name: 'Thở cùng Yên' }).click();
+  await expect(page).toHaveURL(/\/lab\/tho\/$/);
+  await page.clock.runFor(400);
+  await page.getByRole('button', { name: 'bắt đầu', exact: true }).click();
+  await expect(page.locator('#game')).toHaveAttribute('data-state', 'running');
+  await page.clock.runFor(61_000);
+  await expect(page.locator('#game')).toHaveAttribute('data-state', 'complete');
+  // Back/forward through the journey; nothing auto-starts on return.
+  await page.goBack();
   await expect(page).toHaveURL(/\/lab\/$/);
   await page.goBack();
   await expect(page).toHaveURL(/127\.0\.0\.1:4189\/$/);
   await page.goForward();
-  await expect(page.getByRole('heading', { level: 1, name: /Yên Lab/ })).toHaveCount(1);
+  await page.goForward();
+  await expect(page.locator('#game')).toHaveAttribute('data-state', 'idle');
+
+  // Rollback path: flag_yenlab = 0 in the served source hides the link again (the toggle code itself runs).
+  await page.route('**/127.0.0.1:4189/', async route => {
+    const res = await route.fetch();
+    const body = (await res.text()).replace('var flag_yenlab = 1;', 'var flag_yenlab = 0;');
+    await route.fulfill({ response: res, body });
+  });
+  await page.goto('/');
+  expect(await page.evaluate(() => window.flag_yenlab)).toBe(0);
+  await expect(link).toBeHidden();
 });
 
 for (const width of WIDTHS) {

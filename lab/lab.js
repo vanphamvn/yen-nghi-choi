@@ -35,7 +35,9 @@
   const close = document.getElementById('menu-close');
   if (book && menu && close && typeof menu.showModal === 'function') {
     book.disabled = false;
-    book.addEventListener('click', () => { menu.showModal(); close.focus(); });
+    // Keyboard open (click.detail === 0): focus the close control with its visible ring. Tap/mouse open: focus the dialog
+    // itself, because WebKit (iPhone Safari) draws the focus ring on programmatic focus even after a tap.
+    book.addEventListener('click', event => { menu.showModal(); (event.detail === 0 ? close : menu).focus(); });
     close.addEventListener('click', () => menu.close());
     menu.addEventListener('click', event => { if (event.target === menu) menu.close(); }); // tap outside the book
     menu.addEventListener('close', () => book.focus());

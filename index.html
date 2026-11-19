@@ -28,7 +28,7 @@
     // 0 = ẨN toàn bộ chương trình Vòng quay; 1 = HIỆN chương trình.
     var flag_vongquay = 0;
     // Yên Lab (#129): 0 = ẨN liên kết homepage; chỉ đổi thành 1 sau release gate M1 (#134).
-    var flag_yenlab = 0;
+    var flag_yenlab = 1; /* M1 gate #134 passed. Rollback: set 0 to hide the homepage link (/lab/ itself stays reachable). */
     (function(){
       "use strict";
       const enabled=flag_vongquay === 1;
@@ -3064,7 +3064,7 @@ body.yen-stamping-active{overflow:hidden}
 #receipt-next-game{justify-content:center}
 @media(prefers-reduced-motion:reduce){.hero-play-btn:hover .yen-icon{transform:none}}
 </style>
-  <style id="yen-3d-game-door-style">.hero-intro .yen-game-link{display:inline-flex;gap:6px;align-items:center;flex-wrap:wrap;font-weight:800;text-decoration:underline;text-underline-offset:4px;color:var(--green)}.hero-intro .yen-game-link:hover{color:#b76f43}.hero-intro .yen-game-beta{display:inline-block;vertical-align:middle;letter-spacing:.08em;font-size:9px;font-weight:900;line-height:1.4;border:1px solid #b4774d;color:#97552e;background:#fff1dc;padding:2px 6px;border-radius:4px;text-decoration:none}</style>
+  <style id="yen-3d-game-door-style">.hero-intro .yen-game-link{display:inline-flex;gap:6px;align-items:center;flex-wrap:wrap;min-height:44px;font-weight:800;text-decoration:underline;text-underline-offset:4px;color:var(--green)}.hero-intro .yen-game-link:hover{color:#b76f43}.hero-intro .yen-game-beta{display:inline-block;vertical-align:middle;letter-spacing:.08em;font-size:9px;font-weight:900;line-height:1.4;border:1px solid #b4774d;color:#97552e;background:#fff1dc;padding:2px 6px;border-radius:4px;text-decoration:none}</style>
 </head>
 <body>
   <!-- Yên doodle icons: hand-drawn, consistent stroke; no icon fonts or external assets -->
