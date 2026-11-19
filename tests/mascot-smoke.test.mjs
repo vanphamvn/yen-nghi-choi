@@ -1,7 +1,7 @@
 // Run without dependencies: node --test tests/mascot-smoke.test.mjs
 import test from "node:test";
 import assert from "node:assert/strict";
-import { readFileSync } from "node:fs";
+import { readFileSync, existsSync } from "node:fs";
 
 const html=readFileSync(new URL("../index.html",import.meta.url),"utf8");
 const svg=readFileSync(new URL("../assets/cuc-yen/mascot.svg",import.meta.url),"utf8");
@@ -41,7 +41,8 @@ test("permit office has no old mascot and the center-stage cinema uses canonical
 
 test("20 cutscenes use canonical mascot symbols and props",()=>{
   assert.deepEqual(Object.keys(scenes).sort(),expected.slice().sort());
-  assert.ok(html.includes('const mascot=\'<use class="scene-cuc-model"'));
+  assert.ok(html.includes('const mascot=\'<image class="scene-cuc-model" href="\'+CUC_SPRITE+scene.pose+\'.webp"'));
+  assert.ok(html.includes('const CUC_SPRITE="/assets/cuc-yen/sprites/";'));
   assert.ok(html.includes('scene-props-back'));
   assert.ok(html.includes('scene-props-front'));
   for(const [name,scene] of Object.entries(scenes)){
@@ -83,4 +84,19 @@ test("key cafe interactions and policies stay available",()=>{
   assert.ok(html.includes('Mỗi đơn hàng thanh toán từ 25.000đ'));
   assert.ok(html.includes('id="yen-drinks-visit" href="#yen-ngoai-doi"'));
   assert.ok(html.includes("10.513739%2C107.346992"));
+});
+
+// iOS WebKit drops gradients/patterns/clipPaths referenced through an external <use href="mascot.svg#…">,
+// so Cục Yên's body painted transparent on iPhone. The homepage must draw the raster sprites instead.
+test("homepage draws Cục Yên from raster sprites, never an external mascot.svg <use>",()=>{
+  assert.ok(!html.includes("mascot.svg"),"External mascot.svg reference returned to the homepage");
+  const refs=new Set(Array.from(html.matchAll(/\/assets\/cuc-yen\/sprites\/([a-z-]+)\.webp/g),m=>m[1]));
+  const valid=html.match(/const valid=new Set\((\[[^\]]+\])\)/);
+  for(const mood of JSON.parse(valid[1]))refs.add(mood);
+  for(const scene of Object.values(scenes))refs.add(scene.pose);
+  assert.ok(refs.size>=15,"Expected hero, wheel, preview, scene and reaction poses");
+  for(const pose of refs){
+    assert.ok(spriteIds.has("cuc-yen-"+pose),"Unknown pose: "+pose);
+    assert.ok(existsSync(new URL("../assets/cuc-yen/sprites/"+pose+".webp",import.meta.url)),"Missing sprite: "+pose+".webp");
+  }
 });

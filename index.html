@@ -3186,7 +3186,7 @@ body.yen-stamping-active{overflow:hidden}
         <div class="stage-ellipse"></div>
         <button class="mascot-button" type="button" id="mascot" aria-label="Chạm vào Cục Yên để nghe nó nói nhảm một câu">
           <svg class="cuc-yen-model cuc-yen-hero" viewBox="0 0 320 320" aria-hidden="true" focusable="false">
-            <use href="/assets/cuc-yen/mascot.svg#cuc-yen-waving"></use>
+            <image href="/assets/cuc-yen/sprites/waving.webp" width="320" height="320"></image>
           </svg>
         </button>
         <div class="mascot-cutscene" id="mascot-cutscene" aria-hidden="true"></div>
@@ -3279,9 +3279,9 @@ body.yen-stamping-active{overflow:hidden}
         <div class="wheel-right">
           <div class="wheel-clerk" id="yen-wheel-clerk" aria-hidden="true">
             <svg class="wheel-clerk-art cuc-yen-model" viewBox="0 0 320 320" focusable="false">
-              <use class="wheel-role-idle" href="/assets/cuc-yen/mascot.svg#cuc-yen-clerk"></use>
-              <use class="wheel-role-spin" href="/assets/cuc-yen/mascot.svg#cuc-yen-clerk-spin"></use>
-              <use class="wheel-role-win" href="/assets/cuc-yen/mascot.svg#cuc-yen-clerk-win"></use>
+              <image class="wheel-role-idle" href="/assets/cuc-yen/sprites/clerk.webp" width="320" height="320"></image>
+              <image class="wheel-role-spin" href="/assets/cuc-yen/sprites/clerk-spin.webp" width="320" height="320"></image>
+              <image class="wheel-role-win" href="/assets/cuc-yen/sprites/clerk-win.webp" width="320" height="320"></image>
             </svg>
           </div>
           <div class="wheel-speech" id="yen-wheel-speech" role="status" aria-live="polite">Bấm quay đi! Muốn nhận quà thật thì quay tại Yên trước mặt nhân viên nhé.</div>
@@ -3321,7 +3321,7 @@ body.yen-stamping-active{overflow:hidden}
             <!-- Khi có ảnh quán thật, thay phần .irl-preview-empty bằng ảnh <img class="irl-preview-photo" ...>. -->
             <div class="irl-preview-empty" role="img" aria-label="Khung ảnh xem trước quán Yên, hiện chưa có ảnh thực tế">
               <span class="irl-preview-kicker">MỘT GÓC YÊN</span>
-              <svg class="irl-preview-mascot" viewBox="0 0 320 320" aria-hidden="true" focusable="false"><use href="/assets/cuc-yen/mascot.svg#cuc-yen-resting"></use></svg>
+              <svg class="irl-preview-mascot" viewBox="0 0 320 320" aria-hidden="true" focusable="false"><image href="/assets/cuc-yen/sprites/resting.webp" width="320" height="320"></image></svg>
               <span class="irl-preview-message">Ảnh quán sẽ có sớm.</span>
             </div>
           </figure>
@@ -3405,17 +3405,17 @@ body.yen-stamping-active{overflow:hidden}
         mascot.classList.remove('wink');
         void mascot.offsetWidth;
         mascot.classList.add('wink');
-        const actor=mascot.querySelector('use');
-        if(actor)actor.setAttribute('href','/assets/cuc-yen/mascot.svg#cuc-yen-wink');
+        const actor=mascot.querySelector('image');
+        if(actor)actor.setAttribute('href','/assets/cuc-yen/sprites/wink.webp');
         window.setTimeout(() => {
           mascot.classList.remove('wink');
-          if(actor)actor.setAttribute('href','/assets/cuc-yen/mascot.svg#cuc-yen-waving');
+          if(actor)actor.setAttribute('href','/assets/cuc-yen/sprites/waving.webp');
         }, 450);
       }
       mascot.addEventListener('click', () => poke());
       // All 20 cutscenes now place the SAME SVG model into different scenery.
       // Staff scenes use a removable cap; the silhouette, scarf and face stay canonical.
-      const CUC_SPRITE="/assets/cuc-yen/mascot.svg#cuc-yen-";
+      const CUC_SPRITE="/assets/cuc-yen/sprites/";
       const YEN_SCENE_ART={
         "alarm": {
                 "pose": "surprised",
@@ -3611,7 +3611,7 @@ body.yen-stamping-active{overflow:hidden}
                 "size": 188,
                 "motion": "printclone",
                 "back": "",
-                "front": "<rect x=\"64\" y=\"229\" width=\"331\" height=\"170\" rx=\"30\" fill=\"#cddfd0\" stroke=\"#2f4a2f\" stroke-width=\"8\"/><rect x=\"107\" y=\"249\" width=\"230\" height=\"48\" rx=\"10\" fill=\"#fff6e7\" stroke=\"#2f4a2f\" stroke-width=\"5\"/><g class=\"story-mini-clone story-mini-1\"><use href=\"/assets/cuc-yen/mascot.svg#cuc-yen-happy\" x=\"84\" y=\"298\" width=\"106\" height=\"106\"/></g><g class=\"story-mini-clone story-mini-2\"><use href=\"/assets/cuc-yen/mascot.svg#cuc-yen-sleepy\" x=\"188\" y=\"298\" width=\"106\" height=\"106\"/></g><g class=\"story-mini-clone story-mini-3\"><use href=\"/assets/cuc-yen/mascot.svg#cuc-yen-cheeky\" x=\"286\" y=\"298\" width=\"106\" height=\"106\"/></g>",
+                "front": "<rect x=\"64\" y=\"229\" width=\"331\" height=\"170\" rx=\"30\" fill=\"#cddfd0\" stroke=\"#2f4a2f\" stroke-width=\"8\"/><rect x=\"107\" y=\"249\" width=\"230\" height=\"48\" rx=\"10\" fill=\"#fff6e7\" stroke=\"#2f4a2f\" stroke-width=\"5\"/><g class=\"story-mini-clone story-mini-1\"><image href=\"/assets/cuc-yen/sprites/happy.webp\" x=\"84\" y=\"298\" width=\"106\" height=\"106\"/></g><g class=\"story-mini-clone story-mini-2\"><image href=\"/assets/cuc-yen/sprites/sleepy.webp\" x=\"188\" y=\"298\" width=\"106\" height=\"106\"/></g><g class=\"story-mini-clone story-mini-3\"><image href=\"/assets/cuc-yen/sprites/cheeky.webp\" x=\"286\" y=\"298\" width=\"106\" height=\"106\"/></g>",
                 "story": "Máy photocopy nhả ra ba Cục Yên nhỏ, mỗi đứa đòi ngủ trưa.",
                 "detail": "<g class=\"story-clones-nap\"><text x=\"132\" y=\"300\" font-size=\"21\" font-family=\"Arial,sans-serif\" font-weight=\"900\" fill=\"#b18b60\">z</text><text x=\"238\" y=\"290\" font-size=\"23\" font-family=\"Arial,sans-serif\" font-weight=\"900\" fill=\"#b18b60\">Z</text><text x=\"347\" y=\"300\" font-size=\"20\" font-family=\"Arial,sans-serif\" font-weight=\"900\" fill=\"#b18b60\">z</text></g>"
         },
@@ -3640,8 +3640,9 @@ body.yen-stamping-active{overflow:hidden}
 };
       function renderYenScene(id){
         const scene=YEN_SCENE_ART[id]||YEN_SCENE_ART.alarm;
-        // Use an SVG <use> geometry instance, not a nested <svg>. Legacy CSS sizes every nested SVG to 100% on mobile.
-        const mascot='<use class="scene-cuc-model" href="'+CUC_SPRITE+scene.pose+'" x="'+scene.x+'" y="'+scene.y+'" width="'+scene.size+'" height="'+scene.size+'"/>';
+        // Use an SVG <image> (Chromium-rendered WebP), not a nested <svg>: legacy CSS sizes every nested SVG to 100% on mobile,
+        // and iOS WebKit drops the gradients/patterns of an external SVG <use> of the vector sheet (transparent body on iPhone).
+        const mascot='<image class="scene-cuc-model" href="'+CUC_SPRITE+scene.pose+'.webp" x="'+scene.x+'" y="'+scene.y+'" width="'+scene.size+'" height="'+scene.size+'"/>';
         return '<svg class="scene-illustration" viewBox="0 0 460 460" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><ellipse class="scene-ground-shadow" cx="228" cy="421" rx="139" ry="12" fill="#7b896f" opacity=".16"/><g class="scene-props-back">'+scene.back+'</g><g class="scene-cuc-actor scene-motion-'+scene.motion+'">'+mascot+'</g><g class="scene-props-front">'+scene.front+'</g><g class="scene-story-detail">'+(scene.detail||"")+'</g></svg>';
       }
       const DARE_ACTS=[
@@ -4051,7 +4052,7 @@ body.yen-stamping-active{overflow:hidden}
     const old=target.querySelector(":scope > .cuc-reaction");if(old)old.remove();
     const card=document.createElement("div");card.className="cuc-reaction";card.dataset.mood=mood;
     const actor=document.createElement("span");actor.className="cuc-reaction-actor";actor.setAttribute("aria-hidden","true");
-    actor.innerHTML='<svg class="cuc-yen-model" viewBox="0 0 320 320" focusable="false"><use href="/assets/cuc-yen/mascot.svg#cuc-yen-'+mood+'"></use></svg>';
+    actor.innerHTML='<svg class="cuc-yen-model" viewBox="0 0 320 320" focusable="false"><image href="/assets/cuc-yen/sprites/'+mood+'.webp" width="320" height="320"></image></svg>';
     const line=document.createElement("span");line.className="cuc-reaction-text";line.textContent=message;
     card.append(actor,line);target.appendChild(card);
   }

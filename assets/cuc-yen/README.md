@@ -30,21 +30,28 @@ Khác biệt duy nhất của vai nhân viên là **mũ nhỏ** gắn thêm từ
 
 ## Sử dụng trên website
 
+**Không dùng `<use href="/assets/cuc-yen/mascot.svg#…">` trên trang web.** iOS WebKit (Safari/Chrome trên iPhone) không áp dụng gradient/pattern/clipPath/filter khai báo bên trong `mascot.svg` khi tham chiếu qua `<use>` ngoài file, nên thân Cục Yên hiện trong suốt (chỉ còn viền). Trang web dùng sprite WebP nền trong suốt trong `sprites/`, do Chromium dựng từ chính `mascot.svg`:
+
 ```html
-<svg viewBox="0 0 320 320" width="160" height="160"
-     role="img" aria-label="Cục Yên đang chào bạn">
-  <use href="/assets/cuc-yen/mascot.svg#cuc-yen-happy"></use>
+<svg viewBox="0 0 320 320" width="160" height="160" role="img" aria-label="Cục Yên đang chào bạn">
+  <image href="/assets/cuc-yen/sprites/happy.webp" width="320" height="320"></image>
 </svg>
 ```
 
-Đổi biểu cảm trực tiếp trên một instance mà không nhân bản file:
+Đổi biểu cảm trực tiếp trên một instance:
 
 ```js
-const pose = document.querySelector("#my-cuc-yen use");
-pose.setAttribute("href", "/assets/cuc-yen/mascot.svg#cuc-yen-sleepy");
+document.querySelector("#my-cuc-yen image").setAttribute("href", "/assets/cuc-yen/sprites/sleepy.webp");
 ```
 
-**Lưu ý:** SVG tải từ cùng origin. Để dùng ngoài website Yên, tải theo cả `mascot.svg` vào dự án mới. Để export PNG, mở `preview.html` và dùng công cụ xuất ảnh SVG ở trình duyệt/thiết kế.
+`mascot.svg` vẫn là nguồn gốc. Sau khi sửa nó, dựng lại toàn bộ sprite (800×800, WebP q0.9):
+
+```bash
+node tools/serve-lab-ux.mjs &
+node tools/render-cuc-yen-sprites.mjs
+```
+
+`preview.html` vẫn dùng `<use>` vector để soát trên trình duyệt desktop; nó không phải trang công khai cho iPhone.
 
 ## Giới hạn của v1
 

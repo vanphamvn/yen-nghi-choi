@@ -1,18 +1,22 @@
 import { defineConfig } from '@playwright/test';
 
+const origin = `http://127.0.0.1:${process.env.LAB_UX_PORT || 4189}`;
+
 export default defineConfig({
   testDir: './tests',
-  testMatch: ['yen-lab-ux.spec.mjs', 'yen-lab-route.spec.mjs'],
+  testMatch: ['yen-lab-ux.spec.mjs', 'yen-lab-route.spec.mjs', 'homepage-mascot.spec.mjs'],
   outputDir: 'test-results/lab-ux',
   reporter: [['list'], ['html', { outputFolder: 'playwright-report/lab-ux', open: 'never' }]],
   use: {
-    baseURL: 'http://127.0.0.1:4189',
+    baseURL: origin,
     trace: 'retain-on-failure',
     launchOptions: process.env.LAB_UX_CHROMIUM_PATH ? { executablePath: process.env.LAB_UX_CHROMIUM_PATH } : {},
   },
   projects: [
     { name: 'desktop', use: { browserName: 'chromium', viewport: { width: 1440, height: 900 } } },
     { name: 'emulated-touch', use: { browserName: 'chromium', viewport: { width: 360, height: 800 }, hasTouch: true, isMobile: true } },
+    // Local only (CI installs Chromium alone): LAB_UX_WEBKIT=1 adds WebKit for the homepage mascot regression.
+    ...(process.env.LAB_UX_WEBKIT ? [{ name: 'webkit', testMatch: 'homepage-mascot.spec.mjs', use: { browserName: 'webkit' } }] : []),
   ],
-  webServer: { command: 'node tools/serve-lab-ux.mjs', url: 'http://127.0.0.1:4189/docs/yen-lab/wireframes.html', reuseExistingServer: !process.env.CI },
+  webServer: { command: 'node tools/serve-lab-ux.mjs', url: origin + '/docs/yen-lab/wireframes.html', reuseExistingServer: !process.env.CI },
 });
