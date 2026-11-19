@@ -69,7 +69,7 @@ button { font: inherit; color: inherit; }
 /* mobile coordinates (stage = centre 47% of the backdrop) */
 .sprite-bench   { --x: 14%; --b: 23%; --w: 72%; z-index: 1; }
 .sprite-cushion { --x: 60%; --b: 31%; --w: 19%; z-index: 2; }
-.room-buddy     { --x: 31%; --b: 25%; --w: 36%; z-index: 3; }
+.room-buddy     { --x: 25%; --b: 22%; --w: 46%; z-index: 3; }
 .sprite-table   { --x: 16%; --b: 2%;  --w: 68%; z-index: 4; }
 .sprite-book    { --x: 24%; --b: 19%; --w: 24%; z-index: 4; }
 .sprite-cup     { --x: 56%; --b: 19.5%; --w: 14%; z-index: 4; }
@@ -113,7 +113,7 @@ button { font: inherit; color: inherit; }
 /* Cục Yên sitting on the bench */
 .room-buddy { aspect-ratio: 1; padding: 0; background: none; border: 0; border-radius: 50%; cursor: pointer; transition: transform 160ms ease-out; }
 .room-buddy:disabled { cursor: default; }
-.room-buddy svg { width: 100%; height: 100%; filter: drop-shadow(0 6px 4px rgba(60, 40, 20, .25)); }
+.room-buddy img { display: block; width: 100%; height: 100%; filter: drop-shadow(0 6px 4px rgba(60, 40, 20, .25)); }
 .room-buddy:not(:disabled):hover { transform: translateY(-3px) rotate(-1deg); }
 .room-buddy:not(:disabled):active { transform: translateY(2px) scale(.98); }
 .room-buddy.is-poked { animation: buddy-wobble 420ms ease-in-out; }
@@ -179,7 +179,7 @@ button { font: inherit; color: inherit; }
   /* desktop coordinates = backdrop coordinates */
   .sprite-bench   { --x: 35%; --b: 23%; --w: 31%; }
   .sprite-cushion { --x: 56%; --b: 31%; --w: 8.5%; }
-  .room-buddy     { --x: 43%; --b: 25.5%; --w: 15%; }
+  .room-buddy     { --x: 40%; --b: 22.5%; --w: 20%; }
   .sprite-table   { --x: 36%; --b: 2%;  --w: 29%; }
   .sprite-book    { --x: 39.5%; --b: 19%; --w: 10.5%; }
   .sprite-cup     { --x: 54%; --b: 19.5%; --w: 6%; }
