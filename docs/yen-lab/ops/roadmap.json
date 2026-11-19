@@ -260,7 +260,7 @@
       "priority": "P0",
       "title": "Alpha production release gate",
       "kind": "release",
-      "status": "in-progress",
+      "status": "done",
       "depends_on": [
         "F05",
         "F06",
@@ -270,7 +270,7 @@
         "G01"
       ],
       "issue_url": "https://github.com/vanphamvn/yen-nghi-choi/issues/134",
-      "evidence": "Released: PR #181 squash-merged as 4a6a9c4 (owner chose to merge before a physical-phone check). Homepage flag_yenlab=1; homepage links 44px in their own row; no focus ring after tap open/close of the menu on WebKit. Deployed smoke run 44519031989 22/22 at 4a6a9c4; real-browser production walk homepage -> /lab/ -> book -> Thở cùng Yên -> running. Lab suite 126/126; emulated iPhone 15 (WebKit 26.5) and Pixel 7 (Chromium 151) 37/37 each; screenshots + rollback in docs/yen-lab/RELEASE-M1.md. Open: manual check on a physical iPhone/Android (+ VoiceOver/TalkBack) by the owner; issue #134 stays open until then."
+      "evidence": "Released: PR #181 squash-merged as 4a6a9c4 (owner chose to merge before a physical-phone check). Homepage flag_yenlab=1; homepage links 44px in their own row; no focus ring after tap open/close of the menu on WebKit. Deployed smoke run 44519031989 22/22 at 4a6a9c4; real-browser production walk homepage -> /lab/ -> book -> Thở cùng Yên -> running. Lab suite 126/126; emulated iPhone 15 (WebKit 26.5) and Pixel 7 (Chromium 151) 37/37 each; screenshots + rollback in docs/yen-lab/RELEASE-M1.md. Open: manual check on a physical iPhone/Android (+ VoiceOver/TalkBack) by the owner; issue #134 stays open until then. Closed: owner checked on real phones and closed #134 (\"Checked\", 2026-11-19T12:09Z)."
     },
     {
       "key": "G02",
@@ -294,13 +294,14 @@
       "priority": "P0",
       "title": "Ba điều nhỏ xíu",
       "kind": "minigame",
-      "status": "todo",
+      "status": "done",
       "depends_on": [
         "F03",
         "F08",
         "F10"
       ],
-      "issue_url": "https://github.com/vanphamvn/yen-nghi-choi/issues/155"
+      "issue_url": "https://github.com/vanphamvn/yen-nghi-choi/issues/155",
+      "evidence": "PR #185 squash-merged as ba4abfd. /lab/ba-dieu/: write up to three small good things (60 chars each, one is enough, none is fine), suggestions fill empty slips, notes shown only on the page; stop/reset/pagehide/bfcache wipe the words; no storage, no network. Lab Playwright incl. emulated iPhone 15 WebKit + Pixel 7. Production: deployed smoke run 44571037908 36/36 at ba4abfd; still served in 022a2d5 (run 44572144238 36/36). Not verified: physical phones, VoiceOver/TalkBack; owner review pending."
     },
     {
       "key": "F11",
@@ -309,13 +310,14 @@
       "priority": "P0",
       "title": "Core Beta 3 release gate",
       "kind": "release",
-      "status": "todo",
+      "status": "in-progress",
       "depends_on": [
         "G02",
         "G14",
         "F10"
       ],
-      "issue_url": "https://github.com/vanphamvn/yen-nghi-choi/issues/135"
+      "issue_url": "https://github.com/vanphamvn/yen-nghi-choi/issues/135",
+      "evidence": "Gate PR: tests/yen-lab-beta3.spec.mjs (one guest visit through all 3 games, gratitude words never leave the page, offline after load, no sound, cold-load budgets) on desktop, emulated touch, emulated iPhone 15 WebKit 26.5 and Pixel 7 Chromium 151; room tap-highlight fix; docs/yen-lab/RELEASE-BETA3.md. Production SHA recorded on #135 after merge."
     },
     {
       "key": "F12",
