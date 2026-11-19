@@ -50,25 +50,44 @@
     </div>
 
     <!-- The menu: the same painted book, opened big. Games are written on its pages. -->
-    <dialog class="menu" id="lab-menu" aria-labelledby="menu-title" tabindex="-1">
+    <dialog class="menu" id="lab-menu" aria-labelledby="menu-title" data-page="1" tabindex="-1">
       <div class="menu-book">
         <button class="menu-book-art" id="menu-close" type="button">
           <img src="/lab/assets/book.webp" width="384" height="188" alt="" decoding="async">
+          <span class="menu-flip-frame" id="menu-flip-frame" aria-hidden="true"></span>
           <span class="lab-sr">Gấp sổ lại</span>
         </button>
-        <div class="menu-page menu-page--left">
+        <div class="menu-page menu-page--left" data-spread="1">
           <h2 id="menu-title">Thực đơn</h2>
           <ul data-testid="lab-tool-list">
             <li class="lab-tool" data-tool="breath" data-status="released"><a href="/lab/tho/">Thở cùng Yên</a></li>
             <li class="lab-tool" data-tool="tense" data-status="released"><a href="/lab/cang/">Căng rồi thả</a></li>
           </ul>
         </div>
-        <div class="menu-page menu-page--right">
+        <div class="menu-page menu-page--right" data-spread="1">
           <ul aria-label="Thực đơn, trang 2">
             <li class="lab-tool" data-tool="small" data-status="coming">Ba điều nhỏ xíu<span>sắp có</span></li>
           </ul>
         </div>
+        <div class="menu-page menu-page--left" data-spread="2" aria-hidden="true" inert>
+          <h2>Đang ủ</h2>
+          <ul aria-label="Trò đang chuẩn bị">
+            <li>Thám tử hiện tại</li>
+            <li>Lá trôi, nghĩ trôi</li>
+          </ul>
+        </div>
+        <div class="menu-page menu-page--right" data-spread="2" aria-hidden="true" inert>
+          <ul aria-label="Trò sẽ có sau">
+            <li>Gọi tên cơn bực</li>
+          </ul>
+          <p class="menu-coming-note">Những trang này chưa mở chơi.</p>
+        </div>
       </div>
+      <nav class="menu-turn-nav" aria-label="Lật trang thực đơn">
+        <button id="menu-prev" type="button" disabled>Trang trước</button>
+        <span id="menu-page-number" aria-live="polite" aria-atomic="true">Trang 1 / 2</span>
+        <button id="menu-next" type="button">Trang sau</button>
+      </nav>
       <p class="lab-sr" id="lab-release-status" data-released-count="2">Hai trò đang mở: Thở cùng Yên, Căng rồi thả.</p>
     </dialog>
     <noscript><p class="menu-noscript">Thực đơn: <a href="/lab/tho/">Thở cùng Yên</a> · <a href="/lab/cang/">Căng rồi thả</a> · Ba điều nhỏ xíu (sắp có)</p></noscript>
