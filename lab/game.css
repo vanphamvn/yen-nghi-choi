@@ -1,0 +1,118 @@
+/* Yên Lab · shared game screen (LAB-F06, #130).
+   Each game has its own page (/lab/<game>/) that loads /lab/lab.css (tokens, header, footer) and this file.
+   The screen is one sheet of café paper over the softly blurred painted room. Controls are words written
+   in ink on the paper (owner decision 19/11/2026): no pills, borders or tags, but real <button>s, ≥48px targets.
+
+   State contract: <main class="game" data-state="idle|running|paused|complete|stopped|error">.
+   Any element with data-when="<states…>" is shown only in those states; its own display comes from --show. */
+
+.game {
+  position: relative; isolation: isolate; overflow: hidden;
+  display: grid; justify-items: center; align-content: start;
+  min-height: calc(100svh - 72px);
+  padding: 8px var(--pad) 48px;
+}
+.game-backdrop {
+  position: absolute; z-index: -1; top: -24px; left: -24px;
+  width: calc(100% + 48px); height: calc(100% + 48px); max-width: none;
+  object-fit: cover; object-position: 50% 60%;
+  filter: blur(8px) saturate(.85); opacity: .5;
+  pointer-events: none; user-select: none;
+}
+
+/* The paper sheet: homepage card language (ink outline + offset paper shadow), never a SaaS card grid. */
+.game-sheet {
+  width: min(100%, 560px);
+  padding: 28px 20px 20px;
+  background: var(--card); color: var(--ink);
+  border: 1.5px solid var(--ink); border-radius: 8px 12px 10px 14px;
+  box-shadow: 7px 9px 0 #b7cbb0;
+  text-align: center;
+}
+.game-head h1 { font: italic 600 clamp(28px, 8vw, 36px)/1.2 var(--serif); color: var(--green); }
+.game-head h1:focus { outline: none; }
+.game-head h1:focus-visible { outline: 3px solid var(--focus); outline-offset: 4px; border-radius: 6px; }
+.game-lede { margin-top: 6px; font: italic 400 16px/1.5 var(--serif); color: var(--muted); }
+
+/* Stage: the one visual focal point. Games draw here (painted sprite, shape, words…).
+   Decorative only (aria-hidden); the cue + progress text below carry the meaning. */
+.game-stage {
+  position: relative; display: grid; place-items: center;
+  width: min(100%, 260px); aspect-ratio: 1; margin: 18px auto 10px;
+}
+.game-stage > img { width: 82%; height: auto; transition: transform 260ms ease-in-out; }
+
+/* Cue: the single current instruction, large and literal. */
+.game-cue { --show: block; min-height: 1.3em; font: italic 600 clamp(24px, 6.4vw, 30px)/1.3 var(--serif); color: var(--green); }
+
+/* Progress: words first ("vòng 2 / 6"), ink dots only as a visual echo. */
+.game-progress { --show: flex; justify-content: center; align-items: center; gap: 10px; margin-top: 6px; font-size: 15px; font-weight: 500; color: var(--muted); }
+.game-dots { display: inline-flex; gap: 6px; }
+.game-dots i { width: 9px; height: 9px; border-radius: 50%; border: 1.5px solid var(--ink); }
+.game-dots i.is-done { background: var(--ink); }
+
+/* Short notes: the per-tool caution sits right above "bắt đầu" (SAFETY.md). */
+.game-note { --show: block; max-width: 36ch; margin: 10px auto 0; font-size: 15px; line-height: 1.55; color: var(--muted); text-wrap: pretty; }
+
+/* ───── Ink words: the controls ───── */
+.game-words { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 2px 14px; margin-top: 14px; }
+.ink-word {
+  --show: inline-flex; display: inline-flex; align-items: center; justify-content: center;
+  min-width: 48px; min-height: 48px; padding: 4px 12px;
+  background: none; border: 0; border-radius: 10px; cursor: pointer;
+  font: italic 500 20px/1.2 var(--serif); color: var(--ink); white-space: nowrap;
+  text-decoration: underline; text-decoration-thickness: 1.5px; text-underline-offset: 7px;
+  text-decoration-color: rgba(36, 60, 53, .3); /* faint hand underline = "you can tap this" on touch */
+  -webkit-tap-highlight-color: transparent;
+  transition: text-decoration-color 160ms ease-out, transform 160ms ease-out, color 160ms ease-out;
+}
+.ink-word:hover, .ink-word:focus-visible { text-decoration-color: currentColor; }
+.ink-word:active { transform: translateY(1px); }
+.ink-word:disabled, .ink-word[aria-disabled="true"] { color: var(--muted); text-decoration: none; cursor: default; transform: none; }
+/* the one main action of the moment */
+.ink-word--lead { font-size: 25px; font-weight: 600; color: var(--green); text-decoration-color: rgba(46, 90, 70, .35); }
+/* small words for optional choices (reflection) */
+.ink-word--small { font-size: 17px; padding: 4px 8px; }
+.ink-word[aria-pressed="true"] { color: var(--green); text-decoration-color: currentColor; text-decoration-thickness: 2px; }
+
+/* Quiet result: no score, no confetti, skippable reflection. */
+.game-result { --show: block; margin-top: 4px; }
+.game-result-line { font: italic 500 20px/1.4 var(--serif); color: var(--ink); }
+.game-reflect { margin-top: 14px; }
+.game-reflect > p { font-size: 15px; color: var(--muted); }
+.game-reflect .game-words { gap: 0 4px; margin-top: 4px; }
+
+/* Whisper = the "toast": one short line written at the bottom of the sheet, announced politely. */
+.game-whisper { min-height: 1.5em; margin-top: 10px; font: italic 400 15px/1.5 var(--serif); color: var(--muted); }
+.game-whisper.is-new { animation: game-whisper-in 260ms ease-out; }
+@keyframes game-whisper-in { from { opacity: 0; transform: translateY(3px); } to { opacity: 1; transform: none; } }
+
+/* ───── State visibility ───── */
+.game [data-when] { display: none; }
+.game[data-state="idle"]     [data-when~="idle"],
+.game[data-state="running"]  [data-when~="running"],
+.game[data-state="paused"]   [data-when~="paused"],
+.game[data-state="complete"] [data-when~="complete"],
+.game[data-state="stopped"]  [data-when~="stopped"],
+.game[data-state="error"]    [data-when~="error"] { display: var(--show, block); }
+.game[data-state="paused"] .game-stage { opacity: .55; }
+/* after the game the result and "làm lại" matter more than the picture: keep them in the first screen on phones */
+.game[data-state="complete"] .game-stage, .game[data-state="stopped"] .game-stage, .game[data-state="error"] .game-stage { width: min(100%, 140px); margin: 8px auto 4px; }
+
+@media (max-width: 359px) {
+  .game-sheet { padding: 24px 14px 16px; }
+  .game-words { gap: 0 6px; }
+  .ink-word { font-size: 19px; padding: 4px 8px; }
+  .ink-word--lead { font-size: 23px; }
+}
+
+@media (min-width: 768px) {
+  .game { padding-top: 24px; padding-bottom: 72px; }
+  .game-sheet { padding: 40px 48px 28px; box-shadow: 10px 12px 0 #b7cbb0; }
+  .game-stage { width: 300px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* lab.css already removes transitions/animations; state stays readable through cue + progress text. */
+  .game-stage > img { transform: none !important; }
+}

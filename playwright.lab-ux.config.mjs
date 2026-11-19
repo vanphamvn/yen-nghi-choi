@@ -4,7 +4,7 @@ const origin = `http://127.0.0.1:${process.env.LAB_UX_PORT || 4189}`;
 
 export default defineConfig({
   testDir: './tests',
-  testMatch: ['yen-lab-ux.spec.mjs', 'yen-lab-route.spec.mjs', 'homepage-mascot.spec.mjs'],
+  testMatch: ['yen-lab-ux.spec.mjs', 'yen-lab-route.spec.mjs', 'yen-lab-game-kit.spec.mjs', 'homepage-mascot.spec.mjs'],
   outputDir: 'test-results/lab-ux',
   reporter: [['list'], ['html', { outputFolder: 'playwright-report/lab-ux', open: 'never' }]],
   use: {
