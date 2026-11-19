@@ -1,0 +1,649 @@
+{
+  "schema_version": 1,
+  "project": "Yên Lab Beta",
+  "owner_decision_date": "2026-11-19",
+  "status": "planned",
+  "source_of_truth": "docs/yen-lab/ROADMAP.md",
+  "epic_issue": 124,
+  "website": "https://yencafeday.netlify.app/",
+  "target_route": "/lab/",
+  "external_preconditions": [
+    {
+      "reference": "PR #123",
+      "url": "https://github.com/vanphamvn/yen-nghi-choi/pull/123",
+      "requirement": "CI pass + reviewed merge; feature implementation must use active DESIGN.md and skill"
+    }
+  ],
+  "notes": "All statuses todo as of creation, not a claim that code is shipped. Native GitHub milestones have not been created. Dependency lists are planning relations, not an automatically enforced GitHub Projects graph.",
+  "gates": [
+    {
+      "id": "M0",
+      "title": "Reset + Evidence",
+      "required_issues": [
+        125,
+        126,
+        127,
+        128
+      ],
+      "release": "No user-facing release"
+    },
+    {
+      "id": "M1",
+      "title": "Playable Alpha 1",
+      "required_issues": [
+        129,
+        130,
+        131,
+        132,
+        133,
+        142,
+        134
+      ],
+      "release": "Homepage → /lab/ → Thở cùng Yên on production"
+    },
+    {
+      "id": "M2",
+      "title": "Core Beta 3",
+      "required_issues": [
+        143,
+        155,
+        135
+      ],
+      "release": "3 usable tools on production"
+    },
+    {
+      "id": "M3",
+      "title": "Beta 6",
+      "required_issues": [
+        136,
+        146,
+        148,
+        150,
+        137
+      ],
+      "release": "6 usable tools + non-diagnostic recommendation"
+    },
+    {
+      "id": "M4",
+      "title": "Up to 20",
+      "required_issues": [
+        138,
+        144,
+        145,
+        147,
+        149,
+        151,
+        152,
+        153,
+        154,
+        156,
+        157,
+        158,
+        159,
+        160,
+        161
+      ],
+      "release": "Each tool separately quality/research gated; unsupported tools remain experimental or deferred"
+    },
+    {
+      "id": "M5",
+      "title": "Quality + Learning",
+      "required_issues": [
+        139,
+        140,
+        141
+      ],
+      "release": "Regression, real-device QA, rollout/rollback and anonymous aggregate learning"
+    }
+  ],
+  "rules": [
+    "Do not implement old Phaser game unless user explicitly reactivates",
+    "No clinical efficacy claims for custom mini games based solely on underlying technique",
+    "No accounts, analytics identifying users, persistence of mood/journals, or paid APIs by default",
+    "Each shipped increment has exact production SHA, URL, test evidence and rollback",
+    "No forced gamification/leaderboards/streaks; user may always stop or skip"
+  ],
+  "counts": {
+    "all": 37,
+    "foundations": 17,
+    "mini_games": 20
+  },
+  "tasks": [
+    {
+      "key": "F01",
+      "issue": 125,
+      "milestone": "M0",
+      "priority": "P0",
+      "title": "Dừng game Phaser và triage issue/workflow",
+      "kind": "platform",
+      "status": "todo",
+      "depends_on": [],
+      "issue_url": "https://github.com/vanphamvn/yen-nghi-choi/issues/125"
+    },
+    {
+      "key": "F02",
+      "issue": 126,
+      "milestone": "M0",
+      "priority": "P0",
+      "title": "Hoàn tất skill PR #123",
+      "kind": "governance",
+      "status": "todo",
+      "depends_on": [],
+      "issue_url": "https://github.com/vanphamvn/yen-nghi-choi/issues/126"
+    },
+    {
+      "key": "F03",
+      "issue": 127,
+      "milestone": "M0",
+      "priority": "P0",
+      "title": "Research matrix & safety",
+      "kind": "research",
+      "status": "todo",
+      "depends_on": [],
+      "issue_url": "https://github.com/vanphamvn/yen-nghi-choi/issues/127"
+    },
+    {
+      "key": "F04",
+      "issue": 128,
+      "milestone": "M0",
+      "priority": "P1",
+      "title": "Information architecture & microcopy",
+      "kind": "design",
+      "status": "todo",
+      "depends_on": [
+        "F03"
+      ],
+      "issue_url": "https://github.com/vanphamvn/yen-nghi-choi/issues/128"
+    },
+    {
+      "key": "F05",
+      "issue": 129,
+      "milestone": "M1",
+      "priority": "P0",
+      "title": "Route /lab/ + link homepage",
+      "kind": "frontend",
+      "status": "todo",
+      "depends_on": [
+        "F02",
+        "F04"
+      ],
+      "issue_url": "https://github.com/vanphamvn/yen-nghi-choi/issues/129"
+    },
+    {
+      "key": "F06",
+      "issue": 130,
+      "milestone": "M1",
+      "priority": "P0",
+      "title": "UI components & tokens",
+      "kind": "design",
+      "status": "todo",
+      "depends_on": [
+        "F02"
+      ],
+      "issue_url": "https://github.com/vanphamvn/yen-nghi-choi/issues/130"
+    },
+    {
+      "key": "F07",
+      "issue": 131,
+      "milestone": "M1",
+      "priority": "P0",
+      "title": "Shared interaction engine & timers",
+      "kind": "frontend",
+      "status": "todo",
+      "depends_on": [
+        "F05",
+        "F06"
+      ],
+      "issue_url": "https://github.com/vanphamvn/yen-nghi-choi/issues/131"
+    },
+    {
+      "key": "F08",
+      "issue": 132,
+      "milestone": "M1",
+      "priority": "P0",
+      "title": "Privacy, a11y & CSP",
+      "kind": "quality",
+      "status": "todo",
+      "depends_on": [
+        "F02",
+        "F05"
+      ],
+      "issue_url": "https://github.com/vanphamvn/yen-nghi-choi/issues/132"
+    },
+    {
+      "key": "F09",
+      "issue": 133,
+      "milestone": "M1",
+      "priority": "P0",
+      "title": "Playwright /lab/ & release smoke",
+      "kind": "qa",
+      "status": "todo",
+      "depends_on": [
+        "F05",
+        "F07"
+      ],
+      "issue_url": "https://github.com/vanphamvn/yen-nghi-choi/issues/133"
+    },
+    {
+      "key": "G01",
+      "issue": 142,
+      "milestone": "M1",
+      "priority": "P0",
+      "title": "Thở cùng Yên",
+      "kind": "minigame",
+      "status": "todo",
+      "depends_on": [
+        "F03",
+        "F05",
+        "F06",
+        "F07",
+        "F08",
+        "F09"
+      ],
+      "issue_url": "https://github.com/vanphamvn/yen-nghi-choi/issues/142"
+    },
+    {
+      "key": "F10",
+      "issue": 134,
+      "milestone": "M1",
+      "priority": "P0",
+      "title": "Alpha production release gate",
+      "kind": "release",
+      "status": "todo",
+      "depends_on": [
+        "F05",
+        "F06",
+        "F07",
+        "F08",
+        "F09",
+        "G01"
+      ],
+      "issue_url": "https://github.com/vanphamvn/yen-nghi-choi/issues/134"
+    },
+    {
+      "key": "G02",
+      "issue": 143,
+      "milestone": "M2",
+      "priority": "P0",
+      "title": "Căng rồi thả",
+      "kind": "minigame",
+      "status": "todo",
+      "depends_on": [
+        "F03",
+        "F10"
+      ],
+      "issue_url": "https://github.com/vanphamvn/yen-nghi-choi/issues/143"
+    },
+    {
+      "key": "G14",
+      "issue": 155,
+      "milestone": "M2",
+      "priority": "P0",
+      "title": "Ba điều nhỏ xíu",
+      "kind": "minigame",
+      "status": "todo",
+      "depends_on": [
+        "F03",
+        "F08",
+        "F10"
+      ],
+      "issue_url": "https://github.com/vanphamvn/yen-nghi-choi/issues/155"
+    },
+    {
+      "key": "F11",
+      "issue": 135,
+      "milestone": "M2",
+      "priority": "P0",
+      "title": "Core Beta 3 release gate",
+      "kind": "release",
+      "status": "todo",
+      "depends_on": [
+        "G02",
+        "G14",
+        "F10"
+      ],
+      "issue_url": "https://github.com/vanphamvn/yen-nghi-choi/issues/135"
+    },
+    {
+      "key": "F12",
+      "issue": 136,
+      "milestone": "M3",
+      "priority": "P1",
+      "title": "Gợi ý theo nhu cầu",
+      "kind": "frontend",
+      "status": "todo",
+      "depends_on": [
+        "F04",
+        "F05",
+        "F11"
+      ],
+      "issue_url": "https://github.com/vanphamvn/yen-nghi-choi/issues/136"
+    },
+    {
+      "key": "G05",
+      "issue": 146,
+      "milestone": "M3",
+      "priority": "P1",
+      "title": "Thám tử hiện tại",
+      "kind": "minigame",
+      "status": "todo",
+      "depends_on": [
+        "F03",
+        "F11"
+      ],
+      "issue_url": "https://github.com/vanphamvn/yen-nghi-choi/issues/146"
+    },
+    {
+      "key": "G07",
+      "issue": 148,
+      "milestone": "M3",
+      "priority": "P1",
+      "title": "Lá trôi, nghĩ trôi",
+      "kind": "minigame",
+      "status": "todo",
+      "depends_on": [
+        "F03",
+        "F08",
+        "F11"
+      ],
+      "issue_url": "https://github.com/vanphamvn/yen-nghi-choi/issues/148"
+    },
+    {
+      "key": "G09",
+      "issue": 150,
+      "milestone": "M3",
+      "priority": "P1",
+      "title": "Gọi tên cơn bực",
+      "kind": "minigame",
+      "status": "todo",
+      "depends_on": [
+        "F03",
+        "F08",
+        "F11"
+      ],
+      "issue_url": "https://github.com/vanphamvn/yen-nghi-choi/issues/150"
+    },
+    {
+      "key": "F13",
+      "issue": 137,
+      "milestone": "M3",
+      "priority": "P0",
+      "title": "Beta 6 release gate",
+      "kind": "release",
+      "status": "todo",
+      "depends_on": [
+        "F12",
+        "G05",
+        "G07",
+        "G09"
+      ],
+      "issue_url": "https://github.com/vanphamvn/yen-nghi-choi/issues/137"
+    },
+    {
+      "key": "F14",
+      "issue": 138,
+      "milestone": "M4",
+      "priority": "P1",
+      "title": "Catalog 20 trò + lazy-loading",
+      "kind": "platform",
+      "status": "todo",
+      "depends_on": [
+        "F11"
+      ],
+      "issue_url": "https://github.com/vanphamvn/yen-nghi-choi/issues/138"
+    },
+    {
+      "key": "G03",
+      "issue": 144,
+      "milestone": "M4",
+      "priority": "P1",
+      "title": "Quét người tìm căng thẳng",
+      "kind": "minigame",
+      "status": "todo",
+      "depends_on": [
+        "F03",
+        "F14"
+      ],
+      "issue_url": "https://github.com/vanphamvn/yen-nghi-choi/issues/144"
+    },
+    {
+      "key": "G04",
+      "issue": 145,
+      "milestone": "M4",
+      "priority": "P2",
+      "title": "Ngón tay biết thở",
+      "kind": "minigame",
+      "status": "todo",
+      "depends_on": [
+        "F03",
+        "F14"
+      ],
+      "issue_url": "https://github.com/vanphamvn/yen-nghi-choi/issues/145"
+    },
+    {
+      "key": "G06",
+      "issue": 147,
+      "milestone": "M4",
+      "priority": "P2",
+      "title": "Vườn cát không mục tiêu",
+      "kind": "minigame",
+      "status": "todo",
+      "depends_on": [
+        "F03",
+        "F14"
+      ],
+      "issue_url": "https://github.com/vanphamvn/yen-nghi-choi/issues/147"
+    },
+    {
+      "key": "G08",
+      "issue": 149,
+      "milestone": "M4",
+      "priority": "P2",
+      "title": "Ngồi nhìn mây",
+      "kind": "minigame",
+      "status": "todo",
+      "depends_on": [
+        "F03",
+        "F14"
+      ],
+      "issue_url": "https://github.com/vanphamvn/yen-nghi-choi/issues/149"
+    },
+    {
+      "key": "G10",
+      "issue": 151,
+      "milestone": "M4",
+      "priority": "P1",
+      "title": "Hòm thư không gửi",
+      "kind": "minigame",
+      "status": "todo",
+      "depends_on": [
+        "F03",
+        "F08",
+        "F14"
+      ],
+      "issue_url": "https://github.com/vanphamvn/yen-nghi-choi/issues/151"
+    },
+    {
+      "key": "G11",
+      "issue": 152,
+      "milestone": "M4",
+      "priority": "P1",
+      "title": "Đổi góc nhìn",
+      "kind": "minigame",
+      "status": "todo",
+      "depends_on": [
+        "F03",
+        "F14"
+      ],
+      "issue_url": "https://github.com/vanphamvn/yen-nghi-choi/issues/152"
+    },
+    {
+      "key": "G12",
+      "issue": 153,
+      "milestone": "M4",
+      "priority": "P1",
+      "title": "Điều mình kiểm soát",
+      "kind": "minigame",
+      "status": "todo",
+      "depends_on": [
+        "F03",
+        "F14"
+      ],
+      "issue_url": "https://github.com/vanphamvn/yen-nghi-choi/issues/153"
+    },
+    {
+      "key": "G13",
+      "issue": 154,
+      "milestone": "M4",
+      "priority": "P1",
+      "title": "Nói với mình tử tế",
+      "kind": "minigame",
+      "status": "todo",
+      "depends_on": [
+        "F03",
+        "F14"
+      ],
+      "issue_url": "https://github.com/vanphamvn/yen-nghi-choi/issues/154"
+    },
+    {
+      "key": "G15",
+      "issue": 156,
+      "milestone": "M4",
+      "priority": "P2",
+      "title": "Gửi một điều tử tế",
+      "kind": "minigame",
+      "status": "todo",
+      "depends_on": [
+        "F03",
+        "F08",
+        "F14"
+      ],
+      "issue_url": "https://github.com/vanphamvn/yen-nghi-choi/issues/156"
+    },
+    {
+      "key": "G16",
+      "issue": 157,
+      "milestone": "M4",
+      "priority": "P2",
+      "title": "Album chuyện vui",
+      "kind": "minigame",
+      "status": "todo",
+      "depends_on": [
+        "F03",
+        "F14"
+      ],
+      "issue_url": "https://github.com/vanphamvn/yen-nghi-choi/issues/157"
+    },
+    {
+      "key": "G17",
+      "issue": 158,
+      "milestone": "M4",
+      "priority": "P2",
+      "title": "Việc tốt bé tẹo",
+      "kind": "minigame",
+      "status": "todo",
+      "depends_on": [
+        "F03",
+        "F14"
+      ],
+      "issue_url": "https://github.com/vanphamvn/yen-nghi-choi/issues/158"
+    },
+    {
+      "key": "G18",
+      "issue": 159,
+      "milestone": "M4",
+      "priority": "P2",
+      "title": "Đi dạo trong rừng",
+      "kind": "minigame",
+      "status": "todo",
+      "depends_on": [
+        "F03",
+        "F14"
+      ],
+      "issue_url": "https://github.com/vanphamvn/yen-nghi-choi/issues/159"
+    },
+    {
+      "key": "G19",
+      "issue": 160,
+      "milestone": "M4",
+      "priority": "P2",
+      "title": "Một phút không làm gì",
+      "kind": "minigame",
+      "status": "todo",
+      "depends_on": [
+        "F03",
+        "F14"
+      ],
+      "issue_url": "https://github.com/vanphamvn/yen-nghi-choi/issues/160"
+    },
+    {
+      "key": "G20",
+      "issue": 161,
+      "milestone": "M4",
+      "priority": "P2",
+      "title": "Lắng nghe Yên",
+      "kind": "minigame",
+      "status": "todo",
+      "depends_on": [
+        "F03",
+        "F14"
+      ],
+      "issue_url": "https://github.com/vanphamvn/yen-nghi-choi/issues/161"
+    },
+    {
+      "key": "F15",
+      "issue": 139,
+      "milestone": "M5",
+      "priority": "P0",
+      "title": "Full-catalog release & quality gate",
+      "kind": "release",
+      "status": "todo",
+      "depends_on": [
+        "F14",
+        "F13",
+        "G03",
+        "G04",
+        "G06",
+        "G08",
+        "G10",
+        "G11",
+        "G12",
+        "G13",
+        "G15",
+        "G16",
+        "G17",
+        "G18",
+        "G19",
+        "G20"
+      ],
+      "issue_url": "https://github.com/vanphamvn/yen-nghi-choi/issues/139"
+    },
+    {
+      "key": "F16",
+      "issue": 140,
+      "milestone": "M5",
+      "priority": "P2",
+      "title": "QR tại quán và CTA",
+      "kind": "business",
+      "status": "todo",
+      "depends_on": [
+        "F11"
+      ],
+      "issue_url": "https://github.com/vanphamvn/yen-nghi-choi/issues/140"
+    },
+    {
+      "key": "F17",
+      "issue": 141,
+      "milestone": "M5",
+      "priority": "P2",
+      "title": "15 khách test, evidence maintenance",
+      "kind": "research",
+      "status": "todo",
+      "depends_on": [
+        "F11",
+        "F13"
+      ],
+      "issue_url": "https://github.com/vanphamvn/yen-nghi-choi/issues/141"
+    }
+  ]
+}
