@@ -4,6 +4,8 @@
 
 > **QUYẾT ĐỊNH ĐÃ CHỐT:** Ngưng phát triển Game Yên Phaser 2D, giữ source cũ để lưu trữ. Website Yên sẽ dẫn đến `/lab/`, một bộ mini tools thực hành ngắn giúp khách có cơ hội thư giãn và nhận biết trạng thái của mình. **Nghiên cứu hỗ trợ phương pháp không đồng nghĩa đã chứng minh chính mini game có hiệu quả.**
 
+**Research foundation:** F03 / [#127](https://github.com/vanphamvn/yen-nghi-choi/issues/127) reviewed; see [F03-REVIEW.md](F03-REVIEW.md). Completing the matrix does not approve deferred protocols or imply a /lab/ release.
+
 ## 1. Product contract
 
 **Core user journey:** `Yên homepage → CTA vào Yên Lab → chọn nhu cầu hoặc trò → bắt đầu → tương tác 1–5 phút, dừng bất cứ lúc nào → đánh giá tùy chọn → trở về Yên hoặc chọn trò tiếp`.
@@ -37,7 +39,7 @@
 | `LAB-F03` | [#127](https://github.com/vanphamvn/yen-nghi-choi/issues/127) Research matrix & safety | M0 | P0 | Không |
 | `LAB-F04` | [#128](https://github.com/vanphamvn/yen-nghi-choi/issues/128) Information architecture & microcopy | M0 | P1 | [#127](https://github.com/vanphamvn/yen-nghi-choi/issues/127) |
 | `LAB-F05` | [#129](https://github.com/vanphamvn/yen-nghi-choi/issues/129) Route /lab/ + link homepage | M1 | P0 | [#126](https://github.com/vanphamvn/yen-nghi-choi/issues/126), [#128](https://github.com/vanphamvn/yen-nghi-choi/issues/128) |
-| `LAB-F06` | [#130](https://github.com/vanphamvn/yen-nghi-choi/issues/130) UI components & tokens | M1 | P0 | [#126](https://github.com/vanphamvn/yen-nghi-choi/issues/126) |
+| `LAB-F06` | [#130](https://github.com/vanphamvn/yen-nghi-choi/issues/130) UI components & tokens | M1 | P0 | [#126](https://github.com/vanphamvn/yen-nghi-choi/issues/126), [#128](https://github.com/vanphamvn/yen-nghi-choi/issues/128) |
 | `LAB-F07` | [#131](https://github.com/vanphamvn/yen-nghi-choi/issues/131) Shared interaction engine & timers | M1 | P0 | [#129](https://github.com/vanphamvn/yen-nghi-choi/issues/129), [#130](https://github.com/vanphamvn/yen-nghi-choi/issues/130) |
 | `LAB-F08` | [#132](https://github.com/vanphamvn/yen-nghi-choi/issues/132) Privacy, a11y & CSP | M1 | P0 | [#126](https://github.com/vanphamvn/yen-nghi-choi/issues/126), [#129](https://github.com/vanphamvn/yen-nghi-choi/issues/129) |
 | `LAB-F09` | [#133](https://github.com/vanphamvn/yen-nghi-choi/issues/133) Playwright /lab/ & release smoke | M1 | P0 | [#129](https://github.com/vanphamvn/yen-nghi-choi/issues/129), [#131](https://github.com/vanphamvn/yen-nghi-choi/issues/131) |

@@ -139,9 +139,10 @@
       "priority": "P0",
       "title": "Research matrix & safety",
       "kind": "research",
-      "status": "in-progress",
+      "status": "done",
       "depends_on": [],
-      "issue_url": "https://github.com/vanphamvn/yen-nghi-choi/issues/127"
+      "issue_url": "https://github.com/vanphamvn/yen-nghi-choi/issues/127",
+      "evidence": "Issue #127 foundation matrix accepted after source review and independent editorial review; see docs/yen-lab/F03-REVIEW.md. Per-tool deferred protocol gates remain mandatory."
     },
     {
       "key": "F04",
@@ -179,7 +180,8 @@
       "kind": "design",
       "status": "todo",
       "depends_on": [
-        "F02"
+        "F02",
+        "F04"
       ],
       "issue_url": "https://github.com/vanphamvn/yen-nghi-choi/issues/130"
     },

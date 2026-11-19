@@ -32,8 +32,18 @@ Writing: ordinary, low-stakes prompts only; no compelled trauma narrative. Stop/
 
 Grounding: eyes open, no obligatory smell/taste/touch, no collecting unknown objects. Audio begins off and requires explicit play. All sensory tasks must support skipping and reduced motion.
 
+## Placement and publication gate
+
+Use one short non-treatment sentence in the detail/intro, with method limitations behind a clear “Nguồn phương pháp” disclosure. Keep the breathing or muscle caution immediately beside its start controls; do not hide it in a footer. The visitor must still see one clear main action and an always-available stop/skip path. These are layout requirements for implementation review, not proof of the current mockup's rendered usability.
+
+The research foundation may be complete while an individual routine remains deferred. G02's shortened muscle protocol and all deferred rows in EVIDENCE.md stay unpublished until their specific review is recorded. Re-review exact prompts, cadence, audience and any changed benefit wording before the corresponding first public release. Record source date, reviewer and PR/SHA, then perform the separate functional/privacy/browser gates.
+
 ## Editorial review checks
 
 Reject “đã được khoa học chứng minh” applied to a Yên game, guaranteed calm, treatment promises, diagnosis, brain-reset language, magical frequencies and equivalence between simulated and physical nature. Keep cautions next to the relevant start/interaction; put research limitations in a concise details disclosure. Do not turn every page into a medical warning screen.
 
 Review the actual final Vietnamese text and interactive states, not this document alone. Record `reviewerType=agent`, reviewer identity, date and actual tested SHA; do not imply clinician review, user signoff or production success.
+
+## Foundation editorial record · 19/11/2026
+
+Codex coordinator and independent `source_review` agent (`reviewerType=agent`) checked the proposed safety and UX copy. Breathing and muscle guidance both include stop-if-uncomfortable and no breath-hold wording; reflection includes “Không rõ”/“Bỏ qua”, gratitude permits fewer than three items. No diagnosis, guaranteed benefit or clinical approval is inferred. Full record: [F03-REVIEW.md](F03-REVIEW.md). Final implemented UI and privacy claims still require re-review before release.
