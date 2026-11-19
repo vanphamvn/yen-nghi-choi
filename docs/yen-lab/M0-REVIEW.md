@@ -7,7 +7,7 @@ Date: 19/11/2026. Reviewer: Codex QA agent (`reviewerType=agent`). Scope: assemb
 - The archived coding workflow is manual-only, read-only and contains no model call, code generation or publication. Existing game contract and site deployment configuration are outside this diff.
 - EVIDENCE.md covers G01–G20 once each and distinguishes underlying technique research from unvalidated custom tools. Deferred rows remain blocked; the shortened PMR routine requires protocol-specific review. SAFETY.md specifies optional participation, stop/skip, private-text deletion and appropriate breathing cautions.
 - UX.md specifies idle/start, pause, stop, completion, reset, error, navigation and reduced-motion behavior. Wireframes are explicitly static documentation, not an implemented Lab route.
-- Editorial defect found: optional feeling choices omitted “Không rõ”, required by SAFETY.md. Sent to the UX agent for correction in UX.md and wireframes.html before publication.
+- Editorial defect found and corrected by the UX agent: optional feeling choices omitted “Không rõ”, required by SAFETY.md. Both UX.md and wireframes.html now include it alongside “Bỏ qua”.
 
 ## Actual verification
 
