@@ -2,7 +2,7 @@ import { defineConfig } from '@playwright/test';
 
 export default defineConfig({
   testDir: './tests',
-  testMatch: 'yen-lab-ux.spec.mjs',
+  testMatch: ['yen-lab-ux.spec.mjs', 'yen-lab-route.spec.mjs'],
   outputDir: 'test-results/lab-ux',
   reporter: [['list'], ['html', { outputFolder: 'playwright-report/lab-ux', open: 'never' }]],
   use: {

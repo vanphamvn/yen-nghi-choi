@@ -8,6 +8,12 @@ Giữ trang Yên hiện tại; thêm liên kết “Thử Yên Lab · Beta” t�
 
 M1 chỉ công khai **Thở cùng Yên** sau evidence gate #127 và QA #134. Không dựng nút cho trò chưa hoạt động. Ba nhóm nhu cầu được thiết kế ở đây cho M3; chỉ bật khi mỗi nhóm có ít nhất một trò đã phát hành. Trong M1, một thẻ Thở cùng Yên đi thẳng tới phần giới thiệu và Bắt đầu. “Xem tất cả” chỉ xuất hiện khi có nhiều trò.
 
+## Giọng điệu: góc ngồi chơi, không phải góc chữa lành (chủ quán, 19/11/2026)
+
+Yên Lab là **góc ngồi chơi trong quán**, không phải không gian trị liệu. Hub `/lab/` nói bằng giọng Cục Yên: “ngồi chơi”, “trò”, “thực đơn”, “nội quy”, không dùng “bài thực hành”, “chữa lành”, “nhu cầu”, “căng thẳng” làm khung chính. Ba nhóm M3 đổi tên thành **Cho đầu óc nghỉ xíu / Duỗi người cái coi / Kiếm chút gì vui vui** (vẫn chỉ là cách tìm trò, không hỏi lý do).
+
+Không đổi các ràng buộc an toàn: câu “không thay thế tư vấn hoặc điều trị chuyên môn” giữ trong Nội quy của Cục Yên; lưu ý thở/cơ vẫn đặt **cạnh nút Bắt đầu của từng trò** theo SAFETY.md; không tuyên bố hiệu quả; liên kết “Nguồn phương pháp” vẫn có. Bảng nội dung bên dưới là bản gốc F04; ở hub, câu chữ trong `lab/index.html` thay thế các dòng tương ứng. Màn giới thiệu/đang chơi của từng trò dùng cùng giọng thoải mái nhưng giữ nguyên lưu ý an toàn.
+
 ## Cấu trúc thông tin
 
 | Vị trí | Nội dung | Hành động chính |

@@ -1,0 +1,288 @@
+/* Yên Lab · "góc ngồi chơi" (LAB-F05). The whole page is one café corner: no sections, few words.
+   Tokens from DESIGN.md; doodle line-art style borrowed from the homepage (ink outlines, cream fills). */
+:root {
+  color-scheme: light;
+  --paper: #f7f3e9;
+  --card: #fffaf0;
+  --ink: #243c35;
+  --muted: #5f7065;
+  --green: #2e5a46;
+  --lime: #dbe78d;
+  --pink: #f6b4a6;
+  --lavender: #dfd9f5;
+  --butter: #f4d98a;
+  --sage: #cbd9c2;
+  --white: #ffffff;
+  --focus: #a64b1d;
+  --wall: #f3e6c4;
+  --wood: #c99a6b;
+  --wood-dark: #8a5f3b;
+  --board: #2f4a3e;
+  --chalk: #f4efe1;
+  --chalk-dim: #cfd8c9;
+  --sky: #cfe0ea;
+  --pad: max(20px, env(safe-area-inset-left));
+  --sans: "Noto Sans", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  --serif: "Noto Serif", Georgia, "Times New Roman", serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--paper); color: var(--ink); font: 400 16px/1.6 var(--sans); overflow-wrap: break-word; }
+h1, h2, p, ul { margin: 0; }
+ul { list-style: none; padding: 0; }
+img, svg { display: block; max-width: 100%; }
+img { height: auto; }
+a { color: inherit; text-underline-offset: 4px; }
+a:focus-visible, button:focus-visible { outline: 3px solid var(--focus); outline-offset: 4px; border-radius: 8px; }
+button { font: inherit; color: inherit; }
+[hidden] { display: none !important; }
+.lab-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+.lab-wrap { width: 100%; max-width: 1120px; margin: 0 auto; padding-left: var(--pad); padding-right: max(20px, env(safe-area-inset-right)); }
+.lab-skip { position: absolute; left: 12px; top: -100px; z-index: 5; background: var(--ink); color: var(--white); padding: 12px 16px; border-radius: 12px; }
+.lab-skip:focus { top: 12px; }
+
+/* Header — same brand lockup as the homepage */
+.lab-header { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-top: 14px; padding-bottom: 14px; }
+.lab-brand { display: inline-flex; flex-direction: column; justify-content: center; min-height: 44px; text-decoration: none; }
+.lab-brand img { width: 84px; }
+.lab-brand-sub { font-size: 8px; font-weight: 800; letter-spacing: .2em; color: #8a4a35; margin: -2px 0 0 4px; }
+.lab-nav { display: flex; align-items: center; gap: 4px; }
+.lab-nav a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 12px; font-size: 15px; font-weight: 700; text-decoration: none; border-radius: 999px; white-space: nowrap; }
+.lab-nav a:hover { text-decoration: underline; }
+.lab-nav .lab-nav-home { border: 1.5px solid var(--ink); background: var(--card); }
+.lab-nav .lab-nav-home:hover { background: var(--lime); text-decoration: none; }
+
+/* ───────── The room ───────── */
+.room {
+  --room-wall: var(--wall);
+  position: relative; overflow: hidden; isolation: isolate;
+  display: grid; align-items: end; justify-items: center;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas:
+    "sign sign"
+    "window lamp"
+    "shelf shelf"
+    "table table"
+    "plaque board"
+    "floor floor";
+  gap: 20px 12px;
+  padding: 28px var(--pad) 0;
+  background:
+    repeating-linear-gradient(90deg, rgba(138, 95, 59, .05) 0 2px, transparent 2px 64px),
+    var(--room-wall);
+  border-top: 1.5px solid var(--ink);
+  transition: background-color 260ms ease-in-out;
+}
+.room-glow {
+  position: absolute; z-index: -1; inset: 0;
+  background: radial-gradient(42rem 26rem at 70% 14%, rgba(255, 236, 170, .75), rgba(255, 236, 170, 0) 70%);
+  transition: opacity 260ms ease-in-out;
+}
+
+/* Hanging wooden sign = page title */
+.room-sign {
+  grid-area: sign; position: relative; text-align: center;
+  margin-top: 26px; padding: 12px 26px 10px;
+  background: linear-gradient(#d8ad7d, var(--wood));
+  border: 2px solid var(--ink); border-radius: 10px;
+  box-shadow: 4px 5px 0 rgba(36, 60, 53, .25);
+  transform: rotate(-1.5deg);
+}
+.room-sign::before, .room-sign::after { content: ""; position: absolute; bottom: 100%; width: 2px; height: 28px; background: var(--ink); }
+.room-sign::before { left: 22%; transform: rotate(8deg); transform-origin: bottom; }
+.room-sign::after { right: 22%; transform: rotate(-8deg); transform-origin: bottom; }
+.room-sign h1 { font: 500 clamp(44px, 13vw, 76px)/1.05 var(--serif); letter-spacing: -.02em; }
+.room-sign-sub { font: italic 400 18px/1.3 var(--serif); color: #3b2a18; }
+
+/* Window */
+.room-window { grid-area: window; width: min(100%, 160px); justify-self: start; align-self: center; }
+.room-sky { fill: var(--sky); transition: fill 260ms ease-in-out; }
+.room-cloud { fill: #fffaf0; stroke: var(--ink); stroke-width: 3; }
+.room-day, .room-night { transition: opacity 260ms ease-in-out; }
+.room-night { opacity: 0; }
+.room-moon { fill: var(--butter); stroke: var(--ink); stroke-width: 3; }
+.room-star { fill: var(--butter); }
+.room-frame { fill: none; stroke: var(--ink); stroke-width: 5; stroke-linejoin: round; }
+.room-sill { fill: var(--wood); stroke: var(--ink); stroke-width: 4; }
+.room-pot { fill: var(--pink); stroke: var(--ink); stroke-width: 4; stroke-linejoin: round; }
+.room-leaf { fill: #9bbd8a; stroke: var(--ink); stroke-width: 3.5; stroke-linejoin: round; }
+
+/* Lamp + switch */
+.room-lamp { grid-area: lamp; justify-self: end; align-self: start; display: grid; justify-items: center; gap: 6px; margin-top: -48px; }
+.room-lamp-art { width: 96px; }
+.room-cord { stroke: var(--ink); stroke-width: 3; }
+.room-shade { fill: var(--green); stroke: var(--ink); stroke-width: 4; stroke-linejoin: round; }
+.room-bulb { fill: #fff3b0; stroke: var(--ink); stroke-width: 3; transition: fill 260ms ease-in-out; }
+.room-switch {
+  min-height: 44px; padding: 6px 16px; border-radius: 999px; cursor: pointer; white-space: nowrap;
+  background: var(--card); border: 1.5px solid var(--ink); box-shadow: 0 4px 0 var(--wood-dark);
+  font-size: 15px; font-weight: 700;
+  transition: transform 160ms ease-out, box-shadow 160ms ease-out;
+}
+.room-switch:active { transform: translateY(3px); box-shadow: 0 1px 0 var(--wood-dark); }
+
+/* Wall plaque: house rules */
+.room-plaque {
+  grid-area: plaque; justify-self: start; align-self: center;
+  padding: 10px 14px 12px; background: var(--card);
+  border: 2px solid var(--ink); outline: 5px solid var(--wood); outline-offset: 0;
+  box-shadow: 3px 4px 0 6px rgba(36, 60, 53, .18);
+  transform: rotate(-2deg); text-align: center;
+}
+.room-plaque h2 { font: italic 600 18px/1.3 var(--serif); margin-bottom: 4px; }
+.room-plaque li { font-size: 15px; font-weight: 600; line-height: 1.5; }
+
+/* Wall shelf with three mugs */
+.room-shelf { grid-area: shelf; position: relative; width: min(100%, 320px); }
+.room-shelf ul {
+  display: flex; justify-content: space-around; align-items: end; gap: 8px; padding: 0 10px 2px;
+  border-bottom: 10px solid var(--wood); box-shadow: 0 2px 0 var(--ink);
+}
+.mug { display: grid; justify-items: center; gap: 2px; }
+.mug svg { width: 52px; }
+.mug span { font-size: 14px; font-weight: 700; white-space: nowrap; }
+.mug-body { stroke: var(--ink); stroke-width: 4; stroke-linejoin: round; }
+.mug-handle { fill: none; stroke: var(--ink); stroke-width: 4; stroke-linecap: round; }
+.mug--mind .mug-body { fill: var(--lavender); }
+.mug--body .mug-body { fill: #fbd7cd; }
+.mug--body svg { transform: rotate(5deg); }
+.mug--pleasant .mug-body { fill: #e8efb4; }
+.room-shelf-tag {
+  position: absolute; right: 6px; top: 100%; margin-top: 8px; padding: 0 10px;
+  background: var(--butter); border: 1.5px solid var(--ink); border-radius: 4px;
+  font-size: 14px; font-weight: 700; transform: rotate(4deg);
+}
+
+/* Table with Cục Yên */
+.room-table { grid-area: table; position: relative; width: min(100%, 520px); display: grid; grid-template-columns: 1fr auto; align-items: end; }
+.room-bubble {
+  grid-column: 1 / -1; justify-self: center; position: relative; z-index: 2;
+  max-width: 18em; margin-bottom: -28px; padding: 10px 16px;
+  background: var(--card); border: 1.5px solid var(--ink); border-radius: 16px 18px 16px 6px;
+  box-shadow: 3px 4px 0 var(--sage);
+  font: italic 400 16px/1.45 var(--serif); text-align: center;
+}
+.room-buddy {
+  position: relative; z-index: 1; justify-self: center;
+  width: min(62vw, 250px); aspect-ratio: 1; padding: 0; margin-bottom: -22px;
+  background: none; border: 0; border-radius: 50%; cursor: pointer;
+  transition: transform 160ms ease-out;
+}
+.room-buddy:disabled { cursor: default; }
+.room-buddy svg { width: 100%; height: 100%; }
+.room-buddy:not(:disabled):hover { transform: translateY(-3px) rotate(-1deg); }
+.room-buddy:not(:disabled):active { transform: translateY(2px) scale(.98); }
+.room-buddy.is-poked { animation: buddy-wobble 420ms ease-in-out; }
+@keyframes buddy-wobble { 0%, 100% { transform: rotate(0); } 30% { transform: rotate(-4deg); } 65% { transform: rotate(3deg); } }
+.room-cup { position: relative; z-index: 1; width: 64px; margin: 0 8px -4px 0; }
+.room-steam { fill: none; stroke: var(--muted); stroke-width: 3; stroke-linecap: round; }
+.room-mug { fill: var(--card); stroke: var(--ink); stroke-width: 4; stroke-linejoin: round; }
+.room-mug-handle, .room-saucer { fill: none; stroke: var(--ink); stroke-width: 4; stroke-linecap: round; }
+.room-tabletop {
+  grid-column: 1 / -1; height: 26px; margin: 0 -12px;
+  background: linear-gradient(var(--wood), #b7875a);
+  border: 2px solid var(--ink); border-radius: 12px 12px 0 0;
+  box-shadow: 0 10px 0 var(--wood-dark);
+}
+
+/* Standing A-frame chalkboard */
+.room-board { grid-area: board; justify-self: end; position: relative; padding-bottom: 34px; margin-bottom: -2px; }
+.room-board::before, .room-board::after {
+  content: ""; position: absolute; bottom: 0; width: 8px; height: 46px;
+  background: var(--wood-dark); border: 1.5px solid var(--ink); border-radius: 3px;
+}
+.room-board::before { left: 18%; transform: rotate(10deg); }
+.room-board::after { right: 18%; transform: rotate(-10deg); }
+.room-board-face {
+  position: relative; z-index: 1; padding: 12px 16px 14px; min-width: 168px;
+  background: var(--board); color: var(--chalk);
+  border: 7px solid var(--wood); border-radius: 8px; box-shadow: 0 0 0 2px var(--ink);
+  text-align: center;
+}
+.room-board h2 { font: italic 500 20px/1.3 var(--serif); margin-bottom: 6px; color: var(--chalk); }
+.room-board li { font: 600 15px/1.35 var(--serif); padding: 4px 0; }
+.room-board li span { display: block; font: 700 13px/1.4 var(--sans); color: var(--butter); }
+
+/* Floor */
+.room-floor {
+  grid-area: floor; justify-self: stretch; height: 40px; margin: -20px calc(-1 * var(--pad)) 0;
+  background: repeating-linear-gradient(90deg, #b8875a 0 120px, #ad7d51 120px 240px);
+  border-top: 2px solid var(--ink);
+}
+
+/* Evening: lamp off. Only decoration changes; text keeps its own surfaces. */
+.room.is-dim { --room-wall: #e2cfa4; }
+.room.is-dim .room-glow { opacity: .15; }
+.room.is-dim .room-sky { fill: #4a5878; }
+.room.is-dim .room-day { opacity: 0; }
+.room.is-dim .room-night { opacity: 1; }
+.room.is-dim .room-bulb { fill: #d9d2bd; }
+
+/* ───────── Footer: the door ───────── */
+.lab-footer { background: var(--ink); color: var(--paper); }
+.lab-footer-inner {
+  display: grid; grid-template-columns: auto 1fr; gap: 12px 20px; align-items: center;
+  padding-top: 28px; padding-bottom: max(32px, env(safe-area-inset-bottom));
+}
+.lab-door { width: 64px; grid-row: span 2; }
+.door-frame { fill: none; stroke: var(--sage); stroke-width: 4; }
+.door-panel { fill: var(--wood); stroke: var(--chalk); stroke-width: 3; }
+.door-knob { fill: var(--butter); }
+.door-sign { fill: var(--lime); }
+.lab-footer-links { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 20px; }
+.lab-footer-links a:not(.lab-button) { display: inline-flex; align-items: center; min-height: 44px; font-weight: 700; }
+.lab-footer a:focus-visible { outline-color: var(--butter); }
+.lab-button {
+  display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 8px 26px; border-radius: 999px;
+  background: var(--lime); color: var(--ink); font-weight: 800; text-decoration: none; box-shadow: 0 5px 0 #8fa86f;
+  transition: transform 160ms ease-out, box-shadow 160ms ease-out;
+}
+.lab-button:hover { transform: translateY(-2px); box-shadow: 0 7px 0 #8fa86f; }
+.lab-button:active { transform: translateY(3px); box-shadow: 0 2px 0 #8fa86f; }
+.lab-fineprint { color: #c9d3c4; font-size: 14px; max-width: 70ch; }
+.lab-fineprint a { color: var(--chalk); font-weight: 600; }
+
+@media (max-width: 359px) {
+  .lab-header { gap: 8px; }
+  .lab-brand img { width: 72px; }
+  .lab-nav a { padding: 0 10px; }
+  .room-board-face { min-width: 0; padding: 10px 10px 12px; }
+  .room-plaque { padding: 8px 10px 10px; }
+}
+
+@media (min-width: 768px) {
+  .lab-header { padding-top: 20px; padding-bottom: 20px; }
+  .lab-brand img { width: 104px; }
+  .room {
+    --pad: max(32px, calc((100% - 1120px) / 2));
+    grid-template-columns: 1fr 1.4fr 1fr;
+    grid-template-areas:
+      "window sign lamp"
+      "plaque table shelf"
+      "plaque table board"
+      "floor floor floor";
+    gap: 24px 32px; padding-top: 24px;
+  }
+  .room-window { width: 200px; justify-self: center; }
+  .room-lamp { justify-self: center; margin-top: -24px; }
+  .room-lamp-art { width: 120px; }
+  .room-plaque { justify-self: center; align-self: start; margin-top: 24px; }
+  .room-plaque h2 { font-size: 20px; }
+  .room-plaque li { font-size: 16px; }
+  .room-shelf { align-self: start; margin-top: 12px; }
+  .mug svg { width: 60px; }
+  .room-table { width: 100%; }
+  .room-buddy { width: 280px; }
+  .room-cup { width: 76px; }
+  .room-board { justify-self: center; margin-top: 28px; }
+  .room-board-face { min-width: 200px; padding: 16px 20px 18px; }
+  .room-board h2 { font-size: 22px; }
+  .room-board li { font-size: 17px; }
+  .lab-door { width: 80px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition: none !important; animation: none !important; }
+}
