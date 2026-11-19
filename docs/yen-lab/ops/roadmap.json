@@ -260,7 +260,7 @@
       "priority": "P0",
       "title": "Alpha production release gate",
       "kind": "release",
-      "status": "todo",
+      "status": "in-progress",
       "depends_on": [
         "F05",
         "F06",
@@ -269,7 +269,8 @@
         "F09",
         "G01"
       ],
-      "issue_url": "https://github.com/vanphamvn/yen-nghi-choi/issues/134"
+      "issue_url": "https://github.com/vanphamvn/yen-nghi-choi/issues/134",
+      "evidence": "Released: PR #181 squash-merged as 4a6a9c4 (owner chose to merge before a physical-phone check). Homepage flag_yenlab=1; homepage links 44px in their own row; no focus ring after tap open/close of the menu on WebKit. Deployed smoke run 44519031989 22/22 at 4a6a9c4; real-browser production walk homepage -> /lab/ -> book -> Thở cùng Yên -> running. Lab suite 126/126; emulated iPhone 15 (WebKit 26.5) and Pixel 7 (Chromium 151) 37/37 each; screenshots + rollback in docs/yen-lab/RELEASE-M1.md. Open: manual check on a physical iPhone/Android (+ VoiceOver/TalkBack) by the owner; issue #134 stays open until then."
     },
     {
       "key": "G02",
