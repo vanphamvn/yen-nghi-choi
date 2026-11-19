@@ -55,7 +55,7 @@ test('hero, three needs, release-status list, house rules and way back to Yên',
   }
   const released = await page.locator('[data-tool][data-status="released"]').count();
   await expect(page.locator('#lab-release-status')).toHaveAttribute('data-released-count', String(released));
-  await expect(page.locator('[data-tool] button, [data-need] button, .room-board button, .room-shelf button')).toHaveCount(0);
+  await expect(page.locator('[data-tool] button, [data-need] button, .room-note button, .room-shelf button')).toHaveCount(0);
 
   // Không JS cần thiết: page has no scripts at all in the route shell.
   // Only the page's own small script, served from /lab/.
