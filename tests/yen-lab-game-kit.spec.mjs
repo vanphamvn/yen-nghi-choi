@@ -9,7 +9,7 @@ const SHOTS = 'test-results/lab-ux/game-kit-shots';
 
 async function blockExternal(page) {
   const external = [];
-  await page.route(url => !/^http:\/\/127\.0\.0\.1:4189\//.test(url.href), route => { external.push(route.request().url()); return route.abort(); });
+  await page.route(url => !url.href.startsWith(`http://127.0.0.1:${process.env.LAB_UX_PORT || 4189}/`), route => { external.push(route.request().url()); return route.abort(); });
   return external;
 }
 const visibleWords = page => page.locator('#game-controls .ink-word').evaluateAll(list => list.filter(el => el.offsetParent !== null).map(el => el.textContent.trim()));

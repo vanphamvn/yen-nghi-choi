@@ -79,7 +79,7 @@ test('keyboard journey and browser history return to safe intro without autoplay
 test('reflection stays in memory and manual need never enters URL or storage', async ({ page, context }) => {
   const unexpectedRequests = [];
   page.on('request', request => {
-    if (new URL(request.url()).origin !== 'http://127.0.0.1:4189' || request.method() !== 'GET') unexpectedRequests.push(request.url());
+    if (new URL(request.url()).origin !== `http://127.0.0.1:${process.env.LAB_UX_PORT || 4189}` || request.method() !== 'GET') unexpectedRequests.push(request.url());
   });
   await page.goto(prototype);
   await page.locator('[data-need]').first().click();

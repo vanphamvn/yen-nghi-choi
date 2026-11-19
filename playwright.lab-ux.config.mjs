@@ -4,7 +4,7 @@ const origin = `http://127.0.0.1:${process.env.LAB_UX_PORT || 4189}`;
 
 export default defineConfig({
   testDir: './tests',
-  testMatch: ['yen-lab-ux.spec.mjs', 'yen-lab-route.spec.mjs', 'yen-lab-game-kit.spec.mjs', 'yen-lab-privacy.spec.mjs', 'yen-lab-tho.spec.mjs', 'homepage-mascot.spec.mjs'],
+  testMatch: ['yen-lab-ux.spec.mjs', 'yen-lab-route.spec.mjs', 'yen-lab-game-kit.spec.mjs', 'yen-lab-privacy.spec.mjs', 'yen-lab-tho.spec.mjs', 'yen-lab-cang.spec.mjs', 'homepage-mascot.spec.mjs'],
   outputDir: 'test-results/lab-ux',
   reporter: [['list'], ['html', { outputFolder: 'playwright-report/lab-ux', open: 'never' }]],
   use: {
@@ -20,8 +20,8 @@ export default defineConfig({
     // Local only, release gates (#134): LAB_UX_DEVICES=1 runs the game journey on emulated phones.
     // WebKit is iPhone Safari's engine; this is emulation, not a physical device.
     ...(process.env.LAB_UX_DEVICES ? [
-      { name: 'iphone-webkit', testMatch: ['yen-lab-tho.spec.mjs', 'yen-lab-route.spec.mjs', 'yen-lab-privacy.spec.mjs'], use: { ...devices['iPhone 15'] } },
-      { name: 'android-chromium', testMatch: ['yen-lab-tho.spec.mjs', 'yen-lab-route.spec.mjs', 'yen-lab-privacy.spec.mjs'], use: { ...devices['Pixel 7'] } },
+      { name: 'iphone-webkit', testMatch: ['yen-lab-tho.spec.mjs', 'yen-lab-cang.spec.mjs', 'yen-lab-route.spec.mjs', 'yen-lab-privacy.spec.mjs'], use: { ...devices['iPhone 15'] } },
+      { name: 'android-chromium', testMatch: ['yen-lab-tho.spec.mjs', 'yen-lab-cang.spec.mjs', 'yen-lab-route.spec.mjs', 'yen-lab-privacy.spec.mjs'], use: { ...devices['Pixel 7'] } },
     ] : []),
   ],
   webServer: { command: 'node tools/serve-lab-ux.mjs', url: origin + '/docs/yen-lab/wireframes.html', reuseExistingServer: !process.env.CI },

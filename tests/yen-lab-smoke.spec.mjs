@@ -5,13 +5,13 @@ import { test, expect } from '@playwright/test';
 import { mkdirSync, writeFileSync, readFileSync, readdirSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 
-const BASE = process.env.LAB_BASE_URL || 'http://127.0.0.1:4189';
+const BASE = process.env.LAB_BASE_URL || `http://127.0.0.1:${process.env.LAB_UX_PORT || 4189}`;
 const ORIGIN = new URL(BASE).origin;
 const EXPECT_SHA = process.env.LAB_EXPECT_SHA || '';
 const RECORD_DIR = 'test-results/lab-smoke';
 // Every released Lab page. A new game adds its route here (and to the menu test in yen-lab-route.spec.mjs).
-const PAGES = ['/lab/', '/lab/tho/', '/docs/yen-lab/game-kit.html'];
-const GAMES = [{ path: '/lab/tho/', label: 'Thở cùng Yên' }, { path: '/docs/yen-lab/game-kit.html', label: 'kit' }];
+const PAGES = ['/lab/', '/lab/tho/', '/lab/cang/', '/docs/yen-lab/game-kit.html'];
+const GAMES = [{ path: '/lab/tho/', label: 'Thở cùng Yên' }, { path: '/lab/cang/', label: 'Căng rồi thả' }, { path: '/docs/yen-lab/game-kit.html', label: 'kit' }];
 const VIEWPORTS = [[320, 640], [360, 800], [390, 844], [768, 1024], [1440, 900]];
 
 test.use({ baseURL: BASE });
@@ -49,7 +49,7 @@ const NETLIFY_INJECTIONS = [
 
 test('provenance: deployed Lab files are byte-identical to this commit, apart from known host injections', async ({ request }) => {
   test.skip(!process.env.LAB_BASE_URL || !EXPECT_SHA, 'needs a deployed site and LAB_EXPECT_SHA with that commit checked out');
-  const text = [...PAGES.map(p => p.endsWith('/') ? p + 'index.html' : p), '/lab/lab.css', '/lab/lab.js', '/lab/game.css', '/lab/engine.mjs', '/lab/tho/tho.css', '/lab/tho/tho.mjs', '/docs/yen-lab/game-kit.mjs'];
+  const text = [...PAGES.map(p => p.endsWith('/') ? p + 'index.html' : p), '/lab/lab.css', '/lab/lab.js', '/lab/game.css', '/lab/engine.mjs', '/lab/tho/tho.css', '/lab/tho/tho.mjs', '/lab/cang/cang.css', '/lab/cang/cang.mjs', '/docs/yen-lab/game-kit.mjs'];
   const binary = [...readdirSync('lab/assets').filter(f => !f.endsWith('.md')).map(f => `/lab/assets/${f}`), '/yen-logo.svg', '/favicon.svg'];
   const diffs = [];
   for (const file of text) {

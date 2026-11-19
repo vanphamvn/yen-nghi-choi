@@ -1,0 +1,48 @@
+/* Căng rồi thả (G02, #143): only what the shared game screen (lab/game.css) does not already provide. */
+
+/* Choices before starting: small ink words with a quiet label, no chips or pills (same pattern as Thở cùng Yên). */
+.cang-options { --show: block; margin: 4px auto 0; max-width: 30em; }
+.cang-option-row { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 0 6px; }
+.cang-option-row .game-words { margin-top: 0; gap: 0 2px; }
+.cang-option-label { font: italic 400 15px/1.4 var(--serif); color: var(--muted); min-width: 3em; text-align: right; }
+.cang-hint { font-size: 15px; color: var(--muted); margin-top: 2px; min-height: 1.5em; }
+.cang-hint.is-warn { color: var(--ink); font-weight: 600; }
+
+/* While running: one plain line under the cue ("nhẹ thôi, vẫn thở bình thường") and the seconds left. */
+.cang-sub { --show: block; margin-top: 2px; font-size: 16px; color: var(--ink); min-height: 1.6em; }
+.cang-seconds { --show: block; margin-top: 0; font-size: 15px; font-weight: 500; color: var(--muted); min-height: 1.5em; }
+
+/* The picture: Cục Yên squeezes a little while tensing and settles on release (transform only, Web Animations
+   from the engine clock). A soft blush over the part of Cục Yên that matches the cue shows where; it is a
+   highlight, not a drawn prop. The cue text always names the part, so nothing depends on seeing the glow. */
+.cang-stage { position: relative; }
+#cang-buddy { transform-origin: 50% 92%; will-change: transform; transition: none; }
+.cang-spot {
+  position: absolute; left: 50%; top: 68%; width: 44%; height: 26%; transform: translate(-50%, -50%);
+  /* warm blush in Cục Yên's own cheek pink (multiply keeps the painted lines visible through it) */
+  border-radius: 50%; background: radial-gradient(closest-side, rgb(238 140 118 / .85), rgb(246 180 166 / .75) 50%, rgb(246 180 166 / 0));
+  mix-blend-mode: multiply; opacity: 0; pointer-events: none;
+  transition: opacity 260ms ease-in-out, top 260ms ease-in-out, width 260ms ease-in-out, height 260ms ease-in-out;
+}
+.game[data-state="running"] .cang-spot, .game[data-state="paused"] .cang-spot { opacity: 1; }
+.cang-stage[data-part="tay"] .cang-spot { top: 70%; width: 46%; height: 28%; }
+.cang-stage[data-part="mat"] .cang-spot { top: 54%; width: 62%; height: 24%; }
+.cang-stage[data-part="vai"] .cang-spot { top: 50%; width: 92%; height: 30%; }
+.cang-stage[data-part="chan"] .cang-spot { top: 86%; width: 50%; height: 16%; }
+@media (prefers-reduced-motion: reduce) { .cang-spot { transition: none; } }
+
+/* Phones: before starting, the choices, caution and "bắt đầu" matter more than the picture; keep them in the first screen. */
+@media (max-width: 767px) {
+  .game[data-state="idle"] .game-stage { width: min(100%, 120px); margin: 6px auto 4px; }
+  .game[data-state="idle"] .game-head h1 { font-size: 28px; }
+  .game[data-state="idle"] .game-lede { font-size: 15px; margin-top: 2px; }
+  .game[data-state="idle"] .game-note { margin-top: 4px; font-size: 14px; }
+  .game[data-state="idle"] .cang-hint { font-size: 14px; }
+  .game[data-state="idle"] .game-words#game-controls { margin-top: 4px; }
+}
+
+/* Smallest phones: the two choice rows and the caution need the room; Cục Yên appears once the game starts. */
+@media (max-width: 359px) {
+  .cang-option-label { min-width: 0; text-align: center; flex-basis: 100%; }
+  .game[data-state="idle"] .game-stage { display: none; }
+}

@@ -137,6 +137,23 @@ export function createSession(options) {
     resume() { if (state !== 'paused' || guarded()) return false; transition('running', 'resume'); return true; },
     /** running | paused → stopped, immediately, never debounced and never confirmed. */
     stop() { if (state !== 'running' && state !== 'paused') return false; transition('stopped', 'stop'); return true; },
+    /** running | paused: jump forward to the start of round `target` (1-based), keeping the state (a paused game
+     *  stays paused). Past the last round → complete. Used for "skip this part" without treating it as failure. */
+    skipTo(target) {
+      if (destroyed || (state !== 'running' && state !== 'paused') || !Number.isInteger(target) || guarded()) return false;
+      if (state === 'running') { elapsedBefore = Math.min(total(), elapsedBefore + stretch()); runningSince = o.now(); }
+      if (target <= position(elapsedBefore).round) return false;
+      lastTransitionAt = o.now();
+      if (target > rounds) { if (state === 'running') finish(); else { elapsedBefore = total(); transition('complete', 'finished'); } return true; }
+      elapsedBefore = (target - 1) * roundMs;
+      plannedAt = o.now();
+      lastKey = keyOf(position());
+      reason = 'skip';
+      clearTimer();
+      emit();
+      if (state === 'running') arm();
+      return true;
+    },
     /** anything → idle; forgets progress. */
     reset(why = 'reset') { if (destroyed) return false; clearTimer(); state = 'idle'; reason = why; elapsedBefore = 0; error = null; lastTransitionAt = o.now(); emit(); return true; },
     /** Choose how many rounds before starting (e.g. 3–6). Ignored once started. */
