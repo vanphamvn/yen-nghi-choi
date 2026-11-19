@@ -23,7 +23,7 @@ test('direct URL, reload and trailing-slash redirect load the Lab shell', async 
   await expect(page.getByRole('heading', { level: 1, name: 'Yên Lab' })).toBeVisible();
   await expect(page.locator('.lab-badge')).toContainText('Beta');
   await expect(page.getByRole('img', { name: 'Cục Yên ngồi cầm ly trà' })).toBeVisible();
-  await expect(page.getByText('Thử một bài ngắn. Dừng lúc nào cũng được.')).toBeVisible();
+  await expect(page.getByText('Chán thì nghỉ, không ai giục.')).toBeVisible();
   await expect(page.locator('main')).toHaveCount(1);
   await page.reload();
   await expect(page.getByRole('heading', { level: 1, name: 'Yên Lab' })).toBeVisible();
@@ -34,11 +34,11 @@ test('direct URL, reload and trailing-slash redirect load the Lab shell', async 
   expect(external).toEqual([]); // The Lab page itself makes no third-party request.
 });
 
-test('hero, three needs, release-status list, safety note and way back to Yên', async ({ page }) => {
+test('hero, three needs, release-status list, house rules and way back to Yên', async ({ page }) => {
   await blockExternal(page);
   await page.goto(LAB);
   await expect(page.locator('[data-need]')).toHaveCount(3);
-  await expect(page.getByRole('heading', { name: 'Trước khi thử' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Nội quy của Cục Yên' })).toBeVisible();
   await expect(page.getByText('không thay thế tư vấn hoặc điều trị chuyên môn')).toBeVisible();
   await expect(page.getByRole('link', { name: 'Nguồn phương pháp' })).toBeVisible();
 
@@ -107,7 +107,7 @@ for (const width of WIDTHS) {
     await page.goto(LAB);
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
     const small = await page.evaluate(() => [...document.querySelectorAll('a:not(.lab-skip)')]
-      .filter(el => el.offsetParent !== null && el.closest('.lab-safety') === null)
+      .filter(el => el.offsetParent !== null && el.closest('.lab-fineprint') === null)
       .map(el => ({ text: el.textContent.trim(), h: el.getBoundingClientRect().height }))
       .filter(x => x.h < 44));
     expect(small).toEqual([]);
