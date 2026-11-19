@@ -49,6 +49,8 @@ if (game) {
 
   const session = createSession({ steps: [{ id: 'cup', ms: 5000 }, { id: 'window', ms: 5000 }], rounds: 3, onChange: s => render(s) });
   bindPageLifecycle(session);
+  // "bắt đầu" ships disabled so it is never a dead word before this module runs (or without JavaScript).
+  game.querySelector('[data-act="start"]').disabled = false;
 
   const act = { start: () => session.start(), pause: () => session.pause(), resume: () => session.resume(), stop: () => session.stop(), again: () => session.reset() };
   game.addEventListener('click', event => {
