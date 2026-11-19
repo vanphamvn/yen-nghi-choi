@@ -279,12 +279,13 @@
       "priority": "P0",
       "title": "Căng rồi thả",
       "kind": "minigame",
-      "status": "todo",
+      "status": "done",
       "depends_on": [
         "F03",
         "F10"
       ],
-      "issue_url": "https://github.com/vanphamvn/yen-nghi-choi/issues/143"
+      "issue_url": "https://github.com/vanphamvn/yen-nghi-choi/issues/143",
+      "evidence": "PR #183 squash-merged as 8da36e7. /lab/cang/ shortened tense-and-release (PMR, Bernstein–Borkovec 4-area order tay/mặt/vai/chân), each part twice, gentle tension 5 s → release 20 s (3:20 for all four), release-only mode with no tensing; parts deselectable before start and skippable while playing (engine skipTo), never a failure. SAFETY.md muscle caution verbatim above start; no neck/toe moves, no holds, no score. EVIDENCE G02 protocol-specific review (agent): shorter than every studied session, no dose or benefit claim. Local: lab Playwright 276/276 incl. emulated iPhone 15 WebKit + Pixel 7; engine 21/21. Independent agent review: no P0, 2 P1 + P2s fixed before merge. CI foundation + deployed smoke on the PR preview green at dc71ca9. Production: deployed smoke run 44525688827 29/29 at 8da36e7 (build-info production, deploy 6afeeda848bcd33a980e8a86); real-browser production walk room -> book -> game -> start -> skip -> stop, no storage. Not verified: physical iPhone/Android, VoiceOver/TalkBack; owner review pending."
     },
     {
       "key": "G14",
