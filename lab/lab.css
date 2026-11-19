@@ -36,6 +36,8 @@ img { height: auto; }
 a { color: inherit; text-underline-offset: 4px; }
 a:focus-visible, button:focus-visible { outline: 3px solid var(--focus); outline-offset: 4px; border-radius: 8px; }
 button { font: inherit; color: inherit; }
+/* Painted sprites are the controls: no blue Android tap flash over the scene (game.css does the same). Keyboard focus rings stay. */
+button, a { -webkit-tap-highlight-color: transparent; }
 [hidden] { display: none !important; }
 .lab-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
