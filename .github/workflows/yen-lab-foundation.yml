@@ -4,6 +4,11 @@ on:
     paths:
       - docs/yen-lab/**
       - tools/check-yen-lab-foundation.mjs
+      - tools/serve-lab-ux.mjs
+      - tests/yen-lab-ux.spec.mjs
+      - playwright.lab-ux.config.mjs
+      - package.json
+      - package-lock.json
       - .github/codex/game-freeze.test.mjs
       - .github/workflows/game-2d-coding-runner.yml
       - .github/workflows/yen-lab-foundation.yml
@@ -12,6 +17,11 @@ on:
     paths:
       - docs/yen-lab/**
       - tools/check-yen-lab-foundation.mjs
+      - tools/serve-lab-ux.mjs
+      - tests/yen-lab-ux.spec.mjs
+      - playwright.lab-ux.config.mjs
+      - package.json
+      - package-lock.json
       - .github/codex/game-freeze.test.mjs
       - .github/workflows/game-2d-coding-runner.yml
       - .github/workflows/yen-lab-foundation.yml
@@ -20,7 +30,7 @@ permissions:
 jobs:
   foundation:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 12
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
@@ -28,3 +38,24 @@ jobs:
           node-version: '22'
       - run: node tools/check-yen-lab-foundation.mjs
       - run: node --test .github/codex/game-freeze.test.mjs
+      - run: npm ci
+      - name: Locate runner Chrome or install Playwright Chromium
+        shell: bash
+        run: |
+          if command -v google-chrome >/dev/null 2>&1; then
+            echo "LAB_UX_CHROMIUM_PATH=$(command -v google-chrome)" >> "$GITHUB_ENV"
+            google-chrome --version
+          else
+            npx playwright install --with-deps chromium
+          fi
+      - name: Exercise documentation prototype (emulated touch and keyboard)
+        run: npx playwright test --config playwright.lab-ux.config.mjs
+      - name: Preserve prototype screenshots and traces
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: yen-lab-ux-browser-evidence
+          path: |
+            test-results/lab-ux/
+            playwright-report/lab-ux/
+          if-no-files-found: warn

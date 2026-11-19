@@ -14,7 +14,7 @@
       "requirement": "CI pass + reviewed merge; feature implementation must use active DESIGN.md and skill"
     }
   ],
-  "notes": "Active sessions use one coordinator and implementation/independent QA agents. F01 and F02 completed with GitHub evidence; F03/F04 in progress. Each implementation prompt completes at least one real ticket or reports an external blocker honestly; no background schedule implied.",
+  "notes": "M0 foundations F01–F04 accepted with issue/PR evidence; M1 implementation is next. One coordinator resumes via the authorized hourly task and reconciles live work before delegation. Per-tool evidence and production release gates remain mandatory.",
   "gates": [
     {
       "id": "M0",
@@ -152,11 +152,12 @@
       "priority": "P1",
       "title": "Information architecture & microcopy",
       "kind": "design",
-      "status": "in-progress",
+      "status": "done",
       "depends_on": [
         "F03"
       ],
-      "issue_url": "https://github.com/vanphamvn/yen-nghi-choi/issues/128"
+      "issue_url": "https://github.com/vanphamvn/yen-nghi-choi/issues/128",
+      "evidence": "PR #166 interactive design prototype: independent IA/copy review, 10/10 desktop/emulated-touch Playwright cases, screenshot widths320/360/390/768/1440 and actual preview browser walkthrough. See F04-REVIEW.md. No physical-device, runtime-exercise or production-release claim."
     },
     {
       "key": "F05",

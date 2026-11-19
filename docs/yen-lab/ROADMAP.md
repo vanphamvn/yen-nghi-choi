@@ -1,6 +1,6 @@
 # Yên Lab Beta · Product Roadmap
 
-**Trạng thái:** M0 in progress · **Ngày quyết định:** 19/11/2026 · **Epic:** [#124](https://github.com/vanphamvn/yen-nghi-choi/issues/124) · **Source:** `vanphamvn/yen-nghi-choi`
+**Trạng thái:** M0 complete · M1 ready · **Ngày quyết định:** 19/11/2026 · **Epic:** [#124](https://github.com/vanphamvn/yen-nghi-choi/issues/124) · **Source:** `vanphamvn/yen-nghi-choi`
 
 > **QUYẾT ĐỊNH ĐÃ CHỐT:** Ngưng phát triển Game Yên Phaser 2D, giữ source cũ để lưu trữ. Website Yên sẽ dẫn đến `/lab/`, một bộ mini tools thực hành ngắn giúp khách có cơ hội thư giãn và nhận biết trạng thái của mình. **Nghiên cứu hỗ trợ phương pháp không đồng nghĩa đã chứng minh chính mini game có hiệu quả.**
 
@@ -146,4 +146,4 @@ One coordinator selects eligible work, delegates isolated implementation and ind
 - F01 / #125 completed: PR #163, runner freeze and CI, 12 superseded Phaser issues triaged as not_planned, old QA automation disabled, actual homepage browser smoke passed. Exact provider revision and full homepage regression are not asserted.
 - F02 / #126 completed: PR #123 merged and design audit passed.
 - F03 / #127 completed through PR #165 after independent source/claims review and green CI. Deferred per-tool protocol gates remain in force.
-- F04 / #128 remains in progress; no /lab/ Alpha release claimed.
+- F04 / #128 completed through PR #166: interactive design prototype, independent review, 10/10 CI cases with emulated touch and browser walkthrough. Physical-device/runtime release gates remain separate; no /lab/ Alpha release claimed.
