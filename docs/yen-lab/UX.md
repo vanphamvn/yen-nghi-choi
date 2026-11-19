@@ -98,7 +98,7 @@ Các trạng thái prototype chạy thật bằng nút native: giới thiệu �
 
 Không dùng network API, form, audio, font ngoài, cookie hay storage. CSP cho phép chỉ JS/CSS cùng origin, chặn connect/form/object/base. Phản hồi được bỏ ngay sau lần bấm, không giữ giá trị lựa chọn; chỉ hiện lời cảm ơn trung tính. Về hub, reset, pagehide hoặc phục hồi bfcache đều xóa thông báo và trở lại trạng thái an toàn. Back/forward mở hub/giới thiệu, không tự chạy lại. Prototype quản lý focus heading và trả focus về trò trước đó trên hub. Đây là prototype focus/hash flow, chưa chứng minh engine timer hay privacy của `/lab/` tương lai.
 
-Mobile: lề 20px; header gọn với Về Yên; heading + lời mời; một thẻ trò lớn, CTA trong màn đầu; nguồn/riêng tư phía dưới. Desktop: vùng tối đa 1120px, hai cột không cân: lời mời ở trái, một thẻ bài ở phải. Không nhân đôi nhiều thẻ trang trí cho đủ chỗ. Dùng giấy `#f7f3e9`, mực `#243c35`, muted `#5f7065`, chữ giao diện từ 16px, nhãn phụ từ 14px. Noto Sans/Noto Serif nếu có tại site, fallback system; không thêm request font trong mockup.
+Prototype mobile: lề 20px; header gọn với Về Yên; heading + lời mời, ba nhóm nhu cầu và danh sách trò xếp dọc; nguồn/riêng tư phía dưới. Desktop: vùng nội dung tối đa 1120px, phần giới thiệu hai cột và danh sách ba trò theo hàng. Bản M1 tương lai chỉ có một trò khả dụng, không nhân đôi thẻ cho đủ chỗ. Dùng giấy `#f7f3e9`, mực `#243c35`, muted `#5f7065`, chữ giao diện từ 16px, nhãn phụ từ 14px. Noto Sans/Noto Serif nếu có tại site, fallback system; không thêm request font trong mockup.
 
 ## Walkthrough thiết kế và cổng kiểm tra
 
@@ -108,4 +108,8 @@ Mobile: lề 20px; header gọn với Về Yên; heading + lời mời; một th
 | Chỉ muốn chơi | Hub → mở trò trực tiếp → bắt đầu; không hỏi tâm trạng trước | Keyboard Enter/Space, focus, back/forward |
 | Khó chịu trong bài | Dừng bài → thông báo trung tính → về danh sách | Screen reader, không lỗi reset, không hứa hiệu quả |
 
-Review nội bộ bản copy: agent UX rà theo DESIGN.md và QA checklist; wording phương pháp đối chiếu EVIDENCE.md của #127 và các lưu ý riêng. Không có duyệt của chủ quán hoặc duyệt lâm sàng. Nhịp/số vòng thực hành chỉ quyết định trong #142, không mượn thao tác mô phỏng để chứng minh hiệu quả. Browser/keyboard/emulated-touch/screenshots của prototype do QA độc lập ghi kết quả trong F04-REVIEW.md, chỉ tính kết quả thực đã chạy. VoiceOver và ngón tay trên thiết bị thật chưa xác minh. #133/#134 vẫn phải kiểm tra ứng dụng thật và production SHA riêng; không đánh dấu chúng hoàn tất từ prototype này.
+Review nội bộ bản copy: agent UX rà theo DESIGN.md và QA checklist; wording phương pháp đối chiếu EVIDENCE.md của #127 và các lưu ý riêng. Không có duyệt của chủ quán hoặc duyệt lâm sàng. Nhịp/số vòng thực hành chỉ quyết định trong #142, không mượn thao tác mô phỏng để chứng minh hiệu quả.
+
+Prototype đã qua **10/10 bài Playwright CI** trên desktop và emulated touch 360px, bao gồm kiểm tra các chiều rộng 320/360/390/768/1440px. Coordinator đã walkthrough thật trên preview PR #166 ở 360×800 và 1440×900, kiểm tra các trạng thái và hành trình keyboard. Kết quả, screenshots và tham chiếu CI/commit được ghi trong [F04-REVIEW.md](F04-REVIEW.md); đây là chứng cứ cho prototype thiết kế, không phải bài thực hành đã phát hành.
+
+VoiceOver/TalkBack và ngón tay trên thiết bị thật chưa xác minh. #133/#134 vẫn phải kiểm tra ứng dụng thật và production SHA riêng; không đánh dấu chúng hoàn tất từ prototype này.
