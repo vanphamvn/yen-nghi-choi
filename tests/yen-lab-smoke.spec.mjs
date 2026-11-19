@@ -49,8 +49,19 @@ const NETLIFY_INJECTIONS = [
 
 test('provenance: deployed Lab files are byte-identical to this commit, apart from known host injections', async ({ request }) => {
   test.skip(!process.env.LAB_BASE_URL || !EXPECT_SHA, 'needs a deployed site and LAB_EXPECT_SHA with that commit checked out');
-  const text = [...PAGES.map(p => p.endsWith('/') ? p + 'index.html' : p), '/lab/lab.css', '/lab/lab.js', '/lab/game.css', '/lab/engine.mjs', '/lab/tho/tho.css', '/lab/tho/tho.mjs', '/lab/cang/cang.css', '/lab/cang/cang.mjs', '/docs/yen-lab/game-kit.mjs'];
-  const binary = [...readdirSync('lab/assets').filter(f => !f.endsWith('.md')).map(f => `/lab/assets/${f}`), '/yen-logo.svg', '/favicon.svg'];
+  const text = [...PAGES.map(p => p.endsWith('/') ? p + 'index.html' : p), '/lab/lab.css', '/lab/lab.js', '/lab/game.css', '/lab/engine.mjs', '/lab/tho/tho.css', '/lab/tho/tho.mjs', '/lab/cang/cang.css', '/lab/cang/cang.mjs', '/docs/yen-lab/game-kit.mjs', '/lab/assets/sprites/manifest.json', '/lab/assets/sprites/preview.css', '/lab/assets/sprites/preview.js', '/lab/assets/sprites/preview.html'];
+  const spriteSubdirs = ['atlases', 'frames', 'games', 'shared'];
+  const spriteBinary = spriteSubdirs.flatMap(dir =>
+    readdirSync('lab/assets/sprites/' + dir, { withFileTypes: true })
+      .filter(entry => entry.isFile() && entry.name.endsWith('.webp'))
+      .map(entry => '/lab/assets/sprites/' + dir + '/' + entry.name)
+  );
+  const binary = [
+    ...readdirSync('lab/assets', { withFileTypes: true })
+      .filter(entry => entry.isFile() && !entry.name.endsWith('.md'))
+      .map(entry => '/lab/assets/' + entry.name),
+    ...spriteBinary, '/yen-logo.svg', '/favicon.svg'
+  ];
   const diffs = [];
   for (const file of text) {
     const live = await (await request.get(file.replace(/index\.html$/, ''), { headers: { 'cache-control': 'no-cache' } })).text();
