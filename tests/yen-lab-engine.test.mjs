@@ -244,3 +244,57 @@ test('lifecycle: freeze pauses too', () => {
 test('STATES matches the CSS data-state contract', () => {
   assert.deepEqual(STATES, ['idle', 'running', 'paused', 'complete', 'stopped', 'error']);
 });
+
+test('G02: skipTo jumps to the start of a later round, keeps running, one timer', () => {
+  const { session, advance, timers, last } = rig();
+  session.start();
+  advance(1500); // round 1, step a
+  assert.equal(session.skipTo(2), true);
+  assert.deepEqual([last().state, last().reason, last().round, last().step, last().stepElapsed], ['running', 'skip', 2, 'a', 0]);
+  assert.equal(last().elapsed, 10000);
+  assert.equal(timers.size, 1);
+  advance(4000);
+  assert.deepEqual([last().round, last().step], [2, 'b'], 'pacing continues from the new round start');
+  assert.equal(session.skipTo(2), false, 'never backwards or to the current round');
+  assert.equal(session.skipTo(1.5), false);
+});
+
+test('G02: skipTo while paused stays paused; past the last round completes', () => {
+  const { session, advance, timers, last } = rig();
+  session.start();
+  advance(500);
+  session.pause();
+  advance(400);
+  assert.equal(session.skipTo(3), true);
+  assert.deepEqual([last().state, last().round], ['paused', 3]);
+  assert.equal(timers.size, 0, 'no timer while paused');
+  advance(60000);
+  assert.equal(last().round, 3, 'paused time is not counted after a skip');
+  advance(400);
+  assert.equal(session.skipTo(4), true);
+  assert.equal(last().state, 'complete');
+  assert.equal(last().elapsed, last().total);
+  assert.equal(session.skipTo(5), false, 'nothing to skip once complete');
+});
+
+test('G02: skipTo is ignored in idle, double taps are guarded, stop still works right after', () => {
+  const { session, advance, timers, last } = rig();
+  assert.equal(session.skipTo(2), false, 'idle: nothing to skip');
+  session.start();
+  advance(400);
+  assert.equal(session.skipTo(2), true);
+  assert.equal(session.skipTo(3), false, 'second tap within the guard window ignored');
+  assert.equal(session.stop(), true, 'stop is never debounced');
+  assert.equal(last().state, 'stopped');
+  assert.equal(timers.size, 0);
+});
+
+test('G02: skipping from the last round while running completes and clears the timer', () => {
+  const { session, advance, timers, last } = rig();
+  session.start();
+  advance(21000); // round 3
+  assert.equal(last().round, 3);
+  assert.equal(session.skipTo(4), true);
+  assert.equal(last().state, 'complete');
+  assert.equal(timers.size, 0);
+});

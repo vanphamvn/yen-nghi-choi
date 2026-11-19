@@ -54,6 +54,7 @@ bindPageLifecycle(session);
 | Bấm liên tiếp | Lệnh trong 350 ms sau lần đổi trạng thái bị bỏ qua (chạm đúp “bắt đầu” không trúng “tạm dừng” vừa hiện ra). **“dừng hẳn” không bao giờ bị chặn**, không hỏi xác nhận. |
 | Rời trang / khóa màn hình | `visibilitychange → hidden` (đổi tab, khóa màn hình, chuyển app) và `freeze` ⇒ tạm dừng ngay. Quay lại vẫn **tạm dừng**, chỉ chạy tiếp khi người dùng bấm “tiếp tục”; thời gian vắng mặt không tính. |
 | Máy ngủ không báo | Nếu timeout chạy trễ hơn 2 s (máy ngủ mà trình duyệt không phát `visibilitychange`), engine chỉ tính tới mốc đã hẹn rồi tạm dừng (`reason: 'suspended'`), không nhảy vượt bước. Trễ ≤ 2 s (tab bị throttle) thì đi tiếp đúng vị trí thật. |
+| Bỏ qua phần (G02) | `skipTo(round)` nhảy tới đầu vòng sau (chỉ tiến, không lùi), giữ trạng thái: đang chạy thì chạy tiếp từ đó, đang tạm dừng thì vẫn tạm dừng; vượt vòng cuối ⇒ `complete` như bình thường. Có guard chạm đúp 350 ms; `reason: 'skip'`. |
 | Thoát / bfcache | `pagehide` và khôi phục từ back/forward cache ⇒ `reset`, không tự chạy lại. |
 | Lỗi vẽ | Ngoại lệ trong `onChange` ⇒ `error`, xóa timer; màn hình error có “làm lại” và “về góc ngồi chơi”. |
 | Thông báo | Trang trò chỉ thông báo mốc chính qua `.game-whisper` (bắt đầu, tạm dừng, vòng mới, kết thúc), không đọc mỗi giây. Focus chuyển sang chữ chính mới chỉ khi người dùng bấm; không giật focus khi tự tạm dừng/kết thúc. |

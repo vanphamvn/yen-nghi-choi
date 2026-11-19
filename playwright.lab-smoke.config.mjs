@@ -15,5 +15,5 @@ export default defineConfig({
     launchOptions: process.env.LAB_UX_CHROMIUM_PATH ? { executablePath: process.env.LAB_UX_CHROMIUM_PATH } : {},
   },
   projects: [{ name: 'chromium', use: { browserName: 'chromium' } }],
-  webServer: local ? { command: 'node tools/serve-lab-ux.mjs', url: 'http://127.0.0.1:4189/lab/', reuseExistingServer: !process.env.CI } : undefined,
+  webServer: local ? { command: 'node tools/serve-lab-ux.mjs', url: `http://127.0.0.1:${process.env.LAB_UX_PORT || 4189}/lab/`, reuseExistingServer: !process.env.CI } : undefined,
 });

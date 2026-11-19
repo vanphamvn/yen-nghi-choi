@@ -7,7 +7,7 @@ const WIDTHS = [320, 360, 390, 768, 1440];
 // Keep runs hermetic: the homepage requests Google Fonts/Maps, which are irrelevant to these checks.
 async function blockExternal(page) {
   const external = [];
-  await page.route(url => !/^http:\/\/127\.0\.0\.1:4189\//.test(url.href), route => { external.push(route.request().url()); return route.abort(); });
+  await page.route(url => !url.href.startsWith(`http://127.0.0.1:${process.env.LAB_UX_PORT || 4189}/`), route => { external.push(route.request().url()); return route.abort(); });
   return external;
 }
 
@@ -164,13 +164,13 @@ test('M1 (#134): homepage link is on, ≥44px, leads to a playable game; back/fo
   await page.goBack();
   await expect(page).toHaveURL(/\/lab\/$/);
   await page.goBack();
-  await expect(page).toHaveURL(/127\.0\.0\.1:4189\/$/);
+  await expect(page).toHaveURL(`http://127.0.0.1:${process.env.LAB_UX_PORT || 4189}/`);
   await page.goForward();
   await page.goForward();
   await expect(page.locator('#game')).toHaveAttribute('data-state', 'idle');
 
   // Rollback path: flag_yenlab = 0 in the served source hides the link again (the toggle code itself runs).
-  await page.route('**/127.0.0.1:4189/', async route => {
+  await page.route(`**/127.0.0.1:${process.env.LAB_UX_PORT || 4189}/`, async route => {
     const res = await route.fetch();
     const body = (await res.text()).replace('var flag_yenlab = 1;', 'var flag_yenlab = 0;');
     await route.fulfill({ response: res, body });

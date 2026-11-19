@@ -4,8 +4,8 @@ import { test, expect } from '@playwright/test';
 // Safari/WebKit only moves focus through links and buttons with Option+Tab (default "Tab to highlight" is off).
 const TAB = page => page.context().browser()?.browserType().name() === 'webkit' ? 'Alt+Tab' : 'Tab';
 
-const PAGES = ['/lab/', '/lab/tho/', '/docs/yen-lab/game-kit.html'];
-const ORIGIN = 'http://127.0.0.1:4189';
+const PAGES = ['/lab/', '/lab/tho/', '/lab/cang/', '/docs/yen-lab/game-kit.html'];
+const ORIGIN = `http://127.0.0.1:${process.env.LAB_UX_PORT || 4189}`;
 
 async function probe(page) {
   await page.addInitScript(() => {
@@ -66,6 +66,15 @@ async function playTho(page) {
   await tap('dễ chịu hơn'); await tap('làm lại');
 }
 
+async function playCang(page) {
+  await page.goto('/lab/cang/');
+  const tap = async name => { await page.clock.runFor(400); await page.getByRole('button', { name, exact: true }).click(); };
+  await tap('vai'); await tap('chỉ thả lỏng'); await tap('bắt đầu'); await page.clock.runFor(6000);
+  await tap('tạm dừng'); await tap('bỏ qua chỗ này'); await tap('tiếp tục'); await page.clock.runFor(4 * 60_000);
+  await expect(page.locator('#game')).toHaveAttribute('data-state', 'complete');
+  await tap('khó chịu hơn'); await tap('làm lại');
+}
+
 test('no storage, cookies, network, device, audio or URL state during real Lab flows', async ({ page }) => {
   const requests = await probe(page);
   await page.clock.install();
@@ -77,10 +86,12 @@ test('no storage, cookies, network, device, audio or URL state during real Lab f
   expect(await page.evaluate(() => window.__labProbe)).toEqual([]);
   await playTho(page);
   expect(await page.evaluate(() => window.__labProbe)).toEqual([]);
-  // Only page loads add history entries (re-loading /lab/ replaces its entry; kit and game add one each); nothing a guest
+  await playCang(page);
+  expect(await page.evaluate(() => window.__labProbe)).toEqual([]);
+  // Only page loads add history entries (re-loading /lab/ replaces its entry; kit and each game add one); nothing a guest
   // does is pushed into the URL.
   expect(await page.evaluate(() => [location.search, location.hash])).toEqual(['', '']);
-  expect(await page.evaluate(() => history.length)).toBe(historyStart + 2);
+  expect(await page.evaluate(() => history.length)).toBe(historyStart + 3);
   // Only same-origin GETs of static files, never a body (nothing a guest picks or types leaves the page).
   // …and never with a query string, which could smuggle a choice into server logs (e.g. img.src = '/x.webp?m=' + mood).
   const offenders = requests.filter(r => !r.url.startsWith(ORIGIN) || r.method !== 'GET' || r.body || new URL(r.url).search);
