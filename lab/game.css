@@ -77,7 +77,7 @@
 
 /* Quiet result: no score, no confetti, skippable reflection. */
 .game-result { --show: block; margin-top: 4px; }
-.game-result > p:first-child { font: italic 500 20px/1.4 var(--serif); color: var(--ink); }
+.game-result-line { font: italic 500 20px/1.4 var(--serif); color: var(--ink); }
 .game-reflect { margin-top: 14px; }
 .game-reflect > p { font-size: 15px; color: var(--muted); }
 .game-reflect .game-words { gap: 0 4px; margin-top: 4px; }

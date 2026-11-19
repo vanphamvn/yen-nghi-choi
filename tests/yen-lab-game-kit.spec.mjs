@@ -123,7 +123,7 @@ test('WCAG AA contrast for every visible text colour on the paper sheet', async 
   await page.goto(KIT + '?state=paused');
   const lum = c => { const [r, g, b] = c.match(/\d+(\.\d+)?/g).slice(0, 3).map(Number).map(v => v / 255).map(v => v <= .03928 ? v / 12.92 : ((v + .055) / 1.055) ** 2.4); return .2126 * r + .7152 * g + .0722 * b; };
   const paper = await page.locator('.game-sheet').evaluate(el => getComputedStyle(el).backgroundColor);
-  for (const state of ['idle', 'running', 'paused', 'stopped']) {
+  for (const state of ['idle', 'running', 'paused', 'complete', 'stopped', 'error']) {
     await page.goto(KIT + '?state=' + state);
     const colours = await page.locator('.game-sheet').evaluate(sheet => [...sheet.querySelectorAll('*')]
       .filter(el => el.offsetParent !== null && [...el.childNodes].some(n => n.nodeType === 3 && n.textContent.trim()))
@@ -147,10 +147,14 @@ for (const width of WIDTHS) {
       expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth), state).toBe(true);
       const words = await page.locator('.game .ink-word').evaluateAll(list => list.filter(el => el.offsetParent !== null).map(el => {
         const r = el.getBoundingClientRect(); const range = document.createRange(); range.selectNodeContents(el);
-        return { text: el.textContent.trim(), w: r.width, h: r.height, lines: range.getClientRects().length };
+        const sheet = el.closest('.game-sheet').getBoundingClientRect();
+        return { text: el.textContent.trim(), w: r.width, h: r.height, lines: range.getClientRects().length,
+          inside: r.left >= sheet.left - 0.5 && r.right <= sheet.right + 0.5 && sheet.left >= 0 && sheet.right <= innerWidth };
       }));
       expect(words.length, state).toBeGreaterThan(0);
       for (const w of words) {
+        // .game clips overflow, so check each word really sits inside the sheet and the sheet inside the viewport.
+        expect(w.inside, `${state} "${w.text}" clipped`).toBe(true);
         expect(Math.min(w.w, w.h), `${state} "${w.text}"`).toBeGreaterThanOrEqual(44);
         expect(w.lines, `${state} "${w.text}" wraps`).toBe(1); // Vietnamese words never break mid-control
       }

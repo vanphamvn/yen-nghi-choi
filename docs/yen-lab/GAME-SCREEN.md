@@ -24,7 +24,7 @@ Trang trò nạp `/lab/lab.css` (token, header, footer) và `/lab/game.css` (mà
 | Kết quả | `.game-result`, `.game-reflect` | Không điểm, không pháo hoa; phản hồi bỏ qua được, trả lời xong là quên |
 | “Toast” | `.game-whisper[role=status]` | Một dòng viết ở chân tờ giấy, thông báo nhẹ |
 
-**Hiển thị theo trạng thái:** phần tử có `data-when="running paused"` chỉ hiện ở các trạng thái đó; kiểu hiển thị lấy từ biến `--show`. Không cần JS ẩn/hiện từng nút.
+**Hiển thị theo trạng thái:** phần tử có `data-when="running paused"` chỉ hiện ở các trạng thái đó; kiểu hiển thị lấy từ biến `--show`. Không cần JS ẩn/hiện từng nút. Lưu ý: `--show` được kế thừa, nên một phần tử `data-when` lồng trong khối có `--show: flex` (ví dụ `<span>` trong `.game-progress`) sẽ thành `flex`; hãy tự đặt `--show` cho phần tử đó.
 
 **Focus:** chữ vừa bấm biến mất ở trạng thái mới, nên focus chuyển sang chữ chính kế tiếp (không rơi về `<body>`). Back/forward cache trở về `idle`, không tự chạy tiếp.
 
