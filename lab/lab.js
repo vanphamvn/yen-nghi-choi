@@ -19,6 +19,9 @@
   buddy.disabled = false;
   buddy.addEventListener('click', () => {
     says.textContent = lines[next];
+    says.classList.remove('is-new');
+    void says.offsetWidth; // let the new line fade in gently
+    says.classList.add('is-new');
     next = (next + 1) % lines.length;
     buddy.classList.remove('is-poked');
     void buddy.offsetWidth; // restart the wobble

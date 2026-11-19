@@ -120,11 +120,23 @@ button { font: inherit; color: inherit; }
 @keyframes buddy-wobble { 0%, 100% { transform: rotate(0); } 30% { transform: rotate(-4deg); } 65% { transform: rotate(3deg); } }
 .room-bubble {
   position: absolute; left: 4%; bottom: 60%; z-index: 6;
-  width: max-content; max-width: min(48%, 18em); padding: 8px 14px;
-  background: var(--card); border: 1.5px solid var(--ink); border-radius: 16px 18px 16px 6px;
-  box-shadow: 2px 3px 0 rgba(36, 60, 53, .2);
-  font: italic 400 15px/1.4 var(--serif); text-align: center; text-wrap: balance;
+  width: max-content; max-width: min(50%, 17em); padding: 10px 18px 11px;
+  background: rgba(255, 250, 240, .86);
+  -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px);
+  border-radius: 999px / 70%;
+  box-shadow: 0 6px 20px rgba(90, 60, 30, .14), inset 0 0 0 1px rgba(255, 255, 255, .6);
+  color: #5a4330;
+  font: italic 400 15px/1.5 var(--serif); letter-spacing: .01em; text-align: center; text-wrap: balance;
 }
+/* a soft trail of thought dots drifting down toward Cục Yên */
+.room-bubble::before, .room-bubble::after {
+  content: ""; position: absolute; border-radius: 50%;
+  background: rgba(255, 250, 240, .86); box-shadow: 0 3px 8px rgba(90, 60, 30, .12);
+}
+.room-bubble::before { width: 12px; height: 12px; right: 18%; bottom: -14px; }
+.room-bubble::after  { width: 7px;  height: 7px;  right: 11%; bottom: -26px; }
+.room-bubble.is-new { animation: bubble-breathe 700ms ease-out; }
+@keyframes bubble-breathe { from { opacity: .15; transform: translateY(4px); } to { opacity: 1; transform: none; } }
 
 /* ───────── Footer: the door ───────── */
 .lab-footer { background: var(--ink); color: var(--paper); }
@@ -172,7 +184,7 @@ button { font: inherit; color: inherit; }
   .sprite-book    { --x: 39.5%; --b: 19%; --w: 10.5%; }
   .sprite-cup     { --x: 54%; --b: 19.5%; --w: 6%; }
   .sprite-plant   { --x: 72%; --b: 6%;  --w: 12%; }
-  .room-bubble { left: 27%; bottom: 47%; transform: none; font-size: 16px; border-radius: 16px 18px 6px 16px; }
+  .room-bubble { left: 28%; bottom: 48%; font-size: 16px; }
   .lab-door { width: 80px; }
 }
 
