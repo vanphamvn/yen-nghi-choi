@@ -1,0 +1,68 @@
+# Yên Lab · Evidence and publication gates
+
+Issue: [LAB-F03 #127](https://github.com/vanphamvn/yen-nghi-choi/issues/127). Checked: **19/11/2026**. Reviewer: **Codex research agent** (`reviewerType=agent`); no clinician or owner signoff is implied.
+
+This is a source and editorial review, not a clinical evaluation. No Yên mini tool has been validated. The classifications below concern the underlying technique; a 1–5 minute adaptation does not inherit a study's results. Suggested durations are product choices, not effective doses. Intended audience is voluntary general adult visitors; child-specific effectiveness and safety have not been established here.
+
+## Classification
+
+- **Supported technique:** research supports the technique, with important study limitations; never a claim about this game.
+- **Indirect / adapted:** related research, but protocol, audience or outcome differs substantially.
+- **Exploratory / creative:** optional creative activity; no efficacy claim.
+- **Deferred:** do not publish until the stated research/protocol blocker is resolved. A source about an adjacent technique is not sufficient.
+
+## Source register
+
+All links below were retrieved on 19/11/2026 through web retrieval/search. PubMed direct rendering was incomplete for some records; indexed abstracts and PMC/publisher records supplied the information stated. This was not a comprehensive systematic search. Sources S1–S4 are the roadmap's required foundations; primary experiments are identified separately.
+
+| ID | Source / actual population and dose / limitation |
+|---|---|
+| S1 | Fincham et al. (2023), [breathwork meta-analysis](https://pubmed.ncbi.nlm.nih.gov/36624160/), [publisher](https://doi.org/10.1038/s41598-022-27247-y). Stress analysis: 12 randomized trials, 785 adults, varied breathing protocols and schedules. Mostly moderate risk of bias; does not establish a universal cadence or one-session game effect. |
+| S2 | Muhammad Khir et al. (2024), [PMR systematic review](https://pubmed.ncbi.nlm.nih.gov/38322293/), [full text](https://pmc.ncbi.nlm.nih.gov/articles/PMC10844009/). 46 publications, over 3,402 adults; protocols and combinations vary. No single optimal dose can be carried into this shortened tool; exact selected routine still needs protocol-level review. |
+| S3 | Diniz et al. (2023), [gratitude systematic review/meta-analysis](https://pubmed.ncbi.nlm.nih.gov/37585888/), [full text](https://pmc.ncbi.nlm.nih.gov/articles/PMC10393216/). 64 randomized trials, heterogeneous participants, tasks and schedules. Does not validate three text boxes or an immediate improvement promise. |
+| S4 | [NCCIH: mindfulness effectiveness and safety](https://www.nccih.nih.gov/health/meditation-and-mindfulness-effectiveness-and-safety). Official synthesis, not a trial; interventions and populations vary, often involving structured programs. Adverse experiences are possible and safety evidence incomplete; a generic mindfulness source cannot establish each creative variant. |
+| S5 | Balban et al. (2023), [randomized respiration study](https://pubmed.ncbi.nlm.nih.gov/36630953/), [full text](https://pmc.ncbi.nlm.nih.gov/articles/PMC9873947/). Remote daily five-minute breathing or mindfulness practice over about one month. Tested specific protocols, not Yên's proposed gentle paced circle, nor a one-minute single visit. Do not copy hyperventilation or breath-retention arms into this product. |
+| S6 | Emmons & McCullough (2003), [gratitude experiments](https://pubmed.ncbi.nlm.nih.gov/12585811/). Weekly/daily records across studies, including students and people with neuromuscular disease. Some outcomes improved, not all. Repeated practice differs from a single three-item visit. |
+| S7 | Masuda et al. (2010), [defusion randomized experiment](https://pubmed.ncbi.nlm.nih.gov/20689153/). Nonclinical undergraduates; rationale/training with or without an experiential exercise. Short experimental procedure; exact dose not extracted. Does not test animated leaves or erase thoughts. |
+| S8 | Lieberman et al. (2007), [affect labeling experiment](https://pubmed.ncbi.nlm.nih.gov/17576282/). Laboratory affective-stimulus/fMRI task; exact session duration not extracted. Neural response is not proof of everyday anger relief. |
+| S9 | Smeets et al. (2014), [self-compassion randomized study](https://pubmed.ncbi.nlm.nih.gov/24691680/). 52 female college students, three group meetings over three weeks, active time-management control. Not equivalent to selecting one kind sentence. |
+| S10 | Bratman et al. (2015), [nature experiment](https://pubmed.ncbi.nlm.nih.gov/26124129/). Healthy participants, 90-minute real nature versus urban walk. A screen forest is a materially different exposure. |
+| S11 | Pennebaker & Beall (1986), [expressive-writing original study](https://pubmed.ncbi.nlm.nih.gov/3745650/). PubMed bibliographic record verified; abstract unavailable there. Protocol and safety evidence not sufficiently reviewed for this release; no benefit or dose claim accepted. |
+
+## Twenty-tool matrix
+
+**Checked date for every row: 19/11/2026.** Source IDs resolve to actual URLs and population/dose limitations above. “Candidate” means evidence wording is suitable for further implementation review, not release approval. Every tool still requires its issue's functional, privacy and browser gates. General stop/skip and non-treatment copy in [SAFETY.md](SAFETY.md) applies to every row.
+
+| Tool / proposed visit | Basis and classification | Audience / research dose and transfer limit | Discomfort and product caution | Allowed copy / forbidden inference / publication gate |
+|---|---|---|---|---|
+| G01 · Thở cùng Yên · 1–3 min | S1, S5 · **Supported technique** | Adults; varied trials / five minutes daily over a month; Yên cadence and brief visit unvalidated. | Dizziness, air hunger, anxiety; gentle breathing, no hold/deep-breath demand; stop and breathe naturally. | “Thử thở nhẹ theo nhịp.” Never “hết lo âu sau một phút”. Candidate for Alpha with caution and own-pace option. |
+| G02 · Căng rồi thả · 2–4 min | S2 · **Indirect / adapted** | Adult PMR literature; exact shortened hand/shoulder routine dose not verified. | Pain, strain; skip painful/injured areas, no maximal force or breath holding; release immediately if uncomfortable. | “Thử nhận ra lúc cơ căng và lúc thả.” No proven-dose claim. **Defer public routine until protocol-specific review**. |
+| G03 · Quét người tìm căng thẳng · 2–5 min | S4 · **Indirect / adapted** | Broad mindfulness programs; no isolated body-scan dose established here. | Body attention may distress; eyes open, external focus or skip. | “Để ý một vài cảm giác đang có.” No diagnosis or tension score. Protocol review before public release. |
+| G04 · Ngón tay biết thở · 1–3 min | S1, S5 · **Indirect / adapted** | Adult breathing research does not test finger tracing. | Same breathing caution as G01; tracing optional. | “Thử đi ngón tay theo nhịp riêng.” No separate scientific-validation badge. Review motor and breathing interaction. |
+| G05 · Thám tử hiện tại · 1–3 min | S4 · **Exploratory / creative** | Adjacent mindfulness only; no direct 5-4-3-2-1 trial/dose reviewed. | Sensory overload; no tasting/touching unknown objects, all senses optional. | “Để ý vài thứ quanh bạn.” Never proven panic treatment. Candidate only with exploratory label and safe prompts. |
+| G06 · Vườn cát không mục tiêu · 1–5 min | S4 (context only) · **Exploratory / creative** | No reviewed digital-sand efficacy study or research dose. | Motion/visual discomfort; static option and clear reset. | “Vẽ vài nét, thích thì xoá.” No sand-therapy or neuroscience claim. Review as creative play. |
+| G07 · Lá trôi, nghĩ trôi · 1–3 min | S7 · **Indirect / adapted** | Nonclinical student experiment; not leaves-on-stream software, exact dose unreviewed. | Intrusive thoughts can intensify; no trauma prompt, use sample text, stop and wipe. | “Thử nhìn một ý nghĩ đi ngang.” Never “xoá suy nghĩ tiêu cực”. Review prompt and deletion behavior. |
+| G08 · Ngồi nhìn mây · 1–5 min | S4 (context only) · **Exploratory / creative** | No cloud-animation trial or effective dose reviewed. | Motion sickness, eyestrain; still image alternative. | “Ngồi xem mây một lát.” No scientifically proven relaxation claim. Creative release gate. |
+| G09 · Gọi tên cơn bực · 1–3 min | S8 · **Indirect / adapted** | Laboratory task; not personal anger intervention, dose not extracted. | Label choices may invalidate; “khác/không rõ/bỏ qua”, no inferred diagnosis. | “Thử gọi tên điều đang cảm thấy.” No amygdala-control or anger-cure promise. Review self-selection. |
+| G10 · Hòm thư không gửi · 2–5 min | S11 · **Deferred** | Original record verified only; protocol/dose and current review still missing. | Emotional activation, disclosure regret; never solicit trauma; ephemeral text alone does not resolve this. | “Viết vài dòng nếu muốn.” No catharsis/healing claim. Blocked on writing evidence and safe prompt review. |
+| G11 · Đổi góc nhìn · 2–5 min | S4 (context only) · **Deferred** | No specific reappraisal experiment or dose reviewed; mindfulness is not reappraisal evidence. | Can minimize real harm; no forced positive reinterpretation. | “Có cách nhìn nào khác không?” Never “bạn nghĩ sai”. Blocked on specific source and situations review. |
+| G12 · Điều mình kiểm soát · 2–5 min | S4 (context only) · **Deferred** | No problem-solving/CBT protocol dose reviewed. | Self-blame, unsafe advice; allow uncertainty and external constraints. | “Chọn một việc nhỏ bạn có thể làm.” No CBT treatment claim. Blocked on protocol/source review. |
+| G13 · Nói với mình tử tế · 1–3 min | S9 · **Indirect / adapted** | Female students, three-week groups; one phrase differs greatly. | Kindness prompts can feel false; neutral wording or skip. | “Thử nói với mình một câu nhẹ hơn.” No self-esteem cure. Candidate after prompt review. |
+| G14 · Ba điều nhỏ xíu · 2–5 min | S3, S6 · **Supported technique** | Varied gratitude trials, repeated daily/weekly records; not one-shot validation. | Guilt/forced positivity; zero, one or two items allowed, hardship acknowledged. | “Có điều nhỏ nào bạn muốn giữ lại hôm nay?” Never “biết ơn sẽ hết buồn”. Candidate for Core Beta with no required count. |
+| G15 · Gửi một điều tử tế · 1–3 min | S3, S6 · **Indirect / adapted** | Listing gratitude is not proof of sending-message benefit; no sending dose established. | Social pressure/contact risk; no automatic send or demand to reconcile. | “Nghĩ tới một lời tử tế, gửi hay không tuỳ bạn.” No relationship-repair guarantee. Review before publish. |
+| G16 · Album chuyện vui · 2–5 min | S3 (context only) · **Deferred** | Gratitude evidence does not validate reminiscence; no specific dose reviewed. | Grief, painful contrast; no photo upload, ordinary memory or skip. | “Nhớ một chuyện bạn muốn nhớ.” No happiness-treatment claim. Blocked on reminiscence source. |
+| G17 · Việc tốt bé tẹo · 1–3 min | S3 (context only) · **Deferred** | Gratitude is not an acts-of-kindness trial; no matching dose reviewed. | Obligation, money/social pressure; no spending or contacting strangers. | “Nếu muốn, chọn một việc nhỏ.” No guaranteed well-being gain. Blocked on specific evidence. |
+| G18 · Đi dạo trong rừng · 1–5 min | S10 · **Exploratory / creative** | Healthy adults, 90-minute physical walk; virtual scene is not that exposure. | Visual motion, unsafe walking while watching; stationary use, still option. | “Dạo qua một khu rừng trên màn hình.” Never equivalent to real nature or therapy. Creative gate. |
+| G19 · Một phút không làm gì · 1 min | S4 (context only) · **Exploratory / creative** | No isolated one-minute inactivity trial/dose reviewed. | Restlessness, achievement pressure; stop early without failure message. | “Ngồi một chút. Dừng lúc nào cũng được.” No brain-reset promise. Creative gate. |
+| G20 · Lắng nghe Yên · 1–3 min | S4 · **Indirect / adapted** | Sound can be an attention focus; no reviewed ambient-audio dose or custom-audio effect. | Sensory sensitivity; audio off, user initiated, volume control, silent option. | “Thử để ý một âm thanh.” No healing frequency or sleep-treatment claim. Audio/protocol review. |
+
+## Review before publication
+
+1. Freeze the exact interaction, duration, prompts and public claims in the tool's PR. Check the row and source's actual population, comparator, schedule and outcomes; extract missing dose details before any corresponding clinical or dose claim.
+2. Record a second agent editorial review of the final Vietnamese UI, source links and cautions. Agent review is not clinical approval. Deferred rows stay unavailable until blockers are explicitly resolved in a follow-up evidence change.
+3. Confirm start/stop/skip, own-pace options, reduced motion, keyboard/touch behavior and private-text wipe; run privacy/network and browser checks. Publish only after the roadmap release gate.
+4. Re-review when cadence, prompts, intended audience, source conclusions or benefit wording change; check sources again before each tool's first release and during later catalog review. Log actual review date, reviewer, PR/SHA and remaining limitations. Do not mark this whole matrix clinically validated.
+
+## Review record
+
+- 19/11/2026 · Codex research agent · source/claims draft completed; 20 rows checked against roadmap keys G01–G20. No live UI claim audit, clinical review, CI result, merge or production verification is asserted by this document.

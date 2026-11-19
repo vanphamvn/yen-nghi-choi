@@ -1,0 +1,30 @@
+name: Yên Lab foundation contract
+on:
+  pull_request:
+    paths:
+      - docs/yen-lab/**
+      - tools/check-yen-lab-foundation.mjs
+      - .github/codex/game-freeze.test.mjs
+      - .github/workflows/game-2d-coding-runner.yml
+      - .github/workflows/yen-lab-foundation.yml
+  push:
+    branches: [main]
+    paths:
+      - docs/yen-lab/**
+      - tools/check-yen-lab-foundation.mjs
+      - .github/codex/game-freeze.test.mjs
+      - .github/workflows/game-2d-coding-runner.yml
+      - .github/workflows/yen-lab-foundation.yml
+permissions:
+  contents: read
+jobs:
+  foundation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '22'
+      - run: node tools/check-yen-lab-foundation.mjs
+      - run: node --test .github/codex/game-freeze.test.mjs
