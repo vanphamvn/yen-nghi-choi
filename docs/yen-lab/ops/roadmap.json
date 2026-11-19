@@ -211,12 +211,13 @@
       "priority": "P0",
       "title": "Privacy, a11y & CSP",
       "kind": "quality",
-      "status": "todo",
+      "status": "done",
       "depends_on": [
         "F02",
         "F05"
       ],
-      "issue_url": "https://github.com/vanphamvn/yen-nghi-choi/issues/132"
+      "issue_url": "https://github.com/vanphamvn/yen-nghi-choi/issues/132",
+      "evidence": "PR #177 squash-merged as 01ca195. HTTP CSP + COOP for /lab/* on Netlify and Vercel (frame-ancestors none), static tools/check-yen-lab-privacy.mjs (headers, page CSP, inline code, storage/network/device/audio/URL-state/dynamic-URL APIs, health claims, non-treatment + source link), runtime tests/yen-lab-privacy.spec.mjs (API probes before page scripts during real flows; only same-origin GET without body/query; a11y baseline; reduced motion). Fixture server mirrors the /lab/* headers. Mutation-checked statically and at runtime. foundation CI green on 6259ecb (86/86). Independent agent review: no P0/P1, 6 P2 fixed. Production: build-info commitSha=01ca195; curl shows exact CSP/COOP/Permissions-Policy on /lab/; real-browser production check of the room under the header CSP. Not verified: screen readers, physical devices. Docs: docs/yen-lab/PRIVACY.md."
     },
     {
       "key": "F09",

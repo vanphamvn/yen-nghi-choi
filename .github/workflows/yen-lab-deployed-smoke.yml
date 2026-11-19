@@ -1,0 +1,106 @@
+name: Yên Lab deployed smoke
+# LAB-F09 (#133). Runs the Lab smoke suite against the real deployed site:
+#  - pull_request → the Netlify deploy preview of the PR head commit,
+#  - push to main  → production https://yencafeday.netlify.app (release evidence).
+# It first waits until the site's build-info.json reports exactly this commit, so a stale deploy can never pass.
+# Writes a release record (URL, commit, deploy id, browser, pass/fail) to the job summary and artifacts.
+on:
+  pull_request:
+    paths:
+      - lab/**
+      - docs/yen-lab/game-kit.*
+      - netlify.toml
+      - yen-logo.svg
+      - favicon.svg
+      - game/preview-2d/tools/write-build-info.mjs
+      - tests/yen-lab-smoke.spec.mjs
+      - playwright.lab-smoke.config.mjs
+      - .github/workflows/yen-lab-deployed-smoke.yml
+  push:
+    branches: [main]
+    paths:
+      - lab/**
+      - docs/yen-lab/game-kit.*
+      - netlify.toml
+      - yen-logo.svg
+      - favicon.svg
+      - game/preview-2d/tools/write-build-info.mjs
+      - tests/yen-lab-smoke.spec.mjs
+      - playwright.lab-smoke.config.mjs
+      - .github/workflows/yen-lab-deployed-smoke.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: yen-lab-deployed-smoke-${{ github.event.pull_request.number || github.ref }}
+  # Superseded PR pushes may be cancelled; production runs never are (each one is a release record).
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      TRIGGER_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+      LAB_BASE_URL: ${{ github.event_name == 'pull_request' && format('https://deploy-preview-{0}--yencafeday.netlify.app', github.event.pull_request.number) || 'https://yencafeday.netlify.app' }}
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          ref: ${{ env.TRIGGER_SHA }}
+          fetch-depth: 0
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '22'
+      - run: npm ci
+      - name: Locate runner Chrome or install Playwright Chromium
+        shell: bash
+        run: |
+          if command -v google-chrome >/dev/null 2>&1; then
+            echo "LAB_UX_CHROMIUM_PATH=$(command -v google-chrome)" >> "$GITHUB_ENV"
+          else
+            npx playwright install --with-deps chromium
+          fi
+          npx playwright install ffmpeg  # video of failures
+      - name: Wait for the deploy to serve this commit
+        shell: bash
+        run: |
+          # PR: the preview must serve the PR head exactly. main: production must serve this commit or a later main
+          # commit that contains it (another merge may land meanwhile); we then test and record what is actually live.
+          # Manual run: test whatever production serves now.
+          for i in $(seq 1 60); do
+            sha=$(curl -fsS -H 'cache-control: no-cache' "$LAB_BASE_URL/game/preview-2d/build-info.json?t=$i" | node -pe 'JSON.parse(require("fs").readFileSync(0)).commitSha' 2>/dev/null || true)
+            echo "attempt $i: $LAB_BASE_URL serves ${sha:-nothing}, expecting $TRIGGER_SHA"
+            if [ "$sha" = "$TRIGGER_SHA" ]; then echo "LAB_EXPECT_SHA=$sha" >> "$GITHUB_ENV"; exit 0; fi
+            if [ -n "$sha" ] && [ "${{ github.event_name }}" != "pull_request" ]; then
+              git fetch -q origin main || true
+              if [ "${{ github.event_name }}" = "workflow_dispatch" ] || { git cat-file -e "$sha^{commit}" 2>/dev/null && git merge-base --is-ancestor "$TRIGGER_SHA" "$sha"; }; then
+                git checkout -q "$sha"
+                echo "LAB_EXPECT_SHA=$sha" >> "$GITHUB_ENV"
+                echo "Live commit $sha contains $TRIGGER_SHA (or manual run): testing what is live"; exit 0
+              fi
+            fi
+            sleep 15
+          done
+          echo "::error::$LAB_BASE_URL never served $TRIGGER_SHA (or a main commit containing it) within 15 minutes"; exit 1
+      - name: Smoke the deployed Lab
+        id: smoke
+        run: npx playwright test --config playwright.lab-smoke.config.mjs
+      - name: Release record
+        if: always()
+        shell: bash
+        run: |
+          {
+            echo "### Yên Lab deployed smoke: ${{ steps.smoke.outcome }}"
+            echo "- URL: $LAB_BASE_URL/lab/"
+            echo "- Tested commit: \`${LAB_EXPECT_SHA:-none}\` (run triggered by \`$TRIGGER_SHA\`)"
+            if [ -f test-results/lab-smoke/provenance.json ]; then
+              node -e 'const p=require("./test-results/lab-smoke/provenance.json");console.log(`- Served commit: \`${p.commitSha}\` · context ${p.context} · deploy ${p.deployId}\n- Browser: ${p.browser}\n- Checked: ${p.checkedAt}`)'
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: yen-lab-deployed-smoke
+          path: |
+            test-results/lab-smoke/
+            playwright-report/lab-smoke/
+          if-no-files-found: warn
