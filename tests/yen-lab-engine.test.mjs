@@ -269,7 +269,8 @@ test('G02: skipTo while paused stays paused; past the last round completes', () 
   assert.deepEqual([last().state, last().round], ['paused', 3]);
   assert.equal(timers.size, 0, 'no timer while paused');
   advance(60000);
-  assert.equal(last().round, 3, 'paused time is not counted after a skip');
+  assert.equal(session.snapshot().elapsed, 20000, 'paused time is not counted after a skip');
+  assert.equal(session.snapshot().round, 3);
   advance(400);
   assert.equal(session.skipTo(4), true);
   assert.equal(last().state, 'complete');
@@ -297,4 +298,14 @@ test('G02: skipping from the last round while running completes and clears the t
   assert.equal(session.skipTo(4), true);
   assert.equal(last().state, 'complete');
   assert.equal(timers.size, 0);
+});
+
+test('G02: skipTo after the device slept (late timer pending) counts only up to the planned boundary', () => {
+  const { session, timers, last, clock } = rig();
+  session.start();
+  clock.set(clock.get() + 30_000); // asleep: the 4 s timer never fired, far past maxLateMs
+  assert.equal(session.skipTo(2), true);
+  assert.equal(last().elapsed, 10000, 'jumped to round 2 start; the time asleep did not push it further');
+  assert.equal(last().state, 'running');
+  assert.equal(timers.size, 1);
 });

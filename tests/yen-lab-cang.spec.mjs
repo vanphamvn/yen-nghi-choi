@@ -100,9 +100,11 @@ test('skip a part while playing: moves on without failure; skipping the last par
   await expect(page.locator('#game-round')).toHaveText('vai · lần 1 / 2');
   await expect(page.locator('#game-whisper')).toHaveText('Bỏ qua mặt. Tiếp theo: vai, khi bạn bấm “tiếp tục”.');
   await page.clock.runFor(5 * 60_000);
+  expect(await anim(page)).toEqual([]); // review P2: no stale frozen frame from the skipped part
   await tap(page, 'tiếp tục');
   await expect(cue(page)).toHaveText('Nhún nhẹ hai vai lên một chút');
   await expect(page.locator('#cang-seconds')).toHaveText('còn 5 giây');
+  await expect(page.locator('#cang-sr-cue')).toHaveText('Nhún nhẹ hai vai lên một chút'); // review P1: announced on resume
   await tap(page, 'bỏ qua chỗ này');
   await expect(cue(page)).toHaveText('Ép nhẹ hai bàn chân xuống sàn');
   await tap(page, 'bỏ qua chỗ này');
@@ -144,8 +146,13 @@ test('release-only mode: no tensing cue at all, Cục Yên does not squeeze', as
   await expect(cue(page)).toHaveText('Để ý hai bàn tay');
   await expect(page.locator('#cang-sub')).toHaveText('không cần gồng');
   expect(await anim(page)).toEqual([]); // nothing to squeeze while only noticing
+  await page.clock.runFor(5100);
+  await expect(cue(page)).toHaveText('Thả tay ra, để ngón tay mềm');
+  expect(await anim(page)).toEqual([]); // review P1: no squeeze-then-relax at the start of a release either
+  expect(await page.locator('#cang-buddy').evaluate(el => getComputedStyle(el).transform)).toMatch(/^(none|matrix\(1, 0, 0, 1, 0, 0\))$/);
+  await page.clock.runFor(19_900);
   const cues = new Set();
-  for (let i = 0; i < 16; i++) { cues.add(await cue(page).textContent()); await page.clock.runFor(12_500); }
+  for (let i = 0; i < 14; i++) { cues.add(await cue(page).textContent()); await page.clock.runFor(12_500); }
   expect([...cues].some(c => /Nắm|Nhíu|Nhún|Ép/.test(c))).toBe(false);
   await expect(state(page)).toHaveAttribute('data-state', 'complete');
 });
@@ -305,4 +312,21 @@ test('changing choices many times, then starting, runs one clean session', async
   await expect(state(page)).toHaveAttribute('data-state', 'complete');
   await page.clock.runFor(10 * 60_000);
   await expect(state(page)).toHaveAttribute('data-state', 'complete');
+});
+
+test('a skip tapped inside the double-tap guard is not lost: it lands just after', async ({ page }) => {
+  await page.clock.install();
+  await page.goto(CANG);
+  await tap(page, 'bắt đầu');
+  await page.clock.runFor(400);
+  await page.getByRole('button', { name: 'tạm dừng' }).click();
+  await page.clock.runFor(400);
+  await page.getByRole('button', { name: 'tiếp tục' }).click();
+  await page.getByRole('button', { name: 'bỏ qua chỗ này' }).click(); // < 350 ms after "tiếp tục"
+  await page.getByRole('button', { name: 'bỏ qua chỗ này' }).click(); // a second quick tap must not skip two parts
+  await page.clock.runFor(500);
+  await expect(page.locator('#game-round')).toHaveText('mặt · lần 1 / 2');
+  await expect(page.locator('#game-whisper')).toHaveText('Bỏ qua tay. Không sao cả.');
+  await page.clock.runFor(2000);
+  await expect(page.locator('#game-round')).toHaveText('mặt · lần 1 / 2');
 });

@@ -69,7 +69,7 @@ if (game) {
   function stopSqueeze() { if (squeeze) { squeeze.cancel(); squeeze = null; } }
   function drawSqueeze(s) {
     stopSqueeze();
-    const shape = SHAPES[s.step];
+    const shape = choice.mode === 'tense' ? SHAPES[s.step] : null; // release-only mode: Cục Yên never squeezes
     if (!shape || reduceMotion.matches || typeof buddy.animate !== 'function') return; // text guide only
     squeeze = buddy.animate(shape, { duration: s.stepMs, easing: 'ease-in-out', fill: 'forwards' });
     if (s.state !== 'running') squeeze.pause();
@@ -110,9 +110,10 @@ if (game) {
       shownKey = key;
       drawSqueeze(s); drawSeconds();
     } else if (s.state === 'paused') {
-      if (squeeze) { squeeze.pause(); squeeze.currentTime = s.stepElapsed; }
       stopSeconds();
-      shownKey = `${s.round}:${s.step}`;
+      // Skipped while paused: the next part starts relaxed, and "tiếp tục" must announce its first cue.
+      if (s.reason === 'skip') { stopSqueeze(); shownKey = ''; }
+      else { if (squeeze) { squeeze.pause(); squeeze.currentTime = s.stepElapsed; } shownKey = `${s.round}:${s.step}`; }
     } else { stopSqueeze(); stopSeconds(); seconds.textContent = ''; srCue.textContent = ''; shownKey = ''; }
 
     if (changedState) {
@@ -154,24 +155,33 @@ if (game) {
     render(session.snapshot(), { focus: false });
   }
 
-  function skip() {
+  let skipRetry = null;
+  function skip(retried = false) {
+    if (skipRetry) return; // one retry already queued for this tap
     const s = session.snapshot();
+    if (s.state !== 'running' && s.state !== 'paused') return;
     const index = Math.floor((s.round - 1) / REPS);
     const name = PARTS[chosen[index]].name;
-    if (!session.skipTo((index + 1) * REPS + 1)) return;
+    if (!session.skipTo((index + 1) * REPS + 1)) {
+      // Tapped right after "bắt đầu"/"tiếp tục"/another skip: the engine's double-tap guard said no. Try once more
+      // just after it, so the tap is not silently lost.
+      if (!retried) skipRetry = setTimeout(() => { skipRetry = null; skip(true); }, 360);
+      return;
+    }
     // Skipping is never a failure: say what happened, plainly, and move on (the last part simply ends the game).
     if (session.state === 'complete') return;
-    say(`Bỏ qua ${name}. Không sao cả.`);
-    if (session.state === 'paused') say(`Bỏ qua ${name}. Tiếp theo: ${PARTS[chosen[index + 1]].name}, khi bạn bấm “tiếp tục”.`);
+    say(session.state === 'paused'
+      ? `Bỏ qua ${name}. Tiếp theo: ${PARTS[chosen[index + 1]].name}, khi bạn bấm “tiếp tục”.`
+      : `Bỏ qua ${name}. Không sao cả.`);
   }
 
   const act = {
     start: () => { if (session.state !== 'idle' || startWord.disabled) return; session.start(); },
     pause: () => session.pause(),
     resume: () => session.resume(),
-    skip,
-    stop: () => session.stop(),
-    again: () => session.reset(),
+    skip: () => skip(),
+    stop: () => { clearTimeout(skipRetry); skipRetry = null; session.stop(); },
+    again: () => { clearTimeout(skipRetry); skipRetry = null; session.reset(); },
   };
 
   game.addEventListener('click', event => {
