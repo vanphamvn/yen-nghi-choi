@@ -143,4 +143,5 @@ One coordinator selects eligible work, delegates isolated implementation and ind
 
 - F01 / #125 completed: PR #163, runner freeze and CI, 12 superseded Phaser issues triaged as not_planned, old QA automation disabled, actual homepage browser smoke passed. Exact provider revision and full homepage regression are not asserted.
 - F02 / #126 completed: PR #123 merged and design audit passed.
-- F03 / #127 and F04 / #128 remain in progress; no /lab/ Alpha release claimed.
+- F03 / #127 completed through PR #165 after independent source/claims review and green CI. Deferred per-tool protocol gates remain in force.
+- F04 / #128 remains in progress; no /lab/ Alpha release claimed.
