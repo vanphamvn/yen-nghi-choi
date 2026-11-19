@@ -1,24 +1,21 @@
-# Yên Lab · Painted Sprite Pack (art staging)
+# Yên Lab sprite pack · 19/11/2026
 
-Generated 19/11/2026 for [Yên Lab epic #124](https://github.com/vanphamvn/yen-nghi-choi/issues/124).
+**Trạng thái:** Art staging, chưa thay asset trên production, không tự nhận đã QA hay được chủ quán duyệt.
 
-## Inventory
-- `games/g01`–`g20`: illustrated watercolor motifs for all 20 mini tools, not complete playable games.
-- `shared/`: books, character poses, envelopes, notes, paper tags, leaves and decorative FX.
-- `frames/book-flip-00.webp`–`07.webp`: eight painted book-page states.
-- `atlases/book-pageflip.webp`: 4 columns × 2 rows, 410 × 410 pixels/frame, 180 ms nominal interval.
-- `manifest.json`: machine-readable asset listing and animation metadata.
+## Những gì PR lưu
+- 20 minh họa cho G01–G20 trong `games/`; 7 game chứa nhiều trạng thái trong một strip và cần căn frame trước khi gắn animation runtime.
+- 18 sprite vật thể dùng chung trong `shared/`: 5 pose Cục Yên, sách, mẩu giấy, lá, phong bì, hiệu ứng.
+- 8 frame lật trang 410×410 và atlas 4×2 trong `frames/`, `atlases/`.
+- `manifest.json`, trang [preview.html](../../lab/assets/sprites/preview.html) dùng để duyệt, test Node `tests/yen-lab-sprite-manifest.test.mjs`.
 
-## Guardrails
-- **Art stage only.** Do not replace existing production assets until owner visual approval and mobile QA.
-- Game text, input and actions stay in semantic HTML. These raster images are visual accompaniments, not a substitute for real gameplay.
-- No personal data. No animation in reduced-motion mode. No autoplay audio.
-- Existing main website and Phaser archival code remain untouched.
-- Artwork is AI-generated and newly created for Yên Lab. Maintain original files as source reference; do not imply clinical efficacy from visuals.
-- Game panels include their painted paper backing. Shared assets and book flip should be composited over the cream-paper stage; inspect cropping and sizing per game before integration.
+## Chú ý
+- Sổ trên bàn chỉ để chọn trò. Bấm vào tên trò phải chuyển tới route riêng; không thêm gameplay vào sổ.
+- Đây là artwork mới được tạo, texture màu nước và nền giấy. **Một số sprite dùng chung còn nền giấy và viền crop**, chưa đạt chuẩn sprite trong suốt; cần kiểm tra visual trước khi dùng.
+- Không thay artwork Cục Yên đang có mà chưa xác nhận khả năng đồng bộ tạo hình.
+- Không lưu người chơi/tâm trạng trong ảnh; text trong game phải là HTML. Reduced-motion dùng hình tĩnh; không autoplay.
+- Mọi hiệu ứng hoạt hình chỉ là trang trí, không được coi là bằng chứng hiệu quả của phương pháp tâm lý.
 
-## Rendering book frames
-Use `object-position` or a canvas `drawImage` source rectangle (4 × 2 grid). For a static fallback, use `frames/book-flip-00.webp`. Never create animation based only on CSS scale.
-
-## Review
-Check 320/360/390/768/1440, color consistency against existing `lab/assets`, every animated frame for ghost pixels / alpha fringes, min 44px touch targets, voiceover and reduced-motion.
+## Kiểm tra
+`node --test tests/yen-lab-sprite-manifest.test.mjs` kiểm tra tham chiếu và định dạng WebP.
+Trang preview cho phép chủ động phát 8 frame lật sách, không tự chạy khi tải.
+Kiểm tra bằng mắt ở kích thước 320/360/390/768/1440 trước khi merge; cần đánh giá asset so với bộ tranh hiện có ở `lab/assets`.
