@@ -13,3 +13,12 @@
     Referrer-Policy = "no-referrer"
     Permissions-Policy = "camera=(), microphone=(), geolocation=()"
     X-Robots-Tag = "noindex, nofollow, noarchive"
+
+# Yên Lab (LAB-F08, #132): HTTP-level CSP for every /lab/ page, same as each page's <meta> CSP plus what a meta tag
+# cannot express (frame-ancestors). Same-origin scripts/styles/images only; no network, fonts, media, workers or forms.
+# Keep identical to vercel.json and LAB_CSP in tools/check-yen-lab-privacy.mjs.
+[[headers]]
+  for = "/lab/*"
+  [headers.values]
+    Content-Security-Policy = "default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; font-src 'none'; connect-src 'none'; media-src 'none'; worker-src 'none'; manifest-src 'none'; frame-src 'none'; frame-ancestors 'none'; form-action 'none'; base-uri 'none'; object-src 'none'"
+    Cross-Origin-Opener-Policy = "same-origin"

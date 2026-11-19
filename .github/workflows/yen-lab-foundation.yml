@@ -9,6 +9,10 @@ on:
       - tests/yen-lab-route.spec.mjs
       - tests/yen-lab-game-kit.spec.mjs
       - tests/yen-lab-engine.test.mjs
+      - tests/yen-lab-privacy.spec.mjs
+      - tools/check-yen-lab-privacy.mjs
+      - netlify.toml
+      - vercel.json
       - lab/**
       - index.html
       - 404.html
@@ -28,6 +32,10 @@ on:
       - tests/yen-lab-route.spec.mjs
       - tests/yen-lab-game-kit.spec.mjs
       - tests/yen-lab-engine.test.mjs
+      - tests/yen-lab-privacy.spec.mjs
+      - tools/check-yen-lab-privacy.mjs
+      - netlify.toml
+      - vercel.json
       - lab/**
       - index.html
       - 404.html
@@ -51,6 +59,7 @@ jobs:
       - run: node tools/check-yen-lab-foundation.mjs
       - run: node --test .github/codex/game-freeze.test.mjs
       - run: node --test tests/yen-lab-engine.test.mjs
+      - run: node tools/check-yen-lab-privacy.mjs
       - run: npm ci
       - name: Locate runner Chrome or install Playwright Chromium
         shell: bash
