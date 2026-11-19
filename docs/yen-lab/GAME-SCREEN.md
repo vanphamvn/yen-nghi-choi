@@ -35,3 +35,29 @@ Trang trò nạp `/lab/lab.css` (token, header, footer) và `/lab/game.css` (mà
 - `tests/yen-lab-game-kit.spec.mjs` (Chromium, desktop 1440 + touch giả lập 360): luồng idle → running → paused → running → stopped → idle bằng chuột, chạm và bàn phím (Tab/Enter/Space); focus không mất; phản hồi không lưu (storage/cookie/URL trống); controls không có nền/viền/bóng; reduced-motion không còn chuyển động; tương phản WCAG AA mọi chữ trên giấy ở 4 trạng thái; 320/360/390/768/1440 không tràn ngang, chữ điều khiển ≥ 44px và không xuống dòng; “làm lại” nằm trong màn hình đầu 360×800.
 - Ảnh chụp idle/running/complete ở 5 chiều rộng: artifact CI `yen-lab-ux-browser-evidence` → `game-kit-shots/`. Agent đã xem ảnh 320/360/768/1440 và bản Browser pane 390px; chưa có duyệt của chủ quán.
 - Chưa kiểm tra: VoiceOver/TalkBack, iPhone/Android thật. Không có trò nào phát hành trong ticket này.
+
+## Engine dùng chung (LAB-F07, #131)
+
+`lab/engine.mjs` là ES module thuần, không phụ thuộc, không storage/network. Trang trò khai báo các bước (đã qua evidence review cho trò đó) và số vòng, rồi vẽ lại màn hình trong `onChange`:
+
+```js
+import { createSession, bindPageLifecycle } from '/lab/engine.mjs';
+const session = createSession({ steps: [{ id: 'a', ms: 4000 }, { id: 'b', ms: 6000 }], rounds: 3, onChange: render });
+bindPageLifecycle(session);
+// chữ mực: session.start() / pause() / resume() / stop() / reset(); session.setRounds(n) khi còn idle
+```
+
+| Hành vi | Cách làm |
+| --- | --- |
+| Trạng thái | `idle → running ⇄ paused → complete / stopped`; lỗi → `error`; `reset()` về `idle` từ mọi trạng thái. Khớp `data-state` của game.css (`STATES`). |
+| Thời gian | Tính từ đồng hồ đơn điệu (`performance.now`), không đếm tick; chỉ **một** `setTimeout` tới mốc bước kế tiếp, không `setInterval`, không `requestAnimationFrame`. Tắt animation hay giảm FPS không đổi nhịp. |
+| Bấm liên tiếp | Lệnh trong 350 ms sau lần đổi trạng thái bị bỏ qua (chạm đúp “bắt đầu” không trúng “tạm dừng” vừa hiện ra). **“dừng hẳn” không bao giờ bị chặn**, không hỏi xác nhận. |
+| Rời trang / khóa màn hình | `visibilitychange → hidden` (đổi tab, khóa màn hình, chuyển app) và `freeze` ⇒ tạm dừng ngay. Quay lại vẫn **tạm dừng**, chỉ chạy tiếp khi người dùng bấm “tiếp tục”; thời gian vắng mặt không tính. |
+| Máy ngủ không báo | Nếu timeout chạy trễ hơn 2 s (máy ngủ mà trình duyệt không phát `visibilitychange`), engine chỉ tính tới mốc đã hẹn rồi tạm dừng (`reason: 'suspended'`), không nhảy vượt bước. Trễ ≤ 2 s (tab bị throttle) thì đi tiếp đúng vị trí thật. |
+| Thoát / bfcache | `pagehide` và khôi phục từ back/forward cache ⇒ `reset`, không tự chạy lại. |
+| Lỗi vẽ | Ngoại lệ trong `onChange` ⇒ `error`, xóa timer; màn hình error có “làm lại” và “về góc ngồi chơi”. |
+| Thông báo | Trang trò chỉ thông báo mốc chính qua `.game-whisper` (bắt đầu, tạm dừng, vòng mới, kết thúc), không đọc mỗi giây. Focus chuyển sang chữ chính mới chỉ khi người dùng bấm; không giật focus khi tự tạm dừng/kết thúc. |
+
+Bản mẫu [`game-kit.html`](game-kit.html) chạy engine thật với hai bước trung tính (“Nhìn ly trà” / “Nhìn ra cửa sổ”, 5 s × 3 vòng), không phải bài thở hay bài cơ. Nhịp thật của từng trò quyết định trong ticket của trò đó (G01 #142…).
+
+**Kiểm tra:** `tests/yen-lab-engine.test.mjs` (16 unit test, đồng hồ/timer giả: chuyển trạng thái, chạm đúp, stop mọi lúc, pause không tính giờ, timer trễ do throttle, máy ngủ — kể cả khi pause/stop tới trước timer, timer trễ ở mốc cuối thì hoàn tất, timer sớm không phát bước giả, gọi lại trong onChange, destroy, reset, lỗi render, lifecycle/freeze). `tests/yen-lab-game-kit.spec.mjs` thêm 5 luồng Playwright với `page.clock`: nhịp bước/vòng tới complete, chạm đúp (đã kiểm chứng test thất bại khi tắt guard), ẩn trang → tạm dừng và không tự chạy tiếp, reduced-motion vẫn chạy đủ, tự tạm dừng thì focus chuyển sang “tiếp tục”. Khóa màn hình trên điện thoại thật **chưa** được kiểm tra trên thiết bị; hành vi trên dựa vào `visibilitychange` mà Safari/Chrome phát khi khóa màn hình, và guard 2 s cho trường hợp không có sự kiện.

@@ -8,6 +8,7 @@ on:
       - tests/yen-lab-ux.spec.mjs
       - tests/yen-lab-route.spec.mjs
       - tests/yen-lab-game-kit.spec.mjs
+      - tests/yen-lab-engine.test.mjs
       - lab/**
       - index.html
       - 404.html
@@ -26,6 +27,7 @@ on:
       - tests/yen-lab-ux.spec.mjs
       - tests/yen-lab-route.spec.mjs
       - tests/yen-lab-game-kit.spec.mjs
+      - tests/yen-lab-engine.test.mjs
       - lab/**
       - index.html
       - 404.html
@@ -48,6 +50,7 @@ jobs:
           node-version: '22'
       - run: node tools/check-yen-lab-foundation.mjs
       - run: node --test .github/codex/game-freeze.test.mjs
+      - run: node --test tests/yen-lab-engine.test.mjs
       - run: npm ci
       - name: Locate runner Chrome or install Playwright Chromium
         shell: bash

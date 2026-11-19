@@ -1,4 +1,5 @@
-// LAB-F06 (#130): shared game screen primitives (lab/game.css) exercised through the design kit page.
+// LAB-F06 (#130) + LAB-F07 (#131): shared game screen (lab/game.css) driven by the engine (lab/engine.mjs) on the kit page.
+// page.clock fakes performance.now and timers so pacing is tested without waiting.
 import { test, expect } from '@playwright/test';
 import { mkdirSync } from 'node:fs';
 
@@ -18,9 +19,11 @@ test('ink-word controls walk idle → running → paused → running → stopped
   const errors = [];
   page.on('pageerror', e => errors.push(e.message));
   page.on('console', m => { if (m.type() === 'error') errors.push(m.text()); });
+  await page.clock.install();
   await page.goto(KIT);
   const game = page.locator('#game');
   const press = async name => {
+    await page.clock.runFor(400); // a person's taps are further apart than the engine's 350 ms double-tap guard
     const word = page.getByRole('button', { name, exact: true });
     if (testInfo.project.name === 'emulated-touch') await word.tap(); else await word.click();
   };
@@ -28,7 +31,7 @@ test('ink-word controls walk idle → running → paused → running → stopped
   await expect(game).toHaveAttribute('data-state', 'idle');
   expect(await visibleWords(page)).toEqual(['bắt đầu', 'về góc ngồi chơi']);
   // The caution sits right above "bắt đầu" (SAFETY.md) and the cue/progress are hidden until running.
-  await expect(page.getByText('Không cần hít sâu hay nín thở', { exact: false })).toBeVisible();
+  await expect(page.getByText('Dừng lúc nào cũng được', { exact: false })).toBeVisible();
   await expect(page.locator('#game-cue')).toBeHidden();
 
   await press('bắt đầu');
@@ -36,7 +39,7 @@ test('ink-word controls walk idle → running → paused → running → stopped
   expect(await visibleWords(page)).toEqual(['tạm dừng', 'dừng hẳn']);
   await expect(page.getByRole('button', { name: 'tạm dừng' })).toBeFocused();
   await expect(page.locator('#game-cue')).toBeVisible();
-  await expect(page.getByText('vòng 2 / 6')).toBeVisible();
+  await expect(page.getByText('vòng 1 / 3')).toBeVisible();
 
   await press('tạm dừng');
   await expect(game).toHaveAttribute('data-state', 'paused');
@@ -64,6 +67,7 @@ test('ink-word controls walk idle → running → paused → running → stopped
 
 test('keyboard only: Tab reaches the main word, Enter and Space act on it', async ({ page }) => {
   await blockExternal(page);
+  await page.clock.install();
   await page.goto(KIT);
   const start = page.getByRole('button', { name: 'bắt đầu' });
   for (let i = 0; i < 12 && !(await start.evaluate(el => el === document.activeElement)); i++) await page.keyboard.press('Tab');
@@ -72,6 +76,7 @@ test('keyboard only: Tab reaches the main word, Enter and Space act on it', asyn
   expect(await start.evaluate(el => getComputedStyle(el).outlineStyle)).toBe('solid');
   await page.keyboard.press('Enter');
   await expect(page.locator('#game')).toHaveAttribute('data-state', 'running');
+  await page.clock.runFor(400);
   await page.keyboard.press('Space'); // focused word is now "tạm dừng"
   await expect(page.locator('#game')).toHaveAttribute('data-state', 'paused');
 });
@@ -166,3 +171,87 @@ for (const width of WIDTHS) {
     }
   });
 }
+
+// ───── LAB-F07 (#131): engine integration ─────
+
+test('engine paces steps and rounds by the clock, then completes quietly', async ({ page }) => {
+  await blockExternal(page);
+  await page.clock.install();
+  await page.goto(KIT);
+  const game = page.locator('#game'), cue = page.locator('#game-cue');
+  await page.getByRole('button', { name: 'bắt đầu' }).click();
+  await expect(cue).toHaveText('Nhìn ly trà');
+  await page.clock.runFor(5000);
+  await expect(cue).toHaveText('Nhìn ra cửa sổ');
+  await page.clock.runFor(5000);
+  await expect(page.locator('#game-round')).toHaveText('vòng 2 / 3');
+  await expect(page.locator('#game-dots i.is-done')).toHaveCount(1);
+  await expect(page.locator('#game-whisper')).toHaveText('Vòng 2.');
+  await page.clock.runFor(20_000);
+  await expect(game).toHaveAttribute('data-state', 'complete');
+  await expect(page.getByText('Xong rồi. Không cần thấy khác đi.')).toBeVisible();
+});
+
+test('double tap on "bắt đầu" starts once and does not pause through the word that appears under the finger', async ({ page }, testInfo) => {
+  await blockExternal(page);
+  await page.clock.install();
+  await page.goto(KIT);
+  const start = page.getByRole('button', { name: 'bắt đầu' });
+  const box = await start.boundingBox();
+  const x = box.x + box.width / 2, y = box.y + box.height / 2;
+  if (testInfo.project.name === 'emulated-touch') { await page.touchscreen.tap(x, y); await page.touchscreen.tap(x, y); await page.touchscreen.tap(x, y); }
+  else await page.mouse.dblclick(x, y);
+  await expect(page.locator('#game')).toHaveAttribute('data-state', 'running');
+  // Stop is never debounced: it works at once, even right after starting.
+  await page.getByRole('button', { name: 'dừng hẳn' }).click();
+  await expect(page.locator('#game')).toHaveAttribute('data-state', 'stopped');
+});
+
+test('hiding the page pauses, coming back does not resume, and no time is counted while away', async ({ page }) => {
+  await blockExternal(page);
+  await page.clock.install();
+  await page.goto(KIT);
+  await page.getByRole('button', { name: 'bắt đầu' }).click();
+  await page.clock.runFor(3000);
+  const setVisibility = v => page.evaluate(state => {
+    Object.defineProperty(document, 'visibilityState', { configurable: true, get: () => state });
+    document.dispatchEvent(new Event('visibilitychange'));
+  }, v);
+  await setVisibility('hidden'); // tab switch / screen lock
+  await expect(page.locator('#game')).toHaveAttribute('data-state', 'paused');
+  await page.clock.runFor(120_000);
+  await setVisibility('visible');
+  await page.clock.runFor(1000);
+  await expect(page.locator('#game')).toHaveAttribute('data-state', 'paused');
+  await expect(page.locator('#game-whisper')).toHaveText('Đã tạm dừng khi bạn rời trang.');
+  await expect(page.getByText('Bấm “tiếp tục” khi bạn sẵn sàng.')).toBeVisible();
+  await page.getByRole('button', { name: 'tiếp tục' }).click();
+  await expect(page.locator('#game-cue')).toHaveText('Nhìn ly trà'); // still 3 s into the first 5 s step
+  await page.clock.runFor(2000);
+  await expect(page.locator('#game-cue')).toHaveText('Nhìn ra cửa sổ');
+});
+
+test('reduced motion: the engine still paces and completes (no animation dependency)', async ({ browser }) => {
+  const context = await browser.newContext({ reducedMotion: 'reduce' });
+  const page = await context.newPage();
+  await page.clock.install();
+  await page.goto(KIT);
+  await page.getByRole('button', { name: 'bắt đầu' }).click();
+  await page.clock.runFor(30_000);
+  await expect(page.locator('#game')).toHaveAttribute('data-state', 'complete');
+  await context.close();
+});
+
+test('automatic pause moves focus off the word that disappeared (never strands it on <body>)', async ({ page }) => {
+  await blockExternal(page);
+  await page.clock.install();
+  await page.goto(KIT);
+  await page.getByRole('button', { name: 'bắt đầu' }).click();
+  await expect(page.getByRole('button', { name: 'tạm dừng' })).toBeFocused();
+  await page.evaluate(() => {
+    Object.defineProperty(document, 'visibilityState', { configurable: true, get: () => 'hidden' });
+    document.dispatchEvent(new Event('visibilitychange'));
+  });
+  await expect(page.locator('#game')).toHaveAttribute('data-state', 'paused');
+  await expect(page.getByRole('button', { name: 'tiếp tục' })).toBeFocused();
+});
