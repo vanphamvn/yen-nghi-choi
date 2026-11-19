@@ -226,12 +226,13 @@
       "priority": "P0",
       "title": "Playwright /lab/ & release smoke",
       "kind": "qa",
-      "status": "todo",
+      "status": "done",
       "depends_on": [
         "F05",
         "F07"
       ],
-      "issue_url": "https://github.com/vanphamvn/yen-nghi-choi/issues/133"
+      "issue_url": "https://github.com/vanphamvn/yen-nghi-choi/issues/133",
+      "evidence": "PR #178 squash-merged as c424928. tests/yen-lab-smoke.spec.mjs + playwright.lab-smoke.config.mjs: every Lab page at 320x640/360x800/390x844/768x1024/1440x900 (status, console, asset 404s, decoded images, overflow, no covered control), dead internal links, full game flow, reduced motion; no retries; screenshot/video/trace on failure. Deployed mode pins build-info commit and byte-identity of Lab files/assets vs the commit apart from exact Netlify injections; provenance.json. Workflow yen-lab-deployed-smoke.yml smokes the PR deploy preview and production after each push to main (waits for the commit, accepts a later main commit containing it, never cancels production). First production record: run 44509558397, 15/15 at c424928. Independent agent review: 1 P0 + 1 P1 + 6 P2 fixed before merge. Limit: no branch protection/required checks in the repo."
     },
     {
       "key": "G01",
@@ -240,7 +241,7 @@
       "priority": "P0",
       "title": "Thở cùng Yên",
       "kind": "minigame",
-      "status": "todo",
+      "status": "done",
       "depends_on": [
         "F03",
         "F05",
@@ -249,7 +250,8 @@
         "F08",
         "F09"
       ],
-      "issue_url": "https://github.com/vanphamvn/yen-nghi-choi/issues/142"
+      "issue_url": "https://github.com/vanphamvn/yen-nghi-choi/issues/142",
+      "evidence": "PR #179 squash-merged as 065111b. /lab/tho/ paced slow breathing on the shared screen + engine: 1/3/5 min, pace 4/6, 3/4 or own pace, no holds; cue + seconds countdown; Web Animations picture positioned from the engine clock and pinned on pause; none under reduced motion; phases announced politely to screen readers; SAFETY.md copy verbatim; menu link from the book; homepage link still gated (#134). EVIDENCE G01 duration re-reviewed to 1-5 min (agent). foundation CI + deployed smoke on the PR preview green at 95f4a19; lab Playwright 124/124 (3 consecutive runs). Independent agent safety+code review: no P0, 2 P1 + P2s fixed before merge. Production: deployed smoke run 44512838840 22/22 at 065111b (build-info pinned, byte-identical); real-browser production walk room -> book -> game -> play in real time, no storage, no Lab console errors. Not verified: physical iPhone/Android, VoiceOver/TalkBack, iOS landscape; owner review pending."
     },
     {
       "key": "F10",
