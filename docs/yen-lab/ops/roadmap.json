@@ -14,7 +14,7 @@
       "requirement": "CI pass + reviewed merge; feature implementation must use active DESIGN.md and skill"
     }
   ],
-  "notes": "M0 implementation started 2026-11-19 with separate foundation, research, UX and independent QA agents. PR #123 merged. Work in progress is not a production release.",
+  "notes": "Active sessions use one coordinator and implementation/independent QA agents. F01 and F02 completed with GitHub evidence; F03/F04 in progress. Each implementation prompt completes at least one real ticket or reports an external blocker honestly; no background schedule implied.",
   "gates": [
     {
       "id": "M0",
@@ -116,9 +116,10 @@
       "priority": "P0",
       "title": "Dừng game Phaser và triage issue/workflow",
       "kind": "platform",
-      "status": "in-progress",
+      "status": "done",
       "depends_on": [],
-      "issue_url": "https://github.com/vanphamvn/yen-nghi-choi/issues/125"
+      "issue_url": "https://github.com/vanphamvn/yen-nghi-choi/issues/125",
+      "evidence": "Issue #125 closed completed after PR #163 merge, CI, manual-only runner test, old-ticket triage, disabled automation audit and actual homepage browser smoke on 2026-11-19."
     },
     {
       "key": "F02",
