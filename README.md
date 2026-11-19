@@ -4,6 +4,16 @@ Một góc website tương tác của quán **Yên Coffee & Tea**, với nhân v
 
 Website: https://yen-nghi-choi.vercel.app/
 
+## Hướng phát triển UI mới (19/11/2026)
+
+Dự án Phaser 2D trong `game/preview-2d/` đã **tạm ngưng theo quyết định chủ quán**. Hướng phát triển tiếp theo là dẫn khách từ website Yên đến trang **Yên Lab Beta**, gồm các mini tool tương tác ngắn, dựa trên những kỹ thuật thư giãn/chánh niệm có nghiên cứu. Phần beta này **chưa được khẳng định đã triển khai**; không mô tả các game tự tạo là được chứng minh lâm sàng.
+
+Bộ quy chuẩn dành cho Codex và Claude Code:
+- [DESIGN.md](DESIGN.md): nhận diện thị giác, token, giọng điệu và tương tác.
+- [Yên UI Craft Skill](.agents/skills/yen-ui-craft/SKILL.md): quy trình thiết kế → triển khai → kiểm tra.
+- [Tham chiếu 12 repo](.agents/skills/yen-ui-craft/references/RESEARCH-NOTES.md) và [checklist QA](.agents/skills/yen-ui-craft/references/QA-CHECKLIST.md).
+- Kiểm tra hợp đồng skill/tokens: `npm run test:design` (không thay thế browser QA).
+
 ## Chạy cục bộ
 
 Không cần framework, package manager hay database. Chạy bằng bất kỳ static server:
