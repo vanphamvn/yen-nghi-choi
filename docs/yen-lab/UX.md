@@ -90,7 +90,13 @@ Không gửi phản hồi tới server, analytics, URL, cookie, localStorage hay
 
 ## Bố cục và wireframe
 
-[`wireframes.html`](wireframes.html) là tài liệu tĩnh, không phải mini tool. Có hai bản khung đúng kích thước **360×800** và **1440×900**; nội dung dài cuộn trong khung. Khung thứ ba ghi các trạng thái bài để so sánh. Không dùng mockup như chứng cứ đã triển khai `/lab/`.
+[`wireframes.html`](wireframes.html), [`wireframes.css`](wireframes.css) và [`wireframes.js`](wireframes.js) là **prototype thiết kế tương tác**, không phải mini tool. Cùng một giao diện responsive dùng để walkthrough ở **360×800** và **1440×900** (và các chiều rộng QA 320/390/768), không đặt trang lớn trong khung gây tràn viewport. Banner luôn ghi rõ bản mẫu. Không dùng prototype như chứng cứ đã triển khai `/lab/`.
+
+Prototype cho thử ba nhóm nhu cầu và danh sách ba trò mẫu để nghiệm thu IA M3; tất cả đều ghi nhãn Mẫu. M1 chỉ phát hành trò đã qua cổng riêng. Chọn nhóm là thao tác lọc thủ công trong DOM, không đưa nhu cầu vào URL hoặc hồ sơ. Danh sách toàn bộ có ngay lúc đầu; chọn nhóm rồi mở trò mất hai thao tác, mở trực tiếp mất một. Đường dẫn hash chỉ chứa ID `breath`, `release`, `small`.
+
+Các trạng thái prototype chạy thật bằng nút native: giới thiệu → Bắt đầu bản mẫu → đang chạy → Tạm dừng/Tiếp tục → Dừng hoặc Mô phỏng hoàn tất → phản hồi tùy chọn hoặc Về danh sách/Làm lại. “Mô phỏng lỗi” mở đường Thử lại/Về danh sách. Đây chỉ là chuyển màn hình, không chạy nhịp thở, gồng cơ, timer hay hướng dẫn thực hành của trò bị hoãn. Không có hiệu ứng chuyển động; reduced-motion có đầy đủ chức năng tương đương.
+
+Không dùng network API, form, audio, font ngoài, cookie hay storage. CSP cho phép chỉ JS/CSS cùng origin, chặn connect/form/object/base. Phản hồi được bỏ ngay sau lần bấm, không giữ giá trị lựa chọn; chỉ hiện lời cảm ơn trung tính. Về hub, reset, pagehide hoặc phục hồi bfcache đều xóa thông báo và trở lại trạng thái an toàn. Back/forward mở hub/giới thiệu, không tự chạy lại. Prototype quản lý focus heading và trả focus về trò trước đó trên hub. Đây là prototype focus/hash flow, chưa chứng minh engine timer hay privacy của `/lab/` tương lai.
 
 Mobile: lề 20px; header gọn với Về Yên; heading + lời mời; một thẻ trò lớn, CTA trong màn đầu; nguồn/riêng tư phía dưới. Desktop: vùng tối đa 1120px, hai cột không cân: lời mời ở trái, một thẻ bài ở phải. Không nhân đôi nhiều thẻ trang trí cho đủ chỗ. Dùng giấy `#f7f3e9`, mực `#243c35`, muted `#5f7065`, chữ giao diện từ 16px, nhãn phụ từ 14px. Noto Sans/Noto Serif nếu có tại site, fallback system; không thêm request font trong mockup.
 
@@ -102,4 +108,4 @@ Mobile: lề 20px; header gọn với Về Yên; heading + lời mời; một th
 | Chỉ muốn chơi | Hub → mở trò trực tiếp → bắt đầu; không hỏi tâm trạng trước | Keyboard Enter/Space, focus, back/forward |
 | Khó chịu trong bài | Dừng bài → thông báo trung tính → về danh sách | Screen reader, không lỗi reset, không hứa hiệu quả |
 
-Review nội bộ bản copy: agent UX rà theo DESIGN.md và QA checklist, chưa phải duyệt của chủ quán. Nhịp/số vòng và lời giới thiệu phương pháp chờ đối chiếu EVIDENCE.md của #127. Chưa chạy walkthrough bằng ngón tay, browser screenshots, VoiceOver hoặc production; các mục này giữ **pending**, thuộc #133/#134. Không đánh dấu #128 hoàn tất chỉ dựa vào tài liệu này.
+Review nội bộ bản copy: agent UX rà theo DESIGN.md và QA checklist; wording phương pháp đối chiếu EVIDENCE.md của #127 và các lưu ý riêng. Không có duyệt của chủ quán hoặc duyệt lâm sàng. Nhịp/số vòng thực hành chỉ quyết định trong #142, không mượn thao tác mô phỏng để chứng minh hiệu quả. Browser/keyboard/emulated-touch/screenshots của prototype do QA độc lập ghi kết quả trong F04-REVIEW.md, chỉ tính kết quả thực đã chạy. VoiceOver và ngón tay trên thiết bị thật chưa xác minh. #133/#134 vẫn phải kiểm tra ứng dụng thật và production SHA riêng; không đánh dấu chúng hoàn tất từ prototype này.
