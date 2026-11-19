@@ -3,11 +3,10 @@
 // in a URL, storage, request or share card, and are wiped on stop, reset, leaving the page and back/forward restore.
 // No timer, so no pause: idle → running (writing) → complete (reading the notes) | stopped → reset → idle.
 
-export const MAX_LEN = 60;
-export const IDEAS = ['ly trà ấm', 'một câu chào', 'được ngồi yên', 'trời hôm nay', 'bữa ăn ngon', 'một bài hát'];
+const MAX_LEN = 60;
 
-/** Trimmed, non-empty entries in slip order. Exported for tests. */
-export const keptFrom = values => values.map(v => String(v ?? '').replace(/\s+/g, ' ').trim().slice(0, MAX_LEN)).filter(Boolean);
+/** Trimmed, non-empty entries in slip order. */
+const keptFrom = values => values.map(v => String(v ?? '').replace(/\s+/g, ' ').trim().slice(0, MAX_LEN)).filter(Boolean);
 
 const game = document.querySelector('[data-game="ba-dieu"]');
 if (game) {
@@ -46,7 +45,8 @@ if (game) {
     inputs.forEach(input => { input.value = ''; }); // the notes are now the only copy, until reset or leaving
     setState('complete');
     say(kept.length ? `Đã xong, ${kept.length} điều nhỏ.` : 'Đã xong.');
-    focusLead();
+    // Focus the result, not "xóa và làm lại": a stray or repeated Enter must never erase the notes just shown.
+    resultLine.focus();
   }
 
   const act = {
@@ -54,8 +54,7 @@ if (game) {
       if (game.dataset.state !== 'idle') return;
       setState('running');
       say('Bắt đầu. Viết vài chữ vào mẩu giấy, hoặc chọn một gợi ý.');
-      inputs[0].focus({ preventScroll: true });
-      inputs[0].scrollIntoView({ block: 'center' });
+      inputs[0].focus();
     },
     done: () => { if (game.dataset.state === 'running') finish(keptFrom(inputs.map(i => i.value))); },
     none: () => { if (game.dataset.state === 'running') finish([]); },
@@ -78,15 +77,27 @@ if (game) {
 
   // Enter moves to the next slip, and on the last one finishes (there is no <form>, so nothing is ever submitted).
   inputs.forEach((input, i) => input.addEventListener('keydown', event => {
-    if (event.key !== 'Enter' || event.isComposing) return; // Vietnamese IME composition uses Enter too
+    // Vietnamese IME composition uses Enter too (Safari reports it as keyCode 229 with isComposing false);
+    // a held Enter (auto-repeat) must not run on into the next control.
+    if (event.key !== 'Enter' || event.isComposing || event.keyCode === 229 || event.repeat) return;
     event.preventDefault();
     if (i < inputs.length - 1) inputs[i + 1].focus(); else act.done();
   }));
 
-  // Phone keyboards cover the lower half: keep the slip being typed in (and "xong" under it) in view.
+  // Phone keyboards cover the lower half. After the keyboard opens, scroll so "xong" sits at the bottom of what is
+  // still visible (the visual viewport), without pushing the slip being typed in off the top.
+  const doneWord = game.querySelector('[data-act="done"]');
+  function keepInView(input) {
+    const visible = window.visualViewport ? visualViewport.height : innerHeight;
+    const slipBox = input.closest('.ba-slip').getBoundingClientRect();
+    const doneBox = doneWord.getBoundingClientRect();
+    const down = Math.min(doneBox.bottom + 8 - visible, slipBox.top - 8); // > 0: scroll down, < 0: slip above the top
+    if (down > 0 || slipBox.top < 0) scrollBy({ top: slipBox.top < 0 ? slipBox.top - 8 : down, behavior: 'instant' });
+  }
   inputs.forEach(input => input.addEventListener('focus', () => {
-    setTimeout(() => { if (document.activeElement === input) input.scrollIntoView({ block: 'center' }); }, 250);
+    setTimeout(() => { if (document.activeElement === input) keepInView(input); }, 250);
   }));
+  window.visualViewport?.addEventListener('resize', () => { if (inputs.includes(document.activeElement)) keepInView(document.activeElement); });
 
   // Leaving or coming back from the back/forward cache forgets everything; nothing resumes on its own.
   addEventListener('pagehide', () => { wipe(); setState('idle'); });

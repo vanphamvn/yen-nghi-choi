@@ -55,7 +55,7 @@ test('three things: type Vietnamese and emoji, Enter moves on, xong shows them a
   await expect(notes(page)).toHaveText(['Mẹ gọi điện hỏi thăm 😊', 'ly cà phê sữa đá', 'Đường về nhà không kẹt xe']);
   await expect(page.locator('#ba-result-line')).toHaveText('Đây là những điều nhỏ của bạn.');
   expect(await page.locator('.ba-slip input').evaluateAll(list => list.map(i => i.value))).toEqual(['', '', '']);
-  await expect(page.getByRole('button', { name: 'xóa và làm lại' })).toBeFocused();
+  await expect(page.locator('#ba-result-line')).toBeFocused(); // not the destructive "xóa và làm lại"
   await expect(page.locator('#game-whisper')).toHaveText('Đã xong, 3 điều nhỏ.'); // the count only, never the words
   expect(await nothingKept(page)).toEqual([0, 0, '', '', '']);
 });
@@ -154,6 +154,8 @@ test('keyboard only: start, type, Tab through suggestions and controls, finish; 
   await page.getByRole('button', { name: 'xong' }).focus();
   await page.keyboard.press('Enter');
   await expect(state(page)).toHaveAttribute('data-state', 'complete');
+  await expect(page.locator('#ba-result-line')).toBeFocused();
+  await page.keyboard.press(TAB(page)); // → "xóa và làm lại"
   await expect(page.getByRole('button', { name: 'xóa và làm lại' })).toBeFocused();
   await page.keyboard.press('Enter');
   await expect(state(page)).toHaveAttribute('data-state', 'idle');
@@ -180,20 +182,66 @@ test('screen reader: slips are labelled and grouped, announcements never repeat 
   await expect(page.locator('#ba-notes')).toHaveAttribute('aria-labelledby', 'ba-result-line');
 });
 
-test('phone keyboard: the slip being typed in and "xong" stay on screen in a short viewport', async ({ page }) => {
+test('phone keyboard: the slip being typed in and "xong" both stay on screen in a short viewport', async ({ page }) => {
   // A phone with the on-screen keyboard open leaves roughly 360×420 for the page.
   await page.setViewportSize({ width: 360, height: 420 });
   await page.goto(BA);
   await tap(page, 'bắt đầu');
-  await slip(page, 3).focus();
-  await page.waitForTimeout(400); // the game re-centres the focused slip after the keyboard animation
-  const box = await page.locator('.ba-slip').nth(2).boundingBox();
-  expect(box.y).toBeGreaterThanOrEqual(0);
-  expect(box.y + box.height).toBeLessThanOrEqual(420);
+  for (const n of [1, 2, 3]) {
+    await slip(page, n).focus();
+    await page.waitForTimeout(400); // the game re-anchors after the keyboard animation
+    const s = await page.locator('.ba-slip').nth(n - 1).boundingBox();
+    const x = await page.getByRole('button', { name: 'xong' }).boundingBox();
+    expect(s.y, `slip ${n} top`).toBeGreaterThanOrEqual(0);
+    expect(s.y + s.height, `slip ${n} bottom`).toBeLessThanOrEqual(420);
+    expect(x.y + x.height, `"xong" with slip ${n} focused`).toBeLessThanOrEqual(420); // review P1: never under the keyboard
+  }
   await page.keyboard.type('gần xong');
-  await page.getByRole('button', { name: 'xong' }).scrollIntoViewIfNeeded();
-  await tap(page, 'xong');
+  await page.getByRole('button', { name: 'xong' }).click({ trial: false });
   await expect(notes(page)).toHaveText(['gần xong']);
+});
+
+test('a held Enter on the last slip finishes once and never erases the notes', async ({ page }) => {
+  await page.goto(BA);
+  await tap(page, 'bắt đầu');
+  await slip(page, 3).fill('giữ lại');
+  await slip(page, 3).focus();
+  await page.keyboard.down('Enter');
+  await page.keyboard.down('Enter'); // auto-repeat
+  await page.keyboard.down('Enter');
+  await page.keyboard.up('Enter');
+  await expect(state(page)).toHaveAttribute('data-state', 'complete');
+  await expect(notes(page)).toHaveText(['giữ lại']);
+});
+
+test('leaving the page and a back/forward-cache restore wipe the words (lifecycle events)', async ({ page }) => {
+  // Playwright's browsers do not keep pages in the back/forward cache, so the real restore is not exercised here;
+  // the same events the browser sends are dispatched instead.
+  await page.goto(BA);
+  await tap(page, 'bắt đầu');
+  await slip(page, 1).fill('đang viết dở');
+  await page.evaluate(() => dispatchEvent(new PageTransitionEvent('pagehide', { persisted: true })));
+  await expect(state(page)).toHaveAttribute('data-state', 'idle');
+  expect(await page.locator('.ba-slip input').evaluateAll(list => list.map(i => i.value))).toEqual(['', '', '']);
+  await tap(page, 'bắt đầu');
+  await slip(page, 1).fill('đã xong rồi');
+  await tap(page, 'xong');
+  await page.evaluate(() => dispatchEvent(new PageTransitionEvent('pageshow', { persisted: true })));
+  await expect(state(page)).toHaveAttribute('data-state', 'idle');
+  await expect(page.getByText('đã xong rồi')).toHaveCount(0);
+  await expect(notes(page)).toHaveCount(0);
+});
+
+test('a composition Enter (Vietnamese IME) does not move on or finish', async ({ page }) => {
+  await page.goto(BA);
+  await tap(page, 'bắt đầu');
+  await slip(page, 3).fill('đang gõ dấu');
+  await page.locator('#ba-3').evaluate(el => {
+    el.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', keyCode: 229, bubbles: true, cancelable: true })); // Safari commit
+    el.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', isComposing: true, bubbles: true, cancelable: true }));
+  });
+  await expect(state(page)).toHaveAttribute('data-state', 'running');
+  await expect(slip(page, 3)).toHaveValue('đang gõ dấu');
 });
 
 for (const [w, h] of [[320, 640], [360, 800], [390, 844]]) {
