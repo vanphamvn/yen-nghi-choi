@@ -10,6 +10,8 @@ on:
       - tests/yen-lab-game-kit.spec.mjs
       - tests/yen-lab-engine.test.mjs
       - tests/yen-lab-privacy.spec.mjs
+      - tests/yen-lab-smoke.spec.mjs
+      - playwright.lab-smoke.config.mjs
       - tools/check-yen-lab-privacy.mjs
       - netlify.toml
       - vercel.json
@@ -33,6 +35,8 @@ on:
       - tests/yen-lab-game-kit.spec.mjs
       - tests/yen-lab-engine.test.mjs
       - tests/yen-lab-privacy.spec.mjs
+      - tests/yen-lab-smoke.spec.mjs
+      - playwright.lab-smoke.config.mjs
       - tools/check-yen-lab-privacy.mjs
       - netlify.toml
       - vercel.json
@@ -72,6 +76,8 @@ jobs:
           fi
       - name: Exercise prototype and /lab/ route (emulated touch and keyboard)
         run: npx playwright test --config playwright.lab-ux.config.mjs
+      - name: Lab smoke on the fixture server (5 viewports, links, assets, overlays, game flow)
+        run: npx playwright test --config playwright.lab-smoke.config.mjs
       - name: Preserve prototype screenshots and traces
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
@@ -80,4 +86,6 @@ jobs:
           path: |
             test-results/lab-ux/
             playwright-report/lab-ux/
+            test-results/lab-smoke/
+            playwright-report/lab-smoke/
           if-no-files-found: warn
