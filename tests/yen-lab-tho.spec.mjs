@@ -2,6 +2,8 @@
 // pause/background/stop, reduced motion, menu entry. page.clock fakes performance.now and timers (not the animation
 // timeline, so animation positions are asserted where the game sets them from the engine: each phase and each resume).
 import { test, expect } from '@playwright/test';
+// Safari/WebKit only moves focus through links and buttons with Option+Tab (default "Tab to highlight" is off).
+const TAB = page => page.context().browser()?.browserType().name() === 'webkit' ? 'Alt+Tab' : 'Tab';
 
 const THO = '/lab/tho/';
 const tap = async (page, name) => { await page.clock.runFor(400); await page.getByRole('button', { name, exact: true }).click(); };
@@ -163,7 +165,7 @@ test('keyboard and touch: choose, start, pause, stop by keys; tap works on touch
   await page.clock.runFor(400);
   await page.keyboard.press('Space'); // focus moved to "tạm dừng"
   await expect(state(page)).toHaveAttribute('data-state', 'paused');
-  await page.keyboard.press('Tab'); // → "dừng hẳn"
+  await page.keyboard.press(TAB(page)); // → "dừng hẳn"
   await page.keyboard.press('Enter');
   await expect(state(page)).toHaveAttribute('data-state', 'stopped');
 });
@@ -258,12 +260,12 @@ test('menu by keyboard: open the book, Tab to the game, Escape closes back to th
   const book = page.getByRole('button', { name: 'Mở thực đơn trò chơi' });
   await book.focus();
   await page.keyboard.press('Enter');
-  await page.keyboard.press('Tab');
+  await page.keyboard.press(TAB(page));
   await expect(page.getByRole('link', { name: 'Thở cùng Yên' })).toBeFocused();
   await page.keyboard.press('Escape');
   await expect(book).toBeFocused();
   await page.keyboard.press('Enter');
-  await page.keyboard.press('Tab');
+  await page.keyboard.press(TAB(page));
   await page.keyboard.press('Enter');
   await expect(page).toHaveURL(/\/lab\/tho\/$/);
 });

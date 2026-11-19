@@ -88,12 +88,14 @@ button { font: inherit; color: inherit; }
   transform: translateY(-4px) rotate(-2deg); filter: drop-shadow(0 6px 6px rgba(60, 40, 20, .35)) brightness(1.04);
 }
 .sprite-book:not(:disabled):active { transform: translateY(1px); }
+.sprite-book.is-pointer-focus:focus-visible { outline: none; transform: none; filter: none; } /* focus returned after a tap */
 
 /* Menu = the same painted book opened big; game names are written on its pages */
 .menu {
   width: min(94vw, 640px); max-width: none; padding: 0; border: 0; background: none; overflow: visible;
 }
 .menu::backdrop { background: rgba(48, 34, 20, .45); }
+.menu:focus { outline: none; } /* focus lands on the dialog itself after a tap; controls inside keep their ring */
 .menu-book { position: relative; }
 .menu-book-art { display: block; width: 100%; padding: 0; background: none; border: 0; border-radius: 16px; cursor: pointer; }
 .menu-book-art img { width: 100%; height: auto; display: block; filter: drop-shadow(0 18px 24px rgba(30, 20, 10, .35)); }

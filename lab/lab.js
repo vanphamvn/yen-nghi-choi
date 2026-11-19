@@ -35,10 +35,18 @@
   const close = document.getElementById('menu-close');
   if (book && menu && close && typeof menu.showModal === 'function') {
     book.disabled = false;
-    book.addEventListener('click', () => { menu.showModal(); close.focus(); });
+    // Keyboard open (click.detail === 0): focus the close control with its visible ring. Tap/mouse open: focus the dialog
+    // itself, because WebKit (iPhone Safari) draws the focus ring on programmatic focus even after a tap.
+    let byPointer = false;
+    book.addEventListener('click', event => { byPointer = event.detail !== 0; menu.showModal(); (byPointer ? menu : close).focus(); });
     close.addEventListener('click', () => menu.close());
     menu.addEventListener('click', event => { if (event.target === menu) menu.close(); }); // tap outside the book
-    menu.addEventListener('close', () => book.focus());
+    // Focus always returns to the book. After a tap, mark it so no ring is drawn (WebKit shows :focus-visible after
+    // programmatic focus); the mark is dropped as soon as a key is pressed or focus leaves.
+    const unmark = () => book.classList.remove('is-pointer-focus');
+    book.addEventListener('blur', unmark);
+    document.addEventListener('keydown', unmark, true);
+    menu.addEventListener('close', () => { if (byPointer) book.classList.add('is-pointer-focus'); book.focus(); });
   }
 
 })();

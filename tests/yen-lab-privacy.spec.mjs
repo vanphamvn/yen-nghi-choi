@@ -1,6 +1,8 @@
 // LAB-F08 (#132): runtime privacy, CSP and accessibility baseline for every Yên Lab page.
 // Instruments storage, network, device and audio APIs before any page script runs, then drives real flows.
 import { test, expect } from '@playwright/test';
+// Safari/WebKit only moves focus through links and buttons with Option+Tab (default "Tab to highlight" is off).
+const TAB = page => page.context().browser()?.browserType().name() === 'webkit' ? 'Alt+Tab' : 'Tab';
 
 const PAGES = ['/lab/', '/lab/tho/', '/docs/yen-lab/game-kit.html'];
 const ORIGIN = 'http://127.0.0.1:4189';
@@ -118,7 +120,7 @@ for (const path of PAGES) {
     const focusable = await page.evaluate(() => [...document.querySelectorAll('a[href], button:not([disabled])')].filter(el => el.offsetParent !== null).length);
     const seen = new Set();
     for (let i = 0; i < focusable + 3; i++) {
-      await page.keyboard.press('Tab');
+      await page.keyboard.press(TAB(page));
       const info = await page.evaluate(() => {
         const el = document.activeElement;
         if (!el || el === document.body) return null;
