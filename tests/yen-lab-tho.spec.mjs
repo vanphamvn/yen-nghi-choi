@@ -31,7 +31,10 @@ test('idle: safety copy beside start, default 1 minute slow pace, nothing runs b
   await page.clock.runFor(60_000);
   await expect(state(page)).toHaveAttribute('data-state', 'idle'); // never auto-starts
   expect(await anim(page)).toEqual([]);
-  await expect(page.getByText(/nín thở \d|giữ hơi/)).toHaveCount(0); // no hold phase anywhere
+  // No hold phase anywhere: the only cues the game can show are the two gentle phases and own pace.
+  const cues = await page.evaluate(async () => (await import('/lab/tho/tho.mjs')).PACES);
+  for (const pace of Object.values(cues)) for (const step of pace.steps) expect(['in', 'out', 'own']).toContain(step.id);
+  expect(Object.values(cues).flatMap(p => p.steps).filter(st => st.id === 'out').every(st => st.ms >= 4000)).toBe(true);
 });
 
 test('slow pace: in 4 s → out 6 s, seconds count down, rounds advance, 1 minute completes', async ({ page }) => {
@@ -188,3 +191,96 @@ for (const [w, h] of [[320, 640], [360, 800], [390, 844]]) {
     }
   });
 }
+
+test('screen readers hear each phase once, politely; own pace hides rounds and shows time left only', async ({ page }) => {
+  await page.clock.install();
+  await page.goto(THO);
+  const sr = page.locator('#tho-sr-cue');
+  await expect(sr).toHaveAttribute('aria-live', 'polite');
+  await tap(page, 'bắt đầu');
+  await expect(sr).toHaveText(''); // the start announcement (with the pace) is in the whisper line
+  await page.clock.runFor(3600);
+  await expect(sr).toHaveText('Thở ra nhẹ');
+  await page.clock.runFor(6000);
+  await expect(sr).toHaveText('Hít vào nhẹ');
+  await tap(page, 'dừng hẳn');
+  await expect(sr).toHaveText('');
+  await tap(page, 'làm lại');
+  await tap(page, 'tự nhiên');
+  await tap(page, 'bắt đầu');
+  await expect(page.locator('.game-progress')).toBeHidden();
+  await expect(page.locator('#tho-seconds')).toHaveText(/^còn 0:5\d$/);
+  await page.clock.runFor(20_000);
+  await expect(page.locator('#tho-seconds')).toHaveText(/^còn 0:3\d$/);
+  await expect(sr).toHaveText(''); // nothing to pace, nothing announced
+});
+
+test('changing choices many times, then starting, runs one clean session', async ({ page }) => {
+  await page.clock.install();
+  await page.goto(THO);
+  for (const name of ['vừa', 'tự nhiên', '5 phút', 'chậm', '3 phút', 'vừa', '1 phút']) await tap(page, name);
+  await tap(page, 'bắt đầu');
+  await expect(page.locator('#game-round')).toHaveText('vòng 1 / 9'); // 60 s / 7 s
+  await page.clock.runFor(61_000);
+  await expect(state(page)).toHaveAttribute('data-state', 'complete');
+  await page.clock.runFor(10 * 60_000); // no stray timers from earlier sessions change anything
+  await expect(state(page)).toHaveAttribute('data-state', 'complete');
+});
+
+test('turning reduced motion on mid-game drops the animation; the game carries on', async ({ page }) => {
+  await page.clock.install();
+  await page.goto(THO);
+  await tap(page, 'bắt đầu');
+  expect(await anim(page)).toHaveLength(1);
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await expect.poll(() => anim(page)).toEqual([]);
+  await page.clock.runFor(4000);
+  await expect(page.locator('#game-cue')).toHaveText('Thở ra nhẹ');
+  expect(await anim(page)).toEqual([]);
+});
+
+test('reflection: "khó chịu hơn" gets the rest-and-breathe-naturally reply, others a neutral thanks', async ({ page }) => {
+  await page.clock.install();
+  await page.goto(THO);
+  await tap(page, 'bắt đầu');
+  await tap(page, 'dừng hẳn');
+  await tap(page, 'khó chịu hơn');
+  await expect(page.locator('#game-whisper')).toHaveText('Cảm ơn bạn đã nói. Cứ nghỉ và thở tự nhiên nhé; không cần làm lại.');
+  await tap(page, 'làm lại');
+  await tap(page, 'bắt đầu');
+  await tap(page, 'dừng hẳn');
+  await tap(page, 'như cũ');
+  await expect(page.locator('#game-whisper')).toHaveText('Cảm ơn bạn đã tự để ý một chút.');
+});
+
+test('menu by keyboard: open the book, Tab to the game, Escape closes back to the book', async ({ page }) => {
+  await page.goto('/lab/');
+  const book = page.getByRole('button', { name: 'Mở thực đơn trò chơi' });
+  await book.focus();
+  await page.keyboard.press('Enter');
+  await page.keyboard.press('Tab');
+  await expect(page.getByRole('link', { name: 'Thở cùng Yên' })).toBeFocused();
+  await page.keyboard.press('Escape');
+  await expect(book).toBeFocused();
+  await page.keyboard.press('Enter');
+  await page.keyboard.press('Tab');
+  await page.keyboard.press('Enter');
+  await expect(page).toHaveURL(/\/lab\/tho\/$/);
+});
+
+test('320 px while running and paused, and the menu at 320 px: no overflow, game link ≥ 44 px', async ({ page }) => {
+  await page.setViewportSize({ width: 320, height: 640 });
+  await page.clock.install();
+  await page.goto(THO);
+  await tap(page, 'bắt đầu');
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+  await tap(page, 'tạm dừng');
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+  await page.goto('/lab/');
+  await page.getByRole('button', { name: 'Mở thực đơn trò chơi' }).click();
+  const link = await page.getByRole('link', { name: 'Thở cùng Yên' }).boundingBox();
+  expect(link.height).toBeGreaterThanOrEqual(44);
+  expect(link.x).toBeGreaterThanOrEqual(0);
+  expect(link.x + link.width).toBeLessThanOrEqual(320);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+});

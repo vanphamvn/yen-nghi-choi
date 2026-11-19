@@ -10,6 +10,9 @@
 /* Seconds left in the current phase: the text guide that works without any animation. */
 .tho-seconds { --show: block; margin-top: 2px; font-size: 15px; font-weight: 500; color: var(--muted); min-height: 1.5em; }
 
+/* Own pace: no rounds to count, only the time left (shown in .tho-seconds). */
+.game[data-pace="own"] .game-progress { display: none; }
+
 /* Cục Yên breathes by scale only (transform), driven by the Web Animations API from the engine clock. */
 #tho-buddy { transform-origin: 50% 70%; will-change: transform; transition: none; } /* the breath animation owns transform */
 

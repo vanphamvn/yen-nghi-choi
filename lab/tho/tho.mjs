@@ -22,13 +22,14 @@ if (game) {
   const $ = id => document.getElementById(id);
   const whisper = $('game-whisper'), reflect = $('game-reflect'), cue = $('game-cue'), seconds = $('tho-seconds');
   const dots = $('game-dots'), roundText = $('game-round'), pausedNote = $('game-paused-note');
-  const buddy = $('tho-buddy'), paceHint = $('tho-pace-hint');
+  const buddy = $('tho-buddy'), paceHint = $('tho-pace-hint'), srCue = $('tho-sr-cue');
   const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)');
 
   const choice = { length: 1, pace: 'slow' };
   let session = null;
   let breath = null;        // the current Web Animation on Cục Yên
   let secondsTimer = null;  // display-only countdown; the engine owns real timing
+  let shownKey = '';        // round:step currently on screen, so the countdown never runs ahead of the cue
 
   const SAYS = {
     pause: 'Đang tạm dừng.', hidden: 'Đã tạm dừng khi bạn rời trang.', suspended: 'Đã tạm dừng vì máy vừa ngủ.',
@@ -58,7 +59,17 @@ if (game) {
   function drawSeconds() {
     stopSeconds();
     const s = session && session.snapshot();
-    if (!s || s.state !== 'running' || s.step === 'own') { seconds.textContent = ''; return; }
+    if (!s || s.state !== 'running') { seconds.textContent = ''; return; }
+    // The engine's step tick may land a moment after this timer: wait for it rather than show the next phase early.
+    if (`${s.round}:${s.step}` !== shownKey) { secondsTimer = setTimeout(drawSeconds, 50); return; }
+    if (s.step === 'own') {
+      // Own pace: no breath count, only the time left overall (updated each second).
+      const left = Math.max(0, s.total - s.elapsed);
+      const sec = Math.ceil(left / 1000);
+      seconds.textContent = `còn ${Math.floor(sec / 60)}:${String(sec % 60).padStart(2, '0')}`;
+      secondsTimer = setTimeout(drawSeconds, (left % 1000) || 1000);
+      return;
+    }
     const left = Math.max(0, s.stepMs - s.stepElapsed);
     seconds.textContent = `còn ${Math.max(1, Math.ceil(left / 1000))} giây`;
     secondsTimer = setTimeout(drawSeconds, (left % 1000) || 1000);
@@ -74,10 +85,17 @@ if (game) {
     [...dots.children].forEach((dot, i) => dot.classList.toggle('is-done', i < done));
     pausedNote.textContent = s.reason === 'hidden' || s.reason === 'suspended' ? 'Bấm “tiếp tục” khi bạn sẵn sàng. Cứ thở theo nhịp của bạn.' : 'Cứ thở theo nhịp của bạn.';
 
-    if (s.state === 'running') { drawBreath(s); drawSeconds(); }
+    game.dataset.pace = choice.pace;
+    if (s.state === 'running') {
+      const key = `${s.round}:${s.step}`;
+      // Screen readers: one short, polite announcement per phase (every 3–6 s), never every second.
+      if (key !== shownKey && s.step !== 'own' && s.reason === 'step') srCue.textContent = CUES[s.step];
+      shownKey = key;
+      drawBreath(s); drawSeconds();
+    }
     // pause() only takes effect on the next frame; pinning currentTime freezes the picture exactly where the engine stopped
     else if (s.state === 'paused') { if (breath) { breath.pause(); breath.currentTime = s.stepElapsed; } stopSeconds(); }
-    else { stopBreath(); stopSeconds(); seconds.textContent = ''; }
+    else { stopBreath(); stopSeconds(); seconds.textContent = ''; srCue.textContent = ''; shownKey = ''; }
 
     if (changedState) {
       reflect.hidden = false;
@@ -120,9 +138,12 @@ if (game) {
     if (word && act[word.dataset.act]) { act[word.dataset.act](); return; }
     const opt = event.target.closest('[data-length], [data-pace]');
     if (opt && game.dataset.state === 'idle') { pick(opt.dataset.length ? 'length' : 'pace', opt.dataset.length || opt.dataset.pace); return; }
-    if (event.target.closest('[data-reflect]')) {
+    const answer = event.target.closest('[data-reflect]');
+    if (answer) {
       reflect.hidden = true; // the answer is not kept anywhere
-      say('Cảm ơn bạn đã tự để ý một chút.');
+      say(answer.textContent.trim() === 'khó chịu hơn'
+        ? 'Cảm ơn bạn đã nói. Cứ nghỉ và thở tự nhiên nhé; không cần làm lại.'
+        : 'Cảm ơn bạn đã tự để ý một chút.');
       game.querySelector('[data-act="again"]').focus();
     }
   });
