@@ -20,13 +20,11 @@ test('direct URL, reload and trailing-slash redirect load the Lab shell', async 
   const response = await page.goto(LAB);
   expect(response.status()).toBe(200);
   await expect(page).toHaveTitle(/Yên Lab/);
-  await expect(page.getByRole('heading', { level: 1, name: 'Yên Lab' })).toBeVisible();
-  await expect(page.locator('.room-sign-sub')).toContainText('beta');
+  await expect(page.getByRole('heading', { level: 1, name: /Yên Lab/ })).toHaveCount(1);
   await expect(page.getByRole('button', { name: 'Chọc Cục Yên một cái' })).toBeVisible();
-  await expect(page.locator('.room-plaque')).toContainText('không lưu gì');
   await expect(page.locator('main')).toHaveCount(1);
   await page.reload();
-  await expect(page.getByRole('heading', { level: 1, name: 'Yên Lab' })).toBeVisible();
+  await expect(page.getByRole('heading', { level: 1, name: /Yên Lab/ })).toHaveCount(1);
 
   await page.goto('/lab');
   expect(new URL(page.url()).pathname).toBe('/lab/');
@@ -37,27 +35,46 @@ test('direct URL, reload and trailing-slash redirect load the Lab shell', async 
 test('hero, three needs, release-status list, house rules and way back to Yên', async ({ page }) => {
   await blockExternal(page);
   await page.goto(LAB);
-  await expect(page.locator('[data-need]')).toHaveCount(3);
-  await expect(page.getByRole('heading', { name: 'Nội quy', exact: true })).toBeVisible();
+  // Less text: no labels, notes or tags on the room.
+  await expect(page.locator('[data-need], .room-plaque, .room-note, .room-switch, .room-sign')).toHaveCount(0);
   await expect(page.getByText('không thay thế tư vấn hoặc điều trị chuyên môn')).toBeVisible();
   await expect(page.getByRole('link', { name: 'Nguồn phương pháp' })).toBeVisible();
 
-  // Unreleased tools are labelled and never dead links or buttons.
-  // Deferred routines (e.g. G02 Căng rồi thả, pending protocol review) are not listed at all.
+  // The painted book on the table opens the game menu (a native modal dialog).
+  const book = page.getByRole('button', { name: 'Mở thực đơn trò chơi' });
+  const menu = page.locator('#lab-menu');
+  await expect(menu).toBeHidden();
+  await book.click();
+  await expect(menu).toBeVisible();
+  await expect(page.getByRole('dialog', { name: 'Thực đơn' })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Gấp sổ lại' })).toBeFocused();
+  // No visible close button or tag: the open book itself closes the menu.
+  await expect(page.locator('.menu-close')).toHaveCount(0);
+
+  // Deferred routines are not listed; unreleased games are labelled and never dead links/buttons.
   await expect(page.locator('[data-tool="release"]')).toHaveCount(0);
-  // Needs are informational until M3: no controls inside them either.
-  await expect(page.locator('[data-need] a, [data-need] button, [data-need] [tabindex]')).toHaveCount(0);
   const coming = page.locator('[data-tool][data-status="coming"]');
   expect(await coming.count()).toBeGreaterThan(0);
   for (const item of await coming.all()) {
-    await expect(item.getByText('Sắp có')).toBeVisible();
+    await expect(item.getByText('sắp có')).toBeVisible();
     await expect(item.locator('a, button, [role="button"], [tabindex]')).toHaveCount(0);
   }
   const released = await page.locator('[data-tool][data-status="released"]').count();
   await expect(page.locator('#lab-release-status')).toHaveAttribute('data-released-count', String(released));
-  await expect(page.locator('[data-tool] button, [data-need] button, .room-board button, .room-shelf button')).toHaveCount(0);
 
-  // Không JS cần thiết: page has no scripts at all in the route shell.
+  // Close by button, Escape and tapping outside; focus returns to the book each time.
+  await page.getByRole('button', { name: 'Gấp sổ lại' }).click();
+  await expect(menu).toBeHidden();
+  await expect(book).toBeFocused();
+  await book.press('Enter');
+  await expect(menu).toBeVisible();
+  await page.keyboard.press('Escape');
+  await expect(menu).toBeHidden();
+  await expect(book).toBeFocused();
+  await book.click();
+  await page.mouse.click(5, 5); // outside the book, on the backdrop
+  await expect(menu).toBeHidden();
+
   // Only the page's own small script, served from /lab/.
   expect(await page.locator('script').evaluateAll(list => list.map(s => new URL(s.src, location.href).pathname))).toEqual(['/lab/lab.js']);
 
@@ -67,7 +84,7 @@ test('hero, three needs, release-status list, house rules and way back to Yên',
   await expect(page.locator('#dau')).toBeAttached();
 });
 
-test('room playthings: poke Cục Yên and switch the lamp, keyboard included, nothing stored', async ({ page }, testInfo) => {
+test('room playthings: poke Cục Yên by mouse, touch and keyboard, nothing stored', async ({ page }, testInfo) => {
   await blockExternal(page);
   await page.goto(LAB);
   const buddy = page.getByRole('button', { name: 'Chọc Cục Yên một cái' });
@@ -82,16 +99,8 @@ test('room playthings: poke Cục Yên and switch the lamp, keyboard included, n
   await page.keyboard.press('Enter');
   await expect(says).not.toHaveText(second);
 
-  const lamp = page.getByRole('button', { name: 'Tắt đèn' });
-  await lamp.click();
-  await expect(page.locator('[data-room]')).toHaveClass(/is-dim/);
-  await expect(page.getByRole('button', { name: 'Bật đèn' })).toBeVisible();
-  await page.getByRole('button', { name: 'Bật đèn' }).press('Space');
-  await expect(page.locator('[data-room]')).not.toHaveClass(/is-dim/);
-
   expect(await page.evaluate(() => [localStorage.length, sessionStorage.length, document.cookie])).toEqual([0, 0, '']);
-  await page.reload(); // Nothing remembered: lamp back on, first line again.
-  await expect(page.locator('[data-room]')).not.toHaveClass(/is-dim/);
+  await page.reload(); // Nothing remembered: first line again.
   await expect(says).toHaveText(first);
 });
 
@@ -99,9 +108,10 @@ test('without JavaScript the room has no dead buttons', async ({ browser }) => {
   const context = await browser.newContext({ javaScriptEnabled: false });
   const page = await context.newPage();
   await page.goto(LAB);
-  await expect(page.locator('#lamp-switch')).toBeHidden();
+  await expect(page.locator('#menu-open')).toBeDisabled();
+  await expect(page.locator('.menu-noscript')).toContainText('Thở cùng Yên');
   await expect(page.locator('#buddy')).toBeDisabled();
-  await expect(page.getByRole('heading', { level: 1, name: 'Yên Lab' })).toBeVisible();
+  await expect(page.getByRole('heading', { level: 1, name: /Yên Lab/ })).toHaveCount(1);
   await context.close();
 });
 
@@ -136,7 +146,7 @@ test('homepage link stays hidden until flag_yenlab, then supports back/forward',
   await page.goBack();
   await expect(page).toHaveURL(/127\.0\.0\.1:4189\/$/);
   await page.goForward();
-  await expect(page.getByRole('heading', { level: 1, name: 'Yên Lab' })).toBeVisible();
+  await expect(page.getByRole('heading', { level: 1, name: /Yên Lab/ })).toHaveCount(1);
 });
 
 for (const width of WIDTHS) {

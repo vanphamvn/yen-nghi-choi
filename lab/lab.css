@@ -54,171 +54,89 @@ button { font: inherit; color: inherit; }
 .lab-nav .lab-nav-home { border: 1.5px solid var(--ink); background: var(--card); }
 .lab-nav .lab-nav-home:hover { background: var(--lime); text-decoration: none; }
 
-/* ───────── The room ───────── */
-.room {
-  --room-wall: var(--wall);
+/* ───────── The room: a painted stage ─────────
+   Backdrop + props are the painted sprite set (yen-painted-chibi-v1), positioned in % of the stage.
+   Mobile shows the centre crop of the backdrop (cover keeps full height, so vertical % stay true). */
+.room { --room-wall: var(--wall); padding: 0 0 8px; }
+.stage {
   position: relative; overflow: hidden; isolation: isolate;
-  display: grid; align-items: end; justify-items: center;
-  grid-template-columns: 1fr 1fr;
-  grid-template-areas:
-    "sign sign"
-    "window lamp"
-    "shelf shelf"
-    "table table"
-    "plaque board"
-    "floor floor";
-  gap: 20px 12px;
-  padding: 28px var(--pad) 0;
-  background:
-    repeating-linear-gradient(90deg, rgba(138, 95, 59, .05) 0 2px, transparent 2px 64px),
-    var(--room-wall);
-  border-top: 1.5px solid var(--ink);
-  transition: background-color 260ms ease-in-out;
+  aspect-ratio: 3 / 4; max-height: 86svh; margin: 0 auto;
+  background: #e9d3a8;
 }
-.room-glow {
-  position: absolute; z-index: -1; inset: 0;
-  background: radial-gradient(42rem 26rem at 70% 14%, rgba(255, 236, 170, .75), rgba(255, 236, 170, 0) 70%);
-  transition: opacity 260ms ease-in-out;
-}
+.stage-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 50%; z-index: -2; }
+.sprite, .room-buddy { position: absolute; left: var(--x); bottom: var(--b); width: var(--w); height: auto; }
+.sprite { pointer-events: none; user-select: none; }
+/* mobile coordinates (stage = centre 47% of the backdrop) */
+.sprite-bench   { --x: 14%; --b: 23%; --w: 72%; z-index: 1; }
+.sprite-cushion { --x: 60%; --b: 31%; --w: 19%; z-index: 2; }
+.room-buddy     { --x: 31%; --b: 25%; --w: 36%; z-index: 3; }
+.sprite-table   { --x: 16%; --b: 2%;  --w: 68%; z-index: 4; }
+.sprite-book    { --x: 24%; --b: 19%; --w: 24%; z-index: 4; }
+.sprite-cup     { --x: 56%; --b: 19.5%; --w: 14%; z-index: 4; }
+.sprite-plant   { --x: 78%; --b: 6%;  --w: 26%; z-index: 4; }
 
-/* Hanging wooden sign = page title */
-.room-sign {
-  grid-area: sign; position: relative; text-align: center;
-  margin-top: 26px; padding: 12px 26px 10px;
-  background: linear-gradient(#d8ad7d, var(--wood));
-  border: 2px solid var(--ink); border-radius: 10px;
-  box-shadow: 4px 5px 0 rgba(36, 60, 53, .25);
-  transform: rotate(-1.5deg);
+/* The painted book on the table is the menu button */
+.sprite-book {
+  position: absolute; left: var(--x); bottom: var(--b); width: var(--w); z-index: 5;
+  display: flex; align-items: center; min-height: 48px; min-width: 48px;
+  padding: 0; background: none; border: 0; border-radius: 12px; cursor: pointer;
+  transition: transform 160ms ease-out, filter 160ms ease-out;
 }
-.room-sign::before, .room-sign::after { content: ""; position: absolute; bottom: 100%; width: 2px; height: 28px; background: var(--ink); }
-.room-sign::before { left: 22%; transform: rotate(8deg); transform-origin: bottom; }
-.room-sign::after { right: 22%; transform: rotate(-8deg); transform-origin: bottom; }
-.room-sign h1 { font: 500 clamp(44px, 13vw, 76px)/1.05 var(--serif); letter-spacing: -.02em; }
-.room-sign-sub { font: italic 400 18px/1.3 var(--serif); color: #3b2a18; }
+.sprite-book img { width: 100%; height: auto; display: block; }
+.sprite-book:disabled { cursor: default; }
+.sprite-book:not(:disabled):hover, .sprite-book:not(:disabled):focus-visible {
+  transform: translateY(-4px) rotate(-2deg); filter: drop-shadow(0 6px 6px rgba(60, 40, 20, .35)) brightness(1.04);
+}
+.sprite-book:not(:disabled):active { transform: translateY(1px); }
 
-/* Window */
-.room-window { grid-area: window; width: min(100%, 160px); justify-self: start; align-self: center; }
-.room-sky { fill: var(--sky); transition: fill 260ms ease-in-out; }
-.room-cloud { fill: #fffaf0; stroke: var(--ink); stroke-width: 3; }
-.room-day, .room-night { transition: opacity 260ms ease-in-out; }
-.room-night { opacity: 0; }
-.room-moon { fill: var(--butter); stroke: var(--ink); stroke-width: 3; }
-.room-star { fill: var(--butter); }
-.room-frame { fill: none; stroke: var(--ink); stroke-width: 5; stroke-linejoin: round; }
-.room-sill { fill: var(--wood); stroke: var(--ink); stroke-width: 4; }
-.room-pot { fill: var(--pink); stroke: var(--ink); stroke-width: 4; stroke-linejoin: round; }
-.room-leaf { fill: #9bbd8a; stroke: var(--ink); stroke-width: 3.5; stroke-linejoin: round; }
+/* Menu = the same painted book opened big; game names are written on its pages */
+.menu {
+  width: min(94vw, 640px); max-width: none; padding: 0; border: 0; background: none; overflow: visible;
+}
+.menu::backdrop { background: rgba(48, 34, 20, .45); }
+.menu-book { position: relative; }
+.menu-book-art { display: block; width: 100%; padding: 0; background: none; border: 0; border-radius: 16px; cursor: pointer; }
+.menu-book-art img { width: 100%; height: auto; display: block; filter: drop-shadow(0 18px 24px rgba(30, 20, 10, .35)); }
+.menu-page { pointer-events: none; }
+.menu-page {
+  position: absolute; top: 14%; bottom: 18%; width: 34%;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
+  color: #3b2a18;
+}
+.menu-page--left { left: 12%; transform: rotate(-1.5deg); }
+.menu-page--right { right: 12%; transform: rotate(1deg); }
+.menu-page h2 { font: italic 600 clamp(16px, 4.2vw, 24px)/1.2 var(--serif); color: var(--green); margin-bottom: 4px; }
+.menu-page li { font: 600 clamp(15px, 4vw, 22px)/1.25 var(--serif); text-wrap: balance; }
+.menu-page li span { display: block; font: italic 400 clamp(14px, 3.4vw, 17px)/1.4 var(--serif); color: #8a4a35; }
+.menu-noscript { text-align: center; padding: 16px 20px; font: italic 16px/1.5 var(--serif); }
 
-/* Lamp + switch */
-.room-lamp { grid-area: lamp; justify-self: end; align-self: start; display: grid; justify-items: center; gap: 6px; margin-top: -48px; }
-.room-lamp-art { width: 96px; }
-.room-cord { stroke: var(--ink); stroke-width: 3; }
-.room-shade { fill: var(--green); stroke: var(--ink); stroke-width: 4; stroke-linejoin: round; }
-.room-bulb { fill: #fff3b0; stroke: var(--ink); stroke-width: 3; transition: fill 260ms ease-in-out; }
-.room-switch {
-  min-height: 44px; padding: 6px 16px; border-radius: 999px; cursor: pointer; white-space: nowrap;
-  background: var(--card); border: 1.5px solid var(--ink); box-shadow: 0 4px 0 var(--wood-dark);
-  font-size: 15px; font-weight: 700;
-  transition: transform 160ms ease-out, box-shadow 160ms ease-out;
-}
-.room-switch:active { transform: translateY(3px); box-shadow: 0 1px 0 var(--wood-dark); }
-
-/* Wall plaque: house rules */
-.room-plaque {
-  grid-area: plaque; justify-self: start; align-self: center;
-  padding: 10px 14px 12px; background: var(--card);
-  border: 2px solid var(--ink); outline: 5px solid var(--wood); outline-offset: 0;
-  box-shadow: 3px 4px 0 6px rgba(36, 60, 53, .18);
-  transform: rotate(-2deg); text-align: center;
-}
-.room-plaque h2 { font: italic 600 18px/1.3 var(--serif); margin-bottom: 4px; }
-.room-plaque li { font-size: 15px; font-weight: 600; line-height: 1.5; }
-
-/* Wall shelf with three mugs */
-.room-shelf { grid-area: shelf; position: relative; width: min(100%, 320px); }
-.room-shelf ul {
-  display: flex; justify-content: space-around; align-items: end; gap: 8px; padding: 0 10px 2px;
-  border-bottom: 10px solid var(--wood); box-shadow: 0 2px 0 var(--ink);
-}
-.mug { display: grid; justify-items: center; gap: 2px; }
-.mug svg { width: 52px; }
-.mug span { font-size: 14px; font-weight: 700; white-space: nowrap; }
-.mug-body { stroke: var(--ink); stroke-width: 4; stroke-linejoin: round; }
-.mug-handle { fill: none; stroke: var(--ink); stroke-width: 4; stroke-linecap: round; }
-.mug--mind .mug-body { fill: var(--lavender); }
-.mug--body .mug-body { fill: #fbd7cd; }
-.mug--body svg { transform: rotate(5deg); }
-.mug--pleasant .mug-body { fill: #e8efb4; }
-.room-shelf-tag {
-  position: absolute; right: 6px; top: 100%; margin-top: 8px; padding: 0 10px;
-  background: var(--butter); border: 1.5px solid var(--ink); border-radius: 4px;
-  font-size: 14px; font-weight: 700; transform: rotate(4deg);
-}
-
-/* Table with Cục Yên */
-.room-table { grid-area: table; position: relative; width: min(100%, 520px); display: grid; grid-template-columns: 1fr auto; align-items: end; }
-.room-bubble {
-  grid-column: 1 / -1; justify-self: center; position: relative; z-index: 2;
-  max-width: 18em; margin-bottom: -28px; padding: 10px 16px;
-  background: var(--card); border: 1.5px solid var(--ink); border-radius: 16px 18px 16px 6px;
-  box-shadow: 3px 4px 0 var(--sage);
-  font: italic 400 16px/1.45 var(--serif); text-align: center;
-}
-.room-buddy {
-  position: relative; z-index: 1; justify-self: center;
-  width: min(62vw, 250px); aspect-ratio: 1; padding: 0; margin-bottom: -22px;
-  background: none; border: 0; border-radius: 50%; cursor: pointer;
-  transition: transform 160ms ease-out;
-}
+/* Cục Yên sitting on the bench */
+.room-buddy { aspect-ratio: 1; padding: 0; background: none; border: 0; border-radius: 50%; cursor: pointer; transition: transform 160ms ease-out; }
 .room-buddy:disabled { cursor: default; }
-.room-buddy svg { width: 100%; height: 100%; }
+.room-buddy svg { width: 100%; height: 100%; filter: drop-shadow(0 6px 4px rgba(60, 40, 20, .25)); }
 .room-buddy:not(:disabled):hover { transform: translateY(-3px) rotate(-1deg); }
 .room-buddy:not(:disabled):active { transform: translateY(2px) scale(.98); }
 .room-buddy.is-poked { animation: buddy-wobble 420ms ease-in-out; }
 @keyframes buddy-wobble { 0%, 100% { transform: rotate(0); } 30% { transform: rotate(-4deg); } 65% { transform: rotate(3deg); } }
-.room-cup { position: relative; z-index: 1; width: 64px; margin: 0 8px -4px 0; }
-.room-steam { fill: none; stroke: var(--muted); stroke-width: 3; stroke-linecap: round; }
-.room-mug { fill: var(--card); stroke: var(--ink); stroke-width: 4; stroke-linejoin: round; }
-.room-mug-handle, .room-saucer { fill: none; stroke: var(--ink); stroke-width: 4; stroke-linecap: round; }
-.room-tabletop {
-  grid-column: 1 / -1; height: 26px; margin: 0 -12px;
-  background: linear-gradient(var(--wood), #b7875a);
-  border: 2px solid var(--ink); border-radius: 12px 12px 0 0;
-  box-shadow: 0 10px 0 var(--wood-dark);
+.room-bubble {
+  position: absolute; left: 4%; bottom: 60%; z-index: 6;
+  width: max-content; max-width: min(56%, 15em); min-width: 9em; padding: 18px 26px 20px;
+  background: rgba(255, 250, 240, .86);
+  -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px);
+  border-radius: 50%; /* a true ellipse, like a speech bubble, never a box */
+  box-shadow: 0 6px 20px rgba(90, 60, 30, .14), inset 0 0 0 1px rgba(255, 255, 255, .6);
+  color: #5a4330;
+  font: italic 400 15px/1.5 var(--serif); letter-spacing: .01em; text-align: center; text-wrap: balance;
 }
-
-/* Standing A-frame chalkboard */
-.room-board { grid-area: board; justify-self: end; position: relative; padding-bottom: 34px; margin-bottom: -2px; }
-.room-board::before, .room-board::after {
-  content: ""; position: absolute; bottom: 0; width: 8px; height: 46px;
-  background: var(--wood-dark); border: 1.5px solid var(--ink); border-radius: 3px;
+/* a soft trail of thought dots drifting down toward Cục Yên */
+.room-bubble::before, .room-bubble::after {
+  content: ""; position: absolute; border-radius: 50%;
+  background: rgba(255, 250, 240, .86); box-shadow: 0 3px 8px rgba(90, 60, 30, .12);
 }
-.room-board::before { left: 18%; transform: rotate(10deg); }
-.room-board::after { right: 18%; transform: rotate(-10deg); }
-.room-board-face {
-  position: relative; z-index: 1; padding: 12px 16px 14px; min-width: 168px;
-  background: var(--board); color: var(--chalk);
-  border: 7px solid var(--wood); border-radius: 8px; box-shadow: 0 0 0 2px var(--ink);
-  text-align: center;
-}
-.room-board h2 { font: italic 500 20px/1.3 var(--serif); margin-bottom: 6px; color: var(--chalk); }
-.room-board li { font: 600 15px/1.35 var(--serif); padding: 4px 0; }
-.room-board li span { display: block; font: 700 13px/1.4 var(--sans); color: var(--butter); }
-
-/* Floor */
-.room-floor {
-  grid-area: floor; justify-self: stretch; height: 40px; margin: -20px calc(-1 * var(--pad)) 0;
-  background: repeating-linear-gradient(90deg, #b8875a 0 120px, #ad7d51 120px 240px);
-  border-top: 2px solid var(--ink);
-}
-
-/* Evening: lamp off. Only decoration changes; text keeps its own surfaces. */
-.room.is-dim { --room-wall: #e2cfa4; }
-.room.is-dim .room-glow { opacity: .15; }
-.room.is-dim .room-sky { fill: #4a5878; }
-.room.is-dim .room-day { opacity: 0; }
-.room.is-dim .room-night { opacity: 1; }
-.room.is-dim .room-bulb { fill: #d9d2bd; }
+.room-bubble::before { width: 14px; height: 12px; right: 20%; bottom: -12px; }
+.room-bubble::after  { width: 8px;  height: 7px;  right: 12%; bottom: -24px; }
+.room-bubble.is-new { animation: bubble-breathe 700ms ease-out; }
+@keyframes bubble-breathe { from { opacity: .15; transform: translateY(4px); } to { opacity: 1; transform: none; } }
 
 /* ───────── Footer: the door ───────── */
 .lab-footer { background: var(--ink); color: var(--paper); }
@@ -248,38 +166,25 @@ button { font: inherit; color: inherit; }
   .lab-header { gap: 8px; }
   .lab-brand img { width: 72px; }
   .lab-nav a { padding: 0 10px; }
-  .room-board-face { min-width: 0; padding: 10px 10px 12px; }
-  .room-plaque { padding: 8px 10px 10px; }
+  .room-bubble { font-size: 14px; }
 }
 
 @media (min-width: 768px) {
   .lab-header { padding-top: 20px; padding-bottom: 20px; }
   .lab-brand img { width: 104px; }
-  .room {
-    --pad: max(32px, calc((100% - 1120px) / 2));
-    grid-template-columns: 1fr 1.4fr 1fr;
-    grid-template-areas:
-      "window sign lamp"
-      "plaque table shelf"
-      "plaque table board"
-      "floor floor floor";
-    gap: 24px 32px; padding-top: 24px;
+  .stage {
+    aspect-ratio: 1586 / 992; max-height: none; width: min(100% - 48px, 1120px);
+    border: 1.5px solid var(--ink); border-radius: 24px; box-shadow: 0 18px 55px rgba(35, 57, 43, .12);
   }
-  .room-window { width: 200px; justify-self: center; }
-  .room-lamp { justify-self: center; margin-top: -24px; }
-  .room-lamp-art { width: 120px; }
-  .room-plaque { justify-self: center; align-self: start; margin-top: 24px; }
-  .room-plaque h2 { font-size: 20px; }
-  .room-plaque li { font-size: 16px; }
-  .room-shelf { align-self: start; margin-top: 12px; }
-  .mug svg { width: 60px; }
-  .room-table { width: 100%; }
-  .room-buddy { width: 280px; }
-  .room-cup { width: 76px; }
-  .room-board { justify-self: center; margin-top: 28px; }
-  .room-board-face { min-width: 200px; padding: 16px 20px 18px; }
-  .room-board h2 { font-size: 22px; }
-  .room-board li { font-size: 17px; }
+  /* desktop coordinates = backdrop coordinates */
+  .sprite-bench   { --x: 35%; --b: 23%; --w: 31%; }
+  .sprite-cushion { --x: 56%; --b: 31%; --w: 8.5%; }
+  .room-buddy     { --x: 43%; --b: 25.5%; --w: 15%; }
+  .sprite-table   { --x: 36%; --b: 2%;  --w: 29%; }
+  .sprite-book    { --x: 39.5%; --b: 19%; --w: 10.5%; }
+  .sprite-cup     { --x: 54%; --b: 19.5%; --w: 6%; }
+  .sprite-plant   { --x: 72%; --b: 6%;  --w: 12%; }
+  .room-bubble { left: 26%; bottom: 47%; font-size: 16px; max-width: 13em; }
   .lab-door { width: 80px; }
 }
 

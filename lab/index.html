@@ -23,109 +23,59 @@
     </nav>
   </header>
 
-  <!-- The whole page is one café corner. Each object is real, readable markup. -->
+  <!-- One painted café corner. Backdrop + props reuse the painted sprite set (yen-painted-chibi-v1). -->
   <main id="lab-main" class="room" data-room aria-labelledby="lab-title">
-    <div class="room-glow" aria-hidden="true"></div>
+    <div class="stage">
+      <img class="stage-bg" src="/lab/assets/room-backdrop.jpg" width="1586" height="992" alt="" decoding="async" fetchpriority="high">
 
-    <div class="room-sign">
-      <h1 id="lab-title">Yên Lab</h1>
-      <p class="room-sign-sub">góc ngồi chơi · beta</p>
-    </div>
+      <h1 id="lab-title" class="lab-sr">Yên Lab · góc ngồi chơi · beta</h1>
 
-    <svg class="room-window" viewBox="0 0 200 190" aria-hidden="true" focusable="false">
-      <rect class="room-sky" x="14" y="12" width="172" height="160" rx="10"/>
-      <g class="room-day">
-        <path class="room-cloud" d="M42 74c0-12 16-16 22-8 4-14 30-14 32 2 12-2 18 12 8 18H48c-8 0-10-8-6-12Z"/>
-        <path class="room-cloud" d="M118 118c0-9 12-12 17-6 3-10 22-10 24 2 9-2 13 9 6 13h-42c-6 0-8-6-5-9Z"/>
-      </g>
-      <g class="room-night">
-        <path class="room-moon" d="M140 44a20 20 0 1 0 14 34 16 16 0 1 1-14-34Z"/>
-        <circle class="room-star" cx="52" cy="54" r="3"/><circle class="room-star" cx="84" cy="96" r="2.4"/><circle class="room-star" cx="62" cy="132" r="2"/>
-      </g>
-      <rect class="room-frame" x="14" y="12" width="172" height="160" rx="10"/>
-      <path class="room-frame" d="M100 12v160M14 92h172"/>
-      <path class="room-sill" d="M4 172h192v14H4z"/>
-      <path class="room-pot" d="M130 150h36l-5 22h-26z"/>
-      <path class="room-leaf" d="M148 150c-2-14-12-20-22-18 2 10 10 16 22 18Zm0 0c2-16 12-24 24-22-2 12-12 20-24 22Zm0 0c0-14 2-22 0-30"/>
-    </svg>
+      <img class="sprite sprite-plant" src="/lab/assets/plant.webp" width="280" height="363" alt="" decoding="async">
+      <img class="sprite sprite-bench" src="/lab/assets/bench.webp" width="652" height="430" alt="" decoding="async">
+      <img class="sprite sprite-cushion" src="/lab/assets/cushion.webp" width="200" height="139" alt="" decoding="async">
 
-    <div class="room-lamp">
-      <svg class="room-lamp-art" viewBox="0 0 120 116" aria-hidden="true" focusable="false">
-        <path class="room-cord" d="M60 0v52"/>
-        <path class="room-shade" d="M34 92 46 52h28l12 40z"/>
-        <circle class="room-bulb" cx="60" cy="100" r="10"/>
-      </svg>
-      <button class="room-switch" id="lamp-switch" type="button" hidden>Tắt đèn</button>
-    </div>
-
-    <!-- Wall plaque: house rules, three words each -->
-    <section class="room-plaque" aria-labelledby="rules-title">
-      <h2 id="rules-title">Nội quy</h2>
-      <ul>
-        <li>không điểm</li>
-        <li>không vội</li>
-        <li>không lưu gì</li>
-      </ul>
-    </section>
-
-    <!-- Wall shelf: three mugs = three ways to pick a game (M3) -->
-    <section class="room-shelf" aria-labelledby="needs-title" data-testid="lab-needs">
-      <h2 id="needs-title" class="lab-sr">Chơi kiểu gì, sắp có</h2>
-      <ul>
-        <li class="mug mug--mind" data-need="mind">
-          <svg viewBox="0 0 80 80" aria-hidden="true" focusable="false"><path class="mug-body" d="M14 22h40v34c0 8-6 14-14 14H28c-8 0-14-6-14-14z"/><path class="mug-handle" d="M54 30h6c8 0 8 18 0 18h-6"/></svg>
-          <span>nghỉ đầu</span>
-        </li>
-        <li class="mug mug--body" data-need="body">
-          <svg viewBox="0 0 80 80" aria-hidden="true" focusable="false"><path class="mug-body" d="M14 22h40v34c0 8-6 14-14 14H28c-8 0-14-6-14-14z"/><path class="mug-handle" d="M54 30h6c8 0 8 18 0 18h-6"/></svg>
-          <span>duỗi người</span>
-        </li>
-        <li class="mug mug--pleasant" data-need="pleasant">
-          <svg viewBox="0 0 80 80" aria-hidden="true" focusable="false"><path class="mug-body" d="M14 22h40v34c0 8-6 14-14 14H28c-8 0-14-6-14-14z"/><path class="mug-handle" d="M54 30h6c8 0 8 18 0 18h-6"/></svg>
-          <span>vui vui</span>
-        </li>
-      </ul>
-      <p class="room-shelf-tag" aria-hidden="true">sắp có</p>
-    </section>
-
-    <div class="room-table">
-      <p class="room-bubble" id="buddy-says" role="status" aria-live="polite">Ghế này trống nè. Ngồi đi.</p>
+      <p class="room-bubble" id="buddy-says" role="status" aria-live="polite">Ngồi đi. Thực đơn trên bàn nè.</p>
       <button class="room-buddy" id="buddy" type="button" disabled aria-describedby="buddy-says">
         <svg viewBox="0 0 320 320" aria-hidden="true" focusable="false"><use href="/assets/cuc-yen/mascot.svg#cuc-yen-tea"></use></svg>
         <span class="lab-sr">Chọc Cục Yên một cái</span>
       </button>
-      <svg class="room-cup" viewBox="0 0 90 90" aria-hidden="true" focusable="false">
-        <path class="room-steam" d="M34 26c-6-8 6-12 0-20M50 26c-6-8 6-12 0-20"/>
-        <path class="room-mug" d="M18 34h48v30c0 10-8 16-16 16H34c-8 0-16-6-16-16z"/>
-        <path class="room-mug-handle" d="M66 42h6c8 0 8 18 0 18h-6"/>
-        <path class="room-saucer" d="M8 82h70"/>
-      </svg>
-      <div class="room-tabletop" aria-hidden="true"></div>
+
+      <img class="sprite sprite-table" src="/lab/assets/table.webp" width="650" height="403" alt="" decoding="async">
+      <button class="sprite-book" id="menu-open" type="button" disabled aria-haspopup="dialog" aria-controls="lab-menu">
+        <img src="/lab/assets/book.webp" width="384" height="188" alt="" decoding="async">
+        <span class="lab-sr">Mở thực đơn trò chơi</span>
+      </button>
+      <img class="sprite sprite-cup" src="/lab/assets/cup.webp" width="160" height="156" alt="" decoding="async">
+
     </div>
 
-    <!-- Standing A-frame chalkboard: today's games -->
-    <section class="room-board" aria-labelledby="tools-title">
-      <div class="room-board-face">
-        <h2 id="tools-title">Hôm nay</h2>
-        <ul data-testid="lab-tool-list">
-          <li class="lab-tool" data-tool="breath" data-status="coming">Thở cùng Yên <span>sắp có</span></li>
-          <li class="lab-tool" data-tool="small" data-status="coming">Ba điều nhỏ xíu <span>sắp có</span></li>
-        </ul>
-        <p class="lab-sr" id="lab-release-status" data-released-count="0">Chưa có trò nào mở.</p>
+    <!-- The menu: the same painted book, opened big. Games are written on its pages. -->
+    <dialog class="menu" id="lab-menu" aria-labelledby="menu-title">
+      <div class="menu-book">
+        <button class="menu-book-art" id="menu-close" type="button">
+          <img src="/lab/assets/book.webp" width="384" height="188" alt="" decoding="async">
+          <span class="lab-sr">Gấp sổ lại</span>
+        </button>
+        <div class="menu-page menu-page--left">
+          <h2 id="menu-title">Thực đơn</h2>
+          <ul data-testid="lab-tool-list">
+            <li class="lab-tool" data-tool="breath" data-status="coming">Thở cùng Yên<span>sắp có</span></li>
+          </ul>
+        </div>
+        <div class="menu-page menu-page--right">
+          <ul aria-label="Thực đơn, trang 2">
+            <li class="lab-tool" data-tool="small" data-status="coming">Ba điều nhỏ xíu<span>sắp có</span></li>
+          </ul>
+        </div>
       </div>
-    </section>
-
-    <div class="room-floor" aria-hidden="true"></div>
+      <p class="lab-sr" id="lab-release-status" data-released-count="0">Chưa có trò nào mở.</p>
+    </dialog>
+    <noscript><p class="menu-noscript">Thực đơn: Thở cùng Yên (sắp có) · Ba điều nhỏ xíu (sắp có)</p></noscript>
   </main>
 
   <footer class="lab-footer">
     <div class="lab-wrap lab-footer-inner">
-      <svg class="lab-door" viewBox="0 0 120 170" aria-hidden="true" focusable="false">
-        <path class="door-frame" d="M14 166V22c0-10 8-16 16-16h60c8 0 16 6 16 16v144"/>
-        <path class="door-panel" d="M28 166V30c0-6 4-10 10-10h44c6 0 10 4 10 10v136z"/>
-        <circle class="door-knob" cx="82" cy="98" r="5"/>
-        <path class="door-sign" d="M40 46h40v22H40z"/>
-      </svg>
+      <img class="lab-door" src="/lab/assets/door.webp" width="160" height="268" alt="" decoding="async" loading="lazy">
       <nav class="lab-footer-links" aria-label="Rời Yên Lab">
         <a class="lab-button" href="/">Về Yên</a>
         <a href="/#yen-ngoai-doi">Ghé quán thật</a>

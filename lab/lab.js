@@ -1,14 +1,13 @@
-// Yên Lab room: two tiny playthings. No storage, no network, nothing remembered after leaving.
+// Yên Lab room: poke Cục Yên, open the menu book. No storage, no network, nothing remembered after leaving.
 (() => {
   'use strict';
   const room = document.querySelector('[data-room]');
   const buddy = document.getElementById('buddy');
   const says = document.getElementById('buddy-says');
-  const lamp = document.getElementById('lamp-switch');
-  if (!room || !buddy || !says || !lamp) return;
+  if (!room || !buddy || !says) return;
 
   const lines = [
-    'Ghế này trống nè. Ngồi đi.',
+    'Ngồi đi. Thực đơn trên bàn nè.',
     'Mình đang giả vờ bận đó. Đừng nói ai nha.',
     'Trà còn nóng. Không cần uống, ngửi thôi cũng được.',
     'Hôm nay quầy không có hạn chót. Mai cũng không.',
@@ -20,6 +19,9 @@
   buddy.disabled = false;
   buddy.addEventListener('click', () => {
     says.textContent = lines[next];
+    says.classList.remove('is-new');
+    void says.offsetWidth; // let the new line fade in gently
+    says.classList.add('is-new');
     next = (next + 1) % lines.length;
     buddy.classList.remove('is-poked');
     void buddy.offsetWidth; // restart the wobble
@@ -27,10 +29,16 @@
   });
   buddy.addEventListener('animationend', () => buddy.classList.remove('is-poked'));
 
-  lamp.hidden = false;
-  lamp.addEventListener('click', () => {
-    const on = room.classList.contains('is-dim');
-    lamp.textContent = on ? 'Tắt đèn' : 'Bật đèn';
-    room.classList.toggle('is-dim', !on);
-  });
+  // The painted book on the table opens the game menu (native modal dialog: focus trap + Escape for free).
+  const book = document.getElementById('menu-open');
+  const menu = document.getElementById('lab-menu');
+  const close = document.getElementById('menu-close');
+  if (book && menu && close && typeof menu.showModal === 'function') {
+    book.disabled = false;
+    book.addEventListener('click', () => { menu.showModal(); close.focus(); });
+    close.addEventListener('click', () => menu.close());
+    menu.addEventListener('click', event => { if (event.target === menu) menu.close(); }); // tap outside the book
+    menu.addEventListener('close', () => book.focus());
+  }
+
 })();
