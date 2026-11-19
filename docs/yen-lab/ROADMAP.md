@@ -139,7 +139,7 @@ Không dùng copy như “đã được khoa học chứng minh giúp bạn hế
 
 ## 10. Active coordination · 19/11/2026
 
-One coordinator selects eligible work, delegates isolated implementation and independent QA, and reconciles issue/roadmap state. Continue during an active session without repeated prompts; complete at least one actual ticket per implementation prompt with acceptance and test evidence. See AGENTS.md for the execution contract. This is not a background schedule.
+One coordinator selects eligible work, delegates isolated implementation and independent QA, and reconciles issue/roadmap state. Continue during an active session without repeated prompts; complete at least one actual ticket per implementation prompt with acceptance and test evidence. See AGENTS.md for the execution contract. The owner subsequently authorized the enabled hourly background task “Điều phối Yên Lab”; each invocation reconciles live work before assigning it. This is scheduled resumption, not an always-running process.
 
 - F01 / #125 completed: PR #163, runner freeze and CI, 12 superseded Phaser issues triaged as not_planned, old QA automation disabled, actual homepage browser smoke passed. Exact provider revision and full homepage regression are not asserted.
 - F02 / #126 completed: PR #123 merged and design audit passed.
