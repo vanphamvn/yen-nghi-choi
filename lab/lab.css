@@ -64,13 +64,6 @@ button { font: inherit; color: inherit; }
   background: #e9d3a8;
 }
 .stage-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 50%; z-index: -2; }
-.stage-dim {
-  position: absolute; inset: 0; z-index: 5; pointer-events: none;
-  background: radial-gradient(70% 60% at 50% 30%, rgba(40, 32, 70, .25), rgba(30, 24, 50, .55));
-  opacity: 0; transition: opacity 260ms ease-in-out;
-}
-.room.is-dim .stage-dim { opacity: 1; }
-
 .sprite, .room-buddy { position: absolute; left: var(--x); bottom: var(--b); width: var(--w); height: auto; }
 .sprite { pointer-events: none; user-select: none; }
 /* mobile coordinates (stage = centre 47% of the backdrop) */
@@ -82,26 +75,43 @@ button { font: inherit; color: inherit; }
 .sprite-cup     { --x: 56%; --b: 19.5%; --w: 14%; z-index: 4; }
 .sprite-plant   { --x: 78%; --b: 6%;  --w: 26%; z-index: 4; }
 
-/* Hanging label under the painted "Yên" sign = page title */
-.room-sign {
-  position: absolute; left: 4%; top: 4%; z-index: 4; transform: rotate(-2deg);
-  padding: 6px 16px 6px; text-align: center; white-space: nowrap;
-  background: var(--card); border: 1.5px solid var(--ink);
-  border-radius: 14px 18px 12px 20px / 18px 12px 18px 14px;
-  box-shadow: 2px 3px 0 rgba(36, 60, 53, .25);
+/* The painted book on the table is the menu button */
+.sprite-book {
+  position: absolute; left: var(--x); bottom: var(--b); width: var(--w); z-index: 5;
+  display: flex; align-items: center; min-height: 48px; min-width: 48px;
+  padding: 0; background: none; border: 0; border-radius: 12px; cursor: pointer;
+  transition: transform 160ms ease-out, filter 160ms ease-out;
 }
-.room-sign::before { content: none; position: absolute; left: 50%; bottom: 100%; width: 2px; height: 14px; background: var(--ink); }
-.room-sign h1 { font: 500 26px/1.1 var(--serif); }
-.room-sign-sub { font: italic 400 14px/1.3 var(--serif); color: #5a3d22; }
+.sprite-book img { width: 100%; height: auto; display: block; }
+.sprite-book:disabled { cursor: default; }
+.sprite-book:not(:disabled):hover, .sprite-book:not(:disabled):focus-visible {
+  transform: translateY(-4px) rotate(-2deg); filter: drop-shadow(0 6px 6px rgba(60, 40, 20, .35)) brightness(1.04);
+}
+.sprite-book:not(:disabled):active { transform: translateY(1px); }
 
-.room-switch {
-  position: absolute; right: 4%; top: 4%; z-index: 6;
-  min-height: 44px; padding: 6px 16px; border-radius: 999px; cursor: pointer; white-space: nowrap;
-  background: var(--card); border: 1.5px solid var(--ink); box-shadow: 0 4px 0 var(--wood-dark);
-  font-size: 15px; font-weight: 700;
-  transition: transform 160ms ease-out, box-shadow 160ms ease-out;
+/* Menu = the same painted book opened big; game names are written on its pages */
+.menu {
+  width: min(94vw, 640px); max-width: none; padding: 0; border: 0; background: none; overflow: visible;
 }
-.room-switch:active { transform: translateY(3px); box-shadow: 0 1px 0 var(--wood-dark); }
+.menu::backdrop { background: rgba(48, 34, 20, .45); }
+.menu-book { position: relative; }
+.menu-book-art { width: 100%; height: auto; display: block; filter: drop-shadow(0 18px 24px rgba(30, 20, 10, .35)); }
+.menu-page {
+  position: absolute; top: 14%; bottom: 18%; width: 34%;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
+  color: #3b2a18;
+}
+.menu-page--left { left: 12%; transform: rotate(-1.5deg); }
+.menu-page--right { right: 12%; transform: rotate(1deg); }
+.menu-page h2 { font: italic 600 clamp(16px, 4.2vw, 24px)/1.2 var(--serif); color: var(--green); margin-bottom: 4px; }
+.menu-page li { font: 600 clamp(15px, 4vw, 22px)/1.25 var(--serif); text-wrap: balance; }
+.menu-page li span { display: block; font: italic 400 clamp(14px, 3.4vw, 17px)/1.4 var(--serif); color: #8a4a35; }
+.menu-close {
+  position: absolute; right: 4%; bottom: -8px; min-height: 44px; padding: 6px 18px; cursor: pointer;
+  background: var(--card); border: 1.5px solid var(--ink); border-radius: 999px; box-shadow: 0 4px 0 var(--wood-dark);
+  font: italic 600 16px/1 var(--serif); transform: rotate(-3deg);
+}
+.menu-noscript { text-align: center; padding: 16px 20px; font: italic 16px/1.5 var(--serif); }
 
 /* Cục Yên sitting on the bench */
 .room-buddy { aspect-ratio: 1; padding: 0; background: none; border: 0; border-radius: 50%; cursor: pointer; transition: transform 160ms ease-out; }
@@ -118,39 +128,6 @@ button { font: inherit; color: inherit; }
   box-shadow: 2px 3px 0 rgba(36, 60, 53, .2);
   font: italic 400 15px/1.4 var(--serif); text-align: center; text-wrap: balance;
 }
-
-/* Little handwritten tags on the three objects (needs, M3) */
-.room-needs ul { margin: 0; padding: 0; }
-.tag {
-  position: absolute; z-index: 6; padding: 1px 10px; white-space: nowrap;
-  background: rgba(255, 250, 240, .92); border-radius: 999px;
-  font: italic 500 14px/1.5 var(--serif); box-shadow: 0 2px 6px rgba(60, 40, 20, .18);
-}
-.tag--mind     { left: 22%; bottom: 13%; transform: rotate(-4deg); }
-.tag--pleasant { left: 58%; bottom: 13%; transform: rotate(3deg); }
-.tag--body     { left: 62%; bottom: 44%; transform: rotate(-2deg); }
-
-/* Notes below the stage, like things pinned by the door */
-.wall-notes { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 20px 28px; padding-top: 28px; padding-bottom: 32px; }
-.room-plaque {
-  padding: 12px 18px 14px; background: var(--card); border: 1.5px solid var(--ink);
-  border-radius: 18px 26px 16px 28px / 24px 16px 26px 18px; box-shadow: 3px 4px 0 var(--sage);
-  transform: rotate(-2.5deg); text-align: center;
-}
-.room-plaque h2 { font: italic 600 18px/1.3 var(--serif); margin-bottom: 2px; color: var(--green); }
-.room-plaque li { font: italic 400 16px/1.5 var(--serif); }
-.room-note {
-  position: relative; max-width: 240px; padding: 22px 18px 16px; text-align: center; text-wrap: balance;
-  background: #fffdf6; border-radius: 6px 14px 8px 18px / 16px 6px 14px 8px;
-  box-shadow: 0 8px 22px rgba(36, 60, 53, .12), 0 1px 0 rgba(36, 60, 53, .2); transform: rotate(2.5deg);
-}
-.room-note::before {
-  content: ""; position: absolute; top: -10px; left: 50%; width: 76px; height: 20px;
-  transform: translateX(-50%) rotate(-4deg); background: rgba(219, 231, 141, .8); border-radius: 2px;
-}
-.room-note h2 { font: italic 500 20px/1.3 var(--serif); color: var(--green); margin-bottom: 6px; }
-.room-note li { font: 600 16px/1.35 var(--serif); padding: 6px 0; }
-.room-note li span { display: block; font: italic 400 14px/1.4 var(--serif); color: #8a4a35; }
 
 /* ───────── Footer: the door ───────── */
 .lab-footer { background: var(--ink); color: var(--paper); }
@@ -180,7 +157,6 @@ button { font: inherit; color: inherit; }
   .lab-header { gap: 8px; }
   .lab-brand img { width: 72px; }
   .lab-nav a { padding: 0 10px; }
-  .room-sign h1 { font-size: 22px; }
   .room-bubble { font-size: 14px; }
 }
 
@@ -199,16 +175,7 @@ button { font: inherit; color: inherit; }
   .sprite-book    { --x: 39.5%; --b: 19%; --w: 10.5%; }
   .sprite-cup     { --x: 54%; --b: 19.5%; --w: 6%; }
   .sprite-plant   { --x: 72%; --b: 6%;  --w: 12%; }
-  .room-sign { left: 50%; top: 34%; padding: 4px 14px; transform: translateX(-50%) rotate(-2deg); }
-  .room-sign::before { content: ""; }
-  .room-sign h1 { font-size: 24px; }
-  .room-switch { right: 3%; top: 5%; }
   .room-bubble { left: 27%; bottom: 47%; transform: none; font-size: 16px; border-radius: 16px 18px 6px 16px; }
-  .tag { font-size: 16px; }
-  .tag--mind     { left: 39%; bottom: 13%; }
-  .tag--pleasant { left: 55%; bottom: 13%; }
-  .tag--body     { left: 60%; bottom: 43%; }
-  .wall-notes { padding-top: 40px; gap: 32px 56px; }
   .lab-door { width: 80px; }
 }
 
