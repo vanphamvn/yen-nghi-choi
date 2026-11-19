@@ -255,3 +255,22 @@ test('automatic pause moves focus off the word that disappeared (never strands i
   await expect(page.locator('#game')).toHaveAttribute('data-state', 'paused');
   await expect(page.getByRole('button', { name: 'tiếp tục' })).toBeFocused();
 });
+
+test('"bắt đầu" is never a dead word: disabled until the engine loads, and without JavaScript', async ({ browser, page }) => {
+  // Hold the engine module back: the word must stay disabled meanwhile.
+  let release;
+  const held = new Promise(r => { release = r; });
+  await page.route('**/lab/engine.mjs', async route => { await held; await route.continue(); });
+  await page.goto(KIT, { waitUntil: 'commit' }); // module scripts delay DOMContentLoaded, so don't wait for it
+  await expect(page.getByRole('button', { name: 'bắt đầu' })).toBeDisabled();
+  release();
+  await expect(page.getByRole('button', { name: 'bắt đầu' })).toBeEnabled();
+
+  const context = await browser.newContext({ javaScriptEnabled: false });
+  const noJs = await context.newPage();
+  await noJs.goto(KIT);
+  await expect(noJs.getByRole('button', { name: 'bắt đầu' })).toBeDisabled();
+  // (getByText skips <noscript>; innerText proves it is rendered)
+  expect(await noJs.locator('main').innerText()).toContain('Trò tương tác cần JavaScript');
+  await context.close();
+});

@@ -196,12 +196,13 @@
       "priority": "P0",
       "title": "Shared interaction engine & timers",
       "kind": "frontend",
-      "status": "todo",
+      "status": "done",
       "depends_on": [
         "F05",
         "F06"
       ],
-      "issue_url": "https://github.com/vanphamvn/yen-nghi-choi/issues/131"
+      "issue_url": "https://github.com/vanphamvn/yen-nghi-choi/issues/131",
+      "evidence": "PR #175 squash-merged as c827d3f (+ follow-up PR: start word disabled until the engine module loads). lab/engine.mjs: dependency-free ES module, monotonic clock, one timeout to the next step boundary, 350 ms double-tap guard (never on stop), pause on visibilitychange-hidden/freeze without auto-resume, time away never counted (late timer >2 s or any transition after sleep is capped at the planned boundary), late final timer completes, pagehide/bfcache reset, onChange exception -> error. foundation CI green on cd971bb (runs 16 engine unit tests + lab Playwright). Local 74/74 Playwright incl. page.clock flows (pacing, double tap with mutation check, hide->pause->no auto-resume, reduced motion, focus on auto-pause, no dead start word). Independent agent review: no P0/P1, 5 P2 fixed before merge. Netlify production verified: build-info commitSha=c827d3f, /lab/engine.mjs served as application/javascript; real-time production check: real click starts, step 2 after 5 s, background window (visibilityState hidden) paused with focus on tiep tuc. Not verified: physical phone screen lock, screen readers."
     },
     {
       "key": "F08",
