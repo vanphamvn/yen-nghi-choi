@@ -4,7 +4,7 @@ import { test, expect } from '@playwright/test';
 // Safari/WebKit only moves focus through links and buttons with Option+Tab (default "Tab to highlight" is off).
 const TAB = page => page.context().browser()?.browserType().name() === 'webkit' ? 'Alt+Tab' : 'Tab';
 
-const PAGES = ['/lab/', '/lab/tho/', '/lab/cang/', '/docs/yen-lab/game-kit.html'];
+const PAGES = ['/lab/', '/lab/tho/', '/lab/cang/', '/lab/ba-dieu/', '/docs/yen-lab/game-kit.html'];
 const ORIGIN = `http://127.0.0.1:${process.env.LAB_UX_PORT || 4189}`;
 
 async function probe(page) {
@@ -75,6 +75,21 @@ async function playCang(page) {
   await tap('khó chịu hơn'); await tap('làm lại');
 }
 
+const SECRET = 'Bí mật nhỏ của tôi 42';
+async function playBaDieu(page) {
+  await page.goto('/lab/ba-dieu/');
+  const tap = async name => { await page.clock.runFor(400); await page.getByRole('button', { name, exact: true }).click(); };
+  await tap('bắt đầu');
+  await page.getByRole('textbox', { name: 'Điều nhỏ thứ nhất' }).fill(SECRET);
+  await page.getByRole('textbox', { name: 'Điều nhỏ thứ nhất' }).press('Enter'); // no <form>: Enter never submits
+  await tap('được ngồi yên');
+  await tap('xong');
+  await expect(page.locator('#game')).toHaveAttribute('data-state', 'complete');
+  await expect(page.getByText(SECRET)).toBeVisible();
+  await tap('xóa và làm lại');
+  await expect(page.getByText(SECRET)).toHaveCount(0);
+}
+
 test('no storage, cookies, network, device, audio or URL state during real Lab flows', async ({ page }) => {
   const requests = await probe(page);
   await page.clock.install();
@@ -88,15 +103,20 @@ test('no storage, cookies, network, device, audio or URL state during real Lab f
   expect(await page.evaluate(() => window.__labProbe)).toEqual([]);
   await playCang(page);
   expect(await page.evaluate(() => window.__labProbe)).toEqual([]);
+  await playBaDieu(page);
+  expect(await page.evaluate(() => window.__labProbe)).toEqual([]);
   // Only page loads add history entries (re-loading /lab/ replaces its entry; kit and each game add one); nothing a guest
   // does is pushed into the URL.
   expect(await page.evaluate(() => [location.search, location.hash])).toEqual(['', '']);
-  expect(await page.evaluate(() => history.length)).toBe(historyStart + 3);
+  expect(await page.evaluate(() => history.length)).toBe(historyStart + 4);
   // Only same-origin GETs of static files, never a body (nothing a guest picks or types leaves the page).
   // …and never with a query string, which could smuggle a choice into server logs (e.g. img.src = '/x.webp?m=' + mood).
   const offenders = requests.filter(r => !r.url.startsWith(ORIGIN) || r.method !== 'GET' || r.body || new URL(r.url).search);
   expect(offenders).toEqual([]);
   expect(requests.filter(r => /\.(json|php)|\/api\//.test(r.url))).toEqual([]);
+  // What a guest typed never appears in any request (URL, body), plain or encoded.
+  const typed = [SECRET, encodeURIComponent(SECRET), SECRET.replace(/ /g, '+')];
+  expect(requests.filter(r => typed.some(t => r.url.includes(t) || (r.body || '').includes(t)))).toEqual([]);
 });
 
 test('/lab/ is served with the strict HTTP CSP and nothing on the page violates it', async ({ page }) => {
