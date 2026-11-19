@@ -8,7 +8,16 @@ import { fileURLToPath } from 'node:url';
 const root = fileURLToPath(new URL('../', import.meta.url));
 const rootPrefix = root.endsWith(sep) ? root : root + sep;
 const types = { '.html': 'text/html; charset=utf-8', '.css': 'text/css; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.mjs': 'text/javascript; charset=utf-8', '.md': 'text/plain; charset=utf-8', '.svg': 'image/svg+xml', '.png': 'image/png', '.webp': 'image/webp', '.json': 'application/json' };
-const send = (res, status, target, body) => res.writeHead(status, { 'Content-Type': types[extname(target)] || 'application/octet-stream', 'Cache-Control': 'no-store' }).end(body);
+// Mirror the /lab/* HTTP headers from netlify.toml so local tests run under the production header CSP (LAB-F08).
+const labHeaders = {};
+try {
+  const block = (await readFile(resolve(root, 'netlify.toml'), 'utf8')).split('[[headers]]').find(b => /for\s*=\s*"\/lab\/\*"/.test(b)) || '';
+  for (const [, k, v] of block.matchAll(/^\s*([A-Za-z-]+)\s*=\s*"(.*)"\s*$/gm)) if (k !== 'for') labHeaders[k] = v;
+} catch {}
+const send = (res, status, target, body, pathname = '') => res.writeHead(status, {
+  'Content-Type': types[extname(target)] || 'application/octet-stream', 'Cache-Control': 'no-store',
+  ...(pathname.startsWith('/lab/') ? labHeaders : {}),
+}).end(body);
 createServer(async (req, res) => {
   const url = new URL(req.url, 'http://localhost');
   try {
@@ -19,7 +28,7 @@ createServer(async (req, res) => {
       if (!url.pathname.endsWith('/')) { res.writeHead(301, { Location: '/' + name.replace(/^\/+/, '').replace(/\/+$/, '') + '/' + url.search }).end(); return; }
       target = resolve(target, 'index.html');
     }
-    send(res, 200, target, await readFile(target));
+    send(res, 200, target, await readFile(target), url.pathname);
   } catch {
     try { send(res, 404, '404.html', await readFile(resolve(root, '404.html'))); }
     catch { res.writeHead(404).end('Not found'); }
