@@ -1,9 +1,8 @@
-/* Yên Lab · route shell (LAB-F05). "A quiet corner of the café": tokens from DESIGN.md,
-   visual language borrowed from the homepage (Cục Yên, paper notes, offset paper shadows, italic green accents). */
+/* Yên Lab · "góc ngồi chơi" (LAB-F05). A café corner you walk into, not a landing page.
+   Tokens from DESIGN.md; doodle line-art style borrowed from the homepage (ink outlines, cream fills, offset paper shadows). */
 :root {
   color-scheme: light;
   --paper: #f7f3e9;
-  --paper-deep: #efe8d6;
   --card: #fffaf0;
   --ink: #243c35;
   --muted: #5f7065;
@@ -16,10 +15,14 @@
   --white: #ffffff;
   --focus: #a64b1d;
   --line: rgba(36, 60, 53, .19);
-  --paper-shadow: 5px 6px 0 var(--sage);
-  --soft-shadow: 0 18px 55px rgba(35, 57, 43, .10);
+  --wall: #f3e6c4;
+  --wood: #c99a6b;
+  --wood-dark: #8a5f3b;
+  --board: #2f4a3e;
+  --chalk: #f4efe1;
+  --chalk-dim: #cfd8c9;
+  --sky: #cfe0ea;
   --radius-sm: 12px;
-  --radius-md: 20px;
   --radius-lg: 28px;
   --sans: "Noto Sans", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
   --serif: "Noto Serif", Georgia, "Times New Roman", serif;
@@ -27,174 +30,231 @@
 
 *, *::before, *::after { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; }
-body {
-  margin: 0;
-  color: var(--ink);
-  font: 400 16px/1.6 var(--sans);
-  overflow-wrap: break-word;
-  background:
-    radial-gradient(60rem 36rem at 85% -6rem, #fbf2d9 0%, rgba(251, 242, 217, 0) 70%),
-    var(--paper);
-}
-h1, h2, h3, p, ul, figure { margin: 0; }
+body { margin: 0; background: var(--paper); color: var(--ink); font: 400 16px/1.6 var(--sans); overflow-wrap: break-word; }
+h1, h2, h3, p, ul, ol { margin: 0; }
 img, svg { display: block; max-width: 100%; }
 img { height: auto; }
 a { color: inherit; text-underline-offset: 4px; }
-a:focus-visible { outline: 3px solid var(--focus); outline-offset: 4px; border-radius: 6px; }
+a:focus-visible, button:focus-visible { outline: 3px solid var(--focus); outline-offset: 4px; border-radius: 8px; }
 em { font-style: italic; color: var(--green); font-weight: 400; }
+button { font: inherit; color: inherit; }
+[hidden] { display: none !important; }
+.lab-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.lab-muted { color: var(--muted); }
 
 .lab-wrap {
-  width: 100%;
-  max-width: 1120px;
-  margin: 0 auto;
+  width: 100%; max-width: 1120px; margin: 0 auto;
   padding-left: max(20px, env(safe-area-inset-left));
   padding-right: max(20px, env(safe-area-inset-right));
 }
-.lab-skip {
-  position: absolute; left: 12px; top: -100px; z-index: 2;
-  background: var(--ink); color: var(--white); padding: 12px 16px; border-radius: var(--radius-sm);
-}
+.lab-skip { position: absolute; left: 12px; top: -100px; z-index: 5; background: var(--ink); color: var(--white); padding: 12px 16px; border-radius: var(--radius-sm); }
 .lab-skip:focus { top: 12px; }
 
 /* Header — same brand lockup as the homepage */
-.lab-header {
-  display: flex; align-items: center; justify-content: space-between; gap: 12px;
-  padding-top: 14px; padding-bottom: 14px;
-}
+.lab-header { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-top: 14px; padding-bottom: 14px; }
 .lab-brand { display: inline-flex; flex-direction: column; justify-content: center; min-height: 44px; text-decoration: none; }
 .lab-brand img { width: 84px; }
 .lab-brand-sub { font-size: 8px; font-weight: 800; letter-spacing: .2em; color: #8a4a35; margin: -2px 0 0 4px; }
 .lab-nav { display: flex; align-items: center; gap: 4px; }
-.lab-nav a {
-  display: inline-flex; align-items: center; min-height: 44px; padding: 0 12px;
-  font-size: 15px; font-weight: 700; text-decoration: none; border-radius: 999px; white-space: nowrap;
-}
+.lab-nav a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 12px; font-size: 15px; font-weight: 700; text-decoration: none; border-radius: 999px; white-space: nowrap; }
 .lab-nav a:hover { text-decoration: underline; }
 .lab-nav .lab-nav-home { border: 1.5px solid var(--ink); background: var(--card); }
 .lab-nav .lab-nav-home:hover { background: var(--lime); text-decoration: none; }
 
-/* Hero — Cục Yên is the focal point */
-.lab-hero {
-  display: grid; gap: 8px; align-items: center;
-  padding-top: 8px; padding-bottom: 24px;
+/* ───────── The room ───────── */
+.room {
+  --room-wall: var(--wall);
+  position: relative; overflow: hidden; isolation: isolate;
+  display: grid; justify-items: center; align-items: end;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas: "sign sign" "window lamp" "table table" "lead lead";
+  gap: 8px 12px;
+  padding: 28px max(20px, env(safe-area-inset-left)) 0;
+  background:
+    repeating-linear-gradient(90deg, rgba(138, 95, 59, .05) 0 2px, transparent 2px 64px),
+    var(--room-wall);
+  border-top: 1.5px solid var(--ink);
+  border-bottom: 1.5px solid var(--ink);
+  transition: background-color 260ms ease-in-out;
 }
-.lab-badge {
-  display: inline-block; padding: 3px 12px; transform: rotate(-2deg);
-  background: var(--lime); border: 1.5px solid var(--ink); border-radius: 999px;
-  font-size: 14px; font-weight: 700;
+.room-glow {
+  position: absolute; z-index: -1; inset: 0;
+  background: radial-gradient(42rem 26rem at 70% 18%, rgba(255, 236, 170, .75), rgba(255, 236, 170, 0) 70%);
+  transition: opacity 260ms ease-in-out;
 }
-.lab-hero h1 {
-  font: 500 clamp(52px, 15vw, 104px)/1.08 var(--serif);
-  letter-spacing: -.025em;
-  margin: 14px 0 2px;
-}
-.lab-accent {
-  font: italic 400 clamp(26px, 7vw, 40px)/1.2 var(--serif);
-  color: var(--green);
-  margin-bottom: 16px;
-}
-.lab-lead { font-size: 18px; font-weight: 600; line-height: 1.5; max-width: 30ch; margin-bottom: 8px; }
-.lab-sub, .lab-muted { color: var(--muted); }
-.lab-sub { max-width: 46ch; }
 
-.lab-hero-art { position: relative; justify-self: center; width: min(78vw, 340px); order: -1; }
-.lab-hero-glow {
-  aspect-ratio: 1; border-radius: 50%;
-  background: radial-gradient(circle at 50% 45%, #fdf6e3 0%, #f3e6c4 62%, rgba(243, 230, 196, 0) 72%);
-  display: grid; place-items: center;
+/* Hanging wooden sign = page title */
+.room-sign {
+  grid-area: sign; position: relative; text-align: center;
+  margin-top: 26px; padding: 12px 26px 10px;
+  background: linear-gradient(#d8ad7d, var(--wood));
+  border: 2px solid var(--ink); border-radius: 10px;
+  box-shadow: 4px 5px 0 rgba(36, 60, 53, .25);
+  transform: rotate(-1.5deg);
 }
-.lab-mascot { width: 86%; height: auto; aspect-ratio: 1; }
-.lab-note {
-  position: absolute; right: -4px; bottom: 6%;
-  max-width: 13.5em; padding: 10px 14px;
-  background: var(--card); border: 1.5px solid var(--ink); border-radius: 14px;
+.room-sign::before, .room-sign::after {
+  content: ""; position: absolute; bottom: 100%; width: 2px; height: 28px; background: var(--ink);
+}
+.room-sign::before { left: 22%; transform: rotate(8deg); transform-origin: bottom; }
+.room-sign::after { right: 22%; transform: rotate(-8deg); transform-origin: bottom; }
+.room-sign h1 { font: 500 clamp(44px, 13vw, 76px)/1.05 var(--serif); letter-spacing: -.02em; color: var(--ink); }
+.room-sign-sub { font: italic 400 18px/1.3 var(--serif); color: #3b2a18; }
+
+/* Window */
+.room-window { grid-area: window; width: min(100%, 170px); justify-self: start; }
+.room-sky { fill: var(--sky); transition: fill 260ms ease-in-out; }
+.room-cloud { fill: #fffaf0; stroke: var(--ink); stroke-width: 3; }
+.room-day, .room-night { transition: opacity 260ms ease-in-out; }
+.room-night { opacity: 0; }
+.room-moon { fill: var(--butter); stroke: var(--ink); stroke-width: 3; }
+.room-star { fill: var(--butter); }
+.room-frame { fill: none; stroke: var(--ink); stroke-width: 5; stroke-linejoin: round; }
+.room-sill { fill: var(--wood); stroke: var(--ink); stroke-width: 4; }
+.room-pot { fill: var(--pink); stroke: var(--ink); stroke-width: 4; stroke-linejoin: round; }
+.room-leaf { fill: #9bbd8a; stroke: var(--ink); stroke-width: 3.5; stroke-linejoin: round; }
+
+/* Lamp + switch */
+.room-lamp { grid-area: lamp; justify-self: end; display: grid; justify-items: center; gap: 6px; align-self: start; margin-top: -36px; }
+.room-lamp-art { width: 96px; }
+.room-cord { stroke: var(--ink); stroke-width: 3; }
+.room-shade { fill: var(--green); stroke: var(--ink); stroke-width: 4; stroke-linejoin: round; }
+.room-bulb { fill: #fff3b0; stroke: var(--ink); stroke-width: 3; transition: fill 260ms ease-in-out; }
+.room-switch {
+  min-height: 44px; padding: 6px 16px; border-radius: 999px; cursor: pointer;
+  background: var(--card); border: 1.5px solid var(--ink); box-shadow: 0 4px 0 var(--wood-dark);
+  font-size: 15px; font-weight: 700; white-space: nowrap;
+  transition: transform 160ms ease-out, box-shadow 160ms ease-out;
+}
+.room-switch:active { transform: translateY(3px); box-shadow: 0 1px 0 var(--wood-dark); }
+
+/* Table with Cục Yên */
+.room-table {
+  grid-area: table; position: relative; width: min(100%, 560px);
+  display: grid; grid-template-columns: 1fr auto; align-items: end;
+  padding-top: 8px;
+}
+.room-bubble {
+  grid-column: 1 / -1; justify-self: center; position: relative; z-index: 2;
+  max-width: 19em; margin-bottom: -28px; padding: 10px 16px;
+  background: var(--card); border: 1.5px solid var(--ink); border-radius: 16px 18px 16px 6px;
   box-shadow: 3px 4px 0 var(--sage);
-  transform: rotate(2.5deg);
-  font: italic 400 15px/1.45 var(--serif);
+  font: italic 400 16px/1.45 var(--serif); text-align: center;
+}
+.room-buddy {
+  position: relative; z-index: 1; justify-self: center;
+  width: min(62vw, 250px); aspect-ratio: 1; padding: 0; margin-bottom: -22px;
+  background: none; border: 0; border-radius: 50%; cursor: pointer;
+  transition: transform 160ms ease-out;
+}
+.room-buddy:disabled { cursor: default; }
+.room-buddy svg { width: 100%; height: 100%; }
+.room-buddy:not(:disabled):hover { transform: translateY(-3px) rotate(-1deg); }
+.room-buddy:not(:disabled):active { transform: translateY(2px) scale(.98); }
+.room-buddy.is-poked { animation: buddy-wobble 420ms ease-in-out; }
+@keyframes buddy-wobble { 0%, 100% { transform: rotate(0); } 30% { transform: rotate(-4deg); } 65% { transform: rotate(3deg); } }
+.room-cup { position: relative; z-index: 1; width: 64px; margin: 0 8px -4px 0; }
+.room-steam { fill: none; stroke: var(--muted); stroke-width: 3; stroke-linecap: round; }
+.room-mug { fill: var(--card); stroke: var(--ink); stroke-width: 4; stroke-linejoin: round; }
+.room-mug-handle, .room-saucer { fill: none; stroke: var(--ink); stroke-width: 4; stroke-linecap: round; }
+.room-tabletop {
+  grid-column: 1 / -1; height: 26px; margin: 0 -12px;
+  background: linear-gradient(var(--wood), #b7875a);
+  border: 2px solid var(--ink); border-radius: 12px 12px 0 0;
+  box-shadow: 0 10px 0 var(--wood-dark);
 }
 
-/* Section headings, numbered like the homepage ("01 / …") */
-.lab-body { display: grid; gap: 20px; padding-bottom: 48px; }
-.lab-kicker {
-  display: flex; align-items: center; gap: 10px;
-  font-size: 14px; font-weight: 700; color: var(--green); margin-bottom: 6px;
-}
-.lab-kicker span {
-  display: inline-grid; place-items: center; min-width: 32px; height: 26px; padding: 0 6px;
-  background: var(--ink); color: var(--white); border-radius: 8px; font-size: 13px;
-}
-h2 { font: 500 clamp(30px, 8vw, 46px)/1.15 var(--serif); letter-spacing: -.02em; margin-bottom: 10px; }
-h3 { font: 600 22px/1.3 var(--serif); }
-
-/* Needs — pastel paper tags, informational only until M3 */
-.lab-needs { padding-top: 24px; }
-.lab-needs > .lab-muted { max-width: 56ch; margin-bottom: 18px; }
-.lab-need-list, .lab-tool-list { list-style: none; padding: 0; }
-.lab-need-list { display: flex; flex-wrap: wrap; gap: 12px 10px; }
-.lab-need {
-  display: inline-flex; align-items: center; gap: 10px; min-height: 48px;
-  padding: 8px 8px 8px 16px; border: 1.5px solid var(--ink); border-radius: 999px;
-}
-.lab-need--mind { background: var(--lavender); transform: rotate(-1deg); }
-.lab-need--body { background: #fbd7cd; transform: rotate(.8deg); }
-.lab-need--pleasant { background: #e8efb4; transform: rotate(-.6deg); }
-.lab-need-name { font-weight: 700; }
-.lab-need-soon {
-  padding: 1px 10px; border-radius: 999px; background: rgba(255, 255, 255, .7);
-  font-size: 14px; font-weight: 600; white-space: nowrap;
+.room-lead {
+  grid-area: lead; position: relative; z-index: 1; width: calc(100% + 40px); margin-top: 10px;
+  padding: 18px 20px 20px; text-align: center;
+  background: var(--wood-dark); color: #fbf1df;
+  font-size: 17px; font-weight: 600; line-height: 1.5;
 }
 
-/* Menu card — the café's "thực đơn nghỉ" */
-.lab-menu {
-  margin-top: 16px; padding: 28px 20px 12px;
-  background: var(--card); border: 1.5px solid var(--ink); border-radius: var(--radius-lg);
-  box-shadow: var(--paper-shadow), var(--soft-shadow);
-}
-.lab-menu > .lab-muted { max-width: 56ch; margin-bottom: 8px; }
-.lab-tool {
-  display: grid; gap: 10px;
-  padding: 20px 0; border-top: 1.5px dashed var(--line);
-}
-.lab-tool:first-child { border-top: 0; }
-.lab-tool-main p { color: var(--muted); max-width: 40ch; margin-top: 4px; }
-.lab-tool-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; }
-.lab-tool-size { font-size: 14px; font-weight: 600; color: var(--green); }
-.lab-chip {
-  display: inline-block; padding: 1px 12px; border-radius: 999px;
-  background: var(--butter); border: 1px solid #c9a94e; color: var(--ink);
-  font-size: 14px; font-weight: 700; line-height: 1.7; white-space: nowrap;
-}
+/* Evening: lamp off. Only decoration changes; text stays on its own light surfaces. */
+.room.is-dim { --room-wall: #e2cfa4; }
+.room.is-dim .room-glow { opacity: .15; }
+.room.is-dim .room-sky { fill: #4a5878; }
+.room.is-dim .room-day { opacity: 0; }
+.room.is-dim .room-night { opacity: 1; }
+.room.is-dim .room-bulb { fill: #d9d2bd; }
 
-/* House rules — a taped note pinned by the counter, in Cục Yên's voice */
+/* ───────── Shelf with three mugs ───────── */
+.shelf { padding-top: 40px; padding-bottom: 8px; }
+h2 { font: 500 clamp(28px, 7.5vw, 42px)/1.15 var(--serif); letter-spacing: -.02em; margin-bottom: 8px; }
+.shelf > .lab-muted { max-width: 54ch; margin-bottom: 20px; }
+.shelf-row {
+  list-style: none; padding: 0 8px 6px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px;
+  border-bottom: 10px solid var(--wood); box-shadow: 0 2px 0 var(--ink), 0 12px 0 -2px var(--wood-dark);
+}
+.shelf-mug { display: grid; justify-items: center; align-content: end; gap: 4px; text-align: center; }
+.shelf-mug svg { width: 64px; }
+.mug-body { stroke: var(--ink); stroke-width: 4; stroke-linejoin: round; }
+.mug-handle { fill: none; stroke: var(--ink); stroke-width: 4; stroke-linecap: round; }
+.shelf-mug--mind .mug-body { fill: var(--lavender); }
+.shelf-mug--body .mug-body { fill: #fbd7cd; }
+.shelf-mug--pleasant .mug-body { fill: #e8efb4; }
+.shelf-mug:nth-child(2) svg { transform: rotate(4deg); }
+.shelf-label { font-weight: 700; font-size: 15px; line-height: 1.35; }
+.shelf-soon { font-size: 14px; color: var(--muted); }
+
+/* ───────── Chalkboard menu ───────── */
+.board-wrap { padding-top: 40px; padding-bottom: 8px; }
+.board {
+  position: relative; padding: 28px 22px 24px;
+  background:
+    radial-gradient(30rem 16rem at 20% 0%, rgba(255, 255, 255, .06), transparent 70%),
+    var(--board);
+  color: var(--chalk);
+  border: 10px solid var(--wood); border-radius: 14px;
+  box-shadow: 0 0 0 2px var(--ink), 6px 8px 0 rgba(36, 60, 53, .2);
+}
+.board h2 { color: var(--chalk); text-align: center; font-style: italic; }
+.board-note { color: var(--chalk-dim); text-align: center; max-width: 44ch; margin: 0 auto 12px; }
+.board-list { list-style: none; padding: 0; }
+.board-item { padding: 18px 0; border-top: 1.5px dashed rgba(244, 239, 225, .3); }
+.board-item:first-child { border-top: 0; }
+.board-line { display: flex; align-items: baseline; gap: 8px; }
+.board-name { font: 600 21px/1.3 var(--serif); }
+.board-dots { flex: 1; min-width: 16px; border-bottom: 2px dotted var(--chalk-dim); transform: translateY(-5px); }
+.board-size { font-size: 15px; font-weight: 700; color: var(--butter); white-space: nowrap; }
+.board-desc { color: var(--chalk-dim); margin: 4px 0 10px; max-width: 46ch; }
+.board-stamp {
+  display: inline-block; padding: 1px 12px; border-radius: 999px; transform: rotate(-2deg);
+  background: var(--butter); color: var(--ink); font-size: 14px; font-weight: 700; line-height: 1.7;
+}
+.board-chalk { text-align: center; font: italic 16px/1.4 var(--serif); color: var(--chalk-dim); margin-top: 8px; }
+
+/* ───────── House rules: a pinned slip ───────── */
+.rules-wrap { padding-top: 48px; padding-bottom: 56px; }
 .lab-rules {
-  position: relative; margin-top: 20px; padding: 30px 22px 22px;
-  background: #fbf7ec; border: 1px solid var(--line); border-radius: 6px;
-  box-shadow: 0 10px 30px rgba(35, 57, 43, .07);
-  transform: rotate(-.4deg);
+  position: relative; max-width: 680px; margin: 0 auto; padding: 32px 22px 22px;
+  background: #fffdf6; border: 1px solid var(--line); border-radius: 4px;
+  box-shadow: 0 12px 30px rgba(35, 57, 43, .08);
+  transform: rotate(-.6deg);
 }
 .lab-rules::before {
-  content: ""; position: absolute; top: -11px; left: 50%; width: 92px; height: 22px;
-  transform: translateX(-50%) rotate(-2deg);
-  background: rgba(219, 231, 141, .75); border-radius: 3px;
+  content: ""; position: absolute; top: -9px; left: 50%; width: 20px; height: 20px; margin-left: -10px;
+  border-radius: 50%; background: #d9715a; border: 2px solid var(--ink); box-shadow: 1px 2px 0 rgba(0, 0, 0, .2);
 }
 .lab-rules h2 { font-size: clamp(26px, 7vw, 34px); }
 .lab-rules-list { list-style: none; counter-reset: rule; padding: 0; display: grid; gap: 10px; margin: 4px 0 18px; }
-.lab-rules-list li { counter-increment: rule; position: relative; padding-left: 40px; max-width: 60ch; }
+.lab-rules-list li { counter-increment: rule; position: relative; padding-left: 40px; }
 .lab-rules-list li::before {
   content: counter(rule); position: absolute; left: 0; top: 1px;
   display: grid; place-items: center; width: 28px; height: 28px; border-radius: 50%;
   background: var(--lime); border: 1.5px solid var(--ink); font-size: 14px; font-weight: 800;
 }
-.lab-fineprint { color: var(--muted); font-size: 14px; max-width: 60ch; }
+.lab-fineprint { color: var(--muted); font-size: 14px; }
 .lab-fineprint a { color: var(--ink); font-weight: 600; }
 
-/* Footer — invitation to the real café, on the dark green the homepage uses */
-.lab-footer { background: var(--ink); color: var(--paper); margin-top: 16px; }
-.lab-footer-inner {
-  display: grid; gap: 8px; align-items: center;
-  padding-top: 36px; padding-bottom: max(40px, env(safe-area-inset-bottom));
-}
-.lab-footer-mascot { width: 120px; height: 120px; }
+/* ───────── Footer: the door ───────── */
+.lab-footer { background: var(--ink); color: var(--paper); }
+.lab-footer-inner { display: grid; gap: 12px; align-items: end; padding-top: 36px; padding-bottom: max(40px, env(safe-area-inset-bottom)); }
+.lab-door { width: 84px; }
+.door-frame { fill: none; stroke: var(--sage); stroke-width: 4; }
+.door-panel { fill: var(--wood); stroke: var(--chalk); stroke-width: 3; }
+.door-knob { fill: var(--butter); }
+.door-sign { fill: var(--lime); }
 .lab-footer-title { font: 500 clamp(28px, 7.5vw, 40px)/1.2 var(--serif); margin-bottom: 8px; }
 .lab-footer-title em { color: var(--lime); }
 .lab-footer-text { color: #dbe2d6; max-width: 46ch; margin-bottom: 20px; }
@@ -202,10 +262,8 @@ h3 { font: 600 22px/1.3 var(--serif); }
 .lab-footer-links a:not(.lab-button) { display: inline-flex; align-items: center; min-height: 44px; font-weight: 700; }
 .lab-footer a:focus-visible { outline-color: var(--butter); }
 .lab-button {
-  display: inline-flex; align-items: center; justify-content: center;
-  min-height: 48px; padding: 8px 26px; border-radius: 999px;
-  background: var(--lime); color: var(--ink); font-weight: 800; text-decoration: none;
-  box-shadow: 0 5px 0 #8fa86f;
+  display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 8px 26px; border-radius: 999px;
+  background: var(--lime); color: var(--ink); font-weight: 800; text-decoration: none; box-shadow: 0 5px 0 #8fa86f;
   transition: transform 160ms ease-out, box-shadow 160ms ease-out;
 }
 .lab-button:hover { transform: translateY(-2px); box-shadow: 0 7px 0 #8fa86f; }
@@ -215,22 +273,34 @@ h3 { font: 600 22px/1.3 var(--serif); }
   .lab-header { gap: 8px; }
   .lab-brand img { width: 72px; }
   .lab-nav a { padding: 0 10px; }
-  .lab-note { right: -8px; font-size: 14px; }
+  .shelf-label { font-size: 14px; }
+  .board-name { font-size: 19px; }
 }
 
 @media (min-width: 768px) {
-  .lab-header { padding-top: 22px; padding-bottom: 22px; }
+  .lab-header { padding-top: 20px; padding-bottom: 20px; }
   .lab-brand img { width: 104px; }
-  .lab-hero { grid-template-columns: 1.1fr .9fr; gap: 32px; padding-top: 24px; padding-bottom: 48px; }
-  .lab-hero-art { order: 0; width: min(100%, 420px); }
-  .lab-note { right: 0; bottom: 10%; }
-  .lab-body { gap: 32px; padding-bottom: 72px; }
-  .lab-menu { padding: 40px 40px 20px; }
-  .lab-tool { grid-template-columns: 1fr auto; align-items: center; gap: 24px; padding: 24px 0; }
-  .lab-tool-meta { justify-content: flex-end; }
-  .lab-rules { padding: 36px 40px 28px; width: 100%; max-width: 760px; justify-self: center; }
+  .room {
+    grid-template-columns: 1fr 1.3fr 1fr;
+    grid-template-areas: "window sign lamp" "window table lamp" "lead lead lead";
+    gap: 28px 24px; padding-top: 24px; min-height: 600px;
+  }
+  .room-window { width: 200px; align-self: center; justify-self: end; }
+  .room-lamp { align-self: start; justify-self: start; margin-top: -24px; }
+  .room-lamp-art { width: 120px; }
+  .room-table { width: 100%; max-width: 560px; }
+  .room-buddy { width: 280px; }
+  .room-cup { width: 76px; }
+  .room-lead { font-size: 19px; width: calc(100% + 48px); }
+  .shelf, .board-wrap { padding-top: 56px; }
+  .shelf-row { padding: 0 24px 6px; gap: 24px; }
+  .shelf-mug svg { width: 84px; }
+  .shelf-label { font-size: 17px; }
+  .board { padding: 40px 48px 32px; max-width: 820px; margin: 0 auto; }
+  .board-name { font-size: 24px; }
+  .lab-rules { padding: 40px 40px 28px; }
   .lab-footer-inner { grid-template-columns: auto 1fr; gap: 32px; padding-top: 48px; padding-bottom: 56px; }
-  .lab-footer-mascot { width: 160px; height: 160px; }
+  .lab-door { width: 110px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

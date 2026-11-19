@@ -21,8 +21,8 @@ test('direct URL, reload and trailing-slash redirect load the Lab shell', async 
   expect(response.status()).toBe(200);
   await expect(page).toHaveTitle(/Yên Lab/);
   await expect(page.getByRole('heading', { level: 1, name: 'Yên Lab' })).toBeVisible();
-  await expect(page.locator('.lab-badge')).toContainText('Beta');
-  await expect(page.getByRole('img', { name: 'Cục Yên ngồi cầm ly trà' })).toBeVisible();
+  await expect(page.locator('.room-sign-sub')).toContainText('beta');
+  await expect(page.getByRole('button', { name: 'Chọc Cục Yên một cái' })).toBeVisible();
   await expect(page.getByText('Chán thì nghỉ, không ai giục.')).toBeVisible();
   await expect(page.locator('main')).toHaveCount(1);
   await page.reload();
@@ -55,15 +55,54 @@ test('hero, three needs, release-status list, house rules and way back to Yên',
   }
   const released = await page.locator('[data-tool][data-status="released"]').count();
   await expect(page.locator('#lab-release-status')).toHaveAttribute('data-released-count', String(released));
-  await expect(page.locator('main button')).toHaveCount(0);
+  await expect(page.locator('[data-tool] button, [data-need] button, .board button, .shelf button')).toHaveCount(0);
 
   // Không JS cần thiết: page has no scripts at all in the route shell.
-  await expect(page.locator('script')).toHaveCount(0);
+  // Only the page's own small script, served from /lab/.
+  expect(await page.locator('script').evaluateAll(list => list.map(s => new URL(s.src, location.href).pathname))).toEqual(['/lab/lab.js']);
 
   const home = page.locator('footer').getByRole('link', { name: 'Về Yên' });
   await home.click();
   await expect(page).toHaveURL(/\/$/);
   await expect(page.locator('#dau')).toBeAttached();
+});
+
+test('room playthings: poke Cục Yên and switch the lamp, keyboard included, nothing stored', async ({ page }, testInfo) => {
+  await blockExternal(page);
+  await page.goto(LAB);
+  const buddy = page.getByRole('button', { name: 'Chọc Cục Yên một cái' });
+  const says = page.locator('#buddy-says');
+  const first = await says.textContent();
+  await expect(buddy).toBeEnabled();
+  if (testInfo.project.name === 'emulated-touch') await buddy.tap(); else await buddy.click();
+  await expect(says).not.toHaveText(first);
+  await expect(says).toHaveAttribute('aria-live', 'polite');
+  const second = await says.textContent();
+  await buddy.focus();
+  await page.keyboard.press('Enter');
+  await expect(says).not.toHaveText(second);
+
+  const lamp = page.getByRole('button', { name: 'Tắt đèn' });
+  await lamp.click();
+  await expect(page.locator('#lab-room')).toHaveClass(/is-dim/);
+  await expect(page.getByRole('button', { name: 'Bật đèn' })).toBeVisible();
+  await page.getByRole('button', { name: 'Bật đèn' }).press('Space');
+  await expect(page.locator('#lab-room')).not.toHaveClass(/is-dim/);
+
+  expect(await page.evaluate(() => [localStorage.length, sessionStorage.length, document.cookie])).toEqual([0, 0, '']);
+  await page.reload(); // Nothing remembered: lamp back on, first line again.
+  await expect(page.locator('#lab-room')).not.toHaveClass(/is-dim/);
+  await expect(says).toHaveText(first);
+});
+
+test('without JavaScript the room has no dead buttons', async ({ browser }) => {
+  const context = await browser.newContext({ javaScriptEnabled: false });
+  const page = await context.newPage();
+  await page.goto(LAB);
+  await expect(page.locator('#lamp-switch')).toBeHidden();
+  await expect(page.locator('#buddy')).toBeDisabled();
+  await expect(page.getByRole('heading', { level: 1, name: 'Yên Lab' })).toBeVisible();
+  await context.close();
 });
 
 test('unknown Lab paths return the site 404 with a way home', async ({ page }) => {
@@ -106,7 +145,7 @@ for (const width of WIDTHS) {
     await page.setViewportSize({ width, height: width < 768 ? 800 : 900 });
     await page.goto(LAB);
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
-    const small = await page.evaluate(() => [...document.querySelectorAll('a:not(.lab-skip)')]
+    const small = await page.evaluate(() => [...document.querySelectorAll('a:not(.lab-skip), button')]
       .filter(el => el.offsetParent !== null && el.closest('.lab-fineprint') === null)
       .map(el => ({ text: el.textContent.trim(), h: el.getBoundingClientRect().height }))
       .filter(x => x.h < 44));

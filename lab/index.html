@@ -7,9 +7,10 @@
   <meta name="robots" content="noindex, nofollow, noarchive">
   <meta name="referrer" content="no-referrer">
   <meta name="description" content="Yên Lab · Beta: góc ngồi chơi của Yên Coffee &amp; Tea. Vài trò nhỏ, chơi chán thì nghỉ.">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'none'; style-src 'self'; img-src 'self'; font-src 'none'; connect-src 'none'; frame-src 'none'; form-action 'none'; base-uri 'none'; object-src 'none'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; font-src 'none'; connect-src 'none'; frame-src 'none'; form-action 'none'; base-uri 'none'; object-src 'none'">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="stylesheet" href="/lab/lab.css">
+  <script src="/lab/lab.js" defer></script>
   <title>Yên Lab · Góc ngồi chơi | Yên Coffee &amp; Tea</title>
 </head>
 <body>
@@ -23,64 +24,103 @@
   </header>
 
   <main id="lab-main">
-    <section class="lab-hero lab-wrap" aria-labelledby="lab-title">
-      <div class="lab-hero-copy">
-        <p class="lab-badge">Góc ngồi chơi · Beta</p>
+    <!-- The room: wall, window, lamp, table. Everything readable without the drawings. -->
+    <section class="room" id="lab-room" aria-labelledby="lab-title">
+      <div class="room-glow" aria-hidden="true"></div>
+
+      <div class="room-sign">
         <h1 id="lab-title">Yên Lab</h1>
-        <p class="lab-accent">Ngồi chơi xíu đã.</p>
-        <p class="lab-lead">Vài trò nhỏ để lề mề cùng Cục Yên. Chán thì nghỉ, không ai giục.</p>
-        <p class="lab-sub">Không điểm số, không hạn chót, không cần đăng ký. Có trà (trên web).</p>
+        <p class="room-sign-sub">góc ngồi chơi · beta</p>
       </div>
-      <figure class="lab-hero-art">
-        <div class="lab-hero-glow">
-          <svg class="lab-mascot" viewBox="0 0 320 320" role="img" aria-label="Cục Yên ngồi cầm ly trà"><use href="/assets/cuc-yen/mascot.svg#cuc-yen-tea"></use></svg>
-        </div>
-        <figcaption class="lab-note">Ghế này trống nè. Ngồi đi, khỏi gọi món cũng được.</figcaption>
-      </figure>
+
+      <svg class="room-window" viewBox="0 0 200 220" aria-hidden="true" focusable="false">
+        <rect class="room-sky" x="14" y="12" width="172" height="160" rx="10"/>
+        <g class="room-day">
+          <path class="room-cloud" d="M42 74c0-12 16-16 22-8 4-14 30-14 32 2 12-2 18 12 8 18H48c-8 0-10-8-6-12Z"/>
+          <path class="room-cloud" d="M118 118c0-9 12-12 17-6 3-10 22-10 24 2 9-2 13 9 6 13h-42c-6 0-8-6-5-9Z"/>
+        </g>
+        <g class="room-night">
+          <path class="room-moon" d="M140 44a20 20 0 1 0 14 34 16 16 0 1 1-14-34Z"/>
+          <circle class="room-star" cx="52" cy="54" r="3"/><circle class="room-star" cx="84" cy="96" r="2.4"/><circle class="room-star" cx="62" cy="132" r="2"/>
+        </g>
+        <rect class="room-frame" x="14" y="12" width="172" height="160" rx="10"/>
+        <path class="room-frame" d="M100 12v160M14 92h172"/>
+        <path class="room-sill" d="M4 172h192v14H4z"/>
+        <path class="room-pot" d="M130 150h36l-5 22h-26z"/>
+        <path class="room-leaf" d="M148 150c-2-14-12-20-22-18 2 10 10 16 22 18Zm0 0c2-16 12-24 24-22-2 12-12 20-24 22Zm0 0c0-14 2-22 0-30"/>
+      </svg>
+
+      <div class="room-lamp">
+        <svg class="room-lamp-art" viewBox="0 0 120 116" aria-hidden="true" focusable="false">
+          <path class="room-cord" d="M60 0v52"/>
+          <path class="room-shade" d="M34 92 46 52h28l12 40z"/>
+          <circle class="room-bulb" cx="60" cy="100" r="10"/>
+        </svg>
+        <button class="room-switch" id="lamp-switch" type="button" hidden>Tắt đèn</button>
+      </div>
+
+      <div class="room-table">
+        <p class="room-bubble" id="buddy-says" role="status" aria-live="polite">Ghế này trống nè. Ngồi đi, khỏi gọi món cũng được.</p>
+        <button class="room-buddy" id="buddy" type="button" disabled aria-describedby="buddy-says">
+          <svg viewBox="0 0 320 320" aria-hidden="true" focusable="false"><use href="/assets/cuc-yen/mascot.svg#cuc-yen-tea"></use></svg>
+          <span class="lab-sr">Chọc Cục Yên một cái</span>
+        </button>
+        <svg class="room-cup" viewBox="0 0 90 90" aria-hidden="true" focusable="false">
+          <path class="room-steam" d="M34 26c-6-8 6-12 0-20M50 26c-6-8 6-12 0-20"/>
+          <path class="room-mug" d="M18 34h48v30c0 10-8 16-16 16H34c-8 0-16-6-16-16z"/>
+          <path class="room-mug-handle" d="M66 42h6c8 0 8 18 0 18h-6"/>
+          <path class="room-saucer" d="M8 82h70"/>
+        </svg>
+        <div class="room-tabletop" aria-hidden="true"></div>
+      </div>
+
+      <p class="room-lead">Vài trò nhỏ để lề mề cùng Cục Yên. Chán thì nghỉ, không ai giục.</p>
     </section>
 
-    <div class="lab-wrap lab-body">
-      <section class="lab-needs" aria-labelledby="needs-title" data-testid="lab-needs">
-        <p class="lab-kicker"><span>01</span> Hôm nay</p>
-        <h2 id="needs-title">Muốn chơi kiểu <em>gì?</em></h2>
-        <p class="lab-muted">Mấy nhóm này mở khi mỗi nhóm có trò chơi được. Chọn cho vui thôi, không ai hỏi lý do.</p>
-        <ul class="lab-need-list">
-          <li class="lab-need lab-need--mind" data-need="mind"><span class="lab-need-name">Cho đầu óc nghỉ xíu</span><span class="lab-need-soon">Sắp có</span></li>
-          <li class="lab-need lab-need--body" data-need="body"><span class="lab-need-name">Duỗi người cái coi</span><span class="lab-need-soon">Sắp có</span></li>
-          <li class="lab-need lab-need--pleasant" data-need="pleasant"><span class="lab-need-name">Kiếm chút gì vui vui</span><span class="lab-need-soon">Sắp có</span></li>
-        </ul>
-      </section>
+    <!-- Shelf: three mugs = three ways to pick a game (opens in M3) -->
+    <section class="shelf lab-wrap" aria-labelledby="needs-title" data-testid="lab-needs">
+      <h2 id="needs-title">Hôm nay muốn chơi kiểu <em>gì?</em></h2>
+      <p class="lab-muted">Mấy ly này mở khi mỗi kiểu có trò chơi được. Chọn cho vui thôi, không ai hỏi lý do.</p>
+      <ul class="shelf-row">
+        <li class="shelf-mug shelf-mug--mind" data-need="mind">
+          <svg viewBox="0 0 80 80" aria-hidden="true" focusable="false"><path class="mug-body" d="M14 22h40v34c0 8-6 14-14 14H28c-8 0-14-6-14-14z"/><path class="mug-handle" d="M54 30h6c8 0 8 18 0 18h-6"/></svg>
+          <span class="shelf-label">Cho đầu óc nghỉ xíu</span><span class="shelf-soon">Sắp có</span>
+        </li>
+        <li class="shelf-mug shelf-mug--body" data-need="body">
+          <svg viewBox="0 0 80 80" aria-hidden="true" focusable="false"><path class="mug-body" d="M14 22h40v34c0 8-6 14-14 14H28c-8 0-14-6-14-14z"/><path class="mug-handle" d="M54 30h6c8 0 8 18 0 18h-6"/></svg>
+          <span class="shelf-label">Duỗi người cái coi</span><span class="shelf-soon">Sắp có</span>
+        </li>
+        <li class="shelf-mug shelf-mug--pleasant" data-need="pleasant">
+          <svg viewBox="0 0 80 80" aria-hidden="true" focusable="false"><path class="mug-body" d="M14 22h40v34c0 8-6 14-14 14H28c-8 0-14-6-14-14z"/><path class="mug-handle" d="M54 30h6c8 0 8 18 0 18h-6"/></svg>
+          <span class="shelf-label">Kiếm chút gì vui vui</span><span class="shelf-soon">Sắp có</span>
+        </li>
+      </ul>
+    </section>
 
-      <section class="lab-menu" aria-labelledby="tools-title">
-        <p class="lab-kicker"><span>02</span> Thực đơn</p>
-        <h2 id="tools-title">Quầy có gì <em>chơi?</em></h2>
-        <p class="lab-muted" id="lab-release-status" data-released-count="0">Quầy chưa mở trò nào. Thở cùng Yên đang được pha trước, xong là bưng ra.</p>
-        <ul class="lab-tool-list" data-testid="lab-tool-list">
-          <li class="lab-tool" data-tool="breath" data-status="coming">
-            <div class="lab-tool-main">
-              <h3>Thở cùng Yên</h3>
-              <p>Ngồi thở chậm theo Cục Yên một phút. Không thi thố gì hết.</p>
-            </div>
-            <div class="lab-tool-meta">
-              <span class="lab-tool-size">Khoảng 1 phút</span>
-              <span class="lab-chip">Sắp có · đang pha</span>
-            </div>
+    <!-- Chalkboard menu -->
+    <section class="board-wrap lab-wrap" aria-labelledby="tools-title">
+      <div class="board">
+        <h2 id="tools-title">Thực đơn trò chơi</h2>
+        <p class="board-note" id="lab-release-status" data-released-count="0">Quầy chưa mở trò nào. Thở cùng Yên đang được pha trước, xong là bưng ra.</p>
+        <ul class="board-list" data-testid="lab-tool-list">
+          <li class="board-item lab-tool" data-tool="breath" data-status="coming">
+            <p class="board-line"><span class="board-name">Thở cùng Yên</span><span class="board-dots" aria-hidden="true"></span><span class="board-size">1 phút</span></p>
+            <p class="board-desc">Ngồi thở chậm theo Cục Yên một phút. Không thi thố gì hết.</p>
+            <span class="board-stamp">Sắp có · đang pha</span>
           </li>
-          <li class="lab-tool" data-tool="small" data-status="coming">
-            <div class="lab-tool-main">
-              <h3>Ba điều nhỏ xíu</h3>
-              <p>Nhặt một chuyện nhỏ hay hay của hôm nay. Không có cũng được.</p>
-            </div>
-            <div class="lab-tool-meta">
-              <span class="lab-tool-size">Vài phút</span>
-              <span class="lab-chip">Sắp có · đang pha</span>
-            </div>
+          <li class="board-item lab-tool" data-tool="small" data-status="coming">
+            <p class="board-line"><span class="board-name">Ba điều nhỏ xíu</span><span class="board-dots" aria-hidden="true"></span><span class="board-size">vài phút</span></p>
+            <p class="board-desc">Nhặt một chuyện nhỏ hay hay của hôm nay. Không có cũng được.</p>
+            <span class="board-stamp">Sắp có · đang pha</span>
           </li>
         </ul>
-      </section>
+        <p class="board-chalk" aria-hidden="true">~ món mới đang pha ~</p>
+      </div>
+    </section>
 
-      <section class="lab-rules" aria-labelledby="rules-title">
-        <p class="lab-kicker"><span>03</span> Nội quy</p>
+    <!-- House rules: a slip pinned on the wall -->
+    <section class="rules-wrap lab-wrap" aria-labelledby="rules-title">
+      <div class="lab-rules">
         <h2 id="rules-title">Nội quy của <em>Cục Yên</em></h2>
         <ol class="lab-rules-list">
           <li>Không chấm điểm, không xếp hạng, không chuỗi ngày.</li>
@@ -89,16 +129,21 @@
           <li>Trò chơi cho vui thôi, không thay thế tư vấn hoặc điều trị chuyên môn.</li>
         </ol>
         <p class="lab-fineprint">Vài trò mượn ý từ các kỹ thuật thư giãn quen thuộc; bản của Yên chưa ai đo hiệu quả. <a href="https://github.com/vanphamvn/yen-nghi-choi/blob/main/docs/yen-lab/EVIDENCE.md" rel="noopener noreferrer" referrerpolicy="no-referrer">Nguồn phương pháp</a></p>
-      </section>
-    </div>
+      </div>
+    </section>
   </main>
 
   <footer class="lab-footer">
     <div class="lab-wrap lab-footer-inner">
-      <svg class="lab-footer-mascot" viewBox="0 0 320 320" aria-hidden="true" focusable="false"><use href="/assets/cuc-yen/mascot.svg#cuc-yen-coffee"></use></svg>
+      <svg class="lab-door" viewBox="0 0 120 170" aria-hidden="true" focusable="false">
+        <path class="door-frame" d="M14 166V22c0-10 8-16 16-16h60c8 0 16 6 16 16v144"/>
+        <path class="door-panel" d="M28 166V30c0-6 4-10 10-10h44c6 0 10 4 10 10v136z"/>
+        <circle class="door-knob" cx="82" cy="98" r="5"/>
+        <path class="door-sign" d="M40 46h40v22H40z"/>
+      </svg>
       <div>
-        <p class="lab-footer-title">Muốn nghỉ thật thì <em>ghé quán.</em></p>
-        <p class="lab-footer-text">Yên Coffee &amp; Tea ở Láng Dài, Đất Đỏ. Có ghế, có ly, có Cục Yên giả vờ bận.</p>
+        <p class="lab-footer-title">Ngồi đủ rồi thì <em>ra cửa.</em></p>
+        <p class="lab-footer-text">Hoặc ghé Yên Coffee &amp; Tea thật ở Láng Dài, Đất Đỏ. Có ghế, có ly, có Cục Yên giả vờ bận.</p>
         <nav class="lab-footer-links" aria-label="Rời Yên Lab">
           <a class="lab-button" href="/">Về Yên</a>
           <a href="/#yen-ngoai-doi">Xem đường tới quán</a>
