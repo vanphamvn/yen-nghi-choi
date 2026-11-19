@@ -7,6 +7,7 @@ on:
       - tools/serve-lab-ux.mjs
       - tests/yen-lab-ux.spec.mjs
       - tests/yen-lab-route.spec.mjs
+      - tests/yen-lab-game-kit.spec.mjs
       - lab/**
       - index.html
       - 404.html
@@ -24,6 +25,7 @@ on:
       - tools/serve-lab-ux.mjs
       - tests/yen-lab-ux.spec.mjs
       - tests/yen-lab-route.spec.mjs
+      - tests/yen-lab-game-kit.spec.mjs
       - lab/**
       - index.html
       - 404.html

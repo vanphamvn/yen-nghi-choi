@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f7f3e9">
+  <meta name="robots" content="noindex, nofollow, noarchive">
+  <meta name="referrer" content="no-referrer">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; font-src 'none'; connect-src 'none'; frame-src 'none'; form-action 'none'; base-uri 'none'; object-src 'none'">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="stylesheet" href="/lab/lab.css">
+  <link rel="stylesheet" href="/lab/game.css">
+  <script src="/docs/yen-lab/game-kit.js" defer></script>
+  <title>Yên Lab · Bản mẫu màn hình trò (LAB-F06)</title>
+</head>
+<body>
+  <!-- Design kit for LAB-F06 (#130): the shared game screen with every state. Not a released game; no timer.
+       A real game page (/lab/<game>/) copies this markup and lets the F07 engine drive data-state. -->
+  <a class="lab-skip" href="#game-title">Đến nội dung</a>
+  <header class="lab-header lab-wrap">
+    <a class="lab-brand" href="/" aria-label="Về website Yên Coffee &amp; Tea"><img src="/yen-logo.svg" width="1450" height="585" alt="yên"><span class="lab-brand-sub" aria-hidden="true">COFFEE &amp; TEA</span></a>
+    <nav class="lab-nav" aria-label="Điều hướng Yên Lab">
+      <a class="lab-nav-home" href="/lab/">Góc ngồi chơi</a>
+    </nav>
+  </header>
+
+  <main class="game" id="game" data-state="idle" data-kit aria-labelledby="game-title">
+    <img class="game-backdrop" src="/lab/assets/room-backdrop.jpg" width="1586" height="992" alt="" decoding="async">
+    <article class="game-sheet">
+      <header class="game-head">
+        <h1 id="game-title" tabindex="-1">Thở cùng Yên</h1>
+        <p class="game-lede">Khoảng 1 phút · bản mẫu giao diện, chưa có nhịp thở thật</p>
+      </header>
+
+      <div class="game-stage" aria-hidden="true">
+        <img src="/lab/assets/cuc-yen-tea.webp" width="480" height="480" alt="" decoding="async">
+      </div>
+
+      <p class="game-cue" data-when="running" id="game-cue">Hít vào nhẹ</p>
+      <p class="game-cue" data-when="paused">Đang tạm dừng</p>
+      <p class="game-progress" data-when="running paused">
+        <span class="game-dots" aria-hidden="true"><i class="is-done"></i><i class="is-done"></i><i></i><i></i><i></i><i></i></span>
+        <span>vòng 2 / 6</span>
+      </p>
+      <p class="game-note" data-when="idle">Không cần hít sâu hay nín thở. Thấy chóng mặt hay khó chịu thì dừng, thở tự nhiên.</p>
+      <p class="game-note" data-when="paused">Cứ thở theo nhịp của bạn.</p>
+      <p class="game-note" data-when="error">Trò chưa chạy được. Thử lại hoặc về góc ngồi chơi nhé.</p>
+
+      <div class="game-result" data-when="complete stopped">
+        <p data-when="complete">Xong rồi. Không cần thấy khác đi.</p>
+        <p data-when="stopped">Mình dừng ở đây nhé.</p>
+        <div class="game-reflect" id="game-reflect">
+          <p id="reflect-q">Nếu muốn, lúc này bạn thấy sao?</p>
+          <div class="game-words" role="group" aria-labelledby="reflect-q">
+            <button class="ink-word ink-word--small" type="button" data-reflect>dễ chịu hơn</button>
+            <button class="ink-word ink-word--small" type="button" data-reflect>như cũ</button>
+            <button class="ink-word ink-word--small" type="button" data-reflect>khó chịu hơn</button>
+            <button class="ink-word ink-word--small" type="button" data-reflect>không rõ</button>
+            <button class="ink-word ink-word--small" type="button" data-reflect>bỏ qua</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="game-words" id="game-controls" role="group" aria-label="Điều khiển trò">
+        <button class="ink-word ink-word--lead" type="button" data-act="start" data-when="idle">bắt đầu</button>
+        <button class="ink-word" type="button" data-act="pause" data-when="running">tạm dừng</button>
+        <button class="ink-word ink-word--lead" type="button" data-act="resume" data-when="paused">tiếp tục</button>
+        <button class="ink-word" type="button" data-act="stop" data-when="running paused">dừng hẳn</button>
+        <button class="ink-word ink-word--lead" type="button" data-act="again" data-when="complete stopped error">làm lại</button>
+        <a class="ink-word" href="/lab/" data-when="idle complete stopped error">về góc ngồi chơi</a>
+      </div>
+
+      <p class="game-whisper" id="game-whisper" role="status" aria-live="polite"></p>
+    </article>
+    <noscript><p class="game-note">Trò tương tác cần JavaScript. Bạn vẫn có thể <a href="/lab/">về góc ngồi chơi</a>.</p></noscript>
+  </main>
+
+  <footer class="lab-footer">
+    <div class="lab-wrap lab-footer-inner">
+      <img class="lab-door" src="/lab/assets/door.webp" width="160" height="268" alt="" decoding="async" loading="lazy">
+      <nav class="lab-footer-links" aria-label="Rời Yên Lab">
+        <a class="lab-button" href="/">Về Yên</a>
+        <a href="/#yen-ngoai-doi">Ghé quán thật</a>
+      </nav>
+      <p class="lab-fineprint">Trò chơi cho vui, không thay thế tư vấn hoặc điều trị chuyên môn. Không cookie, rời đi là quên. <a href="https://github.com/vanphamvn/yen-nghi-choi/blob/main/docs/yen-lab/EVIDENCE.md" rel="noopener noreferrer" referrerpolicy="no-referrer">Nguồn phương pháp</a></p>
+    </div>
+  </footer>
+</body>
+</html>
