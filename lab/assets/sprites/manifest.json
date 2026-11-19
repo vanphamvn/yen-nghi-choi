@@ -1,0 +1,270 @@
+{
+  "schemaVersion": 1,
+  "pack": "Yên Lab painted sprites",
+  "created": "2026-11-19",
+  "status": "art-review-required",
+  "artDirection": "watercolor, paper texture, muted ink/tea palette",
+  "filesRoot": "/lab/assets/sprites/",
+  "book": {
+    "atlas": "atlases/book-pageflip.webp",
+    "columns": 4,
+    "rows": 2,
+    "frames": 8,
+    "frameWidth": 410,
+    "frameHeight": 410,
+    "frameDurationMs": 180,
+    "individualFrames": [
+      "frames/book-flip-00.webp",
+      "frames/book-flip-01.webp",
+      "frames/book-flip-02.webp",
+      "frames/book-flip-03.webp",
+      "frames/book-flip-04.webp",
+      "frames/book-flip-05.webp",
+      "frames/book-flip-06.webp",
+      "frames/book-flip-07.webp"
+    ],
+    "loop": false
+  },
+  "games": [
+    {
+      "id": "G01",
+      "title": "Thở cùng Yên",
+      "file": "games/g01-tho-cung-yen.webp",
+      "kind": "illustrated-strip",
+      "suggestedSegments": 5,
+      "releaseMilestone": "M1"
+    },
+    {
+      "id": "G02",
+      "title": "Căng rồi thả",
+      "file": "games/g02-cang-roi-tha.webp",
+      "kind": "illustrated-strip",
+      "suggestedSegments": 3,
+      "releaseMilestone": "M2"
+    },
+    {
+      "id": "G03",
+      "title": "Quét người tìm căng thẳng",
+      "file": "games/g03-quet-nguoi.webp",
+      "kind": "illustrated-strip",
+      "suggestedSegments": 4,
+      "releaseMilestone": "M4"
+    },
+    {
+      "id": "G04",
+      "title": "Ngón tay biết thở",
+      "file": "games/g04-ngon-tay-biet-tho.webp",
+      "kind": "illustrated-strip",
+      "suggestedSegments": 4,
+      "releaseMilestone": "M4"
+    },
+    {
+      "id": "G05",
+      "title": "Thám tử hiện tại",
+      "file": "games/g05-tham-tu-hien-tai.webp",
+      "kind": "illustration",
+      "suggestedSegments": 1,
+      "releaseMilestone": "M3"
+    },
+    {
+      "id": "G06",
+      "title": "Vườn cát không mục tiêu",
+      "file": "games/g06-vuon-cat.webp",
+      "kind": "illustration",
+      "suggestedSegments": 1,
+      "releaseMilestone": "M4"
+    },
+    {
+      "id": "G07",
+      "title": "Lá trôi, nghĩ trôi",
+      "file": "games/g07-la-troi.webp",
+      "kind": "illustrated-strip",
+      "suggestedSegments": 4,
+      "releaseMilestone": "M3"
+    },
+    {
+      "id": "G08",
+      "title": "Ngồi nhìn mây",
+      "file": "games/g08-ngoi-nhin-may.webp",
+      "kind": "illustration",
+      "suggestedSegments": 1,
+      "releaseMilestone": "M4"
+    },
+    {
+      "id": "G09",
+      "title": "Gọi tên cơn bực",
+      "file": "games/g09-goi-ten-con-buc.webp",
+      "kind": "illustrated-strip",
+      "suggestedSegments": 5,
+      "releaseMilestone": "M3"
+    },
+    {
+      "id": "G10",
+      "title": "Hòm thư không gửi",
+      "file": "games/g10-hom-thu-khong-gui.webp",
+      "kind": "illustration",
+      "suggestedSegments": 1,
+      "releaseMilestone": "M4"
+    },
+    {
+      "id": "G11",
+      "title": "Đổi góc nhìn",
+      "file": "games/g11-doi-goc-nhin.webp",
+      "kind": "illustration",
+      "suggestedSegments": 1,
+      "releaseMilestone": "M4"
+    },
+    {
+      "id": "G12",
+      "title": "Điều mình kiểm soát",
+      "file": "games/g12-dieu-minh-kiem-soat.webp",
+      "kind": "illustration",
+      "suggestedSegments": 1,
+      "releaseMilestone": "M4"
+    },
+    {
+      "id": "G13",
+      "title": "Nói với mình tử tế",
+      "file": "games/g13-noi-voi-minh-tu-te.webp",
+      "kind": "illustration",
+      "suggestedSegments": 1,
+      "releaseMilestone": "M4"
+    },
+    {
+      "id": "G14",
+      "title": "Ba điều nhỏ xíu",
+      "file": "games/g14-ba-dieu-nho-xiu.webp",
+      "kind": "illustration",
+      "suggestedSegments": 1,
+      "releaseMilestone": "M2"
+    },
+    {
+      "id": "G15",
+      "title": "Gửi một điều tử tế",
+      "file": "games/g15-gui-dieu-tu-te.webp",
+      "kind": "illustration",
+      "suggestedSegments": 1,
+      "releaseMilestone": "M4"
+    },
+    {
+      "id": "G16",
+      "title": "Album chuyện vui",
+      "file": "games/g16-album-chuyen-vui.webp",
+      "kind": "illustration",
+      "suggestedSegments": 1,
+      "releaseMilestone": "M4"
+    },
+    {
+      "id": "G17",
+      "title": "Việc tốt bé tẹo",
+      "file": "games/g17-viec-tot-be-teo.webp",
+      "kind": "illustration",
+      "suggestedSegments": 1,
+      "releaseMilestone": "M4"
+    },
+    {
+      "id": "G18",
+      "title": "Đi dạo trong rừng",
+      "file": "games/g18-di-dao-trong-rung.webp",
+      "kind": "illustrated-strip",
+      "suggestedSegments": 3,
+      "releaseMilestone": "M4"
+    },
+    {
+      "id": "G19",
+      "title": "Một phút không làm gì",
+      "file": "games/g19-mot-phut-khong-lam-gi.webp",
+      "kind": "illustration",
+      "suggestedSegments": 1,
+      "releaseMilestone": "M4"
+    },
+    {
+      "id": "G20",
+      "title": "Lắng nghe Yên",
+      "file": "games/g20-lang-nghe-yen.webp",
+      "kind": "illustration",
+      "suggestedSegments": 1,
+      "releaseMilestone": "M4"
+    }
+  ],
+  "shared": [
+    {
+      "id": "book-closed",
+      "file": "shared/book-closed.webp"
+    },
+    {
+      "id": "book-open",
+      "file": "shared/book-open.webp"
+    },
+    {
+      "id": "bookmark",
+      "file": "shared/bookmark.webp"
+    },
+    {
+      "id": "card",
+      "file": "shared/card.webp"
+    },
+    {
+      "id": "cuc-yen-idle",
+      "file": "shared/cuc-yen-idle.webp"
+    },
+    {
+      "id": "cuc-yen-look",
+      "file": "shared/cuc-yen-look.webp"
+    },
+    {
+      "id": "cuc-yen-point",
+      "file": "shared/cuc-yen-point.webp"
+    },
+    {
+      "id": "cuc-yen-rest",
+      "file": "shared/cuc-yen-rest.webp"
+    },
+    {
+      "id": "cuc-yen-wave",
+      "file": "shared/cuc-yen-wave.webp"
+    },
+    {
+      "id": "envelope-closed",
+      "file": "shared/envelope-closed.webp"
+    },
+    {
+      "id": "envelope-open",
+      "file": "shared/envelope-open.webp"
+    },
+    {
+      "id": "leaf",
+      "file": "shared/leaf.webp"
+    },
+    {
+      "id": "light-dust",
+      "file": "shared/light-dust.webp"
+    },
+    {
+      "id": "paper-fold",
+      "file": "shared/paper-fold.webp"
+    },
+    {
+      "id": "paper-note",
+      "file": "shared/paper-note.webp"
+    },
+    {
+      "id": "paper-open",
+      "file": "shared/paper-open.webp"
+    },
+    {
+      "id": "shadow",
+      "file": "shared/shadow.webp"
+    },
+    {
+      "id": "steam",
+      "file": "shared/steam.webp"
+    }
+  ],
+  "notes": [
+    "Raster illustration assets for review. Individual game strips are not guaranteed to have mathematically equal cells; crop/alignment QA required before runtime animation.",
+    "Do not replace current live game assets until owner approves art, mobile sizes and motion.",
+    "Never render instructions or personal typed content into static images. Semantic HTML is required.",
+    "Reduced-motion defaults to still frame. No auto audio or tracking."
+  ]
+}
