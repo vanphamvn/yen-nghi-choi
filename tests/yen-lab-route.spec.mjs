@@ -201,3 +201,22 @@ for (const width of WIDTHS) {
     await testInfo.attach(`lab-${width}`, { body: await page.screenshot({ fullPage: true }), contentType: 'image/png' });
   });
 }
+
+test('menu focus never draws a ring around the book after a tap (iPhone WebKit), but does for keyboard users', async ({ page }) => {
+  await page.goto(LAB);
+  const book = page.locator('#menu-open');
+  const ring = () => book.evaluate(el => getComputedStyle(el).outlineStyle !== 'none' && el.matches(':focus-visible'));
+  await book.click();
+  await expect(page.locator('#lab-menu')).toBeVisible();
+  await page.locator('#menu-close').click({ position: { x: 20, y: 20 } });
+  await expect(page.locator('#lab-menu')).toBeHidden();
+  await expect(book).toBeFocused();
+  expect(await ring()).toBe(false);
+  // The next key press brings the ring back for keyboard users.
+  await page.keyboard.press('Shift');
+  expect(await ring()).toBe(true);
+  await page.keyboard.press('Enter');
+  await page.keyboard.press('Escape');
+  await expect(book).toBeFocused();
+  expect(await ring()).toBe(true);
+});

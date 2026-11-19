@@ -88,6 +88,7 @@ button { font: inherit; color: inherit; }
   transform: translateY(-4px) rotate(-2deg); filter: drop-shadow(0 6px 6px rgba(60, 40, 20, .35)) brightness(1.04);
 }
 .sprite-book:not(:disabled):active { transform: translateY(1px); }
+.sprite-book.is-pointer-focus:focus-visible { outline: none; transform: none; filter: none; } /* focus returned after a tap */
 
 /* Menu = the same painted book opened big; game names are written on its pages */
 .menu {
