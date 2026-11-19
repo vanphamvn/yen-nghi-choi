@@ -73,7 +73,7 @@ button { font: inherit; color: inherit; }
 .sprite-table   { --x: 16%; --b: 2%;  --w: 68%; z-index: 4; }
 .sprite-book    { --x: 24%; --b: 19%; --w: 24%; z-index: 4; }
 .sprite-cup     { --x: 56%; --b: 19.5%; --w: 14%; z-index: 4; }
-.sprite-plant   { --x: 78%; --b: 6%;  --w: 26%; z-index: 4; }
+.sprite-plant   { --x: 83%; --b: 23%; --w: 17%; z-index: 1; } /* stands on the floor right of the bench */
 
 /* The painted book on the table is the menu button */
 .sprite-book {
@@ -183,7 +183,7 @@ button { font: inherit; color: inherit; }
   .sprite-table   { --x: 36%; --b: 2%;  --w: 29%; }
   .sprite-book    { --x: 39.5%; --b: 19%; --w: 10.5%; }
   .sprite-cup     { --x: 54%; --b: 19.5%; --w: 6%; }
-  .sprite-plant   { --x: 72%; --b: 6%;  --w: 12%; }
+  .sprite-plant   { --x: 66.5%; --b: 23%; --w: 10%; }
   .room-bubble { left: 26%; bottom: 47%; font-size: 16px; max-width: 13em; }
   .lab-door { width: 80px; }
 }
