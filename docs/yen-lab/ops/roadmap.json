@@ -310,14 +310,14 @@
       "priority": "P0",
       "title": "Core Beta 3 release gate",
       "kind": "release",
-      "status": "in-progress",
+      "status": "done",
       "depends_on": [
         "G02",
         "G14",
         "F10"
       ],
       "issue_url": "https://github.com/vanphamvn/yen-nghi-choi/issues/135",
-      "evidence": "Gate PR: tests/yen-lab-beta3.spec.mjs (one guest visit through all 3 games, gratitude words never leave the page, offline after load, no sound, cold-load budgets) on desktop, emulated touch, emulated iPhone 15 WebKit 26.5 and Pixel 7 Chromium 151; room tap-highlight fix; docs/yen-lab/RELEASE-BETA3.md. Production SHA recorded on #135 after merge."
+      "evidence": "PR #190 squash-merged as 1d7c28a. tests/yen-lab-beta3.spec.mjs: one guest visit room -> book -> all 3 games -> back to the room (no console/JS errors, no HTTP >= 400, no storage/cookies, no sound via Web Audio/media/speech/vibrate), gratitude words never leave the page and are wiped on pagehide and gone after back/forward, every game plays to the end offline once loaded with zero requests, cold-load budgets (< 900 KB, <= 25 requests, 0 third-party). Runs on desktop, emulated touch, emulated iPhone 15 WebKit 26.5 and Pixel 7 Chromium 151. Room tap-highlight fix. docs/yen-lab/RELEASE-BETA3.md. Independent agent review: no P0/P1, P2s fixed. CI foundation + smoke green at 35d1987. Production: build-info commitSha 1d7c28a, deployed smoke run 44640067500 36/36. Not verified: physical phones, VoiceOver/TalkBack; owner art review of #188/#189 pending."
     },
     {
       "key": "F12",

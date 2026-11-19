@@ -27,7 +27,7 @@ Không đổi engine, CSP, nội dung an toàn hay copy trò.
 | Nhãn Beta rõ | ✅ | Homepage: “Thử Yên Lab **BETA**” (chip hiển thị + aria “phiên bản Beta”). Trong Lab không thêm nhãn/nút hiển thị (quy tắc của chủ quán: không UI chrome trong phòng) |
 | Full regression | ✅ | Lab UX (desktop + emulated touch) 228 pass, 2 skip · điện thoại giả lập 160 pass, 2 skip · smoke 5 khung 34 pass, 2 skip (bài chỉ chạy trên site đã deploy) · node 25/25 · foundation, privacy, UI audit OK |
 | Offline / không tiếng / cold load / copy nghiên cứu | ✅ | Ở trên; copy fine-print mỗi trò nói rõ “chưa được kiểm chứng hiệu quả riêng” (EVIDENCE.md) |
-| SHA production, P0/P1 = 0 | xem “Production” | |
+| SHA production, P0/P1 = 0 | ✅ | `1d7c28a`, deployed smoke 44640067500 36/36; xem “Production” |
 
 ## Điện thoại giả lập
 
@@ -66,7 +66,7 @@ Chỉ tính tài nguyên tải trước sự kiện `load` (lần vẽ đầu), 
 ## Production
 
 - Trước cổng này: production phục vụ `022a2d56d6fa863577bd2c68ca33293468bf6ec3` (deploy `6aff2ad1ad318f9c95ca8b89`, gồm #185 Ba điều nhỏ xíu, #188 sổ lật trang, #189 bộ sprite), deployed smoke run 44572144238 36/36.
-- SHA của chính cổng này: ghi vào #135 sau khi merge và deployed smoke trên production pass.
+- Cổng này: PR #190 squash-merge thành `1d7c28ad8c9c4c9aceb3707b709fdb466d87ade9`; production `build-info.json` phục vụ đúng SHA đó, deployed smoke run 44640067500 36/36 (20/11/2026). P0/P1 mở: 0.
 
 ## Rollback
 
