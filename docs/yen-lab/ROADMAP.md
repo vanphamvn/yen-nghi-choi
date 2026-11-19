@@ -1,6 +1,6 @@
 # Yên Lab Beta · Product Roadmap
 
-**Trạng thái:** M0 complete · M1 ready · **Ngày quyết định:** 19/11/2026 · **Epic:** [#124](https://github.com/vanphamvn/yen-nghi-choi/issues/124) · **Source:** `vanphamvn/yen-nghi-choi`
+**Trạng thái:** M0 complete · M1 in progress (F05 /lab/ shell done, PR #167 · prod `dd72230`; homepage link still gated) · **Ngày quyết định:** 19/11/2026 · **Epic:** [#124](https://github.com/vanphamvn/yen-nghi-choi/issues/124) · **Source:** `vanphamvn/yen-nghi-choi`
 
 > **QUYẾT ĐỊNH ĐÃ CHỐT:** Ngưng phát triển Game Yên Phaser 2D, giữ source cũ để lưu trữ. Website Yên sẽ dẫn đến `/lab/`, một bộ mini tools thực hành ngắn giúp khách có cơ hội thư giãn và nhận biết trạng thái của mình. **Nghiên cứu hỗ trợ phương pháp không đồng nghĩa đã chứng minh chính mini game có hiệu quả.**
 
@@ -38,7 +38,7 @@
 | `LAB-F02` | [#126](https://github.com/vanphamvn/yen-nghi-choi/issues/126) Hoàn tất skill PR #123 | M0 | P0 | [PR #123](https://github.com/vanphamvn/yen-nghi-choi/pull/123) |
 | `LAB-F03` | [#127](https://github.com/vanphamvn/yen-nghi-choi/issues/127) Research matrix & safety | M0 | P0 | Không |
 | `LAB-F04` | [#128](https://github.com/vanphamvn/yen-nghi-choi/issues/128) Information architecture & microcopy | M0 | P1 | [#127](https://github.com/vanphamvn/yen-nghi-choi/issues/127) |
-| `LAB-F05` | [#129](https://github.com/vanphamvn/yen-nghi-choi/issues/129) Route /lab/ + link homepage | M1 | P0 | [#126](https://github.com/vanphamvn/yen-nghi-choi/issues/126), [#128](https://github.com/vanphamvn/yen-nghi-choi/issues/128) |
+| `LAB-F05` | [#129](https://github.com/vanphamvn/yen-nghi-choi/issues/129) Route /lab/ + link homepage ✅ done ([PR #167](https://github.com/vanphamvn/yen-nghi-choi/pull/167)) | M1 | P0 | [#126](https://github.com/vanphamvn/yen-nghi-choi/issues/126), [#128](https://github.com/vanphamvn/yen-nghi-choi/issues/128) |
 | `LAB-F06` | [#130](https://github.com/vanphamvn/yen-nghi-choi/issues/130) UI components & tokens | M1 | P0 | [#126](https://github.com/vanphamvn/yen-nghi-choi/issues/126), [#128](https://github.com/vanphamvn/yen-nghi-choi/issues/128) |
 | `LAB-F07` | [#131](https://github.com/vanphamvn/yen-nghi-choi/issues/131) Shared interaction engine & timers | M1 | P0 | [#129](https://github.com/vanphamvn/yen-nghi-choi/issues/129), [#130](https://github.com/vanphamvn/yen-nghi-choi/issues/130) |
 | `LAB-F08` | [#132](https://github.com/vanphamvn/yen-nghi-choi/issues/132) Privacy, a11y & CSP | M1 | P0 | [#126](https://github.com/vanphamvn/yen-nghi-choi/issues/126), [#129](https://github.com/vanphamvn/yen-nghi-choi/issues/129) |

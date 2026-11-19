@@ -166,12 +166,13 @@
       "priority": "P0",
       "title": "Route /lab/ + link homepage",
       "kind": "frontend",
-      "status": "todo",
+      "status": "done",
       "depends_on": [
         "F02",
         "F04"
       ],
-      "issue_url": "https://github.com/vanphamvn/yen-nghi-choi/issues/129"
+      "issue_url": "https://github.com/vanphamvn/yen-nghi-choi/issues/129",
+      "evidence": "PR #167 squash-merged as dd72230. /lab/ is a no-storage café-room shell (owner-directed chill-space design), homepage link hidden by flag_yenlab=0 until #134. foundation CI green; 32/32 Playwright desktop+emulated touch (routing, 404, back/forward, playthings, no-JS, 320–1440). Independent agent review of first version (no P0/P1). Netlify production verified: build-info commitSha=dd72230, context=production, branch=main, verifyBuildInfo=true; /lab/ 200, /lab 301, unknown 404; real-browser check 390px on production. Not verified: physical devices, screen readers; redesign after first review not independently re-reviewed; Netlify injects /.netlify/scripts/hud (inline parts blocked by CSP)."
     },
     {
       "key": "F06",
