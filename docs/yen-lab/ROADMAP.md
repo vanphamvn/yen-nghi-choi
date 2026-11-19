@@ -1,6 +1,6 @@
 # Yên Lab Beta · Product Roadmap
 
-**Trạng thái:** M0 complete · M1 in progress (F05 /lab/ shell done, PR #167 · prod `dd72230`; F06 shared game screen done, PR #173 · prod `26059f1`; F07 engine done, PR #175 · prod `c827d3f`; F08 privacy/CSP done, PR #177 · prod `01ca195`; homepage link still gated) · **Ngày quyết định:** 19/11/2026 · **Epic:** [#124](https://github.com/vanphamvn/yen-nghi-choi/issues/124) · **Source:** `vanphamvn/yen-nghi-choi`
+**Trạng thái:** M0 complete · M1 in progress (F05 /lab/ shell done, PR #167 · prod `dd72230`; F06 shared game screen done, PR #173 · prod `26059f1`; F07 engine done, PR #175 · prod `c827d3f`; F08 privacy/CSP done, PR #177 · prod `01ca195`; F09 smoke + release gate done, PR #178 · prod `c424928`; **G01 Thở cùng Yên live at `/lab/tho/`**, PR #179 · prod `065111b`; homepage link still gated) · **Ngày quyết định:** 19/11/2026 · **Epic:** [#124](https://github.com/vanphamvn/yen-nghi-choi/issues/124) · **Source:** `vanphamvn/yen-nghi-choi`
 
 > **QUYẾT ĐỊNH ĐÃ CHỐT:** Ngưng phát triển Game Yên Phaser 2D, giữ source cũ để lưu trữ. Website Yên sẽ dẫn đến `/lab/`, một bộ mini tools thực hành ngắn giúp khách có cơ hội thư giãn và nhận biết trạng thái của mình. **Nghiên cứu hỗ trợ phương pháp không đồng nghĩa đã chứng minh chính mini game có hiệu quả.**
 
@@ -42,7 +42,7 @@
 | `LAB-F06` | [#130](https://github.com/vanphamvn/yen-nghi-choi/issues/130) UI components & tokens ✅ done ([PR #173](https://github.com/vanphamvn/yen-nghi-choi/pull/173), [GAME-SCREEN.md](GAME-SCREEN.md)) | M1 | P0 | [#126](https://github.com/vanphamvn/yen-nghi-choi/issues/126), [#128](https://github.com/vanphamvn/yen-nghi-choi/issues/128) |
 | `LAB-F07` | [#131](https://github.com/vanphamvn/yen-nghi-choi/issues/131) Shared interaction engine & timers ✅ done ([PR #175](https://github.com/vanphamvn/yen-nghi-choi/pull/175), [GAME-SCREEN.md](GAME-SCREEN.md#engine-dùng-chung-lab-f07-131)) | M1 | P0 | [#129](https://github.com/vanphamvn/yen-nghi-choi/issues/129), [#130](https://github.com/vanphamvn/yen-nghi-choi/issues/130) |
 | `LAB-F08` | [#132](https://github.com/vanphamvn/yen-nghi-choi/issues/132) Privacy, a11y & CSP ✅ done ([PR #177](https://github.com/vanphamvn/yen-nghi-choi/pull/177), [PRIVACY.md](PRIVACY.md)) | M1 | P0 | [#126](https://github.com/vanphamvn/yen-nghi-choi/issues/126), [#129](https://github.com/vanphamvn/yen-nghi-choi/issues/129) |
-| `LAB-F09` | [#133](https://github.com/vanphamvn/yen-nghi-choi/issues/133) Playwright /lab/ & release smoke | M1 | P0 | [#129](https://github.com/vanphamvn/yen-nghi-choi/issues/129), [#131](https://github.com/vanphamvn/yen-nghi-choi/issues/131) |
+| `LAB-F09` | [#133](https://github.com/vanphamvn/yen-nghi-choi/issues/133) Playwright /lab/ & release smoke ✅ done ([PR #178](https://github.com/vanphamvn/yen-nghi-choi/pull/178), [RELEASE-SMOKE.md](RELEASE-SMOKE.md)) | M1 | P0 | [#129](https://github.com/vanphamvn/yen-nghi-choi/issues/129), [#131](https://github.com/vanphamvn/yen-nghi-choi/issues/131) |
 | `LAB-F10` | [#134](https://github.com/vanphamvn/yen-nghi-choi/issues/134) Alpha production release gate | M1 | P0 | [#129](https://github.com/vanphamvn/yen-nghi-choi/issues/129), [#130](https://github.com/vanphamvn/yen-nghi-choi/issues/130), [#131](https://github.com/vanphamvn/yen-nghi-choi/issues/131), [#132](https://github.com/vanphamvn/yen-nghi-choi/issues/132), [#133](https://github.com/vanphamvn/yen-nghi-choi/issues/133), [#142](https://github.com/vanphamvn/yen-nghi-choi/issues/142) |
 | `LAB-F11` | [#135](https://github.com/vanphamvn/yen-nghi-choi/issues/135) Core Beta 3 release gate | M2 | P0 | [#143](https://github.com/vanphamvn/yen-nghi-choi/issues/143), [#155](https://github.com/vanphamvn/yen-nghi-choi/issues/155), [#134](https://github.com/vanphamvn/yen-nghi-choi/issues/134) |
 | `LAB-F12` | [#136](https://github.com/vanphamvn/yen-nghi-choi/issues/136) Gợi ý theo nhu cầu | M3 | P1 | [#128](https://github.com/vanphamvn/yen-nghi-choi/issues/128), [#129](https://github.com/vanphamvn/yen-nghi-choi/issues/129), [#135](https://github.com/vanphamvn/yen-nghi-choi/issues/135) |
@@ -56,7 +56,7 @@
 
 | Key | GitHub ticket | Làn phát hành | Ưu tiên | Nhận xét bằng chứng sơ bộ |
 |---|---|---|---|---|
-| `LAB-G01` | [#142](https://github.com/vanphamvn/yen-nghi-choi/issues/142) Thở cùng Yên | M1 | P0 | Có nghiên cứu về breathing, **không phải validation game** |
+| `LAB-G01` | [#142](https://github.com/vanphamvn/yen-nghi-choi/issues/142) Thở cùng Yên ✅ done ([PR #179](https://github.com/vanphamvn/yen-nghi-choi/pull/179), [G01-THO.md](G01-THO.md)) | M1 | P0 | Có nghiên cứu về breathing, **không phải validation game** |
 | `LAB-G02` | [#143](https://github.com/vanphamvn/yen-nghi-choi/issues/143) Căng rồi thả | M2 | P0 | Có nghiên cứu PMR, **liều lượng rút gọn chưa xác minh** |
 | `LAB-G03` | [#144](https://github.com/vanphamvn/yen-nghi-choi/issues/144) Quét người tìm căng thẳng | M4 | P1 | Mindfulness gián tiếp |
 | `LAB-G04` | [#145](https://github.com/vanphamvn/yen-nghi-choi/issues/145) Ngón tay biết thở | M4 | P2 | Biến thể breathing, chưa có chứng cứ riêng |
