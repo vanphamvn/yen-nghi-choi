@@ -6,6 +6,10 @@ on:
       - tools/check-yen-lab-foundation.mjs
       - tools/serve-lab-ux.mjs
       - tests/yen-lab-ux.spec.mjs
+      - tests/yen-lab-route.spec.mjs
+      - lab/**
+      - index.html
+      - 404.html
       - playwright.lab-ux.config.mjs
       - package.json
       - package-lock.json
@@ -19,6 +23,10 @@ on:
       - tools/check-yen-lab-foundation.mjs
       - tools/serve-lab-ux.mjs
       - tests/yen-lab-ux.spec.mjs
+      - tests/yen-lab-route.spec.mjs
+      - lab/**
+      - index.html
+      - 404.html
       - playwright.lab-ux.config.mjs
       - package.json
       - package-lock.json
@@ -48,7 +56,7 @@ jobs:
           else
             npx playwright install --with-deps chromium
           fi
-      - name: Exercise documentation prototype (emulated touch and keyboard)
+      - name: Exercise prototype and /lab/ route (emulated touch and keyboard)
         run: npx playwright test --config playwright.lab-ux.config.mjs
       - name: Preserve prototype screenshots and traces
         if: always()
