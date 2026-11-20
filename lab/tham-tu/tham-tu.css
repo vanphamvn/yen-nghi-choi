@@ -1,0 +1,26 @@
+/* Thám tử hiện tại (G05, #146): only what the shared game screen (lab/game.css) does not already provide. */
+
+/* The painted sense tiles (#189) are a wide strip, not a square character. */
+.tt-stage { width: min(100%, 340px); aspect-ratio: auto; margin: 16px auto 8px; }
+.tt-stage > img {
+  width: 100%;
+  /* Hide the sprite's leaf tile (bottom right): next to a taste step it could read as "taste a plant" (SAFETY.md). */
+  clip-path: polygon(0 0, 100% 0, 100% 46%, 66% 46%, 66% 100%, 0 100%);
+}
+/* No double-tap zoom while tapping quickly to count. */
+.game[data-game="tham-tu"] .ink-word { touch-action: manipulation; }
+
+.tt-sub { --show: block; max-width: 34ch; margin: 6px auto 0; font-size: 15px; line-height: 1.5; color: var(--muted); text-wrap: pretty; }
+.game[data-state="running"] .game-cue { margin-top: 4px; }
+.game[data-state="running"] .game-progress { margin-top: 10px; }
+.game[data-state="running"] #game-controls { margin-top: 10px; }
+#tt-result-line:focus { outline: none; }
+#tt-result-line:focus-visible { outline: 3px solid var(--focus); outline-offset: 4px; border-radius: 6px; }
+
+/* Phones: cue, count and "thấy một thứ" together in the first screen. */
+@media (max-width: 767px) {
+  .game[data-state="idle"] .tt-stage { width: min(100%, 260px); margin: 8px auto 2px; }
+  .game[data-state="running"] .tt-stage { width: min(100%, 220px); margin: 6px auto 0; }
+  .game[data-state="running"] .game-head .game-lede { display: none; }
+  .game[data-state="running"] .game-head h1 { font-size: 26px; }
+}

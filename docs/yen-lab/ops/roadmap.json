@@ -341,7 +341,7 @@
       "priority": "P1",
       "title": "Thám tử hiện tại",
       "kind": "minigame",
-      "status": "todo",
+      "status": "in-progress",
       "depends_on": [
         "F03",
         "F11"
