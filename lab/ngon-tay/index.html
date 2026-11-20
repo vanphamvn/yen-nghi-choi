@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f7f3e9">
+  <meta name="robots" content="noindex, nofollow, noarchive">
+  <meta name="referrer" content="no-referrer">
+  <meta name="description" content="Ngón tay biết thở: đi ngón tay theo viền bàn tay, lên hít vào, xuống thở ra, theo nhịp của bạn.">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; font-src 'none'; connect-src 'none'; frame-src 'none'; form-action 'none'; base-uri 'none'; object-src 'none'">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="stylesheet" href="/lab/lab.css">
+  <link rel="stylesheet" href="/lab/game.css">
+  <link rel="stylesheet" href="/lab/ngon-tay/ngon-tay.css">
+  <script type="module" src="/lab/ngon-tay/ngon-tay.mjs"></script>
+  <title>Ngón tay biết thở · Yên Lab | Yên Coffee &amp; Tea</title>
+</head>
+<body>
+  <!-- G04 (#145): finger-tracing breathing at the guest's own pace. Copy per SAFETY.md "Breathing Alpha" and EVIDENCE.md G04
+       (indirect / adapted). No timer: the marker moves only with the guest's finger (any direction, no precision) or "tiếp". -->
+  <a class="lab-skip" href="#game-title">Đến nội dung</a>
+  <header class="lab-header lab-wrap">
+    <a class="lab-brand" href="/" aria-label="Về website Yên Coffee &amp; Tea"><img src="/yen-logo.svg" width="1450" height="585" alt="yên"><span class="lab-brand-sub" aria-hidden="true">COFFEE &amp; TEA</span></a>
+    <nav class="lab-nav" aria-label="Điều hướng Yên Lab">
+      <a class="lab-nav-home" href="/lab/">Góc ngồi chơi</a>
+    </nav>
+  </header>
+
+  <main class="game" id="game" data-loading data-state="idle" data-game="ngon-tay" aria-labelledby="game-title">
+    <img class="game-backdrop" src="/lab/assets/room-backdrop.jpg" width="1586" height="992" alt="" decoding="async">
+    <article class="game-sheet">
+      <header class="game-head">
+        <h1 id="game-title" tabindex="-1">Ngón tay biết thở</h1>
+        <p class="game-lede">Thử đi ngón tay theo nhịp riêng.</p>
+      </header>
+
+      <div class="game-stage nt-stage" data-when="idle" aria-hidden="true">
+        <img src="/lab/assets/sprites/games/g04-ngon-tay-biet-tho.webp" width="295" height="92" alt="" decoding="async">
+      </div>
+
+      <!-- The hand (first panel of the G04 sprite) with the path to trace. Decorative: the cue and "tiếp" carry the meaning. -->
+      <div class="nt-hand" id="nt-hand" data-when="running complete" aria-hidden="true">
+        <svg viewBox="0 0 75 74" preserveAspectRatio="none" focusable="false">
+          <polyline class="nt-path" id="nt-path" points=""></polyline>
+          <polyline class="nt-done" id="nt-done" points=""></polyline>
+          <circle class="nt-marker" id="nt-marker" r="2.6" cx="0" cy="0"></circle>
+        </svg>
+      </div>
+
+      <p class="game-cue" data-when="running" id="game-cue">hít vào nhẹ</p>
+      <p class="nt-where" data-when="running" id="nt-where" aria-hidden="true"></p>
+      <p class="lab-sr" id="nt-sr" aria-live="polite"></p>
+
+      <div class="nt-options" data-when="idle">
+        <span class="nt-option-label" id="nt-rounds-label">mấy lượt</span>
+        <div class="game-words" role="group" aria-labelledby="nt-rounds-label">
+          <button class="ink-word ink-word--small" type="button" data-rounds="1" aria-pressed="true">một lượt</button>
+          <button class="ink-word ink-word--small" type="button" data-rounds="2" aria-pressed="false">hai lượt</button>
+        </div>
+      </div>
+
+      <p class="game-note" data-when="idle">Rê ngón tay theo viền bàn tay trên màn hình, hoặc trên bàn tay thật của bạn: lên một ngón thì hít vào nhẹ, xuống thì thở ra nhẹ. Không cần rê đúng đường; bấm “tiếp” cũng được.</p>
+      <p class="game-note" data-when="idle">Thở theo nhịp của bạn, ngón tay đi theo hơi thở. Không cần hít sâu hay nín thở. Nếu chóng mặt, hụt hơi hoặc khó chịu, hãy dừng và thở tự nhiên.</p>
+      <p class="game-note" data-when="running">Ngón tay đi chậm hay nhanh cũng được; cứ thở theo nhịp của bạn.</p>
+      <p class="game-note" data-when="error">Trò chưa chạy được. Thử lại hoặc về góc ngồi chơi nhé.</p>
+      <p class="game-note game-wait">Trò đang mở ra. Lâu quá thì về góc ngồi chơi rồi quay lại sau nhé.</p>
+
+      <div class="game-result" data-when="complete stopped">
+        <p class="game-result-line" data-when="complete" id="nt-result-line" tabindex="-1">Xong rồi. Không cần thấy khác đi.</p>
+        <p class="game-result-line" data-when="stopped">Mình dừng ở đây nhé.</p>
+        <div class="game-reflect" id="game-reflect" hidden>
+          <p id="reflect-q">Nếu muốn, lúc này bạn thấy sao?</p>
+          <div class="game-words" role="group" aria-labelledby="reflect-q">
+            <button class="ink-word ink-word--small" type="button" data-reflect>dễ chịu hơn</button>
+            <button class="ink-word ink-word--small" type="button" data-reflect>như cũ</button>
+            <button class="ink-word ink-word--small" type="button" data-reflect>khó chịu hơn</button>
+            <button class="ink-word ink-word--small" type="button" data-reflect>không rõ</button>
+            <button class="ink-word ink-word--small" type="button" data-reflect>bỏ qua</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="game-words" id="game-controls" role="group" aria-label="Điều khiển trò">
+        <button class="ink-word ink-word--lead" type="button" data-act="start" data-when="idle" disabled>bắt đầu</button>
+        <button class="ink-word ink-word--lead" type="button" data-act="next" data-when="running">tiếp</button>
+        <button class="ink-word" type="button" data-act="stop" data-when="running">dừng hẳn</button>
+        <button class="ink-word ink-word--lead" type="button" data-act="again" data-when="complete stopped error">làm lại</button>
+        <a class="ink-word" href="/lab/" data-when="idle complete stopped error">về góc ngồi chơi</a>
+      </div>
+
+      <p class="game-whisper" id="game-whisper" role="status" aria-live="polite"></p>
+    </article>
+    <noscript><p class="game-note">Trò này cần JavaScript để đi theo bàn tay trên màn hình. Không có nó, bạn vẫn có thể thử trên bàn tay thật: rê một ngón theo viền bàn tay kia, lên một ngón thì hít vào nhẹ, xuống thì thở ra nhẹ, theo nhịp của bạn. <a href="/lab/">Về góc ngồi chơi</a>.</p></noscript>
+  </main>
+
+  <footer class="lab-footer">
+    <div class="lab-wrap lab-footer-inner">
+      <img class="lab-door" src="/lab/assets/door.webp" width="160" height="268" alt="" decoding="async" loading="lazy">
+      <nav class="lab-footer-links" aria-label="Rời Yên Lab">
+        <a class="lab-button" href="/">Về Yên</a>
+        <a href="/#yen-ngoai-doi">Ghé quán thật</a>
+      </nav>
+      <p class="lab-fineprint">Một trò nhỏ để thử, không thay thế tư vấn hoặc điều trị chuyên môn. Nghiên cứu nói về thở chậm, nhẹ; trò này chỉ mời thở theo nhịp riêng, việc rê ngón tay chưa được nghiên cứu riêng và trò chưa được kiểm chứng hiệu quả. Không cookie, rời đi là quên. <a href="https://github.com/vanphamvn/yen-nghi-choi/blob/main/docs/yen-lab/EVIDENCE.md" rel="noopener noreferrer" referrerpolicy="no-referrer">Nguồn phương pháp</a></p>
+    </div>
+  </footer>
+</body>
+</html>

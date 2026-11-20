@@ -237,7 +237,7 @@ test('Cục Yên suggests games: all three groups, only released games, a real l
   const buddy = page.getByRole('button', { name: 'Chọc Cục Yên một cái' });
   const says = page.locator('#buddy-says');
   const released = await page.locator('#lab-menu [data-status="released"] a').evaluateAll(list => list.map(a => a.getAttribute('href')));
-  expect(released.length).toBe(8);
+  expect(released.length).toBe(9);
   const seen = [];
   for (let i = 0; i < released.length * 2; i++) {
     if (testInfo.project.name === 'emulated-touch') await buddy.tap(); else await buddy.click();
@@ -262,7 +262,7 @@ test('Cục Yên suggests games: all three groups, only released games, a real l
   expect(await page.evaluate(() => [localStorage.length, sessionStorage.length, document.cookie, location.search, location.hash])).toEqual([0, 0, '', '', '']);
   // the book is still the full list
   await page.getByRole('button', { name: 'Mở thực đơn trò chơi' }).click();
-  await expect(page.locator('#lab-menu [data-status="released"] a')).toHaveCount(8);
+  await expect(page.locator('#lab-menu [data-status="released"] a')).toHaveCount(9);
 });
 
 test('Cục Yên suggestion by keyboard, in a polite live region: poke with Enter, Tab reaches the game, Enter opens it; back starts fresh', async ({ page }, testInfo) => {
