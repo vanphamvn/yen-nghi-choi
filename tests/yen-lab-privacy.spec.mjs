@@ -4,7 +4,7 @@ import { test, expect } from '@playwright/test';
 // Safari/WebKit only moves focus through links and buttons with Option+Tab (default "Tab to highlight" is off).
 const TAB = page => page.context().browser()?.browserType().name() === 'webkit' ? 'Alt+Tab' : 'Tab';
 
-const PAGES = ['/lab/', '/lab/tho/', '/lab/cang/', '/lab/ba-dieu/', '/lab/tham-tu/', '/lab/la-troi/', '/lab/goi-ten/', '/lab/nhin-may/', '/lab/vuon-cat/', '/docs/yen-lab/game-kit.html'];
+const PAGES = ['/lab/', '/lab/tho/', '/lab/cang/', '/lab/ba-dieu/', '/lab/tham-tu/', '/lab/la-troi/', '/lab/goi-ten/', '/lab/nhin-may/', '/lab/vuon-cat/', '/lab/ngon-tay/', '/docs/yen-lab/game-kit.html'];
 const ORIGIN = `http://127.0.0.1:${process.env.LAB_UX_PORT || 4189}`;
 
 async function probe(page) {
@@ -157,6 +157,18 @@ async function playVuonCat(page) {
   await tap('như cũ'); await tap('chơi lại');
 }
 
+async function playNgonTay(page) {
+  await page.goto('/lab/ngon-tay/');
+  const tap = async name => { await page.clock.runFor(450); await page.getByRole('button', { name, exact: true }).click(); };
+  await tap('hai lượt'); await tap('bắt đầu'); await page.clock.runFor(450);
+  const box = await page.locator('#nt-hand').boundingBox();
+  await page.mouse.move(box.x + 60, box.y + 60); await page.mouse.down();
+  await page.mouse.move(box.x + 160, box.y + 140, { steps: 10 }); await page.mouse.up();
+  for (let i = 0; i < 20; i++) { if (await page.locator('#game').getAttribute('data-state') !== 'running') break; await tap('tiếp'); }
+  await expect(page.locator('#game')).toHaveAttribute('data-state', 'complete');
+  await tap('không rõ'); await tap('làm lại');
+}
+
 test('no storage, cookies, network, device, audio or URL state during real Lab flows', async ({ page }) => {
   const requests = await probe(page);
   await page.clock.install();
@@ -182,10 +194,12 @@ test('no storage, cookies, network, device, audio or URL state during real Lab f
   expect(await page.evaluate(() => window.__labProbe)).toEqual([]);
   await playVuonCat(page);
   expect(await page.evaluate(() => window.__labProbe)).toEqual([]);
+  await playNgonTay(page);
+  expect(await page.evaluate(() => window.__labProbe)).toEqual([]);
   // Only page loads add history entries (re-loading /lab/ replaces its entry; kit and each game add one); nothing a guest
   // does is pushed into the URL.
   expect(await page.evaluate(() => [location.search, location.hash])).toEqual(['', '']);
-  expect(await page.evaluate(() => history.length)).toBe(historyStart + 9);
+  expect(await page.evaluate(() => history.length)).toBe(historyStart + 10);
   // Only same-origin GETs of static files, never a body (nothing a guest picks or types leaves the page).
   // …and never with a query string, which could smuggle a choice into server logs (e.g. img.src = '/x.webp?m=' + mood).
   const offenders = requests.filter(r => !r.url.startsWith(ORIGIN) || r.method !== 'GET' || r.body || new URL(r.url).search);

@@ -10,8 +10,8 @@ const ORIGIN = new URL(BASE).origin;
 const EXPECT_SHA = process.env.LAB_EXPECT_SHA || '';
 const RECORD_DIR = 'test-results/lab-smoke';
 // Every released Lab page. A new game adds its route here (and to the menu test in yen-lab-route.spec.mjs).
-const PAGES = ['/lab/', '/lab/tho/', '/lab/cang/', '/lab/ba-dieu/', '/lab/tham-tu/', '/lab/la-troi/', '/lab/goi-ten/', '/lab/nhin-may/', '/lab/vuon-cat/', '/lab/404.html', '/docs/yen-lab/game-kit.html'];
-const GAMES = [{ path: '/lab/tho/', label: 'Thở cùng Yên' }, { path: '/lab/cang/', label: 'Căng rồi thả' }, { path: '/lab/ba-dieu/', label: 'Ba điều nhỏ xíu', untimed: true }, { path: '/lab/tham-tu/', label: 'Thám tử hiện tại', stepped: true }, { path: '/lab/la-troi/', label: 'Lá trôi, nghĩ trôi', leaves: true }, { path: '/lab/goi-ten/', label: 'Gọi tên cơn bực', labels: true }, { path: '/lab/nhin-may/', label: 'Ngồi nhìn mây' }, { path: '/lab/vuon-cat/', label: 'Vườn cát không mục tiêu', sand: true }, { path: '/docs/yen-lab/game-kit.html', label: 'kit' }];
+const PAGES = ['/lab/', '/lab/tho/', '/lab/cang/', '/lab/ba-dieu/', '/lab/tham-tu/', '/lab/la-troi/', '/lab/goi-ten/', '/lab/nhin-may/', '/lab/vuon-cat/', '/lab/ngon-tay/', '/lab/404.html', '/docs/yen-lab/game-kit.html'];
+const GAMES = [{ path: '/lab/tho/', label: 'Thở cùng Yên' }, { path: '/lab/cang/', label: 'Căng rồi thả' }, { path: '/lab/ba-dieu/', label: 'Ba điều nhỏ xíu', untimed: true }, { path: '/lab/tham-tu/', label: 'Thám tử hiện tại', stepped: true }, { path: '/lab/la-troi/', label: 'Lá trôi, nghĩ trôi', leaves: true }, { path: '/lab/goi-ten/', label: 'Gọi tên cơn bực', labels: true }, { path: '/lab/nhin-may/', label: 'Ngồi nhìn mây' }, { path: '/lab/vuon-cat/', label: 'Vườn cát không mục tiêu', sand: true }, { path: '/lab/ngon-tay/', label: 'Ngón tay biết thở', traced: true }, { path: '/docs/yen-lab/game-kit.html', label: 'kit' }];
 const VIEWPORTS = [[320, 640], [360, 800], [390, 844], [768, 1024], [1440, 900]];
 
 test.use({ baseURL: BASE });
@@ -49,7 +49,7 @@ const NETLIFY_INJECTIONS = [
 
 test('provenance: deployed Lab files are byte-identical to this commit, apart from known host injections', async ({ request }) => {
   test.skip(!process.env.LAB_BASE_URL || !EXPECT_SHA, 'needs a deployed site and LAB_EXPECT_SHA with that commit checked out');
-  const text = [...PAGES.map(p => p.endsWith('/') ? p + 'index.html' : p), '/lab/lab.css', '/lab/lab.js', '/lab/game.css', '/lab/engine.mjs', '/lab/tho/tho.css', '/lab/tho/tho.mjs', '/lab/cang/cang.css', '/lab/cang/cang.mjs', '/lab/ba-dieu/ba-dieu.css', '/lab/ba-dieu/ba-dieu.mjs', '/lab/tham-tu/tham-tu.css', '/lab/tham-tu/tham-tu.mjs', '/lab/la-troi/la-troi.css', '/lab/la-troi/la-troi.mjs', '/lab/goi-ten/goi-ten.css', '/lab/goi-ten/goi-ten.mjs', '/lab/nhin-may/nhin-may.css', '/lab/nhin-may/nhin-may.mjs', '/lab/vuon-cat/vuon-cat.css', '/lab/vuon-cat/vuon-cat.mjs', '/docs/yen-lab/game-kit.mjs', '/lab/assets/sprites/manifest.json', '/lab/assets/sprites/preview.css', '/lab/assets/sprites/preview.js', '/lab/assets/sprites/preview.html'];
+  const text = [...PAGES.map(p => p.endsWith('/') ? p + 'index.html' : p), '/lab/lab.css', '/lab/lab.js', '/lab/game.css', '/lab/engine.mjs', '/lab/tho/tho.css', '/lab/tho/tho.mjs', '/lab/cang/cang.css', '/lab/cang/cang.mjs', '/lab/ba-dieu/ba-dieu.css', '/lab/ba-dieu/ba-dieu.mjs', '/lab/tham-tu/tham-tu.css', '/lab/tham-tu/tham-tu.mjs', '/lab/la-troi/la-troi.css', '/lab/la-troi/la-troi.mjs', '/lab/goi-ten/goi-ten.css', '/lab/goi-ten/goi-ten.mjs', '/lab/nhin-may/nhin-may.css', '/lab/nhin-may/nhin-may.mjs', '/lab/vuon-cat/vuon-cat.css', '/lab/vuon-cat/vuon-cat.mjs', '/lab/ngon-tay/ngon-tay.css', '/lab/ngon-tay/ngon-tay.mjs', '/docs/yen-lab/game-kit.mjs', '/lab/assets/sprites/manifest.json', '/lab/assets/sprites/preview.css', '/lab/assets/sprites/preview.js', '/lab/assets/sprites/preview.html'];
   const spriteSubdirs = ['atlases', 'frames', 'games', 'shared'];
   const spriteBinary = spriteSubdirs.flatMap(dir =>
     readdirSync('lab/assets/sprites/' + dir, { withFileTypes: true })
@@ -417,7 +417,51 @@ for (const game of GAMES.filter(g => g.sand)) {
   });
 }
 
-for (const game of GAMES.filter(g => !g.untimed && !g.stepped && !g.leaves && !g.labels && !g.sand)) {
+for (const game of GAMES.filter(g => g.traced)) {
+  test(`${game.label}: start → trace → stop → again → tiếp through a round → complete really works`, async ({ page }) => {
+    const problems = watch(page);
+    await page.clock.install();
+    await page.goto(game.path);
+    const g = page.locator('main.game');
+    const tap = async name => { await page.clock.runFor(450); await page.getByRole('button', { name, exact: true }).click(); };
+    await tap('bắt đầu');
+    await expect(g).toHaveAttribute('data-state', 'running');
+    await page.clock.runFor(450);
+    const box = await page.locator('#nt-hand').boundingBox();
+    await page.mouse.move(box.x + 50, box.y + 50); await page.mouse.down();
+    await page.mouse.move(box.x + 90, box.y + 120, { steps: 6 }); await page.mouse.up();
+    await expect(page.locator('#nt-done')).not.toHaveAttribute('points', '');
+    await tap('dừng hẳn');
+    await expect(g).toHaveAttribute('data-state', 'stopped');
+    await tap('làm lại');
+    await tap('bắt đầu');
+    await expect(page.locator('#nt-where')).toHaveText('ngón út · lên · 1 / 5');
+    for (let i = 0; i < 10; i++) await tap('tiếp');
+    await expect(g).toHaveAttribute('data-state', 'complete');
+    await expect(page.locator('main.game a[href="/lab/"]').first()).toBeVisible();
+    expect(problems).toEqual([]);
+  });
+
+  test(`${game.label}: reduced motion still completes, with nothing moving`, async ({ browser }) => {
+    const context = await browser.newContext({ reducedMotion: 'reduce', baseURL: BASE });
+    if (process.env.LAB_BASE_URL) await blockHostTooling(context);
+    const page = await context.newPage();
+    await page.clock.install();
+    await page.goto(game.path);
+    const tap = async name => { await page.clock.runFor(450); await page.getByRole('button', { name, exact: true }).click(); };
+    await tap('bắt đầu');
+    const moving = await page.evaluate(() => [...document.querySelectorAll('*')].some(el => {
+      const s = getComputedStyle(el);
+      return (s.animationName !== 'none' && s.animationDuration.split(',').some(v => parseFloat(v) > 0)) || s.transitionDuration.split(',').some(v => parseFloat(v) > 0);
+    }));
+    expect(moving).toBe(false);
+    for (let i = 0; i < 10; i++) await tap('tiếp');
+    await expect(page.locator('main.game')).toHaveAttribute('data-state', 'complete');
+    await context.close();
+  });
+}
+
+for (const game of GAMES.filter(g => !g.untimed && !g.stepped && !g.leaves && !g.labels && !g.sand && !g.traced)) {
   test(`${game.label}: start → pause → resume → stop → reset → complete really works`, async ({ page }) => {
     const problems = watch(page);
     await page.clock.install();
