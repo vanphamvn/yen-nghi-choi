@@ -33,7 +33,7 @@ Trang trò nạp `/lab/lab.css` (token, header, footer) và `/lab/game.css` (mà
 ## Bằng chứng kiểm tra (trước merge)
 
 - `tests/yen-lab-game-kit.spec.mjs` (Chromium, desktop 1440 + touch giả lập 360): luồng idle → running → paused → running → stopped → idle bằng chuột, chạm và bàn phím (Tab/Enter/Space); focus không mất; phản hồi không lưu (storage/cookie/URL trống); controls không có nền/viền/bóng; reduced-motion không còn chuyển động; tương phản WCAG AA mọi chữ trên giấy ở 4 trạng thái; 320/360/390/768/1440 không tràn ngang, chữ điều khiển ≥ 44px và không xuống dòng; “làm lại” nằm trong màn hình đầu 360×800.
-- Ảnh chụp idle/running/complete ở 5 chiều rộng: artifact CI `yen-lab-ux-browser-evidence` → `game-kit-shots/`. Agent đã xem ảnh 320/360/768/1440 và bản Browser pane 390px; chưa có duyệt của chủ quán.
+- Ảnh chụp idle/running/complete ở 5 chiều rộng: artifact CI `yen-lab-ux-browser-evidence-shard-<n>` (shard chạy spec game-kit) → `game-kit-shots/`. Agent đã xem ảnh 320/360/768/1440 và bản Browser pane 390px; chưa có duyệt của chủ quán.
 - Chưa kiểm tra: VoiceOver/TalkBack, iPhone/Android thật. Không có trò nào phát hành trong ticket này.
 
 ## Engine dùng chung (LAB-F07, #131)
