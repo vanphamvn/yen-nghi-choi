@@ -1,0 +1,60 @@
+/* Lá trôi, nghĩ trôi (G07, #148): only what the shared game screen (lab/game.css) does not already provide. */
+
+/* The stream: the painted four-panel strip (#189), a leaf drifting downstream. The thought rides across it on a paper slip. */
+.lt-stream { width: min(100%, 360px); aspect-ratio: auto; margin: 16px auto 10px; overflow: hidden; border-radius: 6px; }
+.lt-stream > img { width: 100%; }
+.lt-slip {
+  position: absolute; top: 50%; left: 50%; z-index: 1;
+  max-width: 62%; margin: 0; padding: 6px 12px;
+  background: var(--white); border: 1.5px solid var(--ink); border-radius: 6px 10px 8px 12px; box-shadow: 3px 4px 0 #d9e3d2;
+  font: italic 500 17px/1.35 var(--serif); color: var(--ink); overflow-wrap: anywhere;
+  translate: -50% -50%; opacity: 0; pointer-events: none;
+}
+.lt-slip:empty { display: none; }
+/* 8 s = DRIFT_MS in la-troi.mjs: the leaf comes in from the left, passes, and leaves on the right. */
+.lt-slip.is-drifting { animation: lt-drift 8s linear both; }
+@keyframes lt-drift {
+  0%   { left: 0%;   opacity: 0; rotate: -2deg; }
+  12%  { opacity: 1; }
+  50%  { rotate: 1.5deg; }
+  85%  { opacity: 1; }
+  100% { left: 100%; opacity: 0; rotate: -1deg; }
+}
+/* Reduced motion: the same slip, resting in the middle, until it is let go. */
+.lt-slip.is-still { opacity: 1; }
+
+/* Choose phase: suggestions + an optional line to write. Drift phase: only the stream, "cho lá trôi luôn" and "dừng hẳn". */
+.lt-choose { --show: block; margin-top: 8px; }
+.lt-ideas { margin-top: 6px; gap: 0 2px; }
+.lt-write { display: flex; align-items: center; justify-content: center; gap: 4px; width: min(100%, 26em); margin: 10px auto 0; }
+.lt-field {
+  flex: 1; min-width: 0; display: flex; padding: 2px 10px;
+  background: var(--white); border: 1.5px solid var(--ink); border-radius: 6px 10px 8px 12px; box-shadow: 3px 4px 0 #d9e3d2;
+}
+.lt-field input {
+  flex: 1; min-width: 0; min-height: 44px; padding: 4px 2px; border: 0; background: transparent; color: var(--ink);
+  font: 400 17px/1.4 var(--sans); /* ≥16px so iOS Safari does not zoom in on focus */
+}
+.lt-field input::placeholder { color: var(--muted); font-style: italic; }
+.lt-field input:focus { outline: none; }
+.lt-field:focus-within { outline: 3px solid var(--focus); outline-offset: 3px; }
+.game[data-state="running"][data-phase="drift"] .lt-choose,
+.game[data-state="running"][data-phase="drift"] .lt-choose-only,
+.game[data-state="running"][data-phase="choose"] .lt-drift-only { display: none; }
+.game[data-game="la-troi"] .ink-word { touch-action: manipulation; }
+#lt-result-line:focus { outline: none; }
+#lt-result-line:focus-visible { outline: 3px solid var(--focus); outline-offset: 4px; border-radius: 6px; }
+
+@media (max-width: 767px) {
+  .game[data-state="running"] .game-head .game-lede { display: none; }
+  .game[data-state="running"] .game-head h1 { font-size: 26px; }
+  .game[data-state="running"] .lt-stream { margin: 8px auto 6px; }
+  .game[data-state="running"] .game-cue { font-size: 21px; }
+  .lt-slip { font-size: 16px; padding: 4px 10px; max-width: 70%; }
+}
+@media (max-width: 359px) {
+  .lt-ideas .ink-word--small { font-size: 16px; padding: 4px 5px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .lt-slip.is-drifting { animation: none; opacity: 1; }
+}
