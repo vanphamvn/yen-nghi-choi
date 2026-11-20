@@ -19,6 +19,7 @@ export function namedLine(feelings, strength) {
 const game = document.querySelector('[data-game="goi-ten"]');
 if (game) {
   const $ = id => document.getElementById(id);
+  const reflect = $('game-reflect'); // optional "lúc này bạn thấy sao?" after the game; the answer is never kept
   const whisper = $('game-whisper'), named = $('gt-named'), heading = $('game-title'), resultLine = $('gt-result-line');
   const feelButtons = [...game.querySelectorAll('[data-feel]')];
   const strengthButtons = [...game.querySelectorAll('[data-strength]')];
@@ -31,7 +32,7 @@ if (game) {
     void whisper.offsetWidth;
     if (text) whisper.classList.add('is-new');
   }
-  const setState = state => { game.dataset.state = state; };
+  const setState = state => { game.dataset.state = state; if (state === 'complete' || state === 'stopped') reflect.hidden = false; };
   const setPhase = phase => { game.dataset.phase = phase; };
   const pressed = list => list.filter(b => b.getAttribute('aria-pressed') === 'true');
   const feelings = () => pressed(feelButtons).map(b => b.textContent.trim());
@@ -114,9 +115,15 @@ if (game) {
   };
 
   game.addEventListener('click', event => {
-    const target = event.target.closest('[data-act], [data-feel], [data-strength], a[href]');
+    const target = event.target.closest('[data-act], [data-feel], [data-strength], a[href], [data-reflect]');
     if (!target) return;
     if (performance.now() < settledAt) { event.preventDefault(); return; }
+    if (target.hasAttribute('data-reflect')) {
+      reflect.hidden = true; // the answer is not kept anywhere
+      say(target.textContent.trim() === 'khó chịu hơn' ? 'Cảm ơn bạn đã nói. Cứ nghỉ một chút nhé; không cần làm gì thêm.' : 'Cảm ơn bạn đã tự để ý một chút.');
+      game.querySelector('[data-act="again"]').focus();
+      return;
+    }
     if (target.dataset.act && act[target.dataset.act]) { act[target.dataset.act](); return; }
     if (game.dataset.state !== 'running' || game.dataset.phase !== 'choose') return;
     if (target.hasAttribute('data-feel')) toggleFeeling(target);
