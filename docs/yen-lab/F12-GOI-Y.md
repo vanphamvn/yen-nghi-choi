@@ -21,3 +21,7 @@ Quyết định của chủ quán (20/11/2026): ticket gốc xin “ba nút lự
 Mapping được kiểm bằng Playwright thay cho unit test riêng (ticket ghi “Unit mapping”): đủ ba nhóm, đúng và đủ 6 trò đang mở, tên khớp sổ. `tests/yen-lab-route.spec.mjs`: chọc 12 lần (chuột/chạm): đủ ba nhóm, chỉ trò đang mở, tên link khớp tên trong sổ, mọi trò được gợi ý, hai gợi ý liền nhau khác nhóm, xen câu tán gẫu, không tự chuyển trang, không request/storage/URL, sổ vẫn đủ 6 trò; bàn phím + trình đọc màn hình (Enter chọc, Tab tới link, viền focus, Enter mở trò, back về phòng bắt đầu lại); 320/360/390/768/820/1024/1280/1440: link nằm trên cùng, trong phòng, cao ≥ 44 px, 32 điểm trên thân Cục Yên vẫn chọc được Cục Yên, không tràn ngang. Chưa thử VoiceOver/TalkBack thật: bài bàn phím chỉ kiểm focus và vùng thông báo, không kiểm lời đọc. Bài chọc Cục Yên cũ (chuột/chạm/bàn phím, không lưu) vẫn chạy.
 
 Không đổi: sổ thực đơn, các trò, CSP, privacy. Không kiểm tra trên máy thật hay VoiceOver/TalkBack.
+
+## Phát hành
+
+PR #199 squash-merge thành `e3b83133b2594105bce928aba0a68ac45f788df4`; production `build-info.json` phục vụ đúng SHA đó, deployed smoke run 44668350582 57/57 (20/11/2026). Kiểm tay trên production: chọc Cục Yên → “Mình hay thở chậm vài nhịp với Thở cùng Yên.” → chạm link → `/lab/tho/`, không storage.
