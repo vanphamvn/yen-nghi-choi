@@ -138,6 +138,7 @@ if (game) {
     reset();
     setState('idle');
     game.querySelector('[data-act="start"]').disabled = false; // never a dead word before this module runs
+    game.removeAttribute("data-loading"); // the module runs: no "đang mở ra" note from here on (LAB-F14)
   } catch {
     setState('error');
   }

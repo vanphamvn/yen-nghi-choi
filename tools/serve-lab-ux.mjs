@@ -1,5 +1,6 @@
 // Local-only test fixture server. Not a deployment or application server.
-// Mirrors static-host behavior used by Netlify: /dir/ -> /dir/index.html, /dir -> 301 /dir/, misses -> 404.html (status 404).
+// Mirrors static-host behavior used by Netlify: /dir/ -> /dir/index.html, /dir -> 301 /dir/, misses -> 404.html (status 404),
+// except misses under /lab/, which get lab/404.html like the netlify.toml /lab/* rule (LAB-F14).
 import { createServer } from 'node:http';
 import { readFile, stat } from 'node:fs/promises';
 import { resolve, extname, sep } from 'node:path';
@@ -30,7 +31,8 @@ createServer(async (req, res) => {
     }
     send(res, 200, target, await readFile(target), url.pathname);
   } catch {
-    try { send(res, 404, '404.html', await readFile(resolve(root, '404.html'))); }
+    const miss = url.pathname.startsWith('/lab/') ? 'lab/404.html' : '404.html';
+    try { send(res, 404, miss, await readFile(resolve(root, miss)), url.pathname); }
     catch { res.writeHead(404).end('Not found'); }
   }
 }).listen(Number(process.env.LAB_UX_PORT || 4189), '127.0.0.1');

@@ -129,10 +129,11 @@ test('without JavaScript the room has no dead buttons', async ({ browser }) => {
   await context.close();
 });
 
-test('unknown Lab paths return the site 404 with a way home', async ({ page }) => {
+test('unknown Lab paths return the Lab 404 page with a way back (LAB-F14)', async ({ page }) => {
   const response = await page.goto('/lab/khong-co-bai-nay/');
   expect(response.status()).toBe(404);
-  await expect(page.getByRole('link', { name: 'Về trang chủ Yên' })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'về góc ngồi chơi', exact: true })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Về Yên', exact: true })).toBeVisible();
 });
 
 test('M1 (#134): homepage link is on, ≥44px, leads to a playable game; back/forward; rollback flag hides it', async ({ page }) => {

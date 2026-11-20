@@ -203,4 +203,5 @@ if (game) {
 
   newSession();
   render(session.snapshot(), { focus: false });
+  game.removeAttribute("data-loading"); // the module runs; "bắt đầu" may still be off on purpose (no part chosen), which is not loading (LAB-F14)
 }

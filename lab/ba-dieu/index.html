@@ -26,7 +26,7 @@
     </nav>
   </header>
 
-  <main class="game" id="game" data-state="idle" data-game="ba-dieu" aria-labelledby="game-title">
+  <main class="game" id="game" data-loading data-state="idle" data-game="ba-dieu" aria-labelledby="game-title">
     <img class="game-backdrop" src="/lab/assets/room-backdrop.jpg" width="1586" height="992" alt="" decoding="async">
     <article class="game-sheet">
       <header class="game-head">
@@ -61,6 +61,7 @@
       <p class="game-note" data-when="idle">Một điều cũng được. Hôm nay không nghĩ ra điều gì cũng được.</p>
       <p class="game-note ba-private" data-when="idle running">Chữ bạn viết chỉ ở trên trang này, không gửi, không lưu; rời đi là mất.</p>
       <p class="game-note" data-when="error">Trò chưa chạy được. Thử lại hoặc về góc ngồi chơi nhé.</p>
+      <p class="game-note game-wait">Trò đang mở ra. Lâu quá thì về góc ngồi chơi rồi quay lại sau nhé.</p>
 
       <div class="game-result" data-when="complete stopped">
         <p class="game-result-line" data-when="complete" id="ba-result-line" tabindex="-1">Đây là những điều nhỏ của bạn.</p>
