@@ -10,8 +10,8 @@ const ORIGIN = new URL(BASE).origin;
 const EXPECT_SHA = process.env.LAB_EXPECT_SHA || '';
 const RECORD_DIR = 'test-results/lab-smoke';
 // Every released Lab page. A new game adds its route here (and to the menu test in yen-lab-route.spec.mjs).
-const PAGES = ['/lab/', '/lab/tho/', '/lab/cang/', '/lab/ba-dieu/', '/lab/tham-tu/', '/lab/la-troi/', '/docs/yen-lab/game-kit.html'];
-const GAMES = [{ path: '/lab/tho/', label: 'Thở cùng Yên' }, { path: '/lab/cang/', label: 'Căng rồi thả' }, { path: '/lab/ba-dieu/', label: 'Ba điều nhỏ xíu', untimed: true }, { path: '/lab/tham-tu/', label: 'Thám tử hiện tại', stepped: true }, { path: '/lab/la-troi/', label: 'Lá trôi, nghĩ trôi', leaves: true }, { path: '/docs/yen-lab/game-kit.html', label: 'kit' }];
+const PAGES = ['/lab/', '/lab/tho/', '/lab/cang/', '/lab/ba-dieu/', '/lab/tham-tu/', '/lab/la-troi/', '/lab/goi-ten/', '/docs/yen-lab/game-kit.html'];
+const GAMES = [{ path: '/lab/tho/', label: 'Thở cùng Yên' }, { path: '/lab/cang/', label: 'Căng rồi thả' }, { path: '/lab/ba-dieu/', label: 'Ba điều nhỏ xíu', untimed: true }, { path: '/lab/tham-tu/', label: 'Thám tử hiện tại', stepped: true }, { path: '/lab/la-troi/', label: 'Lá trôi, nghĩ trôi', leaves: true }, { path: '/lab/goi-ten/', label: 'Gọi tên cơn bực', labels: true }, { path: '/docs/yen-lab/game-kit.html', label: 'kit' }];
 const VIEWPORTS = [[320, 640], [360, 800], [390, 844], [768, 1024], [1440, 900]];
 
 test.use({ baseURL: BASE });
@@ -49,7 +49,7 @@ const NETLIFY_INJECTIONS = [
 
 test('provenance: deployed Lab files are byte-identical to this commit, apart from known host injections', async ({ request }) => {
   test.skip(!process.env.LAB_BASE_URL || !EXPECT_SHA, 'needs a deployed site and LAB_EXPECT_SHA with that commit checked out');
-  const text = [...PAGES.map(p => p.endsWith('/') ? p + 'index.html' : p), '/lab/lab.css', '/lab/lab.js', '/lab/game.css', '/lab/engine.mjs', '/lab/tho/tho.css', '/lab/tho/tho.mjs', '/lab/cang/cang.css', '/lab/cang/cang.mjs', '/lab/ba-dieu/ba-dieu.css', '/lab/ba-dieu/ba-dieu.mjs', '/lab/tham-tu/tham-tu.css', '/lab/tham-tu/tham-tu.mjs', '/lab/la-troi/la-troi.css', '/lab/la-troi/la-troi.mjs', '/docs/yen-lab/game-kit.mjs', '/lab/assets/sprites/manifest.json', '/lab/assets/sprites/preview.css', '/lab/assets/sprites/preview.js', '/lab/assets/sprites/preview.html'];
+  const text = [...PAGES.map(p => p.endsWith('/') ? p + 'index.html' : p), '/lab/lab.css', '/lab/lab.js', '/lab/game.css', '/lab/engine.mjs', '/lab/tho/tho.css', '/lab/tho/tho.mjs', '/lab/cang/cang.css', '/lab/cang/cang.mjs', '/lab/ba-dieu/ba-dieu.css', '/lab/ba-dieu/ba-dieu.mjs', '/lab/tham-tu/tham-tu.css', '/lab/tham-tu/tham-tu.mjs', '/lab/la-troi/la-troi.css', '/lab/la-troi/la-troi.mjs', '/lab/goi-ten/goi-ten.css', '/lab/goi-ten/goi-ten.mjs', '/docs/yen-lab/game-kit.mjs', '/lab/assets/sprites/manifest.json', '/lab/assets/sprites/preview.css', '/lab/assets/sprites/preview.js', '/lab/assets/sprites/preview.html'];
   const spriteSubdirs = ['atlases', 'frames', 'games', 'shared'];
   const spriteBinary = spriteSubdirs.flatMap(dir =>
     readdirSync('lab/assets/sprites/' + dir, { withFileTypes: true })
@@ -291,7 +291,58 @@ for (const game of GAMES.filter(g => g.leaves)) {
   });
 }
 
-for (const game of GAMES.filter(g => !g.untimed && !g.stepped && !g.leaves)) {
+for (const game of GAMES.filter(g => g.labels)) {
+  // Choose words → look → edit → look → done; stop and again wipe the choices.
+  test(`${game.label}: start → choose → stop → again → choose, look, edit, look → complete really works`, async ({ page }) => {
+    const problems = watch(page);
+    await page.clock.install(); // taps within 400 ms of a change are dropped on purpose; step the clock past that
+    await page.goto(game.path);
+    const g = page.locator('main.game');
+    const tap = async name => { await page.clock.runFor(450); await page.getByRole('button', { name, exact: true }).click(); };
+    await tap('bắt đầu');
+    await tap('bực');
+    await tap('dừng hẳn');
+    await expect(g).toHaveAttribute('data-state', 'stopped');
+    await tap('chơi lại');
+    await tap('bắt đầu');
+    await expect(page.getByRole('button', { name: 'bực', exact: true })).toHaveAttribute('aria-pressed', 'false');
+    await tap('mệt');
+    await tap('vừa');
+    await tap('nhìn lại');
+    await expect(page.locator('#gt-named')).toHaveText('Lúc này: mệt, vừa.');
+    await tap('sửa lại');
+    await tap('lo');
+    await tap('nhìn lại');
+    await expect(page.locator('#gt-named')).toHaveText('Lúc này: mệt và lo, vừa.');
+    await tap('xong');
+    await expect(g).toHaveAttribute('data-state', 'complete');
+    await expect(page.locator('main.game a[href="/lab/"]').first()).toBeVisible();
+    expect(await page.evaluate(() => location.search + location.hash)).toBe('');
+    expect(problems).toEqual([]);
+  });
+
+  test(`${game.label}: reduced motion still completes, with nothing moving`, async ({ browser }) => {
+    const context = await browser.newContext({ reducedMotion: 'reduce', baseURL: BASE });
+    if (process.env.LAB_BASE_URL) await blockHostTooling(context);
+    const page = await context.newPage();
+    await page.clock.install();
+    await page.goto(game.path);
+    const tap = async name => { await page.clock.runFor(450); await page.getByRole('button', { name, exact: true }).click(); };
+    await tap('bắt đầu');
+    await tap('không biết gọi tên');
+    await tap('nhìn lại');
+    const moving = await page.evaluate(() => [...document.querySelectorAll('*')].some(el => {
+      const s = getComputedStyle(el);
+      return (s.animationName !== 'none' && s.animationDuration.split(',').some(v => parseFloat(v) > 0)) || s.transitionDuration.split(',').some(v => parseFloat(v) > 0);
+    }));
+    expect(moving).toBe(false);
+    await tap('xong');
+    await expect(page.locator('main.game')).toHaveAttribute('data-state', 'complete');
+    await context.close();
+  });
+}
+
+for (const game of GAMES.filter(g => !g.untimed && !g.stepped && !g.leaves && !g.labels)) {
   test(`${game.label}: start → pause → resume → stop → reset → complete really works`, async ({ page }) => {
     const problems = watch(page);
     await page.clock.install();

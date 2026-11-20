@@ -1,0 +1,39 @@
+/* Gọi tên cơn bực (G09, #150): only what the shared game screen (lab/game.css) does not already provide. */
+
+/* The painted weather strip (#189), shown before starting only: every weather is just weather, never a path to sunshine. */
+.gt-stage { width: min(100%, 340px); aspect-ratio: auto; margin: 16px auto 8px; }
+.gt-stage > img { width: 100%; }
+
+.gt-sub { --show: block; max-width: 34ch; margin: 6px auto 0; font-size: 15px; line-height: 1.5; color: var(--muted); text-wrap: pretty; }
+.gt-choose { --show: block; margin-top: 4px; }
+.gt-feelings { margin-top: 8px; gap: 0 2px; max-width: 30em; margin-inline: auto; }
+.gt-strength { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 0 6px; margin: 8px auto 0; }
+.gt-strength .game-words { margin-top: 0; gap: 0 2px; }
+.gt-strength-label { font: italic 400 15px/1.4 var(--serif); color: var(--muted); }
+
+/* Looking at the words: large, quiet, no colour coding and no judgement. */
+.gt-view { --show: block; margin-top: 18px; }
+.gt-named { font: italic 600 clamp(24px, 6.4vw, 30px)/1.35 var(--serif); color: var(--ink); text-wrap: balance; }
+.gt-named:focus { outline: none; }
+.gt-named:focus-visible, #gt-result-line:focus-visible { outline: 3px solid var(--focus); outline-offset: 4px; border-radius: 6px; }
+#gt-result-line:focus { outline: none; }
+
+.game[data-state="running"][data-phase="view"] .gt-choose-only,
+.game[data-state="running"][data-phase="choose"] .gt-view-only { display: none; }
+.game[data-game="goi-ten"] .ink-word { touch-action: manipulation; }
+/* A chosen word is marked like a highlighter stroke on the notepad, plus heavier ink: clear without colour alone. */
+.game[data-game="goi-ten"] .ink-word[aria-pressed="true"] {
+  font-weight: 700; color: var(--ink);
+  background: linear-gradient(transparent 52%, #d9e3d2 52%, #d9e3d2 88%, transparent 88%);
+  text-decoration-color: var(--ink);
+}
+
+@media (max-width: 767px) {
+  .game[data-state="idle"] .gt-stage { width: min(100%, 260px); margin: 8px auto 2px; }
+  .game[data-state="running"] .game-head .game-lede { display: none; }
+  .game[data-state="running"] .game-head h1 { font-size: 26px; }
+  .game[data-state="running"] .game-cue { margin-top: 8px; font-size: 22px; }
+}
+@media (max-width: 359px) {
+  .gt-feelings .ink-word--small, .gt-strength .ink-word--small { font-size: 16px; padding: 4px 5px; }
+}
