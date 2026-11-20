@@ -1,0 +1,47 @@
+/* Quét người tìm căng thẳng (G03, #144): only what the shared game screen (lab/game.css) does not already provide. */
+
+/* Idle picture: the G03 sprite strip. */
+.gq-stage { width: min(100%, 320px); aspect-ratio: auto; margin: 14px auto 8px; }
+.gq-stage > img { width: 100%; }
+
+/* The figure: first panel of the G03 sprite (crop 22,0 · 46×90 px of 301×92), with one soft spotlight per zone. */
+.gq-figure {
+  --show: block; position: relative; width: 120px; aspect-ratio: 46 / 90; margin: 10px auto 2px;
+  background-image: url("/lab/assets/sprites/games/g03-quet-nguoi.webp"); background-repeat: no-repeat;
+  background-size: 654.35% auto; background-position: 8.63% 0%;
+}
+.gq-spot, .gq-spot-2 {
+  position: absolute; display: block; translate: -50% -50%; border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(255, 186, 80, .78), rgba(255, 200, 110, .42) 50%, transparent);
+  mix-blend-mode: multiply;
+  transition: left 420ms ease, top 420ms ease, width 420ms ease, height 420ms ease;
+}
+.game[data-zone="head"] .gq-spot { left: 47%; top: 11%; width: 70%; height: 24%; }
+.game[data-zone="shoulders"] .gq-spot { left: 49%; top: 24%; width: 100%; height: 16%; }
+.game[data-zone="hands"] .gq-spot { left: 13%; top: 55%; width: 44%; height: 16%; }
+.gq-spot-2 { display: none; }
+.game[data-zone="hands"] .gq-spot-2 { display: block; left: 84%; top: 55%; width: 44%; height: 16%; } /* one spot on each hand */
+.game[data-zone="belly"] .gq-spot { left: 48%; top: 44%; width: 70%; height: 16%; }
+.game[data-zone="feet"] .gq-spot { left: 48%; top: 93%; width: 90%; height: 12%; }
+
+.gq-zone-text { --show: block; }
+.gq-cue { max-width: 30ch; margin: 2px auto 0; font-size: 17px; line-height: 1.5; text-wrap: pretty; }
+.gq-where { margin-top: 2px; font-size: 15px; color: var(--muted); }
+
+.gq-options { --show: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 0 6px; margin-top: 2px; }
+.gq-options[hidden], .gq-mute[hidden] { display: none !important; }
+.gq-options .game-words { margin-top: 0; gap: 0 2px; }
+.gq-option-label { font: italic 400 15px/1.4 var(--serif); color: var(--muted); }
+
+@media (max-width: 767px) {
+  .game[data-state="idle"] .game-head h1 { font-size: 26px; }
+  .game[data-state="idle"] .game-lede { font-size: 15px; margin-top: 2px; }
+  .game[data-state="idle"] .game-note { margin-top: 4px; font-size: 14px; }
+  .game[data-state="running"] .game-lede { display: none; }
+  .game[data-state="running"] .game-head h1 { font-size: 22px; }
+  .gq-figure { width: 96px; margin-top: 4px; }
+  .gq-cue { font-size: 16px; }
+}
+@media (max-width: 359px) { .gq-figure { width: 72px; } } /* 320 px: the zone words and stop stay in the first screen */
+@media (prefers-reduced-motion: reduce) { .gq-spot, .gq-spot-2 { transition: none; } }
+@media (forced-colors: active) { .gq-spot, .gq-spot-2 { background: none; outline: 3px solid Highlight; } }

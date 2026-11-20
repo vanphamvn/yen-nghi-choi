@@ -54,6 +54,17 @@ for (const file of pages) {
 }
 
 // 3 · Scripts: no storage, network, tracking, device sensors, media capture or audio autoplay.
+// Reviewed exception (G03 #144, which asks for optional spoken cues, default off): speech synthesis only, with a voice the
+// browser reports as on-device (localService === true, never a network voice), set on the utterance, from one speak call
+// guarded by the guest's opt-in. Any other audio API, or speech that loosens any of these, still fails. The runtime rule
+// (nothing spoken unless turned on) is checked by tests/yen-lab-quet-nguoi.spec.mjs and the speech probe in the privacy spec.
+const SPEECH_ALLOWED = new Set(['lab/quet-nguoi/quet-nguoi.mjs']);
+const speechOnly = code =>
+  !/new\s+Audio\b|AudioContext|createElement\(\s*['"`](audio|video)|\.autoplay\s*=/.test(code) &&
+  /localService\s*===\s*true/.test(code) &&                       // only voices the browser reports as on-device
+  /\.voice\s*=\s*voice\b/.test(code) &&                          // the chosen voice is always set on the utterance
+  (code.match(/\.speak\(/g) || []).length === 1 &&                // one speak call…
+  /if\s*\(\s*!voiceOn\b[^)]*\)\s*return;[\s\S]{0,200}\.speak\(/.test(code); // …behind the guest's own opt-in
 const FORBIDDEN = [
   [/\blocalStorage\b|\bsessionStorage\b|\bindexedDB\b|\bcaches\./, 'browser storage'],
   [/document\.cookie|cookieStore/, 'cookies'],
@@ -67,7 +78,11 @@ const FORBIDDEN = [
 for (const file of scripts) {
   // Ignore comments, but only real ones: `//` at line start or after whitespace, so 'https://…' strings stay scanned.
   const code = read(file).replace(/\/\*[\s\S]*?\*\//g, '').replace(/(^|\s)\/\/.*$/gm, '$1');
-  for (const [re, what] of FORBIDDEN) if (re.test(code)) fail(file, `forbidden: ${what} (${code.match(re)[0]})`);
+  for (const [re, what] of FORBIDDEN) {
+    if (!re.test(code)) continue;
+    if (SPEECH_ALLOWED.has(file) && what.startsWith('audio/video') && speechOnly(code)) continue;
+    fail(file, `forbidden: ${what} (${code.match(re)[0]})`);
+  }
 }
 
 // 4 · Copy: no treatment promises or validation claims (SAFETY.md "Editorial review checks").
