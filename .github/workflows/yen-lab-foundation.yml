@@ -4,6 +4,8 @@ on:
     paths:
       - docs/yen-lab/**
       - tools/check-yen-lab-foundation.mjs
+      - tools/check-yen-lab-catalog.mjs
+      - tests/yen-lab-catalog.spec.mjs
       - tools/serve-lab-ux.mjs
       - tests/yen-lab-ux.spec.mjs
       - tests/yen-lab-route.spec.mjs
@@ -29,6 +31,8 @@ on:
     paths:
       - docs/yen-lab/**
       - tools/check-yen-lab-foundation.mjs
+      - tools/check-yen-lab-catalog.mjs
+      - tests/yen-lab-catalog.spec.mjs
       - tools/serve-lab-ux.mjs
       - tests/yen-lab-ux.spec.mjs
       - tests/yen-lab-route.spec.mjs
@@ -61,6 +65,7 @@ jobs:
         with:
           node-version: '22'
       - run: node tools/check-yen-lab-foundation.mjs
+      - run: node tools/check-yen-lab-catalog.mjs
       - run: node --test .github/codex/game-freeze.test.mjs
       - run: node --test tests/yen-lab-engine.test.mjs
       - run: node tools/check-yen-lab-privacy.mjs

@@ -112,6 +112,16 @@
   .game-stage { width: 300px; }
 }
 
+/* Slow or failed load (LAB-F14): each game page starts with data-loading on .game and its module removes it once it runs
+   ("bắt đầu" may still be off on purpose then, e.g. Căng with no part chosen; that is not loading). If the module takes over
+   1.5 s (slow network, blocked or broken) a quiet note appears, pointing at the exit word that works without the module.
+   Until then it takes no space (no jump on a normal load) and is visibility-hidden (screen readers skip it). Appearing
+   is one discrete step, not motion, so it is kept under reduced motion too. */
+.game .game-wait { display: none; }
+.game[data-loading][data-state="idle"] .game-wait { display: block; height: 0; margin: 0; overflow: hidden; visibility: hidden; animation: game-wait-in 1ms 1.5s forwards !important; }
+@keyframes game-wait-in { 0%, 100% { visibility: visible; height: auto; margin-top: 10px; } } /* both ends: a steps() timing can stop at 0.9999 and stay hidden */
+@media (scripting: none) { .game .game-wait { display: none !important; } } /* <noscript> explains it instead */
+
 @media (prefers-reduced-motion: reduce) {
   /* lab.css already removes transitions/animations; state stays readable through cue + progress text. */
   .game-stage > img { transform: none !important; }

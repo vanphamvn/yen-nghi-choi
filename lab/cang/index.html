@@ -26,7 +26,7 @@
     </nav>
   </header>
 
-  <main class="game" id="game" data-state="idle" data-game="cang" data-mode="tense" aria-labelledby="game-title">
+  <main class="game" id="game" data-loading data-state="idle" data-game="cang" data-mode="tense" aria-labelledby="game-title">
     <img class="game-backdrop" src="/lab/assets/room-backdrop.jpg" width="1586" height="992" alt="" decoding="async">
     <article class="game-sheet">
       <header class="game-head">
@@ -73,6 +73,7 @@
       <p class="game-note" data-when="idle">Chỉ căng nhẹ nếu thấy dễ chịu. Bỏ qua chỗ đang đau hoặc chấn thương. Không nín thở; dừng và thả lỏng nếu khó chịu.</p>
       <p class="game-note" data-when="paused" id="game-paused-note">Cứ thả lỏng, thở tự nhiên.</p>
       <p class="game-note" data-when="error">Trò chưa chạy được. Thử lại hoặc về góc ngồi chơi nhé.</p>
+      <p class="game-note game-wait">Trò đang mở ra. Lâu quá thì về góc ngồi chơi rồi quay lại sau nhé.</p>
 
       <div class="game-result" data-when="complete stopped">
         <p class="game-result-line" data-when="complete">Xong rồi. Không cần thấy khác đi.</p>

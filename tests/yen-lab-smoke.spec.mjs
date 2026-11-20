@@ -10,7 +10,7 @@ const ORIGIN = new URL(BASE).origin;
 const EXPECT_SHA = process.env.LAB_EXPECT_SHA || '';
 const RECORD_DIR = 'test-results/lab-smoke';
 // Every released Lab page. A new game adds its route here (and to the menu test in yen-lab-route.spec.mjs).
-const PAGES = ['/lab/', '/lab/tho/', '/lab/cang/', '/lab/ba-dieu/', '/lab/tham-tu/', '/lab/la-troi/', '/lab/goi-ten/', '/docs/yen-lab/game-kit.html'];
+const PAGES = ['/lab/', '/lab/tho/', '/lab/cang/', '/lab/ba-dieu/', '/lab/tham-tu/', '/lab/la-troi/', '/lab/goi-ten/', '/lab/404.html', '/docs/yen-lab/game-kit.html'];
 const GAMES = [{ path: '/lab/tho/', label: 'Thở cùng Yên' }, { path: '/lab/cang/', label: 'Căng rồi thả' }, { path: '/lab/ba-dieu/', label: 'Ba điều nhỏ xíu', untimed: true }, { path: '/lab/tham-tu/', label: 'Thám tử hiện tại', stepped: true }, { path: '/lab/la-troi/', label: 'Lá trôi, nghĩ trôi', leaves: true }, { path: '/lab/goi-ten/', label: 'Gọi tên cơn bực', labels: true }, { path: '/docs/yen-lab/game-kit.html', label: 'kit' }];
 const VIEWPORTS = [[320, 640], [360, 800], [390, 844], [768, 1024], [1440, 900]];
 
@@ -129,6 +129,29 @@ for (const [width, height] of VIEWPORTS) {
     }
   });
 }
+
+// LAB-F14 (#138): on the real host this proves the netlify.toml /lab/* rule. A planned game's reserved route and any
+// unknown Lab address get the Lab 404 page (status 404, a way back), while every released page, with or without its
+// trailing slash, still wins over the rule.
+test('catalog routes: planned and unknown Lab addresses get the Lab 404 page, released games still load', async ({ request }) => {
+  const catalog = JSON.parse(readFileSync(new URL('../docs/yen-lab/ops/catalog.json', import.meta.url), 'utf8'));
+  for (const g of catalog.games) {
+    const response = await request.get(g.route, { maxRedirects: 3 });
+    const body = await response.text();
+    if (g.status === 'planned') {
+      expect(response.status(), g.route).toBe(404);
+      expect(body, g.route).toContain('Góc này chưa mở');
+      expect(body, g.route).toContain('href="/lab/"');
+    } else {
+      expect(response.status(), g.route).toBe(200);
+      expect(body, g.route).toContain(`<h1 id="game-title" tabindex="-1">${g.title}</h1>`);
+      expect((await request.get(g.route.replace(/\/$/, ''), { maxRedirects: 3 })).status(), `${g.route} without slash`).toBe(200);
+    }
+  }
+  const unknown = await request.get('/lab/khong-co-tro-nay/');
+  expect(unknown.status()).toBe(404);
+  expect(await unknown.text()).toContain('Góc này chưa mở');
+});
 
 test('no dead internal links on any Lab page', async ({ page, request }) => {
   const seen = new Map();

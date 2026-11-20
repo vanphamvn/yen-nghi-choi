@@ -22,3 +22,10 @@
   [headers.values]
     Content-Security-Policy = "default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; font-src 'none'; connect-src 'none'; media-src 'none'; worker-src 'none'; manifest-src 'none'; frame-src 'none'; frame-ancestors 'none'; form-action 'none'; base-uri 'none'; object-src 'none'"
     Cross-Origin-Opener-Policy = "same-origin"
+
+# Yên Lab catalog (LAB-F14, #138): any /lab/ address with no file (a planned game's reserved route, a typo) gets the
+# Lab's own 404 page with a way back to /lab/. Not forced, so every real file and folder index still wins.
+[[redirects]]
+  from = "/lab/*"
+  to = "/lab/404.html"
+  status = 404
