@@ -225,6 +225,7 @@ test('menu focus never draws a ring around the book after a tap (iPhone WebKit),
 // Static mapping, three loose groups (body / head / heart), a suggestion every other poke, never automatic.
 test('Cục Yên suggests games: all three groups, only released games, a real link, never automatic, nothing kept', async ({ page }, testInfo) => {
   await blockExternal(page);
+  await page.emulateMedia({ reducedMotion: 'reduce' }); // no wobble to wait for between pokes; layout and links are the same
   const sent = [];
   page.on('request', r => sent.push(r.url()));
   await page.goto(LAB);
@@ -266,6 +267,7 @@ test('Cục Yên suggests games: all three groups, only released games, a real l
 test('Cục Yên suggestion by keyboard, in a polite live region: poke with Enter, Tab reaches the game, Enter opens it; back starts fresh', async ({ page }, testInfo) => {
   test.skip(testInfo.project.name === 'emulated-touch', 'keyboard path on desktop');
   await blockExternal(page);
+  await page.emulateMedia({ reducedMotion: 'reduce' }); // no wobble to wait for between pokes; layout and links are the same
   await page.goto(LAB);
   const buddy = page.getByRole('button', { name: 'Chọc Cục Yên một cái' });
   const says = page.locator('#buddy-says');
@@ -289,6 +291,8 @@ test('Cục Yên suggestion by keyboard, in a polite live region: poke with Ente
 for (const [w, h] of [[320, 640], [360, 740], [390, 844], [768, 1024], [820, 1180], [1024, 768], [1280, 800], [1440, 900]]) {
   test(`${w}×${h}: a suggested game link sits on top, inside the room, ≥ 44 px, and never covers Cục Yên`, async ({ page }) => {
     await blockExternal(page);
+    await page.emulateMedia({ reducedMotion: 'reduce' }); // no wobble to wait for between pokes
+  await page.emulateMedia({ reducedMotion: 'reduce' }); // no wobble to wait for between pokes; layout and links are the same
     await page.setViewportSize({ width: w, height: h });
     await page.goto(LAB);
     const buddy = page.getByRole('button', { name: 'Chọc Cục Yên một cái' });
