@@ -118,17 +118,17 @@
       "id": "vuon-cat",
       "title": "Vườn cát không mục tiêu",
       "route": "/lab/vuon-cat/",
-      "status": "planned",
+      "status": "beta",
       "category": "attention",
       "duration": "1–5 min",
       "evidenceTier": "exploratory",
       "evidence": "docs/yen-lab/EVIDENCE.md#twenty-tool-matrix",
-      "review": null,
+      "review": "docs/yen-lab/G06-VUON-CAT.md",
       "caution": "Motion or visual discomfort: static option and clear reset.",
       "issue": 147,
-      "module": null,
-      "stylesheet": null,
-      "releasedIn": null
+      "module": "/lab/vuon-cat/vuon-cat.mjs",
+      "stylesheet": "/lab/vuon-cat/vuon-cat.css",
+      "releasedIn": "G06 release (#147); full-catalog gate #139 pending"
     },
     {
       "key": "G07",

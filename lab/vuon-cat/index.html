@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f7f3e9">
+  <meta name="robots" content="noindex, nofollow, noarchive">
+  <meta name="referrer" content="no-referrer">
+  <meta name="description" content="Vườn cát không mục tiêu: cào vài đường cát, đặt vài viên đá, thích thì làm phẳng. Không điểm, không lưu.">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; font-src 'none'; connect-src 'none'; frame-src 'none'; form-action 'none'; base-uri 'none'; object-src 'none'">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="stylesheet" href="/lab/lab.css">
+  <link rel="stylesheet" href="/lab/game.css">
+  <link rel="stylesheet" href="/lab/vuon-cat/vuon-cat.css">
+  <script type="module" src="/lab/vuon-cat/vuon-cat.mjs"></script>
+  <title>Vườn cát không mục tiêu · Yên Lab | Yên Coffee &amp; Tea</title>
+</head>
+<body>
+  <!-- G06 (#147): a small sand tray to rake and set stones in, exploratory / creative per EVIDENCE.md G06. No goal, no
+       score, no timer; nothing moves by itself; the garden lives in page memory only and is flattened on stop/reset/leave. -->
+  <a class="lab-skip" href="#game-title">Đến nội dung</a>
+  <header class="lab-header lab-wrap">
+    <a class="lab-brand" href="/" aria-label="Về website Yên Coffee &amp; Tea"><img src="/yen-logo.svg" width="1450" height="585" alt="yên"><span class="lab-brand-sub" aria-hidden="true">COFFEE &amp; TEA</span></a>
+    <nav class="lab-nav" aria-label="Điều hướng Yên Lab">
+      <a class="lab-nav-home" href="/lab/">Góc ngồi chơi</a>
+    </nav>
+  </header>
+
+  <main class="game" id="game" data-loading data-state="idle" data-game="vuon-cat" aria-labelledby="game-title">
+    <img class="game-backdrop" src="/lab/assets/room-backdrop.jpg" width="1586" height="992" alt="" decoding="async">
+    <article class="game-sheet">
+      <header class="game-head">
+        <h1 id="game-title" tabindex="-1">Vườn cát không mục tiêu</h1>
+        <p class="game-lede">Vẽ vài nét, thích thì xoá.</p>
+      </header>
+
+      <div class="game-stage vc-stage" data-when="idle" aria-hidden="true">
+        <img src="/lab/assets/sprites/games/g06-vuon-cat.webp" width="295" height="81" alt="" decoding="async">
+      </div>
+
+      <!-- The tray: sand on one canvas, stones on a second canvas above it (grooves never paint over a stone). -->
+      <div class="vc-tray-frame" data-when="running complete">
+        <div class="vc-tray" id="vc-tray" role="img" aria-label="Khay cát phẳng, chưa có gì.">
+          <canvas class="vc-sand" id="vc-sand" aria-hidden="true"></canvas>
+          <canvas class="vc-items" id="vc-items" aria-hidden="true"></canvas>
+        </div>
+      </div>
+
+      <div class="vc-tools" data-when="running">
+        <div class="game-words" role="group" aria-label="Dụng cụ">
+          <button class="ink-word ink-word--small" type="button" data-tool="rake" aria-pressed="true">cào</button>
+          <button class="ink-word ink-word--small vc-needs-items" type="button" data-tool="stones" aria-pressed="false" hidden>đá</button>
+          <button class="ink-word ink-word--small vc-needs-items" type="button" data-tool="pebble" aria-pressed="false" hidden>sỏi</button>
+          <button class="ink-word ink-word--small vc-needs-items" type="button" data-tool="shell" aria-pressed="false" hidden>vỏ sò</button>
+        </div>
+        <div class="game-words" role="group" aria-label="Thêm không cần vẽ">
+          <button class="ink-word ink-word--small" type="button" data-act="ring">thêm vòng</button>
+          <button class="ink-word ink-word--small" type="button" data-act="wave">thêm sóng</button>
+          <button class="ink-word ink-word--small vc-needs-items" type="button" data-act="stone" hidden>thêm đá</button>
+        </div>
+      </div>
+
+      <p class="game-note" data-when="idle">Không có hình đúng hay sai, không chấm điểm. Cào vài đường, đặt vài viên đá; chán thì làm phẳng.</p>
+      <p class="game-note" data-when="idle">Không có gì tự chuyển động. Cát chỉ ở trên trang này, không lưu, không gửi; rời đi là phẳng lại.</p>
+      <p class="game-note" data-when="error">Máy này chưa vẽ được cát. Mình về góc ngồi chơi chơi trò khác nhé.</p>
+      <p class="game-note game-wait">Trò đang mở ra. Lâu quá thì về góc ngồi chơi rồi quay lại sau nhé.</p>
+
+      <div class="game-result" data-when="complete stopped">
+        <p class="game-result-line" data-when="complete" id="vc-result-line" tabindex="-1">Vườn của bạn đó.</p>
+        <p class="game-note" data-when="complete">Ngắm thêm chút hay đi lúc nào cũng được. Rời đi là cát phẳng lại.</p>
+        <p class="game-result-line" data-when="stopped">Mình dừng ở đây nhé. Cát đã phẳng lại.</p>
+        <div class="game-reflect" id="game-reflect" hidden>
+          <p id="reflect-q">Nếu muốn, lúc này bạn thấy sao?</p>
+          <div class="game-words" role="group" aria-labelledby="reflect-q">
+            <button class="ink-word ink-word--small" type="button" data-reflect>dễ chịu hơn</button>
+            <button class="ink-word ink-word--small" type="button" data-reflect>như cũ</button>
+            <button class="ink-word ink-word--small" type="button" data-reflect>khó chịu hơn</button>
+            <button class="ink-word ink-word--small" type="button" data-reflect>không rõ</button>
+            <button class="ink-word ink-word--small" type="button" data-reflect>bỏ qua</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="game-words" id="game-controls" role="group" aria-label="Điều khiển trò">
+        <button class="ink-word ink-word--lead" type="button" data-act="start" data-when="idle" disabled>bắt đầu</button>
+        <button class="ink-word" type="button" data-act="undo" data-when="running">hoàn tác</button>
+        <button class="ink-word" type="button" data-act="smooth" data-when="running">làm phẳng</button>
+        <button class="ink-word ink-word--lead" type="button" data-act="done" data-when="running">xong</button>
+        <button class="ink-word" type="button" data-act="stop" data-when="running">dừng hẳn</button>
+        <button class="ink-word ink-word--lead" type="button" data-act="again" data-when="complete stopped">chơi lại</button>
+        <a class="ink-word" href="/lab/" data-when="idle complete stopped error">về góc ngồi chơi</a>
+      </div>
+
+      <p class="game-whisper" id="game-whisper" role="status" aria-live="polite"></p>
+    </article>
+    <noscript><p class="game-note">Trò này cần JavaScript để vẽ cát. Không có nó, bạn vẫn có thể thử: lấy ngón tay vẽ vài vòng chậm trên mặt bàn, rồi xoá đi. <a href="/lab/">Về góc ngồi chơi</a>.</p></noscript>
+  </main>
+
+  <footer class="lab-footer">
+    <div class="lab-wrap lab-footer-inner">
+      <img class="lab-door" src="/lab/assets/door.webp" width="160" height="268" alt="" decoding="async" loading="lazy">
+      <nav class="lab-footer-links" aria-label="Rời Yên Lab">
+        <a class="lab-button" href="/">Về Yên</a>
+        <a href="/#yen-ngoai-doi">Ghé quán thật</a>
+      </nav>
+      <p class="lab-fineprint">Một trò nhỏ để thử, không thay thế tư vấn hoặc điều trị chuyên môn. Trò là một hoạt động sáng tạo cho vui, chưa được kiểm chứng hiệu quả. Không cookie, rời đi là quên. <a href="https://github.com/vanphamvn/yen-nghi-choi/blob/main/docs/yen-lab/EVIDENCE.md" rel="noopener noreferrer" referrerpolicy="no-referrer">Nguồn phương pháp</a></p>
+    </div>
+  </footer>
+</body>
+</html>
