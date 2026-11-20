@@ -448,12 +448,13 @@
       "priority": "P2",
       "title": "Vườn cát không mục tiêu",
       "kind": "minigame",
-      "status": "in-progress",
+      "status": "done",
       "depends_on": [
         "F03",
         "F14"
       ],
-      "issue_url": "https://github.com/vanphamvn/yen-nghi-choi/issues/147"
+      "issue_url": "https://github.com/vanphamvn/yen-nghi-choi/issues/147",
+      "evidence": "PR #209 squash-merged as 25b8809 (also carries the book soon-line wrap fix). /lab/vuon-cat/: canvas sand tray, finger/mouse three-tine raking, stones/pebble/shell cut from the G06 sprite on a second canvas, ink-word shapes as the keyboard/screen-reader/no-finger path, undo, undoable 'làm phẳng', 'xong' keeps the garden, 'dừng hẳn' flattens; no timer/score/storage; no-canvas note. tests/yen-lab-vuon-cat.spec.mjs desktop+touch and emulated iPhone WebKit + Pixel Chromium; smoke 75 local, deploy preview 76/76. Independent agent review: no P0/P1, P2s fixed. Production build-info commitSha 25b880957765e3e359b53fef76b88f598ada4247; deployed smoke run 44698356911 77 passed. Not covered: real iPhone, VoiceOver/TalkBack, owner review."
     },
     {
       "key": "G08",

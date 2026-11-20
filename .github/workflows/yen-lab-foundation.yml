@@ -58,7 +58,7 @@ permissions:
 jobs:
   foundation:
     runs-on: ubuntu-latest
-    timeout-minutes: 20 # 11m55s on #205 with the catalog spec; headroom for M4 games
+    timeout-minutes: 30 # 15m43s on #209 (8 games); each M4 game adds ~1.5 min. Split or shard the suite before this is reached
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
