@@ -13,10 +13,12 @@ test('book turns between spreads and keeps playable links on page one', async ({
   await expect(page.getByRole('link', { name: 'Thở cùng Yên' })).toBeVisible();
   await page.getByRole('button', { name: 'Trang sau' }).click();
   await expect(menu).toHaveAttribute('data-page', '2');
-  await expect(page.getByText('Ngồi nhìn mây', { exact: true })).toBeVisible();
-  // Games not open yet are plain text: nothing on that spread can be tapped or focused.
-  await expect(menu.locator('.menu-page[data-spread="2"]').locator('a, button, [tabindex]')).toHaveCount(0);
-  await expect(menu.locator('.menu-page[data-spread="2"] li:not(.is-soon)')).toHaveCount(0);
+  // Spread 2 holds the newer games: released ones are real links, games not open yet are plain text.
+  await expect(page.getByRole('link', { name: 'Ngồi nhìn mây' })).toBeVisible();
+  await expect(page.getByText('Vườn cát không mục tiêu', { exact: true })).toBeVisible();
+  const spread2 = menu.locator('.menu-page[data-spread="2"]');
+  await expect(spread2.locator('a, button, [tabindex]')).toHaveCount(await spread2.locator('li[data-status="released"]').count());
+  await expect(spread2.locator('li.is-soon').locator('a, button, [tabindex]')).toHaveCount(0);
   await expect(page.locator('#menu-page-number')).toHaveText('Trang 2 / 2');
   await expect(page.locator('#menu-next')).toBeDisabled();
   await page.getByRole('button', { name: 'Trang trước' }).click();

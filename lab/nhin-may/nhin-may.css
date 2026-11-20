@@ -1,0 +1,61 @@
+/* Ngồi nhìn mây (G08, #149): only what the shared game screen (lab/game.css) does not already provide. */
+
+/* The sky: a painted-blue panel close to the G08 sprite's own sky, with soft paper edges. It is a size container so the
+   clouds can be sized and moved in cqw and look the same at 320 px and on desktop. */
+.nm-sky {
+  position: relative; container-type: inline-size; overflow: hidden;
+  width: 100%; max-width: 460px; aspect-ratio: 2.3 / 1; margin: 14px auto 6px;
+  border-radius: 18px; border: 1.5px solid #c9d5c6;
+  background: linear-gradient(#a8c2db, #bfd2e3 55%, #d9e4e9);
+  box-shadow: inset 0 0 18px rgba(255, 250, 238, .55);
+}
+
+/* Each cloud is a crop of the sprite with feathered edges (no hard rectangle), drifting left to right very slowly:
+   one crossing takes 2.5–4 minutes, so nothing ever rushes. Paused unless the game runs with "trôi". */
+.nm-cloud {
+  position: absolute; left: 0; display: block;
+  background-image: url("/lab/assets/sprites/games/g08-ngoi-nhin-may.webp"); background-repeat: no-repeat;
+  -webkit-mask-image: radial-gradient(closest-side, #000 58%, transparent 100%);
+  mask-image: radial-gradient(closest-side, #000 58%, transparent 100%);
+  animation-name: nm-drift; animation-timing-function: linear; animation-iteration-count: infinite;
+  animation-play-state: paused;
+  will-change: translate;
+}
+@keyframes nm-drift { from { translate: -100% 0; } to { translate: 100cqw 0; } }
+.game[data-state="running"][data-clouds="drift"] .nm-cloud { animation-play-state: running; }
+.nm-cloud--a { width: 40cqw; aspect-ratio: 95 / 42; top: 38%; background-size: 316.84% auto; background-position: 10.68% 30.77%; translate: 2cqw 0; animation-duration: 200s; animation-delay: -60s; }
+.nm-cloud--b { width: 24cqw; aspect-ratio: 60 / 28; top: 26%; background-size: 501.67% auto; background-position: 51.87% 47.17%; translate: 60cqw 0; animation-duration: 150s; animation-delay: -105s; }
+.nm-cloud--c { width: 22cqw; aspect-ratio: 52 / 25; top: 6%; background-size: 578.85% auto; background-position: 65.06% 10.71%; translate: 26cqw 0; animation-duration: 170s; animation-delay: -67s; }
+.nm-cloud--d { width: 38cqw; aspect-ratio: 88 / 40; top: 42%; background-size: 342.05% auto; background-position: 97.18% 21.95%; translate: 58cqw 0; animation-duration: 230s; animation-delay: -160s; }
+
+.game[data-state="paused"] .nm-sky { opacity: .7; }
+.game[data-state="complete"] .nm-sky, .game[data-state="stopped"] .nm-sky, .game[data-state="error"] .nm-sky { width: min(100%, 220px); margin-top: 8px; }
+
+/* Choices before starting: small ink words with a quiet label, like Thở cùng Yên. */
+.nm-options { --show: block; margin: 2px auto 0; max-width: 30em; }
+.nm-option-row { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 0 6px; }
+.nm-option-row .game-words { margin-top: 0; gap: 0 2px; }
+.nm-option-label { font: italic 400 15px/1.4 var(--serif); color: var(--muted); min-width: 4.2em; text-align: right; }
+
+/* Time left: the text guide that works without any motion. */
+.nm-left { --show: block; margin-top: 2px; font-size: 15px; font-weight: 500; color: var(--muted); min-height: 1.5em; }
+
+/* Reduced motion: lab.css stops every animation, so the sky is always still; "trôi" would do nothing, so it is not offered. */
+.game[data-motion="reduce"] .nm-sky-row { display: none; }
+.game .nm-caution-still { --show: none; }
+.game[data-motion="reduce"] .nm-caution-still { --show: block; }
+.game[data-motion="reduce"] .nm-caution-drift { --show: none; }
+
+/* Phones: before starting, the choices, caution and "bắt đầu" matter more than the sky; keep them in the first screen. */
+@media (max-width: 767px) {
+  .nm-sky { aspect-ratio: 3.2 / 1; } /* same in every state: starting never makes the sky jump under a finger */
+  .game[data-state="idle"] .nm-sky { margin: 8px auto 4px; }
+  .game[data-state="idle"] .game-head h1 { font-size: 28px; }
+  .game[data-state="idle"] .game-lede { font-size: 15px; margin-top: 2px; }
+  .game[data-state="idle"] .game-note { margin-top: 4px; font-size: 14px; }
+  .game[data-state="idle"] .game-words#game-controls { margin-top: 4px; }
+}
+
+@media (max-width: 359px) {
+  .nm-option-label { min-width: 0; text-align: center; flex-basis: 100%; }
+}

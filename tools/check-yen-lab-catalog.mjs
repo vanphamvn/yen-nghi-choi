@@ -48,7 +48,7 @@ export function checkCatalog() {
     }
   }
 
-  // Roadmap: same title and issue; a game is open exactly when its roadmap ticket is done.
+  // Roadmap: same title and issue; open games are in-progress or done, done games are open.
   const tasks = new Map(JSON.parse(read('docs/yen-lab/ops/roadmap.json')).tasks.map(t => [t.key, t]));
   for (const g of games) {
     const t = tasks.get(g.key);
@@ -56,7 +56,9 @@ export function checkCatalog() {
     if (!t) continue;
     check(t.title === g.title, `${g.key}: title "${g.title}" ≠ roadmap "${t.title}"`);
     check(t.issue === g.issue, `${g.key}: issue ${g.issue} ≠ roadmap ${t.issue}`);
-    check((t.status === 'done') === (g.status !== 'planned'), `${g.key}: status ${g.status} disagrees with roadmap ${t.status}`);
+    // Released in its own PR while the ticket is in-progress; the record PR then marks it done. Done always means open.
+    if (t.status === 'done') check(g.status !== 'planned', `${g.key}: roadmap done but catalog says planned`);
+    if (g.status !== 'planned') check(['in-progress', 'done'].includes(t.status), `${g.key}: open in the catalog but roadmap says ${t.status}`);
   }
 
   // EVIDENCE.md matrix: same title, duration and classification for every row.

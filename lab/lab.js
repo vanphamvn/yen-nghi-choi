@@ -25,6 +25,7 @@
     { group: 'body', before: 'Ngồi lâu mỏi lưng, mình chơi ', name: 'Căng rồi thả', href: '/lab/cang/', after: '.' },
     { group: 'head', before: 'Muốn rời màn hình một chút? Chơi ', name: 'Thám tử hiện tại', href: '/lab/tham-tu/', after: '.' },
     { group: 'heart', before: 'Mình hay ghi vài điều vui vui ở ', name: 'Ba điều nhỏ xíu', href: '/lab/ba-dieu/', after: '.' },
+    { group: 'head', before: 'Không muốn làm gì hết thì mình qua ', name: 'Ngồi nhìn mây', href: '/lab/nhin-may/', after: ' một lát.' },
   ];
   let next = 1; // poke count; the first chat line is already in the bubble
 
