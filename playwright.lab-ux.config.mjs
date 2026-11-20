@@ -20,8 +20,8 @@ export default defineConfig({
     // Local only, release gates (#134): LAB_UX_DEVICES=1 runs the game journey on emulated phones.
     // WebKit is iPhone Safari's engine; this is emulation, not a physical device.
     ...(process.env.LAB_UX_DEVICES ? [
-      { name: 'iphone-webkit', testMatch: ['yen-lab-tho.spec.mjs', 'yen-lab-cang.spec.mjs', 'yen-lab-ba-dieu.spec.mjs', 'yen-lab-tham-tu.spec.mjs', 'yen-lab-tham-tu.spec.mjs', 'yen-lab-route.spec.mjs', 'yen-lab-privacy.spec.mjs', 'yen-lab-beta3.spec.mjs'], use: { ...devices['iPhone 15'] } },
-      { name: 'android-chromium', testMatch: ['yen-lab-tho.spec.mjs', 'yen-lab-cang.spec.mjs', 'yen-lab-ba-dieu.spec.mjs', 'yen-lab-tham-tu.spec.mjs', 'yen-lab-tham-tu.spec.mjs', 'yen-lab-route.spec.mjs', 'yen-lab-privacy.spec.mjs', 'yen-lab-beta3.spec.mjs'], use: { ...devices['Pixel 7'] } },
+      { name: 'iphone-webkit', testMatch: ['yen-lab-tho.spec.mjs', 'yen-lab-cang.spec.mjs', 'yen-lab-ba-dieu.spec.mjs', 'yen-lab-tham-tu.spec.mjs', 'yen-lab-route.spec.mjs', 'yen-lab-privacy.spec.mjs', 'yen-lab-beta3.spec.mjs'], use: { ...devices['iPhone 15'] } },
+      { name: 'android-chromium', testMatch: ['yen-lab-tho.spec.mjs', 'yen-lab-cang.spec.mjs', 'yen-lab-ba-dieu.spec.mjs', 'yen-lab-tham-tu.spec.mjs', 'yen-lab-route.spec.mjs', 'yen-lab-privacy.spec.mjs', 'yen-lab-beta3.spec.mjs'], use: { ...devices['Pixel 7'] } },
     ] : []),
   ],
   webServer: { command: 'node tools/serve-lab-ux.mjs', url: origin + '/docs/yen-lab/wireframes.html', reuseExistingServer: !process.env.CI },

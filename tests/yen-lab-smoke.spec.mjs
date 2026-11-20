@@ -192,10 +192,13 @@ for (const game of GAMES.filter(g => g.stepped)) {
   // Counting steps, no timer and no text: start → stop → again → count/skip every step → complete.
   test(`${game.label}: start → stop → again → count and skip → complete really works`, async ({ page }) => {
     const problems = watch(page);
+    await page.clock.install(); // taps within 400 ms of a step change are dropped on purpose; step the clock past that
     await page.goto(game.path);
     const g = page.locator('main.game');
-    const lead = page.locator('[data-act="found"]'), skip = page.locator('[data-act="skip"]');
-    const tap = name => page.getByRole('button', { name, exact: true }).click();
+    const wait = () => page.clock.runFor(450);
+    const lead = { click: async () => { await wait(); await page.locator('[data-act="found"]').click(); } };
+    const skip = { click: async () => { await wait(); await page.locator('[data-act="skip"]').click(); } };
+    const tap = async name => { await wait(); await page.getByRole('button', { name, exact: true }).click(); };
     await tap('bắt đầu');
     await expect(g).toHaveAttribute('data-state', 'running');
     await lead.click();
@@ -218,9 +221,10 @@ for (const game of GAMES.filter(g => g.stepped)) {
     const context = await browser.newContext({ reducedMotion: 'reduce', baseURL: BASE });
     if (process.env.LAB_BASE_URL) await blockHostTooling(context);
     const page = await context.newPage();
+    await page.clock.install();
     await page.goto(game.path);
     await page.getByRole('button', { name: 'bắt đầu', exact: true }).click();
-    for (let i = 0; i < 5; i++) await page.locator('[data-act="skip"]').click();
+    for (let i = 0; i < 5; i++) { await page.clock.runFor(450); await page.locator('[data-act="skip"]').click(); }
     const moving = await page.evaluate(() => [...document.querySelectorAll('*')].some(el => {
       const s = getComputedStyle(el);
       return (s.animationName !== 'none' && s.animationDuration.split(',').some(v => parseFloat(v) > 0)) || s.transitionDuration.split(',').some(v => parseFloat(v) > 0);

@@ -2,7 +2,13 @@
 
 /* The painted sense tiles (#189) are a wide strip, not a square character. */
 .tt-stage { width: min(100%, 340px); aspect-ratio: auto; margin: 16px auto 8px; }
-.tt-stage > img { width: 100%; }
+.tt-stage > img {
+  width: 100%;
+  /* Hide the sprite's leaf tile (bottom right): next to a taste step it could read as "taste a plant" (SAFETY.md). */
+  clip-path: polygon(0 0, 100% 0, 100% 46%, 66% 46%, 66% 100%, 0 100%);
+}
+/* No double-tap zoom while tapping quickly to count. */
+.game[data-game="tham-tu"] .ink-word { touch-action: manipulation; }
 
 .tt-sub { --show: block; max-width: 34ch; margin: 6px auto 0; font-size: 15px; line-height: 1.5; color: var(--muted); text-wrap: pretty; }
 .game[data-state="running"] .game-cue { margin-top: 4px; }

@@ -95,8 +95,8 @@ async function playThamTu(page) {
   const tap = async name => { await page.clock.runFor(400); await page.getByRole('button', { name, exact: true }).click(); };
   await tap('bắt đầu');
   for (let i = 0; i < 5; i++) await tap('thấy một thứ');
-  await tap('cảm nhận một thứ');
-  await tap('bỏ qua bước này');
+  await tap('cảm thấy một thứ');
+  await tap('đủ rồi');
   await tap('bỏ qua bước này');
   await tap('không có mùi nào');
   await tap('có một vị');

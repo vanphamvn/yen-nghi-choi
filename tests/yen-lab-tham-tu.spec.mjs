@@ -4,12 +4,20 @@ import { test, expect } from '@playwright/test';
 
 const TT = '/lab/tham-tu/';
 const game = page => page.locator('#game');
+// Taps within 400 ms of a step change are dropped on purpose (a leftover tap of the same burst), so every helper first
+// lets the fake clock pass that guard. Tests of the guard itself tap without waiting.
+const SETTLE = 450;
+test.beforeEach(async ({ page }) => { await page.clock.install(); });
 const tap = async (page, name) => {
+  await page.clock.runFor(SETTLE);
   const b = page.getByRole('button', { name, exact: true });
   if (test.info().project.use.hasTouch) await b.tap(); else await b.click();
 };
+const press = async (page, key) => { await page.clock.runFor(SETTLE); await page.keyboard.press(key); };
 const lead = page => page.locator('[data-act="found"]');
 const skip = page => page.locator('[data-act="skip"]');
+const tapLead = async page => { await page.clock.runFor(SETTLE); await lead(page).click(); };
+const tapSkip = async page => { await page.clock.runFor(SETTLE); await skip(page).click(); };
 const whisper = page => page.locator('#game-whisper');
 const nothingKept = page => page.evaluate(() => [localStorage.length, sessionStorage.length, document.cookie, location.search, location.hash]);
 
@@ -28,7 +36,7 @@ test('idle: careful copy beside start (eyes open, nothing strange to touch/smell
   await page.goto(TT);
   await expect(game(page)).toHaveAttribute('data-state', 'idle');
   await expect(page.getByText('Để ý vài thứ quanh bạn.')).toBeVisible(); // EVIDENCE.md G05 allowed copy
-  await expect(page.getByText(/Mở mắt, nhìn và nghe quanh chỗ bạn ngồi\. Không cần chạm, ngửi hay nếm thứ gì lạ; bước nào không hợp thì bỏ qua\./)).toBeVisible();
+  await expect(page.getByText(/Mở mắt, nhìn và nghe quanh chỗ bạn ngồi\. Không cần chạm, ngửi hay nếm gì, và đừng thử thứ lạ; bước nào không hợp thì bỏ qua\./)).toBeVisible();
   await expect(page.getByText(/manh mối ở ngoài đời, trang chỉ đếm giúp bạn/)).toBeVisible();
   // Not a hidden-object game and not a text box: nothing personal can be typed.
   await expect(page.locator('input, textarea, [contenteditable], form, select')).toHaveCount(0);
@@ -57,10 +65,10 @@ test('full case: 5 seen, 4 felt, 3 heard, 2 smells, 1 taste; counts announce num
   await expect(page.locator('#game-dots i.is-done')).toHaveCount(1);
   for (let i = 0; i < 4; i++) await tap(page, 'thấy một thứ');
   await expect(game(page)).toHaveAttribute('data-step', '2');
-  await expect(whisper(page)).toHaveText('Đủ 5 thứ bạn thấy. Bước 2 / 5: Để ý 4 thứ bạn đang cảm nhận.');
-  await expect(lead(page)).toHaveText('cảm nhận một thứ');
+  await expect(whisper(page)).toHaveText('Đủ 5 thứ bạn thấy. Bước 2 / 5: Để ý 4 thứ bạn cảm thấy trên người.');
+  await expect(lead(page)).toHaveText('cảm thấy một thứ');
   await expect(lead(page)).toBeFocused();
-  for (let i = 0; i < 4; i++) await tap(page, 'cảm nhận một thứ');
+  for (let i = 0; i < 4; i++) await tap(page, 'cảm thấy một thứ');
   for (let i = 0; i < 3; i++) await tap(page, 'nghe một tiếng');
   await expect(skip(page)).toHaveText('không có mùi nào');
   for (let i = 0; i < 2; i++) await tap(page, 'có một mùi');
@@ -80,13 +88,13 @@ test('outdoors / no smell or taste: skip those steps, and partial counts still f
   await page.goto(TT);
   await tap(page, 'bắt đầu');
   await tap(page, 'thấy một thứ');
-  await tap(page, 'thấy một thứ'); // two of five is enough
-  await tap(page, 'bỏ qua bước này');
-  await expect(whisper(page)).toHaveText('Bỏ qua. Bước 2 / 5: Để ý 4 thứ bạn đang cảm nhận.');
+  await tap(page, 'thấy một thứ'); // two of five is enough: once something is counted, the skip word says so
+  await tap(page, 'đủ rồi');
+  await expect(whisper(page)).toHaveText('Sang bước sau. Bước 2 / 5: Để ý 4 thứ bạn cảm thấy trên người.');
   await expect(page.locator('#tt-count')).toHaveText('0 / 4');
   await tap(page, 'bỏ qua bước này');
   await tap(page, 'nghe một tiếng');
-  await tap(page, 'bỏ qua bước này');
+  await tap(page, 'đủ rồi');
   await expect(page.locator('#tt-sub')).toHaveText('Không ngửi thấy gì cũng được, đừng ngửi thứ lạ.');
   await tap(page, 'không có mùi nào');
   await expect(page.locator('#tt-sub')).toContainText('Đừng nếm thứ lạ.');
@@ -108,7 +116,7 @@ test('stop at any step, then chơi lại starts clean; leaving and coming back s
   await page.goto(TT);
   await tap(page, 'bắt đầu');
   for (let i = 0; i < 5; i++) await tap(page, 'thấy một thứ');
-  await tap(page, 'cảm nhận một thứ');
+  await tap(page, 'cảm thấy một thứ');
   await tap(page, 'dừng hẳn');
   await expect(game(page)).toHaveAttribute('data-state', 'stopped');
   await expect(page.getByText('Mình dừng ở đây nhé.')).toBeVisible();
@@ -121,8 +129,11 @@ test('stop at any step, then chơi lại starts clean; leaving and coming back s
   await expect(page.locator('#tt-count')).toHaveText('0 / 5');
 
   await tap(page, 'thấy một thứ');
+  // The real reset path: the pageshow a browser fires when restoring from the back/forward cache.
   await page.evaluate(() => dispatchEvent(new PageTransitionEvent('pageshow', { persisted: true })));
   await expect(game(page)).toHaveAttribute('data-state', 'idle');
+  await expect(page.locator('#game-title')).toBeFocused(); // focus is not left on a hidden word
+  // Playwright's browsers keep no back/forward cache: this part shows a normal reload after back starts clean.
   await page.goto('/lab/');
   await page.goBack();
   await expect(game(page)).toHaveAttribute('data-state', 'idle');
@@ -136,22 +147,22 @@ test('keyboard only: Tab to bắt đầu, Enter/Space count, focus stays on the 
   await page.getByRole('button', { name: 'bắt đầu', exact: true }).focus();
   await page.keyboard.press('Enter');
   await expect(lead(page)).toBeFocused();
-  for (let i = 0; i < 5; i++) await page.keyboard.press('Enter');
+  for (let i = 0; i < 5; i++) await press(page, 'Enter');
   await expect(game(page)).toHaveAttribute('data-step', '2');
   await expect(lead(page)).toBeFocused();
-  for (let i = 0; i < 4; i++) await page.keyboard.press('Space');
+  for (let i = 0; i < 4; i++) await press(page, 'Space');
   await expect(game(page)).toHaveAttribute('data-step', '3');
   await page.keyboard.press('Tab'); // → skip
   await expect(skip(page)).toBeFocused();
-  await page.keyboard.press('Enter');
+  await press(page, 'Enter');
   await expect(game(page)).toHaveAttribute('data-step', '4');
   await expect(lead(page)).toBeFocused(); // after a skip, back on the lead word
   await page.keyboard.press('Tab');
-  await page.keyboard.press('Enter'); // không có mùi nào
-  await page.keyboard.press('Enter'); // có một vị
+  await press(page, 'Enter'); // không có mùi nào
+  await press(page, 'Enter'); // có một vị
   await expect(game(page)).toHaveAttribute('data-state', 'complete');
   await expect(page.locator('#tt-result-line')).toBeFocused();
-  await page.keyboard.press('Enter'); // a stray Enter on the result does nothing
+  await press(page, 'Enter'); // a stray Enter on the result does nothing
   await expect(game(page)).toHaveAttribute('data-state', 'complete');
 });
 
@@ -179,7 +190,7 @@ for (const [w, h] of [[320, 640], [360, 740], [390, 844]]) {
       expect(await inView(l)).toBe(true);
     }
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
-    for (let i = 0; i < 4; i++) await skip(page).click();
+    for (let i = 0; i < 4; i++) await tapSkip(page);
     await expect(page.locator('#tt-sub')).toContainText('Đừng nếm thứ lạ.');
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
   });
@@ -188,9 +199,10 @@ for (const [w, h] of [[320, 640], [360, 740], [390, 844]]) {
 test('reduced motion: plays to the end with nothing animating', async ({ browser, baseURL }) => {
   const context = await browser.newContext({ reducedMotion: 'reduce', baseURL });
   const page = await context.newPage();
+  await page.clock.install();
   await page.goto(TT);
   await page.getByRole('button', { name: 'bắt đầu', exact: true }).click();
-  for (let i = 0; i < 15; i++) await page.locator('[data-act="found"]').click();
+  for (let i = 0; i < 15; i++) await tapLead(page);
   await expect(page.locator('#game')).toHaveAttribute('data-state', 'complete');
   const moving = await page.evaluate(() => [...document.querySelectorAll('*')].some(el => {
     const s = getComputedStyle(el);
@@ -200,13 +212,47 @@ test('reduced motion: plays to the end with nothing animating', async ({ browser
   await context.close();
 });
 
+test('a burst of taps: the extra tap after a step change or the last count is dropped, not applied to what moved under it', async ({ page }) => {
+  await page.goto(TT);
+  await tap(page, 'bắt đầu');
+  for (let i = 0; i < 4; i++) await tapLead(page);
+  await lead(page).dblclick(); // 5th + an extra tap right away
+  await expect(game(page)).toHaveAttribute('data-step', '2');
+  await expect(page.locator('#tt-count')).toHaveText('0 / 4'); // the extra tap did not count as something felt
+  await tapSkip(page);
+  await skip(page).click(); // double tap on the skip word: only one step skipped
+  await expect(game(page)).toHaveAttribute('data-step', '3');
+  for (let i = 0; i < 3; i++) await tapSkip(page);
+  await expect(game(page)).toHaveAttribute('data-state', 'complete');
+  // whatever now sits under the finger ("chơi lại", "về góc ngồi chơi") ignores the leftover tap
+  await page.getByRole('button', { name: 'chơi lại', exact: true }).click();
+  await page.locator('main.game a[href="/lab/"]').first().click();
+  await expect(game(page)).toHaveAttribute('data-state', 'complete');
+  await expect(page).toHaveURL(/\/lab\/tham-tu\/$/);
+  await page.clock.runFor(SETTLE); // after a moment, they work again
+  await page.getByRole('button', { name: 'chơi lại', exact: true }).click();
+  await expect(game(page)).toHaveAttribute('data-state', 'idle');
+});
+
+test('holding Enter on the lead word counts once, not through every step', async ({ page }) => {
+  test.skip(!!test.info().project.use.hasTouch, 'keyboard path on desktop');
+  await page.goto(TT);
+  await tap(page, 'bắt đầu');
+  await page.clock.runFor(SETTLE);
+  await page.keyboard.down('Enter');
+  for (let i = 0; i < 20; i++) await page.keyboard.down('Enter'); // auto-repeat: keydown with repeat=true
+  await page.keyboard.up('Enter');
+  await expect(page.locator('#tt-count')).toHaveText('1 / 5');
+  await expect(game(page)).toHaveAttribute('data-step', '1');
+});
+
 test('no network after load, nothing stored, no sound', async ({ page, context }) => {
   await page.goto(TT, { waitUntil: 'load' });
   const late = [];
   page.on('request', r => late.push(r.url()));
   await context.setOffline(true);
   await tap(page, 'bắt đầu');
-  for (let i = 0; i < 15; i++) await lead(page).click();
+  for (let i = 0; i < 15; i++) await tapLead(page);
   await expect(game(page)).toHaveAttribute('data-state', 'complete');
   await context.setOffline(false);
   expect(late).toEqual([]);
