@@ -56,9 +56,10 @@ on:
 permissions:
   contents: read
 jobs:
-  foundation:
+  # Fast node contract checks; no browser.
+  checks:
     runs-on: ubuntu-latest
-    timeout-minutes: 30 # 15m43s on #209 (8 games); each M4 game adds ~1.5 min. Split or shard the suite before this is reached
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
@@ -69,6 +70,23 @@ jobs:
       - run: node --test .github/codex/game-freeze.test.mjs
       - run: node --test tests/yen-lab-engine.test.mjs
       - run: node tools/check-yen-lab-privacy.mjs
+
+  # playwright.lab-ux.config.mjs split by file x project (desktop, emulated-touch) with --shard.
+  # Before sharding this ran as one 13-minute step (8 games, #209) and grew ~1.5 min per game.
+  # If a shard nears 8 minutes as M4 games land, add entries to `shard` (the total follows automatically).
+  lab-ux:
+    name: lab-ux (${{ matrix.shard }}/${{ strategy.job-total }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1, 2, 3, 4, 5, 6]
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '22'
       - run: npm ci
       - name: Locate runner Chrome or install Playwright Chromium
         shell: bash
@@ -81,18 +99,60 @@ jobs:
           fi
       - name: Install ffmpeg for failure videos
         run: npx playwright install ffmpeg
-      - name: Exercise prototype and /lab/ route (emulated touch and keyboard)
-        run: npx playwright test --config playwright.lab-ux.config.mjs
-      - name: Lab smoke on the fixture server (5 viewports, links, assets, overlays, game flow)
-        run: npx playwright test --config playwright.lab-smoke.config.mjs
+      - name: Exercise prototype and /lab/ route (emulated touch and keyboard), shard ${{ matrix.shard }}/${{ strategy.job-total }}
+        run: npx playwright test --config playwright.lab-ux.config.mjs --shard=${{ matrix.shard }}/${{ strategy.job-total }}
       - name: Preserve prototype screenshots and traces
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
-          name: yen-lab-ux-browser-evidence
+          name: yen-lab-ux-browser-evidence-shard-${{ matrix.shard }}
           path: |
             test-results/lab-ux/
             playwright-report/lab-ux/
+          if-no-files-found: warn
+
+  lab-smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '22'
+      - run: npm ci
+      - name: Locate runner Chrome or install Playwright Chromium
+        shell: bash
+        run: |
+          if command -v google-chrome >/dev/null 2>&1; then
+            echo "LAB_UX_CHROMIUM_PATH=$(command -v google-chrome)" >> "$GITHUB_ENV"
+            google-chrome --version
+          else
+            npx playwright install --with-deps chromium
+          fi
+      - name: Install ffmpeg for failure videos
+        run: npx playwright install ffmpeg
+      - name: Lab smoke on the fixture server (5 viewports, links, assets, overlays, game flow)
+        run: npx playwright test --config playwright.lab-smoke.config.mjs
+      - name: Preserve smoke screenshots, videos and traces
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: yen-lab-smoke-browser-evidence
+          path: |
             test-results/lab-smoke/
             playwright-report/lab-smoke/
           if-no-files-found: warn
+
+  # The single status to depend on. Keeps the historical check name `foundation`.
+  foundation:
+    needs: [checks, lab-ux, lab-smoke]
+    if: always()
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Require every Lab check and shard to pass
+        env:
+          RESULTS: ${{ toJSON(needs) }}
+        run: |
+          echo "$RESULTS"
+          echo "$RESULTS" | jq -e 'to_entries | all(.value.result == "success")' > /dev/null

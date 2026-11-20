@@ -13,7 +13,7 @@ Date: 19/11/2026. Independent reviewer: Codex QA agent (`reviewerType=agent`). T
 - Emulated touch using actual Playwright `.tap()` at 360×800; separate desktop context at 1440×900. This does not represent a physical iPhone/Android test.
 - Reduced-motion function availability and horizontal-overflow assertions at 320/360/390/768/1440 widths. Idle, active and completed screenshots are attached at each width, plus normal-motion desktop/mobile screenshots and failure traces.
 
-The fixture server binds only to `127.0.0.1:4189`. The foundation GitHub workflow installs locked dependencies and runs the isolated prototype configuration. It uses runner Chrome when present (logging its actual version), otherwise installs Playwright Chromium. Browser evidence is uploaded as `yen-lab-ux-browser-evidence`.
+The fixture server binds only to `127.0.0.1:4189`. The foundation GitHub workflow installs locked dependencies and runs the isolated prototype configuration. It uses runner Chrome when present (logging its actual version), otherwise installs Playwright Chromium. The Playwright run is sharded across parallel jobs; browser evidence is uploaded per shard as `yen-lab-ux-browser-evidence-shard-<n>` (smoke: `yen-lab-smoke-browser-evidence`).
 
 ## Actual local results
 
