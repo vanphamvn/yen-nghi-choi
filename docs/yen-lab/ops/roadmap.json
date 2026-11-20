@@ -372,7 +372,7 @@
       "priority": "P1",
       "title": "Gọi tên cơn bực",
       "kind": "minigame",
-      "status": "todo",
+      "status": "in-progress",
       "depends_on": [
         "F03",
         "F08",

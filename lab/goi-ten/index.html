@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f7f3e9">
+  <meta name="robots" content="noindex, nofollow, noarchive">
+  <meta name="referrer" content="no-referrer">
+  <meta name="description" content="Gọi tên cơn bực: chọn một hai chữ gần với điều đang cảm thấy, không lưu ở đâu cả.">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; font-src 'none'; connect-src 'none'; frame-src 'none'; form-action 'none'; base-uri 'none'; object-src 'none'">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="stylesheet" href="/lab/lab.css">
+  <link rel="stylesheet" href="/lab/game.css">
+  <link rel="stylesheet" href="/lab/goi-ten/goi-ten.css">
+  <script type="module" src="/lab/goi-ten/goi-ten.mjs"></script>
+  <title>Gọi tên cơn bực · Yên Lab | Yên Coffee &amp; Tea</title>
+</head>
+<body>
+  <!-- G09 (#150): affect labeling, adapted. Copy per EVIDENCE.md G09 and SAFETY.md. Pick up to two words for what is felt
+       right now (any feeling, "không biết gọi tên" included), optionally how strong, and just look at them. No diagnosis,
+       no reading of the choice, nothing kept: choices live only in this page's memory and are wiped on stop/reset/leave. -->
+  <a class="lab-skip" href="#game-title">Đến nội dung</a>
+  <header class="lab-header lab-wrap">
+    <a class="lab-brand" href="/" aria-label="Về website Yên Coffee &amp; Tea"><img src="/yen-logo.svg" width="1450" height="585" alt="yên"><span class="lab-brand-sub" aria-hidden="true">COFFEE &amp; TEA</span></a>
+    <nav class="lab-nav" aria-label="Điều hướng Yên Lab">
+      <a class="lab-nav-home" href="/lab/">Góc ngồi chơi</a>
+    </nav>
+  </header>
+
+  <main class="game" id="game" data-state="idle" data-phase="choose" data-game="goi-ten" aria-labelledby="game-title">
+    <img class="game-backdrop" src="/lab/assets/room-backdrop.jpg" width="1586" height="992" alt="" decoding="async">
+    <article class="game-sheet">
+      <header class="game-head">
+        <h1 id="game-title" tabindex="-1">Gọi tên cơn bực</h1>
+        <p class="game-lede">Thử gọi tên điều đang cảm thấy.</p>
+      </header>
+
+      <div class="game-stage gt-stage" data-when="idle" aria-hidden="true">
+        <img src="/lab/assets/sprites/games/g09-goi-ten-con-buc.webp" width="295" height="81" alt="" decoding="async">
+      </div>
+
+      <p class="game-cue gt-choose-only" data-when="running" id="game-cue">Lúc này bạn thấy thế nào?</p>
+      <p class="gt-sub gt-choose-only" data-when="running" id="gt-sub">Chọn một hoặc hai chữ gần nhất. Chạm lại để bỏ chọn.</p>
+
+      <div class="gt-choose gt-choose-only" data-when="running">
+        <div class="game-words gt-feelings" role="group" aria-labelledby="game-cue" aria-describedby="gt-sub">
+          <button class="ink-word ink-word--small" type="button" data-feel aria-pressed="false">bực</button>
+          <button class="ink-word ink-word--small" type="button" data-feel aria-pressed="false">cáu</button>
+          <button class="ink-word ink-word--small" type="button" data-feel aria-pressed="false">giận</button>
+          <button class="ink-word ink-word--small" type="button" data-feel aria-pressed="false">khó chịu</button>
+          <button class="ink-word ink-word--small" type="button" data-feel aria-pressed="false">mệt</button>
+          <button class="ink-word ink-word--small" type="button" data-feel aria-pressed="false">lo</button>
+          <button class="ink-word ink-word--small" type="button" data-feel aria-pressed="false">sợ</button>
+          <button class="ink-word ink-word--small" type="button" data-feel aria-pressed="false">buồn</button>
+          <button class="ink-word ink-word--small" type="button" data-feel aria-pressed="false">tủi thân</button>
+          <button class="ink-word ink-word--small" type="button" data-feel aria-pressed="false">xấu hổ</button>
+          <button class="ink-word ink-word--small" type="button" data-feel aria-pressed="false">cô đơn</button>
+          <button class="ink-word ink-word--small" type="button" data-feel aria-pressed="false">hụt hẫng</button>
+          <button class="ink-word ink-word--small" type="button" data-feel aria-pressed="false">bồn chồn</button>
+          <button class="ink-word ink-word--small" type="button" data-feel aria-pressed="false">chán</button>
+          <button class="ink-word ink-word--small" type="button" data-feel aria-pressed="false">bình thường</button>
+          <button class="ink-word ink-word--small" type="button" data-feel aria-pressed="false">nhẹ nhõm</button>
+          <button class="ink-word ink-word--small" type="button" data-feel aria-pressed="false">vui</button>
+          <button class="ink-word ink-word--small" type="button" data-feel aria-pressed="false">khác</button>
+          <button class="ink-word ink-word--small" type="button" data-feel data-unknown aria-pressed="false">không biết gọi tên</button>
+        </div>
+        <div class="gt-strength">
+          <span class="gt-strength-label" id="gt-strength-label">mạnh cỡ nào, nếu muốn</span>
+          <div class="game-words" role="group" aria-labelledby="gt-strength-label">
+            <button class="ink-word ink-word--small" type="button" data-strength aria-pressed="false">một chút</button>
+            <button class="ink-word ink-word--small" type="button" data-strength aria-pressed="false">vừa</button>
+            <button class="ink-word ink-word--small" type="button" data-strength aria-pressed="false">nhiều</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="gt-view gt-view-only" data-when="running">
+        <p class="gt-named" id="gt-named" tabindex="-1"></p>
+        <p class="game-note" id="gt-view-note">Chỉ gọi tên thôi. Không cần đổi nó, không cần giải thích nó.</p>
+      </div>
+
+      <p class="game-note" data-when="idle">Cảm giác nào cũng là cảm giác, như trời nào cũng là trời: bực, buồn, vui hay chẳng rõ. Không có chữ đúng hay sai, và không cần nó dễ chịu.</p>
+      <p class="game-note" data-when="idle">Thấy nặng lòng hơn thì dừng lúc nào cũng được. Lựa chọn chỉ ở trên trang này, không gửi, không lưu; rời đi là quên.</p>
+      <p class="game-note" data-when="error">Trò chưa chạy được. Thử lại hoặc về góc ngồi chơi nhé.</p>
+
+      <div class="game-result" data-when="complete stopped">
+        <p class="game-result-line" data-when="complete" id="gt-result-line" tabindex="-1">Gọi tên xong rồi.</p>
+        <p class="game-note" data-when="complete">Cảm giác có thể đổi, hoặc chưa đổi; cả hai đều bình thường. Ngồi chơi thêm chút rồi đi cũng được.</p>
+        <p class="game-result-line" data-when="stopped">Mình dừng ở đây nhé. Lựa chọn đã xóa.</p>
+      </div>
+
+      <div class="game-words" id="game-controls" role="group" aria-label="Điều khiển trò">
+        <button class="ink-word ink-word--lead" type="button" data-act="start" data-when="idle" disabled>bắt đầu</button>
+        <button class="ink-word ink-word--lead gt-choose-only" type="button" data-act="look" data-when="running">nhìn lại</button>
+        <button class="ink-word ink-word--lead gt-view-only" type="button" data-act="done" data-when="running">xong</button>
+        <button class="ink-word gt-view-only" type="button" data-act="edit" data-when="running">sửa lại</button>
+        <button class="ink-word" type="button" data-act="stop" data-when="running">dừng hẳn</button>
+        <button class="ink-word ink-word--lead" type="button" data-act="again" data-when="complete stopped error">chơi lại</button>
+        <a class="ink-word" href="/lab/" data-when="idle complete stopped error">về góc ngồi chơi</a>
+      </div>
+
+      <p class="game-whisper" id="game-whisper" role="status" aria-live="polite"></p>
+    </article>
+    <noscript><p class="game-note">Trò này cần JavaScript. Không có nó, bạn vẫn có thể thử: nghĩ thầm một hai chữ gần nhất với điều đang cảm thấy, kể cả “không biết gọi tên”. <a href="/lab/">Về góc ngồi chơi</a>.</p></noscript>
+  </main>
+
+  <footer class="lab-footer">
+    <div class="lab-wrap lab-footer-inner">
+      <img class="lab-door" src="/lab/assets/door.webp" width="160" height="268" alt="" decoding="async" loading="lazy">
+      <nav class="lab-footer-links" aria-label="Rời Yên Lab">
+        <a class="lab-button" href="/">Về Yên</a>
+        <a href="/#yen-ngoai-doi">Ghé quán thật</a>
+      </nav>
+      <p class="lab-fineprint">Một trò nhỏ để thử, không thay thế tư vấn hoặc điều trị chuyên môn. Trò phỏng theo việc gọi tên cảm xúc (affect labeling); nghiên cứu là thí nghiệm trong phòng lab, trò này chưa được kiểm chứng hiệu quả riêng. Không cookie, rời đi là quên. <a href="https://github.com/vanphamvn/yen-nghi-choi/blob/main/docs/yen-lab/EVIDENCE.md" rel="noopener noreferrer" referrerpolicy="no-referrer">Nguồn phương pháp</a></p>
+    </div>
+  </footer>
+</body>
+</html>
