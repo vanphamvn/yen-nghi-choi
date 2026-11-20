@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f7f3e9">
+  <meta name="robots" content="noindex, nofollow, noarchive">
+  <meta name="referrer" content="no-referrer">
+  <meta name="description" content="Quét người tìm căng thẳng: để ý lần lượt đầu, vai, tay, bụng, chân; tự bấm tiếp, bỏ qua hay dừng lúc nào cũng được.">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; font-src 'none'; connect-src 'none'; frame-src 'none'; form-action 'none'; base-uri 'none'; object-src 'none'">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="stylesheet" href="/lab/lab.css">
+  <link rel="stylesheet" href="/lab/game.css">
+  <link rel="stylesheet" href="/lab/quet-nguoi/quet-nguoi.css">
+  <script type="module" src="/lab/quet-nguoi/quet-nguoi.mjs"></script>
+  <title>Quét người tìm căng thẳng · Yên Lab | Yên Coffee &amp; Tea</title>
+</head>
+<body>
+  <!-- G03 (#144): a self-paced body scan, adapted. Copy per EVIDENCE.md G03 (indirect / adapted) and SAFETY.md: eyes open,
+       skip any zone, look outward if body attention feels uncomfortable; no rating, no diagnosis, no timer. Optional spoken
+       cues are off by default, use only a voice the browser reports as on-device, and can be silenced mid-scan. -->
+  <a class="lab-skip" href="#game-title">Đến nội dung</a>
+  <header class="lab-header lab-wrap">
+    <a class="lab-brand" href="/" aria-label="Về website Yên Coffee &amp; Tea"><img src="/yen-logo.svg" width="1450" height="585" alt="yên"><span class="lab-brand-sub" aria-hidden="true">COFFEE &amp; TEA</span></a>
+    <nav class="lab-nav" aria-label="Điều hướng Yên Lab">
+      <a class="lab-nav-home" href="/lab/">Góc ngồi chơi</a>
+    </nav>
+  </header>
+
+  <main class="game" id="game" data-loading data-state="idle" data-game="quet-nguoi" aria-labelledby="game-title">
+    <img class="game-backdrop" src="/lab/assets/room-backdrop.jpg" width="1586" height="992" alt="" decoding="async">
+    <article class="game-sheet">
+      <header class="game-head">
+        <h1 id="game-title" tabindex="-1">Quét người tìm căng thẳng</h1>
+        <p class="game-lede">Để ý một vài cảm giác đang có.</p>
+      </header>
+
+      <div class="game-stage gq-stage" data-when="idle" aria-hidden="true">
+        <img src="/lab/assets/sprites/games/g03-quet-nguoi.webp" width="301" height="92" alt="" decoding="async">
+      </div>
+
+      <!-- The figure (first panel of the G03 sprite) with a soft spotlight on the current zone. Decorative: the text below is the guide. -->
+      <div class="gq-figure" data-when="running" aria-hidden="true"><span class="gq-spot"></span><span class="gq-spot-2"></span></div>
+
+      <div class="gq-zone-text" data-when="running">
+        <p class="game-cue" id="gq-zone">Đầu và mặt</p>
+        <p class="gq-cue" id="gq-cue"></p>
+        <p class="gq-where" id="gq-where" aria-hidden="true"></p>
+      </div>
+
+      <div class="gq-options" id="gq-voice-row" data-when="idle" hidden>
+        <span class="gq-option-label" id="gq-voice-label">đọc to</span>
+        <div class="game-words" role="group" aria-labelledby="gq-voice-label">
+          <button class="ink-word ink-word--small" type="button" data-voice="off" aria-pressed="true">tắt</button>
+          <button class="ink-word ink-word--small" type="button" data-voice="on" aria-pressed="false">bật</button>
+        </div>
+      </div>
+
+      <p class="game-note" data-when="idle">Lần lượt đầu, vai, tay, bụng, chân: chỉ để ý, không cần đổi gì. Mở mắt cũng được. Không có đúng sai, không chấm gì.</p>
+      <p class="game-note" data-when="idle">Để ý cơ thể có lúc làm khó chịu hơn. Vùng nào không muốn để ý thì bỏ qua, nhìn ra ngoài một chút, hoặc dừng lúc nào cũng được.</p>
+      <p class="game-note" data-when="running">Tự bấm “tiếp” khi xong. Không thoải mái thì bỏ qua vùng này hoặc nhìn ra ngoài.</p>
+      <p class="game-note" data-when="error">Trò chưa chạy được. Thử lại hoặc về góc ngồi chơi nhé.</p>
+      <p class="game-note game-wait">Trò đang mở ra. Lâu quá thì về góc ngồi chơi rồi quay lại sau nhé.</p>
+
+      <div class="game-result" data-when="complete stopped">
+        <p class="game-result-line" data-when="complete" id="gq-result-line" tabindex="-1">Xong một lượt. Không cần thấy khác đi.</p>
+        <p class="game-result-line" data-when="stopped">Mình dừng ở đây nhé.</p>
+        <div class="game-reflect" id="game-reflect" hidden>
+          <p id="reflect-q">Nếu muốn, lúc này bạn thấy sao?</p>
+          <div class="game-words" role="group" aria-labelledby="reflect-q">
+            <button class="ink-word ink-word--small" type="button" data-reflect>dễ chịu hơn</button>
+            <button class="ink-word ink-word--small" type="button" data-reflect>như cũ</button>
+            <button class="ink-word ink-word--small" type="button" data-reflect>khó chịu hơn</button>
+            <button class="ink-word ink-word--small" type="button" data-reflect>không rõ</button>
+            <button class="ink-word ink-word--small" type="button" data-reflect>bỏ qua</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="game-words" id="game-controls" role="group" aria-label="Điều khiển trò">
+        <button class="ink-word ink-word--lead" type="button" data-act="start" data-when="idle" disabled>bắt đầu</button>
+        <button class="ink-word ink-word--lead" type="button" data-act="next" data-when="running">tiếp</button>
+        <button class="ink-word" type="button" data-act="skip" data-when="running">bỏ qua vùng này</button>
+        <button class="ink-word gq-mute" type="button" data-act="mute" data-when="running" id="gq-mute" hidden>tắt đọc to</button>
+        <button class="ink-word" type="button" data-act="stop" data-when="running">dừng hẳn</button>
+        <button class="ink-word ink-word--lead" type="button" data-act="again" data-when="complete stopped error">làm lại</button>
+        <a class="ink-word" href="/lab/" data-when="idle complete stopped error">về góc ngồi chơi</a>
+      </div>
+
+      <p class="game-whisper" id="game-whisper" role="status" aria-live="polite"></p>
+    </article>
+    <noscript><p class="game-note">Trò này cần JavaScript để đi từng vùng. Không có nó, bạn vẫn có thể thử: để ý lần lượt đầu, vai, tay, bụng, chân, mỗi chỗ vài hơi thở; chỗ nào không muốn thì bỏ qua. <a href="/lab/">Về góc ngồi chơi</a>.</p></noscript>
+  </main>
+
+  <footer class="lab-footer">
+    <div class="lab-wrap lab-footer-inner">
+      <img class="lab-door" src="/lab/assets/door.webp" width="160" height="268" alt="" decoding="async" loading="lazy">
+      <nav class="lab-footer-links" aria-label="Rời Yên Lab">
+        <a class="lab-button" href="/">Về Yên</a>
+        <a href="/#yen-ngoai-doi">Ghé quán thật</a>
+      </nav>
+      <p class="lab-fineprint">Một trò nhỏ để thử, không thay thế tư vấn hoặc điều trị chuyên môn. Trò phỏng theo kiểu “quét cơ thể” trong chánh niệm; nghiên cứu nói về các chương trình chánh niệm nói chung, không riêng bài ngắn này, và trò chưa được kiểm chứng hiệu quả. Không cookie, rời đi là quên. <a href="https://github.com/vanphamvn/yen-nghi-choi/blob/main/docs/yen-lab/EVIDENCE.md" rel="noopener noreferrer" referrerpolicy="no-referrer">Nguồn phương pháp</a></p>
+    </div>
+  </footer>
+</body>
+</html>

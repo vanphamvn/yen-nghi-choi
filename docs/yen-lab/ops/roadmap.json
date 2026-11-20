@@ -420,7 +420,7 @@
       "priority": "P1",
       "title": "Quét người tìm căng thẳng",
       "kind": "minigame",
-      "status": "todo",
+      "status": "in-progress",
       "depends_on": [
         "F03",
         "F14"

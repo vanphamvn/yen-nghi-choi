@@ -30,7 +30,7 @@ Gratitude: **“Một điều cũng được. Hôm nay không nghĩ ra điều g
 
 Writing: ordinary, low-stakes prompts only; no compelled trauma narrative. Stop/reset/exit must erase private text in memory and UI; never log, persist, submit or put it in URL/history. Show a truthful short privacy explanation only after implementation is checked.
 
-Grounding: eyes open, no obligatory smell/taste/touch, no collecting unknown objects. Audio begins off and requires explicit play. All sensory tasks must support skipping and reduced motion.
+Grounding: eyes open, no obligatory smell/taste/touch, no collecting unknown objects. Audio begins off and requires explicit play; spoken cues (G03 voice option) count as audio: off by default, opt-in, silenced at any time. All sensory tasks must support skipping and reduced motion.
 
 ## Placement and publication gate
 

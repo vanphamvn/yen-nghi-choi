@@ -67,17 +67,17 @@
       "id": "quet-nguoi",
       "title": "Quét người tìm căng thẳng",
       "route": "/lab/quet-nguoi/",
-      "status": "planned",
+      "status": "beta",
       "category": "body",
       "duration": "2–5 min",
       "evidenceTier": "indirect",
       "evidence": "docs/yen-lab/EVIDENCE.md#twenty-tool-matrix",
-      "review": null,
+      "review": "docs/yen-lab/G03-QUET-NGUOI.md",
       "caution": "Body attention may distress: eyes open, external focus or skip; no tension score.",
       "issue": 144,
-      "module": null,
-      "stylesheet": null,
-      "releasedIn": null
+      "module": "/lab/quet-nguoi/quet-nguoi.mjs",
+      "stylesheet": "/lab/quet-nguoi/quet-nguoi.css",
+      "releasedIn": "G03 release (#144); full-catalog gate #139 pending"
     },
     {
       "key": "G04",
