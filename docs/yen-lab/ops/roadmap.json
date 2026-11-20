@@ -326,13 +326,14 @@
       "priority": "P1",
       "title": "Gợi ý theo nhu cầu",
       "kind": "frontend",
-      "status": "in-progress",
+      "status": "done",
       "depends_on": [
         "F04",
         "F05",
         "F11"
       ],
-      "issue_url": "https://github.com/vanphamvn/yen-nghi-choi/issues/136"
+      "issue_url": "https://github.com/vanphamvn/yen-nghi-choi/issues/136",
+      "evidence": "Owner decision 20/11/2026: no visible need buttons in the Lab (no-UI-chrome rule); suggestions come from Cục Yên. PR #199 squash-merged as e3b8313. Every other poke Cục Yên's bubble suggests one released game as a link, in its own voice (\"Hôm nào bực bực, mình chơi …\"), from a static hand-written mapping across three loose groups (body: Thở cùng Yên, Căng rồi thả; head: Lá trôi, nghĩ trôi, Thám tử hiện tại; heart: Gọi tên cơn bực, Ba điều nhỏ xíu); consecutive suggestions differ in group; never automatic, no question about the guest, no tracking, request, storage or URL; poking again changes it and the book stays the full list. Bubble follows Cục Yên in reading order (Tab reaches the link), role=status. Tests: all groups, only and every released game, names match the book, keyboard path, link ≥ 44 px and never covering Cục Yên at 8 sizes (mutation-checked). Independent agent review: no P0/P1; P2s fixed (iPad overlap, 43 px at 320, voice). CI foundation + deploy-preview smoke green at de8518c. Production: build-info commitSha e3b8313, deployed smoke run 44668350582 57/57; real-browser production walk poke -> suggestion link -> /lab/tho/, no storage. Not verified: physical phones, VoiceOver/TalkBack."
     },
     {
       "key": "G05",
