@@ -341,12 +341,13 @@
       "priority": "P1",
       "title": "Thám tử hiện tại",
       "kind": "minigame",
-      "status": "in-progress",
+      "status": "done",
       "depends_on": [
         "F03",
         "F11"
       ],
-      "issue_url": "https://github.com/vanphamvn/yen-nghi-choi/issues/146"
+      "issue_url": "https://github.com/vanphamvn/yen-nghi-choi/issues/146",
+      "evidence": "PR #193 squash-merged as a00a280. /lab/tham-tu/: 5-4-3-2-1 noticing with the clues in the real room; one tap per thing noticed, every step skippable, smell/taste offer none, skip word becomes \"đủ rồi\" after a count; no text input, only tap counts in memory; taps within 400 ms of a step change/stop/finish dropped, held Enter counts once. SAFETY.md Grounding caution above start; EVIDENCE.md G05 agent copy review (Exploratory, no benefit claim). Local: lab UX 258 passed, emulated iPhone 15 WebKit + Pixel 7 188 passed, smoke 41 passed. Independent agent review: no P0, 1 P1 (leftover tap after finishing) + P2s fixed before merge. CI foundation + deploy-preview smoke green at cef9bfc. Production: build-info commitSha a00a280, deployed smoke run 44645763430 43/43; real-browser production walk start -> count -> next step, no storage. Not verified: physical phones, VoiceOver/TalkBack; owner review pending."
     },
     {
       "key": "G07",
