@@ -60,7 +60,7 @@
 | `LAB-G02` | [#143](https://github.com/vanphamvn/yen-nghi-choi/issues/143) Căng rồi thả ✅ done ([PR #183](https://github.com/vanphamvn/yen-nghi-choi/pull/183)) | M2 | P0 | Có nghiên cứu PMR, **liều lượng rút gọn chưa xác minh** |
 | `LAB-G03` | [#144](https://github.com/vanphamvn/yen-nghi-choi/issues/144) Quét người tìm căng thẳng | M4 | P1 | Mindfulness gián tiếp |
 | `LAB-G04` | [#145](https://github.com/vanphamvn/yen-nghi-choi/issues/145) Ngón tay biết thở | M4 | P2 | Biến thể breathing, chưa có chứng cứ riêng |
-| `LAB-G05` | [#146](https://github.com/vanphamvn/yen-nghi-choi/issues/146) Thám tử hiện tại | M3 | P1 | 5-4-3-2-1 trực tiếp còn hạn chế |
+| `LAB-G05` | [#146](https://github.com/vanphamvn/yen-nghi-choi/issues/146) Thám tử hiện tại 🚧 in review ([G05-THAM-TU.md](G05-THAM-TU.md)) | M3 | P1 | 5-4-3-2-1 trực tiếp còn hạn chế |
 | `LAB-G06` | [#147](https://github.com/vanphamvn/yen-nghi-choi/issues/147) Vườn cát không mục tiêu | M4 | P2 | Exploratory; chưa chứng minh game |
 | `LAB-G07` | [#148](https://github.com/vanphamvn/yen-nghi-choi/issues/148) Lá trôi, nghĩ trôi | M3 | P1 | ACT defusion gián tiếp |
 | `LAB-G08` | [#149](https://github.com/vanphamvn/yen-nghi-choi/issues/149) Ngồi nhìn mây | M4 | P2 | Mindfulness gián tiếp |

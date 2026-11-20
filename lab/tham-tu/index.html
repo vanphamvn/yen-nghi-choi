@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f7f3e9">
+  <meta name="robots" content="noindex, nofollow, noarchive">
+  <meta name="referrer" content="no-referrer">
+  <meta name="description" content="Thám tử hiện tại: một trò nhỏ để để ý vài thứ quanh bạn, bằng mắt, tai và vài giác quan khác.">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; font-src 'none'; connect-src 'none'; frame-src 'none'; form-action 'none'; base-uri 'none'; object-src 'none'">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="stylesheet" href="/lab/lab.css">
+  <link rel="stylesheet" href="/lab/game.css">
+  <link rel="stylesheet" href="/lab/tham-tu/tham-tu.css">
+  <script type="module" src="/lab/tham-tu/tham-tu.mjs"></script>
+  <title>Thám tử hiện tại · Yên Lab | Yên Coffee &amp; Tea</title>
+</head>
+<body>
+  <!-- G05 (#146): 5-4-3-2-1 noticing, every step skippable. Copy per docs/yen-lab/SAFETY.md "Grounding" and EVIDENCE.md G05.
+       The guest notices things in the real room; the page only counts taps. Nothing typed, nothing kept. -->
+  <a class="lab-skip" href="#game-title">Đến nội dung</a>
+  <header class="lab-header lab-wrap">
+    <a class="lab-brand" href="/" aria-label="Về website Yên Coffee &amp; Tea"><img src="/yen-logo.svg" width="1450" height="585" alt="yên"><span class="lab-brand-sub" aria-hidden="true">COFFEE &amp; TEA</span></a>
+    <nav class="lab-nav" aria-label="Điều hướng Yên Lab">
+      <a class="lab-nav-home" href="/lab/">Góc ngồi chơi</a>
+    </nav>
+  </header>
+
+  <main class="game" id="game" data-state="idle" data-game="tham-tu" data-step="0" aria-labelledby="game-title">
+    <img class="game-backdrop" src="/lab/assets/room-backdrop.jpg" width="1586" height="992" alt="" decoding="async">
+    <article class="game-sheet">
+      <header class="game-head">
+        <h1 id="game-title" tabindex="-1">Thám tử hiện tại</h1>
+        <p class="game-lede">Để ý vài thứ quanh bạn.</p>
+      </header>
+
+      <div class="game-stage tt-stage" aria-hidden="true">
+        <img src="/lab/assets/sprites/games/g05-tham-tu-hien-tai.webp" width="315" height="92" alt="" decoding="async">
+      </div>
+
+      <p class="game-cue" data-when="running" id="game-cue">Tìm 5 thứ bạn nhìn thấy</p>
+      <p class="tt-sub" data-when="running" id="tt-sub">Nhìn quanh thôi, không cần đứng dậy.</p>
+      <p class="game-progress" data-when="running">
+        <span class="game-dots" id="game-dots" aria-hidden="true"></span>
+        <span id="tt-count">0 / 5</span>
+      </p>
+
+      <p class="game-note" data-when="idle">Mở mắt, nhìn và nghe quanh chỗ bạn ngồi. Không cần chạm, ngửi hay nếm thứ gì lạ; bước nào không hợp thì bỏ qua.</p>
+      <p class="game-note" data-when="idle">Không phải trò tìm đồ trên màn hình: manh mối ở ngoài đời, trang chỉ đếm giúp bạn. Không gõ gì, không lưu gì.</p>
+      <p class="game-note" data-when="error">Trò chưa chạy được. Thử lại hoặc về góc ngồi chơi nhé.</p>
+
+      <div class="game-result" data-when="complete stopped">
+        <p class="game-result-line" data-when="complete" id="tt-result-line" tabindex="-1">Xong vụ án.</p>
+        <p class="game-note" data-when="complete" id="tt-after">Không cần làm gì thêm. Ngồi chơi một chút rồi đi cũng được.</p>
+        <p class="game-result-line" data-when="stopped">Mình dừng ở đây nhé.</p>
+      </div>
+
+      <div class="game-words" id="game-controls" role="group" aria-label="Điều khiển trò">
+        <button class="ink-word ink-word--lead" type="button" data-act="start" data-when="idle" disabled>bắt đầu</button>
+        <button class="ink-word ink-word--lead" type="button" data-act="found" data-when="running" id="tt-found">thấy một thứ</button>
+        <button class="ink-word ink-word--small" type="button" data-act="skip" data-when="running" id="tt-skip">bỏ qua bước này</button>
+        <button class="ink-word" type="button" data-act="stop" data-when="running">dừng hẳn</button>
+        <button class="ink-word ink-word--lead" type="button" data-act="again" data-when="complete stopped error">chơi lại</button>
+        <a class="ink-word" href="/lab/" data-when="idle complete stopped error">về góc ngồi chơi</a>
+      </div>
+
+      <p class="game-whisper" id="game-whisper" role="status" aria-live="polite"></p>
+    </article>
+    <noscript><p class="game-note">Trò này cần JavaScript. Không có nó, bạn vẫn có thể thử: tìm 5 thứ bạn thấy, 4 thứ bạn cảm nhận được, 3 tiếng bạn nghe, 2 mùi và 1 vị, bước nào không có thì bỏ qua. <a href="/lab/">Về góc ngồi chơi</a>.</p></noscript>
+  </main>
+
+  <footer class="lab-footer">
+    <div class="lab-wrap lab-footer-inner">
+      <img class="lab-door" src="/lab/assets/door.webp" width="160" height="268" alt="" decoding="async" loading="lazy">
+      <nav class="lab-footer-links" aria-label="Rời Yên Lab">
+        <a class="lab-button" href="/">Về Yên</a>
+        <a href="/#yen-ngoai-doi">Ghé quán thật</a>
+      </nav>
+      <p class="lab-fineprint">Một trò nhỏ để thử, không thay thế tư vấn hoặc điều trị chuyên môn. Trò dựa trên cách “5-4-3-2-1” phổ biến để để ý hiện tại; cách này chưa có nghiên cứu trực tiếp đủ mạnh, và trò này chưa được kiểm chứng hiệu quả. Không cookie, rời đi là quên. <a href="https://github.com/vanphamvn/yen-nghi-choi/blob/main/docs/yen-lab/EVIDENCE.md" rel="noopener noreferrer" referrerpolicy="no-referrer">Nguồn phương pháp</a></p>
+    </div>
+  </footer>
+</body>
+</html>
