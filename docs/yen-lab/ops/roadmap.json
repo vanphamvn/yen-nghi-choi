@@ -406,11 +406,12 @@
       "priority": "P1",
       "title": "Catalog 20 trò + lazy-loading",
       "kind": "platform",
-      "status": "todo",
+      "status": "done",
       "depends_on": [
         "F11"
       ],
-      "issue_url": "https://github.com/vanphamvn/yen-nghi-choi/issues/138"
+      "issue_url": "https://github.com/vanphamvn/yen-nghi-choi/issues/138",
+      "evidence": "PR #205 squash-merged as 9dff5f2. docs/yen-lab/ops/catalog.json lists G01–G20 (6 beta, 14 planned) with stable /lab/<id>/ routes, status, category, duration, evidence tier, caution, module and review; no page loads it. tools/check-yen-lab-catalog.mjs (foundation CI) cross-checks roadmap, EVIDENCE.md, pages, book, Cục Yên and the 404 rule (8 mutations caught). netlify.toml /lab/* → /lab/404.html (404, not forced): planned and unknown Lab routes get \"Góc này chưa mở\" with a way back. Game pages start with data-loading; a quiet slow-load note appears after 1.5 s if the module is slow or broken. tests/yen-lab-catalog.spec.mjs covers own-code-only loads, no-JS, held and aborted modules, Căng with no part chosen, planned/unknown routes and homepage cost. Independent agent review: no P0, P1 fixed. Local: Lab UX 421, emulated phones 348, smoke 61. Deploy preview smoke 62/62. Production build-info commitSha 9dff5f265cf0bf1419b1081901d0a310583328f9; deployed smoke run 44686272130 63 passed; production browser walk of /lab/ngon-tay/ (404 page, way back) and /lab/goi-ten/ (marker cleared, no note). Not covered: physical phones, VoiceOver/TalkBack, owner review."
     },
     {
       "key": "G03",
