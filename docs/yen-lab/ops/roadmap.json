@@ -372,13 +372,14 @@
       "priority": "P1",
       "title": "Gọi tên cơn bực",
       "kind": "minigame",
-      "status": "in-progress",
+      "status": "done",
       "depends_on": [
         "F03",
         "F08",
         "F11"
       ],
-      "issue_url": "https://github.com/vanphamvn/yen-nghi-choi/issues/150"
+      "issue_url": "https://github.com/vanphamvn/yen-nghi-choi/issues/150",
+      "evidence": "PR #197 squash-merged as dd66e02. /lab/goi-ten/: affect labeling, adapted; pick up to two of nineteen choices (17 words incl. giận, sợ, xấu hổ, cô đơn; plus khác and không biết gọi tên, which stands alone), optional strength, nhìn lại shows only \"Lúc này: …\" without interpretation, sửa lại keeps choices, xong/dừng wipe them; nothing chosen is fine. No diagnosis, risk or benefit wording; weather strip only before starting. Choices in page memory only, wiped on done, stop, reset, pagehide and back/forward restore. Book: six released games on the first spread, next M4 games as plain non-interactive text on the second. EVIDENCE.md G09 agent copy and self-selection review. Local: lab UX 328 passed, emulated iPhone 15 WebKit + Pixel 7 255 passed, smoke 55 passed. Independent agent review: no P0, 1 P1 (no khác and missing fear/shame/loneliness words) + P2s fixed before merge. CI foundation + deploy-preview smoke green at 2e4bfc1. Production: build-info commitSha dd66e02, deployed smoke run 44658430618 57/57; real-browser production walk start -> sợ + khác + một chút -> nhìn lại, no storage. Not verified: physical phones, VoiceOver/TalkBack; owner review pending."
     },
     {
       "key": "F13",
