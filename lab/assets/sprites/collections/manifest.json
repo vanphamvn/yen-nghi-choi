@@ -1,0 +1,1954 @@
+{
+  "schemaVersion": 1,
+  "collection": "Yên Lab supplemental sprite artwork",
+  "status": "art-review-required",
+  "sourceSheets": [
+    {
+      "name": "coffee-tools",
+      "path": "sources/coffee-tools.webp"
+    },
+    {
+      "name": "yen-coffee-tea",
+      "path": "sources/yen-coffee-tea.webp"
+    },
+    {
+      "name": "emotional-tools",
+      "path": "sources/emotional-tools.webp"
+    },
+    {
+      "name": "positive-psychology",
+      "path": "sources/positive-psychology.webp"
+    },
+    {
+      "name": "walking-exploring",
+      "path": "sources/walking-exploring.webp"
+    },
+    {
+      "name": "breathing-teacup",
+      "path": "sources/breathing-teacup.webp"
+    }
+  ],
+  "sprites": [
+    {
+      "id": "v1-espresso-machine",
+      "category": "coffee-tea",
+      "path": "coffee-tea/v1-espresso-machine.webp",
+      "source": "coffee-tools",
+      "sourceRect": [
+        0,
+        0,
+        362,
+        330
+      ],
+      "kind": "sprite",
+      "reviewRequired": true,
+      "size": [
+        308,
+        319
+      ]
+    },
+    {
+      "id": "v1-coffee-grinder",
+      "category": "coffee-tea",
+      "path": "coffee-tea/v1-coffee-grinder.webp",
+      "source": "coffee-tools",
+      "sourceRect": [
+        362,
+        0,
+        724,
+        330
+      ],
+      "kind": "sprite",
+      "reviewRequired": true,
+      "size": [
+        267,
+        326
+      ]
+    },
+    {
+      "id": "v1-gooseneck-kettle",
+      "category": "coffee-tea",
+      "path": "coffee-tea/v1-gooseneck-kettle.webp",
+      "source": "coffee-tools",
+      "sourceRect": [
+        724,
+        0,
+        1086,
+        330
+      ],
+      "kind": "sprite",
+      "reviewRequired": true,
+      "size": [
+        338,
+        262
+      ]
+    },
+    {
+      "id": "v1-pour-over-dripper",
+      "category": "coffee-tea",
+      "path": "coffee-tea/v1-pour-over-dripper.webp",
+      "source": "coffee-tools",
+      "sourceRect": [
+        1086,
+        0,
+        1448,
+        330
+      ],
+      "kind": "sprite",
+      "reviewRequired": true,
+      "size": [
+        262,
+        260
+      ]
+    },
+    {
+      "id": "v1-coffee-server",
+      "category": "coffee-tea",
+      "path": "coffee-tea/v1-coffee-server.webp",
+      "source": "coffee-tools",
+      "sourceRect": [
+        0,
+        330,
+        362,
+        548
+      ],
+      "kind": "sprite",
+      "reviewRequired": true,
+      "size": [
+        269,
+        213
+      ]
+    },
+    {
+      "id": "v1-portafilter",
+      "category": "coffee-tea",
+      "path": "coffee-tea/v1-portafilter.webp",
+      "source": "coffee-tools",
+      "sourceRect": [
+        362,
+        330,
+        724,
+        548
+      ],
+      "kind": "sprite",
+      "reviewRequired": true,
+      "size": [
+        326,
+        148
+      ]
+    },
+    {
+      "id": "v1-coffee-tamper",
+      "category": "coffee-tea",
+      "path": "coffee-tea/v1-coffee-tamper.webp",
+      "source": "coffee-tools",
+      "sourceRect": [
+        724,
+        330,
+        1086,
+        548
+      ],
+      "kind": "sprite",
+      "reviewRequired": true,
+      "size": [
+        147,
+        207
+      ]
+    },
+    {
+      "id": "v1-milk-pitcher",
+      "category": "coffee-tea",
+      "path": "coffee-tea/v1-milk-pitcher.webp",
+      "source": "coffee-tools",
+      "sourceRect": [
+        1086,
+        330,
+        1448,
+        548
+      ],
+      "kind": "sprite",
+      "reviewRequired": true,
+      "size": [
+        240,
+        215
+      ]
+    },
+    {
+      "id": "v1-latte",
+      "category": "coffee-tea",
+      "path": "coffee-tea/v1-latte.webp",
+      "source": "coffee-tools",
+      "sourceRect": [
+        0,
+        548,
+        362,
+        817
+      ],
+      "kind": "sprite",
+      "reviewRequired": true,
+      "size": [
+        291,
+        276
+      ]
+    },
+    {
+      "id": "v1-ceramic-teapot",
+      "category": "coffee-tea",
+      "path": "coffee-tea/v1-ceramic-teapot.webp",
+      "source": "coffee-tools",
+      "sourceRect": [
+        362,
+        548,
+        724,
+        817
+      ],
+      "kind": "sprite",
+      "reviewRequired": true,
+      "size": [
+        331,
+        245
+      ]
+    },
+    {
+      "id": "v1-glass-tea",
+      "category": "coffee-tea",
+      "path": "coffee-tea/v1-glass-tea.webp",
+      "source": "coffee-tools",
+      "sourceRect": [
+        724,
+        548,
+        1086,
+        817
+      ],
+      "kind": "sprite",
+      "reviewRequired": true,
+      "size": [
+        282,
+        184
+      ]
+    },
+    {
+      "id": "v1-tea-canister",
+      "category": "coffee-tea",
+      "path": "coffee-tea/v1-tea-canister.webp",
+      "source": "coffee-tools",
+      "sourceRect": [
+        1086,
+        548,
+        1448,
+        817
+      ],
+      "kind": "sprite",
+      "reviewRequired": true,
+      "size": [
+        215,
+        272
+      ]
+    },
+    {
+      "id": "v1-tea-strainer",
+      "category": "coffee-tea",
+      "path": "coffee-tea/v1-tea-strainer.webp",
+      "source": "coffee-tools",
+      "sourceRect": [
+        0,
+        817,
+        362,
+        1086
+      ],
+      "kind": "sprite",
+      "reviewRequired": true,
+      "size": [
+        320,
+        177
+      ]
+    },
+    {
+      "id": "v1-measuring-scoop",
+      "category": "coffee-tea",
+      "path": "coffee-tea/v1-measuring-scoop.webp",
+      "source": "coffee-tools",
+      "sourceRect": [
+        362,
+        817,
+        724,
+        1086
+      ],
+      "kind": "sprite",
+      "reviewRequired": true,
+      "size": [
+        271,
+        143
+      ]
+    },
+    {
+      "id": "v1-syrup-bottle",
+      "category": "coffee-tea",
+      "path": "coffee-tea/v1-syrup-bottle.webp",
+      "source": "coffee-tools",
+      "sourceRect": [
+        724,
+        817,
+        1086,
+        1086
+      ],
+      "kind": "sprite",
+      "reviewRequired": true,
+      "size": [
+        141,
+        265
+      ]
+    },
+    {
+      "id": "v1-ice-scoop",
+      "category": "coffee-tea",
+      "path": "coffee-tea/v1-ice-scoop.webp",
+      "source": "coffee-tools",
+      "sourceRect": [
+        1086,
+        817,
+        1448,
+        1086
+      ],
+      "kind": "sprite",
+      "reviewRequired": true,
+      "size": [
+        290,
+        209
+      ]
+    },
+    {
+      "id": "v2-espresso-machine",
+      "category": "coffee-tea",
+      "path": "coffee-tea/v2-espresso-machine.webp",
+      "source": "yen-coffee-tea",
+      "sourceRect": [
+        0,
+        0,
+        320,
+        273
+      ],
+      "kind": "sprite",
+      "reviewRequired": true,
+      "size": [
+        256,
+        262
+      ]
+    },
+    {
+      "id": "v2-coffee-grinder",
+      "category": "coffee-tea",
+      "path": "coffee-tea/v2-coffee-grinder.webp",
+      "source": "yen-coffee-tea",
+      "sourceRect": [
+        320,
+        0,
+        571,
+        273
+      ],
+      "kind": "sprite",
+      "reviewRequired": true,
+      "size": [
+        160,
+        265
+      ]
+    },
+    {
+      "id": "v2-gooseneck-kettle",
+      "category": "coffee-tea",
+      "path": "coffee-tea/v2-gooseneck-kettle.webp",
+      "source": "yen-coffee-tea",
+      "sourceRect": [
+        575,
+        0,
+        885,
+        273
+      ],
+      "kind": "sprite",
+      "reviewRequired": true,
+      "size": [
+        273,
+        229
+      ]
+    },
+    {
+      "id": "v2-pour-over-dripper",
+      "category": "coffee-tea",
+      "path": "coffee-tea/v2-pour-over-dripper.webp",
+      "source": "yen-coffee-tea",
+      "sourceRect": [
+        883,
+        0,
+        1155,
+        273
+      ],
+      "kind": "sprite",
+      "reviewRequired": true,
+      "size": [
+        274,
+        207
+      ]
+    },
+    {
+      "id": "v2-coffee-server",
+      "category": "coffee-tea",
+      "path": "coffee-tea/v2-coffee-server.webp",
+      "source": "yen-coffee-tea",
+      "sourceRect": [
+        1140,
+        0,
+        1448,
+        273
+      ],
+      "kind": "sprite",
+      "reviewRequired": true,
+      "size": [
+        281,
+        226
+      ]
+    },
+    {
+      "id": "v2-portafilter",
+      "category": "coffee-tea",
+      "path": "coffee-tea/v2-portafilter.webp",
+      "source": "yen-coffee-tea",
+      "sourceRect": [
+        0,
+        274,
+        335,
+        474
+      ],
+      "kind": "sprite",
+      "reviewRequired": true,
+      "size": [
+        291,
+        139
+      ]
+    },
+    {
+      "id": "v2-tamper",
+      "category": "coffee-tea",
+      "path": "coffee-tea/v2-tamper.webp",
+      "source": "yen-coffee-tea",
+      "sourceRect": [
+        338,
+        274,
+        570,
+        474
+      ],
+      "kind": "sprite",
+      "reviewRequired": true,
+      "size": [
+        130,
+        182
+      ]
+    },
+    {
+      "id": "v2-milk-pitcher",
+      "category": "coffee-tea",
+      "path": "coffee-tea/v2-milk-pitcher.webp",
+      "source": "yen-coffee-tea",
+      "sourceRect": [
+        571,
+        274,
+        829,
+        476
+      ],
+      "kind": "sprite",
+      "reviewRequired": true,
+      "size": [
+        207,
+        190
+      ]
+    },
+    {
+      "id": "v2-latte",
+      "category": "coffee-tea",
+      "path": "coffee-tea/v2-latte.webp",
+      "source": "yen-coffee-tea",
+      "sourceRect": [
+        825,
+        274,
+        1135,
+        476
+      ],
+      "kind": "sprite",
+      "reviewRequired": true,
+      "size": [
+        252,
+        175
+      ]
+    },
+    {
+      "id": "v2-tea-pot",
+      "category": "coffee-tea",
+      "path": "coffee-tea/v2-tea-pot.webp",
+      "source": "yen-coffee-tea",
+      "sourceRect": [
+        1120,
+        259,
+        1448,
+        478
+      ],
+      "kind": "sprite",
+      "reviewRequired": true,
+      "size": [
+        282,
+        216
+      ]
+    },
+    {
+      "id": "v2-glass-tea",
+      "category": "coffee-tea",
+      "path": "coffee-tea/v2-glass-tea.webp",
+      "source": "yen-coffee-tea",
+      "sourceRect": [
+        0,
+        479,
+        312,
+        699
+      ],
+      "kind": "sprite",
+      "reviewRequired": true,
+      "size": [
+        249,
+        177
+      ]
+    },
+    {
+      "id": "v2-tea-canister",
+      "category": "coffee-tea",
+      "path": "coffee-tea/v2-tea-canister.webp",
+      "source": "yen-coffee-tea",
+      "sourceRect": [
+        320,
+        479,
+        566,
+        699
+      ],
+      "kind": "sprite",
+      "reviewRequired": true,
+      "size": [
+        189,
+        210
+      ]
+    },
+    {
+      "id": "v2-syrup-bottle",
+      "category": "coffee-tea",
+      "path": "coffee-tea/v2-syrup-bottle.webp",
+      "source": "yen-coffee-tea",
+      "sourceRect": [
+        572,
+        476,
+        803,
+        714
+      ],
+      "kind": "sprite",
+      "reviewRequired": true,
+      "size": [
+        155,
+        247
+      ]
+    },
+    {
+      "id": "v2-ice-scoop",
+      "category": "coffee-tea",
+      "path": "coffee-tea/v2-ice-scoop.webp",
+      "source": "yen-coffee-tea",
+      "sourceRect": [
+        802,
+        476,
+        1114,
+        718
+      ],
+      "kind": "sprite",
+      "reviewRequired": true,
+      "size": [
+        256,
+        229
+      ]
+    },
+    {
+      "id": "v2-measuring-scoop",
+      "category": "coffee-tea",
+      "path": "coffee-tea/v2-measuring-scoop.webp",
+      "source": "yen-coffee-tea",
+      "sourceRect": [
+        1117,
+        476,
+        1448,
+        718
+      ],
+      "kind": "sprite",
+      "reviewRequired": true,
+      "size": [
+        260,
+        195
+      ]
+    },
+    {
+      "id": "v2-strainer",
+      "category": "coffee-tea",
+      "path": "coffee-tea/v2-strainer.webp",
+      "source": "yen-coffee-tea",
+      "sourceRect": [
+        0,
+        713,
+        284,
+        895
+      ],
+      "kind": "sprite",
+      "reviewRequired": true,
+      "size": [
+        249,
+        147
+      ]
+    },
+    {
+      "id": "v2-serving-tray",
+      "category": "coffee-tea",
+      "path": "coffee-tea/v2-serving-tray.webp",
+      "source": "yen-coffee-tea",
+      "sourceRect": [
+        283,
+        713,
+        654,
+        895
+      ],
+      "kind": "sprite",
+      "reviewRequired": true,
+      "size": [
+        367,
+        161
+      ]
+    },
+    {
+      "id": "v2-takeaway-cup",
+      "category": "coffee-tea",
+      "path": "coffee-tea/v2-takeaway-cup.webp",
+      "source": "yen-coffee-tea",
+      "sourceRect": [
+        653,
+        694,
+        849,
+        920
+      ],
+      "kind": "sprite",
+      "reviewRequired": true,
+      "size": [
+        173,
+        223
+      ]
+    },
+    {
+      "id": "v2-cold-brew-bottle",
+      "category": "coffee-tea",
+      "path": "coffee-tea/v2-cold-brew-bottle.webp",
+      "source": "yen-coffee-tea",
+      "sourceRect": [
+        845,
+        694,
+        1115,
+        936
+      ],
+      "kind": "sprite",
+      "reviewRequired": true,
+      "size": [
+        130,
+        252
+      ]
+    },
+    {
+      "id": "v2-dessert",
+      "category": "coffee-tea",
+      "path": "coffee-tea/v2-dessert.webp",
+      "source": "yen-coffee-tea",
+      "sourceRect": [
+        1114,
+        690,
+        1448,
+        936
+      ],
+      "kind": "sprite",
+      "reviewRequired": true,
+      "size": [
+        278,
+        203
+      ]
+    },
+    {
+      "id": "v2-menu-card",
+      "category": "coffee-tea",
+      "path": "coffee-tea/v2-menu-card.webp",
+      "source": "yen-coffee-tea",
+      "sourceRect": [
+        0,
+        873,
+        322,
+        1086
+      ],
+      "kind": "sprite",
+      "reviewRequired": true,
+      "size": [
+        274,
+        212
+      ]
+    },
+    {
+      "id": "v2-tea-sprig",
+      "category": "coffee-tea",
+      "path": "coffee-tea/v2-tea-sprig.webp",
+      "source": "yen-coffee-tea",
+      "sourceRect": [
+        321,
+        890,
+        666,
+        1086
+      ],
+      "kind": "sprite",
+      "reviewRequired": true,
+      "size": [
+        217,
+        156
+      ]
+    },
+    {
+      "id": "emotion-breathing-ring",
+      "category": "positive-psychology",
+      "path": "positive-psychology/emotion-breathing-ring.webp",
+      "source": "emotional-tools",
+      "sourceRect": [
+        0,
+        0,
+        290,
+        271
+      ],
+      "kind": "sprite",
+      "reviewRequired": true,
+      "size": [
+        246,
+        240
+      ]
+    },
+    {
+      "id": "emotion-finger-tracing",
+      "category": "positive-psychology",
+      "path": "positive-psychology/emotion-finger-tracing.webp",
+      "source": "emotional-tools",
+      "sourceRect": [
+        290,
+        0,
+        580,
+        271
+      ],
+      "kind": "sprite",
+      "reviewRequired": true,
+      "size": [
+        278,
+        251
+      ]
+    },
+    {
+      "id": "emotion-mindful-figure",
+      "category": "positive-psychology",
+      "path": "positive-psychology/emotion-mindful-figure.webp",
+      "source": "emotional-tools",
+      "sourceRect": [
+        580,
+        0,
+        870,
+        271
+      ],
+      "kind": "sprite",
+      "reviewRequired": true,
+      "size": [
+        296,
+        252
+      ]
+    },
+    {
+      "id": "emotion-sand-garden",
+      "category": "positive-psychology",
+      "path": "positive-psychology/emotion-sand-garden.webp",
+      "source": "emotional-tools",
+      "sourceRect": [
+        870,
+        0,
+        1160,
+        271
+      ],
+      "kind": "sprite",
+      "reviewRequired": true,
+      "size": [
+        284,
+        228
+      ]
+    },
+    {
+      "id": "emotion-magnifying-glass",
+      "category": "positive-psychology",
+      "path": "positive-psychology/emotion-magnifying-glass.webp",
+      "source": "emotional-tools",
+      "sourceRect": [
+        1160,
+        0,
+        1450,
+        271
+      ],
+      "kind": "sprite",
+      "reviewRequired": true,
+      "size": [
+        209,
+        246
+      ]
+    },
+    {
+      "id": "emotion-clouds",
+      "category": "positive-psychology",
+      "path": "positive-psychology/emotion-clouds.webp",
+      "source": "emotional-tools",
+      "sourceRect": [
+        0,
+        271,
+        290,
+        542
+      ],
+      "kind": "sprite",
+      "reviewRequired": true,
+      "size": [
+        231,
+        242
+      ]
+    },
+    {
+      "id": "emotion-weather-mood",
+      "category": "positive-psychology",
+      "path": "positive-psychology/emotion-weather-mood.webp",
+      "source": "emotional-tools",
+      "sourceRect": [
+        290,
+        271,
+        580,
+        542
+      ],
+      "kind": "sprite",
+      "reviewRequired": true,
+      "size": [
+        290,
+        276
+      ]
+    },
+    {
+      "id": "emotion-unposted-letter-box",
+      "category": "positive-psychology",
+      "path": "positive-psychology/emotion-unposted-letter-box.webp",
+      "source": "emotional-tools",
+      "sourceRect": [
+        580,
+        271,
+        870,
+        542
+      ],
+      "kind": "sprite",
+      "reviewRequired": true,
+      "size": [
+        300,
+        237
+      ]
+    },
+    {
+      "id": "emotion-postcard",
+      "category": "positive-psychology",
+      "path": "positive-psychology/emotion-postcard.webp",
+      "source": "emotional-tools",
+      "sourceRect": [
+        870,
+        271,
+        1160,
+        542
+      ],
+      "kind": "sprite",
+      "reviewRequired": true,
+      "size": [
+        280,
+        212
+      ]
+    },
+    {
+      "id": "emotion-reflection-mirror",
+      "category": "positive-psychology",
+      "path": "positive-psychology/emotion-reflection-mirror.webp",
+      "source": "emotional-tools",
+      "sourceRect": [
+        1160,
+        271,
+        1450,
+        542
+      ],
+      "kind": "sprite",
+      "reviewRequired": true,
+      "size": [
+        239,
+        281
+      ]
+    },
+    {
+      "id": "emotion-box-one",
+      "category": "positive-psychology",
+      "path": "positive-psychology/emotion-box-one.webp",
+      "source": "emotional-tools",
+      "sourceRect": [
+        0,
+        542,
+        290,
+        813
+      ],
+      "kind": "sprite",
+      "reviewRequired": true,
+      "size": [
+        273,
+        232
+      ]
+    },
+    {
+      "id": "emotion-box-two",
+      "category": "positive-psychology",
+      "path": "positive-psychology/emotion-box-two.webp",
+      "source": "emotional-tools",
+      "sourceRect": [
+        290,
+        542,
+        580,
+        813
+      ],
+      "kind": "sprite",
+      "reviewRequired": true,
+      "size": [
+        300,
+        242
+      ]
+    },
+    {
+      "id": "emotion-gratitude-tags",
+      "category": "positive-psychology",
+      "path": "positive-psychology/emotion-gratitude-tags.webp",
+      "source": "emotional-tools",
+      "sourceRect": [
+        580,
+        542,
+        870,
+        813
+      ],
+      "kind": "sprite",
+      "reviewRequired": true,
+      "size": [
+        275,
+        179
+      ]
+    },
+    {
+      "id": "emotion-photo-album",
+      "category": "positive-psychology",
+      "path": "positive-psychology/emotion-photo-album.webp",
+      "source": "emotional-tools",
+      "sourceRect": [
+        870,
+        542,
+        1160,
+        813
+      ],
+      "kind": "sprite",
+      "reviewRequired": true,
+      "size": [
+        278,
+        202
+      ]
+    },
+    {
+      "id": "emotion-kindness-box",
+      "category": "positive-psychology",
+      "path": "positive-psychology/emotion-kindness-box.webp",
+      "source": "emotional-tools",
+      "sourceRect": [
+        1160,
+        542,
+        1450,
+        813
+      ],
+      "kind": "sprite",
+      "reviewRequired": true,
+      "size": [
+        274,
+        187
+      ]
+    },
+    {
+      "id": "emotion-wind-chimes",
+      "category": "positive-psychology",
+      "path": "positive-psychology/emotion-wind-chimes.webp",
+      "source": "emotional-tools",
+      "sourceRect": [
+        0,
+        813,
+        294,
+        1086
+      ],
+      "kind": "sprite",
+      "reviewRequired": true,
+      "size": [
+        161,
+        272
+      ]
+    },
+    {
+      "id": "emotion-hourglass",
+      "category": "positive-psychology",
+      "path": "positive-psychology/emotion-hourglass.webp",
+      "source": "emotional-tools",
+      "sourceRect": [
+        294,
+        813,
+        586,
+        1086
+      ],
+      "kind": "sprite",
+      "reviewRequired": true,
+      "size": [
+        215,
+        253
+      ]
+    },
+    {
+      "id": "emotion-connection-bubbles",
+      "category": "positive-psychology",
+      "path": "positive-psychology/emotion-connection-bubbles.webp",
+      "source": "emotional-tools",
+      "sourceRect": [
+        585,
+        813,
+        1103,
+        1086
+      ],
+      "kind": "sprite",
+      "reviewRequired": true,
+      "size": [
+        456,
+        230
+      ]
+    },
+    {
+      "id": "emotion-leaf-on-water",
+      "category": "positive-psychology",
+      "path": "positive-psychology/emotion-leaf-on-water.webp",
+      "source": "emotional-tools",
+      "sourceRect": [
+        1102,
+        813,
+        1448,
+        1086
+      ],
+      "kind": "sprite",
+      "reviewRequired": true,
+      "size": [
+        278,
+        186
+      ]
+    },
+    {
+      "id": "positive-journal",
+      "category": "positive-psychology",
+      "path": "positive-psychology/positive-journal.webp",
+      "source": "positive-psychology",
+      "sourceRect": [
+        0,
+        0,
+        208,
+        362
+      ],
+      "kind": "sprite",
+      "reviewRequired": true,
+      "size": [
+        213,
+        230
+      ]
+    },
+    {
+      "id": "positive-gratitude-jar",
+      "category": "positive-psychology",
+      "path": "positive-psychology/positive-gratitude-jar.webp",
+      "source": "positive-psychology",
+      "sourceRect": [
+        208,
+        0,
+        416,
+        362
+      ],
+      "kind": "sprite",
+      "reviewRequired": true,
+      "size": [
+        218,
+        243
+      ]
+    },
+    {
+      "id": "positive-strength-star",
+      "category": "positive-psychology",
+      "path": "positive-psychology/positive-strength-star.webp",
+      "source": "positive-psychology",
+      "sourceRect": [
+        416,
+        0,
+        624,
+        362
+      ],
+      "kind": "sprite",
+      "reviewRequired": true,
+      "size": [
+        218,
+        250
+      ]
+    },
+    {
+      "id": "positive-curiosity-lens",
+      "category": "positive-psychology",
+      "path": "positive-psychology/positive-curiosity-lens.webp",
+      "source": "positive-psychology",
+      "sourceRect": [
+        624,
+        0,
+        832,
+        362
+      ],
+      "kind": "sprite",
+      "reviewRequired": true,
+      "size": [
+        218,
+        246
+      ]
+    },
+    {
+      "id": "positive-kindness-postcard",
+      "category": "positive-psychology",
+      "path": "positive-psychology/positive-kindness-postcard.webp",
+      "source": "positive-psychology",
+      "sourceRect": [
+        832,
+        0,
+        1040,
+        362
+      ],
+      "kind": "sprite",
+      "reviewRequired": true,
+      "size": [
+        218,
+        208
+      ]
+    },
+    {
+      "id": "positive-growth-sprout",
+      "category": "positive-psychology",
+      "path": "positive-psychology/positive-growth-sprout.webp",
+      "source": "positive-psychology",
+      "sourceRect": [
+        1040,
+        0,
+        1248,
+        362
+      ],
+      "kind": "sprite",
+      "reviewRequired": true,
+      "size": [
+        218,
+        249
+      ]
+    },
+    {
+      "id": "positive-breathing-cycle",
+      "category": "positive-psychology",
+      "path": "positive-psychology/positive-breathing-cycle.webp",
+      "source": "positive-psychology",
+      "sourceRect": [
+        1248,
+        0,
+        1448,
+        362
+      ],
+      "kind": "sprite",
+      "reviewRequired": true,
+      "size": [
+        205,
+        223
+      ]
+    },
+    {
+      "id": "positive-meditation",
+      "category": "positive-psychology",
+      "path": "positive-psychology/positive-meditation.webp",
+      "source": "positive-psychology",
+      "sourceRect": [
+        0,
+        362,
+        208,
+        724
+      ],
+      "kind": "sprite",
+      "reviewRequired": true,
+      "size": [
+        211,
+        314
+      ]
+    },
+    {
+      "id": "positive-tea-savoring",
+      "category": "positive-psychology",
+      "path": "positive-psychology/positive-tea-savoring.webp",
+      "source": "positive-psychology",
+      "sourceRect": [
+        208,
+        362,
+        416,
+        724
+      ],
+      "kind": "sprite",
+      "reviewRequired": true,
+      "size": [
+        218,
+        372
+      ]
+    },
+    {
+      "id": "positive-memory-album",
+      "category": "positive-psychology",
+      "path": "positive-psychology/positive-memory-album.webp",
+      "source": "positive-psychology",
+      "sourceRect": [
+        416,
+        362,
+        624,
+        724
+      ],
+      "kind": "sprite",
+      "reviewRequired": true,
+      "size": [
+        218,
+        314
+      ]
+    },
+    {
+      "id": "positive-strength-cards",
+      "category": "positive-psychology",
+      "path": "positive-psychology/positive-strength-cards.webp",
+      "source": "positive-psychology",
+      "sourceRect": [
+        624,
+        362,
+        832,
+        724
+      ],
+      "kind": "sprite",
+      "reviewRequired": true,
+      "size": [
+        213,
+        306
+      ]
+    },
+    {
+      "id": "positive-connection-bubbles",
+      "category": "positive-psychology",
+      "path": "positive-psychology/positive-connection-bubbles.webp",
+      "source": "positive-psychology",
+      "sourceRect": [
+        832,
+        362,
+        1040,
+        724
+      ],
+      "kind": "sprite",
+      "reviewRequired": true,
+      "size": [
+        218,
+        372
+      ]
+    },
+    {
+      "id": "positive-goal-path",
+      "category": "positive-psychology",
+      "path": "positive-psychology/positive-goal-path.webp",
+      "source": "positive-psychology",
+      "sourceRect": [
+        1040,
+        362,
+        1248,
+        724
+      ],
+      "kind": "sprite",
+      "reviewRequired": true,
+      "size": [
+        218,
+        313
+      ]
+    },
+    {
+      "id": "positive-growth-leaf",
+      "category": "positive-psychology",
+      "path": "positive-psychology/positive-growth-leaf.webp",
+      "source": "positive-psychology",
+      "sourceRect": [
+        1248,
+        362,
+        1448,
+        724
+      ],
+      "kind": "sprite",
+      "reviewRequired": true,
+      "size": [
+        201,
+        235
+      ]
+    },
+    {
+      "id": "positive-optimism-weather",
+      "category": "positive-psychology",
+      "path": "positive-psychology/positive-optimism-weather.webp",
+      "source": "positive-psychology",
+      "sourceRect": [
+        0,
+        724,
+        208,
+        1086
+      ],
+      "kind": "sprite",
+      "reviewRequired": true,
+      "size": [
+        209,
+        222
+      ]
+    },
+    {
+      "id": "positive-resilience-umbrella",
+      "category": "positive-psychology",
+      "path": "positive-psychology/positive-resilience-umbrella.webp",
+      "source": "positive-psychology",
+      "sourceRect": [
+        208,
+        724,
+        416,
+        1086
+      ],
+      "kind": "sprite",
+      "reviewRequired": true,
+      "size": [
+        218,
+        247
+      ]
+    },
+    {
+      "id": "positive-flow-hourglass",
+      "category": "positive-psychology",
+      "path": "positive-psychology/positive-flow-hourglass.webp",
+      "source": "positive-psychology",
+      "sourceRect": [
+        416,
+        724,
+        624,
+        1086
+      ],
+      "kind": "sprite",
+      "reviewRequired": true,
+      "size": [
+        218,
+        253
+      ]
+    },
+    {
+      "id": "positive-kindness-mailbox",
+      "category": "positive-psychology",
+      "path": "positive-psychology/positive-kindness-mailbox.webp",
+      "source": "positive-psychology",
+      "sourceRect": [
+        624,
+        724,
+        832,
+        1086
+      ],
+      "kind": "sprite",
+      "reviewRequired": true,
+      "size": [
+        214,
+        247
+      ]
+    },
+    {
+      "id": "positive-reflection-mirror",
+      "category": "positive-psychology",
+      "path": "positive-psychology/positive-reflection-mirror.webp",
+      "source": "positive-psychology",
+      "sourceRect": [
+        832,
+        724,
+        1040,
+        1086
+      ],
+      "kind": "sprite",
+      "reviewRequired": true,
+      "size": [
+        214,
+        251
+      ]
+    },
+    {
+      "id": "positive-appreciation-medal",
+      "category": "positive-psychology",
+      "path": "positive-psychology/positive-appreciation-medal.webp",
+      "source": "positive-psychology",
+      "sourceRect": [
+        1040,
+        724,
+        1248,
+        1086
+      ],
+      "kind": "sprite",
+      "reviewRequired": true,
+      "size": [
+        218,
+        243
+      ]
+    },
+    {
+      "id": "positive-floating-leaf",
+      "category": "positive-psychology",
+      "path": "positive-psychology/positive-floating-leaf.webp",
+      "source": "positive-psychology",
+      "sourceRect": [
+        1248,
+        724,
+        1448,
+        1086
+      ],
+      "kind": "sprite",
+      "reviewRequired": true,
+      "size": [
+        205,
+        166
+      ]
+    },
+    {
+      "id": "breath-frame-00",
+      "category": "breathing",
+      "path": "breathing/breath-frame-00.webp",
+      "source": "breathing-teacup",
+      "sourceRect": [
+        0,
+        0,
+        362,
+        362
+      ],
+      "kind": "animation-frame",
+      "reviewRequired": true,
+      "size": [
+        362,
+        362
+      ]
+    },
+    {
+      "id": "breath-frame-01",
+      "category": "breathing",
+      "path": "breathing/breath-frame-01.webp",
+      "source": "breathing-teacup",
+      "sourceRect": [
+        362,
+        0,
+        724,
+        362
+      ],
+      "kind": "animation-frame",
+      "reviewRequired": true,
+      "size": [
+        362,
+        362
+      ]
+    },
+    {
+      "id": "breath-frame-02",
+      "category": "breathing",
+      "path": "breathing/breath-frame-02.webp",
+      "source": "breathing-teacup",
+      "sourceRect": [
+        724,
+        0,
+        1086,
+        362
+      ],
+      "kind": "animation-frame",
+      "reviewRequired": true,
+      "size": [
+        362,
+        362
+      ]
+    },
+    {
+      "id": "breath-frame-03",
+      "category": "breathing",
+      "path": "breathing/breath-frame-03.webp",
+      "source": "breathing-teacup",
+      "sourceRect": [
+        1086,
+        0,
+        1448,
+        362
+      ],
+      "kind": "animation-frame",
+      "reviewRequired": true,
+      "size": [
+        362,
+        362
+      ]
+    },
+    {
+      "id": "breath-frame-04",
+      "category": "breathing",
+      "path": "breathing/breath-frame-04.webp",
+      "source": "breathing-teacup",
+      "sourceRect": [
+        0,
+        362,
+        362,
+        724
+      ],
+      "kind": "animation-frame",
+      "reviewRequired": true,
+      "size": [
+        362,
+        362
+      ]
+    },
+    {
+      "id": "breath-frame-05",
+      "category": "breathing",
+      "path": "breathing/breath-frame-05.webp",
+      "source": "breathing-teacup",
+      "sourceRect": [
+        362,
+        362,
+        724,
+        724
+      ],
+      "kind": "animation-frame",
+      "reviewRequired": true,
+      "size": [
+        362,
+        362
+      ]
+    },
+    {
+      "id": "breath-frame-06",
+      "category": "breathing",
+      "path": "breathing/breath-frame-06.webp",
+      "source": "breathing-teacup",
+      "sourceRect": [
+        724,
+        362,
+        1086,
+        724
+      ],
+      "kind": "animation-frame",
+      "reviewRequired": true,
+      "size": [
+        362,
+        362
+      ]
+    },
+    {
+      "id": "breath-frame-07",
+      "category": "breathing",
+      "path": "breathing/breath-frame-07.webp",
+      "source": "breathing-teacup",
+      "sourceRect": [
+        1086,
+        362,
+        1448,
+        724
+      ],
+      "kind": "animation-frame",
+      "reviewRequired": true,
+      "size": [
+        362,
+        362
+      ]
+    },
+    {
+      "id": "breath-frame-08",
+      "category": "breathing",
+      "path": "breathing/breath-frame-08.webp",
+      "source": "breathing-teacup",
+      "sourceRect": [
+        0,
+        724,
+        362,
+        1086
+      ],
+      "kind": "animation-frame",
+      "reviewRequired": true,
+      "size": [
+        362,
+        362
+      ]
+    },
+    {
+      "id": "breath-frame-09",
+      "category": "breathing",
+      "path": "breathing/breath-frame-09.webp",
+      "source": "breathing-teacup",
+      "sourceRect": [
+        362,
+        724,
+        724,
+        1086
+      ],
+      "kind": "animation-frame",
+      "reviewRequired": true,
+      "size": [
+        362,
+        362
+      ]
+    },
+    {
+      "id": "breath-frame-10",
+      "category": "breathing",
+      "path": "breathing/breath-frame-10.webp",
+      "source": "breathing-teacup",
+      "sourceRect": [
+        724,
+        724,
+        1086,
+        1086
+      ],
+      "kind": "animation-frame",
+      "reviewRequired": true,
+      "size": [
+        362,
+        362
+      ]
+    },
+    {
+      "id": "breath-frame-11",
+      "category": "breathing",
+      "path": "breathing/breath-frame-11.webp",
+      "source": "breathing-teacup",
+      "sourceRect": [
+        1086,
+        724,
+        1448,
+        1086
+      ],
+      "kind": "animation-frame",
+      "reviewRequired": true,
+      "size": [
+        362,
+        362
+      ]
+    },
+    {
+      "id": "forest-walk",
+      "category": "walking",
+      "path": "walking/forest-walk.webp",
+      "source": "walking-exploring",
+      "sourceRect": [
+        714,
+        717,
+        880,
+        921
+      ],
+      "kind": "scene-card",
+      "reviewRequired": true,
+      "size": [
+        166,
+        204
+      ]
+    },
+    {
+      "id": "sunset-lake",
+      "category": "walking",
+      "path": "walking/sunset-lake.webp",
+      "source": "walking-exploring",
+      "sourceRect": [
+        882,
+        717,
+        1045,
+        921
+      ],
+      "kind": "scene-card",
+      "reviewRequired": true,
+      "size": [
+        163,
+        204
+      ]
+    },
+    {
+      "id": "summer-meadow",
+      "category": "walking",
+      "path": "walking/summer-meadow.webp",
+      "source": "walking-exploring",
+      "sourceRect": [
+        1048,
+        717,
+        1215,
+        921
+      ],
+      "kind": "scene-card",
+      "reviewRequired": true,
+      "size": [
+        167,
+        204
+      ]
+    },
+    {
+      "id": "backpack",
+      "category": "walking",
+      "path": "walking/backpack.webp",
+      "source": "walking-exploring",
+      "sourceRect": [
+        75,
+        715,
+        155,
+        791
+      ],
+      "kind": "concept-crop",
+      "reviewRequired": true,
+      "size": [
+        80,
+        76
+      ]
+    },
+    {
+      "id": "sun-hat",
+      "category": "walking",
+      "path": "walking/sun-hat.webp",
+      "source": "walking-exploring",
+      "sourceRect": [
+        170,
+        715,
+        257,
+        798
+      ],
+      "kind": "concept-crop",
+      "reviewRequired": true,
+      "size": [
+        87,
+        83
+      ]
+    },
+    {
+      "id": "camera",
+      "category": "walking",
+      "path": "walking/camera.webp",
+      "source": "walking-exploring",
+      "sourceRect": [
+        262,
+        720,
+        340,
+        799
+      ],
+      "kind": "concept-crop",
+      "reviewRequired": true,
+      "size": [
+        78,
+        79
+      ]
+    },
+    {
+      "id": "water-bottle",
+      "category": "walking",
+      "path": "walking/water-bottle.webp",
+      "source": "walking-exploring",
+      "sourceRect": [
+        339,
+        720,
+        407,
+        802
+      ],
+      "kind": "concept-crop",
+      "reviewRequired": true,
+      "size": [
+        68,
+        82
+      ]
+    },
+    {
+      "id": "map",
+      "category": "walking",
+      "path": "walking/map.webp",
+      "source": "walking-exploring",
+      "sourceRect": [
+        470,
+        719,
+        564,
+        804
+      ],
+      "kind": "concept-crop",
+      "reviewRequired": true,
+      "size": [
+        94,
+        85
+      ]
+    },
+    {
+      "id": "compass",
+      "category": "walking",
+      "path": "walking/compass.webp",
+      "source": "walking-exploring",
+      "sourceRect": [
+        565,
+        720,
+        638,
+        798
+      ],
+      "kind": "concept-crop",
+      "reviewRequired": true,
+      "size": [
+        73,
+        78
+      ]
+    },
+    {
+      "id": "lantern",
+      "category": "walking",
+      "path": "walking/lantern.webp",
+      "source": "walking-exploring",
+      "sourceRect": [
+        634,
+        718,
+        707,
+        814
+      ],
+      "kind": "concept-crop",
+      "reviewRequired": true,
+      "size": [
+        73,
+        96
+      ]
+    },
+    {
+      "id": "trail-sign",
+      "category": "walking",
+      "path": "walking/trail-sign.webp",
+      "source": "walking-exploring",
+      "sourceRect": [
+        17,
+        792,
+        98,
+        905
+      ],
+      "kind": "concept-crop",
+      "reviewRequired": true,
+      "size": [
+        81,
+        113
+      ]
+    },
+    {
+      "id": "flowers",
+      "category": "walking",
+      "path": "walking/flowers.webp",
+      "source": "walking-exploring",
+      "sourceRect": [
+        370,
+        806,
+        467,
+        896
+      ],
+      "kind": "concept-crop",
+      "reviewRequired": true,
+      "size": [
+        97,
+        90
+      ]
+    },
+    {
+      "id": "trail-stones",
+      "category": "walking",
+      "path": "walking/trail-stones.webp",
+      "source": "walking-exploring",
+      "sourceRect": [
+        201,
+        848,
+        319,
+        933
+      ],
+      "kind": "concept-crop",
+      "reviewRequired": true,
+      "size": [
+        118,
+        85
+      ]
+    },
+    {
+      "id": "park-bench",
+      "category": "walking",
+      "path": "walking/park-bench.webp",
+      "source": "walking-exploring",
+      "sourceRect": [
+        591,
+        844,
+        706,
+        957
+      ],
+      "kind": "concept-crop",
+      "reviewRequired": true,
+      "size": [
+        115,
+        113
+      ]
+    },
+    {
+      "id": "butterfly",
+      "category": "walking",
+      "path": "walking/butterfly.webp",
+      "source": "walking-exploring",
+      "sourceRect": [
+        805,
+        906,
+        855,
+        970
+      ],
+      "kind": "concept-crop",
+      "reviewRequired": true,
+      "size": [
+        50,
+        64
+      ]
+    }
+  ],
+  "breathing": {
+    "frames": [
+      "breathing/breath-frame-00.webp",
+      "breathing/breath-frame-01.webp",
+      "breathing/breath-frame-02.webp",
+      "breathing/breath-frame-03.webp",
+      "breathing/breath-frame-04.webp",
+      "breathing/breath-frame-05.webp",
+      "breathing/breath-frame-06.webp",
+      "breathing/breath-frame-07.webp",
+      "breathing/breath-frame-08.webp",
+      "breathing/breath-frame-09.webp",
+      "breathing/breath-frame-10.webp",
+      "breathing/breath-frame-11.webp"
+    ],
+    "frameCount": 12,
+    "frameSize": [
+      362,
+      362
+    ],
+    "suggestedPreviewIntervalMs": 130,
+    "loop": true,
+    "reducedMotion": "static frame 00",
+    "warning": "Use game timing for breathing pace: do not infer respiration seconds from frame interval."
+  },
+  "notes": [
+    "Artwork-only PR; no gameplay, treatment claims, or new tracking.",
+    "Cropped from generated image sheets. All require human QA for completeness and continuity.",
+    "Walking scenes/props retain a colored painted background and should not be rendered as transparent sprites.",
+    "Use static art when user requests reduced motion."
+  ]
+}
