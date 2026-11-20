@@ -40,7 +40,7 @@ Không đổi engine, CSP, sổ thực đơn hay copy chính của trò.
 | Feedback tùy chọn chỉ trong RAM, không analytics | ✅ | Câu hỏi sau trò ở 5 trò: Thở, Căng (có sẵn), Thám tử, Lá trôi, Gọi tên (cổng này). Ba điều nhỏ xíu không có: trò đã kết thúc bằng chính các mẩu giấy của khách. Không lưu, không request; bản ghi review câu chữ trong EVIDENCE.md (20/11/2026, Beta 6) |
 | Regression | ✅ | Lab UX (desktop + chạm giả lập) 375 pass, 9 skip · điện thoại giả lập 302 pass, 14 skip · smoke 5 khung 55 pass, 2 skip (bài chỉ chạy trên site đã deploy) · node 26/26 · foundation, privacy, UI audit OK |
 | Reduced motion / VoiceOver | ✅ / ⏳ | Reduced motion: mỗi trò có bài hoàn tất không animation. VoiceOver/TalkBack **chưa thử trên máy thật**; các bài chỉ kiểm nhãn, nhóm, `aria-pressed`, vùng thông báo và focus. Sau “dừng hẳn”, focus vào “chơi lại”, nằm sau câu hỏi trong thứ tự đọc (như Thở/Căng): người dùng trình đọc màn hình có thể lướt qua câu hỏi; câu hỏi là tùy chọn |
-| SHA production, P0/P1 = 0 | xem “Production” | |
+| SHA production, P0/P1 = 0 | ✅ | `364e7aa`, deployed smoke 44673870038 57/57; xem “Production” |
 
 ## Điện thoại giả lập
 
@@ -85,7 +85,7 @@ Chỉ tính tài nguyên tải trước `load`. Thời gian đo trên máy cục
 ## Production
 
 - Trước cổng này: production phục vụ `519115061a88b53ed52a61f1a6e35dfcb6382073` (gồm G05 #193, G07 #195, G09 #197, F12 #199 và các bản ghi roadmap); mỗi PR có deployed smoke riêng (gần nhất: run 44668350582, 57/57 ở `e3b8313`).
-- SHA của chính cổng này: ghi vào #137 sau khi merge và deployed smoke trên production pass.
+- Cổng này: PR #203 squash-merge thành `364e7aacc40d0761e01ef5aa222ab47f85beb3fe`; production `build-info.json` phục vụ đúng SHA đó, deployed smoke run 44673870038 57/57 (20/11/2026). Kiểm tay trên production: Thám tử hiện tại → dừng hẳn → “khó chịu hơn” → lời mời nghỉ, focus về “chơi lại”, không storage, không request bên thứ ba. P0/P1 mở: 0.
 
 ## Rollback
 

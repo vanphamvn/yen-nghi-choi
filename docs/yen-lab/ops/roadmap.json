@@ -389,14 +389,15 @@
       "priority": "P0",
       "title": "Beta 6 release gate",
       "kind": "release",
-      "status": "in-progress",
+      "status": "done",
       "depends_on": [
         "F12",
         "G05",
         "G07",
         "G09"
       ],
-      "issue_url": "https://github.com/vanphamvn/yen-nghi-choi/issues/137"
+      "issue_url": "https://github.com/vanphamvn/yen-nghi-choi/issues/137",
+      "evidence": "PR #203 squash-merged as 364e7aa. Six games together (Thở cùng Yên, Căng rồi thả, Ba điều nhỏ xíu, Thám tử hiện tại, Lá trôi nghĩ trôi, Gọi tên cơn bực) plus Cục Yên suggestions (F12). Optional after-game question \"Nếu muốn, lúc này bạn thấy sao?\" added to G05/G07/G09 (same as G01/G02), never kept, \"khó chịu hơn\" gets a rest reply, double-tap guarded. tests/yen-lab-beta6.spec.mjs: one guest visit through all six (one via Cục Yên), reflection keeps nothing, offline per game, no sound, cold-load budgets (7 pages < 900 KB, ≤ 25 requests, 0 third-party), claim audit over every page and every script string (mutation-checked). docs/yen-lab/RELEASE-BETA6.md with 18 emulated-phone screenshots. Local: lab UX 375 passed, emulated iPhone 15 WebKit 26.5 + Pixel 7 Chromium 151 302 passed, smoke 55 passed, node 26/26. Independent agent review: no P0; borderline P1 (double tap on a reflection word could leave the page) and P2s fixed before merge. CI foundation + deploy-preview smoke green at afa22d0. Production: build-info commitSha 364e7aa, deployed smoke run 44673870038 57/57; real-browser production walk Thám tử start -> stop -> khó chịu hơn -> rest reply, focus on chơi lại, no storage. P0/P1 open: 0. Not verified: physical phones, VoiceOver/TalkBack; owner review of copy and art pending."
     },
     {
       "key": "F14",
