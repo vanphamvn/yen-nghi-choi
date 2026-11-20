@@ -434,12 +434,13 @@
       "priority": "P2",
       "title": "Ngón tay biết thở",
       "kind": "minigame",
-      "status": "in-progress",
+      "status": "done",
       "depends_on": [
         "F03",
         "F14"
       ],
-      "issue_url": "https://github.com/vanphamvn/yen-nghi-choi/issues/145"
+      "issue_url": "https://github.com/vanphamvn/yen-nghi-choi/issues/145",
+      "evidence": "PR #212 squash-merged as 8253279. /lab/ngon-tay/: trace the first panel of the G04 sprite at your own pace, up = hít vào nhẹ, down = thở ra nhẹ; no timer, any movement counts, 'tiếp' route, a leg cannot finish under 2 s and one gesture moves at most one leg (no fast cue flipping); breathing caution beside start; nothing stored. tests/yen-lab-ngon-tay.spec.mjs 29/29 desktop+touch, emulated iPhone WebKit + Pixel Chromium; smoke 82 local, deploy preview 83/83. Independent agent review: P1 (fast-scribble cue racing) fixed with a regression test. Production build-info commitSha 8253279283f391874a413699d3e042a0c29925d7; deployed smoke run 44708792813 84 passed. Not covered: real touchscreen cancel, physical phones, VoiceOver/TalkBack, owner review."
     },
     {
       "key": "G06",

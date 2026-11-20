@@ -59,7 +59,7 @@
 | `LAB-G01` | [#142](https://github.com/vanphamvn/yen-nghi-choi/issues/142) Thở cùng Yên ✅ done ([PR #179](https://github.com/vanphamvn/yen-nghi-choi/pull/179), [G01-THO.md](G01-THO.md)) | M1 | P0 | Có nghiên cứu về breathing, **không phải validation game** |
 | `LAB-G02` | [#143](https://github.com/vanphamvn/yen-nghi-choi/issues/143) Căng rồi thả ✅ done ([PR #183](https://github.com/vanphamvn/yen-nghi-choi/pull/183)) | M2 | P0 | Có nghiên cứu PMR, **liều lượng rút gọn chưa xác minh** |
 | `LAB-G03` | [#144](https://github.com/vanphamvn/yen-nghi-choi/issues/144) Quét người tìm căng thẳng | M4 | P1 | Mindfulness gián tiếp |
-| `LAB-G04` | [#145](https://github.com/vanphamvn/yen-nghi-choi/issues/145) Ngón tay biết thở | M4 | P2 | Biến thể breathing, chưa có chứng cứ riêng |
+| `LAB-G04` | [#145](https://github.com/vanphamvn/yen-nghi-choi/issues/145) Ngón tay biết thở ✅ done ([G04-NGON-TAY.md](G04-NGON-TAY.md), production `8253279`) | M4 | P2 | Biến thể breathing, chưa có chứng cứ riêng |
 | `LAB-G05` | [#146](https://github.com/vanphamvn/yen-nghi-choi/issues/146) Thám tử hiện tại ✅ done ([G05-THAM-TU.md](G05-THAM-TU.md), production `a00a280`) | M3 | P1 | 5-4-3-2-1 trực tiếp còn hạn chế |
 | `LAB-G06` | [#147](https://github.com/vanphamvn/yen-nghi-choi/issues/147) Vườn cát không mục tiêu ✅ done ([G06-VUON-CAT.md](G06-VUON-CAT.md), production `25b8809`) | M4 | P2 | Exploratory; chưa chứng minh game |
 | `LAB-G07` | [#148](https://github.com/vanphamvn/yen-nghi-choi/issues/148) Lá trôi, nghĩ trôi ✅ done ([G07-LA-TROI.md](G07-LA-TROI.md), production `9043840`) | M3 | P1 | ACT defusion gián tiếp |
