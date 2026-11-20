@@ -61,7 +61,7 @@
 | `LAB-G03` | [#144](https://github.com/vanphamvn/yen-nghi-choi/issues/144) Quét người tìm căng thẳng | M4 | P1 | Mindfulness gián tiếp |
 | `LAB-G04` | [#145](https://github.com/vanphamvn/yen-nghi-choi/issues/145) Ngón tay biết thở | M4 | P2 | Biến thể breathing, chưa có chứng cứ riêng |
 | `LAB-G05` | [#146](https://github.com/vanphamvn/yen-nghi-choi/issues/146) Thám tử hiện tại ✅ done ([G05-THAM-TU.md](G05-THAM-TU.md), production `a00a280`) | M3 | P1 | 5-4-3-2-1 trực tiếp còn hạn chế |
-| `LAB-G06` | [#147](https://github.com/vanphamvn/yen-nghi-choi/issues/147) Vườn cát không mục tiêu | M4 | P2 | Exploratory; chưa chứng minh game |
+| `LAB-G06` | [#147](https://github.com/vanphamvn/yen-nghi-choi/issues/147) Vườn cát không mục tiêu ✅ done ([G06-VUON-CAT.md](G06-VUON-CAT.md), production `25b8809`) | M4 | P2 | Exploratory; chưa chứng minh game |
 | `LAB-G07` | [#148](https://github.com/vanphamvn/yen-nghi-choi/issues/148) Lá trôi, nghĩ trôi ✅ done ([G07-LA-TROI.md](G07-LA-TROI.md), production `9043840`) | M3 | P1 | ACT defusion gián tiếp |
 | `LAB-G08` | [#149](https://github.com/vanphamvn/yen-nghi-choi/issues/149) Ngồi nhìn mây ✅ done ([G08-NHIN-MAY.md](G08-NHIN-MAY.md), production `e1d7123`) | M4 | P2 | Mindfulness gián tiếp |
 | `LAB-G09` | [#150](https://github.com/vanphamvn/yen-nghi-choi/issues/150) Gọi tên cơn bực ✅ done ([G09-GOI-TEN.md](G09-GOI-TEN.md), production `dd66e02`) | M3 | P1 | Affect labeling; cần review tình huống |
