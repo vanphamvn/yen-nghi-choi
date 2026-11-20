@@ -12,12 +12,20 @@ Các trò và gợi ý đã lên production qua PR riêng (#193 G05, #195 G07, #
   - Ba điều nhỏ xíu giữ nguyên như đã phát hành.
 - `tests/yen-lab-beta6.spec.mjs` (mới; chạy trong CI qua `playwright.lab-ux.config.mjs`, và trên điện thoại giả lập khi `LAB_UX_DEVICES=1`):
   - **Một lượt khách, 6 trò:** năm trò mở từ sổ, Lá trôi mở từ lời gợi ý của Cục Yên. Mỗi trò chơi đến hết rồi “về góc ngồi chơi”. Không có lỗi console/JS, không HTTP ≥ 400, không cookie/storage. Không âm thanh: đã đếm Web Audio, media, speech, rung và `<audio>/<video>`.
-  - **Câu hỏi sau trò:** không hiện trước khi xong; trả lời rồi thì ẩn; “khó chịu hơn” nhận lời mời nghỉ; vẫn có sau khi dừng; không request, storage hay URL.
+  - **Câu hỏi sau trò:**
+    - Ẩn ngay trong markup (`hidden`); không hiện lúc chờ hay đang chơi.
+    - Trả lời rồi thì ẩn; “khó chịu hơn” nhận lời mời nghỉ; vẫn có sau khi dừng.
+    - Không request, storage hay URL.
+    - Chạm đúp một chữ ở 320 px không rời trang: khi câu hỏi thu lại, “về góc ngồi chơi” trượt lên dưới ngón tay, và cú chạm thứ hai trong 400 ms bị bỏ.
   - **Offline:** sau khi tải, mỗi trò trong 6 trò chơi được đến hết mà không gọi mạng lần nào.
-  - **Rà câu chữ:** toàn bộ chữ trên phòng và 6 trang trò (cả trạng thái chưa hiện) không có chữa / trị liệu / chẩn đoán / bệnh danh / “được chứng minh” / hết lo, hết bực / xóa suy nghĩ / giảm căng thẳng / hạch hạnh nhân.
-    - Chỉ cho phép “không thay thế tư vấn hoặc điều trị chuyên môn” và tên nguồn “liệu pháp ACT”.
+  - **Rà câu chữ (hai lớp):**
+    - (1) chữ của phòng và 6 trang trò như server trả về: kể cả trạng thái chưa hiện và noscript.
+    - (2) mọi chuỗi chữ trong script của Lab: câu Cục Yên, lời thông báo, câu dẫn từng bước, dòng kết quả, lời đáp sau trò.
+    - Cả hai đều không được có: chữa / trị liệu / điều trị / chẩn đoán / bệnh danh / “được chứng minh” / hiệu quả / hết lo, hết bực / xóa suy nghĩ / giảm căng thẳng / hạch hạnh nhân / đảm bảo / reset não / tần số.
+    - Chữ được chuẩn hóa NFC và chữ thường trước khi so.
+    - Chỉ cho phép “không thay thế tư vấn hoặc điều trị chuyên môn”, “chưa được kiểm chứng hiệu quả” và tên nguồn “liệu pháp ACT”.
     - Mọi trang có câu “không thay thế…”; mọi trò có “chưa được kiểm chứng hiệu quả”.
-    - Đã thử: thêm “xóa suy nghĩ tiêu cực” vào một trang thì bài này fail.
+    - Đã thử: thêm “xóa suy nghĩ tiêu cực” vào một trang, hoặc “hết lo” vào một câu của Cục Yên trong script, thì bài này fail.
   - **Cold load:** 7 trang, ngân sách < 900 KB, ≤ 25 request, 0 bên thứ ba.
 
 Không đổi engine, CSP, sổ thực đơn hay copy chính của trò.
@@ -29,9 +37,9 @@ Không đổi engine, CSP, sổ thực đơn hay copy chính của trò.
 | 6 trò có hành vi thật, thoát/làm lại, không thẻ hỏng | ✅ | Lượt khách 6 trò (desktop, chạm giả lập, iPhone 15 WebKit, Pixel 7) + spec từng trò (bắt đầu/dừng/làm lại/xong). Sổ: 6 link mở, trang 2 chỉ là chữ không bấm được |
 | Grounding là quan sát thật, không phải tìm đồ trên màn hình; 5 giác quan là hướng dẫn, không là chuẩn khoa học | ✅ | Thám tử hiện tại: không ô nhập, tranh chỉ minh họa, “manh mối ở ngoài đời, trang chỉ đếm giúp bạn”; mùi/vị “không có cũng được”; fine print “chưa có nghiên cứu trực tiếp đủ mạnh” (G05-THAM-TU.md) |
 | Gọi tên cảm xúc không gán nhãn bệnh; lá trôi không hứa chữa suy nghĩ | ✅ | Gọi tên: chỉ hiện chữ đã chọn, có “khác” / “không biết gọi tên”, không diễn giải; Lá trôi: “Thử nhìn một ý nghĩ đi ngang.”, không “xóa suy nghĩ”; bài rà câu chữ ở trên |
-| Feedback tùy chọn chỉ trong RAM, không analytics | ✅ | Câu hỏi sau trò ở 5 trò có đồng hồ/đếm (Thở, Căng, Thám tử, Lá trôi, Gọi tên); không lưu, không request |
-| Regression | ✅ | Lab UX (desktop + chạm giả lập) 369 pass, 9 skip · điện thoại giả lập 296 pass, 14 skip · smoke 5 khung 55 pass, 2 skip (bài chỉ chạy trên site đã deploy) · node 26/26 · foundation, privacy, UI audit OK |
-| Reduced motion / VoiceOver | ✅ / ⏳ | Reduced motion: mỗi trò có bài hoàn tất không animation. VoiceOver/TalkBack **chưa thử trên máy thật**; các bài chỉ kiểm nhãn, nhóm, `aria-pressed`, vùng thông báo và focus |
+| Feedback tùy chọn chỉ trong RAM, không analytics | ✅ | Câu hỏi sau trò ở 5 trò: Thở, Căng (có sẵn), Thám tử, Lá trôi, Gọi tên (cổng này). Ba điều nhỏ xíu không có: trò đã kết thúc bằng chính các mẩu giấy của khách. Không lưu, không request; bản ghi review câu chữ trong EVIDENCE.md (20/11/2026, Beta 6) |
+| Regression | ✅ | Lab UX (desktop + chạm giả lập) 375 pass, 9 skip · điện thoại giả lập 302 pass, 14 skip · smoke 5 khung 55 pass, 2 skip (bài chỉ chạy trên site đã deploy) · node 26/26 · foundation, privacy, UI audit OK |
+| Reduced motion / VoiceOver | ✅ / ⏳ | Reduced motion: mỗi trò có bài hoàn tất không animation. VoiceOver/TalkBack **chưa thử trên máy thật**; các bài chỉ kiểm nhãn, nhóm, `aria-pressed`, vùng thông báo và focus. Sau “dừng hẳn”, focus vào “chơi lại”, nằm sau câu hỏi trong thứ tự đọc (như Thở/Căng): người dùng trình đọc màn hình có thể lướt qua câu hỏi; câu hỏi là tùy chọn |
 | SHA production, P0/P1 = 0 | xem “Production” | |
 
 ## Điện thoại giả lập
@@ -56,7 +64,7 @@ Chạy lại (cần `npx playwright install webkit chromium`):
 LAB_UX_DEVICES=1 LAB_BETA6_SHOTS=<thư mục> npx playwright test --config playwright.lab-ux.config.mjs --project iphone-webkit --project android-chromium -g "one guest visit" tests/yen-lab-beta6.spec.mjs
 ```
 
-Ảnh chụp ở 3× rồi thu về 1× WebP. Ghi chú kỹ thuật:
+Ảnh iPhone chụp ở 3× rồi thu về 1× WebP (393 px). Ảnh Pixel 7 chụp ở 2.625× và thu cùng tỉ lệ nên nhỏ hơn 1× một chút (361 px cho khung 412 px). Ghi chú kỹ thuật:
 - Đồng hồ giả của Playwright đóng băng animation CSS giữa chừng, nên lượt chụp ảnh cho mọi animation chạy tới khung cuối trước khi chụp (`getAnimations().finish()`).
 - Lượt chụp ảnh bỏ qua đúng thông báo CSP về `<style>` mà `screenshot()` chèn vào trên WebKit. Lượt CI không chụp ảnh nên vẫn kiểm chặt.
 
@@ -83,7 +91,7 @@ Chỉ tính tài nguyên tải trước `load`. Thời gian đo trên máy cục
 
 1. Ẩn link Lab ở homepage: `var flag_yenlab = 0;` trong `index.html`.
 2. Gỡ một trò khỏi sổ: revert PR của trò đó (#193, #195, #197). Lời gợi ý của Cục Yên: revert #199.
-3. Thay đổi của cổng này: revert PR này. Nó chỉ gồm câu hỏi sau trò ở 3 trò M3 và phần test/tài liệu.
+3. Thay đổi của cổng này: revert PR này. Nó chỉ gồm câu hỏi sau trò ở 3 trò M3 (và chặn chạm đúp trên câu hỏi đó) cùng phần test/tài liệu.
 
 ## Còn mở (không chặn cổng, cần chủ quán)
 

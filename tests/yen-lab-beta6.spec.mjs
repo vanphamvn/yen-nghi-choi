@@ -3,7 +3,7 @@
 // that every game finishes offline once loaded, makes no sound, stays light on a cold load, and that no page makes a
 // medical or benefit claim. Runs on desktop, emulated touch and (LAB_UX_DEVICES=1) emulated phones.
 import { test, expect } from '@playwright/test';
-import { mkdirSync, writeFileSync } from 'node:fs';
+import { mkdirSync, writeFileSync, readFileSync, readdirSync } from 'node:fs';
 
 const SETTLE = 450; // the three M3 games drop taps within 400 ms of a change on purpose
 const SHOTS = process.env.LAB_BETA6_SHOTS || ''; // directory for release-note screenshots, only when asked
@@ -107,6 +107,11 @@ for (const game of GAMES.filter(g => g.reflect)) {
     const before = sent.length;
     const reflect = page.locator('#game-reflect');
     await expect(reflect).toBeHidden(); // never before the game ends
+    await expect(reflect).toHaveAttribute('hidden', ''); // hidden in the markup itself, not only by its parent
+    await tap(page, 'bắt đầu');
+    await expect(reflect).toBeHidden(); // nor while playing
+    await tap(page, 'dừng hẳn');
+    await tap(page, 'chơi lại');
     await game.play(page);
     await expect(reflect).toBeVisible();
     await expect(page.getByRole('group', { name: 'Nếu muốn, lúc này bạn thấy sao?' })).toBeVisible();
@@ -141,20 +146,55 @@ for (const game of GAMES) {
   });
 }
 
-// No page may promise a cure, a diagnosis or proven benefit (EVIDENCE.md, SAFETY.md, #137 research claim audit).
-// "không thay thế tư vấn hoặc điều trị chuyên môn" and "liệu pháp ACT" (naming the source method) are the allowed uses.
-const FORBIDDEN = [/khoa học (đã )?chứng minh/i, /được chứng minh/i, /chữa (lành|khỏi|bệnh)/i, /trị liệu/i, /chẩn đoán/i, /trầm cảm|rối loạn|lo âu/i,
-  /hết (lo|buồn|bực|giận|hoảng|căng thẳng)/i, /xóa suy nghĩ|xoá suy nghĩ|suy nghĩ tiêu cực/i, /giảm (stress|căng thẳng|lo)/i, /hạch hạnh nhân|amygdala/i, /hiệu quả (cao|rõ|đã)/i];
-test('claim audit: no page in the Lab promises a cure, a diagnosis or proven benefit; every game says it is not validated', async ({ page }) => {
+for (const game of GAMES.filter(g => g.reflect)) {
+  test(`${game.label}: a double tap on a reflection word at 320 px stays on the game (the words that move up ignore it)`, async ({ page }) => {
+    await page.setViewportSize({ width: 320, height: 640 });
+    await page.clock.install();
+    await page.goto(game.path);
+    await game.play(page);
+    await page.clock.runFor(SETTLE);
+    const word = page.getByRole('button', { name: 'dễ chịu hơn', exact: true });
+    await word.scrollIntoViewIfNeeded();
+    const box = await word.boundingBox();
+    const x = box.x + box.width / 2, y = box.y + box.height / 2;
+    await page.mouse.click(x, y);
+    await page.mouse.click(x, y); // the second tap lands at once, wherever the block collapsed to
+    await expect(page).toHaveURL(new RegExp(game.path.replace(/\//g, '\\/') + '$'));
+    await expect(page.locator('main.game')).toHaveAttribute('data-state', 'complete');
+    await expect(page.locator('#game-whisper')).toHaveText('Cảm ơn bạn đã tự để ý một chút.');
+  });
+}
+
+// No page may promise a cure, a diagnosis or proven benefit (EVIDENCE.md, SAFETY.md "Editorial review checks", #137 claim
+// audit). Checked twice: the text of every page as served (hidden states and noscript included) and every string in the
+// Lab's scripts (Cục Yên's lines, whispers, step cues, result lines, replies). The allowed uses are the disclaimer
+// "không thay thế tư vấn hoặc điều trị chuyên môn", the evidence note "chưa được kiểm chứng hiệu quả" and the source name
+// "liệu pháp ACT".
+const FORBIDDEN = [/khoa học (đã )?chứng minh/, /được chứng minh/, /chữa/, /trị liệu|điều trị|hỗ trợ điều trị/, /chẩn đoán/,
+  /trầm cảm|rối loạn|lo âu|bệnh/, /hết (lo|buồn|bực|giận|hoảng|căng thẳng|stress)/, /xóa suy nghĩ|suy nghĩ tiêu cực/,
+  /giảm (stress|căng thẳng|lo)/, /hạch hạnh nhân|amygdala/, /hiệu quả/, /đảm bảo|chắc chắn (bình tĩnh|thư giãn|hết)/,
+  /reset (não|đầu)|não bộ/, /tần số|sóng não/];
+const ALLOWED = [/không thay thế tư vấn hoặc điều trị chuyên môn/g, /chưa được kiểm chứng hiệu quả( riêng)?/g, /liệu pháp ACT/g];
+const audit = (where, raw) => {
+  // NFC + lower case, "xoá" spelled as "xóa", so a decomposed paste or an old-style accent cannot slip through
+  let text = raw.normalize('NFC').toLowerCase().replace(/oá/g, 'óa').replace(/\s+/g, ' ');
+  for (const re of ALLOWED) text = text.replace(re, '');
+  for (const re of FORBIDDEN) expect(text, `${where} ${re}`).not.toMatch(re);
+};
+test('claim audit: no page or script in the Lab promises a cure, a diagnosis or proven benefit; every game says it is not validated', async ({ page }) => {
   test.skip(test.info().project.name !== 'desktop', 'text is the same on every project');
   for (const path of ['/lab/', ...GAMES.map(g => g.path)]) {
     await page.goto(path);
-    // all text a guest could meet on the page, including states not shown yet (hidden nodes count: they will show)
-    const text = await page.evaluate(() => document.body.textContent.replace(/\s+/g, ' '));
-    const allowed = text.replace(/không thay thế tư vấn hoặc điều trị chuyên môn/g, '').replace(/liệu pháp ACT/g, '');
-    for (const re of FORBIDDEN) expect(allowed, `${path} ${re}`).not.toMatch(re);
+    audit(path, await page.evaluate(() => document.body.textContent));
     await expect(page.locator('.lab-fineprint')).toContainText('không thay thế tư vấn hoặc điều trị chuyên môn');
     if (path !== '/lab/') await expect(page.locator('.lab-fineprint')).toContainText(/chưa được kiểm chứng hiệu quả/);
+  }
+  const scripts = ['lab/lab.js', 'lab/engine.mjs', ...readdirSync('lab', { withFileTypes: true }).filter(d => d.isDirectory() && d.name !== 'assets')
+    .flatMap(d => readdirSync(`lab/${d.name}`).filter(f => /\.m?js$/.test(f)).map(f => `lab/${d.name}/${f}`))];
+  expect(scripts.length).toBeGreaterThanOrEqual(8);
+  for (const file of scripts) {
+    const strings = readFileSync(file, 'utf8').match(/'(?:[^'\\\n]|\\.)*'|`(?:[^`\\]|\\.)*`|"(?:[^"\\\n]|\\.)*"/g) || [];
+    audit(file, strings.join(' '));
   }
 });
 

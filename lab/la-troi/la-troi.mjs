@@ -126,6 +126,7 @@ if (game) {
     if (performance.now() < settledAt) { event.preventDefault(); return; }
     if (target.hasAttribute('data-reflect')) {
       reflect.hidden = true; // the answer is not kept anywhere
+      settle(); // the block collapses and the words below move up under the finger: drop a leftover tap
       say(target.textContent.trim() === 'khó chịu hơn' ? 'Cảm ơn bạn đã nói. Nghỉ một chút nhé; không cần nghĩ tiếp hay làm lại.' : 'Cảm ơn bạn đã tự để ý một chút.');
       game.querySelector('[data-act="again"]').focus();
       return;
