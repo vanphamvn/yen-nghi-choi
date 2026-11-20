@@ -389,7 +389,7 @@
       "priority": "P0",
       "title": "Beta 6 release gate",
       "kind": "release",
-      "status": "todo",
+      "status": "in-progress",
       "depends_on": [
         "F12",
         "G05",

@@ -21,6 +21,7 @@ const SETTLE_MS = 400;
 const game = document.querySelector('[data-game="tham-tu"]');
 if (game) {
   const $ = id => document.getElementById(id);
+  const reflect = $('game-reflect'); // optional "lúc này bạn thấy sao?" after the game; the answer is never kept
   const cue = $('game-cue'), sub = $('tt-sub'), count = $('tt-count'), dots = $('game-dots');
   const found = $('tt-found'), skip = $('tt-skip'), whisper = $('game-whisper');
   const resultLine = $('tt-result-line'), after = $('tt-after'), heading = $('game-title');
@@ -35,7 +36,7 @@ if (game) {
     void whisper.offsetWidth;
     if (text) whisper.classList.add('is-new');
   }
-  function setState(state) { game.dataset.state = state; }
+  function setState(state) { game.dataset.state = state; if (state === 'complete' || state === 'stopped') reflect.hidden = false; }
 
   function render() {
     const s = STEPS[step];
@@ -114,10 +115,17 @@ if (game) {
   };
 
   game.addEventListener('click', event => {
-    const target = event.target.closest('[data-act], a[href]');
+    const target = event.target.closest('[data-act], a[href], [data-reflect]');
     if (!target) return;
     // Includes the "về góc ngồi chơi" link: a leftover tap must not leave the page right after the last count.
     if (performance.now() < settledAt) { event.preventDefault(); return; }
+    if (target.hasAttribute('data-reflect')) {
+      reflect.hidden = true; // the answer is not kept anywhere
+      settle(); // the block collapses and the words below move up under the finger: drop a leftover tap
+      say(target.textContent.trim() === 'khó chịu hơn' ? 'Cảm ơn bạn đã nói. Cứ ngồi nghỉ một chút; không cần để ý thêm gì.' : 'Cảm ơn bạn đã tự để ý một chút.');
+      game.querySelector('[data-act="again"]').focus();
+      return;
+    }
     if (target.dataset.act && act[target.dataset.act]) act[target.dataset.act]();
   });
   // A held Enter/Space repeats clicks on the focused word; only a fresh press counts.

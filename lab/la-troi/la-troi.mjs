@@ -15,6 +15,7 @@ export const cleanThought = value => String(value ?? '').replace(/\s+/g, ' ').tr
 const game = document.querySelector('[data-game="la-troi"]');
 if (game) {
   const $ = id => document.getElementById(id);
+  const reflect = $('game-reflect'); // optional "lúc này bạn thấy sao?" after the game; the answer is never kept
   const lane = $('lt-lane'), slip = $('lt-slip'), input = $('lt-input'), whisper = $('game-whisper');
   const cue = $('game-cue'), heading = $('game-title'), resultLine = $('lt-result-line');
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
@@ -29,7 +30,7 @@ if (game) {
     void whisper.offsetWidth;
     if (text) whisper.classList.add('is-new');
   }
-  function setState(state) { game.dataset.state = state; }
+  function setState(state) { game.dataset.state = state; if (state === 'complete' || state === 'stopped') reflect.hidden = false; }
   function setPhase(phase) { game.dataset.phase = phase; }
 
   // Forget every word: the field, the leaf, and nothing in the announcement ever repeated them.
@@ -120,9 +121,16 @@ if (game) {
   };
 
   game.addEventListener('click', event => {
-    const target = event.target.closest('[data-act], [data-idea], a[href]');
+    const target = event.target.closest('[data-act], [data-idea], a[href], [data-reflect]');
     if (!target) return;
     if (performance.now() < settledAt) { event.preventDefault(); return; }
+    if (target.hasAttribute('data-reflect')) {
+      reflect.hidden = true; // the answer is not kept anywhere
+      settle(); // the block collapses and the words below move up under the finger: drop a leftover tap
+      say(target.textContent.trim() === 'khó chịu hơn' ? 'Cảm ơn bạn đã nói. Nghỉ một chút nhé; không cần nghĩ tiếp hay làm lại.' : 'Cảm ơn bạn đã tự để ý một chút.');
+      game.querySelector('[data-act="again"]').focus();
+      return;
+    }
     if (target.dataset.act && act[target.dataset.act]) { act[target.dataset.act](); return; }
     if (target.hasAttribute('data-idea') && game.dataset.state === 'running' && game.dataset.phase === 'choose') place(target.textContent);
   });
