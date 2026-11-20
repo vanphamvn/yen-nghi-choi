@@ -356,13 +356,14 @@
       "priority": "P1",
       "title": "Lá trôi, nghĩ trôi",
       "kind": "minigame",
-      "status": "in-progress",
+      "status": "done",
       "depends_on": [
         "F03",
         "F08",
         "F11"
       ],
-      "issue_url": "https://github.com/vanphamvn/yen-nghi-choi/issues/148"
+      "issue_url": "https://github.com/vanphamvn/yen-nghi-choi/issues/148",
+      "evidence": "PR #195 squash-merged as 9043840. /lab/la-troi/: leaves on a stream, adapted; pick a neutral everyday thought or write up to 60 characters, a paper slip drifts across the painted stream strip for 8 s or is let go at once; no count, no positive-thinking prompt, never erase-thought wording. Written words cleared from the field on placing and from the slip once it has passed, on stop, reset, pagehide and back/forward restore; never announced, stored, sent or put in the URL. Reduced motion: the slip rests until let go (no time limit). EVIDENCE.md G07 agent copy and deletion review. Local: lab UX 293 passed, emulated iPhone 15 WebKit + Pixel 7 222 passed, smoke 48 passed. Independent agent review: no P0, 1 P1 (slip narrowed and cropped as it drifted) + P2s fixed before merge, plus a 320 px sheet overflow found in browser QA. CI foundation + deploy-preview smoke green at cf80e4c. Production: build-info commitSha 9043840, deployed smoke run 44654020136 50/50; real-browser production walk start -> idea -> drift -> passed, no storage. Not verified: physical phones, VoiceOver/TalkBack; owner review pending."
     },
     {
       "key": "G09",
