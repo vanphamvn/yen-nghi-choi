@@ -325,6 +325,8 @@ test('reduced motion: the leaf rests still, readable, with no time limit, until 
 
 test('no network after load and no sound', async ({ page, context }) => {
   await page.goto(LT, { waitUntil: 'load' });
+  // Load every image first, the lazy door in the footer included (WebKit may fetch it after load), as the Beta 3 gate does.
+  await page.evaluate(() => Promise.all([...document.images].map(img => { img.loading = 'eager'; return img.decode().catch(() => {}); })));
   const late = [];
   // The browser fetches <link rel="icon"> on its own timing, sometimes after load: the tab icon, not the game.
   page.on('request', r => { if (new URL(r.url()).pathname !== '/favicon.svg') late.push(r.url()); });

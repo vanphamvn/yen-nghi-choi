@@ -248,6 +248,8 @@ test('holding Enter on the lead word counts once, not through every step', async
 
 test('no network after load, nothing stored, no sound', async ({ page, context }) => {
   await page.goto(TT, { waitUntil: 'load' });
+  // Load every image first, the lazy door in the footer included (WebKit may fetch it after load), as the Beta 3 gate does.
+  await page.evaluate(() => Promise.all([...document.images].map(img => { img.loading = 'eager'; return img.decode().catch(() => {}); })));
   const late = [];
   // The browser itself fetches <link rel="icon"> on its own timing, sometimes after load (seen on CI); that is the
   // tab icon, not the game. Anything else the page asks for after load fails the test.

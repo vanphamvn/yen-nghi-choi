@@ -9,8 +9,10 @@ const SETTLE_MS = 400; // taps this soon after the words change under a finger a
 
 /** The line shown when looking at the choices. Never interprets them. */
 export function namedLine(feelings, strength) {
-  if (!feelings.length) return strength ? `Chưa có chữ nào, chỉ biết là ${strength}.` : 'Chưa gọi được tên cũng được.';
-  const words = feelings.join(' và ');
+  // "không biết gọi tên" is read the same as choosing nothing: a gentle line, never "you don't know".
+  const named = feelings.filter(f => f !== 'không biết gọi tên');
+  if (!named.length) return strength ? `Chưa gọi được tên, cỡ ${strength}. Vậy cũng được.` : 'Chưa gọi được tên cũng được.';
+  const words = named.map(f => (f === 'khác' ? 'một cảm giác khác' : f)).join(' và ');
   return strength ? `Lúc này: ${words}, ${strength}.` : `Lúc này: ${words}.`;
 }
 
@@ -82,7 +84,7 @@ if (game) {
       named.textContent = namedLine(feelings(), strength());
       setPhase('view');
       settle();
-      say(named.textContent);
+      say(''); // focus reads the line; announcing it too would say the words twice
       named.focus();
     },
     edit: () => {
@@ -124,7 +126,7 @@ if (game) {
   game.addEventListener('keydown', event => { if (event.repeat && (event.key === 'Enter' || event.key === ' ')) event.preventDefault(); });
 
   // Leaving or coming back from the back/forward cache forgets everything; nothing resumes on its own.
-  addEventListener('pagehide', () => { wipe(); setState('idle'); });
+  addEventListener('pagehide', () => { wipe(); setState('idle'); say(''); });
   addEventListener('pageshow', event => { if (event.persisted) { wipe(); setState('idle'); say(''); heading.focus(); } });
 
   try {

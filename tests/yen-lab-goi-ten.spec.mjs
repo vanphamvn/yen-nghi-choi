@@ -20,7 +20,7 @@ const press = async (page, key) => { await page.clock.runFor(SETTLE); await page
 const nothingKept = page => page.evaluate(() => [localStorage.length, sessionStorage.length, document.cookie, location.search, location.hash]);
 const pressedWords = page => page.locator('[data-feel][aria-pressed="true"], [data-strength][aria-pressed="true"]').allTextContents();
 
-const FEELINGS = ['bực', 'cáu', 'khó chịu', 'mệt', 'lo', 'buồn', 'tủi thân', 'hụt hẫng', 'bồn chồn', 'chán', 'bình thường', 'nhẹ nhõm', 'vui', 'không biết gọi tên'];
+const FEELINGS = ['bực', 'cáu', 'giận', 'khó chịu', 'mệt', 'lo', 'sợ', 'buồn', 'tủi thân', 'xấu hổ', 'cô đơn', 'hụt hẫng', 'bồn chồn', 'chán', 'bình thường', 'nhẹ nhõm', 'vui', 'khác', 'không biết gọi tên'];
 
 test('reachable from the room: the book page links to the game', async ({ page }) => {
   await page.goto('/lab/');
@@ -47,7 +47,7 @@ test('idle: allowed copy, no right or wrong feeling, stop any time, privacy besi
   expect(start.y).toBeGreaterThan(note.y);
 });
 
-test('labels are varied (unpleasant, neutral, pleasant, unknown) and none is pre-selected', async ({ page }) => {
+test('labels are varied (unpleasant incl. fear, shame, loneliness; neutral; pleasant; other; unknown) and none is pre-selected', async ({ page }) => {
   await page.goto(GT);
   await tap(page, 'bắt đầu');
   await expect(page.locator('[data-feel]')).toHaveText(FEELINGS);
@@ -91,7 +91,8 @@ test('multiple labels: at most two, a third is refused kindly; deselect to swap;
   await tap(page, 'vừa');
   await tap(page, 'nhìn lại');
   await expect(named(page)).toHaveText('Lúc này: mệt và buồn, vừa.');
-  await expect(whisper(page)).toHaveText('Lúc này: mệt và buồn, vừa.');
+  await expect(named(page)).toBeFocused(); // focus reads the line once…
+  await expect(whisper(page)).toBeEmpty(); // …so the live region does not repeat it
   // No interpretation of the choice: the only lines are the words and the neutral note.
   await expect(page.locator('#gt-view-note')).toHaveText('Chỉ gọi tên thôi. Không cần đổi nó, không cần giải thích nó.');
   await expect(page.getByText(/nên|hãy thử|có vẻ bạn|dấu hiệu|tích cực/)).toHaveCount(0);
@@ -108,13 +109,28 @@ test('"không biết gọi tên" stands alone: it clears the words, and a word c
   expect(await pressedWords(page)).toEqual(['vui']);
   await tap(page, 'không biết gọi tên');
   await tap(page, 'nhìn lại');
-  await expect(named(page)).toHaveText('Lúc này: không biết gọi tên.');
-  // strength without a word is allowed too
+  await expect(named(page)).toHaveText('Chưa gọi được tên cũng được.'); // read like no choice, never "you don't know"
   await tap(page, 'sửa lại');
-  await tap(page, 'không biết gọi tên');
   await tap(page, 'nhiều');
   await tap(page, 'nhìn lại');
-  await expect(named(page)).toHaveText('Chưa có chữ nào, chỉ biết là nhiều.');
+  await expect(named(page)).toHaveText('Chưa gọi được tên, cỡ nhiều. Vậy cũng được.');
+  // strength without any word is allowed too
+  await tap(page, 'sửa lại');
+  await tap(page, 'không biết gọi tên');
+  await tap(page, 'nhìn lại');
+  await expect(named(page)).toHaveText('Chưa gọi được tên, cỡ nhiều. Vậy cũng được.');
+});
+
+test('"khác": a feeling not on the list is a valid choice, alone or with one word', async ({ page }) => {
+  await page.goto(GT);
+  await tap(page, 'bắt đầu');
+  await tap(page, 'khác');
+  await tap(page, 'nhìn lại');
+  await expect(named(page)).toHaveText('Lúc này: một cảm giác khác.');
+  await tap(page, 'sửa lại');
+  await tap(page, 'sợ');
+  await tap(page, 'nhìn lại');
+  await expect(named(page)).toHaveText('Lúc này: sợ và một cảm giác khác.');
 });
 
 test('edit keeps the choices and lets them change; done and stop wipe them; again starts clean', async ({ page }) => {
@@ -165,6 +181,8 @@ test('privacy: choices never reach storage, URL, history or the network; leaving
   await expect(game(page)).toHaveAttribute('data-state', 'idle');
   expect(await pressedWords(page)).toEqual([]);
   await expect(named(page)).toBeEmpty();
+  await expect(whisper(page)).toBeEmpty();
+  expect(await page.evaluate(() => document.body.textContent)).not.toContain('tủi thân và'); // no trace in the cached page
   await page.evaluate(() => dispatchEvent(new PageTransitionEvent('pageshow', { persisted: true })));
   await expect(page.locator('#game-title')).toBeFocused();
   // Playwright's browsers keep no back/forward cache: this part shows a normal reload after back starts clean.
@@ -202,9 +220,7 @@ test('keyboard only: Tab through words, Enter/Space toggle, look, edit, done; he
     return e.defaultPrevented;
   });
   expect(cancelled).toBe(true);
-  await page.keyboard.press('Tab');
-  await page.keyboard.press('Tab');
-  await page.keyboard.press('Tab');
+  for (let i = 0; i < 4; i++) await page.keyboard.press('Tab'); // cáu, giận, khó chịu, mệt
   await expect(word(page, 'mệt')).toBeFocused();
   await press(page, 'Enter');
   await word(page, 'nhìn lại').focus();
@@ -271,6 +287,8 @@ test('reduced motion: completes with nothing animating', async ({ browser, baseU
 
 test('no network after load and no sound', async ({ page, context }) => {
   await page.goto(GT, { waitUntil: 'load' });
+  // Load every image first, the lazy door in the footer included (WebKit may fetch it after load), as the Beta 3 gate does.
+  await page.evaluate(() => Promise.all([...document.images].map(img => { img.loading = 'eager'; return img.decode().catch(() => {}); })));
   const late = [];
   // The browser fetches <link rel="icon"> on its own timing, sometimes after load: the tab icon, not the game.
   page.on('request', r => { if (new URL(r.url()).pathname !== '/favicon.svg') late.push(r.url()); });
