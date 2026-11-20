@@ -151,7 +151,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .room-bubble::after  { width: 8px;  height: 7px;  right: 12%; bottom: -24px; }
 .room-bubble a {
   /* a suggested game: the name itself is the link, ≥44 px tall to tap without changing the bubble's line height */
-  display: inline-block; padding: 11px 2px; margin: -11px 0;
+  display: inline-block; padding: 12px 2px; margin: -12px 0;
   color: var(--green); font-weight: 600; text-decoration: underline; text-decoration-thickness: 1.5px; text-underline-offset: 4px;
   -webkit-tap-highlight-color: transparent;
 }
@@ -206,6 +206,10 @@ button, a { -webkit-tap-highlight-color: transparent; }
   .sprite-cup     { --x: 54%; --b: 19.5%; --w: 6%; }
   .sprite-plant   { --x: 66.5%; --b: 23%; --w: 10%; }
   .room-bubble { left: 26%; bottom: 47%; font-size: 16px; max-width: 13em; }
+}
+/* Tablet portrait: the room is tall, so lift and nudge the bubble left; its links must never cover Cục Yên. */
+@media (min-width: 768px) and (max-aspect-ratio: 1/1) {
+  .room-bubble { left: 18%; bottom: 52%; }
   .lab-door { width: 80px; }
 }
 

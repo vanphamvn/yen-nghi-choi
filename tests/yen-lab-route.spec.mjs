@@ -263,7 +263,7 @@ test('Cục Yên suggests games: all three groups, only released games, a real l
   await expect(page.locator('#lab-menu [data-status="released"] a')).toHaveCount(6);
 });
 
-test('Cục Yên suggestion by keyboard and screen reader: poke with Enter, Tab reaches the game, Enter opens it; back starts fresh', async ({ page }, testInfo) => {
+test('Cục Yên suggestion by keyboard, in a polite live region: poke with Enter, Tab reaches the game, Enter opens it; back starts fresh', async ({ page }, testInfo) => {
   test.skip(testInfo.project.name === 'emulated-touch', 'keyboard path on desktop');
   await blockExternal(page);
   await page.goto(LAB);
@@ -286,8 +286,8 @@ test('Cục Yên suggestion by keyboard and screen reader: poke with Enter, Tab 
   await expect(says).toHaveText(first); // nothing remembered
 });
 
-for (const [w, h] of [[320, 640], [390, 844], [1280, 800]]) {
-  test(`${w}×${h}: a suggested game link sits on top, inside the room, readable and tappable`, async ({ page }) => {
+for (const [w, h] of [[320, 640], [360, 740], [390, 844], [768, 1024], [820, 1180], [1024, 768], [1280, 800], [1440, 900]]) {
+  test(`${w}×${h}: a suggested game link sits on top, inside the room, ≥ 44 px, and never covers Cục Yên`, async ({ page }) => {
     await blockExternal(page);
     await page.setViewportSize({ width: w, height: h });
     await page.goto(LAB);
@@ -301,10 +301,21 @@ for (const [w, h] of [[320, 640], [390, 844], [1280, 800]]) {
         const r = a.getClientRects()[0], stage = document.querySelector('[data-room]').getBoundingClientRect();
         const top = document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2);
         const bubble = a.parentElement.getBoundingClientRect();
-        return { onTop: top === a || a.contains(top), inStage: bubble.left >= stage.left - 1 && bubble.right <= stage.right + 1 && bubble.top >= stage.top - 1, name: a.textContent };
+        // Cục Yên's painted body (inner 80 % of its round button) must still poke Cục Yên, not open a game.
+        const buddy = document.getElementById('buddy'), bb = buddy.getBoundingClientRect();
+        const cx = bb.left + bb.width / 2, cy = bb.top + bb.height / 2, rad = Math.min(bb.width, bb.height) * 0.4;
+        const missed = [];
+        for (let k = 0; k < 16; k++) for (const f of [0.5, 1]) {
+          const x = cx + Math.cos(k * Math.PI / 8) * rad * f, y = cy + Math.sin(k * Math.PI / 8) * rad * f;
+          const hit = document.elementFromPoint(x, y);
+          if (hit && a.contains(hit) || hit === a) missed.push([Math.round(x), Math.round(y)]);
+        }
+        return { onTop: top === a || a.contains(top), inStage: bubble.left >= stage.left - 1 && bubble.right <= stage.right + 1 && bubble.top >= stage.top - 1, name: a.textContent, height: a.getBoundingClientRect().height, missed };
       });
       expect(ok.onTop, ok.name).toBe(true);
       expect(ok.inStage, ok.name).toBe(true);
+      expect(ok.height, ok.name).toBeGreaterThanOrEqual(44);
+      expect(ok.missed, ok.name).toEqual([]);
     }
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
   });

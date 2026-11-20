@@ -17,13 +17,14 @@
     'Chọc nữa là mình đổ trà đó. Đùa thôi, ngồi tiếp đi.',
     'Món mới đang pha. Pha chậm cho ngon.',
   ];
+  // Cục Yên talks about itself ("mình hay…"), it does not guess how the guest feels.
   const suggestions = [
-    { group: 'body', before: 'Muốn thở chậm một chút không? Thử ', name: 'Thở cùng Yên', href: '/lab/tho/', after: ' nè.' },
-    { group: 'head', before: 'Đầu nhiều chữ quá thì thử ', name: 'Lá trôi, nghĩ trôi', href: '/lab/la-troi/', after: '.' },
-    { group: 'heart', before: 'Trong lòng lấn cấn gì đó? Thử ', name: 'Gọi tên cơn bực', href: '/lab/goi-ten/', after: '.' },
-    { group: 'body', before: 'Ngồi lâu mỏi người hả? Thử ', name: 'Căng rồi thả', href: '/lab/cang/', after: '.' },
+    { group: 'body', before: 'Mình hay thở chậm vài nhịp với ', name: 'Thở cùng Yên', href: '/lab/tho/', after: '.' },
+    { group: 'head', before: 'Đầu mình nhiều chữ quá thì chơi ', name: 'Lá trôi, nghĩ trôi', href: '/lab/la-troi/', after: '.' },
+    { group: 'heart', before: 'Hôm nào bực bực, mình chơi ', name: 'Gọi tên cơn bực', href: '/lab/goi-ten/', after: '.' },
+    { group: 'body', before: 'Ngồi lâu mỏi lưng, mình chơi ', name: 'Căng rồi thả', href: '/lab/cang/', after: '.' },
     { group: 'head', before: 'Muốn rời màn hình một chút? Chơi ', name: 'Thám tử hiện tại', href: '/lab/tham-tu/', after: '.' },
-    { group: 'heart', before: 'Hôm nay có điều gì nhỏ nhỏ hay hay? ', name: 'Ba điều nhỏ xíu', href: '/lab/ba-dieu/', after: ' nè.' },
+    { group: 'heart', before: 'Mình hay ghi vài điều vui vui ở ', name: 'Ba điều nhỏ xíu', href: '/lab/ba-dieu/', after: '.' },
   ];
   let next = 1; // poke count; the first chat line is already in the bubble
 
