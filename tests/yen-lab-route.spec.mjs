@@ -220,3 +220,92 @@ test('menu focus never draws a ring around the book after a tap (iPhone WebKit),
   await expect(book).toBeFocused();
   expect(await ring()).toBe(true);
 });
+
+// LAB-F12 (#136): game suggestions come from Cục Yên's bubble (owner decision 20/11/2026: no visible need buttons).
+// Static mapping, three loose groups (body / head / heart), a suggestion every other poke, never automatic.
+test('Cục Yên suggests games: all three groups, only released games, a real link, never automatic, nothing kept', async ({ page }, testInfo) => {
+  await blockExternal(page);
+  const sent = [];
+  page.on('request', r => sent.push(r.url()));
+  await page.goto(LAB);
+  await page.waitForLoadState('load');
+  // Load every image first (lazy ones too): only what poking asks for is counted.
+  await page.evaluate(() => Promise.all([...document.images].map(img => { img.loading = 'eager'; return img.decode().catch(() => {}); })));
+  const before = sent.length;
+  const buddy = page.getByRole('button', { name: 'Chọc Cục Yên một cái' });
+  const says = page.locator('#buddy-says');
+  const released = await page.locator('#lab-menu [data-status="released"] a').evaluateAll(list => list.map(a => a.getAttribute('href')));
+  expect(released.length).toBe(6);
+  const seen = [];
+  for (let i = 0; i < 12; i++) {
+    if (testInfo.project.name === 'emulated-touch') await buddy.tap(); else await buddy.click();
+    const link = says.locator('a');
+    if (i % 2 === 0) {
+      await expect(link).toHaveCount(1);
+      const [href, group, name] = await link.evaluate(a => [a.getAttribute('href'), a.dataset.suggest, a.textContent]);
+      // the link names the game exactly as the book does
+      await expect(page.locator(`#lab-menu a[href="${href}"]`)).toHaveText(name);
+      seen.push({ href, group });
+      expect((await link.boundingBox()).height).toBeGreaterThanOrEqual(44);
+    } else {
+      await expect(link).toHaveCount(0); // a chat line in between: the room is not a recommendation engine
+    }
+  }
+  expect(new Set(seen.map(s => s.group))).toEqual(new Set(['body', 'head', 'heart']));
+  expect(seen.every(s => released.includes(s.href))).toBe(true);
+  expect(new Set(seen.map(s => s.href))).toEqual(new Set(released)); // every released game gets suggested
+  for (let i = 1; i < seen.length; i++) expect(seen[i].group).not.toBe(seen[i - 1].group); // consecutive suggestions differ
+  await expect(page).toHaveURL(/\/lab\/$/); // nothing navigated on its own
+  expect(sent.slice(before)).toEqual([]); // suggesting asks the network for nothing
+  expect(await page.evaluate(() => [localStorage.length, sessionStorage.length, document.cookie, location.search, location.hash])).toEqual([0, 0, '', '', '']);
+  // the book is still the full list
+  await page.getByRole('button', { name: 'Mở thực đơn trò chơi' }).click();
+  await expect(page.locator('#lab-menu [data-status="released"] a')).toHaveCount(6);
+});
+
+test('Cục Yên suggestion by keyboard and screen reader: poke with Enter, Tab reaches the game, Enter opens it; back starts fresh', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name === 'emulated-touch', 'keyboard path on desktop');
+  await blockExternal(page);
+  await page.goto(LAB);
+  const buddy = page.getByRole('button', { name: 'Chọc Cục Yên một cái' });
+  const says = page.locator('#buddy-says');
+  const first = await says.textContent();
+  await buddy.focus();
+  await page.keyboard.press('Enter');
+  await expect(says).toHaveAttribute('role', 'status');
+  await expect(says).toContainText('Thở cùng Yên');
+  // Safari/WebKit only moves focus to links with Option+Tab (default "Tab to highlight" is off).
+  await page.keyboard.press(page.context().browser()?.browserType().name() === 'webkit' ? 'Alt+Tab' : 'Tab');
+  await expect(page.getByRole('link', { name: 'Thở cùng Yên' }).first()).toBeFocused();
+  const focusRing = await page.evaluate(() => { const s = getComputedStyle(document.activeElement); return s.outlineStyle !== 'none' && parseFloat(s.outlineWidth) >= 2; });
+  expect(focusRing).toBe(true);
+  await page.keyboard.press('Enter');
+  await expect(page).toHaveURL(/\/lab\/tho\/$/);
+  await page.goBack();
+  await expect(page).toHaveURL(/\/lab\/$/);
+  await expect(says).toHaveText(first); // nothing remembered
+});
+
+for (const [w, h] of [[320, 640], [390, 844], [1280, 800]]) {
+  test(`${w}×${h}: a suggested game link sits on top, inside the room, readable and tappable`, async ({ page }) => {
+    await blockExternal(page);
+    await page.setViewportSize({ width: w, height: h });
+    await page.goto(LAB);
+    const buddy = page.getByRole('button', { name: 'Chọc Cục Yên một cái' });
+    for (let i = 0; i < 12; i++) {
+      await buddy.click();
+      if (i % 2) continue;
+      const link = page.locator('#buddy-says a');
+      const ok = await link.evaluate(a => {
+        a.scrollIntoView({ block: 'center', behavior: 'instant' });
+        const r = a.getClientRects()[0], stage = document.querySelector('[data-room]').getBoundingClientRect();
+        const top = document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2);
+        const bubble = a.parentElement.getBoundingClientRect();
+        return { onTop: top === a || a.contains(top), inStage: bubble.left >= stage.left - 1 && bubble.right <= stage.right + 1 && bubble.top >= stage.top - 1, name: a.textContent };
+      });
+      expect(ok.onTop, ok.name).toBe(true);
+      expect(ok.inStage, ok.name).toBe(true);
+    }
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+  });
+}
