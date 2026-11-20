@@ -3,12 +3,14 @@
 Bản nháp, 2026-11-20. Đã biên tập câu chữ theo giọng trò chuyện tự nhiên; chưa thử thực tế với khách. Đi kèm [roadmap.md](roadmap.md).
 
 - 36 lá, 9 lá mỗi màu. Đánh số lại theo màu, 9 lá ví dụ cũ trong roadmap đã được xếp vào bộ này (cột "Số cũ").
-- Mỗi lá: **mặt trước** (câu hỏi / điều thú vị / tên thử thách), **mặt sau** gồm *Thử xem*, dòng "Khi ___, tôi sẽ thử", *Vì sao* (nếu có), ô "☐ Đã thử", dòng minh bạch.
-- Lá **Vui** không cần dòng *Vì sao*: mặt sau chỉ có một thử thách vui hoặc lời chúc.
+- Trong bản thảo, mỗi lá có câu ở mặt trước, gợi ý **Thử xem** ở mặt sau và phần **Vì sao** để người biên tập kiểm tra. Nguồn nghiên cứu không bắt buộc in trên lá; khách không phải điền biểu mẫu hay làm thử thách.
+- Lá **Vui** không cần giải thích khoa học: mặt sau là một câu gợi chuyện hoặc trò vui nhỏ.
 - Lá **Nghề** dùng cách hỏi rộng về "việc đang làm", để người đi học, làm tự do, ở nhà hay đang tìm việc đều có thể tham gia (danh sách chủ đề cấm, roadmap mục 4.5).
 
+**Nguyên tắc câu chữ**: như nói chuyện với một người ghé quán, không như đang huấn luyện hay kiểm tra họ. Hỏi một ý mỗi lần; ưu tiên từ ngữ quen thuộc; luôn để khách có quyền bỏ qua. Phần **Vì sao** là ghi chú biên tập, không phải lời thoại đưa cho khách.
+
 **Tình trạng kiểm tra** (danh sách 8 câu ở roadmap mục 4.5):
-- Câu 1–6 (vui, nhẹ, không chủ đề cấm, không dạy đời, ≤ 2 phút không tốn tiền, tự viết): mình đã tự rà từng lá.
+- Câu 1–6 (dễ hiểu, nhẹ nhàng, không chủ đề cấm, không dạy đời, dễ bắt đầu, không tốn tiền, tự viết): đã rà ở mức bản thảo; vẫn cần thử với người thật.
 - Câu 7 (đã tra nguồn gốc): **xong 2026-11-20**, xem [sources-check.md](sources-check.md). Đã sửa lá 10, 15, 17, 23, 24, 31.
 - Câu 8 (thử với 5 người quen): **chưa**. Các lá đánh dấu ⚠ cần chú ý khi thử.
 
@@ -25,7 +27,7 @@ Bản nháp, 2026-11-20. Đã biên tập câu chữ theo giọng trò chuyện 
 | 05 | – | Bài hát nào vừa bật lên là bạn muốn nhún nhảy? | Lúc rảnh, mở lại bài ấy và nghe cho hết điệp khúc. |
 | 06 | – | Nếu hôm nay là một món nước, bạn sẽ gọi nó là gì? | Ghi tên món ở góc lá bài. Mai đọc lại xem còn đúng tâm trạng không. |
 | 07 | – | Bạn muốn có một siêu năng lực vô dụng nào? | Hỏi thêm một người xem họ muốn có siêu năng lực gì. |
-| 08 ⚠ | – | Bạn có nhớ câu đùa nào dở đến mức vẫn buồn cười không? | Thử kể lại nếu người nghe muốn. Không ai cười cũng đúng bài! |
+| 08 ⚠ | – | Bạn có nhớ câu đùa nào dở đến mức vẫn buồn cười không? | Nếu người nghe thích, thử kể lại. Không ai cười thì đúng là đùa dở thật. |
 | 09 | – | Nếu một con mèo nhìn bạn chằm chằm, bạn đoán nó đang nghĩ gì? | Thử viết một câu lên lá bài, bằng giọng của con mèo đó. |
 
 ⚠ 08: khách có thể kể câu đùa khiến người khác khó chịu. Khi thử, xem có cần nhắc "chọn câu đùa không trêu chọc ai".
@@ -38,7 +40,7 @@ Bản nháp, 2026-11-20. Đã biên tập câu chữ theo giọng trò chuyện 
 |---|---|---|---|---|---|
 | 10 | 02 | Câu hỏi | Tuần này có chuyện nhỏ nào làm bạn vui không? | Nếu thích, tối nay ghi lại ba điều dễ chịu trong ngày. | Ghi lại ba điều tốt đẹp mỗi tối có thể giúp cải thiện tâm trạng (Seligman et al. 2005) |
 | 11 | 03 | Điều thú vị | Ngồi dưới tán cây một lúc có thể giúp đầu óc dễ chịu hơn. | Nếu tiện, thử ngồi ở sân vườn vài phút mà không cầm điện thoại. | Tiếp xúc với thiên nhiên có thể giúp phục hồi sự chú ý (Kaplan 1995) |
-| 12 | – | Điều thú vị | Bạn có nhớ ngụm đầu tiên của ly nước này có vị thế nào không? | Thử nhấp một ngụm chậm rãi, chỉ để cảm nhận mùi và vị. | Chú ý tới trải nghiệm dễ chịu có thể giúp ta tận hưởng nó rõ hơn (Bryant & Veroff 2007) |
+| 12 | – | Điều thú vị | Một ngụm nước cũng đáng để mình nếm thật chậm. | Thử nhấp một ngụm chậm rãi, chỉ để cảm nhận mùi và vị. | Chú ý tới trải nghiệm dễ chịu có thể giúp ta tận hưởng nó rõ hơn (Bryant & Veroff 2007) |
 | 13 | – | Câu hỏi | Ở đây có âm thanh nào khiến bạn thấy dễ chịu không? | Nếu thấy thoải mái, nhắm mắt vài giây và lắng nghe xung quanh. | Một số âm thanh tự nhiên có thể giúp thư giãn (Buxton et al. 2021) |
 | 14 | – | Câu hỏi | Gần đây có ai giúp bạn một việc nhỏ mà bạn chưa kịp cảm ơn không? | Nếu muốn, nhắn cho người ấy một lời cảm ơn thật cụ thể. | Người được cảm ơn thường vui hơn người gửi nghĩ (Kumar & Epley 2018) |
 | 15 | – | Thử thách | **“Đi dạo và nhìn ngắm”** | Lần tới đi bộ, thử dành một phút nhìn kỹ thứ gì đó khiến bạn thích thú. | Trong nghiên cứu ở người lớn tuổi, đi bộ để tìm điều thú vị gắn với cảm xúc tích cực hơn (Sturm et al. 2022) |
@@ -55,7 +57,7 @@ Bản nháp, 2026-11-20. Đã biên tập câu chữ theo giọng trò chuyện 
 | Số | Số cũ | Kiểu | Mặt trước | Mặt sau – Thử xem | Vì sao |
 |---|---|---|---|---|---|
 | 19 | 04 | Câu hỏi | Dạo này có điều gì khiến bạn tò mò? | Nếu muốn, tìm hiểu trong hai phút rồi kể lại điều nhớ nhất. | Tự nhớ lại điều vừa học có thể giúp nhớ lâu hơn (Roediger & Karpicke 2006) |
-| 20 | 05 | Điều thú vị | Đọc xong một đoạn, bạn nhớ được bao nhiêu nếu không nhìn lại? | Thử gấp sách lại và tự đặt ba câu hỏi về điều vừa đọc. | Tự kiểm tra kiến thức có thể giúp nhớ lâu hơn chỉ đọc lại (Roediger & Karpicke 2006) |
+| 20 | 05 | Điều thú vị | Đọc lại nhiều lần chưa chắc nhớ lâu bằng tự thử nhớ lại. | Thử gấp sách lại và tự đặt ba câu hỏi về điều vừa đọc. | Tự kiểm tra kiến thức có thể giúp nhớ lâu hơn chỉ đọc lại (Roediger & Karpicke 2006) |
 | 21 | 06 | Thử thách | **“Chỉ một trang thôi”** | Chọn một lúc rảnh rồi điền: “Khi ___, mình sẽ đọc một trang.” | Bắt đầu từ việc nhỏ có thể khiến việc bắt đầu dễ hơn (Fogg 2019) |
 | 22 | – | Điều thú vị | Học ít một, rồi ôn lại sau vài ngày, thường dễ nhớ hơn học dồn. | Chọn một điều mới học và hẹn ngày mai xem lại trong hai phút. | Ôn cách quãng giúp ghi nhớ lâu hơn (Cepeda et al. 2006) |
 | 23 | – | Câu hỏi | Có điều gì trước đây bạn tin chắc, giờ lại nghĩ khác không? | Nếu thích, kể chuyện ấy cho một người rồi hỏi xem họ từng đổi ý về điều gì. | Sẵn sàng thừa nhận mình có thể sai có liên quan đến sự cởi mở với thông tin mới (Leary et al. 2017) |
@@ -76,7 +78,7 @@ Bản nháp, 2026-11-20. Đã biên tập câu chữ theo giọng trò chuyện 
 | 31 | – | Câu hỏi | Có lời khen nào về việc bạn làm mà bạn vẫn nhớ tới giờ? | Nếu thích, viết lại lời khen ấy. Bạn đã làm tốt điều gì? | Nhìn lại khi mình làm tốt có thể giúp nhận ra điểm mạnh (Roberts et al. 2005) |
 | 32 | – | Điều thú vị | Có việc gì bạn đang loay hoay mà người khác có thể giúp một chút không? | Nếu thấy tiện, thử nhờ một người giúp một việc thật nhỏ. | Ta thường đánh giá thấp mức độ người khác sẵn lòng giúp (Flynn & Lake 2008) |
 | 33 | – | Thử thách | **“Việc quan trọng nhất”** | Sáng mai, thử viết ra một việc quan trọng trước khi mở tin nhắn. | Chọn trước thời điểm làm có thể giúp biến ý định thành hành động (Gollwitzer & Sheeran 2006) |
-| 34 | – | Câu hỏi | Bạn sẽ giải thích việc mình đang làm thế nào để một em bé bảy tuổi hiểu? | Thử kể lại bằng một câu đơn giản cho người đi cùng nghe. | (chỉ để vui, không cần nguồn) |
+| 34 | – | Câu hỏi | Bạn sẽ giải thích việc mình đang làm thế nào để một bé 7 tuổi hiểu? | Thử kể lại bằng một câu đơn giản cho người đi cùng nghe. | (chỉ để vui, không cần nguồn) |
 | 35 | – | Thử thách | **“Mình đã tiến được chút nào?”** | Cuối ngày, thử ghi một việc nhỏ mà hôm nay bạn làm được. | Nhận ra những bước tiến nhỏ có liên quan đến động lực làm việc (Amabile & Kramer 2011) |
 | 36 | – | Câu hỏi | Bạn muốn mọi người tin tưởng mình ở kỹ năng nào? | Chọn một bước nhỏ để rèn kỹ năng đó, rồi ghi lúc bạn muốn thử. | Đặt mục tiêu rõ và chọn thời điểm thực hiện có thể giúp dễ bắt đầu (Locke & Latham 2002; Gollwitzer & Sheeran 2006) |
 
