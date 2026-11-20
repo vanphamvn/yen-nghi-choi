@@ -1,7 +1,8 @@
 // Lá trôi, nghĩ trôi (G07, #148). Leaves on a stream, adapted: pick a neutral thought or write a few words, place it on a
 // leaf, and watch it pass. Nothing is pushed away, judged or kept: the words live only in this page's memory, are never
 // put in a URL, storage or request, and are wiped when the leaf has passed, on stop, on reset and on leaving.
-// No session timer, so no pause; one leaf drifts for DRIFT_MS and "cho lá trôi luôn" lets it go at once.
+// No session timer, so no pause; one leaf drifts for DRIFT_MS and "cho lá trôi luôn" lets it go at once. With reduced
+// motion the leaf rests still and stays until the guest lets it go (no time limit on reading it).
 // idle → running (phase choose ⇄ drift) → complete | stopped → "chơi lại" → idle.
 
 export const MAX_LEN = 60;
@@ -14,7 +15,7 @@ export const cleanThought = value => String(value ?? '').replace(/\s+/g, ' ').tr
 const game = document.querySelector('[data-game="la-troi"]');
 if (game) {
   const $ = id => document.getElementById(id);
-  const slip = $('lt-slip'), input = $('lt-input'), whisper = $('game-whisper');
+  const lane = $('lt-lane'), slip = $('lt-slip'), input = $('lt-input'), whisper = $('game-whisper');
   const cue = $('game-cue'), heading = $('game-title'), resultLine = $('lt-result-line');
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
   let driftTimer = 0;
@@ -37,7 +38,7 @@ if (game) {
     driftTimer = 0;
     input.value = '';
     slip.textContent = '';
-    slip.classList.remove('is-drifting', 'is-still');
+    lane.classList.remove('is-drifting', 'is-still');
     setPhase('choose');
     cue.textContent = 'Chọn một ý nghĩ, hoặc viết vài chữ';
   }
@@ -50,15 +51,22 @@ if (game) {
     input.value = '';
     input.blur(); // close the phone keyboard so the stream can be seen
     slip.textContent = thought;
-    slip.classList.remove('is-drifting', 'is-still');
-    void slip.offsetWidth; // restart the drift animation for a new leaf
-    slip.classList.add(reduced.matches ? 'is-still' : 'is-drifting');
+    lane.classList.remove('is-drifting', 'is-still');
+    void lane.offsetWidth; // restart the drift animation for a new leaf
     setPhase('drift');
     settle();
-    cue.textContent = 'Nhìn lá trôi qua';
-    say('Đã đặt ý nghĩ lên lá. Lá đang trôi.'); // never read the words back
     game.querySelector('[data-act="pass"]').focus();
-    driftTimer = setTimeout(passLeaf, DRIFT_MS);
+    // never read the words back
+    if (reduced.matches) {
+      lane.classList.add('is-still');
+      cue.textContent = 'Nhìn lá trên dòng suối';
+      say('Đã đặt ý nghĩ lên lá. Lá nằm yên đến khi bạn chạm “cho lá trôi luôn”.');
+    } else {
+      lane.classList.add('is-drifting');
+      cue.textContent = 'Nhìn lá trôi qua';
+      say('Đã đặt ý nghĩ lên lá. Lá đang trôi.');
+      driftTimer = setTimeout(passLeaf, DRIFT_MS);
+    }
   }
 
   function passLeaf() {
@@ -66,13 +74,16 @@ if (game) {
     clearTimeout(driftTimer);
     driftTimer = 0;
     slip.textContent = '';
-    slip.classList.remove('is-drifting', 'is-still');
+    lane.classList.remove('is-drifting', 'is-still');
     passed += 1;
     setPhase('choose');
     settle();
     cue.textContent = 'Chọn một ý nghĩ khác, hoặc xong';
     say('Lá đã trôi qua. Chọn ý nghĩ khác, hoặc xong.');
-    firstIdea().focus(); // not the text field: that would open the phone keyboard on its own
+    // Only move focus if it was on "cho lá trôi luôn" (now hidden) or lost: never pull a guest away from where they are.
+    // Not the text field either: that would open the phone keyboard on its own.
+    const here = document.activeElement;
+    if (!here || here === document.body || here.dataset.act === 'pass') firstIdea().focus();
   }
 
   function finish() {
@@ -130,11 +141,13 @@ if (game) {
     setTimeout(() => { if (document.activeElement === input) input.closest('.lt-write').scrollIntoView({ block: 'nearest', behavior: 'instant' }); }, 250);
   });
 
-  // Turning reduced motion on mid-drift stills the leaf; the timer carries on.
+  // Turning reduced motion on mid-drift stills the leaf and stops its timer: it then waits to be let go. Turning it off
+  // mid-drift leaves a resting leaf resting (restarting the drift would make it vanish mid-stream).
   reduced.addEventListener?.('change', () => {
-    if (game.dataset.phase === 'drift' && slip.textContent) {
-      slip.classList.toggle('is-still', reduced.matches);
-      slip.classList.toggle('is-drifting', !reduced.matches);
+    if (reduced.matches && game.dataset.phase === 'drift' && slip.textContent) {
+      clearTimeout(driftTimer);
+      driftTimer = 0;
+      lane.classList.replace('is-drifting', 'is-still');
     }
   });
 

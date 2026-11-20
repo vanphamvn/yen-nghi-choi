@@ -10,6 +10,7 @@ test.beforeEach(async ({ page }) => { await page.clock.install(); });
 
 const game = page => page.locator('#game');
 const slip = page => page.locator('#lt-slip');
+const lane = page => page.locator('#lt-lane');
 const field = page => page.getByRole('textbox', { name: 'Viết một ý nghĩ, không bắt buộc' });
 const whisper = page => page.locator('#game-whisper');
 const tap = async (page, name) => {
@@ -61,8 +62,8 @@ test('a suggested thought: one tap places it on the leaf; it drifts and is gone 
   await tap(page, 'việc phải làm');
   await expect(game(page)).toHaveAttribute('data-phase', 'drift');
   await expect(slip(page)).toHaveText('việc phải làm');
-  await expect(slip(page)).toHaveClass(/is-drifting/);
-  expect(await slip(page).evaluate(el => getComputedStyle(el).animationDuration)).toBe(`${DRIFT / 1000}s`); // = DRIFT_MS
+  await expect(lane(page)).toHaveClass(/is-drifting/);
+  expect(await lane(page).evaluate(el => getComputedStyle(el).animationDuration)).toBe(`${DRIFT / 1000}s`); // = DRIFT_MS
   await expect(page.locator('#game-cue')).toHaveText('Nhìn lá trôi qua');
   await expect(whisper(page)).toHaveText('Đã đặt ý nghĩ lên lá. Lá đang trôi.');
   await expect(page.getByRole('button', { name: 'cho lá trôi luôn', exact: true })).toBeFocused();
@@ -189,18 +190,42 @@ test('keyboard only: Tab to an idea or the field, Enter places, Enter lets go, T
   await field(page).focus();
   await page.keyboard.type('đang nghĩ vu vơ');
   await page.clock.runFor(SETTLE);
-  await page.keyboard.down('Enter');
-  for (let i = 0; i < 10; i++) await page.keyboard.down('Enter'); // auto-repeat
-  await page.keyboard.up('Enter');
+  // An auto-repeat Enter alone (as when Enter is still held from earlier) never places the leaf…
+  await field(page).evaluate(el => el.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', repeat: true, bubbles: true, cancelable: true })));
+  await expect(game(page)).toHaveAttribute('data-phase', 'choose');
+  await expect(field(page)).toHaveValue('đang nghĩ vu vơ');
+  // …a fresh press does.
+  await page.keyboard.press('Enter');
   await expect(slip(page)).toHaveText('đang nghĩ vu vơ');
+  // On a focused word, an auto-repeat keydown is cancelled before it can become a click.
+  const repeatCancelled = await page.getByRole('button', { name: 'cho lá trôi luôn', exact: true }).evaluate(el => {
+    const e = new KeyboardEvent('keydown', { key: 'Enter', repeat: true, bubbles: true, cancelable: true });
+    el.dispatchEvent(e);
+    return e.defaultPrevented;
+  });
+  expect(repeatCancelled).toBe(true);
   await page.clock.runFor(DRIFT);
   await expect(game(page)).toHaveAttribute('data-phase', 'choose');
-  await expect(slip(page)).toBeEmpty(); // the repeats did not place an empty or second leaf
   await page.getByRole('button', { name: 'xong', exact: true }).focus();
   await press(page, 'Enter');
   await expect(game(page)).toHaveAttribute('data-state', 'complete');
   await press(page, 'Enter'); // stray Enter on the result line does nothing
   await expect(game(page)).toHaveAttribute('data-state', 'complete');
+});
+
+test('a leaf passing on its own does not pull focus away from where the guest is', async ({ page }) => {
+  await page.goto(LT);
+  await tap(page, 'bắt đầu');
+  await tap(page, 'bụng hơi đói');
+  await page.getByRole('link', { name: 'Nguồn phương pháp' }).focus();
+  await page.clock.runFor(DRIFT);
+  await expect(game(page)).toHaveAttribute('data-phase', 'choose');
+  await expect(page.getByRole('link', { name: 'Nguồn phương pháp' })).toBeFocused();
+  // …but if focus was on "cho lá trôi luôn", which is now hidden, it moves to the first idea instead of being lost.
+  await tap(page, 'chuyện ngày mai');
+  await expect(page.getByRole('button', { name: 'cho lá trôi luôn', exact: true })).toBeFocused();
+  await page.clock.runFor(DRIFT);
+  await expect(page.getByRole('button', { name: 'việc phải làm', exact: true })).toBeFocused();
 });
 
 test('a Vietnamese IME composition Enter does not place the leaf', async ({ page }) => {
@@ -233,31 +258,64 @@ for (const [w, h] of [[320, 640], [360, 740], [390, 844]]) {
     expect(await inView(page.getByText(/Không cần viết chuyện nặng lòng/))).toBe(true);
     await tap(page, 'bắt đầu');
     await page.evaluate(() => scrollTo(0, 0));
+    // The paper sheet stays inside the screen while choosing (the game clips overflow, so scrollWidth alone cannot see it).
+    const sheet = await page.locator('.game-sheet').boundingBox();
+    expect(sheet.x).toBeGreaterThanOrEqual(0);
+    expect(sheet.x + sheet.width).toBeLessThanOrEqual(w);
     for (const l of [page.locator('.lt-stream'), page.getByRole('button', { name: 'việc phải làm', exact: true }), field(page),
       page.getByRole('button', { name: 'đặt lên lá', exact: true }), page.getByRole('button', { name: 'xong', exact: true }), page.getByRole('button', { name: 'dừng hẳn', exact: true })]) {
       expect(await inView(l), await l.evaluate(el => el.outerHTML.slice(0, 50))).toBe(true);
     }
-    await field(page).fill('x'.repeat(30) + 'ôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôô');
+    // The longest thought (60 characters of real words) is fully readable on the slip all the way across: never narrowed
+    // by its position, never cut off by the stream, never over the cue below.
+    await field(page).fill('Không biết ngày mai có kịp nộp bài cho thầy hay lại trễ nữa');
     await tap(page, 'đặt lên lá');
     await page.evaluate(() => scrollTo(0, 0));
-    await page.clock.runFor(4000);
+    for (const at of [1500, 2500, 2500]) { // ≈ 25 %, 56 %, 87 % of the drift
+      await page.clock.runFor(at);
+      const fit = await page.evaluate(() => {
+        const s = document.getElementById('lt-slip'), st = document.querySelector('.lt-stream'), cue = document.getElementById('game-cue');
+        const b = s.getBoundingClientRect(), sb = st.getBoundingClientRect(), cb = cue.getBoundingClientRect();
+        const centre = (b.left + b.right) / 2 - (sb.left + sb.right) / 2;
+        return { wide: b.width / sb.width, inside: b.left >= sb.left - 1 && b.right <= sb.right + 1, centre, notClipped: s.scrollHeight <= s.clientHeight + 1 && s.scrollWidth <= s.clientWidth + 1, aboveCue: b.bottom <= cb.top, lines: Math.round((b.height - 10) / parseFloat(getComputedStyle(s).lineHeight)) };
+      });
+      expect(fit.wide, JSON.stringify(fit)).toBeGreaterThan(0.6);
+      expect(fit.wide, JSON.stringify(fit)).toBeLessThanOrEqual(0.82); // never wider than the stream allows
+      if (Math.abs(fit.centre) < 20) expect(fit.inside, JSON.stringify(fit)).toBe(true); // mid-stream: whole slip on the water
+      expect(fit.notClipped).toBe(true);
+      expect(fit.aboveCue, JSON.stringify(fit)).toBe(true);
+      expect(fit.lines, JSON.stringify(fit)).toBeLessThanOrEqual(3);
+    }
     expect(await inView(page.getByRole('button', { name: 'cho lá trôi luôn', exact: true }))).toBe(true);
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
   });
 }
 
-test('reduced motion: the leaf rests still (no animation) and the game completes', async ({ browser, baseURL }) => {
-  const context = await browser.newContext({ reducedMotion: 'reduce', baseURL });
+test('reduced motion: the leaf rests still, readable, with no time limit, until let go; the game completes', async ({ browser, baseURL }) => {
+  const context = await browser.newContext({ reducedMotion: 'reduce', baseURL, viewport: { width: 320, height: 640 } });
   const page = await context.newPage();
   await page.clock.install();
   await page.goto(LT);
   await page.clock.runFor(SETTLE);
   await page.getByRole('button', { name: 'bắt đầu', exact: true }).click();
   await page.clock.runFor(SETTLE);
-  await page.getByRole('button', { name: 'chuyện ngày mai', exact: true }).click();
-  await expect(slip(page)).toHaveClass(/is-still/);
-  expect(await slip(page).evaluate(el => [getComputedStyle(el).animationName, getComputedStyle(el).opacity])).toEqual(['none', '1']);
-  await page.clock.runFor(DRIFT);
+  await page.locator('#lt-input').fill('Không biết ngày mai có kịp nộp bài cho thầy hay lại trễ nữa');
+  await page.clock.runFor(SETTLE);
+  await page.getByRole('button', { name: 'đặt lên lá', exact: true }).click();
+  await expect(lane(page)).toHaveClass(/is-still/);
+  expect(await lane(page).evaluate(el => [getComputedStyle(el).animationName, getComputedStyle(el).opacity])).toEqual(['none', '1']);
+  await expect(page.locator('#game-whisper')).toHaveText('Đã đặt ý nghĩ lên lá. Lá nằm yên đến khi bạn chạm “cho lá trôi luôn”.');
+  const fit = await slip(page).evaluate(s => {
+    const b = s.getBoundingClientRect(), sb = document.querySelector('.lt-stream').getBoundingClientRect();
+    return { wide: b.width / sb.width, inside: b.left >= sb.left - 1 && b.right <= sb.right + 1, clipped: s.scrollHeight > s.clientHeight + 1 };
+  });
+  expect(fit.wide).toBeGreaterThan(0.6);
+  expect(fit.inside).toBe(true);
+  expect(fit.clipped).toBe(false);
+  await page.clock.runFor(5 * DRIFT); // no time limit: still there to read
+  await expect(slip(page)).toHaveText(/nộp bài/);
+  await page.clock.runFor(SETTLE);
+  await page.getByRole('button', { name: 'cho lá trôi luôn', exact: true }).click();
   await expect(slip(page)).toBeEmpty();
   await page.clock.runFor(SETTLE);
   await page.getByRole('button', { name: 'xong', exact: true }).click();

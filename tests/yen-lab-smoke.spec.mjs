@@ -281,8 +281,10 @@ for (const game of GAMES.filter(g => g.leaves)) {
       return (s.animationName !== 'none' && s.animationDuration.split(',').some(v => parseFloat(v) > 0)) || s.transitionDuration.split(',').some(v => parseFloat(v) > 0);
     }));
     expect(moving).toBe(false);
-    await expect(page.locator('#lt-slip')).toBeVisible(); // the static equivalent: the leaf rests in view
+    await expect(page.locator('#lt-slip')).toBeVisible(); // the static equivalent: the leaf rests in view until let go
     await page.clock.runFor(9_000);
+    await expect(page.locator('#lt-slip')).toHaveText('việc phải làm');
+    await tap('cho lá trôi luôn');
     await tap('xong');
     await expect(page.locator('main.game')).toHaveAttribute('data-state', 'complete');
     await context.close();
