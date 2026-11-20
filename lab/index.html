@@ -34,11 +34,12 @@
       <img class="sprite sprite-bench" src="/lab/assets/bench.webp" width="652" height="430" alt="" decoding="async">
       <img class="sprite sprite-cushion" src="/lab/assets/cushion.webp" width="200" height="139" alt="" decoding="async">
 
-      <p class="room-bubble" id="buddy-says" role="status" aria-live="polite">Ngồi đi. Thực đơn trên bàn nè.</p>
       <button class="room-buddy" id="buddy" type="button" disabled aria-describedby="buddy-says">
         <img src="/lab/assets/cuc-yen-tea.webp" width="480" height="480" alt="" decoding="async">
         <span class="lab-sr">Chọc Cục Yên một cái</span>
       </button>
+      <!-- After the button in reading order: after a poke, Tab reaches a suggested game link in the bubble (LAB-F12). -->
+      <p class="room-bubble" id="buddy-says" role="status" aria-live="polite">Ngồi đi. Thực đơn trên bàn nè.</p>
 
       <img class="sprite sprite-table" src="/lab/assets/table.webp" width="650" height="403" alt="" decoding="async">
       <button class="sprite-book" id="menu-open" type="button" disabled aria-haspopup="dialog" aria-controls="lab-menu">

@@ -167,6 +167,8 @@ test('privacy: choices never reach storage, URL, history or the network; leaving
   context.on('request', r => sent.push(`${r.method()} ${r.url()} ${r.postData() || ''}`));
   await page.goto(GT);
   await page.waitForLoadState('load');
+  // Load every image first (WebKit may fetch the lazy footer door after load): only what the guest does is counted.
+  await page.evaluate(() => Promise.all([...document.images].map(img => { img.loading = 'eager'; return img.decode().catch(() => {}); })));
   const before = sent.length;
   const history = await page.evaluate(() => history.length);
   await tap(page, 'bắt đầu');

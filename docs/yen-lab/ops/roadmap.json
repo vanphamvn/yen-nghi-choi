@@ -326,7 +326,7 @@
       "priority": "P1",
       "title": "Gợi ý theo nhu cầu",
       "kind": "frontend",
-      "status": "todo",
+      "status": "in-progress",
       "depends_on": [
         "F04",
         "F05",

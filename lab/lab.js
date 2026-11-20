@@ -6,7 +6,10 @@
   const says = document.getElementById('buddy-says');
   if (!room || !buddy || !says) return;
 
-  const lines = [
+  // Cục Yên's chat. Every other poke it suggests one released game (LAB-F12 #136): a static, hand-written mapping, no
+  // tracking, no question about the guest, never automatic. Suggestions rotate across three loose groups (body, head,
+  // heart) so consecutive ones differ; poking again offers another, and the book on the table is always the full list.
+  const chat = [
     'Ngồi đi. Thực đơn trên bàn nè.',
     'Mình đang giả vờ bận đó. Đừng nói ai nha.',
     'Trà còn nóng. Không cần uống, ngửi thôi cũng được.',
@@ -14,15 +17,40 @@
     'Chọc nữa là mình đổ trà đó. Đùa thôi, ngồi tiếp đi.',
     'Món mới đang pha. Pha chậm cho ngon.',
   ];
-  let next = 1;
+  // Cục Yên talks about itself ("mình hay…"), it does not guess how the guest feels.
+  const suggestions = [
+    { group: 'body', before: 'Mình hay thở chậm vài nhịp với ', name: 'Thở cùng Yên', href: '/lab/tho/', after: '.' },
+    { group: 'head', before: 'Đầu mình nhiều chữ quá thì chơi ', name: 'Lá trôi, nghĩ trôi', href: '/lab/la-troi/', after: '.' },
+    { group: 'heart', before: 'Hôm nào bực bực, mình chơi ', name: 'Gọi tên cơn bực', href: '/lab/goi-ten/', after: '.' },
+    { group: 'body', before: 'Ngồi lâu mỏi lưng, mình chơi ', name: 'Căng rồi thả', href: '/lab/cang/', after: '.' },
+    { group: 'head', before: 'Muốn rời màn hình một chút? Chơi ', name: 'Thám tử hiện tại', href: '/lab/tham-tu/', after: '.' },
+    { group: 'heart', before: 'Mình hay ghi vài điều vui vui ở ', name: 'Ba điều nhỏ xíu', href: '/lab/ba-dieu/', after: '.' },
+  ];
+  let next = 1; // poke count; the first chat line is already in the bubble
 
-  buddy.disabled = false;
-  buddy.addEventListener('click', () => {
-    says.textContent = lines[next];
+  function show(line) {
+    if (typeof line === 'string') {
+      says.textContent = line;
+    } else {
+      const link = document.createElement('a');
+      link.href = line.href;
+      link.textContent = line.name;
+      link.dataset.suggest = line.group;
+      says.replaceChildren(line.before, link, line.after);
+    }
     says.classList.remove('is-new');
     void says.offsetWidth; // let the new line fade in gently
     says.classList.add('is-new');
-    next = (next + 1) % lines.length;
+  }
+
+  buddy.disabled = false;
+  buddy.addEventListener('click', () => {
+    // odd pokes: a suggestion; even pokes: a chat line
+    const line = next % 2 === 1
+      ? suggestions[((next - 1) / 2) % suggestions.length]
+      : chat[(next / 2) % chat.length];
+    show(line);
+    next += 1;
     buddy.classList.remove('is-poked');
     void buddy.offsetWidth; // restart the wobble
     buddy.classList.add('is-poked');
