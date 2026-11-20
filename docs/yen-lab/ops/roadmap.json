@@ -420,12 +420,13 @@
       "priority": "P1",
       "title": "Quét người tìm căng thẳng",
       "kind": "minigame",
-      "status": "in-progress",
+      "status": "done",
       "depends_on": [
         "F03",
         "F14"
       ],
-      "issue_url": "https://github.com/vanphamvn/yen-nghi-choi/issues/144"
+      "issue_url": "https://github.com/vanphamvn/yen-nghi-choi/issues/144",
+      "evidence": "PR #214 squash-merged as 929181a. /lab/quet-nguoi/: self-paced five-zone body scan (head, shoulders, hands, belly, feet), text cue per zone, tiếp / bỏ qua vùng này / dừng hẳn, decorative spotlight, no rating or diagnosis, no timer; optional voice off by default, only with a browser-reported on-device Vietnamese voice, mute mid-scan, hushed on change/hide/leave; privacy checker speech exception for this file only, privacy spec probes speak(). tests/yen-lab-quet-nguoi.spec.mjs 33 desktop+touch (speech stubbed), emulated iPhone WebKit + Pixel Chromium; smoke 89 local, deploy preview 90/90. Independent agent review: three P1s fixed. Production build-info commitSha 929181a0b2b3a2f7bcaf7e7f4e71aca6515ea589; deployed smoke run 44719630355 91 passed. Not covered: real-device speech, VoiceOver/TalkBack, owner review."
     },
     {
       "key": "G04",
