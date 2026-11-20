@@ -135,7 +135,7 @@ Bộ đầy đủ 36 lá (đánh số lại theo màu) nằm ở [cards-mua-1.md
 | 02 | Sống | Tuần này có chuyện nhỏ nào làm bạn vui không? | Nếu thích, tối nay ghi lại ba điều dễ chịu trong ngày. | Ghi lại ba điều tốt đẹp mỗi tối có thể giúp cải thiện tâm trạng (Seligman et al. 2005) |
 | 03 | Sống | Ngồi dưới tán cây một lúc có thể giúp đầu óc dễ chịu hơn. | Nếu tiện, thử ngồi ở sân vườn vài phút mà không cầm điện thoại. | Tiếp xúc với thiên nhiên có thể giúp phục hồi sự chú ý (Kaplan 1995) |
 | 04 | Học | Dạo này có điều gì khiến bạn tò mò? | Nếu muốn, tìm hiểu trong hai phút rồi kể lại điều nhớ nhất. | Tự nhớ lại điều vừa học có thể giúp nhớ lâu hơn (Roediger & Karpicke 2006) |
-| 05 | Học | Đọc xong một đoạn, bạn nhớ được bao nhiêu nếu không nhìn lại? | Thử gấp sách lại và tự đặt ba câu hỏi về điều vừa đọc. | Tự kiểm tra kiến thức có thể giúp nhớ lâu hơn chỉ đọc lại (Roediger & Karpicke 2006) |
+| 05 | Học | Đọc lại nhiều lần chưa chắc nhớ lâu bằng tự thử nhớ lại. | Thử gấp sách lại và tự đặt ba câu hỏi về điều vừa đọc. | Tự kiểm tra kiến thức có thể giúp nhớ lâu hơn chỉ đọc lại (Roediger & Karpicke 2006) |
 | 06 | Học | **“Chỉ một trang thôi”** | Chọn một lúc rảnh rồi điền: “Khi ___, mình sẽ đọc một trang.” | Bắt đầu từ việc nhỏ có thể khiến việc bắt đầu dễ hơn (Fogg 2019) |
 | 07 | Nghề | Trong việc bạn đang làm, phần nào khiến bạn mải mê nhất? | Nếu có thể, tuần này thử dành hai phút đầu cho phần việc ấy. | Chủ động điều chỉnh cách làm việc có thể giúp công việc phù hợp với mình hơn (Wrzesniewski & Dutton 2001) |
 | 08 | Nghề | Cơ hội đôi khi đến từ người quen ít liên lạc, chứ không chỉ bạn thân. | Có ai lâu rồi bạn chưa hỏi thăm không? Nếu muốn, nhắn một câu. | Những mối quen biết không quá thân cũng có vai trò trong cơ hội nghề nghiệp (Granovetter 1973; Rajkumar et al. 2022) |
@@ -269,26 +269,26 @@ Khi đã có nhóm khách quen sưu tập, mở thêm trò chơi chung (Phụ l�
 
 ## 8. Rủi ro
 
-Cột **Trạng thái**: **Loại bỏ** = thiết kế làm rủi ro gần như không thể xảy ra; **Giảm** = vẫn có thể xảy ra nhưng nhỏ và dễ phát hiện.
+Cột **Trạng thái** mô tả mức giảm rủi ro dự kiến, không phải cam kết rằng rủi ro sẽ biến mất.
 
 | ID | Rủi ro | Thiết kế xử lý thế nào | Trạng thái | Còn lại gì, theo dõi bằng gì |
 |---|---|---|---|---|
 | R1 | Lá bài thành tờ rơi, khách bỏ lại | Mời trước khi trao (QT 2); khách chọn màu hợp tâm trạng (QT 2); đổi ngay được (QT 3); chỉ in lá đã thử (4.5) | Giảm mạnh | Vài lá vẫn bị bỏ lại. Đếm khi dọn bàn; lá nào bị bỏ hoặc bị đổi ≥ 3 lần thì viết lại |
-| R2 | Có vẻ là chiêu bán hàng | Không gắn với thanh toán, không mời ở quầy thu tiền, khách không mua cũng được tặng, dòng minh bạch trên lá (QT 1, 9) | Loại bỏ | Không còn gì đáng kể |
-| R3 | Sưu tập thành áp lực mua thêm | Một người một lá mỗi ngày dù mua bao nhiêu; không lá hiếm; Hộp đổi bài (QT 1, 7) | Loại bỏ | Không có cách nào lấy thêm bài bằng tiền |
-| R4 | Giọng văn giảng đạo, không vui | 1/4 là lá Vui; cấm "bạn nên"; thử với 5 người trước khi in (QT 4, 6, 10) | Giảm mạnh | Đôi khi một lá vẫn nhạt. Đổi ngay được nên không gây khó chịu |
-| R5 | Nhân viên quá tải | Hộp bài tự rút (5.4); nhân viên chỉ cần một câu; không có thủ tục ghi chép | Loại bỏ | Không còn thêm việc cho nhân viên |
+| R2 | Khách tưởng đây là cách quảng cáo | Không gắn với thanh toán, khách không mua gì vẫn được tặng (QT 1, 9) | Giảm mạnh | Khách vẫn có thể hiểu nhầm; giải thích rõ và điều chỉnh lời mời nếu cần |
+| R3 | Khách thấy áp lực phải sưu tập đủ bộ | Mỗi người một lá mỗi ngày, không bán lá hiếm; có Hộp đổi bài (QT 1, 7) | Giảm mạnh | Không nhắc khách phải sưu tập, dù không tốn tiền |
+| R4 | Câu chữ nghe như đang dạy đời | Có lá Vui, tránh giọng ra lệnh và thử với người thật (QT 4, 6, 10) | Giảm mạnh | Có lá vẫn chưa hay; khách được đổi nhưng vẫn cần hỏi phản hồi khi thử |
+| R5 | Nhân viên bận, khó mời khách rút bài | Hộp bài tự rút (5.4), không bắt nhân viên ghi chép | Giảm | Vẫn cần châm bài và giữ hộp gọn; theo dõi giờ đông khách |
 | R6 | Chi phí in | Mời trước nên không phát thừa; in đợt nhỏ 10 bản rồi mới in thêm (Giai đoạn 1) | Giảm mạnh | Chi phí cố định nhỏ, biết trước sau 2 tuần đếm |
 | R7 | Lá chạm chuyện buồn | Khách tự chọn chủ đề bằng màu (QT 2); danh sách chủ đề cấm trên mọi lá (4.5); chỉ câu nhẹ; đổi ngay được; hướng dẫn khi chuyện nặng (5.5) | Giảm mạnh | Không thể loại bỏ hoàn toàn vì một câu vô hại vẫn có thể chạm ai đó. Ngẫu nhiên giờ chỉ còn ở tầng câu hỏi, không còn ở tầng chủ đề |
-| R8 | Khách thấy bị "gài" khi biết bạn là coach | Lá ghi rõ ai viết và vì sao (QT 9); không bán dịch vụ coaching qua lá bài | Loại bỏ | Không có gì phải giấu |
-| R9 | Quyền riêng tư | Không có sổ ghi chép; khách giữ lá của mình và tự nhắc lại (QT 8, 5.3) | Loại bỏ | Không lưu thông tin cá nhân nào |
-| R10 | Trùng với bộ bài có bản quyền | Tự viết mọi lá; kiểm tra ở 4.5 câu 6 | Loại bỏ | Chỉ còn nếu chép, mà quy trình đã chặn |
-| R11 | In sai thông tin khoa học | Tra lại nguồn trước khi in; nếu chưa chắc thì bỏ tên nguồn, chỉ giữ ý bằng lời thường (4.5 câu 7) | Loại bỏ | Không lá nào in nguồn chưa tra |
-| R12 | Làm phiền khách muốn ngồi yên | Mời một lần, không mời lại trong ngày; không mời người đang làm việc ở phòng máy lạnh (5.1) | Giảm mạnh | Một câu hỏi "muốn rút một lá không?" là mức làm phiền nhỏ nhất có thể |
+| R8 | Khách hiểu nhầm đây là buổi coaching | Nói rõ đây là quà của Yên; không dùng bài để bán dịch vụ coaching (QT 9) | Giảm mạnh | Không phân tích hay đánh giá khách khi trò chuyện |
+| R9 | Chuyện riêng của khách bị ghi nhớ hoặc kể lại | Không ghi chép thông tin cá nhân; khách giữ lá của mình (QT 8, 5.3) | Giảm mạnh | Không chia sẻ chuyện khách; tránh hỏi sâu về đời tư |
+| R10 | Câu chữ vô tình giống một bộ bài khác | Tự viết mọi lá; kiểm tra trước khi in (4.5 câu 6) | Giảm mạnh | Nếu phát hiện câu giống sản phẩm khác, viết lại |
+| R11 | In câu giải thích khoa học quá chắc chắn hoặc sai ý | Đối chiếu nguồn, dùng lời thận trọng, không mặc định in nguồn lên lá (4.5 câu 7) | Giảm mạnh | Chưa đọc toàn văn tất cả nguồn; cần duyệt nội dung trước khi in |
+| R12 | Làm phiền khách muốn ngồi yên | Chỉ mời một lần khi phù hợp; không mời người đang làm việc (5.1) | Giảm mạnh | Khách vẫn có thể không thích; tôn trọng lời từ chối |
 | R13 | Bạn kiệt sức | Không có chỉ tiêu số lá hay số cuộc trò chuyện; lá bài tự vui khi bạn vắng (5.4) | Giảm mạnh | Bạn tự chọn lúc nào trò chuyện |
-| R14 | Không được chủ quán đồng ý (nếu bạn không phải chủ quán) | Thống nhất trước khi đặt hộp bài (mục 9) | Loại bỏ nếu làm bước này | — |
+| R14 | Nhân viên chưa thống nhất cách tặng bài | Thống nhất vị trí hộp, lúc mời và lời giới thiệu (mục 9) | Giảm mạnh | Nhân viên mới cần được hướng dẫn lại |
 | R15 | Bộ sưu tập lệch màu (do khách chọn màu) | Danh hiệu trao theo từng màu (4.4); Hộp đổi bài | Giảm mạnh | Một màu có thể hết bài sớm. Đếm màu được chọn (mục 7), in thêm màu đó |
-| R16 | Chọn bài làm chậm việc phục vụ | Chỉ chọn 1 trong 4 màu, không trải ngửa 36 lá (QT 2) | Loại bỏ | Chọn màu mất khoảng 2 giây |
+| R16 | Rút bài làm chậm việc phục vụ | Chỉ chọn một trong bốn màu, không trải cả bộ (QT 2) | Giảm mạnh | Giờ đông khách có thể tạm ngừng mời rút bài |
 
 **Cần theo dõi kỹ nhất**: R7 (câu hỏi vô tình chạm chuyện buồn) và R1 (khách không muốn giữ bài). Việc cho đổi lá và đếm bài bị bỏ lại giúp nhận ra vấn đề, nhưng không thay thế phản hồi trực tiếp của khách.
 
@@ -296,7 +296,7 @@ Cột **Trạng thái**: **Loại bỏ** = thiết kế làm rủi ro gần như
 
 ## 9. Việc cần làm ngay (2 tuần tới)
 
-1. ~~Viết thêm 27 lá cho đủ 36~~ Đã có bản nháp ở [cards-mua-1.md](cards-mua-1.md). Còn: tra nguồn (câu 7) và thử với người quen (câu 8) của danh sách kiểm tra ở mục 4.5.
+1. Đã viết đủ 36 lá trong [cards-mua-1.md](cards-mua-1.md) và đối chiếu nguồn ở [sources-check.md](sources-check.md). Việc còn lại: thử câu chữ với ít nhất 5 người (mục 4.5, câu 8).
 2. Làm tay 5 lá đẹp nhất, tặng 5 người quen trong tuần này, quan sát phản ứng.
 3. Thống nhất với người vận hành và nhân viên: mời khách ở đâu, đặt hộp bốn ngăn ở đâu và dùng lời mời nào ("Bạn muốn rút thử một lá không?").
 4. Lấy báo giá in thử 36 lá × 10 bản.
