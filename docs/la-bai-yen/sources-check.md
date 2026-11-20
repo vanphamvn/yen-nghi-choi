@@ -2,7 +2,7 @@
 
 2026-11-20. Đối chiếu từng nguồn trong [roadmap.md](roadmap.md) và [cards-mua-1.md](cards-mua-1.md) với bài gốc (trang nhà xuất bản, DOI, PubMed). Chia ba nhóm, kiểm tra song song.
 
-**Kết quả**: 50 nguồn. **38 đúng**, **12 đúng một phần** (sai chi tiết hoặc câu chữ nói quá), **0 sai hẳn**, **0 không tìm thấy**.
+**Kết quả rà soát tài liệu (không thay thế việc đọc toàn văn và đánh giá chuyên môn)**: 50 nguồn. **38 đúng**, **12 đúng một phần** (sai chi tiết hoặc câu chữ nói quá), **0 sai hẳn**, **0 không tìm thấy**.
 
 Mức "đã đọc": phần lớn được xác nhận qua trang nhà xuất bản hoặc tóm tắt. Một số sách và bài kinh điển (Ryan & Deci 2000, Kivetz 2006, Locke & Latham 2002, Csikszentmihalyi 1990, Amabile & Kramer 2011) xác nhận qua hồ sơ thư mục, không mở toàn văn. **Strohmetz 2002 chưa đọc được toàn văn** (máy chủ chặn), số liệu lấy từ bảng thứ cấp.
 
@@ -12,12 +12,12 @@ Mức "đã đọc": phần lớn được xác nhận qua trang nhà xuất b�
 
 | Nguồn | Sai ở đâu | Đã sửa thành | File |
 |---|---|---|---|
-| Sturm et al. 2022 (*Emotion*) | Cả hai nhóm đều đi bộ; chỉ nhóm được dặn **tìm điều làm mình ngạc nhiên** vui hơn. Mẫu là người 60–90 tuổi | Lá 15 đổi thành "Đi chậm, tìm một điều 'ồ'", ghi rõ độ tuổi | cards |
-| Leary et al. 2017 (*PSPB*) | Nghiên cứu tương quan, không đo việc học | Lá 23: "Người sẵn lòng nghĩ 'mình có thể sai' thường tò mò hơn và cân nhắc bằng chứng kỹ hơn" | cards |
-| Wood & Neal 2007 (*Psych Review*) | Bài lý thuyết, không phải bằng chứng cho "đổi bối cảnh giúp đổi thói quen" | Lá 17 dùng **Wood, Tam & Witt 2005** (*JPSP*) | cards |
-| Nestojko et al. 2014 (*Memory & Cognition*) | Người tham gia chỉ **dự định** dạy, không dạy thật | Lá 24: "Học với ý định sẽ dạy lại giúp nhớ nhiều hơn và sắp xếp ý rõ hơn" | cards |
-| Seligman et al. 2005 (*Am Psych*) | Bài tập hiệu quả là **3 điều tốt** mỗi tối (kéo dài 6 tháng); tái lập 2012 thấy hiệu ứng không riêng cho bài tập này | Lá 10 đổi thành viết 3 điều tốt | cards |
-| Roberts et al. 2005 (*AMR*) | Bài lý thuyết | Lá 31 nói nhẹ hơn: "là một cách để thấy điểm mạnh" | cards |
+| Sturm et al. 2022 (*Emotion*) | Cả hai nhóm đều đi bộ; chỉ nhóm được dặn **tìm điều làm mình ngạc nhiên** vui hơn. Mẫu là người 60–90 tuổi | Lá 15 mời người đọc đi dạo và nhìn ngắm; phần giải thích ghi rõ kết quả được nghiên cứu ở người lớn tuổi | cards |
+| Leary et al. 2017 (*PSPB*) | Nghiên cứu tương quan, không đo việc học | Lá 23 hỏi nhẹ về lần đổi ý; phần giải thích chỉ nói đến mối liên hệ với sự cởi mở trước thông tin mới | cards |
+| Wood & Neal 2007 (*Psych Review*) | Bài lý thuyết, không phải bằng chứng cho "đổi bối cảnh giúp đổi thói quen" | Lá 17 dùng **Wood, Tam & Witt 2005** (*JPSP*) và thêm điều kiện để không gây bất tiện cho người cần để điện thoại gần giường | cards |
+| Nestojko et al. 2014 (*Memory & Cognition*) | Người tham gia chỉ **dự định** dạy, không dạy thật | Lá 24 nói rõ lợi ích của việc chuẩn bị học để dạy lại, không khẳng định việc dạy thật đã được kiểm chứng trong nghiên cứu này | cards |
+| Seligman et al. 2005 (*Am Psych*) | Bài tập hiệu quả là **3 điều tốt** mỗi tối (kéo dài 6 tháng); tái lập 2012 thấy hiệu ứng không riêng cho bài tập này | Lá 10 gợi ý ghi lại ba điều dễ chịu, không hứa hẹn hiệu quả cho mọi người | cards |
+| Roberts et al. 2005 (*AMR*) | Bài lý thuyết | Lá 31 dùng cách diễn đạt thận trọng: nhìn lại lời khen có thể giúp nhận ra điểm mạnh | cards |
 | Isen & Levin 1972 (*JPSP*) | Hai thí nghiệm riêng (bánh quy, đồng xu); kết quả 88% so với 4% là từ thí nghiệm đồng xu; tái lập thất bại (Weyant & Clark 1977) | Roadmap dòng 1: mức **Yếu**, không dựa vào để hứa hẹn gì | roadmap |
 | Strohmetz et al. 2002 (*JASP*) | Con số "+23%" hay được trích sai; đúng là 1 kẹo ≈ +3%, kẹo thêm "dành riêng" ≈ +21% (tương đối) | Roadmap dòng 2 ghi số đúng + ghi chú số liệu thứ cấp | roadmap |
 | Sandstrom & Dunn 2014 (*SPPS*) | Khách trò chuyện với **thu ngân Starbucks**, không phải barista; một nghiên cứu nhỏ | Roadmap dòng 7 | roadmap |
@@ -101,4 +101,4 @@ Thêm lưu ý (không sai, nhưng cần nói rõ): Deci 1999 – lời khen làm
 ## 3. Còn mở
 
 - **Strohmetz et al. 2002**: đọc toàn văn để xác nhận các con số tiền tip trước khi trích ra ngoài roadmap.
-- Không lá bài nào in số liệu từ nguồn này, nên lá bài in được ngay.
+- Không lá bài nào dựa vào số liệu từ nguồn này. Tuy nhiên, các lá vẫn cần được thử với người thật trước khi quyết định in.
