@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f7f3e9">
+  <meta name="robots" content="noindex, nofollow, noarchive">
+  <meta name="referrer" content="no-referrer">
+  <meta name="description" content="Ngồi nhìn mây: ngồi xem mây trôi một lát, lơ đãng thì nhìn lại, dừng lúc nào cũng được.">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; font-src 'none'; connect-src 'none'; frame-src 'none'; form-action 'none'; base-uri 'none'; object-src 'none'">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="stylesheet" href="/lab/lab.css">
+  <link rel="stylesheet" href="/lab/game.css">
+  <link rel="stylesheet" href="/lab/nhin-may/nhin-may.css">
+  <script type="module" src="/lab/nhin-may/nhin-may.mjs"></script>
+  <title>Ngồi nhìn mây · Yên Lab | Yên Coffee &amp; Tea</title>
+</head>
+<body>
+  <!-- G08 (#149): cloud watching, a light focused-attention activity. Copy per EVIDENCE.md G08 (exploratory / creative) and
+       SAFETY.md: slow clouds, a still sky on request or with reduced motion, wandering attention is never counted or scored. -->
+  <a class="lab-skip" href="#game-title">Đến nội dung</a>
+  <header class="lab-header lab-wrap">
+    <a class="lab-brand" href="/" aria-label="Về website Yên Coffee &amp; Tea"><img src="/yen-logo.svg" width="1450" height="585" alt="yên"><span class="lab-brand-sub" aria-hidden="true">COFFEE &amp; TEA</span></a>
+    <nav class="lab-nav" aria-label="Điều hướng Yên Lab">
+      <a class="lab-nav-home" href="/lab/">Góc ngồi chơi</a>
+    </nav>
+  </header>
+
+  <main class="game" id="game" data-loading data-state="idle" data-clouds="drift" data-game="nhin-may" aria-labelledby="game-title">
+    <img class="game-backdrop" src="/lab/assets/room-backdrop.jpg" width="1586" height="992" alt="" decoding="async">
+    <article class="game-sheet">
+      <header class="game-head">
+        <h1 id="game-title" tabindex="-1">Ngồi nhìn mây</h1>
+        <p class="game-lede">Ngồi xem mây một lát.</p>
+      </header>
+
+      <!-- Four clouds cut from the G08 sprite (games/g08-ngoi-nhin-may.webp) with soft edges, over a painted-blue sky. -->
+      <div class="nm-sky" id="nm-sky" aria-hidden="true">
+        <i class="nm-cloud nm-cloud--a"></i>
+        <i class="nm-cloud nm-cloud--b"></i>
+        <i class="nm-cloud nm-cloud--c"></i>
+        <i class="nm-cloud nm-cloud--d"></i>
+      </div>
+
+      <p class="game-cue" data-when="running" id="game-cue">Nhìn một đám mây</p>
+      <p class="nm-left" data-when="running paused" id="nm-left"></p>
+      <p class="game-cue" data-when="paused">Đang tạm dừng</p>
+
+      <div class="nm-options" data-when="idle">
+        <div class="nm-option-row">
+          <span class="nm-option-label" id="nm-length-label">bao lâu</span>
+          <div class="game-words" role="group" aria-labelledby="nm-length-label">
+            <button class="ink-word ink-word--small" type="button" data-length="1" aria-pressed="true">1 phút</button>
+            <button class="ink-word ink-word--small" type="button" data-length="2" aria-pressed="false">2 phút</button>
+            <button class="ink-word ink-word--small" type="button" data-length="3" aria-pressed="false">3 phút</button>
+          </div>
+        </div>
+        <div class="nm-option-row nm-sky-row">
+          <span class="nm-option-label" id="nm-sky-label">mây</span>
+          <div class="game-words" role="group" aria-labelledby="nm-sky-label">
+            <button class="ink-word ink-word--small" type="button" data-sky="drift" aria-pressed="true">trôi</button>
+            <button class="ink-word ink-word--small" type="button" data-sky="still" aria-pressed="false">đứng yên</button>
+          </div>
+        </div>
+      </div>
+
+      <p class="game-note" data-when="idle">Chỉ ngồi nhìn thôi. Lơ đãng là chuyện thường; nhận ra thì nhìn lại một đám mây.</p>
+      <p class="game-note nm-caution-drift" data-when="idle">Mỏi mắt hay chóng mặt thì cho mây đứng yên, nhìn ra xa, hoặc dừng lúc nào cũng được.</p>
+      <p class="game-note nm-caution-still" data-when="idle">Mỏi mắt hay chóng mặt thì nhìn ra xa, hoặc dừng lúc nào cũng được.</p>
+      <p class="game-note" data-when="running" id="nm-hint">Lơ đãng cũng không sao. Nhận ra thì nhìn lại một đám mây.</p>
+      <p class="game-note" data-when="paused" id="game-paused-note">Mây chờ bạn.</p>
+      <p class="game-note" data-when="error">Trò chưa chạy được. Thử lại hoặc về góc ngồi chơi nhé.</p>
+      <p class="game-note game-wait">Trò đang mở ra. Lâu quá thì về góc ngồi chơi rồi quay lại sau nhé.</p>
+
+      <div class="game-result" data-when="complete stopped">
+        <p class="game-result-line" data-when="complete" id="nm-result-line" tabindex="-1">Hết giờ rồi. Ngồi thêm hay đi lúc nào cũng được.</p>
+        <p class="game-result-line" data-when="stopped">Mình dừng ở đây nhé.</p>
+        <div class="game-reflect" id="game-reflect" hidden>
+          <p id="reflect-q">Nếu muốn, lúc này bạn thấy sao?</p>
+          <div class="game-words" role="group" aria-labelledby="reflect-q">
+            <button class="ink-word ink-word--small" type="button" data-reflect>dễ chịu hơn</button>
+            <button class="ink-word ink-word--small" type="button" data-reflect>như cũ</button>
+            <button class="ink-word ink-word--small" type="button" data-reflect>khó chịu hơn</button>
+            <button class="ink-word ink-word--small" type="button" data-reflect>không rõ</button>
+            <button class="ink-word ink-word--small" type="button" data-reflect>bỏ qua</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="game-words" id="game-controls" role="group" aria-label="Điều khiển trò">
+        <button class="ink-word ink-word--lead" type="button" data-act="start" data-when="idle" disabled>bắt đầu</button>
+        <button class="ink-word" type="button" data-act="wander" data-when="running">mình lơ đãng rồi</button>
+        <button class="ink-word" type="button" data-act="pause" data-when="running">tạm dừng</button>
+        <button class="ink-word ink-word--lead" type="button" data-act="resume" data-when="paused">tiếp tục</button>
+        <button class="ink-word" type="button" data-act="stop" data-when="running paused">dừng hẳn</button>
+        <button class="ink-word ink-word--lead" type="button" data-act="again" data-when="complete stopped error">làm lại</button>
+        <a class="ink-word" href="/lab/" data-when="idle complete stopped error">về góc ngồi chơi</a>
+      </div>
+
+      <p class="game-whisper" id="game-whisper" role="status" aria-live="polite"></p>
+    </article>
+    <noscript><p class="game-note">Trò này cần JavaScript để đếm giờ. Không có nó, bạn vẫn có thể thử: nhìn ra cửa sổ hoặc nhìn bức trời ở trên một lát, lơ đãng thì nhìn lại một đám mây. <a href="/lab/">Về góc ngồi chơi</a>.</p></noscript>
+  </main>
+
+  <footer class="lab-footer">
+    <div class="lab-wrap lab-footer-inner">
+      <img class="lab-door" src="/lab/assets/door.webp" width="160" height="268" alt="" decoding="async" loading="lazy">
+      <nav class="lab-footer-links" aria-label="Rời Yên Lab">
+        <a class="lab-button" href="/">Về Yên</a>
+        <a href="/#yen-ngoai-doi">Ghé quán thật</a>
+      </nav>
+      <p class="lab-fineprint">Một trò nhỏ để thử, không thay thế tư vấn hoặc điều trị chuyên môn. Trò là một hoạt động sáng tạo, gần với việc tập chú ý nhẹ nhàng; chưa có nghiên cứu nào về nhìn mây trên màn hình, và trò này chưa được kiểm chứng hiệu quả. Không cookie, rời đi là quên. <a href="https://github.com/vanphamvn/yen-nghi-choi/blob/main/docs/yen-lab/EVIDENCE.md" rel="noopener noreferrer" referrerpolicy="no-referrer">Nguồn phương pháp</a></p>
+    </div>
+  </footer>
+</body>
+</html>

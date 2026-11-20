@@ -4,7 +4,7 @@
   "checked": "2026-11-20",
   "notes": [
     "Source of truth for the twenty Yên Lab games. Data only: no page loads this file, so it adds nothing to any page load.",
-    "status: planned = no page exists and the route falls back to /lab/404.html; beta = released through a Lab beta gate; live = passed the full-catalog gate (#139).",
+    "status: planned = no page exists and the route falls back to /lab/404.html; beta = released through a Lab beta gate; live = passed the full-catalog gate (#139). A game is open while its roadmap ticket is in-progress (released, awaiting the record) or done.",
     "route is the stable deep link reserved now, so it never changes when a planned game opens.",
     "evidenceTier mirrors the EVIDENCE.md twenty-tool matrix and concerns the underlying technique only, never a claim that the game itself works.",
     "Checked by tools/check-yen-lab-catalog.mjs against the roadmap, EVIDENCE.md, the book menu, Cục Yên suggestions and the files on disk."
@@ -152,17 +152,17 @@
       "id": "nhin-may",
       "title": "Ngồi nhìn mây",
       "route": "/lab/nhin-may/",
-      "status": "planned",
+      "status": "beta",
       "category": "attention",
       "duration": "1–5 min",
       "evidenceTier": "exploratory",
       "evidence": "docs/yen-lab/EVIDENCE.md#twenty-tool-matrix",
-      "review": null,
+      "review": "docs/yen-lab/G08-NHIN-MAY.md",
       "caution": "Motion sickness or eyestrain: still-image alternative.",
       "issue": 149,
-      "module": null,
-      "stylesheet": null,
-      "releasedIn": null
+      "module": "/lab/nhin-may/nhin-may.mjs",
+      "stylesheet": "/lab/nhin-may/nhin-may.css",
+      "releasedIn": "G08 release (#149); full-catalog gate #139 pending"
     },
     {
       "key": "G09",
