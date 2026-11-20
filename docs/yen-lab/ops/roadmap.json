@@ -462,12 +462,13 @@
       "priority": "P2",
       "title": "Ngồi nhìn mây",
       "kind": "minigame",
-      "status": "in-progress",
+      "status": "done",
       "depends_on": [
         "F03",
         "F14"
       ],
-      "issue_url": "https://github.com/vanphamvn/yen-nghi-choi/issues/149"
+      "issue_url": "https://github.com/vanphamvn/yen-nghi-choi/issues/149",
+      "evidence": "PR #207 squash-merged as e1d7123. /lab/nhin-may/: clouds cut from the G08 sprite drift only while running (2.5–4 min per crossing), 'đứng yên' and reduced motion keep the sky still, 'mình lơ đãng rồi' answers with fixed gentle lines and is never counted, engine timing with pause/hidden-pause/stop/reset, optional after-game question, nothing stored or sent. Book spread 2 link, Cục Yên suggestion, catalog G08 beta. tests/yen-lab-nhin-may.spec.mjs 29/29 local, 30/30 emulated iPhone WebKit + Pixel Chromium; smoke 68 local, deploy preview 69/69. Independent agent review: no P0/P1, P2s fixed. Production build-info commitSha e1d7123b72175d7a64e9ae99ed789c10e101eaac; deployed smoke run 44691455879 70 passed; production browser walk at 375 px. Not covered: physical phones, VoiceOver/TalkBack, CPU throttling, owner review."
     },
     {
       "key": "G10",
