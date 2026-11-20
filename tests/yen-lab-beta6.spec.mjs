@@ -13,6 +13,8 @@ const tap = async (page, name) => { await page.clock.runFor(SETTLE); await tapOn
 const shot = async (page, name) => {
   if (!SHOTS) return;
   mkdirSync(SHOTS, { recursive: true });
+  // The fake clock also freezes CSS animations mid-way (a fade at 15 %); show the settled frame a guest would see.
+  await page.evaluate(() => document.getAnimations().forEach(a => { try { a.finish(); } catch {} }));
   await page.screenshot({ path: `${SHOTS}/${test.info().project.name}-${name}.png` });
 };
 
