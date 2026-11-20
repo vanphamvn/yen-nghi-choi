@@ -146,7 +146,8 @@ for (const game of GAMES) {
     await page.goto(game.path, { waitUntil: 'load' });
     await page.evaluate(() => Promise.all([...document.images].map(img => img.decode().catch(() => {}))));
     const late = [];
-    page.on('request', r => late.push(r.url()));
+    // The browser fetches <link rel="icon"> on its own timing, sometimes after load: the tab icon, not the game.
+    page.on('request', r => { if (new URL(r.url()).pathname !== '/favicon.svg') late.push(r.url()); });
     await context.setOffline(true);
     await playThrough(page, game);
     await context.setOffline(false);

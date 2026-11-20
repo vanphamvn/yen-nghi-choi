@@ -249,7 +249,9 @@ test('holding Enter on the lead word counts once, not through every step', async
 test('no network after load, nothing stored, no sound', async ({ page, context }) => {
   await page.goto(TT, { waitUntil: 'load' });
   const late = [];
-  page.on('request', r => late.push(r.url()));
+  // The browser itself fetches <link rel="icon"> on its own timing, sometimes after load (seen on CI); that is the
+  // tab icon, not the game. Anything else the page asks for after load fails the test.
+  page.on('request', r => { if (new URL(r.url()).pathname !== '/favicon.svg') late.push(r.url()); });
   await context.setOffline(true);
   await tap(page, 'bắt đầu');
   for (let i = 0; i < 15; i++) await tapLead(page);
