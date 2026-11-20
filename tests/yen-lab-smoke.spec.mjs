@@ -10,8 +10,8 @@ const ORIGIN = new URL(BASE).origin;
 const EXPECT_SHA = process.env.LAB_EXPECT_SHA || '';
 const RECORD_DIR = 'test-results/lab-smoke';
 // Every released Lab page. A new game adds its route here (and to the menu test in yen-lab-route.spec.mjs).
-const PAGES = ['/lab/', '/lab/tho/', '/lab/cang/', '/lab/ba-dieu/', '/lab/tham-tu/', '/docs/yen-lab/game-kit.html'];
-const GAMES = [{ path: '/lab/tho/', label: 'Thở cùng Yên' }, { path: '/lab/cang/', label: 'Căng rồi thả' }, { path: '/lab/ba-dieu/', label: 'Ba điều nhỏ xíu', untimed: true }, { path: '/lab/tham-tu/', label: 'Thám tử hiện tại', stepped: true }, { path: '/docs/yen-lab/game-kit.html', label: 'kit' }];
+const PAGES = ['/lab/', '/lab/tho/', '/lab/cang/', '/lab/ba-dieu/', '/lab/tham-tu/', '/lab/la-troi/', '/docs/yen-lab/game-kit.html'];
+const GAMES = [{ path: '/lab/tho/', label: 'Thở cùng Yên' }, { path: '/lab/cang/', label: 'Căng rồi thả' }, { path: '/lab/ba-dieu/', label: 'Ba điều nhỏ xíu', untimed: true }, { path: '/lab/tham-tu/', label: 'Thám tử hiện tại', stepped: true }, { path: '/lab/la-troi/', label: 'Lá trôi, nghĩ trôi', leaves: true }, { path: '/docs/yen-lab/game-kit.html', label: 'kit' }];
 const VIEWPORTS = [[320, 640], [360, 800], [390, 844], [768, 1024], [1440, 900]];
 
 test.use({ baseURL: BASE });
@@ -49,7 +49,7 @@ const NETLIFY_INJECTIONS = [
 
 test('provenance: deployed Lab files are byte-identical to this commit, apart from known host injections', async ({ request }) => {
   test.skip(!process.env.LAB_BASE_URL || !EXPECT_SHA, 'needs a deployed site and LAB_EXPECT_SHA with that commit checked out');
-  const text = [...PAGES.map(p => p.endsWith('/') ? p + 'index.html' : p), '/lab/lab.css', '/lab/lab.js', '/lab/game.css', '/lab/engine.mjs', '/lab/tho/tho.css', '/lab/tho/tho.mjs', '/lab/cang/cang.css', '/lab/cang/cang.mjs', '/lab/ba-dieu/ba-dieu.css', '/lab/ba-dieu/ba-dieu.mjs', '/lab/tham-tu/tham-tu.css', '/lab/tham-tu/tham-tu.mjs', '/docs/yen-lab/game-kit.mjs', '/lab/assets/sprites/manifest.json', '/lab/assets/sprites/preview.css', '/lab/assets/sprites/preview.js', '/lab/assets/sprites/preview.html'];
+  const text = [...PAGES.map(p => p.endsWith('/') ? p + 'index.html' : p), '/lab/lab.css', '/lab/lab.js', '/lab/game.css', '/lab/engine.mjs', '/lab/tho/tho.css', '/lab/tho/tho.mjs', '/lab/cang/cang.css', '/lab/cang/cang.mjs', '/lab/ba-dieu/ba-dieu.css', '/lab/ba-dieu/ba-dieu.mjs', '/lab/tham-tu/tham-tu.css', '/lab/tham-tu/tham-tu.mjs', '/lab/la-troi/la-troi.css', '/lab/la-troi/la-troi.mjs', '/docs/yen-lab/game-kit.mjs', '/lab/assets/sprites/manifest.json', '/lab/assets/sprites/preview.css', '/lab/assets/sprites/preview.js', '/lab/assets/sprites/preview.html'];
   const spriteSubdirs = ['atlases', 'frames', 'games', 'shared'];
   const spriteBinary = spriteSubdirs.flatMap(dir =>
     readdirSync('lab/assets/sprites/' + dir, { withFileTypes: true })
@@ -235,7 +235,63 @@ for (const game of GAMES.filter(g => g.stepped)) {
   });
 }
 
-for (const game of GAMES.filter(g => !g.untimed && !g.stepped)) {
+for (const game of GAMES.filter(g => g.leaves)) {
+  // A leaf at a time: start → place → stop (wipes) → again → write + place → let go → idea + drift ends → done.
+  test(`${game.label}: start → place → stop → again → place, let go, drift ends → complete really works, words never kept`, async ({ page }) => {
+    const problems = watch(page);
+    await page.clock.install(); // taps within 400 ms of a change are dropped on purpose; step the clock past that
+    await page.goto(game.path);
+    const g = page.locator('main.game');
+    const tap = async name => { await page.clock.runFor(450); await page.getByRole('button', { name, exact: true }).click(); };
+    await tap('bắt đầu');
+    await expect(g).toHaveAttribute('data-state', 'running');
+    await tap('bụng hơi đói');
+    await expect(g).toHaveAttribute('data-phase', 'drift');
+    await tap('dừng hẳn');
+    await expect(g).toHaveAttribute('data-state', 'stopped');
+    await tap('chơi lại');
+    await tap('bắt đầu');
+    await page.getByRole('textbox').fill('smoke ý nghĩ thử');
+    await tap('đặt lên lá');
+    await expect(page.locator('#lt-slip')).toHaveText('smoke ý nghĩ thử');
+    await tap('cho lá trôi luôn');
+    await expect(g).toHaveAttribute('data-phase', 'choose');
+    await expect(page.getByText('smoke ý nghĩ thử')).toHaveCount(0);
+    await tap('chuyện ngày mai');
+    await page.clock.runFor(9_000); // the drift ends on its own
+    await expect(g).toHaveAttribute('data-phase', 'choose');
+    await tap('xong');
+    await expect(g).toHaveAttribute('data-state', 'complete');
+    await expect(page.locator('main.game a[href="/lab/"]').first()).toBeVisible();
+    expect(await page.evaluate(() => location.search + location.hash)).toBe('');
+    expect(problems).toEqual([]);
+  });
+
+  test(`${game.label}: reduced motion still completes, with nothing moving`, async ({ browser }) => {
+    const context = await browser.newContext({ reducedMotion: 'reduce', baseURL: BASE });
+    if (process.env.LAB_BASE_URL) await blockHostTooling(context);
+    const page = await context.newPage();
+    await page.clock.install();
+    await page.goto(game.path);
+    const tap = async name => { await page.clock.runFor(450); await page.getByRole('button', { name, exact: true }).click(); };
+    await tap('bắt đầu');
+    await tap('việc phải làm');
+    const moving = await page.evaluate(() => [...document.querySelectorAll('*')].some(el => {
+      const s = getComputedStyle(el);
+      return (s.animationName !== 'none' && s.animationDuration.split(',').some(v => parseFloat(v) > 0)) || s.transitionDuration.split(',').some(v => parseFloat(v) > 0);
+    }));
+    expect(moving).toBe(false);
+    await expect(page.locator('#lt-slip')).toBeVisible(); // the static equivalent: the leaf rests in view until let go
+    await page.clock.runFor(9_000);
+    await expect(page.locator('#lt-slip')).toHaveText('việc phải làm');
+    await tap('cho lá trôi luôn');
+    await tap('xong');
+    await expect(page.locator('main.game')).toHaveAttribute('data-state', 'complete');
+    await context.close();
+  });
+}
+
+for (const game of GAMES.filter(g => !g.untimed && !g.stepped && !g.leaves)) {
   test(`${game.label}: start → pause → resume → stop → reset → complete really works`, async ({ page }) => {
     const problems = watch(page);
     await page.clock.install();

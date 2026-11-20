@@ -356,7 +356,7 @@
       "priority": "P1",
       "title": "Lá trôi, nghĩ trôi",
       "kind": "minigame",
-      "status": "todo",
+      "status": "in-progress",
       "depends_on": [
         "F03",
         "F08",

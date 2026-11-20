@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content">
+  <meta name="theme-color" content="#f7f3e9">
+  <meta name="robots" content="noindex, nofollow, noarchive">
+  <meta name="referrer" content="no-referrer">
+  <meta name="description" content="Lá trôi, nghĩ trôi: đặt một ý nghĩ lên lá rồi nhìn nó trôi qua, không lưu ở đâu cả.">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; font-src 'none'; connect-src 'none'; frame-src 'none'; form-action 'none'; base-uri 'none'; object-src 'none'">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="stylesheet" href="/lab/lab.css">
+  <link rel="stylesheet" href="/lab/game.css">
+  <link rel="stylesheet" href="/lab/la-troi/la-troi.css">
+  <script type="module" src="/lab/la-troi/la-troi.mjs"></script>
+  <title>Lá trôi, nghĩ trôi · Yên Lab | Yên Coffee &amp; Tea</title>
+</head>
+<body>
+  <!-- G07 (#148): leaves on a stream (ACT defusion), adapted. Copy per EVIDENCE.md G07 and SAFETY.md "Reflection…/Writing".
+       A thought is placed on a leaf and watched as it passes; nothing is pushed away or judged. Text stays in this page's
+       memory only: no form element, no storage, wiped when the leaf has passed, on stop/reset and on leaving. -->
+  <a class="lab-skip" href="#game-title">Đến nội dung</a>
+  <header class="lab-header lab-wrap">
+    <a class="lab-brand" href="/" aria-label="Về website Yên Coffee &amp; Tea"><img src="/yen-logo.svg" width="1450" height="585" alt="yên"><span class="lab-brand-sub" aria-hidden="true">COFFEE &amp; TEA</span></a>
+    <nav class="lab-nav" aria-label="Điều hướng Yên Lab">
+      <a class="lab-nav-home" href="/lab/">Góc ngồi chơi</a>
+    </nav>
+  </header>
+
+  <main class="game" id="game" data-state="idle" data-phase="choose" data-game="la-troi" aria-labelledby="game-title">
+    <img class="game-backdrop" src="/lab/assets/room-backdrop.jpg" width="1586" height="992" alt="" decoding="async">
+    <article class="game-sheet">
+      <header class="game-head">
+        <h1 id="game-title" tabindex="-1">Lá trôi, nghĩ trôi</h1>
+        <p class="game-lede">Thử nhìn một ý nghĩ đi ngang.</p>
+      </header>
+
+      <div class="game-stage lt-stream" aria-hidden="true">
+        <img src="/lab/assets/sprites/games/g07-la-troi.webp" width="291" height="81" alt="" decoding="async">
+        <div class="lt-lane" id="lt-lane"><p class="lt-slip" id="lt-slip"></p></div>
+      </div>
+
+      <p class="game-cue" data-when="running" id="game-cue">Chọn một ý nghĩ, hoặc viết vài chữ</p>
+
+      <div class="lt-choose" data-when="running">
+        <div class="game-words lt-ideas" role="group" aria-labelledby="game-cue">
+          <button class="ink-word ink-word--small" type="button" data-idea>việc phải làm</button>
+          <button class="ink-word ink-word--small" type="button" data-idea>một câu ai đó nói</button>
+          <button class="ink-word ink-word--small" type="button" data-idea>bụng hơi đói</button>
+          <button class="ink-word ink-word--small" type="button" data-idea>chuyện ngày mai</button>
+          <button class="ink-word ink-word--small" type="button" data-idea>bài hát trong đầu</button>
+          <button class="ink-word ink-word--small" type="button" data-idea>không biết nghĩ gì</button>
+        </div>
+        <div class="lt-write">
+          <label class="lt-field"><span class="lab-sr">Viết một ý nghĩ, không bắt buộc</span><input id="lt-input" type="text" maxlength="60" placeholder="hoặc viết vài chữ" autocomplete="off" autocapitalize="sentences" spellcheck="false" enterkeyhint="go"></label>
+          <button class="ink-word" type="button" data-act="place">đặt lên lá</button>
+        </div>
+      </div>
+
+      <p class="game-note" data-when="idle">Chọn hoặc viết một ý nghĩ đang có, đặt lên lá rồi nhìn nó trôi qua. Không cần đẩy nó đi hay nghĩ khác đi; ý nghĩ quay lại cũng bình thường.</p>
+      <p class="game-note" data-when="idle">Không cần viết chuyện nặng lòng. Thấy khó chịu hơn thì dừng lúc nào cũng được.</p>
+      <p class="game-note" data-when="idle">Chữ bạn viết chỉ ở trên trang này, không gửi, không lưu; lá trôi qua hoặc rời đi là mất.</p>
+      <p class="game-note" data-when="error">Trò chưa chạy được. Thử lại hoặc về góc ngồi chơi nhé.</p>
+
+      <div class="game-result" data-when="complete stopped">
+        <p class="game-result-line" data-when="complete" id="lt-result-line" tabindex="-1">Ngồi xem lá trôi xong rồi.</p>
+        <p class="game-note" data-when="complete">Ý nghĩ có thể quay lại, vậy cũng bình thường. Ngồi chơi thêm chút rồi đi cũng được.</p>
+        <p class="game-result-line" data-when="stopped">Mình dừng ở đây nhé. Chữ đã xóa.</p>
+      </div>
+
+      <div class="game-words" id="game-controls" role="group" aria-label="Điều khiển trò">
+        <button class="ink-word ink-word--lead" type="button" data-act="start" data-when="idle" disabled>bắt đầu</button>
+        <button class="ink-word ink-word--lead lt-drift-only" type="button" data-act="pass" data-when="running">cho lá trôi luôn</button>
+        <button class="ink-word lt-choose-only" type="button" data-act="done" data-when="running">xong</button>
+        <button class="ink-word" type="button" data-act="stop" data-when="running">dừng hẳn</button>
+        <button class="ink-word ink-word--lead" type="button" data-act="again" data-when="complete stopped error">chơi lại</button>
+        <a class="ink-word" href="/lab/" data-when="idle complete stopped error">về góc ngồi chơi</a>
+      </div>
+
+      <p class="game-whisper" id="game-whisper" role="status" aria-live="polite"></p>
+    </article>
+    <noscript><p class="game-note">Trò này cần JavaScript. Không có nó, bạn vẫn có thể thử: nhắm hờ hoặc mở mắt, tưởng tượng đặt một ý nghĩ lên chiếc lá trên dòng suối và nhìn nó trôi đi. <a href="/lab/">Về góc ngồi chơi</a>.</p></noscript>
+  </main>
+
+  <footer class="lab-footer">
+    <div class="lab-wrap lab-footer-inner">
+      <img class="lab-door" src="/lab/assets/door.webp" width="160" height="268" alt="" decoding="async" loading="lazy">
+      <nav class="lab-footer-links" aria-label="Rời Yên Lab">
+        <a class="lab-button" href="/">Về Yên</a>
+        <a href="/#yen-ngoai-doi">Ghé quán thật</a>
+      </nav>
+      <p class="lab-fineprint">Một trò nhỏ để thử, không thay thế tư vấn hoặc điều trị chuyên môn. Trò phỏng theo bài “lá trôi trên suối” của liệu pháp ACT; nghiên cứu nói về cách tập này nói chung, trò này chưa được kiểm chứng hiệu quả riêng. Không cookie, rời đi là quên. <a href="https://github.com/vanphamvn/yen-nghi-choi/blob/main/docs/yen-lab/EVIDENCE.md" rel="noopener noreferrer" referrerpolicy="no-referrer">Nguồn phương pháp</a></p>
+    </div>
+  </footer>
+</body>
+</html>
