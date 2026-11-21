@@ -1,0 +1,77 @@
+name: Yên 30-day campaign · Day 1 visual gameplay
+
+on:
+  pull_request:
+    paths:
+      - "tinh-huong/campaign/**"
+      - "tinh-huong/index.html"
+      - "docs/visual-novel/art-manifest.json"
+      - "docs/visual-novel/episodes.json"
+      - "tools/check-yen-visual-art.mjs"
+      - "tests/yen-campaign-day01*"
+      - "tests/yen-visual-novel-roadmap.test.mjs"
+      - "tests/yen-visual-art.test.mjs"
+      - "tests/yen-campaign-engine.test.mjs"
+      - "playwright.yen-day01.config.mjs"
+      - ".github/workflows/yen-campaign-day01.yml"
+  push:
+    branches: [main]
+    paths:
+      - "tinh-huong/campaign/**"
+      - "tinh-huong/index.html"
+      - "docs/visual-novel/art-manifest.json"
+      - "docs/visual-novel/episodes.json"
+      - "tools/check-yen-visual-art.mjs"
+      - "tests/yen-campaign-day01*"
+      - "tests/yen-visual-novel-roadmap.test.mjs"
+      - "tests/yen-visual-art.test.mjs"
+      - "tests/yen-campaign-engine.test.mjs"
+      - "playwright.yen-day01.config.mjs"
+      - ".github/workflows/yen-campaign-day01.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  story:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with: {node-version: "22"}
+      - name: Verify Day 1 branching, art manifest and content contracts
+        run: |
+          node --test tests/yen-visual-novel-roadmap.test.mjs
+          node --test tests/yen-campaign-engine.test.mjs
+          node --test tests/yen-campaign-day01.test.mjs
+          node --test tests/yen-visual-art.test.mjs
+          node tools/check-yen-visual-art.mjs
+
+  browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with: {node-version: "22"}
+      - run: npm ci
+      - name: Find Chrome or install Playwright Chromium
+        shell: bash
+        run: |
+          if command -v google-chrome >/dev/null 2>&1; then
+            echo "LAB_UX_CHROMIUM_PATH=$(command -v google-chrome)" >> "$GITHUB_ENV"
+          else
+            npx playwright install --with-deps chromium
+          fi
+      - name: Play three linked illustrated incidents at 5 viewports
+        run: npx playwright test --config playwright.yen-day01.config.mjs
+      - name: Save visual-stage screenshots and traces
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: yen-day01-three-scenes-and-decisions
+          path: |
+            playwright-report/yen-day01/
+            test-results/
+          if-no-files-found: warn
