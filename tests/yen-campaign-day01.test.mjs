@@ -6,50 +6,31 @@ import {
   createState, currentIncident, validatePlayable, sceneView,
   interact, choose, recover, advance
 } from "../tinh-huong/campaign/engine.mjs";
-import { DAY01, DAY01_BY_ID, DAY01_SCRIPTS, DAY01_ART_REFS, day01Debrief }
- from "../tinh-huong/campaign/day01.mjs";
-import { getScene, createInteraction, updateInteraction, visualState }
- from "../tinh-huong/interactions/mechanics.mjs";
+import {
+  DAY01, DAY01_BY_ID, DAY01_SCRIPTS, DAY01_ART_REFS, day01Debrief
+} from "../tinh-huong/campaign/day01.mjs";
 
 const root=resolve(import.meta.dirname,"..");
 const catalog=JSON.parse(readFileSync(resolve(root,"docs/visual-novel/episodes.json"),"utf8"));
-const paths={
- arrange:["03","01","03","02"],
- isolate:["sign","spill"],
- compare:["tea"]
-};
 
-function solve(id){
- const m=getScene(id);
- let state=createInteraction(id);
- for(const item of paths[id])state=updateInteraction(state,{type:"activate",id:item});
- assert.equal(state.completed,true,id);
- assert.equal(visualState(m,state).phase,"resolution");
- return state;
-}
 function play(indices=[0,0,0],recovery=false){
  let state=createState(catalog);
  for(let i=0;i<3;i++){
   const entry=DAY01[i];
-  const incident=currentIncident(catalog,state);
-  assert.equal(incident.id,entry.id);
+  assert.equal(currentIncident(catalog,state).id,entry.id);
   assert.equal(state.phase,"observe");
-  const scene=getScene(entry.mechanicId);
-  const visual=visualState(scene,solve(entry.mechanicId));
-  assert.equal(visual.completed,true);
   const first=sceneView(catalog,DAY01_SCRIPTS,state);
   assert.equal(first.phase,"establishing");
-  state=interact(catalog,DAY01_SCRIPTS,state,entry.actionId);
-  const close=sceneView(catalog,DAY01_SCRIPTS,state);
-  assert.equal(close.phase,"interactive");
-  assert.notDeepEqual(first.shot.camera,close.shot.camera);
-  assert.throws(()=>interact(catalog,DAY01_SCRIPTS,state,entry.actionId),/can only happen/);
+  const before=state;
   state=choose(catalog,DAY01_SCRIPTS,state,entry.choices[indices[i]].id);
+  assert.equal(before.phase,"observe","a choice must not mutate the previous state");
+  assert.equal(state.phase,"resolve");
   const after=sceneView(catalog,DAY01_SCRIPTS,state);
   assert.equal(after.phase,"resolution");
+  assert.notDeepEqual(first.shot.camera,after.shot.camera);
   assert.ok(after.visualChanges.length>=2);
   assert.throws(()=>choose(catalog,DAY01_SCRIPTS,state,entry.choices[indices[i]].id),/do not choose twice/);
-  if(i===1&&indices[i]===2&&recovery){
+  if(i===1 && indices[i]===2 && recovery){
    assert.ok(state.pending.recovery);
    state=recover(catalog,DAY01_SCRIPTS,state);
    assert.equal(state.unresolvedHazards.length,0);
@@ -64,73 +45,79 @@ function play(indices=[0,0,0],recovery=false){
  return state;
 }
 
-test("three Day 1 scripts pass the engine contract without pretending 90 days are playable",()=>{
+test("Day 1 is an illustrated visual novel: 3 choices appear without touching scene objects",()=>{
  assert.equal(validatePlayable(catalog,DAY01_SCRIPTS),true);
  assert.throws(()=>validatePlayable(catalog,DAY01_SCRIPTS,{requireAll:true}),/90 playable/);
  assert.deepEqual(DAY01.map(e=>e.id),["D01-01","D01-02","D01-03"]);
  assert.equal(Object.keys(DAY01_BY_ID).length,3);
- for(const entry of DAY01) {
+ for(const entry of DAY01){
+  const script=DAY01_SCRIPTS[entry.id];
+  assert.equal(script.mode,"visual-novel");
+  assert.deepEqual(script.interactions,[]);
   assert.equal(entry.choices.length,3);
-  assert.ok(entry.intro.length>25&&entry.cue.length>20&&entry.transition.length>20);
-  assert.ok(entry.question&&entry.sceneTheme&&entry.assets.length>=3);
+  assert.ok(entry.intro.length>25 && entry.cue.length>20 && entry.question.length>20);
+  assert.ok(entry.sceneTheme && entry.assets.length>=3);
   assert.ok(entry.choices.every(c=>c.reaction.visualChanges.length>=2));
  }
 });
-test("all nine Day 1 painted-world asset references exist in the repo, not CSS placeholder art",()=>{
+
+test("painted backgrounds, actors and relevant world prop references all exist",()=>{
+ const unique=[];
  for(const entry of DAY01){
   const refs=DAY01_ART_REFS[entry.id];
   assert.equal(refs.length,3);
   assert.ok(refs.every(src=>/\.webp$/.test(src)));
   for(const url of refs)assert.equal(existsSync(resolve(root,url.slice(1))),true,url);
   assert.equal(existsSync(resolve(root,"lab/assets/room-backdrop.jpg")),true);
+  unique.push(refs.join("|"));
  }
- const refLists=DAY01.map(e=>DAY01_ART_REFS[e.id].join("|"));
- assert.equal(new Set(refLists).size,3,"each incident needs a distinct painted prop/character composition");
+ assert.equal(new Set(unique).size,3,"every incident must have distinct painted actors/props");
 });
-test("each scenario has three distinct scene shots and an action on physical evidence",()=>{
+test("shots carry different camera, actor pose and story evidence, not object actions",()=>{
  for(const entry of DAY01){
   const shots=entry.scene.shots;
-  assert.ok(shots.establishing.description!==shots.interactive.description);
-  assert.ok(shots.interactive.description!==shots.resolution.description);
-  assert.ok(shots.establishing.actors[0].pose!==shots.interactive.actors[0].pose);
-  assert.ok(shots.interactive.props[0].state!==shots.resolution.props[0].state);
-  assert.ok(entry.action.targetId&&entry.action.keyboardAlternative);
-  const m=solve(entry.mechanicId);
-  assert.equal(m.completed,true);
+  assert.notEqual(shots.establishing.description,shots.interactive.description);
+  assert.notEqual(shots.interactive.description,shots.resolution.description);
+  assert.notEqual(shots.establishing.actors[0].pose,shots.resolution.actors[0].pose);
+  assert.notEqual(shots.interactive.props[0].state,shots.resolution.props[0].state);
+  assert.equal(DAY01_SCRIPTS[entry.id].interactions.length,0);
  }
 });
-test("all 3³ choice combinations reach Day 2, preserve cross-day flags and bound metrics",()=>{
+test("engine retains old direct-scene guard for other scripts, while Day 1 needs no action",()=>{
+ let state=createState(catalog);
+ assert.throws(()=>interact(catalog,DAY01_SCRIPTS,state,"sort-tickets"),/visual-novel choices are direct/);
+ state=choose(catalog,DAY01_SCRIPTS,state,"explain");
+ assert.equal(state.actionId,null);
+ assert.equal(state.history[0].actionId,null);
+});
+test("27 combinations can finish Day 1 and carry distinct flags and consequences to Day 2",()=>{
  for(let n=0;n<27;n++){
   const indices=[Math.floor(n/9)%3,Math.floor(n/3)%3,n%3];
   const state=play(indices,n%2===0);
-  assert.ok(state.flags.queueSorted);
+  assert.equal(state.flags.queueSorted,indices[0]!==2);
+  assert.equal(state.flags.queueExplained,indices[0]===0);
+  assert.equal(state.flags.billCorrected,indices[2]===0);
   assert.equal(state.history.length,3);
-  assert.ok(state.history.every(r=>r.day===1));
+  assert.ok(state.history.every(record=>record.day===1));
   for(const value of Object.values(state.metrics))assert.ok(value>=0&&value<=100);
   const notes=day01Debrief(state.flags);
   assert.equal(notes.length,3);
-  assert.ok(notes.every(x=>x.length>30));
-  assert.equal(state.flags.billCorrected,indices[2]===0);
+  assert.ok(notes.every(text=>text.length>30));
  }
 });
-test("water safety cannot be cheated: unsafe choice persists as hazard until corrected",()=>{
+test("unsafe water decision stays hazardous until player explicitly chooses recovery",()=>{
  const unsafe=play([0,2,0],false);
  assert.deepEqual(unsafe.unresolvedHazards,["D01-02"]);
  assert.equal(unsafe.flags.spillResolved,false);
  assert.match(day01Debrief(unsafe.flags)[1],/chưa được khắc phục/);
- const repaired=play([0,2,0],true);
- assert.equal(repaired.unresolvedHazards.length,0);
- assert.equal(repaired.flags.spillResolved,true);
- assert.ok(repaired.history[1].recovered);
+ const recovered=play([0,2,0],true);
+ assert.equal(recovered.unresolvedHazards.length,0);
+ assert.equal(recovered.flags.spillResolved,true);
+ assert.ok(recovered.history[1].recovered);
 });
-test("refund and communication change Day 2 callbacks, not just numeric score",()=>{
- const careful=play([0,0,0]);
- const careless=play([2,1,2]);
- assert.equal(careful.flags.queueExplained,true);
- assert.equal(careful.flags.spillResolved,true);
- assert.equal(careful.flags.billCorrected,true);
- assert.equal(careless.flags.queueExplained,false);
- assert.equal(careless.flags.spillResolved,false);
- assert.equal(careless.flags.billCorrected,false);
+test("communication and refunds change tomorrow's brief, not only displayed scores",()=>{
+ const careful=play([0,0,0]), careless=play([2,1,2]);
+ assert.deepEqual([careful.flags.queueExplained,careful.flags.spillResolved,careful.flags.billCorrected],[true,true,true]);
+ assert.deepEqual([careless.flags.queueExplained,careless.flags.spillResolved,careless.flags.billCorrected],[false,false,false]);
  assert.notDeepEqual(day01Debrief(careful.flags),day01Debrief(careless.flags));
 });
