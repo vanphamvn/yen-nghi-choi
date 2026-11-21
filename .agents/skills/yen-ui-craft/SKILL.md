@@ -103,3 +103,12 @@ For each new Yên Lab tool, record: **name and goal**, underlying technique and 
 Return the exact changed paths, PR/commit, meaningful test results, real screenshots or URLs when available, limitations and deployment status. Avoid a generic UI quality score without inspection evidence.
 
 **References:** `references/RESEARCH-NOTES.md` and `references/QA-CHECKLIST.md`. External repos are inspiration and research, not silently installed packages or automatic permission to copy source.
+
+## Netlify Deploy Preview iframe collision: do not mask it in QA
+
+An observed 24/24 immediate-Continue touch failure (21 Nov 2026) exposed a provider iframe over the button. The campaign's static HTML contains no iframe, but Netlify can inject a fixed review Drawer into Deploy Previews, typically inside `[data-netlify-deploy-id]`. This is a **hit-target obstruction**, not an event-handler timing problem.
+
+- On the one-screen campaign only, hide the provider-specific injected Drawer wrapper through `game-ui.css`; never disable all iframes globally and never raise the game's z-index to arbitrary huge values.
+- Prefer disabling the Netlify Drawer in the site's Collaboration tools settings for a permanent platform-side fix. A clean preview can also be tested using `?ntl-drawer-state=hidden`.
+- Browser tests must **not delete** `[data-netlify-deploy-id]` to make clicks pass. Reproduce a fixed high-z-index wrapper with an iframe, check `document.elementFromPoint()` over **Tiếp tục**, and require 24/24 first taps to advance D01-01 to D01-02 on mobile.
+- Keep the preview-first owner gate. Unit/browser test implementation does not constitute a passed real-device QA run; don't claim iOS Facebook confirmation, merge, or production until explicitly approved.
