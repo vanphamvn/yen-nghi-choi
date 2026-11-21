@@ -1,255 +1,248 @@
+// VN-F04: a traditional illustrated visual novel. No touching, dragging or sorting scenery.
 import { DAY01, DAY01_SCRIPTS, day01Debrief } from "./day01.mjs";
-import {
-  createState, currentIncident, interact, choose, recover, advance,
-  sceneView, validatePlayable, METRICS
-} from "./engine.mjs";
-import { createInteraction, getScene, updateInteraction, visualState } from "../interactions/mechanics.mjs";
+import { createState, currentIncident, choose, recover, advance, sceneView, validatePlayable, METRICS } from "./engine.mjs";
 
-const $=id=>document.getElementById(id);
-const elem=(tag,cls,text="")=>{
- const node=document.createElement(tag);
- if(cls)node.className=cls;
- if(text)node.textContent=text;
- return node;
+const $ = id => document.getElementById(id);
+const node = (tag, className, content = "") => {
+  const element = document.createElement(tag);
+  if (className) element.className = className;
+  if (content) element.textContent = content;
+  return element;
 };
-const LABELS={safety:"An toàn",trust:"Niềm tin",flow:"Nhịp quán",budget:"Ngân sách"};
-const CLASS={safe:"is-safe",caution:"is-caution",hazard:"is-hazard"};
-const FILES={
- pleased:"/assets/cuc-yen/sprites/delighted.webp",
- neutral:"/assets/cuc-yen/sprites/shy.webp",
- alarmed:"/assets/cuc-yen/sprites/surprised.webp",
- recovered:"/assets/cuc-yen/sprites/happy.webp"
+const LABELS = { safety: "An toàn", trust: "Niềm tin", flow: "Nhịp quán", budget: "Ngân sách" };
+const SPRITES = {
+  relieved: "/assets/cuc-yen/sprites/delighted.webp",
+  unsure: "/assets/cuc-yen/sprites/shy.webp",
+  worried: "/assets/cuc-yen/sprites/surprised.webp",
+  repaired: "/assets/cuc-yen/sprites/happy.webp"
 };
+const chapterById = Object.fromEntries(DAY01.map(item => [item.id, item]));
+let catalog = null;
+let state = null;
 
-let catalog=null;
-let state=null;
-let mechanic=null;
+function chapter() {
+  const current = currentIncident(catalog, state);
+  const entry = current && chapterById[current.id];
+  if (!entry) throw new Error("Chưa có nội dung chơi cho " + (current?.id ?? "ngày tiếp theo"));
+  return entry;
+}
 
-function chapter(){
- const inc=currentIncident(catalog,state);
- const entry=DAY01.find(s=>s.id===inc?.id);
- if(!entry)throw new Error("Ngày 2 chưa phát hành: "+(inc?.id||"không rõ"));
- return entry;
+function start() {
+  state = createState(catalog);
+  $("debrief").hidden = true;
+  $("game").hidden = false;
+  $("loading").hidden = true;
+  render();
+  $("incident-title").focus({ preventScroll: true });
 }
-function start(){
- state=createState(catalog);
- mechanic=createInteraction(DAY01[0].mechanicId);
- $("debrief").hidden=true;$("game").hidden=false;$("loading").hidden=true;
- render();
- $("incident-title").focus({preventScroll:true});
+
+function incidentVisuals(entry) {
+  const scene = sceneView(catalog, DAY01_SCRIPTS, state);
+  const decided = state.phase === "resolve";
+  const choice = decided ? entry.choices.find(item => item.id === state.pending.choiceId) : null;
+  const recovered = decided && state.pending.recovered;
+  const risk = recovered ? "safe" : choice?.risk ?? "";
+  const outcome = recovered ? "recovered" : choice?.id ?? "";
+  const camera = scene.shot.camera || { scale: 1, position: "center" };
+
+  const world = $("world");
+  world.dataset.incident = entry.id;
+  world.dataset.phase = decided ? "resolution" : "establishing";
+  world.dataset.outcome = outcome;
+  world.dataset.risk = risk;
+  world.dataset.time = entry.sceneTheme;
+  world.setAttribute("aria-label", scene.shot.alt + (decided ? ". " + state.pending.reaction.line : ". " + entry.cue));
+
+  const backdrop = $("backdrop");
+  backdrop.src = scene.shot.backdrop;
+  backdrop.alt = ""; // semantic description is on the scene container
+  backdrop.style.objectPosition = camera.position;
+  backdrop.style.transform = "scale(" + camera.scale + ")";
+
+  const illustration = $("illustrations");
+  illustration.replaceChildren();
+  for (const prop of entry.assets) {
+    const image = node("img", "painted-layer " + prop.id);
+    image.style.setProperty("--x", prop.x + "%");
+    image.style.setProperty("--y", prop.y + "%");
+    image.style.setProperty("--size", prop.width + "%");
+    image.alt = "";
+    image.loading = "eager";
+    image.src = prop.id === "actor" && decided
+      ? recovered ? SPRITES.repaired
+        : choice.risk === "safe" ? SPRITES.relieved
+        : choice.risk === "hazard" ? SPRITES.worried
+        : SPRITES.unsure
+      : prop.src;
+    illustration.append(image);
+  }
+
+  // Diegetic evidence: visible scene details, not clickable hotspots.
+  const evidence = $("scene-evidence");
+  evidence.replaceChildren();
+  const label = node("div", "evidence-title", entry.id === "D01-01" ? "Dải phiếu chờ" :
+    entry.id === "D01-02" ? "Lối đi cạnh quầy" : "Biên lai của khách");
+  evidence.append(label);
+  if (entry.id === "D01-01") {
+    const order = outcome === "priority" ? ["02", "01", "03"] :
+      decided ? ["01", "02", "03"] : ["03", "01", "02"];
+    evidence.append(node("div", "evidence-detail ticket-order", order.join("  ·  ")));
+    evidence.append(node("div", "evidence-note", decided ?
+      outcome === "priority" ? "Người đến sau được phục vụ trước" :
+      outcome === "explain" ? "Khách đã được thông báo thứ tự" : "Khách vẫn đang chờ thông tin"
+      : "Phiếu in bị lẫn thứ tự"));
+  } else if (entry.id === "D01-02") {
+    const cleared = outcome === "clean" || outcome === "recovered";
+    evidence.append(node("div", "evidence-detail", cleared ? "Sàn đã lau khô" :
+      outcome === "later" ? "Đã chặn lối · sàn còn ướt" :
+      outcome === "open" ? "Sàn trơn · chưa có cảnh báo" : "Sàn ướt · khách đang đến gần"));
+    evidence.append(node("div", "evidence-note", cleared ?
+      "Khách đi qua lối an toàn" : "Cần ngăn nguy cơ trượt ngã"));
+  } else {
+    const corrected = outcome === "refund";
+    evidence.append(node("div", "evidence-detail", decided && corrected ?
+      "Trà đào 25.000đ · Tổng 41.000đ" :
+      "Trà đào 35.000đ · Tổng 51.000đ"));
+    evidence.append(node("div", "evidence-note", corrected ?
+      "Đã sửa và hoàn 10.000đ" : "Menu niêm yết: 25.000đ"));
+  }
+
+  const feedback = $("character-reaction");
+  feedback.textContent = decided ? recovered ? "ĐÃ KHẮC PHỤC" :
+    choice.risk === "hazard" ? "NGUY CƠ CHƯA ĐƯỢC XỬ LÝ" :
+    choice.risk === "safe" ? "ĐÃ GIẢI QUYẾT" : "CẦN THEO DÕI" : "";
+
+  $("camera-caption").textContent = decided ? "SAU LỰA CHỌN · " + entry.slot.toUpperCase() :
+    "CÂU CHUYỆN · " + entry.slot.toUpperCase();
+  $("weather-caption").textContent = entry.weather;
+  $("world-alt").textContent = decided ? scene.shot.alt + ". " + state.pending.reason : scene.shot.alt;
 }
-function targetButton(item,scene){
- const b=elem("button","scene-item item-"+item.kind);
- b.type="button";b.dataset.item=item.id;
- b.style.setProperty("--x",item.x+"%");
- b.style.setProperty("--y",item.y+"%");
- b.setAttribute("aria-label",item.label);
- b.setAttribute("aria-pressed",String(Boolean(item.selected||item.marked||item.corrected||item.placed||item.warningPlaced||item.inspected)));
- for(const [flag,klass] of [
-  ["selected","is-selected"],["marked","is-marked"],["corrected","is-corrected"],
-  ["placed","is-placed"],["warningPlaced","is-deployed"],["inspected","is-inspected"]
- ])if(item[flag])b.classList.add(klass);
- if(mechanic.completed||state.phase!=="observe")b.disabled=true;
- if(item.src){
-   const img=elem("img","");
-   img.src=item.src;img.alt="";b.append(img,elem("span","painted-label",item.label));
- }else if(item.kind==="ticket"){
-   b.append(elem("span","ticket-number","PHIẾU "+item.id),elem("span","ticket-description",item.label.split(" · ")[1]||item.label));
- }else if(item.kind==="receipt")b.append(elem("span","receipt-text",item.label));
- else if(item.kind==="sign")b.append(elem("span","sign-symbol","!"),elem("span","sign-text","CẢNH BÁO"));
- else if(item.kind==="spill")b.append(elem("span","hazard-symbol","!"),elem("span","hazard-text",item.marked?"ĐÃ KHOANH VÙNG":"SÀN TRƠN"));
- else if(item.kind==="dry")b.append(elem("span","ground-text","LỐI KHÔ"));
- else if(item.kind==="target")b.append(elem("span","target-text",scene.kind==="place"?"KHAY NHẬN":"GÓC TRỐNG"));
- b.addEventListener("click",()=>{
-   if(state.phase!=="observe")return;
-   const hadFocus=document.activeElement===b;
-   const previous=mechanic;
-   mechanic=updateInteraction(mechanic,{type:"activate",id:item.id});
-   if(mechanic===previous)return;
-   if(mechanic.completed){
-     const entry=chapter();
-     state=interact(catalog,DAY01_SCRIPTS,state,entry.actionId);
-   }
-   render();
-   const replacement=[...$("targets").querySelectorAll("[data-item]")].find(x=>x.dataset.item===item.id);
-   if(hadFocus && replacement && !replacement.disabled)replacement.focus({preventScroll:true});
-   if(mechanic.completed){
-     // Transition the keyboard to the new decision controls, not a removed hotspot.
-     $("choices").querySelector("button")?.focus({preventScroll:true});
-   }
- });
- return b;
+
+function drawChoices(entry) {
+  const choices = $("choices");
+  choices.replaceChildren();
+  choices.hidden = state.phase !== "observe";
+  if (state.phase !== "observe") return;
+  for (const [index, option] of entry.choices.entries()) {
+    const button = node("button", "day-choice");
+    button.type = "button";
+    button.dataset.choice = option.id;
+    button.append(node("span", "choice-index", String(index + 1).padStart(2, "0")),
+      node("span", "choice-text", option.label));
+    button.addEventListener("click", () => {
+      if (state.phase !== "observe") return;
+      state = choose(catalog, DAY01_SCRIPTS, state, option.id);
+      render();
+      $("continue").focus({ preventScroll: true });
+    });
+    choices.append(button);
+  }
 }
-function paintWorld(entry,view,visuals){
- const assets=entry.assets.map(a=>({...a}));
- let outcome=state.phase==="resolve"?state.pending.choiceId:"";
- if(state.phase==="resolve" && state.pending.recovered)outcome="recovered";
- const risk=state.phase==="resolve" ? entry.choices.find(c=>c.id===state.pending.choiceId)?.risk : null;
- const camera=view.shot.camera||{scale:1,position:"center"};
- $("world").dataset.incident=entry.id;
- $("world").dataset.phase=state.phase==="resolve"?"resolution":state.phase==="decide"?"interactive":"establishing";
- $("world").dataset.outcome=outcome;
- $("world").dataset.risk=state.phase==="resolve"&&state.pending.recovered?"safe":risk||"";
- $("world").dataset.time=entry.sceneTheme;
- $("backdrop").src=view.shot.backdrop;
- $("backdrop").alt=view.shot.alt;
- $("backdrop").style.objectPosition=camera.position;
- $("backdrop").style.transform="scale("+camera.scale+")";
- const illustration=$("illustrations");
- illustration.replaceChildren();
- for(const a of assets){
-  const img=elem("img","painted-layer "+a.id);
-  img.style.setProperty("--x",a.x+"%");img.style.setProperty("--y",a.y+"%");
-  img.style.setProperty("--size",a.width+"%");
-  img.alt="";
-  img.src=a.id==="actor" && state.phase==="resolve" ?
-   (state.pending.recovered?FILES.recovered:risk==="safe"?FILES.pleased:risk==="hazard"?FILES.alarmed:FILES.neutral):a.src;
-  illustration.append(img);
- }
- const props=$("targets");props.replaceChildren();
- if(entry.id==="D01-02" && state.phase==="resolve"){
-   const spill=visuals.items.find(i=>i.id==="spill");
-   const sign=visuals.items.find(i=>i.id==="sign");
-   if(outcome==="open"){
-     spill.marked=false;sign.warningPlaced=false;sign.x=16;sign.y=63;
-   }else if(outcome==="clean"||outcome==="recovered"){
-     spill.marked=true;
-   }
- }
- if(entry.id==="D01-03" && state.phase==="resolve" && outcome!=="refund"){
-   for(const item of visuals.items){
-    if(item.id==="tea"){item.label="Trà đào · 35.000đ · CHƯA SỬA";item.corrected=false;}
-    if(item.id==="total"){item.label="Tổng · 51.000đ";item.corrected=false;}
-   }
- }
- if(entry.id==="D01-01" && state.phase==="resolve" && outcome==="priority"){
-  visuals.items.sort((a,b)=>["02","01","03"].indexOf(a.id)-["02","01","03"].indexOf(b.id));
-  visuals.items.forEach((x,index)=>x.x=24+index*25);
- }
- for(const item of visuals.items)props.append(targetButton(item,getScene(entry.mechanicId)));
- const label=outcome ? (state.pending.recovered?"ĐÃ SỬA SAI":risk==="safe"?"ĐÃ XỬ LÝ":risk==="hazard"?"CHƯA AN TOÀN":"CẦN THEO DÕI") : "ĐANG DIỄN RA";
- $("character-reaction").textContent=label;
- $("camera-caption").textContent=state.phase==="observe"?"TOÀN CẢNH · "+entry.slot.toUpperCase():
-   state.phase==="decide"?"CẬN CẢNH · VẬT CHỨNG":"KẾT QUẢ · "+entry.slot.toUpperCase();
- $("weather-caption").textContent=entry.weather;
- $("world-alt").textContent=state.phase==="resolve" ?
-   (state.pending.recovered?state.pending.recovery.reason:state.pending.reason)+". "+view.shot.alt :
-   view.shot.alt+" "+getScene(entry.mechanicId).goal;
+
+function drawMetrics() {
+  const metrics = $("metrics");
+  metrics.replaceChildren();
+  for (const key of METRICS) {
+    const item = node("div", "metric");
+    const heading = node("div", "metric-label");
+    const value = state.metrics[key];
+    heading.append(node("span", "", LABELS[key]), node("strong", "", value + "/100"));
+    const bar = node("progress");
+    bar.max = 100;
+    bar.value = value;
+    bar.setAttribute("aria-label", LABELS[key]);
+    item.append(heading, bar);
+    metrics.append(item);
+  }
 }
-function drawChoices(entry){
- const choices=$("choices");
- choices.replaceChildren();
- if(state.phase!=="decide"){choices.hidden=true;return;}
- choices.hidden=false;
- entry.choices.forEach((choice,index)=>{
-  const b=elem("button","day-choice");
-  b.type="button";b.dataset.choice=choice.id;
-  b.append(elem("span","choice-index",String(index+1).padStart(2,"0")),elem("span","choice-text",choice.label));
-  b.addEventListener("click",()=>{
-   state=choose(catalog,DAY01_SCRIPTS,state,choice.id);
-   render();
-   $("continue").focus({preventScroll:true});
-  });
-  choices.append(b);
- });
+
+function render() {
+  if (state.dayIndex !== 0) {
+    showDebrief();
+    return;
+  }
+  const entry = chapter();
+  const decided = state.phase === "resolve";
+  $("scene-number").textContent = "NGÀY 01 / 30 · " + entry.slot.toUpperCase() + " · " + entry.time;
+  $("scene-status").textContent = decided ? "KẾT QUẢ QUYẾT ĐỊNH" : "CHỌN CÁCH XỬ LÝ";
+  $("incident-id").textContent = entry.id + " · " + entry.time + " · " + entry.scene.location;
+  $("incident-title").textContent = entry.title;
+  $("speaker").textContent = decided ? state.pending.reaction.speaker : entry.speaker;
+  $("dialogue").textContent = decided ? state.pending.reaction.line : entry.cue;
+  $("prompt").textContent = decided ? "Chuyện tiếp theo?" : entry.question;
+  $("goal").textContent = decided ?
+    "Chỉ số thay đổi theo lựa chọn của bạn. Hệ quả được giữ lại trong ngày." : entry.intro;
+  $("notice").hidden = !decided;
+  $("notice").textContent = decided ?
+    state.pending.recovered ? "Quán đã thực hiện hành động khắc phục." : state.pending.reason : "";
+  $("result").hidden = !decided;
+  $("recover").hidden = !decided || !state.pending.recovery || state.pending.recovered;
+  $("continue").hidden = !decided;
+  $("continue").textContent = state.incidentIndex === 2 ? "Kết sổ Ngày 1" : "Tiếp tục ca sau";
+  $("outcome-speaker").textContent = decided ? state.pending.reaction.speaker : "";
+  $("outcome").textContent = decided ? state.pending.reaction.line : "";
+  $("reason").textContent = decided ? state.pending.reason : "";
+  for (const element of document.querySelectorAll("[data-step]")) {
+    const index = Number(element.dataset.step);
+    element.classList.toggle("is-current", index === state.incidentIndex);
+    element.classList.toggle("is-done", index < state.incidentIndex);
+  }
+  incidentVisuals(entry);
+  drawChoices(entry);
+  drawMetrics();
 }
-function drawMetrics(){
- const host=$("metrics");host.replaceChildren();
- for(const key of METRICS){
-  const box=elem("div","metric");
-  const value=state.metrics[key];
-  const label=elem("div","metric-label");
-  label.append(elem("span","",LABELS[key]),elem("strong","",String(value)+"/100"));
-  const meter=elem("progress");
-  meter.max=100;meter.value=value;meter.setAttribute("aria-label",LABELS[key]);
-  box.append(label,meter);
-  host.append(box);
- }
+
+function showDebrief() {
+  $("game").hidden = true;
+  $("debrief").hidden = false;
+  for (const element of document.querySelectorAll("[data-step]")) {
+    element.classList.remove("is-current");
+    element.classList.add("is-done");
+  }
+  const list = $("debrief-list");
+  list.replaceChildren();
+  for (const summary of day01Debrief(state.flags)) list.append(node("li", "", summary));
+  $("tomorrow").textContent =
+    state.flags.spillResolved && state.flags.billCorrected && state.flags.queueExplained ?
+      "Quán đã có nền tảng tốt hơn cho Ngày 2. Mưa đầu mùa vẫn có những chuyện mới." :
+      "Ngày 2: Mưa đầu mùa. Quán cần kiểm tra những việc còn dang dở trước khi mở cửa.";
+  const history = $("history");
+  history.replaceChildren();
+  for (const record of state.history) {
+    const option = chapterById[record.incidentId]?.choices.find(choice => choice.id === record.choiceId);
+    history.append(node("li", "", record.incidentId + " · " +
+      (option?.label || record.choiceLabel) + (record.recovered ? " (đã khắc phục)" : "")));
+  }
+  $("debrief-title").focus({ preventScroll: true });
 }
-function render(){
- if(state.dayIndex!==0){showDebrief();return;}
- const entry=chapter();
- const scene=getScene(entry.mechanicId);
- const v=sceneView(catalog,DAY01_SCRIPTS,state);
- const visual=visualState(scene,mechanic);
- const slot=["SÁNG","CHIỀU","TỐI"][state.incidentIndex];
- $("scene-number").textContent="NGÀY 01 / 30 · "+slot+" · "+entry.time;
- $("scene-status").textContent=state.phase==="observe"?"CHẠM VÀO CẢNH":
-  state.phase==="decide"?"RA QUYẾT ĐỊNH":"KẾT QUẢ";
- $("incident-id").textContent=entry.id+" · "+entry.time+" · "+entry.scene.location;
- $("incident-title").textContent=entry.title;
- $("speaker").textContent=state.phase==="resolve"?state.pending.reaction.speaker:entry.speaker;
- $("dialogue").textContent=state.phase==="observe"?entry.cue:
-  state.phase==="decide"?entry.transition:state.pending.reaction.line;
- $("prompt").textContent=state.phase==="observe"?scene.prompt:
-  state.phase==="decide"?entry.question:"Hệ quả của lựa chọn";
- $("goal").textContent=state.phase==="resolve"?"Hậu quả sẽ đi theo quán sang những ngày tiếp theo.":
-  state.phase==="decide"?"Chọn một cách xử lý. Bạn có thể thử lại Ngày 1 để thấy kết quả khác.":scene.goal;
- $("notice").textContent=state.phase==="observe"?mechanic.message:
-  state.phase==="decide"?"Bạn đã thao tác trực tiếp lên cảnh. Hãy chọn bước xử lý tiếp theo.":
-  state.pending.recovered?"Đã thực hiện hành động sửa sai.":state.pending.reason;
- $("reset-mechanic").hidden=state.phase!=="observe";
- $("result").hidden=state.phase!=="resolve";
- $("recover").hidden=state.phase!=="resolve"||!state.pending.recovery||state.pending.recovered;
- $("continue").hidden=state.phase!=="resolve";
- $("continue").textContent=state.incidentIndex===2?"Kết sổ Ngày 1":"Tiếp tục ca sau";
- $("outcome-speaker").textContent=state.phase==="resolve"?state.pending.reaction.speaker:"";
- $("outcome").textContent=state.phase==="resolve"?state.pending.reaction.line:"";
- $("reason").textContent=state.phase==="resolve"?state.pending.reason:"";
- document.querySelectorAll("[data-step]").forEach((li,i)=>{
-  li.classList.toggle("is-current",i===state.incidentIndex);
-  li.classList.toggle("is-done",i<state.incidentIndex);
- });
- drawChoices(entry);
- paintWorld(entry,v,visual);
- drawMetrics();
-}
-function showDebrief(){
- $("game").hidden=true;$("debrief").hidden=false;
- document.querySelectorAll("[data-step]").forEach(li=>{
-  li.classList.remove("is-current");li.classList.add("is-done");
- });
- const list=$("debrief-list");list.replaceChildren();
- for(const line of day01Debrief(state.flags))list.append(elem("li","",line));
- $("tomorrow").textContent=state.flags.spillResolved&&state.flags.billCorrected&&state.flags.queueExplained?
-  "Quán đã có nền tảng tốt hơn cho Ngày 2. Mưa đầu mùa vẫn có những chuyện mới.":
-  "Ngày 2: Mưa đầu mùa. Quán cần kiểm tra lại những việc còn dang dở trước khi nhận thêm khách.";
- const history=$("history");history.replaceChildren();
- for(const record of state.history){
-  const chosen=DAY01.find(s=>s.id===record.incidentId)?.choices.find(c=>c.id===record.choiceId);
-  history.append(elem("li","",record.incidentId+" · "+(chosen?.label||record.choiceLabel)+(record.recovered?" (đã sửa sai)":"")));
- }
- $("debrief-title").focus({preventScroll:true});
-}
-function onNext(){
- if(state.phase!=="resolve")return;
- state=advance(catalog,state);
- if(state.dayIndex!==0){showDebrief();return;}
- mechanic=createInteraction(chapter().mechanicId);
- render();
- $("incident-title").focus({preventScroll:true});
-}
-$("continue").addEventListener("click",onNext);
-$("recover").addEventListener("click",()=>{
- if(state.phase!=="resolve"||!state.pending.recovery||state.pending.recovered)return;
- state=recover(catalog,DAY01_SCRIPTS,state);render();
- $("continue").focus({preventScroll:true});
+
+$("continue").addEventListener("click", () => {
+  if (state.phase !== "resolve") return;
+  state = advance(catalog, state);
+  if (state.dayIndex !== 0) showDebrief();
+  else {
+    render();
+    $("incident-title").focus({ preventScroll: true });
+  }
 });
-$("reset-mechanic").addEventListener("click",()=>{
- if(state.phase!=="observe")return;
- mechanic=createInteraction(chapter().mechanicId);render();$("incident-title").focus({preventScroll:true});
+$("recover").addEventListener("click", () => {
+  if (state.phase !== "resolve" || !state.pending.recovery || state.pending.recovered) return;
+  state = recover(catalog, DAY01_SCRIPTS, state);
+  render();
+  $("continue").focus({ preventScroll: true });
 });
-$("restart").addEventListener("click",start);
-$("play-again").addEventListener("click",start);
+$("restart").addEventListener("click", start);
+$("play-again").addEventListener("click", start);
+
 try {
- const response=await fetch("../../docs/visual-novel/episodes.json",{cache:"no-store"});
- if(!response.ok)throw new Error("Không tải được danh mục câu chuyện");
- catalog=await response.json();
- validatePlayable(catalog,DAY01_SCRIPTS,{requireAll:false});
- start();
-} catch(error) {
- $("loading").replaceChildren(elem("strong","","Không mở được Ngày 1: "+error.message),
-  elem("p","","Bạn vẫn có thể chơi bản thử tương tác riêng của quán."));
- const link=elem("a","","Mở bản thử thao tác với cảnh");
- link.href="../tuong-tac/";$("loading").append(link);
+  const response = await fetch("../../docs/visual-novel/episodes.json", { cache: "no-store" });
+  if (!response.ok) throw new Error("Không tải được danh mục câu chuyện");
+  catalog = await response.json();
+  validatePlayable(catalog, DAY01_SCRIPTS, { requireAll: false });
+  start();
+} catch (error) {
+  $("loading").replaceChildren(node("strong", "", "Không mở được Ngày 1: " + error.message));
+  const link = node("a", "", "Quay về Một Ca Không Yên");
+  link.href = "../";
+  $("loading").append(link);
 }
