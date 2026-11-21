@@ -27,7 +27,7 @@ This concerns the **visual novel with immediate dialogue choices**, not the arch
 Store physical layout and roles in \`tinh-huong/campaign/scene-composition.mjs\`, not ad hoc \`x,y,width\` on incident scripts. The engine keeps pure game state in \`day01.mjs\`. Each composition object contains \`background\`, \`layers\`, \`role\`, \`surface\`, \`contact\`, \`size\`, \`depth\`, \`src\` and \`artKind\`; sheet actors have an explicit selected frame. Use \`validateSceneComposition()\` to enforce roles and surfaces.
 
 Standard anchors for the *current* painted café background, **not universal positions for all future art**:
-- Floor starts visually near 55% vertical; feet for foreground customers/Cục Yên near 90–97%, staff behind counter near 82–89%.
+- Floor starts visually near 55% vertical; feet for foreground customers/Cục Yên near 90–97%, staff on the deeper floor behind counter near 68–75% (adjusted for scene crop).
 - Counter prop artwork sits on the floor with bottom near 77–83%; its top edge defines the machine/receipt contact plane near 62–68%.
 - A spill belongs near the walkway floor (78–92%), not on the counter. A receipt/menu belongs on the counter; a coffee machine's footprint belongs on its surface.
 
@@ -39,3 +39,9 @@ These percentages are a starting calibration. Always inspect browser screenshots
 - Browser: \`npx playwright test --config playwright.yen-day01.config.mjs\` checks all three scenes and outcome states at 320×480, 320×568, 360×640, 390×844, 768×1024 and landscape/desktop, one-screen no overflow, 44px buttons and loaded sheet backgrounds.
 - Inspect real screenshots at least 390×844 and 1440×900 with **two staff poses and the focal prop at runtime scale**. Capture what still needs repainting. Never claim human approval.
 - PR → green CI if available → merge → verify exact production revision and the live route. If hosted CI cannot execute, document independent test evidence and limitation precisely.
+
+## Perspective calibration regression (21/11/2026)
+
+**Do not enlarge a rear barista merely to show more of the body above the counter.** Day 1 originally set staff width to 32% of the scene and foreground guest to 23%; this made the employee's head disproportionately large. The corrected rear staff uses 20% (less than 92% of the guest's 23%) and a farther **floor** contact around 71% of scene height. Keep the upper body legible by moving the foot anchor to the deeper floor plane, not by scaling the figure up. For a staff member approaching the walkway, 21% is acceptable against a 23% visitor.
+
+**Visual bottom vs image box:** the painted espresso machine's *metal base* sits at about 90% of the asset's image height. The remaining 10% includes shadow/transparent pixels. Anchoring at 98% placed its apparent feet *above* the counter. Set `footOffset: 90` to align the painted metal with the actual countertop. Validate `machineRect.top + machineRect.height * 0.90 ≈ counterRect.top`, not only `machine.style.top ≈ counterRect.top`. Inspect at 375×667, 390×660 and desktop. Record image-level proof; browser geometry alone cannot approve visual art.
