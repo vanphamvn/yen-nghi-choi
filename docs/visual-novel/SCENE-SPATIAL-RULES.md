@@ -19,11 +19,11 @@ Each surface must be **drawn or part of the background**. A machine cannot belon
 | Depth | Content | Rule |
 |---|---|---|
 | 0 | Painted café backdrop | Room, lighting, wall and floor |
-| 10–19 | Staff standing behind counter | Feet rest on rear floor; counter may occlude lower body |
+| 10–19 | Staff standing behind counter (D01-01, D01-03) | Feet rest on rear floor; counter may occlude lower body, never face |
 | 20–29 | Fixed furniture | Painted counter has its foot/base on floor |
 | 30–39 | Items on furniture | Machine, receipts, tickets have bases aligned to visible countertop |
 | 40–49 | Physical incident | Spill/pitcher on floor; incident remains visible |
-| 50–59 | Foreground guest and Cục Yên | Ground contact; credible scale; no floating or standing on counter |
+| 50–59 | Floor-side staff (D01-02), foreground guest and Cục Yên | Independent silhouette and floor contact; no overlapping heads/faces |
 | 60+ | Essential scene HUD | Exit, short day/time label, one clue, no duplicate copy |
 
 Avoid piling people directly on top of the focus prop. Z-order alone cannot repair wrong geometry; adjust anchor and scale first.
@@ -36,7 +36,7 @@ Avoid piling people directly on top of the focus prop. Z-order alone cannot repa
 | D01-02 | Tipped pitcher, wet floor hazard | Barista approaching safe side of walkway | Guest near but outside wet footprint | Feet on floor near hazard | Counter left, spill only on floor |
 | D01-03 | Incorrect receipt beside menu/POS | Barista at cashier counter | Guest across cashier side | Feet on floor beside counter | Painted counter, receipt/menu resting on top |
 
-The repository currently has a painted \`barista.png\` sheet, a painted \`shipper.png\` character (used provisionally as a **takeaway customer** rather than inventing a non-existent generic guest illustration), a Cục Yên asset, a painted counter, and coffee props. The wet-floor illustration currently reuses a tinted painted shadow with a tipped pitcher; **replace it with genuinely painted puddle art when available**. Do not label either provisional role/prop as final custom illustration.
+The repository currently has a painted \`barista.png\` sheet, a painted \`shipper.png\` character (used provisionally as a **takeaway customer** rather than inventing a non-existent generic guest illustration), a Cục Yên asset, a painted counter, and coffee props. D01-02 now uses a transparent watercolor spill image and a tipped pitcher; the old tinted rectangular shadow is removed. Owner review of the replacement remains pending. Do not label either provisional role/prop as final custom illustration.
 
 ## Review checklist
 
