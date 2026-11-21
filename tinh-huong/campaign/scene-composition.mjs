@@ -48,17 +48,17 @@ export const SCENE_COMPOSITIONS=Object.freeze({
    employee(41,84,32),
    counter(43,82,72),
    prop("espresso","espresso","counter",22,66,16,34),
-   focus("ticket-left","paper","counter",47,67,10,44,{rotation:-8}),
-   focus("ticket-center","paper","counter",56,67,11,45,{rotation:3}),
-   focus("ticket-right","paper","counter",65,67,10,44,{rotation:8}),
-   prop("tray","tray","counter",73,66,10,35),
+   focus("ticket-left","paper","counter",55,67,7.5,44,{rotation:-8}),
+   focus("ticket-center","paper","counter",63,67,8.5,45,{rotation:3}),
+   focus("ticket-right","paper","counter",71,67,7.5,44,{rotation:8}),
+   prop("tray","tray","counter",75,66,8,35),
    guest(85,95,23),
-   yen(11,96,19)
+   yen(12,96,21)
   ],
   outcomeChanges:{
-    explain:{"ticket-left":{x:46,rotation:-2},"ticket-center":{x:56,rotation:0},"ticket-right":{x:66,rotation:2},"customer":{x:84,frame:1}},
+    explain:{"ticket-left":{x:55,rotation:-2},"ticket-center":{x:63,rotation:0},"ticket-right":{x:71,rotation:2},"customer":{x:84,frame:1}},
     silent:{"ticket-center":{rotation:-1}},
-    priority:{"ticket-left":{x:65},"ticket-right":{x:47},"customer":{x:82,frame:1}}
+    priority:{"ticket-left":{x:71},"ticket-right":{x:55},"customer":{x:82,frame:1}}
   }
  },
  "D01-02":{
@@ -66,13 +66,13 @@ export const SCENE_COMPOSITIONS=Object.freeze({
   focusId:"spill",
   description:"Bình nghiêng và sàn ướt ngay lối đi; nhân viên rời quầy, khách đi gần đó và Cục Yên đứng cạnh vũng nước",
   layers:[
-   employee(22,84,28),
+   employee(40,93,28),
    counter(24,80,45),
    prop("espresso","espresso","counter",14,68,12,34),
-   focus("spill","wetFloor","floor",61,91,27,43,{footOffset:91,tint:"wet",rotation:-5}),
-   focus("pitcher","pitcher","floor",56,85,11,45,{rotation:-42,footOffset:90}),
+   focus("spill","wetFloor","floor",64,91,34,43,{footOffset:91,tint:"wet",rotation:-5}),
+   focus("pitcher","pitcher","floor",63,84,14,45,{rotation:-42,footOffset:90}),
    guest(86,96,23),
-   yen(42,96,19)
+   yen(47,96,21)
   ],
   outcomeChanges:{
     clean:{"spill":{state:"dry"},"pitcher":{rotation:0},"customer":{x:89,frame:1}},
@@ -89,9 +89,9 @@ export const SCENE_COMPOSITIONS=Object.freeze({
    employee(42,84,32),
    counter(43,82,72),
    prop("espresso","espresso","counter",20,66,15,34),
-   prop("menu","menu","counter",42,67,12,38,{rotation:-7}),
-   focus("receipt","paper","counter",56,66,13,45,{rotation:7}),
-   prop("tea","tea","counter",72,66,9,35),
+   prop("menu","menu","counter",54,67,10,38,{rotation:-7}),
+   focus("receipt","paper","counter",66,66,11,45,{rotation:7}),
+   prop("tea","tea","counter",75,66,8,35),
    guest(84,95,23),
    yen(11,96,19)
   ],
