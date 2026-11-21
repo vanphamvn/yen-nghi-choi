@@ -1,6 +1,6 @@
 // VN-F04: a traditional illustrated visual novel. No touching, dragging or sorting scenery.
 import { DAY01, DAY01_SCRIPTS, day01Debrief } from "./day01.mjs";
-import { createState, currentIncident, choose, recover, advance, sceneView, validatePlayable, METRICS } from "./engine.mjs";
+import { createState, currentIncident, choose, recover, advance, sceneView, validatePlayable } from "./engine.mjs";
 
 const $ = id => document.getElementById(id);
 const node = (tag, className, content = "") => {
@@ -9,7 +9,6 @@ const node = (tag, className, content = "") => {
   if (content) element.textContent = content;
   return element;
 };
-const LABELS = { safety: "An toàn", trust: "Niềm tin", flow: "Nhịp quán", budget: "Ngân sách" };
 const SPRITES = {
   relieved: "/assets/cuc-yen/sprites/delighted.webp",
   unsure: "/assets/cuc-yen/sprites/shy.webp",
@@ -77,34 +76,25 @@ function incidentVisuals(entry) {
     illustration.append(image);
   }
 
-  // Diegetic evidence: visible scene details, not clickable hotspots.
+  // A single brief clue on the painting; the decisions stay in the lower half.
   const evidence = $("scene-evidence");
   evidence.replaceChildren();
-  const label = node("div", "evidence-title", entry.id === "D01-01" ? "Dải phiếu chờ" :
-    entry.id === "D01-02" ? "Lối đi cạnh quầy" : "Biên lai của khách");
-  evidence.append(label);
   if (entry.id === "D01-01") {
-    const order = outcome === "priority" ? ["02", "01", "03"] :
-      decided ? ["01", "02", "03"] : ["03", "01", "02"];
-    evidence.append(node("div", "evidence-detail ticket-order", order.join("  ·  ")));
-    evidence.append(node("div", "evidence-note", decided ?
-      outcome === "priority" ? "Người đến sau được phục vụ trước" :
-      outcome === "explain" ? "Khách đã được thông báo thứ tự" : "Khách vẫn đang chờ thông tin"
-      : "Phiếu in bị lẫn thứ tự"));
+    const order = outcome === "priority" ? "02 · 01 · 03" :
+      decided ? "01 · 02 · 03" : "03 · 01 · 02";
+    evidence.textContent = decided
+      ? outcome === "priority" ? "Người đến sau được phục vụ trước · " + order :
+        outcome === "explain" ? "Khách đã được thông báo · " + order :
+        "Khách vẫn đang chờ thông tin · " + order
+      : "Phiếu in bị lẫn thứ tự · " + order;
   } else if (entry.id === "D01-02") {
-    const cleared = outcome === "clean" || outcome === "recovered";
-    evidence.append(node("div", "evidence-detail", cleared ? "Sàn đã lau khô" :
+    evidence.textContent = outcome === "clean" || outcome === "recovered" ? "Sàn đã lau khô" :
       outcome === "later" ? "Đã chặn lối · sàn còn ướt" :
-      outcome === "open" ? "Sàn trơn · chưa có cảnh báo" : "Sàn ướt · khách đang đến gần"));
-    evidence.append(node("div", "evidence-note", cleared ?
-      "Khách đi qua lối an toàn" : "Cần ngăn nguy cơ trượt ngã"));
+      outcome === "open" ? "Sàn trơn · chưa có cảnh báo" : "Sàn ướt · khách đang đến gần";
   } else {
-    const corrected = outcome === "refund";
-    evidence.append(node("div", "evidence-detail", decided && corrected ?
-      "Trà đào 25.000đ · Tổng 41.000đ" :
-      "Trà đào 35.000đ · Tổng 51.000đ"));
-    evidence.append(node("div", "evidence-note", corrected ?
-      "Đã sửa và hoàn 10.000đ" : "Menu niêm yết: 25.000đ"));
+    evidence.textContent = outcome === "refund" ?
+      "Trà đào 25.000đ · Tổng 41.000đ · Đã hoàn 10.000đ" :
+      "Menu 25.000đ · hóa đơn 35.000đ · Tổng 51.000đ";
   }
 
   const feedback = $("character-reaction");
@@ -112,9 +102,6 @@ function incidentVisuals(entry) {
     choice.risk === "hazard" ? "NGUY CƠ CHƯA ĐƯỢC XỬ LÝ" :
     choice.risk === "safe" ? "ĐÃ GIẢI QUYẾT" : "CẦN THEO DÕI" : "";
 
-  $("camera-caption").textContent = decided ? "SAU LỰA CHỌN · " + entry.slot.toUpperCase() :
-    "CÂU CHUYỆN · " + entry.slot.toUpperCase();
-  $("weather-caption").textContent = entry.weather;
   $("world-alt").textContent = decided ? scene.shot.alt + ". " + state.pending.reason : scene.shot.alt;
 }
 
@@ -139,23 +126,6 @@ function drawChoices(entry) {
   }
 }
 
-function drawMetrics() {
-  const metrics = $("metrics");
-  metrics.replaceChildren();
-  for (const key of METRICS) {
-    const item = node("div", "metric");
-    const heading = node("div", "metric-label");
-    const value = state.metrics[key];
-    heading.append(node("span", "", LABELS[key]), node("strong", "", value + "/100"));
-    const bar = node("progress");
-    bar.max = 100;
-    bar.value = value;
-    bar.setAttribute("aria-label", LABELS[key]);
-    item.append(heading, bar);
-    metrics.append(item);
-  }
-}
-
 function render() {
   if (state.dayIndex !== 0) {
     showDebrief();
@@ -165,15 +135,11 @@ function render() {
   const decided = state.phase === "resolve";
   $("story").dataset.state = decided ? "resolve" : "observe";
   $("actions").hidden = !decided;
-  $("scene-number").textContent = "NGÀY 01 / 30 · " + entry.slot.toUpperCase() + " · " + entry.time;
-  $("scene-status").textContent = decided ? "KẾT QUẢ QUYẾT ĐỊNH" : "CHỌN CÁCH XỬ LÝ";
-  $("incident-id").textContent = entry.id + " · " + entry.time + " · " + entry.scene.location;
+  $("scene-number").textContent = "Ngày 1 · " + entry.slot + " · " + entry.time + " (" + (state.incidentIndex + 1) + "/3)";
   $("incident-title").textContent = entry.title;
   $("speaker").textContent = decided ? state.pending.reaction.speaker : entry.speaker;
   $("dialogue").textContent = decided ? state.pending.reaction.line : entry.cue;
   $("prompt").textContent = decided ? "Chuyện tiếp theo?" : entry.question;
-  $("goal").textContent = decided ?
-    "Chỉ số thay đổi theo lựa chọn của bạn. Hệ quả được giữ lại trong ngày." : entry.intro;
   $("notice").hidden = !decided;
   $("notice").textContent = decided ?
     state.pending.recovered ? "Quán đã thực hiện hành động khắc phục." : state.pending.reason : "";
@@ -181,26 +147,14 @@ function render() {
   $("recover").hidden = !decided || !state.pending.recovery || state.pending.recovered;
   $("continue").hidden = !decided;
   $("continue").textContent = state.incidentIndex === 2 ? "Kết sổ Ngày 1" : "Tiếp tục ca sau";
-  $("outcome-speaker").textContent = decided ? state.pending.reaction.speaker : "";
-  $("outcome").textContent = decided ? state.pending.reaction.line : "";
   $("reason").textContent = decided ? state.pending.reason : "";
-  for (const element of document.querySelectorAll("[data-step]")) {
-    const index = Number(element.dataset.step);
-    element.classList.toggle("is-current", index === state.incidentIndex);
-    element.classList.toggle("is-done", index < state.incidentIndex);
-  }
   incidentVisuals(entry);
   drawChoices(entry);
-  drawMetrics();
 }
 
 function showDebrief() {
   $("game").hidden = true;
   $("debrief").hidden = false;
-  for (const element of document.querySelectorAll("[data-step]")) {
-    element.classList.remove("is-current");
-    element.classList.add("is-done");
-  }
   const list = $("debrief-list");
   list.replaceChildren();
   for (const summary of day01Debrief(state.flags)) list.append(node("li", "", summary));

@@ -57,7 +57,7 @@ test("Day 1: choose directly from illustrated story, then see reactions and debr
  await next(page);
  await expect(page.locator("#debrief")).toBeVisible();
  await expect(page.locator("#debrief-list li")).toHaveCount(3);
- await expect(page.locator(".coming-soon")).toContainText("Ngày 2 chưa mở chơi");
+ await expect(page.locator("#tomorrow")).toContainText("Ngày 2");
  await testInfo.attach("D01-debrief",{body:await page.screenshot({fullPage:true}),contentType:"image/png"});
  expect(errors).toEqual([]);
 });
@@ -269,3 +269,58 @@ test("compact phone: risk and recovery must fit without page or panel scrolling"
  await next(page);
  await assertOneViewport(page,"negative-debrief");
 });
+
+
+test("portrait is exactly two 50% halves with no redundant navigation, trackers or meters",async({page})=>{
+  await page.setViewportSize({width:390,height:844});
+  await open(page);
+  await expect(page.locator(".header,.intro,#chapter-steps,.meter-section,.world-caption,.world-below")).toHaveCount(0);
+  await expect(page.locator(".scene-meta .scene-exit")).toHaveAttribute("href","/tinh-huong/");
+  await expect(page.locator("#scene-number")).toContainText("Ngày 1");
+  for(const [phase,choice] of [["morning","explain"],["afternoon","clean"],["evening","refund"]]){
+    const geometry=await page.evaluate(()=>{
+      const w=document.querySelector("#game").getBoundingClientRect();
+      const a=document.querySelector(".world-panel").getBoundingClientRect();
+      const b=document.querySelector("#story").getBoundingClientRect();
+      const picture=document.querySelector("#world").getBoundingClientRect();
+      const background=document.querySelector("#backdrop").getBoundingClientRect();
+      return{viewport:innerHeight,worldTop:a.top,worldBottom:a.bottom,worldHeight:a.height,
+        storyTop:b.top,storyBottom:b.bottom,storyHeight:b.height,
+        imageTop:picture.top,imageBottom:picture.bottom,backgroundBottom:background.bottom,
+        split:Math.abs(a.height-b.height),gameHeight:w.height};
+    });
+    expect(geometry.split,phase+" exact 50/50 split").toBeLessThan(1.1);
+    expect(geometry.worldTop).toBeGreaterThanOrEqual(-1);
+    expect(geometry.storyBottom).toBeLessThanOrEqual(845);
+    expect(Math.abs(geometry.storyTop-geometry.worldBottom)).toBeLessThan(1.1);
+    expect(Math.abs(geometry.imageBottom-geometry.worldBottom)).toBeLessThan(1.1);
+    await assertOneViewport(page,phase+" 50/50");
+    await decide(page,choice);
+    await assertOneViewport(page,phase+" result 50/50");
+    await next(page);
+  }
+  await expect(page.locator("#debrief")).toBeVisible();
+  await assertOneViewport(page,"end of day");
+});
+
+for(const {width,height} of [{width:320,height:480},{width:320,height:568},{width:360,height:640},{width:390,height:844},{width:768,height:1024}]){
+ test("strict upper art and lower answers 50/50 on "+width+"x"+height,async({page})=>{
+  await page.setViewportSize({width,height});
+  await open(page);
+  for(const answer of ["explain","clean","refund"]){
+    const halves=await page.evaluate(()=>{
+      const a=document.querySelector(".world-panel").getBoundingClientRect();
+      const b=document.querySelector("#story").getBoundingClientRect();
+      return{a:a.height,b:b.height,y:a.bottom,next:b.top,top:a.top,bottom:b.bottom};
+    });
+    expect(Math.abs(halves.a-halves.b)).toBeLessThanOrEqual(1.1);
+    expect(Math.abs(halves.y-halves.next)).toBeLessThanOrEqual(1.1);
+    expect(halves.top).toBeGreaterThanOrEqual(-1);
+    expect(halves.bottom).toBeLessThanOrEqual(height+1);
+    await assertOneViewport(page,width+"x"+height+" before");
+    await decide(page,answer);
+    await assertOneViewport(page,width+"x"+height+" after");
+    await next(page);
+  }
+ });
+}
