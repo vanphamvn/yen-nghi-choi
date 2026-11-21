@@ -22,6 +22,7 @@ test("each of three visual scenes has real actor and story roles on correct surf
  assert.deepEqual(Object.keys(SCENE_COMPOSITIONS),["D01-01","D01-02","D01-03"]);
  for(const [id,scene] of Object.entries(SCENE_COMPOSITIONS)){
   assert.deepEqual(validateSceneComposition(id),[],id+" staging violations");
+  assert.deepEqual(actorSeparation(scene),[],"all visible character silhouettes must be separated on "+id);
   const byRole=role=>scene.layers.filter(layer=>layer.role===role);
   assert.equal(byRole("staff").length,1);
   assert.equal(byRole("customer").length,1);
