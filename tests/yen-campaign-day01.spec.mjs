@@ -568,3 +568,29 @@ test("first tap after each reload responds without extra taps or sprite reconstr
   await expect(page.locator("#interaction-error")).toBeHidden();
  }
 });
+
+test("real mobile touch works on first tap immediately after each ready reload",async({browser,baseURL})=>{
+ const context=await browser.newContext({
+  baseURL,viewport:{width:390,height:844},isMobile:true,hasTouch:true,deviceScaleFactor:1
+ });
+ try{
+  const page=await context.newPage();
+  for(let reload=0;reload<5;reload++){
+   await page.goto("/tinh-huong/campaign/",{waitUntil:"domcontentloaded"});
+   await expect(page.locator("html")).toHaveAttribute("data-input-ready","true",{timeout:10000});
+   await page.evaluate(()=>document.querySelectorAll("[data-netlify-deploy-id]").forEach(el=>el.remove()));
+   const button=page.locator('[data-choice="explain"]');
+   await expect(button).toBeVisible();
+   const rect=await button.boundingBox();
+   await page.touchscreen.tap(rect.x+rect.width/2,rect.y+rect.height/2);
+   await expect(page.locator("#story")).toHaveAttribute("data-state","resolve");
+   await expect(page.locator("#interaction-error")).toBeHidden();
+   const proceed=page.locator("#continue");
+   const nextRect=await proceed.boundingBox();
+   await page.touchscreen.tap(nextRect.x+nextRect.width/2,nextRect.y+nextRect.height/2);
+   await expect(page.locator("#world")).toHaveAttribute("data-incident","D01-02");
+  }
+ }finally{
+  await context.close();
+ }
+});
