@@ -52,7 +52,7 @@ const createScript = (inc) => ({
       recovery: {
         label: "Dừng việc và khoanh vùng nguy hiểm",
         reason: "Sửa quyết định cũ và giúp khách rời khu vực nguy hiểm.",
-        effects: { safety: 4, trust: 1, flow: -2 },
+        effects: { safety: 6, trust: 1, flow: -2 },
         flags: { hazardRepaired: true }, resolvesHazard: true,
         reaction: reaction("recovered")
       }
