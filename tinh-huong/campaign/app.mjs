@@ -57,7 +57,8 @@ function incidentVisuals(entry) {
   backdrop.src = scene.shot.backdrop;
   backdrop.alt = ""; // semantic description is on the scene container
   backdrop.style.objectPosition = camera.position;
-  backdrop.style.transform = "scale(" + camera.scale + ")";
+  // Do not zoom the painted floor under contact-anchored characters after a choice.
+  backdrop.style.transform = "scale(1)";
 
   const composition=getSceneComposition(entry.id,outcome);
   world.setAttribute("aria-label",composition.description + (decided ? ". " + state.pending.reaction.line : ". " + entry.cue));
