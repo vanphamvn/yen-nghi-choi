@@ -510,7 +510,7 @@ test("wet floor is an irregular transparent watercolor illustration with no rect
  await open(page);
  await decide(page,"explain");await next(page);
  const asset=page.locator('[data-sprite-id="spill"]');
- await expect(asset).toHaveAttribute("src",/watercolor-floor-puddle\\.webp$/);
+ await expect(asset).toHaveAttribute("src",/watercolor-floor-puddle\.webp$/);
  const art=await asset.evaluate(async image=>{
   await image.decode();
   const canvas=document.createElement("canvas");
