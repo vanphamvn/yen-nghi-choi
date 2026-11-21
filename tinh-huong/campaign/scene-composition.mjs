@@ -178,8 +178,9 @@ export function validateSceneComposition(id,scene=SCENE_COMPOSITIONS[id]){
  const visitor=layers.find(item=>item.role==="customer");
  if(staff&&visitor&&staff.size>visitor.size*.92)
   errors.push("rear barista too large compared with foreground customer");
+ // The same silhouette separation requirement applies to all three day-one scenes.
+ errors.push(...actorSeparation(scene).map(collision=>"visible actor overlap: "+collision));
  if(id==="D01-02"){
-  errors.push(...actorSeparation(scene).map(collision=>"visible actor overlap: "+collision));
   const puddle=layers.find(item=>item.id==="spill"),pitcher=layers.find(item=>item.id==="pitcher");
   const mascot=layers.find(item=>item.role==="mascot");
   if(puddle&&puddle.asset!=="wetFloor")errors.push("puddle must use transparent painted floor asset");
@@ -191,6 +192,13 @@ export function validateSceneComposition(id,scene=SCENE_COMPOSITIONS[id]){
  }
  if(!ids.has(scene.focusId))errors.push("focal object not on stage");
  if(layers.some(x=>x.surface==="counter")&&!roles.has("counter"))errors.push("counter-top item without furniture");
+ // Keep changed guest/employee poses in nonoverlapping physical lanes too.
+ for(const [outcome,changes] of Object.entries(scene.outcomeChanges||{})){
+  const placed={layers:layers.map(item=>({
+    ...item,contact:{...item.contact,x:changes[item.id]?.x??item.contact.x}
+  }))};
+  errors.push(...actorSeparation(placed).map(collision=>"visible actor overlap after "+outcome+": "+collision));
+ }
  for(const [outcome,changes] of Object.entries(scene.outcomeChanges||{})){
   for(const [key,patch] of Object.entries(changes)){
    if(!ids.has(key))errors.push("outcome "+outcome+" targets missing layer "+key);
