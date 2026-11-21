@@ -104,7 +104,10 @@ export function validateScript(script, incident) {
   ensure(isObject(script.scene) && text(script.scene.location), script.id + " missing scene");
   ensure(isObject(script.scene.shots), script.id + " missing shots");
   SHOT_PHASES.forEach((phase) => checkShot(script.scene.shots[phase], script.id + "." + phase));
-  ensure(Array.isArray(script.interactions) && script.interactions.length > 0, script.id + " needs actual scene interaction");
+  const isDialogueNovel = script.mode === "visual-novel";
+  ensure(!script.mode || isDialogueNovel, script.id + " invalid presentation mode");
+  ensure(Array.isArray(script.interactions) && (isDialogueNovel ? script.interactions.length === 0 : script.interactions.length > 0),
+    script.id + (isDialogueNovel ? " visual novel must not require object manipulation" : " needs actual scene interaction"));
   const actionIDs = new Set();
   for (const action of script.interactions) {
     ensure(isObject(action) && text(action.id) && !actionIDs.has(action.id) &&
@@ -197,13 +200,15 @@ export function sceneView(catalog, scripts, state) {
 export function interact(catalog, scripts, state, actionId) {
   ensure(state.phase === "observe", "scene interaction can only happen while observing");
   const script = checkPlayableAtCursor(catalog, scripts, state);
+  ensure(script.mode !== "visual-novel", "visual-novel choices are direct; there is no object action");
   const action = script.interactions.find((item) => item.id === actionId);
   ensure(action, "unknown scene action: " + actionId);
   return copyState(state, { phase: "decide", actionId, pending: null });
 }
 export function choose(catalog, scripts, state, choiceId) {
-  ensure(state.phase === "decide", "interact with the scene before deciding, and do not choose twice");
   const script = checkPlayableAtCursor(catalog, scripts, state);
+  const canChoose = state.phase === "decide" || (script.mode === "visual-novel" && state.phase === "observe");
+  ensure(canChoose, "interact with the scene before deciding, and do not choose twice");
   const choice = script.choices.find((item) => item.id === choiceId);
   ensure(choice, "unknown decision: " + choiceId);
   const metrics = applyEffects(state.metrics, choice.effects);
