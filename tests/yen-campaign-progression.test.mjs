@@ -30,7 +30,7 @@ test("progress derives from decisions with rank transitions and next-title text"
  assert.deepEqual([first.xp,first.level,first.earned,first.remaining],[12,1,12,8]);
  assert.equal(first.nextTitle,"Quầy đã vào nhịp");
  const second=shopProgress([{risk:"safe"},{risk:"safe"}]);
- assert.deepEqual([second.xp,second.level,second.earned,second.remaining],[24,2,4,21]);
+ assert.deepEqual([second.xp,second.level,second.earned,second.remaining],[24,2,4,36]);
  assert.equal(second.justLeveled,true);
  const third=shopProgress([{risk:"safe"},{risk:"safe"},{risk:"safe"}]);
  assert.equal(third.xp,36);
@@ -78,4 +78,12 @@ test("completed 30-day scores cap at the top level instead of inventing future r
  assert.equal(p.threshold,0);
  assert.equal(p.remaining,0);
  assert.equal(p.xp,1080);
+});
+
+test("rank pacing spans the full 30-day month, not only the opening week",()=>{
+ const early=Array.from({length:18},()=>({risk:"safe"}));
+ const later=Array.from({length:75},()=>({risk:"safe"}));
+ assert.ok(shopProgress(early).level<7,"Day 6 should not exhaust awards");
+ assert.equal(shopProgress(later).level,7,"steady choices by day 25 can reach top rank");
+ assert.deepEqual(RANKS.map(x=>x.from),[0,20,60,150,310,560,900]);
 });
