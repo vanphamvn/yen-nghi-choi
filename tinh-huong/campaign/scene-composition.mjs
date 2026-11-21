@@ -45,7 +45,7 @@ export const SCENE_COMPOSITIONS=Object.freeze({
   focusId:"ticket-center",
   description:"Khách đang chờ trước quầy; nhân viên sau quầy, máy pha và ba phiếu order đặt trên quầy; Cục Yên đứng trên sàn",
   layers:[
-   employee(41,84,32),
+   employee(41,80,32),
    counter(43,82,72),
    prop("espresso","espresso","counter",22,66,16,34),
    focus("ticket-left","paper","counter",55,67,7.5,44,{rotation:-8}),
@@ -86,7 +86,7 @@ export const SCENE_COMPOSITIONS=Object.freeze({
   focusId:"receipt",
   description:"Máy pha và menu nằm trên quầy; giấy biên lai sai được đưa lên quầy; nhân viên đối diện khách, Cục Yên đứng trên sàn",
   layers:[
-   employee(42,84,32),
+   employee(42,80,32),
    counter(43,82,72),
    prop("espresso","espresso","counter",20,66,15,34),
    prop("menu","menu","counter",54,67,10,38,{rotation:-7}),
