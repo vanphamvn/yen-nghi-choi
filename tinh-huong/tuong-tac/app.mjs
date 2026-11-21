@@ -65,12 +65,13 @@ function sceneItem(item, scene, state) {
 
   button.addEventListener("click", () => {
     const before = current;
+    const restoreFocus = document.activeElement === button;
     current = updateInteraction(current, { type: "activate", id: item.id });
     // A no-op stays no-op even on repeated taps and after completion.
     if (before === current) return;
     render();
     const replacement = [...targets.querySelectorAll("[data-item]")].find(b => b.dataset.item === item.id);
-    if (replacement && !replacement.disabled && document.activeElement?.closest("#world")) {
+    if (replacement && !replacement.disabled && restoreFocus) {
       replacement.focus({ preventScroll: true });
     }
   });
