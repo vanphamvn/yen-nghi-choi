@@ -531,3 +531,121 @@ body{
 @media(prefers-reduced-motion:reduce){
  #game .scene-sprite{transition:none!important}
 }
+
+
+/* Player progression stays inside the LOWER story half; scene art stays label-free. */
+#game .scene-evidence,#game .character-reaction{display:none!important}
+#story .level-panel{
+  flex:0 1 auto;
+  margin-top:auto;
+  margin-bottom:10px;
+}
+.level-panel{
+  min-width:0;
+  padding:clamp(10px,1.4vw,15px);
+  background:#f0efdf;
+  border:1px solid #c2ceb2;
+  border-radius:12px;
+  color:#243c35;
+}
+.level-heading{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  min-width:0;
+}
+.level-number{
+  flex:0 0 auto;
+  display:inline-grid;
+  place-items:center;
+  padding:6px 9px;
+  border-radius:8px;
+  background:#2e5a46;
+  color:#fff;
+  font-size:clamp(11px,1.4vw,14px);
+  font-weight:850;
+  line-height:1.15;
+  white-space:nowrap;
+}
+.level-title{
+  min-width:0;
+  flex:1 1 auto;
+  font:700 clamp(13px,1.5vw,17px)/1.15 var(--sans);
+}
+.level-earned{
+  flex:0 0 auto;
+  padding:5px 8px;
+  border-radius:999px;
+  background:#d9e6c6;
+  font-size:clamp(11px,1.3vw,14px);
+  font-weight:800;
+  white-space:nowrap;
+}
+.level-panel progress{
+  width:100%;
+  display:block;
+  height:10px;
+  margin:11px 0 5px;
+  border:0;
+  border-radius:99px;
+  overflow:hidden;
+  appearance:none;
+  -webkit-appearance:none;
+  background:#d7dccc;
+}
+.level-panel progress::-webkit-progress-bar{background:#d7dccc;border-radius:99px}
+.level-panel progress::-webkit-progress-value{background:#56805a;border-radius:99px;transition:width .35s ease}
+.level-panel progress::-moz-progress-bar{background:#56805a;border-radius:99px}
+.level-foot{
+  display:flex;
+  justify-content:space-between;
+  align-items:baseline;
+  flex-wrap:wrap;
+  column-gap:10px;
+  row-gap:2px;
+  margin:0;
+  font-size:clamp(10px,1.1vw,12px);
+  line-height:1.25;
+  color:#476154;
+}
+.level-foot [data-level="xp"]{font-weight:800;white-space:nowrap}
+.level-foot [data-level="next"]{margin-left:auto;text-align:right}
+.level-panel[data-level-up="true"]{border-color:#7b9754;background:#e8efd6}
+.level-panel[data-level-up="true"] .level-number{background:#3d6642}
+#debrief .level-panel{flex:0 0 auto}
+@media(orientation:portrait){
+  #story .level-panel{margin-bottom:8px}
+  .level-panel{padding:9px 11px}
+  .level-panel progress{margin:8px 0 4px;height:8px}
+  .level-title{font-size:clamp(13px,3.5vw,17px)}
+  .level-earned{font-size:12px}
+}
+@media(orientation:portrait) and (max-height:650px){
+  #story .level-panel{margin-bottom:5px}
+  .level-panel{padding:6px 8px;border-radius:8px}
+  .level-heading{gap:6px}
+  .level-number{padding:4px 6px;font-size:11px}
+  .level-title{font-size:12px;line-height:1.13}
+  .level-earned{padding:3px 5px;font-size:11px}
+  .level-panel progress{height:6px;margin:5px 0 3px}
+  .level-foot{font-size:10px;line-height:1.16}
+}
+@media(orientation:portrait) and (max-height:520px){
+  #story[data-state="observe"] .level-panel{display:none}
+  #story[data-state="resolve"] .level-foot [data-level="next"]{display:none}
+  #story[data-state="resolve"] .level-panel{margin-top:4px;margin-bottom:4px}
+  #story[data-state="resolve"] .level-heading{gap:4px}
+  #story[data-state="resolve"] .level-title{font-size:11px}
+  #story[data-state="resolve"] .level-panel progress{margin:4px 0 2px}
+  #debrief .level-foot [data-level="next"]{display:none}
+}
+@media(orientation:landscape) and (max-height:480px){
+  #story .level-panel{margin-top:auto;margin-bottom:4px;padding:6px 9px}
+  .level-title{font-size:12px}
+  .level-number{padding:4px 6px}
+  .level-panel progress{height:6px;margin:5px 0 3px}
+  .level-foot{font-size:10px}
+}
+@media(prefers-reduced-motion:reduce){
+  .level-panel progress::-webkit-progress-value{transition:none}
+}
