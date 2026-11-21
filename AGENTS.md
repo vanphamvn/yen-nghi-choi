@@ -32,6 +32,10 @@ Run `node game/preview-2d/tools/audit-art-style.mjs` and the game contract tests
 
 For user-facing gameplay changes, a GitHub PR is **not** a finished production release. Verify exact commit and READY status of the production target, provide the playable URL, or explicitly report deployment blocked.
 
+## Netlify Preview game tap safety (21/11/2026)
+
+Interactive game review links should append `?ntl-drawer-state=hidden` to the **Deploy Preview URL**. Netlify's injected 48px-wide-bottom iframe Drawer was directly observed to intercept `Tiếp tục ca sau` taps; a first touch reaches the game once the Drawer is disabled. Do not merge to production before owner preview approval, and do not confuse overlay interception with bugs in the game's own click handlers.
+
 ## Visual novel preview-first approval and choice visibility (21/11/2026)
 
 For `/tinh-huong/campaign/`, follow the owner-directed sequence: update rules/skill if needed → implement UI on a feature branch → **deploy and share a real Netlify Preview link** → **wait for explicit owner approval** → only then perform QA, merge or production deployment. Don't auto-merge this preview. Read `.agents/skills/yen-ui-craft/SKILL.md` for the story HUD hierarchy: all three choices must fit within the lower portrait half before any XP/reward panel; generic speaker label “Người cùng ca” is not part of the UI.
