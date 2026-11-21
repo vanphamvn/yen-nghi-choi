@@ -1,0 +1,139 @@
+import test from "node:test";
+import assert from "node:assert/strict";
+import {existsSync,readFileSync} from "node:fs";
+import {resolve} from "node:path";
+import {
+  SCENE_COMPOSITIONS, VISUAL_ASSETS, getSceneComposition,
+  projectContact, validateSceneComposition, COUNTER_ASPECT_RATIO
+} from "../tinh-huong/campaign/scene-composition.mjs";
+
+const root=resolve(import.meta.dirname,"..");
+const SIZES=[[320,240],[320,284],[360,320],[390,422],[768,512],[812,375],[1440,900]];
+
+test("spatial skill and rule file exist for future agents and future 87 incidents",()=>{
+ assert.ok(existsSync(resolve(root,".agents/skills/yen-visual-novel-staging/SKILL.md")));
+ assert.ok(existsSync(resolve(root,"docs/visual-novel/SCENE-SPATIAL-RULES.md")));
+ const rules=readFileSync(resolve(root,"docs/visual-novel/SCENE-SPATIAL-RULES.md"),"utf8");
+ for(const key of ["D01-01","D01-02","D01-03","floor","counter","Cục Yên"])
+  assert.ok(rules.includes(key),key);
+});
+
+test("each of three visual scenes has real actor and story roles on correct surfaces",()=>{
+ assert.deepEqual(Object.keys(SCENE_COMPOSITIONS),["D01-01","D01-02","D01-03"]);
+ for(const [id,scene] of Object.entries(SCENE_COMPOSITIONS)){
+  assert.deepEqual(validateSceneComposition(id),[],id+" staging violations");
+  const byRole=role=>scene.layers.filter(layer=>layer.role===role);
+  assert.equal(byRole("staff").length,1);
+  assert.equal(byRole("customer").length,1);
+  assert.equal(byRole("mascot").length,1);
+  assert.equal(byRole("counter").length,1);
+  assert.ok(byRole("focus").length>=1);
+  assert.ok(scene.layers.find(layer=>layer.id===scene.focusId)?.surface);
+  const byId=Object.fromEntries(scene.layers.map(x=>[x.id,x]));
+  assert.equal(byId.staff.kind,"sheet");
+  assert.equal(byId.customer.kind,"sheet");
+  assert.equal(byId.staff.asset,"staff");
+  assert.equal(byId.customer.asset,"guest");
+  assert.equal(byId["cuc-yen"].surface,"floor");
+  assert.equal(byId.staff.surface,"floor");
+  assert.equal(byId.customer.surface,"floor");
+  assert.ok(byId.staff.depth<byId.counter.depth,"staff must be behind painted service counter");
+  assert.ok(byId.customer.depth>byId.counter.depth,"customer must be in front of counter");
+  assert.ok(byId["cuc-yen"].depth>byId.counter.depth,"Cục Yên must be foreground floor actor");
+  assert.equal(byId.espresso.surface,"counter","espresso must not float or rest on floor");
+ }
+});
+
+test("role sprite sheet is a real 4×4 painted pack, not the full image onstage",()=>{
+ for(const key of ["staff","guest"]){
+  const path=resolve(root,VISUAL_ASSETS[key].slice(1));
+  const b=readFileSync(path);
+  assert.equal(b.toString("ascii",1,4),"PNG");
+  assert.equal(b.readUInt32BE(16),1024,key+" width");
+  assert.equal(b.readUInt32BE(20),1280,key+" height");
+ }
+ for(const id of Object.keys(SCENE_COMPOSITIONS)){
+  const scene=getSceneComposition(id);
+  const actors=scene.layers.filter(x=>x.kind==="sheet");
+  assert.equal(actors.length,2);
+  assert.ok(actors.every(x=>x.frame===0||x.frame===1));
+ }
+});
+
+test("all sources actually exist in repository, with no remote runtime image dependencies",()=>{
+ for(const [id,src] of Object.entries(VISUAL_ASSETS)){
+  assert.match(src,/^\//);
+  assert.ok(/\.(webp|png|jpg)$/i.test(src),id);
+  assert.equal(existsSync(resolve(root,src.slice(1))),true,src);
+ }
+});
+
+test("countertop projection exactly matches the upper edge of the physical painted counter at every aspect",()=>{
+ for(const id of Object.keys(SCENE_COMPOSITIONS)){
+  const scene=getSceneComposition(id);
+  const counter=scene.layers.find(x=>x.id==="counter");
+  const machine=scene.layers.find(x=>x.id==="espresso");
+  for(const [width,height] of SIZES){
+   const result=projectContact(machine,scene,width,height);
+   const counterHeight=width*counter.size/100*COUNTER_ASPECT_RATIO;
+   const physicalTop=height*counter.contact.y/100-counterHeight*counter.footOffset/100;
+   assert.ok(Math.abs(result.y-physicalTop)<.01,id+" "+width+"x"+height);
+   assert.ok(result.y>height*.25,result.y);
+   assert.ok(result.y<height*.78,result.y);
+   const staff=scene.layers.find(x=>x.role==="staff");
+   const staffFoot=projectContact(staff,scene,width,height);
+   assert.equal(staffFoot.y,height*staff.contact.y/100);
+   assert.ok(staffFoot.y>physicalTop,"staff shoes are behind counter");
+   const guest=scene.layers.find(x=>x.role==="customer");
+   assert.ok(projectContact(guest,scene,width,height).y>physicalTop);
+  }
+ }
+});
+
+test("spill stays on the floor and dries only when the choice or recovery resolves the hazard",()=>{
+ const before=getSceneComposition("D01-02");
+ const safe=getSceneComposition("D01-02","clean");
+ const unsafe=getSceneComposition("D01-02","open");
+ const warning=getSceneComposition("D01-02","later");
+ const repaired=getSceneComposition("D01-02","recovered");
+ const find=(x,id)=>x.layers.find(y=>y.id===id);
+ assert.equal(find(before,"spill").surface,"floor");
+ assert.ok(find(before,"spill").contact.y>=80);
+ assert.equal(find(safe,"spill").state,"dry");
+ assert.equal(find(repaired,"spill").state,"dry");
+ assert.equal(find(unsafe,"spill").state,"unsafe");
+ assert.equal(find(warning,"spill").state,"wet-warning");
+ assert.notEqual(find(safe,"pitcher").rotation,find(before,"pitcher").rotation);
+ assert.ok(find(unsafe,"customer").contact.x<find(before,"customer").contact.x);
+ assert.equal(find(before,"spill").state,"","the prior scene must not mutate");
+});
+
+test("focal objects change under decisions and never jump surfaces",()=>{
+ for(const [id,scene] of Object.entries(SCENE_COMPOSITIONS)){
+  const initial=getSceneComposition(id);
+  const focus=initial.layers.find(x=>x.id===scene.focusId);
+  assert.equal(focus.role,"focus");
+  for(const [choice,patches] of Object.entries(scene.outcomeChanges)){
+   const staged=getSceneComposition(id,choice);
+   assert.equal(staged.layers.length,initial.layers.length);
+   for(const [key,patch] of Object.entries(patches)){
+    const original=initial.layers.find(x=>x.id===key),changed=staged.layers.find(x=>x.id===key);
+    assert.equal(changed.surface,original.surface,key+" jumped physical surface");
+    assert.ok(Object.keys(patch).some(field=>["x","rotation","state","frame"].includes(field)),key);
+   }
+  }
+ }
+});
+
+test("contract detects floating actors and a coffee machine placed on the floor",()=>{
+ const original=SCENE_COMPOSITIONS["D01-01"];
+ const clone=()=>structuredClone(original);
+ const one=clone();one.layers.find(x=>x.id==="cuc-yen").surface="counter";
+ assert.ok(validateSceneComposition("D01-01",one).some(e=>/actor must stand on floor/.test(e)));
+ const two=clone();two.layers.find(x=>x.id==="espresso").surface="floor";
+ assert.ok(validateSceneComposition("D01-01",two).some(e=>/espresso machine must be on counter/.test(e)));
+ const three=clone();three.layers.find(x=>x.role==="staff").contact.y=40;
+ assert.ok(validateSceneComposition("D01-01",three).some(e=>/feet above floor/.test(e)));
+ const four=clone();four.layers= four.layers.filter(x=>x.id!=="counter");
+ assert.ok(validateSceneComposition("D01-01",four).some(e=>/missing counter|without furniture/.test(e)));
+});
