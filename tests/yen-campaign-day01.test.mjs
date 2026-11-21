@@ -7,8 +7,9 @@ import {
   interact, choose, recover, advance
 } from "../tinh-huong/campaign/engine.mjs";
 import {
-  DAY01, DAY01_BY_ID, DAY01_SCRIPTS, DAY01_ART_REFS, day01Debrief
+  DAY01, DAY01_BY_ID, DAY01_SCRIPTS, day01Debrief
 } from "../tinh-huong/campaign/day01.mjs";
+import { getSceneComposition, VISUAL_ASSETS } from "../tinh-huong/campaign/scene-composition.mjs";
 
 const root=resolve(import.meta.dirname,"..");
 const catalog=JSON.parse(readFileSync(resolve(root,"docs/visual-novel/episodes.json"),"utf8"));
@@ -56,22 +57,24 @@ test("Day 1 is an illustrated visual novel: 3 choices appear without touching sc
   assert.deepEqual(script.interactions,[]);
   assert.equal(entry.choices.length,3);
   assert.ok(entry.intro.length>25 && entry.cue.length>20 && entry.question.length>20);
-  assert.ok(entry.sceneTheme && entry.assets.length>=3);
+  assert.ok(entry.sceneTheme && getSceneComposition(entry.id).layers.length>=6);
   assert.ok(entry.choices.every(c=>c.reaction.visualChanges.length>=2));
  }
 });
 
-test("painted backgrounds, actors and relevant world prop references all exist",()=>{
- const unique=[];
- for(const entry of DAY01){
-  const refs=DAY01_ART_REFS[entry.id];
-  assert.equal(refs.length,3);
-  assert.ok(refs.every(src=>/\.webp$/.test(src)));
-  for(const url of refs)assert.equal(existsSync(resolve(root,url.slice(1))),true,url);
-  assert.equal(existsSync(resolve(root,"lab/assets/room-backdrop.jpg")),true);
-  unique.push(refs.join("|"));
+test("painted staff/customer/Cục Yên, counter and incident objects all point to real source assets",()=>{
+ for(const [key,ref] of Object.entries(VISUAL_ASSETS)){
+  assert.equal(existsSync(resolve(root,ref.slice(1))),true,key+" "+ref);
  }
- assert.equal(new Set(unique).size,3,"every incident must have distinct painted actors/props");
+ const keys=[];
+ for(const entry of DAY01){
+  const composition=getSceneComposition(entry.id);
+  assert.equal(composition.background,"/lab/assets/room-backdrop.jpg");
+  assert.ok(composition.layers.length>=7);
+  assert.ok(composition.layers.some(x=>x.id===composition.focusId));
+  keys.push(composition.layers.map(x=>x.asset).join("|"));
+ }
+ assert.equal(new Set(keys).size,3,"every incident must have distinct staged artwork");
 });
 test("shots carry different camera, actor pose and story evidence, not object actions",()=>{
  for(const entry of DAY01){
