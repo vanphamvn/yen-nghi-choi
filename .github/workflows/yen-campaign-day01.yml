@@ -9,6 +9,7 @@ on:
       - "docs/visual-novel/episodes.json"
       - "tools/check-yen-visual-art.mjs"
       - "tests/yen-campaign-day01*"
+      - "tests/yen-campaign-scene-composition.test.mjs"
       - "tests/yen-visual-novel-roadmap.test.mjs"
       - "tests/yen-visual-art.test.mjs"
       - "tests/yen-campaign-engine.test.mjs"
@@ -23,6 +24,7 @@ on:
       - "docs/visual-novel/episodes.json"
       - "tools/check-yen-visual-art.mjs"
       - "tests/yen-campaign-day01*"
+      - "tests/yen-campaign-scene-composition.test.mjs"
       - "tests/yen-visual-novel-roadmap.test.mjs"
       - "tests/yen-visual-art.test.mjs"
       - "tests/yen-campaign-engine.test.mjs"
@@ -45,6 +47,7 @@ jobs:
           node --test tests/yen-visual-novel-roadmap.test.mjs
           node --test tests/yen-campaign-engine.test.mjs
           node --test tests/yen-campaign-day01.test.mjs
+          node --test tests/yen-campaign-scene-composition.test.mjs
           node --test tests/yen-visual-art.test.mjs
           node tools/check-yen-visual-art.mjs
 
