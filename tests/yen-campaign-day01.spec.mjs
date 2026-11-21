@@ -531,3 +531,40 @@ test("wet floor is an irregular transparent watercolor illustration with no rect
  await expect(asset).toHaveAttribute("data-state","dry");
  await expect(asset).toBeHidden();
 });
+
+test("initial load never shows an apparently clickable button before game input is ready",async({page})=>{
+ await page.route("**/docs/visual-novel/episodes.json",async route=>{
+  await new Promise(resolve=>setTimeout(resolve,250));
+  await route.continue();
+ });
+ await page.goto("/tinh-huong/campaign/",{waitUntil:"domcontentloaded"});
+ await expect(page.locator("html")).toHaveAttribute("data-input-ready","false");
+ await expect(page.locator("#game")).toBeHidden();
+ await expect(page.locator("#loading")).toBeVisible();
+ await expect(page.locator("html")).toHaveAttribute("data-input-ready","true",{timeout:10000});
+ await expect(page.locator("#controls-loading")).toBeHidden();
+ await expect(page.locator("#choices")).toBeVisible();
+ await page.locator('[data-choice="explain"]').click();
+ await expect(page.locator("#story")).toHaveAttribute("data-state","resolve");
+});
+
+test("first tap after each reload responds without extra taps or sprite reconstruction on browser chrome resize",async({page})=>{
+ await page.setViewportSize({width:390,height:844});
+ for(let attempt=0;attempt<5;attempt++){
+  await page.goto("/tinh-huong/campaign/",{waitUntil:"domcontentloaded"});
+  await expect(page.locator("html")).toHaveAttribute("data-input-ready","true",{timeout:10000});
+  await expect(page.locator("#choices")).toBeVisible();
+  const sceneIdentity=await page.evaluate(()=>{
+   const initial=document.querySelector('[data-sprite-id="staff"]');
+   window.__firstSceneStaff=initial;
+   window.dispatchEvent(new Event("resize"));
+   return Boolean(initial);
+  });
+  expect(sceneIdentity).toBe(true);
+  await page.locator('[data-choice="explain"]').click();
+  await expect(page.locator("#story")).toHaveAttribute("data-state","resolve");
+  const preserved=await page.evaluate(()=>window.__firstSceneStaff?.isConnected);
+  expect(preserved).toBe(false); // valid state transition redraws, unlike browser resize
+  await expect(page.locator("#interaction-error")).toBeHidden();
+ }
+});
