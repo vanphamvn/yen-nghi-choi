@@ -2,11 +2,11 @@
 
 Ticket: [VN-F01 #219](https://github.com/vanphamvn/yen-nghi-choi/issues/219) · Engine source: `tinh-huong/campaign/engine.mjs`
 
-**Status:** campaign logic implemented, illustrations and all 90 playable scripts remain PLANNED. This contract does not imply an art release.
+**Status:** campaign logic implemented; 3 Day 1 scripts are playable with agent-reviewed scene compositions; 87 remain planned. Owner visual review pending.
 
 ## Graph and finite states
 
-30 days × 3 incidents, strictly ordered D01-01 through D30-03. Every incident follows: observe (establishing shot) → manipulate a physical object in-scene → decide → resolve (actor and prop reaction) → optional recovery → advance. Day 30 final event resolves into one of three endings. No calendar gate or daily real-time lock.
+30 days × 3 incidents, strictly ordered D01-01 through D30-03. Every new visual-novel incident follows: show contextual illustrated scene + character dialogue + answer buttons → player chooses → visible actor/prop reaction → optional recovery → advance. No object manipulation or drag is required. Day 30 final event resolves into one of three endings. No calendar gate or daily real-time lock.
 
 Three endings: repair for unresolved hazards or low safety, steady for a functioning but imperfect shop, thriving if safety/trust/flow thresholds are maintained. Safety cannot be traded for a better ending by exploiting higher speed or budget.
 
@@ -15,7 +15,7 @@ Three endings: repair for unresolved hazards or low safety, steady for a functio
 - The existing `episodes.json` catalog is a **planning manifest**, containing day, slot, planned incident, scenario visual briefs, story carry flags and status. Planned entries are never treated as playable.
 - Playable incident scripts must declare id and scene.location.
 - scene.shots has **establishing**, **interactive**, **resolution** shots; each defines backdrop asset ID, human-readable description, accessibility alt, actors with id/pose/alt, props with id/state/alt.
-- interactions must contain a meaningful type (inspect, arrange, isolate, move, compare, place), targetId, instructional prompt, keyboardAlternative and visible actor/prop/setting change. A standalone text-choice quiz cannot pass.
+- For `mode: "visual-novel"`, `interactions` is an empty array. The player chooses directly from 2–4 dialogue responses; `choose()` accepts the initial `observe` phase. The scene must still show context-specific painted actors/props and visibly react. The legacy scene-action engine remains compatible with other experiments, but is not a campaign requirement.
 - choices have id, label, reason, risk (safe/caution/hazard), bounded effects on safety/trust/flow/budget, optional flags, and reaction with speaker, dialogue and visible on-scene changes.
 - A hazard must decrease safety and include a recovery action with label, explanation, flag/metric changes, explicit hazard resolution boolean, and visible response. No uncorrectable hazard lock.
 - callbacks optionally read long-term boolean flags and alter later lines/visual layers. They may not prevent progression.
