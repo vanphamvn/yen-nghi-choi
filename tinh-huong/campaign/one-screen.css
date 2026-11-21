@@ -359,3 +359,56 @@ body{
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{scroll-behavior:auto!important;animation:none!important;transition:none!important}
 }
+
+/* Extremely low landscape phones (including 812×375) are not desktop layouts. */
+@media (orientation:landscape) and (max-height:500px){
+  .header,.header .return{min-height:34px}
+  .header{padding-top:0;padding-bottom:0}
+  #main{gap:3px;padding:0 6px 3px}
+  #main>.intro .eyebrow{display:none}
+  #main>.intro h1{font-size:18px;line-height:1.1}
+  #chapter-steps li{height:27px;min-height:27px;padding:1px 6px;flex-direction:row;align-items:center;gap:5px}
+  #chapter-steps li span{font-size:9px}
+  #chapter-steps li strong{font-size:10px}
+  #game{grid-template-columns:minmax(0,47fr) minmax(0,53fr);gap:7px}
+  #game .world-bar{min-height:17px;font-size:9px;padding:0}
+  #game .story{padding:6px}
+  #story h2{font-size:18px;line-height:1.1;margin-bottom:3px}
+  #story .dialogue-scene{padding:4px 6px;margin-bottom:3px}
+  #story .dialogue-scene strong{font-size:10px;margin:0}
+  #story .dialogue-scene p{font-size:11px;line-height:1.18}
+  #story h3{font-size:12px;line-height:1.15;margin-bottom:3px}
+  #story #choices{gap:3px}
+  #story .day-choice{min-height:44px;padding:3px 6px;gap:6px}
+  #story .choice-index{flex-basis:23px;height:23px}
+  #story .choice-text{font-size:11px;line-height:1.15}
+  #story .day-result{padding:5px 7px;margin-bottom:5px}
+  #story .day-result .reason{font-size:11px;line-height:1.2}
+  #story .actions button{min-height:44px;font-size:11px}
+  #story .meter-section{display:none}
+}
+/* 320×480: free vertical space without shrinking tap targets or forcing scroll. */
+@media (orientation:portrait) and (max-height:520px){
+  .header,.header .return{min-height:32px}
+  #main{gap:2px;padding:0 5px 2px}
+  #main>.intro h1{font-size:17px;line-height:1.08}
+  #main>.intro .eyebrow{display:none}
+  #chapter-steps li{height:27px;min-height:27px;padding:1px 5px}
+  #chapter-steps li span{font-size:8px}
+  #chapter-steps li strong{font-size:10px}
+  #game{gap:3px;grid-template-rows:minmax(0,30fr) minmax(0,70fr)}
+  #game .world-bar{min-height:15px}
+  #game .story{padding:6px}
+  #story h2{font-size:18px;margin-bottom:2px}
+  #story .dialogue-scene{padding:4px 6px;margin-bottom:2px}
+  #story .dialogue-scene p{font-size:11px;line-height:1.16}
+  #story .dialogue-scene strong{font-size:10px}
+  #story h3{margin-bottom:2px;font-size:12px}
+  #story #choices{gap:2px}
+  #story .day-choice{min-height:44px;padding:3px 6px}
+  #story .choice-text{font-size:11px;line-height:1.16}
+  #debrief{gap:3px;padding:7px 9px}
+  #debrief h2{font-size:19px}
+  #debrief .debrief-list li{padding:4px 7px;font-size:11px}
+  #debrief .tomorrow{padding:4px 7px;font-size:11px}
+}
