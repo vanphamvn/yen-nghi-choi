@@ -1,0 +1,58 @@
+name: Yên visual novel QA
+
+on:
+  pull_request:
+    paths:
+      - "tinh-huong/**"
+      - "tests/yen-tinh-huong*"
+      - "playwright.tinh-huong.config.mjs"
+      - ".github/workflows/yen-tinh-huong.yml"
+  push:
+    branches: [main]
+    paths:
+      - "tinh-huong/**"
+      - "tests/yen-tinh-huong*"
+      - "playwright.tinh-huong.config.mjs"
+      - ".github/workflows/yen-tinh-huong.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  story-contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: "22"
+      - run: node --test tests/yen-tinh-huong.test.mjs
+
+  browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: "22"
+      - run: npm ci
+      - name: Find system Chrome or install Chromium
+        shell: bash
+        run: |
+          if command -v google-chrome >/dev/null 2>&1; then
+            echo "LAB_UX_CHROMIUM_PATH=$(command -v google-chrome)" >> "$GITHUB_ENV"
+          else
+            npx playwright install --with-deps chromium
+          fi
+      - run: npx playwright test --config playwright.tinh-huong.config.mjs
+      - name: Preserve browser artifacts
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: mot-ca-khong-yen-browser-qa
+          path: |
+            test-results/
+            playwright-report/tinh-huong/
+          if-no-files-found: warn
