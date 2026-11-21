@@ -17,7 +17,7 @@ test("bốn ca chơi trọn từ chọn tình huống đến tổng kết và ch
       await page.locator(".choice").first().click();
       await expect(page.locator("#consequence")).toBeVisible();
       await expect(page.locator("#impact")).not.toBeEmpty();
-      await expect(page.locator(".choice")).toBeHidden();
+      await expect(page.locator("#choices")).toBeHidden();
       await page.locator("#continue").click();
     }
     await expect(page.locator("#ending")).toBeVisible();
@@ -35,14 +35,12 @@ test("bốn ca chơi trọn từ chọn tình huống đến tổng kết và ch
 test("phản hồi thay đổi theo lựa chọn, không cho chọn hai lần", async ({ page }) => {
   await page.goto("/tinh-huong/");
   await page.locator('[data-scenario="nuoc-do"]').click();
-  const before = await page.locator("#stat-safety").inputValue().catch(() => null);
   await page.locator(".choice").nth(1).click();
   await expect(page.locator("#dialogue-line")).toContainText("suýt trượt");
   await expect(page.locator("#reason")).toContainText("Khăn");
   await expect(page.locator("#word-safety")).toHaveText("Đang khó");
   const after = await page.locator("#stat-safety").evaluate((p) => p.value);
   expect(Number(after)).toBeLessThan(65);
-  expect(before).toBeNull(); // progress is not an input, so no false input-value assumption
   await expect(page.locator("#continue")).toBeEnabled();
   await page.locator("#continue").click();
   await expect(page.locator("#dialogue-line")).toContainText("Lối đi vẫn trơn");
