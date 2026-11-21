@@ -1,94 +1,162 @@
-/* VN-F07: every state of Day 1 is an entire viewport, never a vertically scrolling page.
-   The scene and the complete answer set share one screen at real device sizes. */
+/* Day 1 visual novel · portrait is EXACTLY two halves.
+   Upper half: edge-to-edge illustrated situation + only essential scene info.
+   Lower half: dialogue + three answer buttons, or choice consequence + continue.
+   No scrolling, draggable props, score bar or page chrome. */
 html,body{
   width:100%;
   height:100%;
+  margin:0;
   overflow:hidden;
   overscroll-behavior:none;
 }
 body{
   height:100vh;
   height:100dvh;
-  display:flex;
-  flex-direction:column;
+  display:block;
+  background:var(--paper);
 }
-.header{
-  flex:0 0 auto;
-  width:min(100%,1180px);
-  min-height:40px;
-  padding:2px 12px;
-}
-.header .return{min-height:40px;font-size:12px}
-.header .stamp{font-size:10px;letter-spacing:.04em}
 #main{
-  flex:1 1 auto;
-  min-height:0;
-  width:min(100%,1180px);
-  margin:0 auto;
-  padding:2px 12px max(5px,env(safe-area-inset-bottom));
+  height:100%;
+  height:100dvh;
+  width:100%;
+  max-width:none;
+  margin:0;
+  padding:0;
   display:flex;
   flex-direction:column;
-  gap:6px;
+  gap:0;
+  min-height:0;
   overflow:hidden;
 }
-#main>.intro{
-  flex:0 0 auto;
-  margin:0;
-  display:flex;
-  align-items:baseline;
-  gap:12px;
-  max-width:none;
-}
-#main>.intro .eyebrow{font-size:10px;white-space:nowrap}
-#main>.intro h1{
-  margin:0;
-  font-size:clamp(21px,2.7vw,30px);
-  line-height:1.15;
-  letter-spacing:-.025em;
-}
-#main>.intro p,#main>.bottom{display:none}
-#chapter-steps{
-  flex:0 0 auto;
-  margin:0;
-  grid-template-columns:repeat(3,minmax(0,1fr));
-  gap:6px;
-}
-#chapter-steps li{
-  min-height:36px;
-  height:36px;
-  padding:3px 11px;
-  border-radius:7px;
-}
-#chapter-steps li span{font-size:10px;line-height:1.15}
-#chapter-steps li strong{font-size:12px;line-height:1.2}
 #game{
-  flex:1 1 auto;
-  min-height:0;
   display:grid;
   grid-template-columns:minmax(0,55fr) minmax(0,45fr);
-  gap:12px;
+  grid-template-rows:minmax(0,1fr);
+  flex:1 1 auto;
+  height:100%;
+  width:100%;
+  min-height:0;
+  gap:0;
   align-items:stretch;
   overflow:hidden;
 }
 #game .world-panel{
-  min-height:0;
-  display:flex;
-  flex-direction:column;
-}
-#game .world-bar{
-  flex:0 0 auto;
-  min-height:23px;
-  padding:2px 1px;
-  font-size:10px;
-  line-height:1.35;
-}
-#game .day-world{
-  flex:1 1 auto;
+  position:relative;
+  min-width:0;
   min-height:0;
   height:100%;
+  width:100%;
+  max-width:none;
+  margin:0;
+  overflow:hidden;
+}
+#game .day-world{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  min-height:0;
   aspect-ratio:auto;
-  border-radius:10px;
+  margin:0;
+  overflow:hidden;
+  border:0;
+  border-radius:0;
   box-shadow:none;
+}
+#game .painted-backdrop{
+  position:absolute;
+  inset:0;
+  display:block;
+}
+#game .painted-backdrop img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+}
+#game .scene-meta{
+  position:absolute;
+  z-index:15;
+  left:max(12px,env(safe-area-inset-left));
+  right:max(12px,env(safe-area-inset-right));
+  top:max(10px,env(safe-area-inset-top));
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:8px;
+  pointer-events:none;
+}
+#game .scene-meta>*{pointer-events:auto}
+#game .scene-exit{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-width:66px;
+  min-height:44px;
+  padding:6px 9px;
+  background:rgba(247,243,233,.94);
+  border:1px solid rgba(36,60,53,.22);
+  border-radius:10px;
+  color:var(--ink);
+  text-decoration:none;
+  font-size:13px;
+  font-weight:750;
+  white-space:nowrap;
+}
+#game .scene-number{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  text-align:right;
+  padding:7px 10px;
+  min-height:38px;
+  max-width:calc(100% - 76px);
+  background:rgba(36,60,53,.91);
+  color:#fff;
+  border-radius:9px;
+  font-size:clamp(11px,2.8vw,13px);
+  font-weight:700;
+  line-height:1.25;
+}
+#game .scene-evidence{
+  position:absolute;
+  z-index:10;
+  top:auto;
+  right:auto;
+  bottom:12px;
+  left:12px;
+  width:auto;
+  max-width:min(88%,540px);
+  padding:8px 11px;
+  margin:0;
+  border:0;
+  border-radius:8px;
+  background:rgba(247,243,233,.94);
+  box-shadow:0 3px 14px rgba(17,31,26,.2);
+  color:var(--ink);
+  font-size:clamp(12px,2.8vw,15px);
+  font-weight:720;
+  line-height:1.35;
+  transform:none;
+  pointer-events:none;
+}
+#game .character-reaction{
+  position:absolute;
+  z-index:11;
+  top:auto;
+  right:10px;
+  bottom:65px;
+  max-width:54%;
+  padding:6px 9px;
+  font-size:11px;
+  font-weight:750;
+  letter-spacing:0;
+  text-align:right;
+  border-radius:7px;
+}
+#game .painted-layer.actor{
+  z-index:5;
+  max-height:44%;
 }
 #game .world-alt{
   position:absolute;
@@ -101,314 +169,284 @@ body{
   clip-path:inset(50%);
   border:0;
 }
-#game .world-below{display:none}
 #game .story{
   height:100%;
+  width:100%;
+  max-width:none;
+  min-width:0;
   min-height:0;
   margin:0;
-  padding:clamp(10px,1.5vw,19px);
-  border-radius:11px;
-  box-shadow:none;
-  overflow:hidden;
+  padding:clamp(12px,2.4vw,28px);
   display:flex;
   flex-direction:column;
+  gap:0;
+  overflow:hidden;
+  background:var(--cream);
+  border:0;
+  border-radius:0;
+  box-shadow:none;
 }
-#story .folio{display:none}
-#story h2{
+#story h1{
+  margin:0 0 10px;
   flex:0 0 auto;
-  margin:0 0 7px;
-  font-size:clamp(21px,2.5vw,28px);
-  line-height:1.15;
+  font:650 clamp(20px,2.5vw,30px)/1.15 var(--serif);
+  letter-spacing:-.015em;
+  color:var(--ink);
 }
 #story .dialogue-scene{
   flex:0 0 auto;
-  padding:8px 10px;
-  margin:0 0 9px;
-  border-radius:6px;
-  border-left-width:3px;
+  margin:0 0 12px;
+  padding:0;
+  border:0;
+  border-radius:0;
+  background:transparent;
 }
 #story .dialogue-scene strong{
-  font-size:11px;
-  margin:0 0 1px;
+  display:block;
+  margin-bottom:3px;
+  font-size:clamp(12px,1.25vw,14px);
   line-height:1.25;
+  color:var(--green);
 }
 #story .dialogue-scene p{
-  font-size:clamp(12px,1.3vw,15px);
-  line-height:1.36;
   margin:0;
+  line-height:1.4;
+  font-size:clamp(13px,1.5vw,16px);
+  font-weight:480;
 }
-#story h3{
-  flex:0 0 auto;
-  font:700 clamp(13px,1.5vw,17px)/1.25 var(--sans);
-  margin:0 0 7px;
-}
-#story[data-state="resolve"] h3{display:none}
-#story .goal,#story .status{
-  position:absolute;
-  width:1px;height:1px;overflow:hidden;
-  margin:-1px;padding:0;border:0;
-  clip-path:inset(50%);
-}
+#story #prompt{display:none}
 #story #choices{
+  display:flex;
   flex:0 1 auto;
+  flex-direction:column;
+  gap:8px;
   min-height:0;
   margin:0;
-  gap:7px;
 }
 #story .day-choice{
-  min-height:44px;
-  padding:6px 9px;
-  gap:8px;
-  border-radius:7px;
+  flex:0 0 auto;
+  display:flex;
   align-items:center;
+  width:100%;
+  min-height:44px;
+  border:1.5px solid #aebfaf;
+  border-radius:10px;
+  background:#fffdf7;
+  gap:9px;
+  padding:8px 11px;
+}
+#story .day-choice:hover,
+#story .day-choice:focus-visible{
+  border-color:var(--green);
+  background:#edf2e2;
 }
 #story .choice-index{
-  flex:0 0 26px;
-  height:26px;
-  font-size:11px;
+  display:grid;
+  place-items:center;
+  flex:0 0 28px;
+  width:28px;
+  height:28px;
+  border-radius:50%;
+  font-size:12px;
+  font-weight:750;
 }
 #story .choice-text{
-  font-size:clamp(12px,1.2vw,15px);
+  font-size:clamp(12px,1.3vw,15px);
   line-height:1.27;
   font-weight:650;
 }
 #story .day-result{
   flex:0 0 auto;
-  margin:0 0 8px;
-  padding:9px 10px;
-  border-radius:7px;
+  min-width:0;
+  padding:9px 11px;
+  margin:0 0 10px;
+  border-radius:8px;
 }
-#story .day-result strong,#story #outcome{display:none}
 #story .day-result .reason{
   border:0;
   padding:0;
   margin:0!important;
-  font-size:clamp(12px,1.2vw,14px);
-  line-height:1.32;
   color:var(--ink);
+  font-size:clamp(12px,1.3vw,15px);
+  line-height:1.35;
 }
 #story .day-result .reason::before{
   content:"Hệ quả · ";
+  font-weight:850;
   color:var(--green);
-  font-weight:800;
 }
 #story .actions{
-  flex:0 0 auto;
   display:flex;
   flex-wrap:nowrap;
-  gap:6px;
+  align-items:stretch;
+  flex:0 0 auto;
+  gap:7px;
   margin:0;
 }
 #story .actions button{
   flex:1 1 0;
   min-width:0;
   min-height:44px;
-  padding:6px;
-  border-radius:8px;
-  font-size:clamp(11px,1.2vw,14px);
-  line-height:1.2;
+  padding:6px 10px;
+  border-radius:9px;
+  font-size:clamp(12px,1.3vw,15px);
+  line-height:1.25;
+  font-weight:750;
 }
-#story .meter-section{
-  flex:0 0 auto;
-  margin-top:auto;
-  border-top:0;
-  padding-top:6px;
+#story .actions button.primary{
+  flex-grow:1.4;
 }
-#story .meter-heading{display:none}
-#story .metric-row{
-  grid-template-columns:repeat(4,minmax(0,1fr));
-  gap:8px;
+#story .visually-hidden{
+  position:absolute;
+  width:1px;
+  height:1px;
+  padding:0;
+  margin:-1px;
+  overflow:hidden;
+  white-space:nowrap;
+  clip-path:inset(50%);
 }
-#story .metric-label{font-size:10px;line-height:1.2}
-#story .metric-label strong{font-size:10px}
-#story .metric progress{height:5px;margin-top:3px}
-#loading{flex:1;min-height:0;display:grid;place-content:center;font-size:14px}
-#debrief{
+#loading{
+  display:grid;
   flex:1 1 auto;
   min-height:0;
+  place-content:center;
+  font-size:14px;
+}
+#debrief{
   width:min(100%,760px);
   max-width:none;
+  height:100%;
+  flex:1 1 auto;
+  min-height:0;
+  padding:clamp(16px,3vw,32px);
   margin:0 auto;
-  padding:clamp(12px,2.7vw,30px);
-  border-radius:12px;
+  border:0;
+  border-radius:0;
   box-shadow:none;
   display:flex;
   flex-direction:column;
   justify-content:center;
-  gap:8px;
+  gap:9px;
   overflow:hidden;
 }
-#debrief .eyebrow{font-size:11px}
-#debrief h2{font-size:clamp(22px,3.7vw,34px);line-height:1.15;margin:0}
-#debrief>p:not(.tomorrow){display:none}
+#debrief h2{
+  margin:0;
+  font-size:clamp(24px,4vw,36px);
+  line-height:1.18;
+}
 #debrief .debrief-list{
-  margin:4px 0;
-  padding:0;
-  gap:6px;
+  margin:5px 0;
+  display:grid;
   flex:0 0 auto;
+  gap:7px;
 }
 #debrief .debrief-list li{
   padding:8px 11px;
-  border-radius:6px;
-  font-size:clamp(12px,1.4vw,15px);
+  font-size:clamp(12px,1.5vw,15px);
   line-height:1.3;
+  border-radius:7px;
 }
 #debrief .tomorrow{
   margin:0;
   padding:9px 11px;
-  border-radius:7px;
-  font-size:clamp(12px,1.35vw,15px);
+  font-size:clamp(12px,1.5vw,15px);
   line-height:1.3;
+  border-radius:7px;
 }
 #debrief .actions{
-  margin:3px 0 0;
+  margin:2px 0 0;
   display:flex;
   flex-wrap:nowrap;
   gap:8px;
 }
-#debrief .actions button,#debrief .actions a{
+#debrief .actions button,
+#debrief .actions a{
   min-height:44px;
+  padding:7px 10px;
   display:flex;
   align-items:center;
   justify-content:center;
-  padding:7px 10px;
-  font-size:12px;
+  text-align:center;
+  font-size:13px;
   border-radius:8px;
 }
-#debrief .back-link{text-align:center}
-#debrief .coming-soon{display:none}
+#debrief .back-link{padding:7px 10px}
 
-@media(max-height:700px){
-  #story .meter-section{display:none}
-}
-@media(max-width:760px) and (orientation:portrait){
-  #main{gap:4px;padding:0 7px max(4px,env(safe-area-inset-bottom))}
-  #main>.intro{gap:6px;align-items:center}
-  #main>.intro .eyebrow{font-size:9px}
-  #main>.intro h1{font-size:clamp(18px,5vw,25px)}
-  #chapter-steps{gap:4px}
-  #chapter-steps li{height:33px;min-height:33px;padding:3px 5px}
-  #chapter-steps li span{font-size:9px}
-  #chapter-steps li strong{font-size:11px}
+@media(orientation:portrait){
   #game{
     grid-template-columns:minmax(0,1fr);
-    grid-template-rows:minmax(0,43fr) minmax(0,57fr);
-    gap:5px;
+    grid-template-rows:minmax(0,1fr) minmax(0,1fr);
+    gap:0;
   }
-  #game .world-bar{min-height:17px;font-size:9px;padding:0 1px}
-  #game .story{padding:9px;min-height:0}
-  #story h2{font-size:clamp(18px,5.5vw,23px);margin-bottom:5px}
-  #story .dialogue-scene{padding:6px 8px;margin-bottom:5px}
-  #story .dialogue-scene p{font-size:clamp(12px,3.2vw,14px);line-height:1.25}
-  #story h3{font-size:clamp(12px,3.4vw,15px);margin-bottom:5px}
-  #story #choices{gap:4px}
-  #story .day-choice{min-height:44px;padding:5px 7px;gap:7px}
-  #story .choice-index{flex-basis:24px;height:24px}
-  #story .choice-text{font-size:clamp(12px,3.1vw,14px);line-height:1.24}
-  #story .day-result{padding:8px;margin-bottom:7px}
-  #story .day-result .reason{font-size:12px;line-height:1.28}
-  #story .metric-row{gap:5px}
-  #story .metric-label{font-size:9px}
-  #story .metric-label strong{font-size:9px}
-  #story .meter-section{padding-top:4px}
-  #debrief{justify-content:center;padding:14px 12px}
+  #game .story{
+    padding:clamp(10px,2.6vw,19px);
+  }
+  #story h1{
+    font-size:clamp(19px,5.6vw,25px);
+    margin-bottom:7px;
+  }
+  #story .dialogue-scene{
+    margin-bottom:9px;
+  }
+  #story .dialogue-scene strong{
+    font-size:12px;
+    margin-bottom:2px;
+  }
+  #story .dialogue-scene p{
+    font-size:clamp(13px,3.5vw,15px);
+    line-height:1.32;
+  }
+  #story #choices{gap:6px}
+  #story .day-choice{min-height:44px;padding:6px 9px;gap:8px}
+  #story .choice-text{font-size:clamp(12px,3.3vw,14px);line-height:1.25}
+  #game .character-reaction{
+    right:10px;
+    bottom:60px;
+  }
+  #debrief{padding:clamp(14px,3vw,22px)}
 }
-@media(max-width:760px) and (orientation:portrait) and (max-height:690px){
-  #game{grid-template-rows:minmax(0,34fr) minmax(0,66fr)}
-  #story h2{margin-bottom:4px}
-  #story .dialogue-scene{padding:5px 8px;margin-bottom:4px}
-  #story h3{margin-bottom:4px}
-  #story #choices{gap:3px}
-  #debrief{gap:5px}
+@media(orientation:portrait) and (max-height:650px){
+  #game .story{padding:8px 10px}
+  #story h1{margin-bottom:4px;font-size:clamp(18px,5.3vw,22px);line-height:1.13}
+  #story .dialogue-scene{margin-bottom:6px}
+  #story .dialogue-scene strong{font-size:11px;margin:0 0 1px}
+  #story .dialogue-scene p{font-size:12px;line-height:1.22}
+  #story #choices{gap:4px}
+  #story .day-choice{min-height:44px;padding:4px 7px}
+  #story .choice-index{flex-basis:24px;width:24px;height:24px;font-size:11px}
+  #story .choice-text{font-size:12px;line-height:1.2}
+  #story .day-result{padding:7px 9px;margin-bottom:6px}
+  #story .day-result .reason{font-size:12px;line-height:1.25}
+  #game .scene-meta{top:max(5px,env(safe-area-inset-top))}
+  #game .scene-evidence{bottom:8px;left:8px;max-width:90%;padding:6px 8px;font-size:12px}
+  #debrief{gap:6px}
   #debrief .debrief-list{gap:4px;margin:0}
-  #debrief .debrief-list li{padding:6px 9px}
+  #debrief .debrief-list li{padding:6px 8px}
   #debrief .tomorrow{padding:7px 9px}
 }
-@media(max-width:760px) and (orientation:landscape){
-  #main{gap:3px;padding:0 6px max(3px,env(safe-area-inset-bottom))}
-  #main>.intro .eyebrow{display:none}
-  #main>.intro h1{font-size:19px}
-  #chapter-steps li{height:27px;min-height:27px;padding:1px 8px;display:flex;flex-direction:row;align-items:center;gap:6px}
-  #chapter-steps li span{font-size:9px}
-  #chapter-steps li strong{font-size:10px}
-  #game{grid-template-columns:minmax(0,47fr) minmax(0,53fr);gap:8px}
-  #game .world-bar{min-height:18px}
-  #game .story{padding:7px}
-  #story h2{font-size:18px;margin-bottom:4px}
-  #story .dialogue-scene{margin-bottom:4px;padding:4px 7px}
-  #story .dialogue-scene p{font-size:11px;line-height:1.2}
-  #story .dialogue-scene strong{font-size:10px}
-  #story h3{font-size:12px;margin-bottom:4px}
-  #story #choices{gap:3px}
-  #story .day-choice{min-height:44px;padding:4px 6px}
-  #story .choice-text{font-size:11px;line-height:1.19}
-  #story .choice-index{flex-basis:23px;height:23px}
-  #debrief{padding:8px 15px;gap:3px}
-  #debrief h2{font-size:22px}
-  #debrief .debrief-list{gap:3px;margin:0}
-  #debrief .debrief-list li{padding:5px 9px;font-size:12px}
-  #debrief .tomorrow{padding:5px 9px;font-size:12px}
-}
-@media(max-height:520px){
-  .header{min-height:34px;padding-top:0;padding-bottom:0}
-  .header .return{min-height:34px}
-  #main>.intro h1{font-size:18px}
-  #story .meter-section{display:none}
-  #debrief .eyebrow{display:none}
+@media(orientation:landscape) and (max-height:480px){
+  #game{grid-template-columns:minmax(0,47fr) minmax(0,53fr)}
+  #game .story{padding:7px 9px}
+  #story h1{font-size:20px;margin-bottom:5px}
+  #story .dialogue-scene{margin-bottom:6px}
+  #story .dialogue-scene strong{font-size:11px;margin-bottom:2px}
+  #story .dialogue-scene p{font-size:12px;line-height:1.25}
+  #story #choices{gap:4px}
+  #story .day-choice{min-height:44px;padding:4px 7px}
+  #story .choice-index{width:24px;height:24px;flex-basis:24px}
+  #story .choice-text{font-size:12px;line-height:1.2}
+  #story .day-result{padding:6px 8px;margin-bottom:6px}
+  #story .day-result .reason{font-size:12px;line-height:1.23}
+  #game .scene-evidence{font-size:12px;left:7px;bottom:7px}
+  #debrief{gap:5px;padding:10px 18px}
+  #debrief .debrief-list{gap:4px;margin:0}
+  #debrief .debrief-list li{padding:5px 8px}
 }
 @media(prefers-reduced-motion:reduce){
-  *,*::before,*::after{scroll-behavior:auto!important;animation:none!important;transition:none!important}
-}
-
-/* Extremely low landscape phones (including 812×375) are not desktop layouts. */
-@media (orientation:landscape) and (max-height:500px){
-  .header,.header .return{min-height:34px}
-  .header{padding-top:0;padding-bottom:0}
-  #main{gap:3px;padding:0 6px 3px}
-  #main>.intro .eyebrow{display:none}
-  #main>.intro h1{font-size:18px;line-height:1.1}
-  #chapter-steps li{height:27px;min-height:27px;padding:1px 6px;flex-direction:row;align-items:center;gap:5px}
-  #chapter-steps li span{font-size:9px}
-  #chapter-steps li strong{font-size:10px}
-  #game{grid-template-columns:minmax(0,47fr) minmax(0,53fr);gap:7px}
-  #game .world-bar{min-height:17px;font-size:9px;padding:0}
-  #game .story{padding:6px}
-  #story h2{font-size:18px;line-height:1.1;margin-bottom:3px}
-  #story .dialogue-scene{padding:4px 6px;margin-bottom:3px}
-  #story .dialogue-scene strong{font-size:10px;margin:0}
-  #story .dialogue-scene p{font-size:11px;line-height:1.18}
-  #story h3{font-size:12px;line-height:1.15;margin-bottom:3px}
-  #story #choices{gap:3px}
-  #story .day-choice{min-height:44px;padding:3px 6px;gap:6px}
-  #story .choice-index{flex-basis:23px;height:23px}
-  #story .choice-text{font-size:11px;line-height:1.15}
-  #story .day-result{padding:5px 7px;margin-bottom:5px}
-  #story .day-result .reason{font-size:11px;line-height:1.2}
-  #story .actions button{min-height:44px;font-size:11px}
-  #story .meter-section{display:none}
-}
-/* 320×480: free vertical space without shrinking tap targets or forcing scroll. */
-@media (orientation:portrait) and (max-height:520px){
-  .header,.header .return{min-height:32px}
-  #main{gap:2px;padding:0 5px 2px}
-  #main>.intro h1{font-size:17px;line-height:1.08}
-  #main>.intro .eyebrow{display:none}
-  #chapter-steps li{height:27px;min-height:27px;padding:1px 5px}
-  #chapter-steps li span{font-size:8px}
-  #chapter-steps li strong{font-size:10px}
-  #game{gap:3px;grid-template-rows:minmax(0,30fr) minmax(0,70fr)}
-  #game .world-bar{min-height:15px}
-  #game .story{padding:6px}
-  #story h2{font-size:18px;margin-bottom:2px}
-  #story .dialogue-scene{padding:4px 6px;margin-bottom:2px}
-  #story .dialogue-scene p{font-size:11px;line-height:1.16}
-  #story .dialogue-scene strong{font-size:10px}
-  #story h3{margin-bottom:2px;font-size:12px}
-  #story #choices{gap:2px}
-  #story .day-choice{min-height:44px;padding:3px 6px}
-  #story .choice-text{font-size:11px;line-height:1.16}
-  #debrief{gap:3px;padding:7px 9px}
-  #debrief h2{font-size:19px}
-  #debrief .debrief-list li{padding:4px 7px;font-size:11px}
-  #debrief .tomorrow{padding:4px 7px;font-size:11px}
+  *,*::before,*::after{
+    scroll-behavior:auto!important;
+    animation:none!important;
+    transition:none!important;
+  }
 }
