@@ -59,6 +59,19 @@ Output painted assets as transparent WebP/PNG for props, AVIF/WebP for large bac
 
 Performance goals (targets, not verified until measured): lazy-load future day packs, cache shared approved sources; avoid shipping 90 backgrounds at page load. Aim to keep initial scene image around 250 KB when practical without obscuring the visual clues. Ship a compression report with each art pack.
 
+
+### Reproducible image optimization
+
+Use `tools/optimize-yen-art.mjs` to convert a reviewed painted PNG/JPEG/WebP source via locally installed Chromium. The tool is offline and uses browser-native canvas encoding; it does not invent new art or require an external image API.
+
+```bash
+node tools/optimize-yen-art.mjs --input path/to/painted-prop.png --output tinh-huong/assets/prop-name --alpha --max-width 640
+node tools/optimize-yen-art.mjs --input path/to/painted-background.jpg --output tinh-huong/assets/background-name --max-width 1600
+```
+
+The first command writes `.webp` **and** a `.png` transparency-safe fallback; the second writes `.webp` **and** `.jpg` fallback. Use an HTML `<picture>` element with WebP source and the JPEG/PNG fallback for browsers that cannot decode WebP. Input is not overwritten. AVIF may be supplied as an additional source format only after an encoder and browser fallback have been verified; do not generate fake AVIF file extensions.
+
+**Verify** visual similarity at display size, alpha edges, native dimensions, alternative format, decode success and measured file-size delta before checking in new files. Compression passing does not constitute art review.
 ## QA process and proof sheet
 
 1. Use `/tinh-huong/art-reference/` to check the **existing** painted reference on desktop and mobile. Capture real browser screenshots at 320, 360, 390, 768, 1440 widths. Note: current sheet contains reference images only.
