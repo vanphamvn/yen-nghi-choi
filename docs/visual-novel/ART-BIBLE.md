@@ -7,14 +7,14 @@ Reference sheet: [/tinh-huong/art-reference/](/tinh-huong/art-reference/) · Mac
 
 ## What the player must actually see
 
-A visual novel is not an illustration behind a quiz. Every incident requires **a clear physical event**, a camera cut to interact with something that exists in the room, and a **visually different outcome** based on what the player did. Dialogue explains reactions but does not replace the artwork.
+A visual novel is not an illustration behind a quiz. Every incident requires **a clear illustrated situation**, characters who speak naturally, answer choices shown beside the image, and a **visibly different outcome** after the player chooses. Do not require tapping props or placing objects. Dialogue explains reactions but does not replace the artwork.
 
 Every incident Dxx-yy has an art triptych:
 
 | Stage | Required shot | What must change |
 |---|---|---|
 | Establishing | Wide scene with time/weather, actors and risk/object in context | Character entering, prop malfunctioning, environmental cue |
-| Interactive | Close-up/over-the-shoulder of the physical target | Hotspot/selected object, hand/gesture or meaningful changed prop state |
+| Decision (`interactive` in the manifest) | Contextual close-up of characters and the specific incident | Dialogue and 2–4 answer buttons appear immediately; no clickable props, drag or hotspots |
 | Resolution | Choice-specific outcome with human reaction | Character pose or expression AND/OR prop state, possibly background lighting/weather; no text-only change |
 
 **Do not** substitute three captions on the same unchanged backdrop for three stages. Frame sources may share a background *only if* the actor/prop composition meaningfully changes. Failure to find a suitable visual asset keeps the incident planned.
@@ -23,7 +23,7 @@ Every incident Dxx-yy has an art triptych:
 
 Use the real Yên Coffee & Tea painted-web materials in `lab/assets/`: `room-backdrop.jpg`, `cuc-yen-tea.webp`, `bench.webp`, `table.webp`, `cup.webp`, `plant.webp`, `book.webp`, `door.webp`. They originate in the existing Yên painted room set, as documented in `lab/assets/README.md`. They are **reference assets**, not a free pass to fake all 90 scenes with one background.
 
-Look for warm paper/wood/tea colors, visible imperfect painted texture, soft brush edges, dimensional shading and one coherent light source. Match the muted palette from `DESIGN.md` (`#f7f3e9`, `#243c35`, `#2e5a46`, etc.) but **color match alone does not establish style match**. Avoid flat geometric SVG or CSS illustration as a substitute for new painted world props. Invisible hotspot regions and controls may use SVG/CSS.
+Look for warm paper/wood/tea colors, visible imperfect painted texture, soft brush edges, dimensional shading and one coherent light source. Match the muted palette from `DESIGN.md` (`#f7f3e9`, `#243c35`, `#2e5a46`, etc.) but **color match alone does not establish style match**. Avoid flat geometric SVG or CSS illustration as a substitute for new painted world props. Answer controls can use CSS; in-world props should keep the painted art direction.
 
 Do not import the old archived Phaser sprite sheets into this web novel simply because they exist. The active web Cục Yên and room painting are the reference for this project; the Phaser game remains stopped. Any new actor/prop must be viewed next to these exact runtime images.
 
@@ -45,7 +45,7 @@ These are reference proportions from Yên Lab, **not** universally correct chara
 
 1. **Establishing wide:** show location, weather/time and what is physically at risk.
 2. **Evidence close-up:** reveal the receipt, water, machine status, label or injury hazard; on-screen enough to read without zooming.
-3. **Over-shoulder action:** show where the player's touch/keyboard action acts in the world.
+3. **Dialogue decision:** focus the character and evidence; show answer choices outside the illustration, ready for keyboard/touch selection.
 4. **Dialogue pair:** the right actor addresses the player and changes pose/face, not just speech bubble text.
 5. **After action:** confirm the hazard was isolated or remains, show visible consequence and recovery opportunity.
 
@@ -78,12 +78,12 @@ The first command writes `.webp` **and** a `.png` transparency-safe fallback; th
 2. For each *new* asset, produce side-by-side proof against current painted room and at least two relevant character poses, at actual runtime scale and at a neutral background. If the pose references are unavailable, flag art review blocked rather than fabricate an approval.
 3. Record camera, object dimensions, ground pivot, soft brush edges, shadow direction, occlusion, legible cues, crop, transparent alpha and source fingerprint.
 4. Review exact current asset revision. Record reviewer type and evidence, `ownerReviewPending=true` until actual owner review. Agent visual assessment may be delegated but may not impersonate the owner.
-5. Verify a responsive interactive scene, keyboard/touch/reduced-motion, image load failure, pixel crop/overflow, and choice-specific outcome. Screenshots must show beginning, interaction and outcome, not only the first frame.
+5. Verify each scenario background and character composition on mobile and desktop, answer selection by keyboard/touch, reduced-motion, image-load failure, layout and choice-specific visual outcome. Screenshots show before and after decision.
 6. Run content + art manifest audit, interactive browser checks and production SHA verification before calling a scene shipped.
 
 ## Incident asset slots
 
-`art-manifest.json` declares all 90 incident IDs and requires three actual art frames plus choice-specific `visualChanges`. All 90 currently have `status: planned` and null frame refs intentionally. A future PR may mark **only its implemented incident IDs** ready, and then the audit requires real asset files, source/licensing, distinct visual states and review evidence. Reducing the number of incidents or silently replacing null slots with an identical placeholder is not accepted.
+`art-manifest.json` declares all 90 incident IDs and requires three actual art frames plus choice-specific `visualChanges`. The first 3 (Day 1) contain painted-asset compositions with agent review evidence; 87 remain `planned` with null frame refs. Owner art review is still pending. A future PR may mark **only its implemented incident IDs** ready, and then the audit requires real asset files, source/licensing, distinct visual states and review evidence. Reducing the number of incidents or silently replacing null slots with an identical placeholder is not accepted.
 
 ### First production illustration set (VN-F04 / Day 1)
 
@@ -91,4 +91,4 @@ The first command writes `.webp` **and** a `.png` transparency-safe fallback; th
 - **D01-02:** tipped water pitcher and clear wet footprint on actual floor; player places a physical warning sign and blocks a route; outcome depicts dry/cordoned or still slippery floor and guest path.
 - **D01-03:** POS screen, real-looking receipt and drink tray; player selects erroneous line and reconciles bill; corrected receipt and customer's face change.
 
-**Release gate:** publish Day 1 only when it is a real three-incident interactive story with scene evidence, not an extension of the existing text-choice prototype. See #220 → #221 → #222.
+**Release gate:** publish Day 1 when it presents three distinct contextual backgrounds/character compositions, immediate story reply choices, and visible choice-dependent reactions. Object manipulation is not part of the game. See #220 → #221 → #222.
