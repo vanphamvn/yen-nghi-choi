@@ -60,6 +60,16 @@ Run `node tools/audit-ui-design.mjs`, the relevant existing Node tests, and Play
 - Reflection input stays local to the current page and is optional; do not persist it.
 - Present effects as **possible user experiences**, not medical outcomes. Provide a quiet exit path.
 
+## Netlify Deploy Preview overlay and blocked next-shift button (confirmed)
+
+On 21/11/2026 PR #241, 24/24 immediate `Tiếp tục ca sau` taps failed in an iPhone-like browser with the ordinary Deploy Preview URL. The hit target was **not the game button**, but Netlify's injected `<iframe title="Netlify Drawer">` occupying the bottom **48 CSS px** of the viewport. The continue button occupied part of that strip. The exact same first tap succeeded when loading `?ntl-drawer-state=hidden`, which is Netlify's documented official option for hiding its feedback drawer.
+
+**Rules:**
+- Share interactive Netlify game previews with the official query parameter `?ntl-drawer-state=hidden` to keep reviewer chrome from blocking CTA targets. This is not a fix to game input events; do not add more touch event hacks to solve a third-party iframe intercept.
+- On this game page, disable pointer interception by the injected Netlify Drawer iframe in CSS as a fallback for anyone visiting the unmodified Preview URL. Do not alter the real game action layout, XP, half-screen proportions or production navigation to accommodate a Preview-only vendor control.
+- When diagnosing an apparently inert tap, always inspect `document.elementFromPoint()` at the center of the visible button **after the state transition**. A visible button does not guarantee it is the top hit target.
+- The preview gate remains: update rule/skill, implement the minimal fix, confirm Netlify Preview deployment and send link, stop for owner retest; full QA and merge only with explicit approval.
+
 ## Boot and first-tap reliability in Facebook/Safari webviews
 
 Reported on Netlify PR #241: buttons may look ready immediately after a new page load/reload but fail to react for several taps. Repeated initial tap diagnosis in Chromium (including CPU/network throttling) was successful; **the exact Facebook/iOS failure is not yet reproduced**, so avoid attributing it definitively to hover or one specific event.
