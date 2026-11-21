@@ -37,6 +37,8 @@ function sceneItem(item, scene, state) {
   if (item.marked) button.classList.add("is-marked");
   if (item.corrected) button.classList.add("is-corrected");
   if (item.placed) button.classList.add("is-placed");
+  if (item.warningPlaced) button.classList.add("is-deployed");
+  if (item.inspected) button.classList.add("is-inspected");
   if (state.completed) button.disabled = true;
 
   if (item.src) {
