@@ -23,7 +23,7 @@
 .day-world[data-phase="resolution"] .painted-layer.actor{transform:translate(-50%,-55%) scale(1.09)}
 .day-world[data-incident="D01-01"] .painted-layer.prop-machine{left:13%;top:76%;width:22%;max-height:47%}
 .day-world[data-incident="D01-01"] .painted-layer.prop-tray{left:86%;top:81%;width:17%}
-.day-world[data-incident="D01-02"] .painted-layer.prop-pitcher{left:22%;top:58%;width:16%}
+.day-world[data-incident="D01-02"] .painted-layer.prop-pitcher{left:22%;top:58%;width:16%;transform:translate(-50%,-50%) rotate(-38deg)}
 .day-world[data-incident="D01-02"] .painted-layer.prop-glass{left:85%;top:51%;width:11%}
 .day-world[data-incident="D01-03"] .painted-layer.prop-menu{left:15%;top:56%;width:17%}
 .day-world[data-incident="D01-03"] .painted-layer.prop-glass{left:85%;top:70%;width:14%}
