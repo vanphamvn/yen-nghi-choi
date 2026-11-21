@@ -344,7 +344,7 @@ async function validateSpatialScene(page,incident){
     size:getComputedStyle(e).backgroundSize,
     pos:getComputedStyle(e).backgroundPosition
   }));
-  const countertop=counter?rect(counter).top:NaN;
+  const countertop=counter?rect(counter).top+rect(counter).height*.12:NaN;
   const machineFoot=machine?parseFloat(machine.style.top)+root.top:NaN;
   const paintedMachineBase=machine?rect(machine).top+rect(machine).height*.90:NaN;
   const stageHeight=root.height,stageWidth=root.width;
@@ -365,7 +365,7 @@ async function validateSpatialScene(page,incident){
  }
  expect(Math.abs(result.machineFoot-result.countertop),incident+" projected countertop contact").toBeLessThanOrEqual(2.5);
  expect(Math.abs(result.paintedMachineBase-result.countertop),
-   incident+" painted espresso metal feet must touch visible wood surface").toBeLessThanOrEqual(1.5);
+   incident+" metal feet must contact painted wood, not upper image box").toBeLessThanOrEqual(1.5);
  const byId=Object.fromEntries(result.children.map(c=>[c.id,c]));
  expect(byId.staff.depth).toBeLessThan(byId.counter.depth);
  expect(byId.staff.w/byId.customer.w,incident+" staff must be smaller than guest").toBeLessThanOrEqual(.92);
