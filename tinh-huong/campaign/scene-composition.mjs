@@ -154,3 +154,18 @@ export function validateSceneComposition(id,scene=SCENE_COMPOSITIONS[id]){
  }
  return errors;
 }
+
+
+// Projection with a physical tabletop, rather than guessing the machine's y%.
+export const COUNTER_ASPECT_RATIO=195/768;
+export function projectContact(layer,scene,stageWidth,stageHeight){
+ const x=stageWidth*layer.contact.x/100;
+ let y=stageHeight*layer.contact.y/100;
+ if(layer.surface==="counter"){
+  const furniture=scene.layers.find(item=>item.role==="counter");
+  if(!furniture)throw new Error("Counter surface has no supporting counter");
+  const h=stageWidth*(furniture.size/100)*COUNTER_ASPECT_RATIO;
+  y=stageHeight*furniture.contact.y/100 - h*(furniture.footOffset/100);
+ }
+ return{x,y};
+}
