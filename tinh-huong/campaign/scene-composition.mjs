@@ -138,9 +138,8 @@ export function validateSceneComposition(id,scene=SCENE_COMPOSITIONS[id]){
      !Number.isFinite(item.contact.y)||item.contact.y<0||item.contact.y>100)
     errors.push("invalid contact "+item.id);
   if(["staff","customer","mascot"].includes(item.role)&&item.surface!=="floor")errors.push("actor must stand on floor: "+item.id);
-  if(["staff","customer","mascot"].includes(item.role)&&item.contact.y<80)errors.push("actor feet above floor: "+item.id);
+  if(["staff","customer","mascot"].includes(item.role)&&item.contact.y<(item.role==="staff"?68:80))errors.push("actor feet above floor: "+item.id);
   if(item.role==="staff"&&(item.depth>=28||item.contact.x>78))errors.push("staff not behind counter: "+item.id);
-  if(item.role==="staff" && item.contact.y<68)errors.push("staff feet outside rear café floor: "+item.id);
   if(item.role==="customer"&&item.depth<=28)errors.push("customer should be in front: "+item.id);
   if(item.role==="mascot"&&item.depth<=28)errors.push("Cuc Yen should stand in front on the floor: "+item.id);
   if(item.asset==="espresso"&&item.surface!=="counter")errors.push("espresso machine must be on counter: "+item.id);
