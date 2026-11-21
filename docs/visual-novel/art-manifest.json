@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "name": "Yên visual-novel art direction",
   "status": "foundation-only",
-  "notice": "No incident art is approved or playable. Existing assets are style references, not incident-specific production artwork.",
+  "notice": "Three Day 1 compositions have agent-reviewed browser evidence and owner review is pending. Remaining 87 incident art slots are planned. Interaction means dialogue selection, never touching scenery.",
   "style": "yen-painted-chibi-v1 · Yên Coffee & Tea web adaptation",
   "referenceSheet": "/tinh-huong/art-reference/",
   "sourceAssets": [
@@ -100,7 +100,8 @@
     "desktopReferenceWidth": 1440,
     "assetSourcePolicy": "Original/generated/commissioned art with rights and reviewer evidence",
     "reducedMotion": "Every action and reaction must remain understandable in a still frame",
-    "verification": "A ready incident requires real asset files, visual delta, alt descriptions and review evidence"
+    "verification": "A ready incident requires real asset files, visual delta, alt descriptions and review evidence",
+    "playerInteraction": "Select answers shown with character dialogue; never require manipulating backdrop, actors or props."
   },
   "incidents": [
     {
@@ -110,10 +111,10 @@
       "status": "ready",
       "requiredBrief": {
         "establishing": "Quầy sáng, dải 7 phiếu in dài dần; khách ở cửa sốt ruột, ly chưa có nhãn",
-        "interactive": "Chạm phiếu, sắp thứ tự xử lý rồi nhìn hàng khách thay đổi",
+        "interactive": "Cận cảnh hàng khách đầu tiên: Quầy sáng, dải 7 phiếu in dài dần; khách ở cửa sốt ruột, ly chưa có nhãn; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
         "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
       },
-      "interactionBrief": "Chạm phiếu, sắp thứ tự xử lý rồi nhìn hàng khách thay đổi",
+      "interactionBrief": "Cận cảnh hàng khách đầu tiên: Quầy sáng, dải 7 phiếu in dài dần; khách ở cửa sốt ruột, ly chưa có nhãn; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
       "frames": {
         "establishing": {
           "background": "lab/assets/room-backdrop.jpg",
@@ -253,7 +254,7 @@
         "reviewerType": "agent",
         "reviewAuthority": "user-delegated",
         "reviewEvidence": "https://github.com/vanphamvn/yen-nghi-choi/actions/runs/44885011176/artifacts/14699965889",
-        "reviewNotes": "Agent xem screenshot 320, 390, 768, 1440 và 3 pha thực trên Chromium. Painted props và nhân vật tái dùng từ repo; vùng tương tác biển/nước/biên lai là UI overlay. Chưa có background mới riêng, owner review pending.",
+        "reviewNotes": "Các hình ghép từ nguồn tranh Yên hiện có, gồm background/nhân vật/đạo cụ theo từng tình huống. Người chơi chỉ chọn câu trả lời dưới lời thoại; không tương tác vật thể. Ảnh QA Chromium, owner review pending.",
         "ownerReviewPending": true
       }
     },
@@ -264,10 +265,10 @@
       "status": "ready",
       "requiredBrief": {
         "establishing": "Bình nghiêng, vũng nước loang sát lối đi; bé và khách tiến gần khu vực ướt",
-        "interactive": "Đặt biển cảnh báo và ngăn lối trước khi lau; hình sàn đổi khô/ướt",
+        "interactive": "Cận cảnh vũng nước cạnh quầy: Bình nghiêng, vũng nước loang sát lối đi; bé và khách tiến gần khu vực ướt; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
         "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
       },
-      "interactionBrief": "Đặt biển cảnh báo và ngăn lối trước khi lau; hình sàn đổi khô/ướt",
+      "interactionBrief": "Cận cảnh vũng nước cạnh quầy: Bình nghiêng, vũng nước loang sát lối đi; bé và khách tiến gần khu vực ướt; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
       "frames": {
         "establishing": {
           "background": "lab/assets/room-backdrop.jpg",
@@ -383,7 +384,7 @@
         "reviewerType": "agent",
         "reviewAuthority": "user-delegated",
         "reviewEvidence": "https://github.com/vanphamvn/yen-nghi-choi/actions/runs/44885011176/artifacts/14699965889",
-        "reviewNotes": "Agent xem screenshot 320, 390, 768, 1440 và 3 pha thực trên Chromium. Painted props và nhân vật tái dùng từ repo; vùng tương tác biển/nước/biên lai là UI overlay. Chưa có background mới riêng, owner review pending.",
+        "reviewNotes": "Các hình ghép từ nguồn tranh Yên hiện có, gồm background/nhân vật/đạo cụ theo từng tình huống. Người chơi chỉ chọn câu trả lời dưới lời thoại; không tương tác vật thể. Ảnh QA Chromium, owner review pending.",
         "ownerReviewPending": true
       }
     },
@@ -394,10 +395,10 @@
       "status": "ready",
       "requiredBrief": {
         "establishing": "Màn POS hiện combo lệch giá, khách chỉ vào biên lai và khay tiền",
-        "interactive": "Chạm dòng sai, đối chiếu menu và sửa hóa đơn; khách đổi nét mặt",
+        "interactive": "Cận cảnh hóa đơn khai trương: Màn POS hiện combo lệch giá, khách chỉ vào biên lai và khay tiền; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
         "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
       },
-      "interactionBrief": "Chạm dòng sai, đối chiếu menu và sửa hóa đơn; khách đổi nét mặt",
+      "interactionBrief": "Cận cảnh hóa đơn khai trương: Màn POS hiện combo lệch giá, khách chỉ vào biên lai và khay tiền; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
       "frames": {
         "establishing": {
           "background": "lab/assets/room-backdrop.jpg",
@@ -513,7 +514,7 @@
         "reviewerType": "agent",
         "reviewAuthority": "user-delegated",
         "reviewEvidence": "https://github.com/vanphamvn/yen-nghi-choi/actions/runs/44885011176/artifacts/14699965889",
-        "reviewNotes": "Agent xem screenshot 320, 390, 768, 1440 và 3 pha thực trên Chromium. Painted props và nhân vật tái dùng từ repo; vùng tương tác biển/nước/biên lai là UI overlay. Chưa có background mới riêng, owner review pending.",
+        "reviewNotes": "Các hình ghép từ nguồn tranh Yên hiện có, gồm background/nhân vật/đạo cụ theo từng tình huống. Người chơi chỉ chọn câu trả lời dưới lời thoại; không tương tác vật thể. Ảnh QA Chromium, owner review pending.",
         "ownerReviewPending": true
       }
     },
@@ -524,10 +525,10 @@
       "status": "planned",
       "requiredBrief": {
         "establishing": "Mưa chéo qua mái, giọt bắn lên ghế; nhóm khách co vào hiên",
-        "interactive": "Di chuyển ghế vào vùng khô, đánh dấu chỗ trơn trên sơ đồ",
+        "interactive": "Cận cảnh cơn mưa tạt hiên: Mưa chéo qua mái, giọt bắn lên ghế; nhóm khách co vào hiên; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
         "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
       },
-      "interactionBrief": "Di chuyển ghế vào vùng khô, đánh dấu chỗ trơn trên sơ đồ",
+      "interactionBrief": "Cận cảnh cơn mưa tạt hiên: Mưa chéo qua mái, giọt bắn lên ghế; nhóm khách co vào hiên; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
       "frames": {
         "establishing": {
           "background": null,
@@ -563,10 +564,10 @@
       "status": "planned",
       "requiredBrief": {
         "establishing": "Dòng nước chảy men tường gần ổ cắm; công tắc và dây điện hiện rõ",
-        "interactive": "Khoanh vùng nguy hiểm, chọn gọi người có chuyên môn thay vì chạm thiết bị",
+        "interactive": "Cận cảnh nước ở mép ổ điện: Dòng nước chảy men tường gần ổ cắm; công tắc và dây điện hiện rõ; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
         "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
       },
-      "interactionBrief": "Khoanh vùng nguy hiểm, chọn gọi người có chuyên môn thay vì chạm thiết bị",
+      "interactionBrief": "Cận cảnh nước ở mép ổ điện: Dòng nước chảy men tường gần ổ cắm; công tắc và dây điện hiện rõ; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
       "frames": {
         "establishing": {
           "background": null,
@@ -602,10 +603,10 @@
       "status": "planned",
       "requiredBrief": {
         "establishing": "Người giao nguyên liệu che thùng giấy ướt, túi hàng có dấu nước",
-        "interactive": "Kiểm tra từng kiện bằng thao tác mở/đối chiếu, tách hàng bị ảnh hưởng",
+        "interactive": "Cận cảnh đơn hàng ướt: Người giao nguyên liệu che thùng giấy ướt, túi hàng có dấu nước; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
         "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
       },
-      "interactionBrief": "Kiểm tra từng kiện bằng thao tác mở/đối chiếu, tách hàng bị ảnh hưởng",
+      "interactionBrief": "Cận cảnh đơn hàng ướt: Người giao nguyên liệu che thùng giấy ướt, túi hàng có dấu nước; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
       "frames": {
         "establishing": {
           "background": null,
@@ -641,10 +642,10 @@
       "status": "planned",
       "requiredBrief": {
         "establishing": "Cận cảnh hai máy hoạt động, hàng vé order treo dồn và đồng hồ chỉ giờ",
-        "interactive": "Sắp thứ tự pha theo nhóm công đoạn thay vì bấm trắc nghiệm",
+        "interactive": "Cận cảnh máy xay và máy pha: Cận cảnh hai máy hoạt động, hàng vé order treo dồn và đồng hồ chỉ giờ; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
         "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
       },
-      "interactionBrief": "Sắp thứ tự pha theo nhóm công đoạn thay vì bấm trắc nghiệm",
+      "interactionBrief": "Cận cảnh máy xay và máy pha: Cận cảnh hai máy hoạt động, hàng vé order treo dồn và đồng hồ chỉ giờ; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
       "frames": {
         "establishing": {
           "background": null,
@@ -680,10 +681,10 @@
       "status": "planned",
       "requiredBrief": {
         "establishing": "Hai ly màu gần giống, nhãn tên lệch chỗ; hai khách chìa tay",
-        "interactive": "Xoay và kiểm tra nhãn, đối chiếu phiếu rồi giao đúng ly",
+        "interactive": "Cận cảnh hai ly giống nhau: Hai ly màu gần giống, nhãn tên lệch chỗ; hai khách chìa tay; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
         "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
       },
-      "interactionBrief": "Xoay và kiểm tra nhãn, đối chiếu phiếu rồi giao đúng ly",
+      "interactionBrief": "Cận cảnh hai ly giống nhau: Hai ly màu gần giống, nhãn tên lệch chỗ; hai khách chìa tay; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
       "frames": {
         "establishing": {
           "background": null,
@@ -719,10 +720,10 @@
       "status": "planned",
       "requiredBrief": {
         "establishing": "Đèn quán chuyển vàng tối, chổi dọn sàn và khách mới đứng ở cửa",
-        "interactive": "Chọn vùng phục vụ còn an toàn và cập nhật bảng nhận món cuối",
+        "interactive": "Cận cảnh khách tới giờ đóng: Đèn quán chuyển vàng tối, chổi dọn sàn và khách mới đứng ở cửa; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
         "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
       },
-      "interactionBrief": "Chọn vùng phục vụ còn an toàn và cập nhật bảng nhận món cuối",
+      "interactionBrief": "Cận cảnh khách tới giờ đóng: Đèn quán chuyển vàng tối, chổi dọn sàn và khách mới đứng ở cửa; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
       "frames": {
         "establishing": {
           "background": null,
@@ -758,10 +759,10 @@
       "status": "planned",
       "requiredBrief": {
         "establishing": "Bốn bạn đứng quanh quầy, điện thoại thanh toán và tiền lẻ trải trên bàn",
-        "interactive": "Ghép số tiền từng bạn với đúng món, kiểm tra thiếu/thừa",
+        "interactive": "Cận cảnh nhóm bạn chia tiền: Bốn bạn đứng quanh quầy, điện thoại thanh toán và tiền lẻ trải trên bàn; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
         "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
       },
-      "interactionBrief": "Ghép số tiền từng bạn với đúng món, kiểm tra thiếu/thừa",
+      "interactionBrief": "Cận cảnh nhóm bạn chia tiền: Bốn bạn đứng quanh quầy, điện thoại thanh toán và tiền lẻ trải trên bàn; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
       "frames": {
         "establishing": {
           "background": null,
@@ -797,10 +798,10 @@
       "status": "planned",
       "requiredBrief": {
         "establishing": "Nhóm học sinh ở một phía, khách đọc sách ở phía đối diện; các đường âm thanh xuất hiện",
-        "interactive": "Chạm vị trí bàn, đề nghị đổi chỗ và xem biểu cảm hai nhóm",
+        "interactive": "Cận cảnh bàn nói chuyện lớn: Nhóm học sinh ở một phía, khách đọc sách ở phía đối diện; các đường âm thanh xuất hiện; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
         "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
       },
-      "interactionBrief": "Chạm vị trí bàn, đề nghị đổi chỗ và xem biểu cảm hai nhóm",
+      "interactionBrief": "Cận cảnh bàn nói chuyện lớn: Nhóm học sinh ở một phía, khách đọc sách ở phía đối diện; các đường âm thanh xuất hiện; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
       "frames": {
         "establishing": {
           "background": null,
@@ -836,10 +837,10 @@
       "status": "planned",
       "requiredBrief": {
         "establishing": "Một chiếc balô dưới ghế trong lúc khách ra về; lối đi dần vắng",
-        "interactive": "Đưa vật vào điểm lưu giữ có nhãn, xác minh người nhận mà không công khai thông tin",
+        "interactive": "Cận cảnh cặp sách bị bỏ quên: Một chiếc balô dưới ghế trong lúc khách ra về; lối đi dần vắng; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
         "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
       },
-      "interactionBrief": "Đưa vật vào điểm lưu giữ có nhãn, xác minh người nhận mà không công khai thông tin",
+      "interactionBrief": "Cận cảnh cặp sách bị bỏ quên: Một chiếc balô dưới ghế trong lúc khách ra về; lối đi dần vắng; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
       "frames": {
         "establishing": {
           "background": null,
@@ -875,10 +876,10 @@
       "status": "planned",
       "requiredBrief": {
         "establishing": "Thùng đá gần cạn, bảng tồn kho báo ít, khách đặt đồ lạnh liên tục",
-        "interactive": "Kéo lượng đá còn vào các nhóm đơn khả thi, đánh dấu món tạm hết",
+        "interactive": "Cận cảnh thiếu đá cho giờ cao điểm: Thùng đá gần cạn, bảng tồn kho báo ít, khách đặt đồ lạnh liên tục; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
         "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
       },
-      "interactionBrief": "Kéo lượng đá còn vào các nhóm đơn khả thi, đánh dấu món tạm hết",
+      "interactionBrief": "Cận cảnh thiếu đá cho giờ cao điểm: Thùng đá gần cạn, bảng tồn kho báo ít, khách đặt đồ lạnh liên tục; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
       "frames": {
         "establishing": {
           "background": null,
@@ -914,10 +915,10 @@
       "status": "planned",
       "requiredBrief": {
         "establishing": "Thùng trái cây mở ra, quả lành và quả dập có dấu rõ",
-        "interactive": "Phân loại từng quả, từ chối phần không đạt và cập nhật tồn kho",
+        "interactive": "Cận cảnh thơm dập trong thùng: Thùng trái cây mở ra, quả lành và quả dập có dấu rõ; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
         "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
       },
-      "interactionBrief": "Phân loại từng quả, từ chối phần không đạt và cập nhật tồn kho",
+      "interactionBrief": "Cận cảnh thơm dập trong thùng: Thùng trái cây mở ra, quả lành và quả dập có dấu rõ; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
       "frames": {
         "establishing": {
           "background": null,
@@ -953,10 +954,10 @@
       "status": "planned",
       "requiredBrief": {
         "establishing": "Cửa tủ mở, khay sữa/nguyên liệu có nhãn mờ và khay mới nhập",
-        "interactive": "Sắp theo nhãn và điều kiện bảo quản đã kiểm chứng, không suy đoán hạn dùng",
+        "interactive": "Cận cảnh nhãn trong tủ lạnh: Cửa tủ mở, khay sữa/nguyên liệu có nhãn mờ và khay mới nhập; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
         "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
       },
-      "interactionBrief": "Sắp theo nhãn và điều kiện bảo quản đã kiểm chứng, không suy đoán hạn dùng",
+      "interactionBrief": "Cận cảnh nhãn trong tủ lạnh: Cửa tủ mở, khay sữa/nguyên liệu có nhãn mờ và khay mới nhập; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
       "frames": {
         "establishing": {
           "background": null,
@@ -992,10 +993,10 @@
       "status": "planned",
       "requiredBrief": {
         "establishing": "Góc bàn sát lối, bé khóc và phụ huynh chạy tới; cốc nước rung trên mặt bàn",
-        "interactive": "Đưa người hỗ trợ, đánh dấu góc bàn cần ngừng sử dụng và kiểm tra",
+        "interactive": "Cận cảnh bé va cạnh bàn: Góc bàn sát lối, bé khóc và phụ huynh chạy tới; cốc nước rung trên mặt bàn; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
         "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
       },
-      "interactionBrief": "Đưa người hỗ trợ, đánh dấu góc bàn cần ngừng sử dụng và kiểm tra",
+      "interactionBrief": "Cận cảnh bé va cạnh bàn: Góc bàn sát lối, bé khóc và phụ huynh chạy tới; cốc nước rung trên mặt bàn; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
       "frames": {
         "establishing": {
           "background": null,
@@ -1031,10 +1032,10 @@
       "status": "planned",
       "requiredBrief": {
         "establishing": "Khu vui chơi hiện nhiều bé cùng tiến vào, đồ chơi nằm sát lối thoát",
-        "interactive": "Di chuyển vật cản khỏi lối, phân khu hoạt động và báo phụ huynh",
+        "interactive": "Cận cảnh khu chơi quá đông: Khu vui chơi hiện nhiều bé cùng tiến vào, đồ chơi nằm sát lối thoát; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
         "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
       },
-      "interactionBrief": "Di chuyển vật cản khỏi lối, phân khu hoạt động và báo phụ huynh",
+      "interactionBrief": "Cận cảnh khu chơi quá đông: Khu vui chơi hiện nhiều bé cùng tiến vào, đồ chơi nằm sát lối thoát; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
       "frames": {
         "establishing": {
           "background": null,
@@ -1070,10 +1071,10 @@
       "status": "planned",
       "requiredBrief": {
         "establishing": "Xe đẩy dựng ngay cửa ra vào, người khác đang đẩy cửa",
-        "interactive": "Chọn vị trí gửi xe đẩy, kiểm tra đường đi thoáng trên sơ đồ",
+        "interactive": "Cận cảnh xe đẩy chắn cửa: Xe đẩy dựng ngay cửa ra vào, người khác đang đẩy cửa; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
         "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
       },
-      "interactionBrief": "Chọn vị trí gửi xe đẩy, kiểm tra đường đi thoáng trên sơ đồ",
+      "interactionBrief": "Cận cảnh xe đẩy chắn cửa: Xe đẩy dựng ngay cửa ra vào, người khác đang đẩy cửa; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
       "frames": {
         "establishing": {
           "background": null,
@@ -1109,10 +1110,10 @@
       "status": "planned",
       "requiredBrief": {
         "establishing": "Sổ tiền mặt và POS đặt cạnh nhau, một dòng thu chưa khớp",
-        "interactive": "Đối chiếu hóa đơn với khay tiền và đánh dấu khoản chênh cần tìm",
+        "interactive": "Cận cảnh cuối ca lệch tiền: Sổ tiền mặt và POS đặt cạnh nhau, một dòng thu chưa khớp; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
         "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
       },
-      "interactionBrief": "Đối chiếu hóa đơn với khay tiền và đánh dấu khoản chênh cần tìm",
+      "interactionBrief": "Cận cảnh cuối ca lệch tiền: Sổ tiền mặt và POS đặt cạnh nhau, một dòng thu chưa khớp; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
       "frames": {
         "establishing": {
           "background": null,
@@ -1148,10 +1149,10 @@
       "status": "planned",
       "requiredBrief": {
         "establishing": "Ly làm xong nằm lại trên quầy; giờ nhận nước trôi qua",
-        "interactive": "Truy lại phiếu, kiểm tra chất lượng món trước khi giao hay làm lại",
+        "interactive": "Cận cảnh ly nước bị quên: Ly làm xong nằm lại trên quầy; giờ nhận nước trôi qua; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
         "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
       },
-      "interactionBrief": "Truy lại phiếu, kiểm tra chất lượng món trước khi giao hay làm lại",
+      "interactionBrief": "Cận cảnh ly nước bị quên: Ly làm xong nằm lại trên quầy; giờ nhận nước trôi qua; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
       "frames": {
         "establishing": {
           "background": null,
@@ -1187,10 +1188,10 @@
       "status": "planned",
       "requiredBrief": {
         "establishing": "Bảng ca trực đầy ô trống, người cùng ca đang nghỉ mệt",
-        "interactive": "Kéo thẻ công việc vào lịch, giữ khung nghỉ và dự phòng khách đông",
+        "interactive": "Cận cảnh lịch ca tuần tới: Bảng ca trực đầy ô trống, người cùng ca đang nghỉ mệt; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
         "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
       },
-      "interactionBrief": "Kéo thẻ công việc vào lịch, giữ khung nghỉ và dự phòng khách đông",
+      "interactionBrief": "Cận cảnh lịch ca tuần tới: Bảng ca trực đầy ô trống, người cùng ca đang nghỉ mệt; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
       "frames": {
         "establishing": {
           "background": null,
@@ -1226,10 +1227,10 @@
       "status": "planned",
       "requiredBrief": {
         "establishing": "Khách chỉ vào vạch đường trên bảng công thức, ly mẫu đặt cạnh nhau",
-        "interactive": "Dùng thanh chỉnh trực quan mức ngọt, xác nhận bằng nhãn in lên ly",
+        "interactive": "Cận cảnh ly ít ngọt: Khách chỉ vào vạch đường trên bảng công thức, ly mẫu đặt cạnh nhau; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
         "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
       },
-      "interactionBrief": "Dùng thanh chỉnh trực quan mức ngọt, xác nhận bằng nhãn in lên ly",
+      "interactionBrief": "Cận cảnh ly ít ngọt: Khách chỉ vào vạch đường trên bảng công thức, ly mẫu đặt cạnh nhau; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
       "frames": {
         "establishing": {
           "background": null,
@@ -1265,10 +1266,10 @@
       "status": "planned",
       "requiredBrief": {
         "establishing": "Thành phần trên khay và dụng cụ chạm nhau; khách hỏi cách chuẩn bị",
-        "interactive": "Kiểm tra bảng thành phần và điểm giao nhau dụng cụ, không bảo đảm an toàn khi chưa chắc",
+        "interactive": "Cận cảnh yêu cầu tránh thành phần dị ứng: Thành phần trên khay và dụng cụ chạm nhau; khách hỏi cách chuẩn bị; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
         "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
       },
-      "interactionBrief": "Kiểm tra bảng thành phần và điểm giao nhau dụng cụ, không bảo đảm an toàn khi chưa chắc",
+      "interactionBrief": "Cận cảnh yêu cầu tránh thành phần dị ứng: Thành phần trên khay và dụng cụ chạm nhau; khách hỏi cách chuẩn bị; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
       "frames": {
         "establishing": {
           "background": null,
@@ -1304,10 +1305,10 @@
       "status": "planned",
       "requiredBrief": {
         "establishing": "Bình cá nhân đưa qua quầy; miệng bình có vết bẩn và khay rửa đang bận",
-        "interactive": "Quan sát trạng thái bình, chọn quy trình từ chối/nhận theo điều kiện vệ sinh",
+        "interactive": "Cận cảnh bình riêng của khách: Bình cá nhân đưa qua quầy; miệng bình có vết bẩn và khay rửa đang bận; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
         "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
       },
-      "interactionBrief": "Quan sát trạng thái bình, chọn quy trình từ chối/nhận theo điều kiện vệ sinh",
+      "interactionBrief": "Cận cảnh bình riêng của khách: Bình cá nhân đưa qua quầy; miệng bình có vết bẩn và khay rửa đang bận; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
       "frames": {
         "establishing": {
           "background": null,
@@ -1343,10 +1344,10 @@
       "status": "planned",
       "requiredBrief": {
         "establishing": "Hai phiếu cùng số nhưng giờ khác; khay nước đang được chuyển đi",
-        "interactive": "So phiếu với thời điểm và mã món, gỡ trùng trước khi giao",
+        "interactive": "Cận cảnh hai vé giống số: Hai phiếu cùng số nhưng giờ khác; khay nước đang được chuyển đi; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
         "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
       },
-      "interactionBrief": "So phiếu với thời điểm và mã món, gỡ trùng trước khi giao",
+      "interactionBrief": "Cận cảnh hai vé giống số: Hai phiếu cùng số nhưng giờ khác; khay nước đang được chuyển đi; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
       "frames": {
         "establishing": {
           "background": null,
@@ -1382,10 +1383,10 @@
       "status": "planned",
       "requiredBrief": {
         "establishing": "Hàng khách đổi tư thế, đồng hồ trôi và số thứ tự còn nằm trong máy",
-        "interactive": "Đặt lại thứ tự, chạm khách cần thông báo để cập nhật trung thực",
+        "interactive": "Cận cảnh khách đợi quá lâu: Hàng khách đổi tư thế, đồng hồ trôi và số thứ tự còn nằm trong máy; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
         "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
       },
-      "interactionBrief": "Đặt lại thứ tự, chạm khách cần thông báo để cập nhật trung thực",
+      "interactionBrief": "Cận cảnh khách đợi quá lâu: Hàng khách đổi tư thế, đồng hồ trôi và số thứ tự còn nằm trong máy; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
       "frames": {
         "establishing": {
           "background": null,
@@ -1421,10 +1422,10 @@
       "status": "planned",
       "requiredBrief": {
         "establishing": "Cận bình siro rót quá vạch, màu ly đổi đậm; khách cần ít ngọt",
-        "interactive": "Kiểm tra thể tích, chọn làm lại nếu không thể sửa đạt yêu cầu",
+        "interactive": "Cận cảnh siro lỡ tay: Cận bình siro rót quá vạch, màu ly đổi đậm; khách cần ít ngọt; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
         "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
       },
-      "interactionBrief": "Kiểm tra thể tích, chọn làm lại nếu không thể sửa đạt yêu cầu",
+      "interactionBrief": "Cận cảnh siro lỡ tay: Cận bình siro rót quá vạch, màu ly đổi đậm; khách cần ít ngọt; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
       "frames": {
         "establishing": {
           "background": null,
@@ -1460,10 +1461,10 @@
       "status": "planned",
       "requiredBrief": {
         "establishing": "Đèn vụt tắt, máy xay đứng im, đèn báo nguồn nhấp nháy",
-        "interactive": "Ngừng thiết bị an toàn và chỉ định khu vực điện cần kiểm tra bởi người phù hợp",
+        "interactive": "Cận cảnh máy xay dừng ngang: Đèn vụt tắt, máy xay đứng im, đèn báo nguồn nhấp nháy; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
         "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
       },
-      "interactionBrief": "Ngừng thiết bị an toàn và chỉ định khu vực điện cần kiểm tra bởi người phù hợp",
+      "interactionBrief": "Cận cảnh máy xay dừng ngang: Đèn vụt tắt, máy xay đứng im, đèn báo nguồn nhấp nháy; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
       "frames": {
         "establishing": {
           "background": null,
@@ -1499,10 +1500,10 @@
       "status": "planned",
       "requiredBrief": {
         "establishing": "Cửa tủ đóng, nhãn nhiệt độ và thời gian mất điện hiện trên khung",
-        "interactive": "Ghi mốc thời gian, kiểm tra dữ liệu nhiệt độ, phân loại nguyên liệu có căn cứ",
+        "interactive": "Cận cảnh tủ lạnh im tiếng: Cửa tủ đóng, nhãn nhiệt độ và thời gian mất điện hiện trên khung; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
         "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
       },
-      "interactionBrief": "Ghi mốc thời gian, kiểm tra dữ liệu nhiệt độ, phân loại nguyên liệu có căn cứ",
+      "interactionBrief": "Cận cảnh tủ lạnh im tiếng: Cửa tủ đóng, nhãn nhiệt độ và thời gian mất điện hiện trên khung; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
       "frames": {
         "establishing": {
           "background": null,
@@ -1538,10 +1539,10 @@
       "status": "planned",
       "requiredBrief": {
         "establishing": "Màn thu ngân tối, khách cầm mã thanh toán chưa được xác nhận",
-        "interactive": "Kiểm tra trạng thái giao dịch trước khi chốt, dùng quy trình dự phòng không trùng thu",
+        "interactive": "Cận cảnh pos mất kết nối: Màn thu ngân tối, khách cầm mã thanh toán chưa được xác nhận; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
         "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
       },
-      "interactionBrief": "Kiểm tra trạng thái giao dịch trước khi chốt, dùng quy trình dự phòng không trùng thu",
+      "interactionBrief": "Cận cảnh pos mất kết nối: Màn thu ngân tối, khách cầm mã thanh toán chưa được xác nhận; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
       "frames": {
         "establishing": {
           "background": null,
@@ -1577,10 +1578,10 @@
       "status": "planned",
       "requiredBrief": {
         "establishing": "Đồng hồ chuyển, tạp dề treo trống trong khi bàn bắt đầu đông",
-        "interactive": "Phân vai lại trên sơ đồ trạm, đánh dấu công việc chưa có người xử lý",
+        "interactive": "Cận cảnh người cùng ca đến muộn: Đồng hồ chuyển, tạp dề treo trống trong khi bàn bắt đầu đông; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
         "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
       },
-      "interactionBrief": "Phân vai lại trên sơ đồ trạm, đánh dấu công việc chưa có người xử lý",
+      "interactionBrief": "Cận cảnh người cùng ca đến muộn: Đồng hồ chuyển, tạp dề treo trống trong khi bàn bắt đầu đông; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
       "frames": {
         "establishing": {
           "background": null,
@@ -1616,10 +1617,10 @@
       "status": "planned",
       "requiredBrief": {
         "establishing": "Người học việc bối rối trước hai chai màu giống nhau",
-        "interactive": "Chạm nhãn để kiểm tra, hướng dẫn từ trạm an toàn thay vì đoán",
+        "interactive": "Cận cảnh pha chế mới đọc sai nhãn: Người học việc bối rối trước hai chai màu giống nhau; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
         "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
       },
-      "interactionBrief": "Chạm nhãn để kiểm tra, hướng dẫn từ trạm an toàn thay vì đoán",
+      "interactionBrief": "Cận cảnh pha chế mới đọc sai nhãn: Người học việc bối rối trước hai chai màu giống nhau; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
       "frames": {
         "establishing": {
           "background": null,
@@ -1655,10 +1656,10 @@
       "status": "planned",
       "requiredBrief": {
         "establishing": "Hai người trong quầy có tư thế mệt, phiếu đơn vẫn đến",
-        "interactive": "Điều chỉnh nhịp nhận đơn và lượt nghỉ qua bảng ca",
+        "interactive": "Cận cảnh không ai kịp nghỉ: Hai người trong quầy có tư thế mệt, phiếu đơn vẫn đến; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
         "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
       },
-      "interactionBrief": "Điều chỉnh nhịp nhận đơn và lượt nghỉ qua bảng ca",
+      "interactionBrief": "Cận cảnh không ai kịp nghỉ: Hai người trong quầy có tư thế mệt, phiếu đơn vẫn đến; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
       "frames": {
         "establishing": {
           "background": null,
@@ -1694,10 +1695,10 @@
       "status": "planned",
       "requiredBrief": {
         "establishing": "Khách chỉ ly nước và màn đánh giá, người phía sau quan sát",
-        "interactive": "Mở phiếu order gốc trên bàn, lắng nghe rồi xác minh điểm chưa khớp",
+        "interactive": "Cận cảnh khách quay lại quầy: Khách chỉ ly nước và màn đánh giá, người phía sau quan sát; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
         "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
       },
-      "interactionBrief": "Mở phiếu order gốc trên bàn, lắng nghe rồi xác minh điểm chưa khớp",
+      "interactionBrief": "Cận cảnh khách quay lại quầy: Khách chỉ ly nước và màn đánh giá, người phía sau quan sát; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
       "frames": {
         "establishing": {
           "background": null,
@@ -1733,10 +1734,10 @@
       "status": "planned",
       "requiredBrief": {
         "establishing": "Màn hình điện thoại phóng một khung ảnh, góc rộng hiện câu chuyện khác",
-        "interactive": "Đổi giữa khung cắt và toàn cảnh, kiểm tra bằng chứng trước phản hồi",
+        "interactive": "Cận cảnh ảnh cắt mất ngữ cảnh: Màn hình điện thoại phóng một khung ảnh, góc rộng hiện câu chuyện khác; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
         "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
       },
-      "interactionBrief": "Đổi giữa khung cắt và toàn cảnh, kiểm tra bằng chứng trước phản hồi",
+      "interactionBrief": "Cận cảnh ảnh cắt mất ngữ cảnh: Màn hình điện thoại phóng một khung ảnh, góc rộng hiện câu chuyện khác; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
       "frames": {
         "establishing": {
           "background": null,
@@ -1772,10 +1773,10 @@
       "status": "planned",
       "requiredBrief": {
         "establishing": "Giao diện bài đánh giá với ô soạn nháp, thông tin cá nhân bị lộ trong bản nháp",
-        "interactive": "Che dữ liệu riêng và chọn nội dung đáp có trách nhiệm, không gây tranh cãi công khai",
+        "interactive": "Cận cảnh phản hồi công khai: Giao diện bài đánh giá với ô soạn nháp, thông tin cá nhân bị lộ trong bản nháp; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
         "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
       },
-      "interactionBrief": "Che dữ liệu riêng và chọn nội dung đáp có trách nhiệm, không gây tranh cãi công khai",
+      "interactionBrief": "Cận cảnh phản hồi công khai: Giao diện bài đánh giá với ô soạn nháp, thông tin cá nhân bị lộ trong bản nháp; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
       "frames": {
         "establishing": {
           "background": null,
@@ -1811,10 +1812,10 @@
       "status": "planned",
       "requiredBrief": {
         "establishing": "Giọt nước chạy dọc thanh mái đến đèn và dây điện",
-        "interactive": "Khoanh vùng, chọn ngắt/kiểm tra theo quy trình an toàn, không tự sửa khi nguy hiểm",
+        "interactive": "Cận cảnh nước nhỏ gần đèn: Giọt nước chạy dọc thanh mái đến đèn và dây điện; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
         "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
       },
-      "interactionBrief": "Khoanh vùng, chọn ngắt/kiểm tra theo quy trình an toàn, không tự sửa khi nguy hiểm",
+      "interactionBrief": "Cận cảnh nước nhỏ gần đèn: Giọt nước chạy dọc thanh mái đến đèn và dây điện; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
       "frames": {
         "establishing": {
           "background": null,
@@ -1850,10 +1851,10 @@
       "status": "planned",
       "requiredBrief": {
         "establishing": "Các vệt nước rơi xuống bộ bàn ghế ngoài sân",
-        "interactive": "Di chuyển bàn theo bản đồ vùng khô, đổi vị trí khách có trao đổi",
+        "interactive": "Cận cảnh ghế vườn ướt: Các vệt nước rơi xuống bộ bàn ghế ngoài sân; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
         "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
       },
-      "interactionBrief": "Di chuyển bàn theo bản đồ vùng khô, đổi vị trí khách có trao đổi",
+      "interactionBrief": "Cận cảnh ghế vườn ướt: Các vệt nước rơi xuống bộ bàn ghế ngoài sân; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
       "frames": {
         "establishing": {
           "background": null,
@@ -1889,10 +1890,10 @@
       "status": "planned",
       "requiredBrief": {
         "establishing": "Máng thoát và vệt nước đi về ranh sân hàng xóm",
-        "interactive": "Đặt hướng xử lý thoát nước có kiểm tra, trao đổi trực tiếp thay vì đẩy nước đi",
+        "interactive": "Cận cảnh nước chảy sang sân cạnh: Máng thoát và vệt nước đi về ranh sân hàng xóm; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
         "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
       },
-      "interactionBrief": "Đặt hướng xử lý thoát nước có kiểm tra, trao đổi trực tiếp thay vì đẩy nước đi",
+      "interactionBrief": "Cận cảnh nước chảy sang sân cạnh: Máng thoát và vệt nước đi về ranh sân hàng xóm; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
       "frames": {
         "establishing": {
           "background": null,
@@ -1928,10 +1929,10 @@
       "status": "planned",
       "requiredBrief": {
         "establishing": "Hộp trò chơi mở, một ô cờ trống, khách lục dưới bàn",
-        "interactive": "Soi các vị trí đồ đạc, kiểm tra danh sách mảnh trước khi kết luận",
+        "interactive": "Cận cảnh thiếu một quân cờ: Hộp trò chơi mở, một ô cờ trống, khách lục dưới bàn; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
         "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
       },
-      "interactionBrief": "Soi các vị trí đồ đạc, kiểm tra danh sách mảnh trước khi kết luận",
+      "interactionBrief": "Cận cảnh thiếu một quân cờ: Hộp trò chơi mở, một ô cờ trống, khách lục dưới bàn; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
       "frames": {
         "establishing": {
           "background": null,
@@ -1967,10 +1968,10 @@
       "status": "planned",
       "requiredBrief": {
         "establishing": "Hai nhóm chỉ vào lá bài, nét mặt căng dần",
-        "interactive": "Chọn cách đưa luật tham khảo/đổi game trên bàn và xem phản ứng",
+        "interactive": "Cận cảnh tranh cãi về luật: Hai nhóm chỉ vào lá bài, nét mặt căng dần; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
         "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
       },
-      "interactionBrief": "Chọn cách đưa luật tham khảo/đổi game trên bàn và xem phản ứng",
+      "interactionBrief": "Cận cảnh tranh cãi về luật: Hai nhóm chỉ vào lá bài, nét mặt căng dần; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
       "frames": {
         "establishing": {
           "background": null,
@@ -2006,10 +2007,10 @@
       "status": "planned",
       "requiredBrief": {
         "establishing": "Đồng hồ gần giờ đóng, âm lượng nhóm tăng, nhà bên cạnh tắt đèn",
-        "interactive": "Giảm âm thanh của không gian, thống nhất giờ kết thúc với khách",
+        "interactive": "Cận cảnh ồn khi gần đóng cửa: Đồng hồ gần giờ đóng, âm lượng nhóm tăng, nhà bên cạnh tắt đèn; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
         "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
       },
-      "interactionBrief": "Giảm âm thanh của không gian, thống nhất giờ kết thúc với khách",
+      "interactionBrief": "Cận cảnh ồn khi gần đóng cửa: Đồng hồ gần giờ đóng, âm lượng nhóm tăng, nhà bên cạnh tắt đèn; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
       "frames": {
         "establishing": {
           "background": null,
@@ -2045,10 +2046,10 @@
       "status": "planned",
       "requiredBrief": {
         "establishing": "Khách quen bước đến bên cạnh hàng số thứ tự, người đang chờ nhìn sang",
-        "interactive": "Di chuyển đơn trên bảng hàng chờ và nhìn phản ứng người đến trước",
+        "interactive": "Cận cảnh khách quen xin làm trước: Khách quen bước đến bên cạnh hàng số thứ tự, người đang chờ nhìn sang; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
         "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
       },
-      "interactionBrief": "Di chuyển đơn trên bảng hàng chờ và nhìn phản ứng người đến trước",
+      "interactionBrief": "Cận cảnh khách quen xin làm trước: Khách quen bước đến bên cạnh hàng số thứ tự, người đang chờ nhìn sang; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
       "frames": {
         "establishing": {
           "background": null,
@@ -2084,10 +2085,10 @@
       "status": "planned",
       "requiredBrief": {
         "establishing": "Thẻ tích điểm có bảy dấu, khách nói đủ tám; phiếu mua nằm cạnh",
-        "interactive": "Đếm mộc và đối chiếu giao dịch hợp lệ với khách",
+        "interactive": "Cận cảnh thẻ tám mộc: Thẻ tích điểm có bảy dấu, khách nói đủ tám; phiếu mua nằm cạnh; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
         "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
       },
-      "interactionBrief": "Đếm mộc và đối chiếu giao dịch hợp lệ với khách",
+      "interactionBrief": "Cận cảnh thẻ tám mộc: Thẻ tích điểm có bảy dấu, khách nói đủ tám; phiếu mua nằm cạnh; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
       "frames": {
         "establishing": {
           "background": null,
@@ -2123,10 +2124,10 @@
       "status": "planned",
       "requiredBrief": {
         "establishing": "Khách quen chưa mang tiền, hóa đơn đang treo",
-        "interactive": "Chọn xử lý minh bạch trong quy định quán, ghi nhận bằng cách không lộ dữ liệu riêng",
+        "interactive": "Cận cảnh nợ một ly mai trả: Khách quen chưa mang tiền, hóa đơn đang treo; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
         "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
       },
-      "interactionBrief": "Chọn xử lý minh bạch trong quy định quán, ghi nhận bằng cách không lộ dữ liệu riêng",
+      "interactionBrief": "Cận cảnh nợ một ly mai trả: Khách quen chưa mang tiền, hóa đơn đang treo; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
       "frames": {
         "establishing": {
           "background": null,
@@ -2162,10 +2163,10 @@
       "status": "planned",
       "requiredBrief": {
         "establishing": "Một điện thoại giơ cao, khung hình bắt trúng khách bàn bên",
-        "interactive": "Di chuyển góc máy hoặc yêu cầu dừng quay, màn hình mô phỏng vùng riêng tư",
+        "interactive": "Cận cảnh quay phim dính mặt khách: Một điện thoại giơ cao, khung hình bắt trúng khách bàn bên; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
         "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
       },
-      "interactionBrief": "Di chuyển góc máy hoặc yêu cầu dừng quay, màn hình mô phỏng vùng riêng tư",
+      "interactionBrief": "Cận cảnh quay phim dính mặt khách: Một điện thoại giơ cao, khung hình bắt trúng khách bàn bên; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
       "frames": {
         "establishing": {
           "background": null,
@@ -2201,10 +2202,10 @@
       "status": "planned",
       "requiredBrief": {
         "establishing": "Nhóm học sinh để ly nước sát thiết bị sạc",
-        "interactive": "Kéo ly khỏi nguy cơ, chỉ khu vực dùng đồ uống phù hợp",
+        "interactive": "Cận cảnh nước sát ổ điện: Nhóm học sinh để ly nước sát thiết bị sạc; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
         "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
       },
-      "interactionBrief": "Kéo ly khỏi nguy cơ, chỉ khu vực dùng đồ uống phù hợp",
+      "interactionBrief": "Cận cảnh nước sát ổ điện: Nhóm học sinh để ly nước sát thiết bị sạc; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
       "frames": {
         "establishing": {
           "background": null,
@@ -2240,10 +2241,10 @@
       "status": "planned",
       "requiredBrief": {
         "establishing": "Một bạn trẻ bối rối trước quầy, bạn bè đứng phía sau",
-        "interactive": "So lại món đã giao và cách thanh toán hợp lệ, tránh làm khách xấu hổ",
+        "interactive": "Cận cảnh bạn quên ví: Một bạn trẻ bối rối trước quầy, bạn bè đứng phía sau; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
         "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
       },
-      "interactionBrief": "So lại món đã giao và cách thanh toán hợp lệ, tránh làm khách xấu hổ",
+      "interactionBrief": "Cận cảnh bạn quên ví: Một bạn trẻ bối rối trước quầy, bạn bè đứng phía sau; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
       "frames": {
         "establishing": {
           "background": null,
@@ -2279,10 +2280,10 @@
       "status": "planned",
       "requiredBrief": {
         "establishing": "Vệt nắng dịch qua ghế, khách lấy tay che mặt, cây ngoài sân héo",
-        "interactive": "Chọn vị trí có bóng râm và điều chỉnh bố trí ghế",
+        "interactive": "Cận cảnh bàn sân nắng gắt: Vệt nắng dịch qua ghế, khách lấy tay che mặt, cây ngoài sân héo; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
         "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
       },
-      "interactionBrief": "Chọn vị trí có bóng râm và điều chỉnh bố trí ghế",
+      "interactionBrief": "Cận cảnh bàn sân nắng gắt: Vệt nắng dịch qua ghế, khách lấy tay che mặt, cây ngoài sân héo; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
       "frames": {
         "establishing": {
           "background": null,
@@ -2318,10 +2319,10 @@
       "status": "planned",
       "requiredBrief": {
         "establishing": "Máy làm đá báo không đủ, menu đồ lạnh vẫn sáng",
-        "interactive": "Chỉ định hạn mức đơn và cập nhật món tạm ngưng nhận",
+        "interactive": "Cận cảnh thùng đá gần hết: Máy làm đá báo không đủ, menu đồ lạnh vẫn sáng; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
         "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
       },
-      "interactionBrief": "Chỉ định hạn mức đơn và cập nhật món tạm ngưng nhận",
+      "interactionBrief": "Cận cảnh thùng đá gần hết: Máy làm đá báo không đủ, menu đồ lạnh vẫn sáng; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
       "frames": {
         "establishing": {
           "background": null,
@@ -2357,10 +2358,10 @@
       "status": "planned",
       "requiredBrief": {
         "establishing": "Một khách ôm đầu ngồi xuống, người đi cùng tìm nước và chỗ mát",
-        "interactive": "Dọn đường hỗ trợ, gọi hỗ trợ y tế khi có dấu hiệu nghiêm trọng; không tự chẩn đoán",
+        "interactive": "Cận cảnh khách choáng vì nóng: Một khách ôm đầu ngồi xuống, người đi cùng tìm nước và chỗ mát; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
         "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
       },
-      "interactionBrief": "Dọn đường hỗ trợ, gọi hỗ trợ y tế khi có dấu hiệu nghiêm trọng; không tự chẩn đoán",
+      "interactionBrief": "Cận cảnh khách choáng vì nóng: Một khách ôm đầu ngồi xuống, người đi cùng tìm nước và chỗ mát; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
       "frames": {
         "establishing": {
           "background": null,
@@ -2396,10 +2397,10 @@
       "status": "planned",
       "requiredBrief": {
         "establishing": "Xe khách dựng lấn cổng bên cạnh, người hàng xóm đang dắt xe ra",
-        "interactive": "Chuyển vị trí đỗ trên sơ đồ có giới hạn thực tế",
+        "interactive": "Cận cảnh xe chắn lối đi: Xe khách dựng lấn cổng bên cạnh, người hàng xóm đang dắt xe ra; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
         "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
       },
-      "interactionBrief": "Chuyển vị trí đỗ trên sơ đồ có giới hạn thực tế",
+      "interactionBrief": "Cận cảnh xe chắn lối đi: Xe khách dựng lấn cổng bên cạnh, người hàng xóm đang dắt xe ra; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
       "frames": {
         "establishing": {
           "background": null,
@@ -2435,10 +2436,10 @@
       "status": "planned",
       "requiredBrief": {
         "establishing": "Loa trong nhà hiện vòng âm, cửa hàng xóm khép lại",
-        "interactive": "Điều chỉnh mức âm và vị trí loa, hỏi hàng xóm nhu cầu thực tế",
+        "interactive": "Cận cảnh nhạc vang sau 21 giờ: Loa trong nhà hiện vòng âm, cửa hàng xóm khép lại; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
         "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
       },
-      "interactionBrief": "Điều chỉnh mức âm và vị trí loa, hỏi hàng xóm nhu cầu thực tế",
+      "interactionBrief": "Cận cảnh nhạc vang sau 21 giờ: Loa trong nhà hiện vòng âm, cửa hàng xóm khép lại; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
       "frames": {
         "establishing": {
           "background": null,
@@ -2474,10 +2475,10 @@
       "status": "planned",
       "requiredBrief": {
         "establishing": "Khói từ một vị trí ngoài sân trôi về nhóm khách khác",
-        "interactive": "Chỉ định khu vực không ảnh hưởng người khác, trao đổi nội quy rõ ràng",
+        "interactive": "Cận cảnh khói bay vào bàn: Khói từ một vị trí ngoài sân trôi về nhóm khách khác; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
         "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
       },
-      "interactionBrief": "Chỉ định khu vực không ảnh hưởng người khác, trao đổi nội quy rõ ràng",
+      "interactionBrief": "Cận cảnh khói bay vào bàn: Khói từ một vị trí ngoài sân trôi về nhóm khách khác; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
       "frames": {
         "establishing": {
           "background": null,
@@ -2513,10 +2514,10 @@
       "status": "planned",
       "requiredBrief": {
         "establishing": "Hai phiếu báo giá đặt cạnh nhau, giá mới được khoanh đỏ",
-        "interactive": "So giá, định lượng và chất lượng trước khi quyết định menu",
+        "interactive": "Cận cảnh nhà cung cấp tăng giá: Hai phiếu báo giá đặt cạnh nhau, giá mới được khoanh đỏ; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
         "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
       },
-      "interactionBrief": "So giá, định lượng và chất lượng trước khi quyết định menu",
+      "interactionBrief": "Cận cảnh nhà cung cấp tăng giá: Hai phiếu báo giá đặt cạnh nhau, giá mới được khoanh đỏ; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
       "frames": {
         "establishing": {
           "background": null,
@@ -2552,10 +2553,10 @@
       "status": "planned",
       "requiredBrief": {
         "establishing": "Ngăn nguyên liệu vắng một chai, món cốt dừa vẫn ở menu",
-        "interactive": "Khóa món tạm hết và đề nghị thay thế chỉ sau khi khách đồng ý",
+        "interactive": "Cận cảnh thiếu cốt dừa: Ngăn nguyên liệu vắng một chai, món cốt dừa vẫn ở menu; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
         "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
       },
-      "interactionBrief": "Khóa món tạm hết và đề nghị thay thế chỉ sau khi khách đồng ý",
+      "interactionBrief": "Cận cảnh thiếu cốt dừa: Ngăn nguyên liệu vắng một chai, món cốt dừa vẫn ở menu; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
       "frames": {
         "establishing": {
           "background": null,
@@ -2591,10 +2592,10 @@
       "status": "planned",
       "requiredBrief": {
         "establishing": "Khay sữa có mã lô khác thường và dấu hiệu bảo quản chưa rõ",
-        "interactive": "Cách ly lô, đối chiếu điều kiện lưu trữ/nguồn hàng, không thử bằng mùi",
+        "interactive": "Cận cảnh lô sữa có vấn đề: Khay sữa có mã lô khác thường và dấu hiệu bảo quản chưa rõ; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
         "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
       },
-      "interactionBrief": "Cách ly lô, đối chiếu điều kiện lưu trữ/nguồn hàng, không thử bằng mùi",
+      "interactionBrief": "Cận cảnh lô sữa có vấn đề: Khay sữa có mã lô khác thường và dấu hiệu bảo quản chưa rõ; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
       "frames": {
         "establishing": {
           "background": null,
@@ -2630,10 +2631,10 @@
       "status": "planned",
       "requiredBrief": {
         "establishing": "Biển treo phía trước bị gió giật, dây giữ kéo căng",
-        "interactive": "Khoanh vùng phía dưới và gọi đơn vị phù hợp kiểm tra cố định",
+        "interactive": "Cận cảnh biển bạt rung mạnh: Biển treo phía trước bị gió giật, dây giữ kéo căng; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
         "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
       },
-      "interactionBrief": "Khoanh vùng phía dưới và gọi đơn vị phù hợp kiểm tra cố định",
+      "interactionBrief": "Cận cảnh biển bạt rung mạnh: Biển treo phía trước bị gió giật, dây giữ kéo căng; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
       "frames": {
         "establishing": {
           "background": null,
@@ -2669,10 +2670,10 @@
       "status": "planned",
       "requiredBrief": {
         "establishing": "Gió hất khăn và làm ghế chuyển chỗ, khách đứng dậy",
-        "interactive": "Thu đồ an toàn, dời khách khỏi khu nguy hiểm",
+        "interactive": "Cận cảnh ghế ngoài sân bị xô: Gió hất khăn và làm ghế chuyển chỗ, khách đứng dậy; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
         "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
       },
-      "interactionBrief": "Thu đồ an toàn, dời khách khỏi khu nguy hiểm",
+      "interactionBrief": "Cận cảnh ghế ngoài sân bị xô: Gió hất khăn và làm ghế chuyển chỗ, khách đứng dậy; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
       "frames": {
         "establishing": {
           "background": null,
@@ -2708,10 +2709,10 @@
       "status": "planned",
       "requiredBrief": {
         "establishing": "Lá cây gom quanh rãnh, mực nước dâng về cửa quán",
-        "interactive": "Chặn khu trơn và sắp thứ tự kiểm tra vệ sinh khi điều kiện an toàn",
+        "interactive": "Cận cảnh miệng thoát nước nghẹt: Lá cây gom quanh rãnh, mực nước dâng về cửa quán; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
         "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
       },
-      "interactionBrief": "Chặn khu trơn và sắp thứ tự kiểm tra vệ sinh khi điều kiện an toàn",
+      "interactionBrief": "Cận cảnh miệng thoát nước nghẹt: Lá cây gom quanh rãnh, mực nước dâng về cửa quán; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
       "frames": {
         "establishing": {
           "background": null,
@@ -2747,10 +2748,10 @@
       "status": "planned",
       "requiredBrief": {
         "establishing": "Khu khách nhiều người, ghế che khuất tầm nhìn, phụ huynh gọi tên con",
-        "interactive": "Đánh dấu lối cần rà soát, phân công tìm an toàn và liên hệ người có trách nhiệm",
+        "interactive": "Cận cảnh phụ huynh tìm bé: Khu khách nhiều người, ghế che khuất tầm nhìn, phụ huynh gọi tên con; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
         "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
       },
-      "interactionBrief": "Đánh dấu lối cần rà soát, phân công tìm an toàn và liên hệ người có trách nhiệm",
+      "interactionBrief": "Cận cảnh phụ huynh tìm bé: Khu khách nhiều người, ghế che khuất tầm nhìn, phụ huynh gọi tên con; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
       "frames": {
         "establishing": {
           "background": null,
@@ -2786,10 +2787,10 @@
       "status": "planned",
       "requiredBrief": {
         "establishing": "Một khách ngồi khuỵu, người đi cùng ra hiệu, lối ra bị đông người",
-        "interactive": "Giải phóng lối tiếp cận và gọi hỗ trợ khẩn theo dấu hiệu, tránh chẩn đoán trong game",
+        "interactive": "Cận cảnh khách có dấu hiệu cần trợ giúp: Một khách ngồi khuỵu, người đi cùng ra hiệu, lối ra bị đông người; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
         "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
       },
-      "interactionBrief": "Giải phóng lối tiếp cận và gọi hỗ trợ khẩn theo dấu hiệu, tránh chẩn đoán trong game",
+      "interactionBrief": "Cận cảnh khách có dấu hiệu cần trợ giúp: Một khách ngồi khuỵu, người đi cùng ra hiệu, lối ra bị đông người; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
       "frames": {
         "establishing": {
           "background": null,
@@ -2825,10 +2826,10 @@
       "status": "planned",
       "requiredBrief": {
         "establishing": "Nhiều điện thoại cùng hướng vào người gặp sự cố",
-        "interactive": "Chọn vị trí che tầm quay, mời tôn trọng riêng tư, giữ không gian hỗ trợ",
+        "interactive": "Cận cảnh đám đông giơ máy quay: Nhiều điện thoại cùng hướng vào người gặp sự cố; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
         "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
       },
-      "interactionBrief": "Chọn vị trí che tầm quay, mời tôn trọng riêng tư, giữ không gian hỗ trợ",
+      "interactionBrief": "Cận cảnh đám đông giơ máy quay: Nhiều điện thoại cùng hướng vào người gặp sự cố; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
       "frames": {
         "establishing": {
           "background": null,
@@ -2864,10 +2865,10 @@
       "status": "planned",
       "requiredBrief": {
         "establishing": "Hai thẻ mộc đặt cạnh hai biên lai, khách chỉ vào mộc vừa đóng",
-        "interactive": "Đối chiếu lượt mua và kết quả đóng dấu, sửa công bằng",
+        "interactive": "Cận cảnh hai thẻ cùng ghi một lượt: Hai thẻ mộc đặt cạnh hai biên lai, khách chỉ vào mộc vừa đóng; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
         "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
       },
-      "interactionBrief": "Đối chiếu lượt mua và kết quả đóng dấu, sửa công bằng",
+      "interactionBrief": "Cận cảnh hai thẻ cùng ghi một lượt: Hai thẻ mộc đặt cạnh hai biên lai, khách chỉ vào mộc vừa đóng; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
       "frames": {
         "establishing": {
           "background": null,
@@ -2903,10 +2904,10 @@
       "status": "planned",
       "requiredBrief": {
         "establishing": "Ngăn quà trống, khách đã đặt thẻ đủ mộc lên quầy",
-        "interactive": "Chọn phương án thông báo và quyền nhận bù có thể thực hiện",
+        "interactive": "Cận cảnh quà đổi mộc hết hàng: Ngăn quà trống, khách đã đặt thẻ đủ mộc lên quầy; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
         "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
       },
-      "interactionBrief": "Chọn phương án thông báo và quyền nhận bù có thể thực hiện",
+      "interactionBrief": "Cận cảnh quà đổi mộc hết hàng: Ngăn quà trống, khách đã đặt thẻ đủ mộc lên quầy; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
       "frames": {
         "establishing": {
           "background": null,
@@ -2942,10 +2943,10 @@
       "status": "planned",
       "requiredBrief": {
         "establishing": "Nhân viên mới cầm mộc, thẻ đã có vết mực lem",
-        "interactive": "Chọn cách xử lý thẻ lỗi, kiểm tra số lượt không làm khách mất quyền lợi",
+        "interactive": "Cận cảnh dấu đóng sai chỗ: Nhân viên mới cầm mộc, thẻ đã có vết mực lem; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
         "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
       },
-      "interactionBrief": "Chọn cách xử lý thẻ lỗi, kiểm tra số lượt không làm khách mất quyền lợi",
+      "interactionBrief": "Cận cảnh dấu đóng sai chỗ: Nhân viên mới cầm mộc, thẻ đã có vết mực lem; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
       "frames": {
         "establishing": {
           "background": null,
@@ -2981,10 +2982,10 @@
       "status": "planned",
       "requiredBrief": {
         "establishing": "Máy quay dựng cạnh bàn và khung preview hiện mặt khách chưa đồng ý",
-        "interactive": "Thay góc máy, cắt vùng có người hoặc dừng ghi hình",
+        "interactive": "Cận cảnh khung quay dính người lạ: Máy quay dựng cạnh bàn và khung preview hiện mặt khách chưa đồng ý; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
         "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
       },
-      "interactionBrief": "Thay góc máy, cắt vùng có người hoặc dừng ghi hình",
+      "interactionBrief": "Cận cảnh khung quay dính người lạ: Máy quay dựng cạnh bàn và khung preview hiện mặt khách chưa đồng ý; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
       "frames": {
         "establishing": {
           "background": null,
@@ -3020,10 +3021,10 @@
       "status": "planned",
       "requiredBrief": {
         "establishing": "Một đoạn ngắn và cảnh trước-sau đặt trên storyboard song song",
-        "interactive": "Sắp mảnh diễn biến đúng thứ tự trước khi viết lời giải thích",
+        "interactive": "Cận cảnh video bị hiểu sai: Một đoạn ngắn và cảnh trước-sau đặt trên storyboard song song; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
         "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
       },
-      "interactionBrief": "Sắp mảnh diễn biến đúng thứ tự trước khi viết lời giải thích",
+      "interactionBrief": "Cận cảnh video bị hiểu sai: Một đoạn ngắn và cảnh trước-sau đặt trên storyboard song song; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
       "frames": {
         "establishing": {
           "background": null,
@@ -3059,10 +3060,10 @@
       "status": "planned",
       "requiredBrief": {
         "establishing": "Hai trang xã hội có logo gần giống, khách giơ điện thoại hỏi",
-        "interactive": "Đối chiếu kênh chính thức và soạn cảnh báo không lộ thông tin khách",
+        "interactive": "Cận cảnh tài khoản giả đăng ưu đãi: Hai trang xã hội có logo gần giống, khách giơ điện thoại hỏi; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
         "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
       },
-      "interactionBrief": "Đối chiếu kênh chính thức và soạn cảnh báo không lộ thông tin khách",
+      "interactionBrief": "Cận cảnh tài khoản giả đăng ưu đãi: Hai trang xã hội có logo gần giống, khách giơ điện thoại hỏi; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
       "frames": {
         "establishing": {
           "background": null,
@@ -3098,10 +3099,10 @@
       "status": "planned",
       "requiredBrief": {
         "establishing": "Bàn giấy tờ với tập hồ sơ và nhiệt kế/tủ lạnh ở phía sau",
-        "interactive": "Tìm đúng hồ sơ có sẵn, chỉ rõ điểm chưa có thay vì dựng số liệu",
+        "interactive": "Cận cảnh hỏi hồ sơ vệ sinh: Bàn giấy tờ với tập hồ sơ và nhiệt kế/tủ lạnh ở phía sau; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
         "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
       },
-      "interactionBrief": "Tìm đúng hồ sơ có sẵn, chỉ rõ điểm chưa có thay vì dựng số liệu",
+      "interactionBrief": "Cận cảnh hỏi hồ sơ vệ sinh: Bàn giấy tờ với tập hồ sơ và nhiệt kế/tủ lạnh ở phía sau; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
       "frames": {
         "establishing": {
           "background": null,
@@ -3137,10 +3138,10 @@
       "status": "planned",
       "requiredBrief": {
         "establishing": "Bìa giấy lẫn giữa menu và biên nhận, người kiểm tra đang chờ",
-        "interactive": "Sắp lại chứng từ theo nhóm, thừa nhận phần chưa xác minh",
+        "interactive": "Cận cảnh chứng từ đặt nhầm chỗ: Bìa giấy lẫn giữa menu và biên nhận, người kiểm tra đang chờ; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
         "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
       },
-      "interactionBrief": "Sắp lại chứng từ theo nhóm, thừa nhận phần chưa xác minh",
+      "interactionBrief": "Cận cảnh chứng từ đặt nhầm chỗ: Bìa giấy lẫn giữa menu và biên nhận, người kiểm tra đang chờ; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
       "frames": {
         "establishing": {
           "background": null,
@@ -3176,10 +3177,10 @@
       "status": "planned",
       "requiredBrief": {
         "establishing": "Lavabo và thùng hàng chặn nửa lối, người cùng ca cần dùng",
-        "interactive": "Di chuyển thùng, mở lối và nhìn trạng thái sử dụng thay đổi",
+        "interactive": "Cận cảnh lối rửa tay bị chắn: Lavabo và thùng hàng chặn nửa lối, người cùng ca cần dùng; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
         "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
       },
-      "interactionBrief": "Di chuyển thùng, mở lối và nhìn trạng thái sử dụng thay đổi",
+      "interactionBrief": "Cận cảnh lối rửa tay bị chắn: Lavabo và thùng hàng chặn nửa lối, người cùng ca cần dùng; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
       "frames": {
         "establishing": {
           "background": null,
@@ -3215,10 +3216,10 @@
       "status": "planned",
       "requiredBrief": {
         "establishing": "Cả hai cùng cầm ly giống nhau, bảng phân công bị xóa mờ",
-        "interactive": "Gắn nhãn người phụ trách mỗi trạm, tránh làm trùng",
+        "interactive": "Cận cảnh hai người làm trùng đơn: Cả hai cùng cầm ly giống nhau, bảng phân công bị xóa mờ; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
         "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
       },
-      "interactionBrief": "Gắn nhãn người phụ trách mỗi trạm, tránh làm trùng",
+      "interactionBrief": "Cận cảnh hai người làm trùng đơn: Cả hai cùng cầm ly giống nhau, bảng phân công bị xóa mờ; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
       "frames": {
         "establishing": {
           "background": null,
@@ -3254,10 +3255,10 @@
       "status": "planned",
       "requiredBrief": {
         "establishing": "Sổ ca mở ở trang trống, một nguyên liệu hết chưa được báo",
-        "interactive": "Điền thẻ tình trạng đơn, tồn kho và thiết bị trên bảng bàn giao",
+        "interactive": "Cận cảnh bàn giao ca thiếu thông tin: Sổ ca mở ở trang trống, một nguyên liệu hết chưa được báo; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
         "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
       },
-      "interactionBrief": "Điền thẻ tình trạng đơn, tồn kho và thiết bị trên bảng bàn giao",
+      "interactionBrief": "Cận cảnh bàn giao ca thiếu thông tin: Sổ ca mở ở trang trống, một nguyên liệu hết chưa được báo; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
       "frames": {
         "establishing": {
           "background": null,
@@ -3293,10 +3294,10 @@
       "status": "planned",
       "requiredBrief": {
         "establishing": "Người cùng ca nhìn đi chỗ khác, khách ngồi gần nghe được câu tranh luận",
-        "interactive": "Chọn dừng tranh cãi công khai, phân công tiếp tục phục vụ rồi trao đổi riêng",
+        "interactive": "Cận cảnh căng thẳng trước khách: Người cùng ca nhìn đi chỗ khác, khách ngồi gần nghe được câu tranh luận; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
         "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
       },
-      "interactionBrief": "Chọn dừng tranh cãi công khai, phân công tiếp tục phục vụ rồi trao đổi riêng",
+      "interactionBrief": "Cận cảnh căng thẳng trước khách: Người cùng ca nhìn đi chỗ khác, khách ngồi gần nghe được câu tranh luận; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
       "frames": {
         "establishing": {
           "background": null,
@@ -3332,10 +3333,10 @@
       "status": "planned",
       "requiredBrief": {
         "establishing": "Hàng phiếu đặt trước phủ kín bàn pha, đơn tại chỗ mới tới",
-        "interactive": "Phân luồng cam kết đã nhận và năng lực làm món, cập nhật thời gian thực tế",
+        "interactive": "Cận cảnh đơn đặt trước tràn quầy: Hàng phiếu đặt trước phủ kín bàn pha, đơn tại chỗ mới tới; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
         "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
       },
-      "interactionBrief": "Phân luồng cam kết đã nhận và năng lực làm món, cập nhật thời gian thực tế",
+      "interactionBrief": "Cận cảnh đơn đặt trước tràn quầy: Hàng phiếu đặt trước phủ kín bàn pha, đơn tại chỗ mới tới; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
       "frames": {
         "establishing": {
           "background": null,
@@ -3371,10 +3372,10 @@
       "status": "planned",
       "requiredBrief": {
         "establishing": "Bàn ghế thêm vào làm lối đi hẹp, nhóm khách muốn ghép bàn",
-        "interactive": "Kéo sơ đồ bàn ghế, giữ lối an toàn và báo giới hạn chỗ",
+        "interactive": "Cận cảnh ghế chật lối ra: Bàn ghế thêm vào làm lối đi hẹp, nhóm khách muốn ghép bàn; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
         "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
       },
-      "interactionBrief": "Kéo sơ đồ bàn ghế, giữ lối an toàn và báo giới hạn chỗ",
+      "interactionBrief": "Cận cảnh ghế chật lối ra: Bàn ghế thêm vào làm lối đi hẹp, nhóm khách muốn ghép bàn; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
       "frames": {
         "establishing": {
           "background": null,
@@ -3410,10 +3411,10 @@
       "status": "planned",
       "requiredBrief": {
         "establishing": "Khay tiền lẻ trống cạnh chồng ly cuối; khách đang thanh toán",
-        "interactive": "Kiểm tra lựa chọn thanh toán và tồn bao bì trước khi nhận thêm món",
+        "interactive": "Cận cảnh tiền lẻ và ly mang về: Khay tiền lẻ trống cạnh chồng ly cuối; khách đang thanh toán; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
         "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
       },
-      "interactionBrief": "Kiểm tra lựa chọn thanh toán và tồn bao bì trước khi nhận thêm món",
+      "interactionBrief": "Cận cảnh tiền lẻ và ly mang về: Khay tiền lẻ trống cạnh chồng ly cuối; khách đang thanh toán; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
       "frames": {
         "establishing": {
           "background": null,
@@ -3449,10 +3450,10 @@
       "status": "planned",
       "requiredBrief": {
         "establishing": "Núm máy đứng yên, hạt kẹt trong phễu và đèn cảnh báo",
-        "interactive": "Dừng nguồn đúng cách, kiểm tra theo hướng dẫn thay vì cố quay",
+        "interactive": "Cận cảnh máy xay cà phê kẹt: Núm máy đứng yên, hạt kẹt trong phễu và đèn cảnh báo; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
         "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
       },
-      "interactionBrief": "Dừng nguồn đúng cách, kiểm tra theo hướng dẫn thay vì cố quay",
+      "interactionBrief": "Cận cảnh máy xay cà phê kẹt: Núm máy đứng yên, hạt kẹt trong phễu và đèn cảnh báo; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
       "frames": {
         "establishing": {
           "background": null,
@@ -3488,10 +3489,10 @@
       "status": "planned",
       "requiredBrief": {
         "establishing": "Nước chảy ở đáy thùng, menu đồ đá vẫn đang mở",
-        "interactive": "Đánh dấu lượng đá còn dùng được và món cần tạm dừng",
+        "interactive": "Cận cảnh đá tan trong thùng: Nước chảy ở đáy thùng, menu đồ đá vẫn đang mở; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
         "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
       },
-      "interactionBrief": "Đánh dấu lượng đá còn dùng được và món cần tạm dừng",
+      "interactionBrief": "Cận cảnh đá tan trong thùng: Nước chảy ở đáy thùng, menu đồ đá vẫn đang mở; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
       "frames": {
         "establishing": {
           "background": null,
@@ -3527,10 +3528,10 @@
       "status": "planned",
       "requiredBrief": {
         "establishing": "Màn nhiệt độ vượt vùng cho phép, khay sữa có nhãn giờ nhập",
-        "interactive": "Đọc nhật ký nhiệt độ, cách ly nguyên liệu không đủ căn cứ an toàn",
+        "interactive": "Cận cảnh báo động nhiệt tủ lạnh: Màn nhiệt độ vượt vùng cho phép, khay sữa có nhãn giờ nhập; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
         "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
       },
-      "interactionBrief": "Đọc nhật ký nhiệt độ, cách ly nguyên liệu không đủ căn cứ an toàn",
+      "interactionBrief": "Cận cảnh báo động nhiệt tủ lạnh: Màn nhiệt độ vượt vùng cho phép, khay sữa có nhãn giờ nhập; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
       "frames": {
         "establishing": {
           "background": null,
@@ -3566,10 +3567,10 @@
       "status": "planned",
       "requiredBrief": {
         "establishing": "Bóng và dây buộc qua lối đi, trẻ chạy quanh ghế",
-        "interactive": "Thay vị trí dây/bóng bằng kéo-thả, giữ thông thoáng lối ra",
+        "interactive": "Cận cảnh dây trang trí chắn cửa: Bóng và dây buộc qua lối đi, trẻ chạy quanh ghế; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
         "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
       },
-      "interactionBrief": "Thay vị trí dây/bóng bằng kéo-thả, giữ thông thoáng lối ra",
+      "interactionBrief": "Cận cảnh dây trang trí chắn cửa: Bóng và dây buộc qua lối đi, trẻ chạy quanh ghế; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
       "frames": {
         "establishing": {
           "background": null,
@@ -3605,10 +3606,10 @@
       "status": "planned",
       "requiredBrief": {
         "establishing": "Bàn sinh nhật hát, khách ngồi bên cạnh đưa mắt nhìn, người nhà ở sân ngoài",
-        "interactive": "Điều chỉnh khu vực và trao đổi giới hạn âm lượng với người đặt bàn",
+        "interactive": "Cận cảnh nhóm hát hơi lớn: Bàn sinh nhật hát, khách ngồi bên cạnh đưa mắt nhìn, người nhà ở sân ngoài; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
         "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
       },
-      "interactionBrief": "Điều chỉnh khu vực và trao đổi giới hạn âm lượng với người đặt bàn",
+      "interactionBrief": "Cận cảnh nhóm hát hơi lớn: Bàn sinh nhật hát, khách ngồi bên cạnh đưa mắt nhìn, người nhà ở sân ngoài; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
       "frames": {
         "establishing": {
           "background": null,
@@ -3644,10 +3645,10 @@
       "status": "planned",
       "requiredBrief": {
         "establishing": "Ly giấy và bóng vỡ ở sân, thùng phân loại sắp đầy",
-        "interactive": "Phân loại rác, xử lý mảnh vỡ và kiểm tra sân trước khi đón khách mới",
+        "interactive": "Cận cảnh rác sau tiệc: Ly giấy và bóng vỡ ở sân, thùng phân loại sắp đầy; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
         "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
       },
-      "interactionBrief": "Phân loại rác, xử lý mảnh vỡ và kiểm tra sân trước khi đón khách mới",
+      "interactionBrief": "Cận cảnh rác sau tiệc: Ly giấy và bóng vỡ ở sân, thùng phân loại sắp đầy; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
       "frames": {
         "establishing": {
           "background": null,
@@ -3683,10 +3684,10 @@
       "status": "planned",
       "requiredBrief": {
         "establishing": "Người đề xuất giao hàng đưa bảng đơn, quầy có hai người với lịch kín",
-        "interactive": "Thử bố trí một đơn giao trên lịch và thấy ai phải rời quầy",
+        "interactive": "Cận cảnh đề nghị bán giao tận nơi: Người đề xuất giao hàng đưa bảng đơn, quầy có hai người với lịch kín; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
         "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
       },
-      "interactionBrief": "Thử bố trí một đơn giao trên lịch và thấy ai phải rời quầy",
+      "interactionBrief": "Cận cảnh đề nghị bán giao tận nơi: Người đề xuất giao hàng đưa bảng đơn, quầy có hai người với lịch kín; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
       "frames": {
         "establishing": {
           "background": null,
@@ -3722,10 +3723,10 @@
       "status": "planned",
       "requiredBrief": {
         "establishing": "Bảng menu dày, lịch làm ca và chi phí hiển thị cạnh nhau",
-        "interactive": "Gỡ/giữ món trên bảng năng lực, thử phương án nhân sự với ngân sách",
+        "interactive": "Cận cảnh nên thêm người hay bớt món: Bảng menu dày, lịch làm ca và chi phí hiển thị cạnh nhau; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
         "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
       },
-      "interactionBrief": "Gỡ/giữ món trên bảng năng lực, thử phương án nhân sự với ngân sách",
+      "interactionBrief": "Cận cảnh nên thêm người hay bớt món: Bảng menu dày, lịch làm ca và chi phí hiển thị cạnh nhau; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
       "frames": {
         "establishing": {
           "background": null,
@@ -3761,10 +3762,10 @@
       "status": "planned",
       "requiredBrief": {
         "establishing": "Hai mẫu hợp đồng và khay nguyên liệu khác giá, yêu cầu chất lượng khác nhau",
-        "interactive": "So điều kiện giao, bảo quản và đổi trả trước khi lựa chọn",
+        "interactive": "Cận cảnh hợp đồng nguyên liệu mới: Hai mẫu hợp đồng và khay nguyên liệu khác giá, yêu cầu chất lượng khác nhau; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
         "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
       },
-      "interactionBrief": "So điều kiện giao, bảo quản và đổi trả trước khi lựa chọn",
+      "interactionBrief": "Cận cảnh hợp đồng nguyên liệu mới: Hai mẫu hợp đồng và khay nguyên liệu khác giá, yêu cầu chất lượng khác nhau; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
       "frames": {
         "establishing": {
           "background": null,
@@ -3800,10 +3801,10 @@
       "status": "planned",
       "requiredBrief": {
         "establishing": "Lối đi và góc quầy có chi tiết sửa chữa hoặc bỏ ngỏ tùy các cờ ngày trước",
-        "interactive": "Tìm dấu nguy cơ trong cảnh, kích hoạt quy trình đã chọn trước đó",
+        "interactive": "Cận cảnh sự cố cũ quay lại: Lối đi và góc quầy có chi tiết sửa chữa hoặc bỏ ngỏ tùy các cờ ngày trước; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
         "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
       },
-      "interactionBrief": "Tìm dấu nguy cơ trong cảnh, kích hoạt quy trình đã chọn trước đó",
+      "interactionBrief": "Cận cảnh sự cố cũ quay lại: Lối đi và góc quầy có chi tiết sửa chữa hoặc bỏ ngỏ tùy các cờ ngày trước; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
       "frames": {
         "establishing": {
           "background": null,
@@ -3839,10 +3840,10 @@
       "status": "planned",
       "requiredBrief": {
         "establishing": "Một hoặc nhiều nhân vật từng gặp trở lại với biểu cảm/phụ kiện thay đổi theo ký ức câu chuyện",
-        "interactive": "Tương tác trực tiếp với nhân vật, phản hồi thay đổi theo mức tin tưởng",
+        "interactive": "Cận cảnh khách quen trở lại: Một hoặc nhiều nhân vật từng gặp trở lại với biểu cảm/phụ kiện thay đổi theo ký ức câu chuyện; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
         "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
       },
-      "interactionBrief": "Tương tác trực tiếp với nhân vật, phản hồi thay đổi theo mức tin tưởng",
+      "interactionBrief": "Cận cảnh khách quen trở lại: Một hoặc nhiều nhân vật từng gặp trở lại với biểu cảm/phụ kiện thay đổi theo ký ức câu chuyện; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
       "frames": {
         "establishing": {
           "background": null,
@@ -3878,10 +3879,10 @@
       "status": "planned",
       "requiredBrief": {
         "establishing": "Máy pha yên, bảng tiền và ghế dọn gọn hoặc hỗn độn tùy hành trình; cửa quán khép dần",
-        "interactive": "Kiểm tra cuối ca bằng thao tác vật thể, mở cảnh kết phù hợp trạng thái tháng",
+        "interactive": "Cận cảnh tắt đèn đóng cửa: Máy pha yên, bảng tiền và ghế dọn gọn hoặc hỗn độn tùy hành trình; cửa quán khép dần; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
         "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
       },
-      "interactionBrief": "Kiểm tra cuối ca bằng thao tác vật thể, mở cảnh kết phù hợp trạng thái tháng",
+      "interactionBrief": "Cận cảnh tắt đèn đóng cửa: Máy pha yên, bảng tiền và ghế dọn gọn hoặc hỗn độn tùy hành trình; cửa quán khép dần; nhân vật nêu tình huống, hiện các lựa chọn trả lời bên cạnh tranh minh họa",
       "frames": {
         "establishing": {
           "background": null,
