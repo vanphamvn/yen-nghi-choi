@@ -502,26 +502,15 @@ html[data-input-ready="true"] #story .controls-loading{display:none!important}
   #story .interaction-error:not([hidden]){padding:5px 8px;font-size:11px;margin:3px 0}
 }
 
-/* Netlify injects its Drawer as a full-width, 48px-tall feedback iframe at
-   the bottom of Deploy Previews. On mobile it literally sits on top of
-   "Tiếp tục ca sau" and intercepts taps. It is not part of the game.
-   Prefer the official ?ntl-drawer-state=hidden preview link, and make
-   legacy/plain preview links nonblocking as well. Production has no Drawer. */
-/* The 48px Netlify Drawer has an injected wrapper that ALSO captures taps.
-   Disable pointer capture on both wrapper and iframe on this game page. */
-[data-netlify-deploy-id],
-iframe[title="Netlify Drawer"],
-iframe[src^="https://app.netlify.com/cdp/"] {
-  pointer-events:none!important;
-}
-
-/* Netlify adds a review Drawer to Deploy Preview pages outside the app DOM.
-   Its fixed iframe can cover the bottom CTA and intercept the first touch.
-   This stylesheet is loaded only by the full-screen campaign; suppress the
-   provider's injected wrapper, never arbitrary iframes or game controls.
-   The permanent alternative is to disable Drawer in Netlify site settings. */
+/* Netlify injects a review Drawer at the bottom of Deploy Previews. On a
+   390x844 mobile screen its 48px iframe covers the Continue button. Disable
+   only Netlify's injected elements (including a separately portaled iframe)
+   on this full-screen campaign page; do not disable ordinary iframes.
+   The clean review URL uses ?ntl-drawer-state=hidden. */
 body [data-netlify-deploy-id],
-body [data-netlify-site-id][data-vcs]{
+body [data-netlify-site-id][data-vcs],
+body iframe[title="Netlify Drawer"],
+body iframe[src^="https://app.netlify.com/cdp/"]{
   display:none!important;
   pointer-events:none!important;
 }
