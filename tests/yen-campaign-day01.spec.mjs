@@ -346,6 +346,7 @@ async function validateSpatialScene(page,incident){
   }));
   const countertop=counter?rect(counter).top:NaN;
   const machineFoot=machine?parseFloat(machine.style.top)+root.top:NaN;
+  const paintedMachineBase=machine?rect(machine).top+rect(machine).height*.90:NaN;
   const stageHeight=root.height,stageWidth=root.width;
   const children=elements.map(e=>{
    const r=rect(e);
@@ -353,7 +354,7 @@ async function validateSpatialScene(page,incident){
     contactX:parseFloat(e.style.left),contactY:parseFloat(e.style.top),
     x:r.left-root.left,y:r.top-root.top,right:r.right-root.left,bottom:r.bottom-root.top,w:r.width,h:r.height};
   });
-  return{scene:id,roles,sheets,children,countertop,machineFoot,stageHeight,stageWidth,
+  return{scene:id,roles,sheets,children,countertop,machineFoot,paintedMachineBase,stageHeight,stageWidth,
    focus:document.querySelector("#illustrations .is-focus")?.dataset.spriteId}
  },incident);
  expect(result.roles,{incident,result}).toEqual({staff:1,customer:1,mascot:1});
@@ -362,15 +363,23 @@ async function validateSpatialScene(page,incident){
   expect(sheet.size).toBe("400% 400%");
   expect(sheet.image).toContain("/game/preview-2d/assets/sprites/");
  }
- expect(Math.abs(result.machineFoot-result.countertop),incident+" countertop grounded").toBeLessThanOrEqual(2.5);
+ expect(Math.abs(result.machineFoot-result.countertop),incident+" projected countertop contact").toBeLessThanOrEqual(2.5);
+ expect(Math.abs(result.paintedMachineBase-result.countertop),
+   incident+" painted espresso metal feet must touch visible wood surface").toBeLessThanOrEqual(1.5);
  const byId=Object.fromEntries(result.children.map(c=>[c.id,c]));
  expect(byId.staff.depth).toBeLessThan(byId.counter.depth);
+ expect(byId.staff.w/byId.customer.w,incident+" staff must be smaller than guest").toBeLessThanOrEqual(.92);
+ if(incident!=="D01-02"){
+   const visibleBarista=byId.counter.y-byId.staff.y;
+   expect(visibleBarista,incident+" head and shoulders visible over counter").toBeGreaterThan(byId.staff.h*.42);
+   expect(visibleBarista,incident+" rear barista must not loom above counter").toBeLessThan(byId.staff.h*.79);
+ }
  expect(byId.customer.depth).toBeGreaterThan(byId.counter.depth);
  expect(byId["cuc-yen"].depth).toBeGreaterThan(byId.counter.depth);
  for(const id of ["staff","customer","cuc-yen"]){
   const a=byId[id];
   expect(a.surface).toBe("floor");
-  expect(a.contactY,incident+" actor feet on floor "+id).toBeGreaterThan(result.stageHeight*.79);
+  expect(a.contactY,incident+" actor feet on floor "+id).toBeGreaterThan(result.stageHeight*(id==="staff"?.679:.79));
   expect(a.contactY,incident+" actor feet below viewport "+id).toBeLessThanOrEqual(result.stageHeight*.99);
   expect(a.w).toBeGreaterThan(20);
   expect(a.h).toBeGreaterThan(20);
@@ -379,7 +388,7 @@ async function validateSpatialScene(page,incident){
  return result;
 }
 
-for(const [width,height] of [[320,480],[390,844],[768,1024],[812,375],[1440,900]]){
+for(const [width,height] of [[320,480],[375,667],[390,660],[390,844],[768,1024],[812,375],[1440,900]]){
  test("painted staff, customer, Cục Yên on floor and machine on counter at "+width+"×"+height,async({page},testInfo)=>{
   await page.setViewportSize({width,height});
   await open(page);
