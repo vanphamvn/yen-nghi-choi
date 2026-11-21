@@ -1,6 +1,6 @@
 // VN-F04: a traditional illustrated visual novel. No touching, dragging or sorting scenery.
 import { DAY01, DAY01_SCRIPTS, day01Debrief } from "./day01.mjs";
-import { getSceneComposition, projectContact } from "./scene-composition.mjs";
+import { getSceneComposition, projectContact, VISUAL_ASSET_DIMENSIONS } from "./scene-composition.mjs";
 import { createState, currentIncident, choose, recover, advance, sceneView, validatePlayable } from "./engine.mjs";
 
 const $ = id => document.getElementById(id);
@@ -94,6 +94,9 @@ function incidentVisuals(entry) {
           choice.risk==="hazard"?SPRITES.worried:SPRITES.unsure
         :prop.src;
       element.alt="";
+      const [sourceWidth,sourceHeight]=VISUAL_ASSET_DIMENSIONS[prop.asset];
+      element.width=sourceWidth;
+      element.height=sourceHeight;
       element.loading="eager";
       element.decoding="async";
     }
