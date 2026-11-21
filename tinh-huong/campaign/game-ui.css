@@ -462,3 +462,42 @@
 #story .day-choice .choice-text{
   pointer-events:none;
 }
+
+/* Stable small viewport prevents iOS/Facebook browser-toolbar animation from
+   moving a choice under the user's finger just after loading/reloading.
+   The 100vh fallback is for older browsers without svh support. */
+@supports (height:100svh){
+  html,body{height:100svh}
+  body{height:100svh}
+  #main{height:100svh}
+}
+/* An interactive-looking choice is never exposed while the JS controller,
+   handlers and mobile viewport are still settling. */
+html[data-input-ready="false"] #story #choices{display:none!important}
+#story .controls-loading{
+  margin:10px 0;
+  padding:12px 15px;
+  border:1px solid rgba(245,219,159,.55);
+  border-radius:5px 11px 5px 11px;
+  background:rgba(255,245,214,.1);
+  color:#fff0cc;
+  text-align:center;
+  font-size:clamp(12px,3.2vw,15px);
+  font-weight:700;
+}
+html[data-input-ready="true"] #story .controls-loading{display:none!important}
+#story .interaction-error:not([hidden]){
+  flex:0 0 auto;
+  padding:8px 12px;
+  margin:7px 0;
+  color:#5e311a;
+  background:#ffefcc;
+  border:2px solid #b97639;
+  border-radius:7px;
+  font-size:12px;
+  font-weight:750;
+}
+@media(orientation:portrait) and (max-height:650px){
+  #story .controls-loading{margin:5px 0;padding:7px 9px}
+  #story .interaction-error:not([hidden]){padding:5px 8px;font-size:11px;margin:3px 0}
+}
