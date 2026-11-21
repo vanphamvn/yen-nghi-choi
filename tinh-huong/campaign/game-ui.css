@@ -1,0 +1,416 @@
+/* Day 1 · Cozy storybook game HUD
+   Keeps the top illustrated stage untouched and its lower story area at 50vh.
+   This is a visual-novel controller, not a collection of form controls.
+   Design reference: DESIGN.md, yen-ui-craft. Zero images, fonts, libraries or storage. */
+#game .story{
+  --game-night:#1b3c31;
+  --game-deep:#122b24;
+  --game-gold:#e3c77f;
+  --game-ink:#2a3f34;
+  --game-paper:#fff4d9;
+  position:relative;
+  isolation:isolate;
+  background:
+    radial-gradient(ellipse at 8% 7%,rgba(201,177,99,.16),transparent 47%),
+    radial-gradient(ellipse at 94% 94%,rgba(81,116,70,.25),transparent 51%),
+    repeating-linear-gradient(155deg,transparent 0 17px,rgba(242,230,182,.018) 18px 19px),
+    linear-gradient(150deg,#274b3b 0%,#17372d 64%,#112d27 100%);
+  color:#fff4d9;
+  border-top:5px solid #a87e46;
+  box-shadow:inset 0 3px 0 rgba(250,223,160,.42),inset 0 -4px 0 rgba(5,27,22,.3);
+}
+/* Tiny bevel and an unobtrusive connector from the painted scene to its dialogue. */
+#game .story::before{
+  content:"";
+  position:absolute;
+  z-index:0;
+  inset:5px 7px 7px;
+  pointer-events:none;
+  border:1px solid rgba(227,199,127,.19);
+  border-radius:2px;
+}
+#game .story::after{
+  content:"◆";
+  position:absolute;
+  right:20px;
+  top:11px;
+  pointer-events:none;
+  font-size:13px;
+  line-height:1;
+  color:rgba(240,204,120,.55);
+}
+#story > *{position:relative;z-index:1}
+#story h1{
+  color:#ffefc8;
+  font:750 clamp(20px,2.4vw,30px)/1.16 var(--serif);
+  letter-spacing:-.02em;
+  text-shadow:0 2px 0 rgba(10,28,23,.55);
+  padding-left:22px;
+  margin:0 0 10px;
+  min-height:0;
+}
+#story h1::before{
+  content:"✦";
+  position:absolute;
+  top:.16em;left:0;
+  color:var(--game-gold);
+  font-size:.64em;
+  text-shadow:0 1px 3px #0005;
+}
+#story .dialogue-scene{
+  position:relative;
+  flex-shrink:0;
+  margin:5px 0 11px;
+  padding:16px 14px 10px;
+  color:var(--game-ink);
+  background:
+    radial-gradient(ellipse at 92% 0%,rgba(227,199,127,.18),transparent 55%),
+    linear-gradient(125deg,#fff7e5,#eee2c4);
+  border:2px solid #bc9755;
+  border-radius:5px 13px 7px 11px;
+  box-shadow:0 3px 0 #10271e, inset 0 0 0 3px rgba(255,252,240,.69),0 7px 12px rgba(0,0,0,.15);
+}
+#story .dialogue-scene::before,
+#story .dialogue-scene::after{
+  content:"";
+  position:absolute;
+  width:8px;
+  height:8px;
+  border:2px solid #c1a169;
+  pointer-events:none;
+}
+#story .dialogue-scene::before{left:4px;bottom:4px;border-top:0;border-right:0}
+#story .dialogue-scene::after{right:4px;top:4px;border-bottom:0;border-left:0}
+#story .dialogue-scene strong{
+  position:absolute;
+  top:-13px;
+  left:12px;
+  z-index:1;
+  max-width:calc(100% - 25px);
+  margin:0;
+  padding:4px 12px 3px;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  background:linear-gradient(#caa866,#a47a40);
+  border:1px solid #f3dba7;
+  border-bottom:2px solid #805d31;
+  border-radius:4px 9px 4px 4px;
+  box-shadow:0 2px 0 rgba(51,51,28,.38);
+  color:#24392d;
+  font-weight:850;
+  font-size:clamp(11px,1.12vw,13px);
+  line-height:1.1;
+}
+#story .dialogue-scene p{
+  margin:0;
+  color:#283e33;
+  font-size:clamp(13px,1.55vw,16px);
+  font-weight:580;
+  line-height:1.38;
+  text-wrap:pretty;
+}
+#story #prompt{display:none}
+#story #choices{
+  display:flex;
+  flex-direction:column;
+  gap:7px;
+  margin:0;
+}
+#story .day-choice{
+  position:relative;
+  display:flex;
+  align-items:center;
+  flex:0 0 auto;
+  min-height:49px;
+  padding:7px 33px 7px 9px;
+  gap:10px;
+  background:linear-gradient(110deg,#fff6de 0%,#f4e7c4 100%);
+  color:#203b2f;
+  border:2px solid #c2a16a;
+  border-radius:6px 12px 5px 12px;
+  box-shadow:inset 0 0 0 2px #fff8e6,0 3px 0 #071e18,0 4px 10px rgba(3,22,16,.28);
+  text-align:left;
+  transition:background-color .16s ease,transform .16s ease,box-shadow .16s ease;
+}
+#story .day-choice::after{
+  content:"›";
+  position:absolute;
+  right:11px;
+  top:50%;
+  transform:translateY(-50%);
+  color:#97723c;
+  font-size:clamp(21px,2.2vw,28px);
+  font-family:serif;
+  font-weight:700;
+}
+#story .day-choice:hover{
+  background:linear-gradient(110deg,#fff8e7,#e7edcf);
+  border-color:#e6ca88;
+  transform:translateX(2px);
+}
+#story .day-choice:active{
+  transform:translate(2px,2px);
+  box-shadow:inset 0 0 0 2px #fff8e6,0 1px 0 #071e18;
+}
+#story .day-choice:focus-visible,
+#story .actions button:focus-visible,
+#game .scene-exit:focus-visible,
+#debrief .actions :focus-visible{
+  outline:3px solid #ffe6a1;
+  outline-offset:2px;
+}
+#story .choice-index{
+  display:grid;
+  flex:0 0 29px;
+  width:29px;
+  height:29px;
+  place-items:center;
+  border:1.5px solid #c69b4d;
+  border-radius:7px 3px 7px 3px;
+  background:linear-gradient(135deg,#e8d49b,#bc9458);
+  color:#24382d;
+  font:850 13px/1 var(--sans);
+  box-shadow:inset 0 1px 0 #fff2c0,1px 2px 0 #8d7449;
+}
+#story .choice-text{
+  display:block;
+  min-width:0;
+  font-size:clamp(12px,1.33vw,15px);
+  font-weight:760;
+  line-height:1.28;
+  letter-spacing:0;
+}
+#story .day-result{
+  margin:3px 0 10px;
+  padding:11px 12px 10px;
+  border:2px solid #b6985d;
+  border-radius:5px 11px 5px 11px;
+  background:linear-gradient(145deg,#fff3d7,#efdfba);
+  box-shadow:inset 0 0 0 2px #fff9e7,0 3px 0 #09281f;
+}
+#story .day-result .reason{
+  margin:0!important;
+  padding:0;
+  color:#314334;
+  font-size:clamp(12px,1.4vw,15px);
+  line-height:1.37;
+  border:0;
+}
+#story .day-result .reason::before{
+  content:"✦ Hệ quả  ";
+  color:#74572e;
+  font-weight:850;
+}
+#story .level-panel{
+  flex:0 1 auto;
+  position:relative;
+  margin-top:auto;
+  margin-bottom:12px;
+  padding:10px 12px;
+  border:1px solid rgba(255,227,155,.56);
+  border-radius:5px 11px 5px 11px;
+  background:
+    radial-gradient(circle at 94% 18%,rgba(243,224,156,.14),transparent 45%),
+    linear-gradient(125deg,#345746,#244439);
+  color:#fff5dd;
+  box-shadow:inset 0 0 0 2px rgba(4,26,21,.5),0 3px 0 #09231d;
+}
+#story .level-panel::before,#debrief .level-panel::before{
+  content:"✧";
+  position:absolute;
+  right:9px;bottom:5px;
+  font-size:16px;
+  color:rgba(229,208,149,.35);
+  pointer-events:none;
+}
+.level-panel .level-heading{gap:9px}
+.level-panel .level-number{
+  flex:0 0 auto;
+  min-height:34px;
+  min-width:51px;
+  padding:6px 10px;
+  background:linear-gradient(145deg,#ddbd74,#a67d41);
+  border:1px solid #fce2a9;
+  border-radius:3px 9px 3px 9px;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.45),2px 2px 0 rgba(7,31,25,.45);
+  color:#283b2e;
+  font:900 clamp(11px,1.3vw,13px)/1.2 var(--sans);
+}
+.level-panel .level-title{
+  color:#fff1ca;
+  font:750 clamp(13px,1.5vw,17px)/1.2 var(--serif);
+}
+.level-panel .level-earned{
+  padding:5px 8px;
+  border-radius:5px;
+  border:1px solid #dfc583;
+  background:#f9e6aa;
+  color:#354831;
+  font-weight:900;
+}
+.level-panel progress{
+  height:9px;
+  margin:9px 0 4px;
+  border:1px solid rgba(247,224,162,.55);
+  border-radius:2px;
+  background:#10291f;
+  box-shadow:inset 0 1px 3px rgba(0,0,0,.55);
+}
+.level-panel progress::-webkit-progress-bar{background:#10291f;border-radius:2px}
+.level-panel progress::-webkit-progress-value{
+  background:linear-gradient(90deg,#b5c873,#f2d98f);
+  border-radius:1px;
+}
+.level-panel progress::-moz-progress-bar{background:#e6ce81;border-radius:1px}
+.level-panel .level-foot{color:#f0e5c8;font-size:clamp(11px,1.1vw,12px)}
+.level-panel .level-foot [data-level="xp"]{color:#ffe5a2}
+#story .level-panel[data-level-up="true"]{
+  background:radial-gradient(circle at 85% 25%,rgba(236,211,131,.26),transparent 50%),linear-gradient(125deg,#476345,#244a37);
+  border-color:#ebd28a;
+  box-shadow:inset 0 0 0 2px rgba(235,207,126,.3),0 3px 0 #09231d;
+}
+#story .level-panel[data-level-up="true"] .level-number{background:linear-gradient(#ffe6a0,#dbb36a)}
+#story .actions{
+  flex:0 0 auto;
+  display:flex;
+  gap:9px;
+  align-items:stretch;
+  margin:0;
+}
+#story .actions button{
+  position:relative;
+  min-width:0;
+  min-height:46px;
+  padding:8px 10px;
+  border-radius:5px 11px 5px 11px;
+  font-size:clamp(12px,1.36vw,15px);
+  font-weight:850;
+  line-height:1.2;
+}
+#story .actions .primary{
+  background:linear-gradient(#5c8663,#2f5a41 80%);
+  color:#ffefc7;
+  border:2px solid #c9b378;
+  box-shadow:inset 0 0 0 2px rgba(12,63,43,.48),0 3px 0 #0b211b;
+}
+#story .actions .primary::after{
+  content:" ›";
+  font-size:1.15em;
+}
+#story .actions .secondary{
+  background:linear-gradient(#fff4d7,#dfcc9d);
+  color:#334c39;
+  border:2px solid #ad8c57;
+  box-shadow:inset 0 0 0 2px #f8e7c1,0 3px 0 #0b211b;
+}
+#story .actions button:active{transform:translateY(2px);box-shadow:none}
+#game .scene-exit{background:#f7ebcf;border-color:#ad8c57;box-shadow:0 2px 0 #695133}
+#game .scene-number{background:linear-gradient(#34594a,#204238);border:1px solid rgba(238,210,145,.65);box-shadow:0 2px 0 rgba(7,22,18,.65)}
+
+/* The debrief is the end-of-level page, not a business status form. */
+#debrief{
+  background:radial-gradient(circle at 50% 0%,#3b614b,#17372e 72%);
+  color:#fff2d6;
+  border:0;
+  box-shadow:inset 0 0 0 6px rgba(192,154,78,.36);
+}
+#debrief .eyebrow{color:#e2d094}
+#debrief h2{color:#fff2cf;text-shadow:0 2px 0 #0e211b}
+#debrief .level-panel{
+  position:relative;
+  margin:0;
+  padding:10px 13px;
+  border:1px solid #bd9f5f;
+  border-radius:5px 12px 5px 12px;
+  background:linear-gradient(125deg,#365747,#244b3c);
+  color:#fff4dc;
+}
+#debrief .debrief-list li{
+  background:linear-gradient(135deg,#fff4d7,#eaddb8);
+  border:2px solid #b4965b;
+  border-left:6px solid #be9652;
+  border-radius:5px 10px 5px 10px;
+  color:#2c4536;
+  box-shadow:0 2px 0 #0d2b22;
+}
+#debrief .tomorrow{
+  background:rgba(15,43,32,.68);
+  color:#f8e7c0;
+  border:1px solid rgba(227,201,130,.46);
+  border-radius:6px;
+}
+#debrief .actions .primary{
+  background:linear-gradient(#5c8663,#2f5a41);
+  color:#fff0cb;
+  border:2px solid #dac184;
+  box-shadow:0 3px 0 #0b211b;
+}
+#debrief .back-link{color:#fff1d1;text-decoration:underline}
+
+/* Portrait: the illustrated world remains exactly one half, visual-novel HUD the other. */
+@media(orientation:portrait){
+  #game .story{padding:clamp(9px,2.6vw,18px)}
+  #story h1{font-size:clamp(20px,5.2vw,26px);margin-bottom:10px}
+  #story .dialogue-scene{margin:6px 0 9px;padding:17px 12px 9px}
+  #story .dialogue-scene strong{font-size:12px}
+  #story .dialogue-scene p{font-size:clamp(13px,3.5vw,16px);line-height:1.31}
+  #story #choices{gap:6px}
+  #story .day-choice{min-height:47px;padding:6px 30px 6px 8px;gap:9px}
+  #story .choice-index{width:27px;height:27px;flex-basis:27px}
+  #story .choice-text{font-size:clamp(12px,3.3vw,14px)}
+  #story .level-panel{margin-bottom:8px;padding:9px 10px}
+  .level-panel progress{margin:7px 0 4px}
+}
+@media(orientation:portrait) and (max-height:650px){
+  #game .story{padding:7px 8px 6px;border-top-width:4px}
+  #game .story::after{top:7px}
+  #story h1{font-size:clamp(18px,5vw,21px);padding-left:18px;margin-bottom:4px;line-height:1.1}
+  #story .dialogue-scene{margin:4px 0 5px;padding:13px 9px 6px;border-width:1px}
+  #story .dialogue-scene strong{top:-9px;left:8px;padding:2px 8px;font-size:10px}
+  #story .dialogue-scene p{font-size:12px;line-height:1.21}
+  #story #choices{gap:4px}
+  #story .day-choice{min-height:44px;padding:3px 27px 3px 6px;border-width:1px;gap:6px}
+  #story .day-choice::after{right:8px;font-size:20px}
+  #story .choice-index{height:24px;width:24px;flex-basis:24px;font-size:11px}
+  #story .choice-text{font-size:12px;line-height:1.18}
+  #story .day-result{margin:3px 0 6px;padding:6px 8px;border-width:1px}
+  #story .day-result .reason{font-size:12px;line-height:1.22}
+  #story .level-panel{margin-bottom:6px;padding:6px 8px}
+  .level-panel .level-number{min-height:24px;min-width:42px;padding:4px 6px;font-size:10px}
+  .level-panel .level-title{font-size:12px;line-height:1.15}
+  .level-panel .level-earned{font-size:10px;padding:3px 5px}
+  .level-panel progress{margin:5px 0 3px;height:7px}
+  .level-panel .level-foot{font-size:10px;line-height:1.14}
+  #story .actions button{min-height:44px;padding:5px}
+}
+@media(orientation:portrait) and (max-height:520px){
+  #story[data-state="observe"] .level-panel{display:none}
+  #story[data-state="resolve"] .dialogue-scene{margin:3px 0 4px;padding:7px 8px 5px}
+  #story[data-state="resolve"] .dialogue-scene strong{display:none}
+  #story[data-state="resolve"] .day-result{margin:2px 0 3px;padding:4px 7px}
+  #story[data-state="resolve"] .level-panel{margin:4px 0 5px;padding:4px 7px}
+  #story[data-state="resolve"] .level-panel .level-number{min-height:20px;padding:2px 5px}
+  #story[data-state="resolve"] .level-panel progress{margin:3px 0 2px;height:6px}
+  #story[data-state="resolve"] .level-foot [data-level="next"]{display:none}
+  #story[data-state="resolve"] .actions button{min-height:44px}
+}
+@media(orientation:landscape) and (max-height:480px){
+  #game .story{padding:8px 10px}
+  #story h1{font-size:19px;margin-bottom:6px}
+  #story .dialogue-scene{margin:4px 0 7px;padding:14px 9px 7px}
+  #story .dialogue-scene strong{font-size:11px;top:-10px;padding:2px 8px}
+  #story .dialogue-scene p{font-size:12px;line-height:1.23}
+  #story #choices{gap:4px}
+  #story .day-choice{min-height:44px;padding:4px 26px 4px 7px}
+  #story .choice-index{width:25px;height:25px;flex-basis:25px}
+  #story .choice-text{font-size:12px;line-height:1.18}
+  #story .level-panel{margin-bottom:5px;padding:6px 9px}
+  .level-panel .level-title{font-size:12px}
+  .level-panel .level-number{min-height:25px;padding:3px 6px}
+  .level-panel progress{height:6px;margin:5px 0 2px}
+  #story .day-result{margin:3px 0 6px;padding:7px 8px}
+}
+@media(prefers-reduced-motion:reduce){
+  #story .day-choice,#story .level-panel progress::-webkit-progress-value{transition:none!important}
+}
