@@ -18,7 +18,7 @@ const baseScene=(location,description,backgroundPosition,pose,props,subject)=>({
     interactive:{
       backdrop:room,description:"Cận cảnh: người chơi đang kiểm tra "+subject,
       alt:"Góc cận cho phép chạm trực tiếp lên "+subject,
-      actors:[{id:"cuc-yen",pose:"focused",alt:"Cục Yên quan sát vật chứng"}],
+      actors:[{id:"cuc-yen",pose:"investigating",alt:"Cục Yên cúi quan sát vật chứng"}],
       props:props.map(([id])=>({id,state:"selected",alt:subject+" đang được kiểm tra"})),
       camera:{scale:1.16,position:backgroundPosition}
     },
