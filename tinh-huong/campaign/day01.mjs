@@ -1,8 +1,7 @@
 // VN-F04 #222 · Three linked Day 1 illustrated incident scripts.
 // The 30-day catalog still describes future days as planned.
 // Illustrated visual novel: backgrounds, painted characters, dialogue and direct story choices.
-const coffee="/lab/assets/sprites/collections/assets/coffee-tea/";
-const mascot="/assets/cuc-yen/sprites/";
+// All artwork and physical coordinates live in scene-composition.mjs.
 const room="/lab/assets/room-backdrop.jpg";
 
 const baseScene=(location,description,backgroundPosition,pose,props,subject)=>({
@@ -11,21 +10,21 @@ const baseScene=(location,description,backgroundPosition,pose,props,subject)=>({
     establishing:{
       backdrop:room,description:"Toàn cảnh: "+description,
       alt:"Khung cảnh quán Yên: "+description,
-      actors:[{id:"cuc-yen",pose,alt:"Cục Yên đang quan sát ở "+location}],
+      actors:[{id:"cuc-yen",pose,alt:"Cục Yên đứng trên sàn tại "+location},{id:"staff",pose:"serving",alt:"Nhân viên đứng sau quầy"},{id:"customer",pose:"waiting",alt:"Khách đứng trước quầy"}],
       props:props.map(([id,state])=>({id,state,alt:subject+" · "+state})),
       camera:{scale:1,position:backgroundPosition}
     },
     interactive:{
       backdrop:room,description:"Tình huống cận cảnh: "+subject,
       alt:"Góc cận minh họa "+subject+" và nhân vật đang suy nghĩ",
-      actors:[{id:"cuc-yen",pose:"investigating",alt:"Cục Yên cúi quan sát vật chứng"}],
+      actors:[{id:"cuc-yen",pose:"investigating",alt:"Cục Yên quan sát vật chứng từ sàn quán"},{id:"staff",pose:"watching",alt:"Nhân viên theo dõi tình huống"},{id:"customer",pose:"concerned",alt:"Khách liên quan tới tình huống"}],
       props:props.map(([id])=>({id,state:"in-focus",alt:subject+" nằm trong điểm nhìn của nhân vật"})),
       camera:{scale:1.16,position:backgroundPosition}
     },
     resolution:{
       backdrop:room,description:"Kết quả: vật dụng và nhân vật đổi trạng thái sau lựa chọn",
       alt:"Cảnh quán sau xử lý "+subject+", nhân vật và đồ vật phản ứng theo quyết định",
-      actors:[{id:"cuc-yen",pose:"reacting",alt:"Cục Yên phản ứng với cách xử lý"}],
+      actors:[{id:"cuc-yen",pose:"reacting",alt:"Cục Yên phản ứng với cách xử lý"},{id:"staff",pose:"reacting",alt:"Nhân viên phản ứng sau quyết định"},{id:"customer",pose:"reacting",alt:"Khách nhận kết quả xử lý"}],
       props:props.map(([id])=>({id,state:"changed",alt:subject+" sau lựa chọn"})),
       camera:{scale:1.04,position:backgroundPosition}
     }
@@ -50,11 +49,6 @@ export const DAY01=[
   transition:"Khách đang nhìn đồng hồ, còn quầy vẫn phải giữ thứ tự. Bạn quyết định thế nào?",
   sceneTheme:"morning",weather:"Nắng đầu ngày",
   scene:baseScene("Quầy nhận đơn","khách xếp hàng và dải phiếu order trên quầy","48% 48%","working",[["tickets","unordered"],["tray","waiting"]],"phiếu nhận đồ uống"),
-  assets:[
-   {id:"prop-machine",src:coffee+"v2-espresso-machine.webp",x:13,y:70,width:21,alt:"Máy pha cà phê đặt bên trái quầy"},
-   {id:"prop-tray",src:coffee+"v2-serving-tray.webp",x:84,y:75,width:18,alt:"Khay phục vụ bên phải"},
-   {id:"actor",src:mascot+"barista.webp",x:73,y:28,width:21,alt:"Cục Yên đang pha chế"}
-  ],
   question:"Khách đến trước đang sốt ruột. Bạn xử lý thế nào?",
   choices:[
    {id:"explain",label:"Xếp phiếu, báo thời gian chờ rồi phục vụ theo lượt.",reason:"Khách được biết thời gian chờ, hàng nhận nước rõ thứ tự.",risk:"safe",effects:{safety:1,trust:9,flow:7,budget:-1},flags:{queueSorted:true,queueExplained:true},reaction:reaction("Khách đầu hàng","“Cảm ơn quán. Vậy mình biết đợi khoảng nào rồi.”","relieved","announced")},
@@ -70,11 +64,6 @@ export const DAY01=[
   transition:"Sàn đang ướt và có khách đi ngang. Bạn sẽ làm gì?",
   sceneTheme:"afternoon",weather:"Chiều có khách",
   scene:baseScene("Lối đi trước quầy","bình đổ, nền sàn ướt và một lối đi cần cảnh báo","47% 83%","alarmed",[["spill","wet"],["warning","away"]],"lối đi có nước đổ"),
-  assets:[
-   {id:"prop-pitcher",src:coffee+"v2-milk-pitcher.webp",x:21,y:60,width:16,alt:"Bình inox nghiêng cạnh quầy"},
-   {id:"prop-glass",src:coffee+"v2-glass-tea.webp",x:82,y:42,width:11,alt:"Ly trà của khách ở khu vực gần đó"},
-   {id:"actor",src:mascot+"surprised.webp",x:70,y:24,width:23,alt:"Cục Yên giật mình khi thấy nước đổ"}
-  ],
   question:"Một khách đang đến gần vũng nước. Bạn xử lý thế nào?",
   choices:[
    {id:"clean",label:"Chặn lối, đặt biển, lau và kiểm tra sàn trước khi mở lại.",reason:"Lối trơn đã được ngăn và lau, khách đi an toàn.",risk:"safe",effects:{safety:18,trust:8,flow:-4,budget:-1},flags:{spillContained:true,spillResolved:true},reaction:reaction("Khách gần quầy","“Được rồi, em đi vòng bên này. Cảm ơn quán đã nhắc.”","reassured","dry")},
@@ -91,11 +80,6 @@ export const DAY01=[
   transition:"Khách đang cầm biên lai và chờ lời giải thích. Bạn quyết định thế nào?",
   sceneTheme:"evening",weather:"Đèn quán đã lên",
   scene:baseScene("Quầy thu ngân","màn thu ngân, biên lai và ly trà của khách lúc tối","56% 49%","focused",[["receipt","mismatch"],["register","review"]],"hóa đơn đang tính sai"),
-  assets:[
-   {id:"prop-menu",src:coffee+"v2-menu-card.webp",x:15,y:50,width:17,alt:"Menu minh họa được đặt cạnh máy tính tiền"},
-   {id:"prop-glass",src:coffee+"v2-glass-tea.webp",x:84,y:66,width:14,alt:"Ly trà vừa mua của khách"},
-   {id:"actor",src:mascot+"clerk.webp",x:72,y:24,width:23,alt:"Cục Yên ở quầy thu ngân"}
-  ],
   question:"Menu ghi 25.000đ, hóa đơn ghi 35.000đ. Bạn làm gì?",
   choices:[
    {id:"refund",label:"Xin lỗi, sửa hóa đơn và hoàn 10.000đ.",reason:"Khách được hoàn tiền; quán sửa đúng dòng tính sai.",risk:"safe",effects:{safety:0,trust:12,flow:-2,budget:-1},flags:{billCorrected:true,customerReassured:true},reaction:reaction("Khách mua nước","“Dạ, cảm ơn quán đã kiểm tra và sửa ngay.”","relieved","refunded")},
@@ -111,11 +95,6 @@ export const DAY01_SCRIPTS=Object.fromEntries(DAY01.map(s=>[
   id:s.id,mode:"visual-novel",scene:s.scene,interactions:[],choices:s.choices,callbacks:[]
  }
 ]));
-export const DAY01_ART_REFS=Object.freeze({
-  "D01-01":[coffee+"v2-espresso-machine.webp",coffee+"v2-serving-tray.webp",mascot+"barista.webp"],
-  "D01-02":[coffee+"v2-milk-pitcher.webp",coffee+"v2-glass-tea.webp",mascot+"surprised.webp"],
-  "D01-03":[coffee+"v2-menu-card.webp",coffee+"v2-glass-tea.webp",mascot+"clerk.webp"]
-});
 export function day01Debrief(flags){
  const summary=[];
  summary.push(flags.queueExplained ? "Hàng chờ có thứ tự, khách được báo thời gian đợi."
