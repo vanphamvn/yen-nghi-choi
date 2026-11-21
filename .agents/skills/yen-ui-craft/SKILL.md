@@ -66,7 +66,7 @@ On 21/11/2026 PR #241, 24/24 immediate `Tiếp tục ca sau` taps failed in an i
 
 **Rules:**
 - Share interactive Netlify game previews with the official query parameter `?ntl-drawer-state=hidden` to keep reviewer chrome from blocking CTA targets. This is not a fix to game input events; do not add more touch event hacks to solve a third-party iframe intercept.
-- On this game page, disable pointer interception by the injected Netlify Drawer iframe in CSS as a fallback for anyone visiting the unmodified Preview URL. Do not alter the real game action layout, XP, half-screen proportions or production navigation to accommodate a Preview-only vendor control.
+- On this game page, disable pointer interception by BOTH the injected Netlify Drawer iframe AND its outer `[data-netlify-deploy-id]` wrapper in CSS as a fallback for the unmodified Preview URL. The wrapper still intercepted taps after the iframe alone was set to `pointer-events:none`. Do not alter the real game action layout, XP, half-screen proportions or production navigation to accommodate a Preview-only vendor control.
 - When diagnosing an apparently inert tap, always inspect `document.elementFromPoint()` at the center of the visible button **after the state transition**. A visible button does not guarantee it is the top hit target.
 - The preview gate remains: update rule/skill, implement the minimal fix, confirm Netlify Preview deployment and send link, stop for owner retest; full QA and merge only with explicit approval.
 
