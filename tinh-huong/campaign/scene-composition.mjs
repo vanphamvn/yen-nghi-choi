@@ -174,6 +174,10 @@ export function validateSceneComposition(id,scene=SCENE_COMPOSITIONS[id]){
 // the machine visibly floating over the wooden countertop.
 export const ESPRESSO_PAINTED_BASE_RATIO=0.90;
 export const COUNTER_ASPECT_RATIO=195/768;
+// The painted wooden top is inset from the image bounding box. The previous
+// surface projection used its uppermost pixel and left the machine/tickets
+// hovering in front of the green wall. This is the usable tabletop contact line.
+export const COUNTER_PAINTED_SURFACE_INSET_RATIO=0.12;
 export function projectContact(layer,scene,stageWidth,stageHeight){
  const x=stageWidth*layer.contact.x/100;
  let y=stageHeight*layer.contact.y/100;
@@ -181,7 +185,7 @@ export function projectContact(layer,scene,stageWidth,stageHeight){
   const furniture=scene.layers.find(item=>item.role==="counter");
   if(!furniture)throw new Error("Counter surface has no supporting counter");
   const h=stageWidth*(furniture.size/100)*COUNTER_ASPECT_RATIO;
-  y=stageHeight*furniture.contact.y/100 - h*(furniture.footOffset/100);
+  y=stageHeight*furniture.contact.y/100 - h*(furniture.footOffset/100) + h*COUNTER_PAINTED_SURFACE_INSET_RATIO;
  }
  return{x,y};
 }
