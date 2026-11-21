@@ -163,6 +163,8 @@ function render() {
   }
   const entry = chapter();
   const decided = state.phase === "resolve";
+  $("story").dataset.state = decided ? "resolve" : "observe";
+  $("actions").hidden = !decided;
   $("scene-number").textContent = "NGÀY 01 / 30 · " + entry.slot.toUpperCase() + " · " + entry.time;
   $("scene-status").textContent = decided ? "KẾT QUẢ QUYẾT ĐỊNH" : "CHỌN CÁCH XỬ LÝ";
   $("incident-id").textContent = entry.id + " · " + entry.time + " · " + entry.scene.location;
@@ -206,13 +208,6 @@ function showDebrief() {
     state.flags.spillResolved && state.flags.billCorrected && state.flags.queueExplained ?
       "Quán đã có nền tảng tốt hơn cho Ngày 2. Mưa đầu mùa vẫn có những chuyện mới." :
       "Ngày 2: Mưa đầu mùa. Quán cần kiểm tra những việc còn dang dở trước khi mở cửa.";
-  const history = $("history");
-  history.replaceChildren();
-  for (const record of state.history) {
-    const option = chapterById[record.incidentId]?.choices.find(choice => choice.id === record.choiceId);
-    history.append(node("li", "", record.incidentId + " · " +
-      (option?.label || record.choiceLabel) + (record.recovered ? " (đã khắc phục)" : "")));
-  }
   $("debrief-title").focus({ preventScroll: true });
 }
 

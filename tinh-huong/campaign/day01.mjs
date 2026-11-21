@@ -46,7 +46,7 @@ export const DAY01=[
   id:"D01-01",time:"08:10",slot:"Sáng",title:"Hàng khách đầu tiên",
   intro:"Sáng khai trương. Khách đã đứng đợi, nhưng phiếu in ra theo thứ tự lộn xộn.",
   speaker:"Người cùng ca",
-  cue:"Khách đang đợi, ba phiếu order thì lộn thứ tự. Em nên phục vụ và nói gì với mọi người đây?",
+  cue:"Khách đang đợi mà phiếu order lại lộn thứ tự. Mình xử lý sao đây?",
   transition:"Khách đang nhìn đồng hồ, còn quầy vẫn phải giữ thứ tự. Bạn quyết định thế nào?",
   sceneTheme:"morning",weather:"Nắng đầu ngày",
   scene:baseScene("Quầy nhận đơn","khách xếp hàng và dải phiếu order trên quầy","48% 48%","working",[["tickets","unordered"],["tray","waiting"]],"phiếu nhận đồ uống"),
@@ -57,16 +57,16 @@ export const DAY01=[
   ],
   question:"Khách đến trước đang sốt ruột. Bạn xử lý thế nào?",
   choices:[
-   {id:"explain",label:"Xếp lại phiếu theo lượt, thông báo thời gian chờ và phục vụ theo thứ tự.",reason:"Sắp xếp đúng là chưa đủ; khách cần biết mình được phục vụ thế nào.",risk:"safe",effects:{safety:1,trust:9,flow:7,budget:-1},flags:{queueSorted:true,queueExplained:true},reaction:reaction("Khách đầu hàng","“Cảm ơn quán. Vậy mình biết đợi khoảng nào rồi.”","relieved","announced")},
-   {id:"silent",label:"Xếp lại phiếu rồi âm thầm pha nước, chưa báo gì với khách.",reason:"Thứ tự được giữ, nhưng người chờ không có thông tin về tiến độ.",risk:"caution",effects:{safety:0,trust:-4,flow:3,budget:0},flags:{queueSorted:true,queueExplained:false},reaction:reaction("Một khách phía sau","“Quán ơi, không biết đến lượt em chưa?”","uncertain","waiting")},
-   {id:"priority",label:"Đưa đơn của người quen lên trước dù họ đến sau.",reason:"Một khách vui, những khách còn lại thấy nguyên tắc bị thay đổi.",risk:"caution",effects:{safety:0,trust:-11,flow:-3,budget:1},flags:{queueSorted:false,queueExplained:false,queueSkipped:true},reaction:reaction("Khách đứng đầu","“Ủa, mình đến trước mà sao người sau được lấy nước trước?”","concerned","skipped")}
+   {id:"explain",label:"Xếp phiếu, báo thời gian chờ rồi phục vụ theo lượt.",reason:"Khách được biết thời gian chờ, hàng nhận nước rõ thứ tự.",risk:"safe",effects:{safety:1,trust:9,flow:7,budget:-1},flags:{queueSorted:true,queueExplained:true},reaction:reaction("Khách đầu hàng","“Cảm ơn quán. Vậy mình biết đợi khoảng nào rồi.”","relieved","announced")},
+   {id:"silent",label:"Xếp lại phiếu rồi pha nước, không báo khách.",reason:"Đúng lượt, nhưng khách không rõ mình phải đợi bao lâu.",risk:"caution",effects:{safety:0,trust:-4,flow:3,budget:0},flags:{queueSorted:true,queueExplained:false},reaction:reaction("Một khách phía sau","“Quán ơi, không biết đến lượt em chưa?”","uncertain","waiting")},
+   {id:"priority",label:"Ưu tiên người quen dù họ đến sau.",reason:"Khách đến trước cảm thấy mình bị đối xử bất công.",risk:"caution",effects:{safety:0,trust:-11,flow:-3,budget:1},flags:{queueSorted:false,queueExplained:false,queueSkipped:true},reaction:reaction("Khách đứng đầu","“Ủa, mình đến trước mà sao người sau được lấy nước trước?”","concerned","skipped")}
   ],
   day02:"Thứ tự nhận đơn sẽ quyết định quán xử lý hàng chờ ra sao trong những hôm mưa hoặc đông khách."
  },
  {
   id:"D01-02",time:"15:40",slot:"Chiều",title:"Vũng nước cạnh quầy",
   intro:"Chiều. Một bình nước đổ sát lối đi. Khách đang bưng nước đi ngang khu vực ấy.",
-  speaker:"Người cùng ca",cue:"Nước đổ ra lối khách đi rồi! Mình còn nhiều đơn, xử lý thế nào để mọi người an toàn?",
+  speaker:"Người cùng ca",cue:"Nước đổ ngay lối đi! Khách đang tới. Mình làm gì trước?",
   transition:"Sàn đang ướt và có khách đi ngang. Bạn sẽ làm gì?",
   sceneTheme:"afternoon",weather:"Chiều có khách",
   scene:baseScene("Lối đi trước quầy","bình đổ, nền sàn ướt và một lối đi cần cảnh báo","47% 83%","alarmed",[["spill","wet"],["warning","away"]],"lối đi có nước đổ"),
@@ -77,9 +77,9 @@ export const DAY01=[
   ],
   question:"Một khách đang đến gần vũng nước. Bạn xử lý thế nào?",
   choices:[
-   {id:"clean",label:"Ngăn lối nguy hiểm, đặt biển, nhờ hỗ trợ lau khô và kiểm tra trước khi mở lại.",reason:"Nguy cơ được cô lập rồi loại bỏ, đồng thời khách được hướng dẫn đi lối khác.",risk:"safe",effects:{safety:18,trust:8,flow:-4,budget:-1},flags:{spillContained:true,spillResolved:true},reaction:reaction("Khách gần quầy","“Được rồi, em đi vòng bên này. Cảm ơn quán đã nhắc.”","reassured","dry")},
-   {id:"later",label:"Đặt biển, hướng khách đi lối khác nhưng để chỗ ướt lại tới khi bớt đông.",reason:"Có cảnh báo nhưng sàn vẫn trơn. Quán cần duy trì việc ngăn lối và xử lý sớm.",risk:"caution",effects:{safety:1,trust:-2,flow:2,budget:0},flags:{spillContained:true,spillResolved:false},reaction:reaction("Khách gần cửa","“Em thấy biển rồi. Nhưng chỗ đó vẫn còn ướt nha.”","uncertain","wet-blocked")},
-   {id:"open",label:"Bỏ qua vũng nước, cho khách đi như bình thường để kịp bán.",reason:"Cảnh báo bị gỡ khi nguy cơ vẫn tồn tại. Tốc độ không bù được rủi ro trượt ngã.",risk:"hazard",effects:{safety:-20,trust:-12,flow:5,budget:1},flags:{spillContained:false,spillResolved:false},reaction:reaction("Một khách đang đi","“Chỗ này trơn quá! Mọi người đừng đi qua đây.”","alarmed","unsafe"),
+   {id:"clean",label:"Chặn lối, đặt biển, lau và kiểm tra sàn trước khi mở lại.",reason:"Lối trơn đã được ngăn và lau, khách đi an toàn.",risk:"safe",effects:{safety:18,trust:8,flow:-4,budget:-1},flags:{spillContained:true,spillResolved:true},reaction:reaction("Khách gần quầy","“Được rồi, em đi vòng bên này. Cảm ơn quán đã nhắc.”","reassured","dry")},
+   {id:"later",label:"Đặt biển, hướng khách đi vòng; lau khi bớt đông.",reason:"Có biển, nhưng sàn vẫn trơn và cần xử lý sớm.",risk:"caution",effects:{safety:1,trust:-2,flow:2,budget:0},flags:{spillContained:true,spillResolved:false},reaction:reaction("Khách gần cửa","“Em thấy biển rồi. Nhưng chỗ đó vẫn còn ướt nha.”","uncertain","wet-blocked")},
+   {id:"open",label:"Bỏ qua sàn ướt để tiếp tục phục vụ.",reason:"Sàn trơn không được cảnh báo; nguy cơ trượt ngã còn đó.",risk:"hazard",effects:{safety:-20,trust:-12,flow:5,budget:1},flags:{spillContained:false,spillResolved:false},reaction:reaction("Một khách đang đi","“Chỗ này trơn quá! Mọi người đừng đi qua đây.”","alarmed","unsafe"),
       recovery:recover("Đóng lối, đặt lại biển, gọi hỗ trợ và lau kiểm tra sàn","Khôi phục biện pháp an toàn trước khi tiếp tục nhận khách.",{safety:16,trust:6,flow:-6},{spillContained:true,spillResolved:true},"reassured","dry")}
   ],
   day02:"Nếu hôm nay sàn chưa được xử lý triệt để, Ngày 2 sẽ cần kiểm tra lại lối đi khi trời mưa."
@@ -98,9 +98,9 @@ export const DAY01=[
   ],
   question:"Menu ghi 25.000đ, hóa đơn ghi 35.000đ. Bạn làm gì?",
   choices:[
-   {id:"refund",label:"Xin lỗi, sửa hóa đơn và hoàn ngay 10.000 đồng cho khách.",reason:"Thừa nhận sai sót cụ thể, trả lại đúng số tiền và sửa nguồn gây lỗi.",risk:"safe",effects:{safety:0,trust:12,flow:-2,budget:-1},flags:{billCorrected:true,customerReassured:true},reaction:reaction("Khách mua nước","“Dạ, cảm ơn quán đã kiểm tra và sửa ngay.”","relieved","refunded")},
-   {id:"later",label:"Giải thích và hẹn kiểm tra sau, nhưng chưa xử lý số tiền tính dư.",reason:"Khách đã được nghe giải thích, nhưng khoản tính sai vẫn tồn tại.",risk:"caution",effects:{safety:0,trust:-5,flow:2,budget:0},flags:{billCorrected:false,customerReassured:false},reaction:reaction("Khách mua nước","“Nếu đúng là tính dư, khi nào quán hoàn giúp em?”","uncertain","pending")},
-   {id:"ignore",label:"Bảo đây là giá trên máy rồi tiếp tục thu tiền như cũ.",reason:"Đùn lỗi cho hệ thống làm khách mất niềm tin và sai lệch còn lặp lại.",risk:"caution",effects:{safety:0,trust:-16,flow:3,budget:3},flags:{billCorrected:false,customerReassured:false},reaction:reaction("Khách mua nước","“Vậy thôi, chắc lần sau mình không ghé nữa.”","concerned","wrong")}
+   {id:"refund",label:"Xin lỗi, sửa hóa đơn và hoàn 10.000đ.",reason:"Khách được hoàn tiền; quán sửa đúng dòng tính sai.",risk:"safe",effects:{safety:0,trust:12,flow:-2,budget:-1},flags:{billCorrected:true,customerReassured:true},reaction:reaction("Khách mua nước","“Dạ, cảm ơn quán đã kiểm tra và sửa ngay.”","relieved","refunded")},
+   {id:"later",label:"Hẹn kiểm tra sau, chưa hoàn số tiền tính dư.",reason:"Khách còn chờ khoản hoàn tiền chưa được xử lý.",risk:"caution",effects:{safety:0,trust:-5,flow:2,budget:0},flags:{billCorrected:false,customerReassured:false},reaction:reaction("Khách mua nước","“Nếu đúng là tính dư, khi nào quán hoàn giúp em?”","uncertain","pending")},
+   {id:"ignore",label:"Nói giá trên máy là đúng, không điều chỉnh.",reason:"Khách mất niềm tin; lỗi tính tiền chưa được sửa.",risk:"caution",effects:{safety:0,trust:-16,flow:3,budget:3},flags:{billCorrected:false,customerReassured:false},reaction:reaction("Khách mua nước","“Vậy thôi, chắc lần sau mình không ghé nữa.”","concerned","wrong")}
   ],
   day02:"Nếu hóa đơn chưa được sửa, quán có nguy cơ lặp lại cách tính sai vào ca tiếp theo."
  }
@@ -118,11 +118,11 @@ export const DAY01_ART_REFS=Object.freeze({
 });
 export function day01Debrief(flags){
  const summary=[];
- summary.push(flags.queueExplained ? "Hàng chờ đã có thứ tự và khách được báo tiến độ."
-  : flags.queueSorted ? "Phiếu đã sắp, nhưng cần thông báo rõ tiến độ với khách." : "Thứ tự hàng chờ chưa được tôn trọng, cần cải thiện cách điều phối.");
- summary.push(flags.spillResolved ? "Lối đi đã được xử lý; nguy cơ trơn trượt không còn ở ca này."
-  : "Sàn trơn chưa được khắc phục hoàn toàn, cần kiểm tra lại trước ca mới.");
- summary.push(flags.billCorrected ? "Biên lai được sửa và khoản tiền tính dư đã hoàn trả."
-  : "Sai lệch trên hóa đơn vẫn cần giải quyết để không lặp lại.");
+ summary.push(flags.queueExplained ? "Hàng chờ có thứ tự, khách được báo thời gian đợi."
+  : flags.queueSorted ? "Phiếu đã sắp nhưng khách chưa biết bao giờ đến lượt." : "Thứ tự phục vụ bị phá vỡ, cần điều phối lại.");
+ summary.push(flags.spillResolved ? "Lối đi đã được xử lý, khách có thể đi an toàn."
+  : "Sàn trơn chưa được khắc phục, cần xử lý trước ca mới.");
+ summary.push(flags.billCorrected ? "Biên lai đã sửa, khách được hoàn lại 10.000đ."
+  : "Sai lệch trên hóa đơn vẫn cần giải quyết trong ca sau.");
  return summary;
 }
