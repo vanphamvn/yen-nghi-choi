@@ -4,7 +4,7 @@ import {existsSync,readFileSync} from "node:fs";
 import {resolve} from "node:path";
 import {
   SCENE_COMPOSITIONS, VISUAL_ASSETS, getSceneComposition,
-  projectContact, validateSceneComposition, COUNTER_ASPECT_RATIO, ESPRESSO_PAINTED_BASE_RATIO
+  projectContact, validateSceneComposition, COUNTER_ASPECT_RATIO, COUNTER_PAINTED_SURFACE_INSET_RATIO, ESPRESSO_PAINTED_BASE_RATIO
 } from "../tinh-huong/campaign/scene-composition.mjs";
 
 const root=resolve(import.meta.dirname,"..");
@@ -88,7 +88,7 @@ test("all sources actually exist in repository, with no remote runtime image dep
  }
 });
 
-test("countertop projection exactly matches the upper edge of the physical painted counter at every aspect",()=>{
+test("countertop projection uses the painted wooden surface inset, not the image bounding top",()=>{
  for(const id of Object.keys(SCENE_COMPOSITIONS)){
   const scene=getSceneComposition(id);
   const counter=scene.layers.find(x=>x.id==="counter");
@@ -97,7 +97,9 @@ test("countertop projection exactly matches the upper edge of the physical paint
    const result=projectContact(machine,scene,width,height);
    const counterHeight=width*counter.size/100*COUNTER_ASPECT_RATIO;
    const physicalTop=height*counter.contact.y/100-counterHeight*counter.footOffset/100;
-   assert.ok(Math.abs(result.y-physicalTop)<.01,id+" "+width+"x"+height);
+   const woodenSurfaceY=physicalTop+counterHeight*COUNTER_PAINTED_SURFACE_INSET_RATIO;
+   assert.ok(Math.abs(result.y-woodenSurfaceY)<.01,id+" "+width+"x"+height);
+   assert.ok(result.y>physicalTop+counterHeight*.10,"contact must reach the painted wood lip");
    assert.ok(result.y>height*.25,result.y);
    assert.ok(result.y<height*.78,result.y);
    const staff=scene.layers.find(x=>x.role==="staff");
