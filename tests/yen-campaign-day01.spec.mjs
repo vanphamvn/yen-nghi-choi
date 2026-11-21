@@ -157,6 +157,7 @@ for(const width of [320,360,390,768,1440]){
 
 
 const oneScreenSizes=[
+  {width:320,height:480,label:"short-phone"},
   {width:320,height:568,label:"compact-phone"},
   {width:360,height:640,label:"small-phone"},
   {width:390,height:844,label:"modern-phone"},
