@@ -25,7 +25,7 @@ test("catalog = exactly 30 sequential in-game days and 90 unique three-event inc
       assert.equal(incident.id, id);
       assert.ok(!seen.has(id), "duplicate incident ID " + id);
       seen.add(id);
-      assert.equal(incident.status, "planned", "do not mark unimplemented work complete");
+      assert.equal(incident.status, dayIndex === 0 ? "playable" : "planned", "only the three implemented Day 1 incidents may be playable");
       assert.equal(incident.slot, ["Sáng", "Chiều", "Tối"][incidentIndex]);
       assert.ok(incident.title.length > 6);
       assert.ok(flags.has(incident.carryFlag), "unknown story flag " + incident.carryFlag);
