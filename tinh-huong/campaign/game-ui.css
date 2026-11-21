@@ -507,6 +507,9 @@ html[data-input-ready="true"] #story .controls-loading{display:none!important}
    "Tiếp tục ca sau" and intercepts taps. It is not part of the game.
    Prefer the official ?ntl-drawer-state=hidden preview link, and make
    legacy/plain preview links nonblocking as well. Production has no Drawer. */
+/* The 48px Netlify Drawer has an injected wrapper that ALSO captures taps.
+   Disable pointer capture on both wrapper and iframe on this game page. */
+[data-netlify-deploy-id],
 iframe[title="Netlify Drawer"],
 iframe[src^="https://app.netlify.com/cdp/"] {
   pointer-events:none!important;
