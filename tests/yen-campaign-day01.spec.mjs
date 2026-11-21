@@ -439,14 +439,14 @@ test("gamified Day 1: XP, levels, awards and debrief come from the actual three 
  await expect(page.locator("#level-panel")).toHaveAttribute("data-level","2");
  await expect(page.locator("#level-panel")).toHaveAttribute("data-level-up","true");
  await expect(page.locator("#level-panel [data-level=title]")).toHaveText("Quầy đã vào nhịp");
- await expect(page.locator("#level-panel [data-level=xp]")).toHaveText("4/25 XP");
+ await expect(page.locator("#level-panel [data-level=xp]")).toHaveText("4/40 XP");
  await next(page);
  await decide(page,"refund");
- await expect(page.locator("#level-panel [data-level=xp]")).toHaveText("16/25 XP");
+ await expect(page.locator("#level-panel [data-level=xp]")).toHaveText("16/40 XP");
  await next(page);
  await expect(page.locator("#day-level [data-level=title]")).toHaveText("Quầy đã vào nhịp");
  await expect(page.locator("#day-level [data-level=earned]")).toHaveText("Ngày 1 · +36 XP");
- await expect(page.locator("#day-level [data-level=xp]")).toHaveText("16/25 XP");
+ await expect(page.locator("#day-level [data-level=xp]")).toHaveText("16/40 XP");
  await expect(page.locator("#scene-evidence,#character-reaction")).toHaveCount(0);
 });
 
