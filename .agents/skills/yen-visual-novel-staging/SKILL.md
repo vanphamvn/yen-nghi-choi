@@ -20,16 +20,16 @@ This concerns the **visual novel with immediate dialogue choices**, not the arch
 5. **Use perspective and correct overlap.** Keep human-relative size within the scene, foreground characters larger than rear characters where appropriate. Staff can be partially hidden behind the painted counter, but their head and action must remain identifiable. The coffee machine's base rests on the counter surface. Use z-order for occlusion: back staff → counter → on-counter props → foreground customers/Cục Yên → interface.
 6. **Keep stage content inside the upper half** on portrait screens. On mobile portrait the world remains exactly 50% of \`100dvh\`, with dialogue/buttons in the lower 50%. No clipping of the three 44px answers, “Tiếp tục”, “Khắc phục” or exit. Crop must preserve all characters and the focal incident.
 7. **Show meaningful outcomes.** Choice changes Cục Yên expression, and at least one relevant character placement or focal prop state. Avoid misleading visual claims: if the spilled liquid has not been cleaned, it must still be visible; if the bill was not corrected, the original receipt remains.
-8. **Do not declare artwork approved solely from tests.** The current painted source assets are reused with agent-only visual review; owner review pending. A blue-tinted shadow is not a fully painted puddle and must be documented as temporary where used, never passed off as a finished illustration.
+8. **Do not declare artwork approved solely from tests.** The current painted source assets are reused with agent-only visual review; owner review pending. The original tinted rectangle was replaced by a transparent watercolor puddle for D01-02; owner review is still pending, and any new floor incident must use equally complete painted artwork.
 
 ## Code contract
 
 Store physical layout and roles in \`tinh-huong/campaign/scene-composition.mjs\`, not ad hoc \`x,y,width\` on incident scripts. The engine keeps pure game state in \`day01.mjs\`. Each composition object contains \`background\`, \`layers\`, \`role\`, \`surface\`, \`contact\`, \`size\`, \`depth\`, \`src\` and \`artKind\`; sheet actors have an explicit selected frame. Use \`validateSceneComposition()\` to enforce roles and surfaces.
 
 Standard anchors for the *current* painted café background, **not universal positions for all future art**:
-- Floor starts visually near 55% vertical; feet for foreground customers/Cục Yên near 90–97%, staff on the deeper floor behind counter near 68–75% (adjusted for scene crop).
+- Floor starts visually near 55% vertical; feet for foreground customers/Cục Yên near 90–97%, staff on the deeper floor behind counter near 68–75% in D01-01/D01-03; D01-02 staff steps onto foreground floor with a separate depth and visible face.
 - Counter prop artwork sits on the floor with bottom near 77–83%; its top edge defines the machine/receipt contact plane near 62–68%.
-- A spill belongs near the walkway floor (78–92%), not on the counter. A receipt/menu belongs on the counter; a coffee machine's footprint belongs on its surface.
+- A spilled-water asset belongs near the walkway floor (78–92%), never on the counter, and must have organic alpha edges. A receipt/menu belongs on the counter; a coffee machine's footprint belongs on its surface.
 
 These percentages are a starting calibration. Always inspect browser screenshots and adjust for actual artwork, device crop and scene focus.
 
