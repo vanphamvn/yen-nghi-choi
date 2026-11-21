@@ -126,7 +126,7 @@ export function validateSceneComposition(id,scene=SCENE_COMPOSITIONS[id]){
   ids.add(item.id);roles.set(item.role,(roles.get(item.role)||0)+1);
   if(!VISUAL_ASSETS[item.asset])errors.push("missing source asset: "+item.id);
   if(!["floor","counter","table","held"].includes(item.surface))errors.push("unknown surface "+item.id);
-  if(!Number.isFinite(item.size)||item.size<=0||item.size>45)errors.push("invalid size "+item.id);
+  if(!Number.isFinite(item.size)||item.size<=0||item.size>(item.role==="counter"?85:45))errors.push("invalid size "+item.id);
   if(!Number.isFinite(item.depth))errors.push("depth required "+item.id);
   if(!Number.isFinite(item.contact.x)||item.contact.x<0||item.contact.x>100||
      !Number.isFinite(item.contact.y)||item.contact.y<0||item.contact.y>100)
