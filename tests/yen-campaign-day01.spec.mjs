@@ -3,6 +3,9 @@ import { test, expect } from "@playwright/test";
 const open = async page => {
   await page.goto("/tinh-huong/campaign/");
   await expect(page.locator("#game")).toBeVisible();
+  // Netlify adds an external Deploy Preview drawer across the bottom of the viewport.
+  // Remove only that provider QA overlay so it cannot intercept gameplay clicks.
+  await page.evaluate(()=>document.querySelectorAll("[data-netlify-deploy-id]").forEach(element=>element.remove()));
   await expect(page.locator("#world")).toHaveAttribute("data-incident","D01-01");
   await expect(page.locator("#choices button")).toHaveCount(3);
 };
