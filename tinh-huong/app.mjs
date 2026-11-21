@@ -24,7 +24,7 @@ function focusHeading(id) {
   const heading = byId(id);
   heading.focus({ preventScroll: true });
   if (window.matchMedia("(max-width: 767px)").matches) {
-    heading.scrollIntoView({ behavior: "instant", block: "start" });
+    heading.scrollIntoView({ behavior: "auto", block: "start" });
   }
 }
 
@@ -157,7 +157,7 @@ function choose(index) {
   byId("consequence").hidden = false;
   byId("continue").textContent = beatIndex === current.beats.length - 1 ? "Xem kết quả ca trực" : "Tiếp tục câu chuyện";
   if (window.matchMedia("(max-width: 767px)").matches) {
-    byId("dialogue").scrollIntoView({ behavior: "instant", block: "start" });
+    byId("dialogue").scrollIntoView({ behavior: "auto", block: "start" });
   }
   byId("continue").focus({ preventScroll: true });
 }
