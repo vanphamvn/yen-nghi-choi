@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#f7f3e9">
   <meta name="robots" content="noindex,nofollow,noarchive">
   <meta name="referrer" content="no-referrer">
-  <meta name="description" content="Một Tháng Không Yên: Ngày 1, ba tình huống liên tiếp tại Yên Coffee & Tea.">
+  <meta name="description" content="Một Tháng Không Yên: visual novel với tranh minh họa, nhân vật, lời thoại và các lựa chọn xử lý ba tình huống Ngày 1.">
   <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; font-src 'none'; connect-src 'self'; frame-src 'none'; form-action 'none'; base-uri 'none'; object-src 'none'">
   <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
   <link rel="stylesheet" href="../tuong-tac/styles.css">
@@ -25,7 +25,7 @@
     <div class="intro">
       <span class="eyebrow">CHƯƠNG MỘT · NGÀY 01 / 30</span>
       <h1>Ngày đầu <em>chưa yên.</em></h1>
-      <p>Ba ca trực, ba chuyện xảy ra trong cùng một ngày. Chạm vào những vật chứng trong quán trước khi quyết định.</p>
+      <p>Ba ca trực, ba chuyện xảy ra trong cùng một ngày. Xem cảnh, đọc lời thoại và chọn cách bạn muốn xử lý.</p>
       <p class="caveat">Mô phỏng hư cấu. An toàn luôn quan trọng hơn điểm số; không thay thế quy trình xử lý sự cố thực tế.</p>
     </div>
 
@@ -48,7 +48,7 @@
           </picture>
           <div class="scene-tone" aria-hidden="true"></div>
           <div class="day-illustrations" id="illustrations" aria-hidden="true"></div>
-          <div id="targets" class="targets" role="group" aria-label="Vật dụng có thể tương tác trực tiếp"></div>
+          <div id="scene-evidence" class="scene-evidence" aria-hidden="true"></div>
           <div class="character-reaction" id="character-reaction" aria-hidden="true"></div>
           <div class="world-caption" aria-hidden="true">
             <span id="camera-caption">TOÀN CẢNH · QUẦY</span>
@@ -57,8 +57,7 @@
         </div>
         <p class="world-alt" id="world-alt">Quan sát tình huống trên cảnh.</p>
         <div class="world-below">
-          <span>Không cần kéo thả. Dùng Tab, Enter hoặc Space nếu bạn chơi bằng bàn phím.</span>
-          <button class="tiny-reset" id="reset-mechanic" type="button">Làm lại thao tác</button>
+          <span>Không cần chạm vào đồ vật. Chỉ cần đọc tình huống và chọn câu trả lời. Dùng Tab và Enter để chơi bằng bàn phím.</span>
         </div>
       </section>
 
@@ -69,10 +68,10 @@
           <strong id="speaker">Người cùng ca</strong>
           <p id="dialogue">Em đã nhận ba đơn này. Nhờ anh xếp lại phiếu trước khi em bắt đầu pha nhé.</p>
         </div>
-        <h3 id="prompt">Bạn sẽ làm gì trước?</h3>
-        <p class="goal" id="goal">Chọn phiếu để sắp xếp.</p>
-        <p class="status" id="notice" role="status" aria-live="polite" aria-atomic="true">Chạm vào phiếu để bắt đầu.</p>
-        <div id="choices" role="group" aria-label="Chọn cách xử lý" class="day-choices" hidden></div>
+        <h3 id="prompt">Bạn sẽ xử lý thế nào?</h3>
+        <p class="goal" id="goal">Chọn một cách xử lý.</p>
+        <p class="status" id="notice" role="status" aria-live="polite" aria-atomic="true" hidden></p>
+        <div id="choices" role="group" aria-label="Chọn cách xử lý" class="day-choices"></div>
         <div class="result day-result" id="result" hidden>
           <strong id="outcome-speaker">Khách</strong>
           <p id="outcome"></p>
