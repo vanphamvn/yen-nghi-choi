@@ -4,11 +4,11 @@
 export const RANKS = Object.freeze([
   {level:1, from:0, title:"Tập đứng quầy"},
   {level:2, from:20, title:"Quầy đã vào nhịp"},
-  {level:3, from:45, title:"Gỡ rối gọn ghẽ"},
-  {level:4, from:75, title:"Có người giữ quầy"},
-  {level:5, from:110, title:"Giữ Yên giờ đông"},
-  {level:6, from:150, title:"Vững tay xoay ca"},
-  {level:7, from:200, title:"Trái tim quán Yên"}
+  {level:3, from:60, title:"Gỡ rối gọn ghẽ"},
+  {level:4, from:150, title:"Có người giữ quầy"},
+  {level:5, from:310, title:"Giữ Yên giờ đông"},
+  {level:6, from:560, title:"Vững tay xoay ca"},
+  {level:7, from:900, title:"Trái tim quán Yên"}
 ]);
 export const REWARD_BY_RISK = Object.freeze({safe:12,caution:6,hazard:2});
 export const RECOVERY_BONUS = 4;
