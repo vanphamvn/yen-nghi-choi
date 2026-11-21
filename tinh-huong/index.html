@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f7f3e9">
+  <meta name="robots" content="noindex, nofollow, noarchive">
+  <meta name="referrer" content="no-referrer">
+  <meta name="description" content="Một Ca Không Yên: visual novel xử lý các tình huống thường gặp ở quán Yên Coffee &amp; Tea.">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; font-src 'none'; connect-src 'none'; frame-src 'none'; form-action 'none'; base-uri 'none'; object-src 'none'">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="styles.css">
+  <script type="module" src="app.mjs"></script>
+  <title>Một Ca Không Yên · Visual novel | Yên Coffee &amp; Tea</title>
+</head>
+<body>
+  <a class="skip-link" href="#main">Đến trò chơi</a>
+  <header class="masthead">
+    <a class="brand" href="/" aria-label="Trở về Yên Coffee & Tea">
+      <img src="../yen-logo.svg" alt="yên" width="1450" height="585">
+      <span>COFFEE &amp; TEA</span>
+    </a>
+    <nav aria-label="Điều hướng">
+      <a href="/lab/">Yên Lab</a>
+      <a href="/">Về Yên</a>
+    </nav>
+  </header>
+
+  <main id="main" class="main">
+    <div class="heading">
+      <span class="eyebrow">VISUAL NOVEL · CA TRỰC CỦA BẠN</span>
+      <h1>Một Ca <em>Không Yên</em></h1>
+      <p>Ở quán Yên, không phải ngày nào cũng yên. Bạn sẽ xử lý thế nào?</p>
+    </div>
+
+    <div class="novel-layout">
+      <section class="scene" aria-label="Khung truyện minh họa">
+        <img class="scene-art" src="../lab/assets/room-backdrop.jpg" width="1586" height="992" alt="Minh họa một góc quán cà phê ấm áp">
+        <div class="scene-shadow" aria-hidden="true"></div>
+        <div class="scene-label">
+          <span id="scene-time">MỘT NGÀY Ở YÊN</span>
+          <strong id="scene-place">Quán Yên Coffee &amp; Tea</strong>
+        </div>
+        <img class="guide" src="../lab/assets/cuc-yen-tea.webp" width="480" height="480" alt="">
+        <p class="scene-note" id="scene-note">Cục Yên chỉ quan sát. Quyết định là của bạn.</p>
+        <div class="scene-counter" aria-hidden="true"><span>YÊN</span><span>COFFEE &amp; TEA</span></div>
+      </section>
+
+      <div class="paper">
+        <section id="selector" aria-labelledby="selector-title">
+          <div class="panel-heading"><span class="folio">TẬP 01 · BỐN CA TRỰC</span><span class="duration">Mỗi ca 3–5 phút</span></div>
+          <h2 id="selector-title" tabindex="-1">Hôm nay bạn trực ca nào?</h2>
+          <p class="hint">Chọn một tình huống. Mỗi quyết định đều có hệ quả, kể cả khi bạn có ý tốt.</p>
+          <div class="scenario-list" id="scenario-list">
+            <p>Đang mở sổ ca trực…</p>
+          </div>
+          <p class="fineprint">Các câu chuyện và chỉ số đều là mô phỏng, không phải quy trình xử lý sự cố chính thức.</p>
+        </section>
+
+        <section id="playing" aria-labelledby="chapter-title" hidden>
+          <div class="panel-heading"><span class="folio" id="chapter-number">HỒI 1 / 3</span><button type="button" class="quiet-link" id="leave">Đổi tình huống</button></div>
+          <h2 id="chapter-title" tabindex="-1">Câu chuyện bắt đầu</h2>
+          <div class="beats" role="group" aria-label="Tiến trình câu chuyện"><span class="is-active">1</span><span>2</span><span>3</span></div>
+          <div class="dialogue" id="dialogue" aria-live="polite" aria-atomic="true">
+            <span class="speaker" id="speaker">Người dẫn chuyện</span>
+            <p id="dialogue-line"></p>
+          </div>
+          <h3 id="decision-question"></h3>
+          <div id="choices" class="choices" role="group" aria-labelledby="decision-question"></div>
+
+          <div id="consequence" class="consequence" hidden>
+            <p class="caption">ĐIỀU QUYẾT ĐỊNH NÀY DẪN ĐẾN</p>
+            <p id="reason"></p>
+            <p class="impact" id="impact"></p>
+            <button type="button" class="primary" id="continue">Tiếp tục câu chuyện</button>
+          </div>
+          <div class="meters" aria-label="Tình hình trong ca">
+            <p class="meters-title">Tình hình hiện tại <span>Chỉ số mô phỏng</span></p>
+            <div class="meter-grid">
+              <div class="meter"><label for="stat-safety">An toàn</label><progress id="stat-safety" max="100" value="65"></progress><small id="word-safety">Cần chú ý</small></div>
+              <div class="meter"><label for="stat-trust">Niềm tin khách</label><progress id="stat-trust" max="100" value="55"></progress><small id="word-trust">Cần chú ý</small></div>
+              <div class="meter"><label for="stat-flow">Nhịp quán</label><progress id="stat-flow" max="100" value="55"></progress><small id="word-flow">Cần chú ý</small></div>
+              <div class="meter"><label for="stat-budget">Ngân sách</label><progress id="stat-budget" max="100" value="60"></progress><small id="word-budget">Ổn định</small></div>
+            </div>
+          </div>
+        </section>
+
+        <section id="ending" aria-labelledby="ending-title" hidden>
+          <span class="folio">HẾT CA · TỔNG KẾT</span>
+          <h2 id="ending-title" tabindex="-1">Ca trực đã kết thúc</h2>
+          <p class="ending-lead" id="ending-lead"></p>
+          <p id="ending-summary"></p>
+          <div class="lesson"><span class="caption">ĐIỀU MANG VỀ TỪ CA NÀY</span><p id="lesson"></p></div>
+          <details class="history"><summary>Xem lại ba quyết định của bạn</summary><ol id="history-list"></ol></details>
+          <div class="end-actions">
+            <button type="button" class="primary" id="replay">Thử cách xử lý khác</button>
+            <button type="button" class="secondary" id="back-to-cases">Chọn ca khác</button>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <p class="bottom-note">Không lưu lựa chọn, không gửi dữ liệu. Bạn có thể dừng bất cứ lúc nào. Trong sự cố thật, an toàn và trợ giúp khẩn cấp luôn quan trọng hơn điểm số.</p>
+    <noscript><p class="noscript">Trò chơi cần JavaScript để hiện các lựa chọn. Bạn vẫn có thể <a href="/">trở về Yên</a>.</p></noscript>
+  </main>
+</body>
+</html>
