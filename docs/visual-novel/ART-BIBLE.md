@@ -1,0 +1,94 @@
+# Một Tháng Không Yên · Visual Art Bible v1
+
+**Scope:** VN-F02 #220 · painted scene identity and quality gate for all 90 incidents.
+**Status:** foundational reference sheet, manifest and QA. **No new world prop/actor pose is approved by this document.**
+
+Reference sheet: [/tinh-huong/art-reference/](/tinh-huong/art-reference/) · Machine-readable art manifest: `docs/visual-novel/art-manifest.json`.
+
+## What the player must actually see
+
+A visual novel is not an illustration behind a quiz. Every incident requires **a clear physical event**, a camera cut to interact with something that exists in the room, and a **visually different outcome** based on what the player did. Dialogue explains reactions but does not replace the artwork.
+
+Every incident Dxx-yy has an art triptych:
+
+| Stage | Required shot | What must change |
+|---|---|---|
+| Establishing | Wide scene with time/weather, actors and risk/object in context | Character entering, prop malfunctioning, environmental cue |
+| Interactive | Close-up/over-the-shoulder of the physical target | Hotspot/selected object, hand/gesture or meaningful changed prop state |
+| Resolution | Choice-specific outcome with human reaction | Character pose or expression AND/OR prop state, possibly background lighting/weather; no text-only change |
+
+**Do not** substitute three captions on the same unchanged backdrop for three stages. Frame sources may share a background *only if* the actor/prop composition meaningfully changes. Failure to find a suitable visual asset keeps the incident planned.
+
+## Canonical visual identity
+
+Use the real Yên Coffee & Tea painted-web materials in `lab/assets/`: `room-backdrop.jpg`, `cuc-yen-tea.webp`, `bench.webp`, `table.webp`, `cup.webp`, `plant.webp`, `book.webp`, `door.webp`. They originate in the existing Yên painted room set, as documented in `lab/assets/README.md`. They are **reference assets**, not a free pass to fake all 90 scenes with one background.
+
+Look for warm paper/wood/tea colors, visible imperfect painted texture, soft brush edges, dimensional shading and one coherent light source. Match the muted palette from `DESIGN.md` (`#f7f3e9`, `#243c35`, `#2e5a46`, etc.) but **color match alone does not establish style match**. Avoid flat geometric SVG or CSS illustration as a substitute for new painted world props. Invisible hotspot regions and controls may use SVG/CSS.
+
+Do not import the old archived Phaser sprite sheets into this web novel simply because they exist. The active web Cục Yên and room painting are the reference for this project; the Phaser game remains stopped. Any new actor/prop must be viewed next to these exact runtime images.
+
+## Character and prop scale
+
+| Role | Runtime reference and placement | Consistency rule |
+|---|---|---|
+| Main painted room | 1586×992 original, desktop 16:10 | Fixed camera and floor line; don't stretch the image |
+| Cục Yên tea mascot | 480×480 source, shown ~20% of desktop room width / 46% of cropped mobile scene | Ground contact behind table, consistent outline and shading |
+| Bench | 652×430 source, ~31% desktop / 72% mobile crop | Seat behind character; preserve seat vs character heights |
+| Table | 650×403 source, ~29% desktop / 68% mobile crop | Table must overlap actor lower body; cups stand on tabletop |
+| Cup | 160×156 source, ~6% desktop / 14% mobile crop | Avoid human-sized drinks; align to tabletop |
+| Plant | 280×363 source, ~10% desktop / 17% mobile crop | Base touches floor; no floating props |
+| Door/book | 160×268 / 384×188 source | Perspective/texture must match actual scene |
+
+These are reference proportions from Yên Lab, **not** universally correct character scales. For other camera angles, first define floor/vanishing direction and the actor's physical height relative to the countertop and doors; then measure props at runtime. In scenes with human NPCs, proportions must be realistic *within the chosen painted stylization*. Do not resize everything arbitrarily until it fits.
+
+## Camera grammar (five intentional shots)
+
+1. **Establishing wide:** show location, weather/time and what is physically at risk.
+2. **Evidence close-up:** reveal the receipt, water, machine status, label or injury hazard; on-screen enough to read without zooming.
+3. **Over-shoulder action:** show where the player's touch/keyboard action acts in the world.
+4. **Dialogue pair:** the right actor addresses the player and changes pose/face, not just speech bubble text.
+5. **After action:** confirm the hazard was isolated or remains, show visible consequence and recovery opportunity.
+
+Shift angle only to clarify information. Avoid looping character bobbing, automatic camera movement and unnecessary zooms. At 320px, the evidence and CTA must remain in view; safe-area paddings and screen-reader narration are required.
+
+## Production asset contract
+
+Each new image needs: unique asset ID; incident ID; role (background, actor pose, world prop, effect); source/provenance and rights; original dimensions; transparency and pivot for props/actors; expected visible size and camera anchor; default and alternate states; accessibility alt; still fallback; optimized delivery reference; style review evidence.
+
+Output painted assets as transparent WebP/PNG for props, AVIF/WebP for large backgrounds only with a reliable WebP/JPEG fallback. Trim transparent padding deliberately, avoid halos, keep consistent baseline/ground pivot. For animated states, create separate scene states with a stable camera, not a CSS transform pretending a new drawn pose.
+
+Performance goals (targets, not verified until measured): lazy-load future day packs, cache shared approved sources; avoid shipping 90 backgrounds at page load. Aim to keep initial scene image around 250 KB when practical without obscuring the visual clues. Ship a compression report with each art pack.
+
+
+### Reproducible image optimization
+
+Use `tools/optimize-yen-art.mjs` to convert a reviewed painted PNG/JPEG/WebP source via locally installed Chromium. The tool is offline and uses browser-native canvas encoding; it does not invent new art or require an external image API.
+
+```bash
+node tools/optimize-yen-art.mjs --input path/to/painted-prop.png --output tinh-huong/assets/prop-name --alpha --max-width 640
+node tools/optimize-yen-art.mjs --input path/to/painted-background.jpg --output tinh-huong/assets/background-name --max-width 1600
+```
+
+The first command writes `.webp` **and** a `.png` transparency-safe fallback; the second writes `.webp` **and** `.jpg` fallback. Use an HTML `<picture>` element with WebP source and the JPEG/PNG fallback for browsers that cannot decode WebP. Input is not overwritten. AVIF may be supplied as an additional source format only after an encoder and browser fallback have been verified; do not generate fake AVIF file extensions.
+
+**Verify** visual similarity at display size, alpha edges, native dimensions, alternative format, decode success and measured file-size delta before checking in new files. Compression passing does not constitute art review.
+## QA process and proof sheet
+
+1. Use `/tinh-huong/art-reference/` to check the **existing** painted reference on desktop and mobile. Capture real browser screenshots at 320, 360, 390, 768, 1440 widths. Note: current sheet contains reference images only.
+2. For each *new* asset, produce side-by-side proof against current painted room and at least two relevant character poses, at actual runtime scale and at a neutral background. If the pose references are unavailable, flag art review blocked rather than fabricate an approval.
+3. Record camera, object dimensions, ground pivot, soft brush edges, shadow direction, occlusion, legible cues, crop, transparent alpha and source fingerprint.
+4. Review exact current asset revision. Record reviewer type and evidence, `ownerReviewPending=true` until actual owner review. Agent visual assessment may be delegated but may not impersonate the owner.
+5. Verify a responsive interactive scene, keyboard/touch/reduced-motion, image load failure, pixel crop/overflow, and choice-specific outcome. Screenshots must show beginning, interaction and outcome, not only the first frame.
+6. Run content + art manifest audit, interactive browser checks and production SHA verification before calling a scene shipped.
+
+## Incident asset slots
+
+`art-manifest.json` declares all 90 incident IDs and requires three actual art frames plus choice-specific `visualChanges`. All 90 currently have `status: planned` and null frame refs intentionally. A future PR may mark **only its implemented incident IDs** ready, and then the audit requires real asset files, source/licensing, distinct visual states and review evidence. Reducing the number of incidents or silently replacing null slots with an identical placeholder is not accepted.
+
+### First production illustration set (VN-F04 / Day 1)
+
+- **D01-01:** queue of seven tickets in a cafe wide shot; individual paper ticket with labels/orders in close-up; player rearranges order rail; customer and queue physically change afterwards.
+- **D01-02:** tipped water pitcher and clear wet footprint on actual floor; player places a physical warning sign and blocks a route; outcome depicts dry/cordoned or still slippery floor and guest path.
+- **D01-03:** POS screen, real-looking receipt and drink tray; player selects erroneous line and reconciles bill; corrected receipt and customer's face change.
+
+**Release gate:** publish Day 1 only when it is a real three-incident interactive story with scene evidence, not an extension of the existing text-choice prototype. See #220 → #221 → #222.

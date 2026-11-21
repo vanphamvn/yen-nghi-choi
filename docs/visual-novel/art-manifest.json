@@ -1,0 +1,3617 @@
+{
+  "schemaVersion": 1,
+  "name": "Yên visual-novel art direction",
+  "status": "foundation-only",
+  "notice": "No incident art is approved or playable. Existing assets are style references, not incident-specific production artwork.",
+  "style": "yen-painted-chibi-v1 · Yên Coffee & Tea web adaptation",
+  "referenceSheet": "/tinh-huong/art-reference/",
+  "sourceAssets": [
+    {
+      "id": "room",
+      "path": "lab/assets/room-backdrop.jpg",
+      "kind": "background",
+      "width": 1586,
+      "height": 992,
+      "usage": "runtime-reference",
+      "origin": "Yên Lab existing painted assets, owner art review pending"
+    },
+    {
+      "id": "cuc-yen",
+      "path": "lab/assets/cuc-yen-tea.webp",
+      "kind": "actor",
+      "width": 480,
+      "height": 480,
+      "usage": "runtime-reference",
+      "origin": "Yên Lab existing painted assets, owner art review pending"
+    },
+    {
+      "id": "bench",
+      "path": "lab/assets/bench.webp",
+      "kind": "prop",
+      "width": 652,
+      "height": 430,
+      "usage": "runtime-reference",
+      "origin": "Yên Lab existing painted assets, owner art review pending"
+    },
+    {
+      "id": "table",
+      "path": "lab/assets/table.webp",
+      "kind": "prop",
+      "width": 650,
+      "height": 403,
+      "usage": "runtime-reference",
+      "origin": "Yên Lab existing painted assets, owner art review pending"
+    },
+    {
+      "id": "cup",
+      "path": "lab/assets/cup.webp",
+      "kind": "prop",
+      "width": 160,
+      "height": 156,
+      "usage": "runtime-reference",
+      "origin": "Yên Lab existing painted assets, owner art review pending"
+    },
+    {
+      "id": "plant",
+      "path": "lab/assets/plant.webp",
+      "kind": "prop",
+      "width": 280,
+      "height": 363,
+      "usage": "runtime-reference",
+      "origin": "Yên Lab existing painted assets, owner art review pending"
+    },
+    {
+      "id": "book",
+      "path": "lab/assets/book.webp",
+      "kind": "prop",
+      "width": 384,
+      "height": 188,
+      "usage": "runtime-reference",
+      "origin": "Yên Lab existing painted assets, owner art review pending"
+    },
+    {
+      "id": "door",
+      "path": "lab/assets/door.webp",
+      "kind": "prop",
+      "width": 160,
+      "height": 268,
+      "usage": "runtime-reference",
+      "origin": "Yên Lab existing painted assets, owner art review pending"
+    }
+  ],
+  "rules": {
+    "shots": [
+      "establishing",
+      "interactive",
+      "resolution"
+    ],
+    "requiredLayerTypes": [
+      "background",
+      "actor",
+      "prop"
+    ],
+    "composition": "Consistent human-relative scale, ground pivots and painted edges; no flat SVG/CSS shapes as world props.",
+    "minimumIncidentVisualChanges": 1,
+    "mobileReferenceWidths": [
+      320,
+      360,
+      390
+    ],
+    "desktopReferenceWidth": 1440,
+    "assetSourcePolicy": "Original/generated/commissioned art with rights and reviewer evidence",
+    "reducedMotion": "Every action and reaction must remain understandable in a still frame",
+    "verification": "A ready incident requires real asset files, visual delta, alt descriptions and review evidence"
+  },
+  "incidents": [
+    {
+      "id": "D01-01",
+      "day": 1,
+      "title": "Hàng khách đầu tiên",
+      "status": "planned",
+      "requiredBrief": {
+        "establishing": "Quầy sáng, dải 7 phiếu in dài dần; khách ở cửa sốt ruột, ly chưa có nhãn",
+        "interactive": "Chạm phiếu, sắp thứ tự xử lý rồi nhìn hàng khách thay đổi",
+        "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+      },
+      "interactionBrief": "Chạm phiếu, sắp thứ tự xử lý rồi nhìn hàng khách thay đổi",
+      "frames": {
+        "establishing": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "interactive": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "resolution": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        }
+      },
+      "visualChanges": [],
+      "artReview": {
+        "status": "pending",
+        "reviewerType": null,
+        "reviewEvidence": null,
+        "ownerReviewPending": true
+      }
+    },
+    {
+      "id": "D01-02",
+      "day": 1,
+      "title": "Vũng nước cạnh quầy",
+      "status": "planned",
+      "requiredBrief": {
+        "establishing": "Bình nghiêng, vũng nước loang sát lối đi; bé và khách tiến gần khu vực ướt",
+        "interactive": "Đặt biển cảnh báo và ngăn lối trước khi lau; hình sàn đổi khô/ướt",
+        "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+      },
+      "interactionBrief": "Đặt biển cảnh báo và ngăn lối trước khi lau; hình sàn đổi khô/ướt",
+      "frames": {
+        "establishing": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "interactive": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "resolution": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        }
+      },
+      "visualChanges": [],
+      "artReview": {
+        "status": "pending",
+        "reviewerType": null,
+        "reviewEvidence": null,
+        "ownerReviewPending": true
+      }
+    },
+    {
+      "id": "D01-03",
+      "day": 1,
+      "title": "Hóa đơn khai trương",
+      "status": "planned",
+      "requiredBrief": {
+        "establishing": "Màn POS hiện combo lệch giá, khách chỉ vào biên lai và khay tiền",
+        "interactive": "Chạm dòng sai, đối chiếu menu và sửa hóa đơn; khách đổi nét mặt",
+        "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+      },
+      "interactionBrief": "Chạm dòng sai, đối chiếu menu và sửa hóa đơn; khách đổi nét mặt",
+      "frames": {
+        "establishing": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "interactive": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "resolution": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        }
+      },
+      "visualChanges": [],
+      "artReview": {
+        "status": "pending",
+        "reviewerType": null,
+        "reviewEvidence": null,
+        "ownerReviewPending": true
+      }
+    },
+    {
+      "id": "D02-01",
+      "day": 2,
+      "title": "Cơn mưa tạt hiên",
+      "status": "planned",
+      "requiredBrief": {
+        "establishing": "Mưa chéo qua mái, giọt bắn lên ghế; nhóm khách co vào hiên",
+        "interactive": "Di chuyển ghế vào vùng khô, đánh dấu chỗ trơn trên sơ đồ",
+        "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+      },
+      "interactionBrief": "Di chuyển ghế vào vùng khô, đánh dấu chỗ trơn trên sơ đồ",
+      "frames": {
+        "establishing": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "interactive": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "resolution": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        }
+      },
+      "visualChanges": [],
+      "artReview": {
+        "status": "pending",
+        "reviewerType": null,
+        "reviewEvidence": null,
+        "ownerReviewPending": true
+      }
+    },
+    {
+      "id": "D02-02",
+      "day": 2,
+      "title": "Nước ở mép ổ điện",
+      "status": "planned",
+      "requiredBrief": {
+        "establishing": "Dòng nước chảy men tường gần ổ cắm; công tắc và dây điện hiện rõ",
+        "interactive": "Khoanh vùng nguy hiểm, chọn gọi người có chuyên môn thay vì chạm thiết bị",
+        "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+      },
+      "interactionBrief": "Khoanh vùng nguy hiểm, chọn gọi người có chuyên môn thay vì chạm thiết bị",
+      "frames": {
+        "establishing": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "interactive": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "resolution": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        }
+      },
+      "visualChanges": [],
+      "artReview": {
+        "status": "pending",
+        "reviewerType": null,
+        "reviewEvidence": null,
+        "ownerReviewPending": true
+      }
+    },
+    {
+      "id": "D02-03",
+      "day": 2,
+      "title": "Đơn hàng ướt",
+      "status": "planned",
+      "requiredBrief": {
+        "establishing": "Người giao nguyên liệu che thùng giấy ướt, túi hàng có dấu nước",
+        "interactive": "Kiểm tra từng kiện bằng thao tác mở/đối chiếu, tách hàng bị ảnh hưởng",
+        "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+      },
+      "interactionBrief": "Kiểm tra từng kiện bằng thao tác mở/đối chiếu, tách hàng bị ảnh hưởng",
+      "frames": {
+        "establishing": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "interactive": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "resolution": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        }
+      },
+      "visualChanges": [],
+      "artReview": {
+        "status": "pending",
+        "reviewerType": null,
+        "reviewEvidence": null,
+        "ownerReviewPending": true
+      }
+    },
+    {
+      "id": "D03-01",
+      "day": 3,
+      "title": "Máy xay và máy pha",
+      "status": "planned",
+      "requiredBrief": {
+        "establishing": "Cận cảnh hai máy hoạt động, hàng vé order treo dồn và đồng hồ chỉ giờ",
+        "interactive": "Sắp thứ tự pha theo nhóm công đoạn thay vì bấm trắc nghiệm",
+        "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+      },
+      "interactionBrief": "Sắp thứ tự pha theo nhóm công đoạn thay vì bấm trắc nghiệm",
+      "frames": {
+        "establishing": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "interactive": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "resolution": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        }
+      },
+      "visualChanges": [],
+      "artReview": {
+        "status": "pending",
+        "reviewerType": null,
+        "reviewEvidence": null,
+        "ownerReviewPending": true
+      }
+    },
+    {
+      "id": "D03-02",
+      "day": 3,
+      "title": "Hai ly giống nhau",
+      "status": "planned",
+      "requiredBrief": {
+        "establishing": "Hai ly màu gần giống, nhãn tên lệch chỗ; hai khách chìa tay",
+        "interactive": "Xoay và kiểm tra nhãn, đối chiếu phiếu rồi giao đúng ly",
+        "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+      },
+      "interactionBrief": "Xoay và kiểm tra nhãn, đối chiếu phiếu rồi giao đúng ly",
+      "frames": {
+        "establishing": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "interactive": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "resolution": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        }
+      },
+      "visualChanges": [],
+      "artReview": {
+        "status": "pending",
+        "reviewerType": null,
+        "reviewEvidence": null,
+        "ownerReviewPending": true
+      }
+    },
+    {
+      "id": "D03-03",
+      "day": 3,
+      "title": "Khách tới giờ đóng",
+      "status": "planned",
+      "requiredBrief": {
+        "establishing": "Đèn quán chuyển vàng tối, chổi dọn sàn và khách mới đứng ở cửa",
+        "interactive": "Chọn vùng phục vụ còn an toàn và cập nhật bảng nhận món cuối",
+        "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+      },
+      "interactionBrief": "Chọn vùng phục vụ còn an toàn và cập nhật bảng nhận món cuối",
+      "frames": {
+        "establishing": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "interactive": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "resolution": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        }
+      },
+      "visualChanges": [],
+      "artReview": {
+        "status": "pending",
+        "reviewerType": null,
+        "reviewEvidence": null,
+        "ownerReviewPending": true
+      }
+    },
+    {
+      "id": "D04-01",
+      "day": 4,
+      "title": "Nhóm bạn chia tiền",
+      "status": "planned",
+      "requiredBrief": {
+        "establishing": "Bốn bạn đứng quanh quầy, điện thoại thanh toán và tiền lẻ trải trên bàn",
+        "interactive": "Ghép số tiền từng bạn với đúng món, kiểm tra thiếu/thừa",
+        "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+      },
+      "interactionBrief": "Ghép số tiền từng bạn với đúng món, kiểm tra thiếu/thừa",
+      "frames": {
+        "establishing": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "interactive": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "resolution": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        }
+      },
+      "visualChanges": [],
+      "artReview": {
+        "status": "pending",
+        "reviewerType": null,
+        "reviewEvidence": null,
+        "ownerReviewPending": true
+      }
+    },
+    {
+      "id": "D04-02",
+      "day": 4,
+      "title": "Bàn nói chuyện lớn",
+      "status": "planned",
+      "requiredBrief": {
+        "establishing": "Nhóm học sinh ở một phía, khách đọc sách ở phía đối diện; các đường âm thanh xuất hiện",
+        "interactive": "Chạm vị trí bàn, đề nghị đổi chỗ và xem biểu cảm hai nhóm",
+        "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+      },
+      "interactionBrief": "Chạm vị trí bàn, đề nghị đổi chỗ và xem biểu cảm hai nhóm",
+      "frames": {
+        "establishing": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "interactive": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "resolution": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        }
+      },
+      "visualChanges": [],
+      "artReview": {
+        "status": "pending",
+        "reviewerType": null,
+        "reviewEvidence": null,
+        "ownerReviewPending": true
+      }
+    },
+    {
+      "id": "D04-03",
+      "day": 4,
+      "title": "Cặp sách bị bỏ quên",
+      "status": "planned",
+      "requiredBrief": {
+        "establishing": "Một chiếc balô dưới ghế trong lúc khách ra về; lối đi dần vắng",
+        "interactive": "Đưa vật vào điểm lưu giữ có nhãn, xác minh người nhận mà không công khai thông tin",
+        "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+      },
+      "interactionBrief": "Đưa vật vào điểm lưu giữ có nhãn, xác minh người nhận mà không công khai thông tin",
+      "frames": {
+        "establishing": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "interactive": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "resolution": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        }
+      },
+      "visualChanges": [],
+      "artReview": {
+        "status": "pending",
+        "reviewerType": null,
+        "reviewEvidence": null,
+        "ownerReviewPending": true
+      }
+    },
+    {
+      "id": "D05-01",
+      "day": 5,
+      "title": "Thiếu đá cho giờ cao điểm",
+      "status": "planned",
+      "requiredBrief": {
+        "establishing": "Thùng đá gần cạn, bảng tồn kho báo ít, khách đặt đồ lạnh liên tục",
+        "interactive": "Kéo lượng đá còn vào các nhóm đơn khả thi, đánh dấu món tạm hết",
+        "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+      },
+      "interactionBrief": "Kéo lượng đá còn vào các nhóm đơn khả thi, đánh dấu món tạm hết",
+      "frames": {
+        "establishing": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "interactive": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "resolution": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        }
+      },
+      "visualChanges": [],
+      "artReview": {
+        "status": "pending",
+        "reviewerType": null,
+        "reviewEvidence": null,
+        "ownerReviewPending": true
+      }
+    },
+    {
+      "id": "D05-02",
+      "day": 5,
+      "title": "Thơm dập trong thùng",
+      "status": "planned",
+      "requiredBrief": {
+        "establishing": "Thùng trái cây mở ra, quả lành và quả dập có dấu rõ",
+        "interactive": "Phân loại từng quả, từ chối phần không đạt và cập nhật tồn kho",
+        "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+      },
+      "interactionBrief": "Phân loại từng quả, từ chối phần không đạt và cập nhật tồn kho",
+      "frames": {
+        "establishing": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "interactive": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "resolution": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        }
+      },
+      "visualChanges": [],
+      "artReview": {
+        "status": "pending",
+        "reviewerType": null,
+        "reviewEvidence": null,
+        "ownerReviewPending": true
+      }
+    },
+    {
+      "id": "D05-03",
+      "day": 5,
+      "title": "Nhãn trong tủ lạnh",
+      "status": "planned",
+      "requiredBrief": {
+        "establishing": "Cửa tủ mở, khay sữa/nguyên liệu có nhãn mờ và khay mới nhập",
+        "interactive": "Sắp theo nhãn và điều kiện bảo quản đã kiểm chứng, không suy đoán hạn dùng",
+        "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+      },
+      "interactionBrief": "Sắp theo nhãn và điều kiện bảo quản đã kiểm chứng, không suy đoán hạn dùng",
+      "frames": {
+        "establishing": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "interactive": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "resolution": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        }
+      },
+      "visualChanges": [],
+      "artReview": {
+        "status": "pending",
+        "reviewerType": null,
+        "reviewEvidence": null,
+        "ownerReviewPending": true
+      }
+    },
+    {
+      "id": "D06-01",
+      "day": 6,
+      "title": "Bé va cạnh bàn",
+      "status": "planned",
+      "requiredBrief": {
+        "establishing": "Góc bàn sát lối, bé khóc và phụ huynh chạy tới; cốc nước rung trên mặt bàn",
+        "interactive": "Đưa người hỗ trợ, đánh dấu góc bàn cần ngừng sử dụng và kiểm tra",
+        "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+      },
+      "interactionBrief": "Đưa người hỗ trợ, đánh dấu góc bàn cần ngừng sử dụng và kiểm tra",
+      "frames": {
+        "establishing": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "interactive": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "resolution": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        }
+      },
+      "visualChanges": [],
+      "artReview": {
+        "status": "pending",
+        "reviewerType": null,
+        "reviewEvidence": null,
+        "ownerReviewPending": true
+      }
+    },
+    {
+      "id": "D06-02",
+      "day": 6,
+      "title": "Khu chơi quá đông",
+      "status": "planned",
+      "requiredBrief": {
+        "establishing": "Khu vui chơi hiện nhiều bé cùng tiến vào, đồ chơi nằm sát lối thoát",
+        "interactive": "Di chuyển vật cản khỏi lối, phân khu hoạt động và báo phụ huynh",
+        "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+      },
+      "interactionBrief": "Di chuyển vật cản khỏi lối, phân khu hoạt động và báo phụ huynh",
+      "frames": {
+        "establishing": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "interactive": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "resolution": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        }
+      },
+      "visualChanges": [],
+      "artReview": {
+        "status": "pending",
+        "reviewerType": null,
+        "reviewEvidence": null,
+        "ownerReviewPending": true
+      }
+    },
+    {
+      "id": "D06-03",
+      "day": 6,
+      "title": "Xe đẩy chắn cửa",
+      "status": "planned",
+      "requiredBrief": {
+        "establishing": "Xe đẩy dựng ngay cửa ra vào, người khác đang đẩy cửa",
+        "interactive": "Chọn vị trí gửi xe đẩy, kiểm tra đường đi thoáng trên sơ đồ",
+        "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+      },
+      "interactionBrief": "Chọn vị trí gửi xe đẩy, kiểm tra đường đi thoáng trên sơ đồ",
+      "frames": {
+        "establishing": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "interactive": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "resolution": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        }
+      },
+      "visualChanges": [],
+      "artReview": {
+        "status": "pending",
+        "reviewerType": null,
+        "reviewEvidence": null,
+        "ownerReviewPending": true
+      }
+    },
+    {
+      "id": "D07-01",
+      "day": 7,
+      "title": "Cuối ca lệch tiền",
+      "status": "planned",
+      "requiredBrief": {
+        "establishing": "Sổ tiền mặt và POS đặt cạnh nhau, một dòng thu chưa khớp",
+        "interactive": "Đối chiếu hóa đơn với khay tiền và đánh dấu khoản chênh cần tìm",
+        "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+      },
+      "interactionBrief": "Đối chiếu hóa đơn với khay tiền và đánh dấu khoản chênh cần tìm",
+      "frames": {
+        "establishing": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "interactive": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "resolution": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        }
+      },
+      "visualChanges": [],
+      "artReview": {
+        "status": "pending",
+        "reviewerType": null,
+        "reviewEvidence": null,
+        "ownerReviewPending": true
+      }
+    },
+    {
+      "id": "D07-02",
+      "day": 7,
+      "title": "Ly nước bị quên",
+      "status": "planned",
+      "requiredBrief": {
+        "establishing": "Ly làm xong nằm lại trên quầy; giờ nhận nước trôi qua",
+        "interactive": "Truy lại phiếu, kiểm tra chất lượng món trước khi giao hay làm lại",
+        "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+      },
+      "interactionBrief": "Truy lại phiếu, kiểm tra chất lượng món trước khi giao hay làm lại",
+      "frames": {
+        "establishing": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "interactive": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "resolution": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        }
+      },
+      "visualChanges": [],
+      "artReview": {
+        "status": "pending",
+        "reviewerType": null,
+        "reviewEvidence": null,
+        "ownerReviewPending": true
+      }
+    },
+    {
+      "id": "D07-03",
+      "day": 7,
+      "title": "Lịch ca tuần tới",
+      "status": "planned",
+      "requiredBrief": {
+        "establishing": "Bảng ca trực đầy ô trống, người cùng ca đang nghỉ mệt",
+        "interactive": "Kéo thẻ công việc vào lịch, giữ khung nghỉ và dự phòng khách đông",
+        "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+      },
+      "interactionBrief": "Kéo thẻ công việc vào lịch, giữ khung nghỉ và dự phòng khách đông",
+      "frames": {
+        "establishing": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "interactive": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "resolution": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        }
+      },
+      "visualChanges": [],
+      "artReview": {
+        "status": "pending",
+        "reviewerType": null,
+        "reviewEvidence": null,
+        "ownerReviewPending": true
+      }
+    },
+    {
+      "id": "D08-01",
+      "day": 8,
+      "title": "Ly ít ngọt",
+      "status": "planned",
+      "requiredBrief": {
+        "establishing": "Khách chỉ vào vạch đường trên bảng công thức, ly mẫu đặt cạnh nhau",
+        "interactive": "Dùng thanh chỉnh trực quan mức ngọt, xác nhận bằng nhãn in lên ly",
+        "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+      },
+      "interactionBrief": "Dùng thanh chỉnh trực quan mức ngọt, xác nhận bằng nhãn in lên ly",
+      "frames": {
+        "establishing": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "interactive": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "resolution": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        }
+      },
+      "visualChanges": [],
+      "artReview": {
+        "status": "pending",
+        "reviewerType": null,
+        "reviewEvidence": null,
+        "ownerReviewPending": true
+      }
+    },
+    {
+      "id": "D08-02",
+      "day": 8,
+      "title": "Yêu cầu tránh thành phần dị ứng",
+      "status": "planned",
+      "requiredBrief": {
+        "establishing": "Thành phần trên khay và dụng cụ chạm nhau; khách hỏi cách chuẩn bị",
+        "interactive": "Kiểm tra bảng thành phần và điểm giao nhau dụng cụ, không bảo đảm an toàn khi chưa chắc",
+        "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+      },
+      "interactionBrief": "Kiểm tra bảng thành phần và điểm giao nhau dụng cụ, không bảo đảm an toàn khi chưa chắc",
+      "frames": {
+        "establishing": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "interactive": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "resolution": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        }
+      },
+      "visualChanges": [],
+      "artReview": {
+        "status": "pending",
+        "reviewerType": null,
+        "reviewEvidence": null,
+        "ownerReviewPending": true
+      }
+    },
+    {
+      "id": "D08-03",
+      "day": 8,
+      "title": "Bình riêng của khách",
+      "status": "planned",
+      "requiredBrief": {
+        "establishing": "Bình cá nhân đưa qua quầy; miệng bình có vết bẩn và khay rửa đang bận",
+        "interactive": "Quan sát trạng thái bình, chọn quy trình từ chối/nhận theo điều kiện vệ sinh",
+        "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+      },
+      "interactionBrief": "Quan sát trạng thái bình, chọn quy trình từ chối/nhận theo điều kiện vệ sinh",
+      "frames": {
+        "establishing": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "interactive": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "resolution": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        }
+      },
+      "visualChanges": [],
+      "artReview": {
+        "status": "pending",
+        "reviewerType": null,
+        "reviewEvidence": null,
+        "ownerReviewPending": true
+      }
+    },
+    {
+      "id": "D09-01",
+      "day": 9,
+      "title": "Hai vé giống số",
+      "status": "planned",
+      "requiredBrief": {
+        "establishing": "Hai phiếu cùng số nhưng giờ khác; khay nước đang được chuyển đi",
+        "interactive": "So phiếu với thời điểm và mã món, gỡ trùng trước khi giao",
+        "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+      },
+      "interactionBrief": "So phiếu với thời điểm và mã món, gỡ trùng trước khi giao",
+      "frames": {
+        "establishing": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "interactive": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "resolution": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        }
+      },
+      "visualChanges": [],
+      "artReview": {
+        "status": "pending",
+        "reviewerType": null,
+        "reviewEvidence": null,
+        "ownerReviewPending": true
+      }
+    },
+    {
+      "id": "D09-02",
+      "day": 9,
+      "title": "Khách đợi quá lâu",
+      "status": "planned",
+      "requiredBrief": {
+        "establishing": "Hàng khách đổi tư thế, đồng hồ trôi và số thứ tự còn nằm trong máy",
+        "interactive": "Đặt lại thứ tự, chạm khách cần thông báo để cập nhật trung thực",
+        "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+      },
+      "interactionBrief": "Đặt lại thứ tự, chạm khách cần thông báo để cập nhật trung thực",
+      "frames": {
+        "establishing": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "interactive": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "resolution": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        }
+      },
+      "visualChanges": [],
+      "artReview": {
+        "status": "pending",
+        "reviewerType": null,
+        "reviewEvidence": null,
+        "ownerReviewPending": true
+      }
+    },
+    {
+      "id": "D09-03",
+      "day": 9,
+      "title": "Siro lỡ tay",
+      "status": "planned",
+      "requiredBrief": {
+        "establishing": "Cận bình siro rót quá vạch, màu ly đổi đậm; khách cần ít ngọt",
+        "interactive": "Kiểm tra thể tích, chọn làm lại nếu không thể sửa đạt yêu cầu",
+        "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+      },
+      "interactionBrief": "Kiểm tra thể tích, chọn làm lại nếu không thể sửa đạt yêu cầu",
+      "frames": {
+        "establishing": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "interactive": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "resolution": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        }
+      },
+      "visualChanges": [],
+      "artReview": {
+        "status": "pending",
+        "reviewerType": null,
+        "reviewEvidence": null,
+        "ownerReviewPending": true
+      }
+    },
+    {
+      "id": "D10-01",
+      "day": 10,
+      "title": "Máy xay dừng ngang",
+      "status": "planned",
+      "requiredBrief": {
+        "establishing": "Đèn vụt tắt, máy xay đứng im, đèn báo nguồn nhấp nháy",
+        "interactive": "Ngừng thiết bị an toàn và chỉ định khu vực điện cần kiểm tra bởi người phù hợp",
+        "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+      },
+      "interactionBrief": "Ngừng thiết bị an toàn và chỉ định khu vực điện cần kiểm tra bởi người phù hợp",
+      "frames": {
+        "establishing": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "interactive": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "resolution": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        }
+      },
+      "visualChanges": [],
+      "artReview": {
+        "status": "pending",
+        "reviewerType": null,
+        "reviewEvidence": null,
+        "ownerReviewPending": true
+      }
+    },
+    {
+      "id": "D10-02",
+      "day": 10,
+      "title": "Tủ lạnh im tiếng",
+      "status": "planned",
+      "requiredBrief": {
+        "establishing": "Cửa tủ đóng, nhãn nhiệt độ và thời gian mất điện hiện trên khung",
+        "interactive": "Ghi mốc thời gian, kiểm tra dữ liệu nhiệt độ, phân loại nguyên liệu có căn cứ",
+        "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+      },
+      "interactionBrief": "Ghi mốc thời gian, kiểm tra dữ liệu nhiệt độ, phân loại nguyên liệu có căn cứ",
+      "frames": {
+        "establishing": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "interactive": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "resolution": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        }
+      },
+      "visualChanges": [],
+      "artReview": {
+        "status": "pending",
+        "reviewerType": null,
+        "reviewEvidence": null,
+        "ownerReviewPending": true
+      }
+    },
+    {
+      "id": "D10-03",
+      "day": 10,
+      "title": "POS mất kết nối",
+      "status": "planned",
+      "requiredBrief": {
+        "establishing": "Màn thu ngân tối, khách cầm mã thanh toán chưa được xác nhận",
+        "interactive": "Kiểm tra trạng thái giao dịch trước khi chốt, dùng quy trình dự phòng không trùng thu",
+        "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+      },
+      "interactionBrief": "Kiểm tra trạng thái giao dịch trước khi chốt, dùng quy trình dự phòng không trùng thu",
+      "frames": {
+        "establishing": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "interactive": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "resolution": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        }
+      },
+      "visualChanges": [],
+      "artReview": {
+        "status": "pending",
+        "reviewerType": null,
+        "reviewEvidence": null,
+        "ownerReviewPending": true
+      }
+    },
+    {
+      "id": "D11-01",
+      "day": 11,
+      "title": "Người cùng ca đến muộn",
+      "status": "planned",
+      "requiredBrief": {
+        "establishing": "Đồng hồ chuyển, tạp dề treo trống trong khi bàn bắt đầu đông",
+        "interactive": "Phân vai lại trên sơ đồ trạm, đánh dấu công việc chưa có người xử lý",
+        "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+      },
+      "interactionBrief": "Phân vai lại trên sơ đồ trạm, đánh dấu công việc chưa có người xử lý",
+      "frames": {
+        "establishing": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "interactive": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "resolution": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        }
+      },
+      "visualChanges": [],
+      "artReview": {
+        "status": "pending",
+        "reviewerType": null,
+        "reviewEvidence": null,
+        "ownerReviewPending": true
+      }
+    },
+    {
+      "id": "D11-02",
+      "day": 11,
+      "title": "Pha chế mới đọc sai nhãn",
+      "status": "planned",
+      "requiredBrief": {
+        "establishing": "Người học việc bối rối trước hai chai màu giống nhau",
+        "interactive": "Chạm nhãn để kiểm tra, hướng dẫn từ trạm an toàn thay vì đoán",
+        "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+      },
+      "interactionBrief": "Chạm nhãn để kiểm tra, hướng dẫn từ trạm an toàn thay vì đoán",
+      "frames": {
+        "establishing": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "interactive": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "resolution": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        }
+      },
+      "visualChanges": [],
+      "artReview": {
+        "status": "pending",
+        "reviewerType": null,
+        "reviewEvidence": null,
+        "ownerReviewPending": true
+      }
+    },
+    {
+      "id": "D11-03",
+      "day": 11,
+      "title": "Không ai kịp nghỉ",
+      "status": "planned",
+      "requiredBrief": {
+        "establishing": "Hai người trong quầy có tư thế mệt, phiếu đơn vẫn đến",
+        "interactive": "Điều chỉnh nhịp nhận đơn và lượt nghỉ qua bảng ca",
+        "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+      },
+      "interactionBrief": "Điều chỉnh nhịp nhận đơn và lượt nghỉ qua bảng ca",
+      "frames": {
+        "establishing": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "interactive": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "resolution": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        }
+      },
+      "visualChanges": [],
+      "artReview": {
+        "status": "pending",
+        "reviewerType": null,
+        "reviewEvidence": null,
+        "ownerReviewPending": true
+      }
+    },
+    {
+      "id": "D12-01",
+      "day": 12,
+      "title": "Khách quay lại quầy",
+      "status": "planned",
+      "requiredBrief": {
+        "establishing": "Khách chỉ ly nước và màn đánh giá, người phía sau quan sát",
+        "interactive": "Mở phiếu order gốc trên bàn, lắng nghe rồi xác minh điểm chưa khớp",
+        "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+      },
+      "interactionBrief": "Mở phiếu order gốc trên bàn, lắng nghe rồi xác minh điểm chưa khớp",
+      "frames": {
+        "establishing": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "interactive": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "resolution": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        }
+      },
+      "visualChanges": [],
+      "artReview": {
+        "status": "pending",
+        "reviewerType": null,
+        "reviewEvidence": null,
+        "ownerReviewPending": true
+      }
+    },
+    {
+      "id": "D12-02",
+      "day": 12,
+      "title": "Ảnh cắt mất ngữ cảnh",
+      "status": "planned",
+      "requiredBrief": {
+        "establishing": "Màn hình điện thoại phóng một khung ảnh, góc rộng hiện câu chuyện khác",
+        "interactive": "Đổi giữa khung cắt và toàn cảnh, kiểm tra bằng chứng trước phản hồi",
+        "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+      },
+      "interactionBrief": "Đổi giữa khung cắt và toàn cảnh, kiểm tra bằng chứng trước phản hồi",
+      "frames": {
+        "establishing": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "interactive": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "resolution": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        }
+      },
+      "visualChanges": [],
+      "artReview": {
+        "status": "pending",
+        "reviewerType": null,
+        "reviewEvidence": null,
+        "ownerReviewPending": true
+      }
+    },
+    {
+      "id": "D12-03",
+      "day": 12,
+      "title": "Phản hồi công khai",
+      "status": "planned",
+      "requiredBrief": {
+        "establishing": "Giao diện bài đánh giá với ô soạn nháp, thông tin cá nhân bị lộ trong bản nháp",
+        "interactive": "Che dữ liệu riêng và chọn nội dung đáp có trách nhiệm, không gây tranh cãi công khai",
+        "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+      },
+      "interactionBrief": "Che dữ liệu riêng và chọn nội dung đáp có trách nhiệm, không gây tranh cãi công khai",
+      "frames": {
+        "establishing": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "interactive": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "resolution": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        }
+      },
+      "visualChanges": [],
+      "artReview": {
+        "status": "pending",
+        "reviewerType": null,
+        "reviewEvidence": null,
+        "ownerReviewPending": true
+      }
+    },
+    {
+      "id": "D13-01",
+      "day": 13,
+      "title": "Nước nhỏ gần đèn",
+      "status": "planned",
+      "requiredBrief": {
+        "establishing": "Giọt nước chạy dọc thanh mái đến đèn và dây điện",
+        "interactive": "Khoanh vùng, chọn ngắt/kiểm tra theo quy trình an toàn, không tự sửa khi nguy hiểm",
+        "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+      },
+      "interactionBrief": "Khoanh vùng, chọn ngắt/kiểm tra theo quy trình an toàn, không tự sửa khi nguy hiểm",
+      "frames": {
+        "establishing": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "interactive": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "resolution": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        }
+      },
+      "visualChanges": [],
+      "artReview": {
+        "status": "pending",
+        "reviewerType": null,
+        "reviewEvidence": null,
+        "ownerReviewPending": true
+      }
+    },
+    {
+      "id": "D13-02",
+      "day": 13,
+      "title": "Ghế vườn ướt",
+      "status": "planned",
+      "requiredBrief": {
+        "establishing": "Các vệt nước rơi xuống bộ bàn ghế ngoài sân",
+        "interactive": "Di chuyển bàn theo bản đồ vùng khô, đổi vị trí khách có trao đổi",
+        "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+      },
+      "interactionBrief": "Di chuyển bàn theo bản đồ vùng khô, đổi vị trí khách có trao đổi",
+      "frames": {
+        "establishing": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "interactive": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "resolution": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        }
+      },
+      "visualChanges": [],
+      "artReview": {
+        "status": "pending",
+        "reviewerType": null,
+        "reviewEvidence": null,
+        "ownerReviewPending": true
+      }
+    },
+    {
+      "id": "D13-03",
+      "day": 13,
+      "title": "Nước chảy sang sân cạnh",
+      "status": "planned",
+      "requiredBrief": {
+        "establishing": "Máng thoát và vệt nước đi về ranh sân hàng xóm",
+        "interactive": "Đặt hướng xử lý thoát nước có kiểm tra, trao đổi trực tiếp thay vì đẩy nước đi",
+        "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+      },
+      "interactionBrief": "Đặt hướng xử lý thoát nước có kiểm tra, trao đổi trực tiếp thay vì đẩy nước đi",
+      "frames": {
+        "establishing": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "interactive": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "resolution": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        }
+      },
+      "visualChanges": [],
+      "artReview": {
+        "status": "pending",
+        "reviewerType": null,
+        "reviewEvidence": null,
+        "ownerReviewPending": true
+      }
+    },
+    {
+      "id": "D14-01",
+      "day": 14,
+      "title": "Thiếu một quân cờ",
+      "status": "planned",
+      "requiredBrief": {
+        "establishing": "Hộp trò chơi mở, một ô cờ trống, khách lục dưới bàn",
+        "interactive": "Soi các vị trí đồ đạc, kiểm tra danh sách mảnh trước khi kết luận",
+        "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+      },
+      "interactionBrief": "Soi các vị trí đồ đạc, kiểm tra danh sách mảnh trước khi kết luận",
+      "frames": {
+        "establishing": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "interactive": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "resolution": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        }
+      },
+      "visualChanges": [],
+      "artReview": {
+        "status": "pending",
+        "reviewerType": null,
+        "reviewEvidence": null,
+        "ownerReviewPending": true
+      }
+    },
+    {
+      "id": "D14-02",
+      "day": 14,
+      "title": "Tranh cãi về luật",
+      "status": "planned",
+      "requiredBrief": {
+        "establishing": "Hai nhóm chỉ vào lá bài, nét mặt căng dần",
+        "interactive": "Chọn cách đưa luật tham khảo/đổi game trên bàn và xem phản ứng",
+        "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+      },
+      "interactionBrief": "Chọn cách đưa luật tham khảo/đổi game trên bàn và xem phản ứng",
+      "frames": {
+        "establishing": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "interactive": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "resolution": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        }
+      },
+      "visualChanges": [],
+      "artReview": {
+        "status": "pending",
+        "reviewerType": null,
+        "reviewEvidence": null,
+        "ownerReviewPending": true
+      }
+    },
+    {
+      "id": "D14-03",
+      "day": 14,
+      "title": "Ồn khi gần đóng cửa",
+      "status": "planned",
+      "requiredBrief": {
+        "establishing": "Đồng hồ gần giờ đóng, âm lượng nhóm tăng, nhà bên cạnh tắt đèn",
+        "interactive": "Giảm âm thanh của không gian, thống nhất giờ kết thúc với khách",
+        "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+      },
+      "interactionBrief": "Giảm âm thanh của không gian, thống nhất giờ kết thúc với khách",
+      "frames": {
+        "establishing": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "interactive": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "resolution": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        }
+      },
+      "visualChanges": [],
+      "artReview": {
+        "status": "pending",
+        "reviewerType": null,
+        "reviewEvidence": null,
+        "ownerReviewPending": true
+      }
+    },
+    {
+      "id": "D15-01",
+      "day": 15,
+      "title": "Khách quen xin làm trước",
+      "status": "planned",
+      "requiredBrief": {
+        "establishing": "Khách quen bước đến bên cạnh hàng số thứ tự, người đang chờ nhìn sang",
+        "interactive": "Di chuyển đơn trên bảng hàng chờ và nhìn phản ứng người đến trước",
+        "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+      },
+      "interactionBrief": "Di chuyển đơn trên bảng hàng chờ và nhìn phản ứng người đến trước",
+      "frames": {
+        "establishing": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "interactive": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "resolution": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        }
+      },
+      "visualChanges": [],
+      "artReview": {
+        "status": "pending",
+        "reviewerType": null,
+        "reviewEvidence": null,
+        "ownerReviewPending": true
+      }
+    },
+    {
+      "id": "D15-02",
+      "day": 15,
+      "title": "Thẻ tám mộc",
+      "status": "planned",
+      "requiredBrief": {
+        "establishing": "Thẻ tích điểm có bảy dấu, khách nói đủ tám; phiếu mua nằm cạnh",
+        "interactive": "Đếm mộc và đối chiếu giao dịch hợp lệ với khách",
+        "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+      },
+      "interactionBrief": "Đếm mộc và đối chiếu giao dịch hợp lệ với khách",
+      "frames": {
+        "establishing": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "interactive": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "resolution": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        }
+      },
+      "visualChanges": [],
+      "artReview": {
+        "status": "pending",
+        "reviewerType": null,
+        "reviewEvidence": null,
+        "ownerReviewPending": true
+      }
+    },
+    {
+      "id": "D15-03",
+      "day": 15,
+      "title": "Nợ một ly mai trả",
+      "status": "planned",
+      "requiredBrief": {
+        "establishing": "Khách quen chưa mang tiền, hóa đơn đang treo",
+        "interactive": "Chọn xử lý minh bạch trong quy định quán, ghi nhận bằng cách không lộ dữ liệu riêng",
+        "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+      },
+      "interactionBrief": "Chọn xử lý minh bạch trong quy định quán, ghi nhận bằng cách không lộ dữ liệu riêng",
+      "frames": {
+        "establishing": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "interactive": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "resolution": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        }
+      },
+      "visualChanges": [],
+      "artReview": {
+        "status": "pending",
+        "reviewerType": null,
+        "reviewEvidence": null,
+        "ownerReviewPending": true
+      }
+    },
+    {
+      "id": "D16-01",
+      "day": 16,
+      "title": "Quay phim dính mặt khách",
+      "status": "planned",
+      "requiredBrief": {
+        "establishing": "Một điện thoại giơ cao, khung hình bắt trúng khách bàn bên",
+        "interactive": "Di chuyển góc máy hoặc yêu cầu dừng quay, màn hình mô phỏng vùng riêng tư",
+        "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+      },
+      "interactionBrief": "Di chuyển góc máy hoặc yêu cầu dừng quay, màn hình mô phỏng vùng riêng tư",
+      "frames": {
+        "establishing": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "interactive": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "resolution": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        }
+      },
+      "visualChanges": [],
+      "artReview": {
+        "status": "pending",
+        "reviewerType": null,
+        "reviewEvidence": null,
+        "ownerReviewPending": true
+      }
+    },
+    {
+      "id": "D16-02",
+      "day": 16,
+      "title": "Nước sát ổ điện",
+      "status": "planned",
+      "requiredBrief": {
+        "establishing": "Nhóm học sinh để ly nước sát thiết bị sạc",
+        "interactive": "Kéo ly khỏi nguy cơ, chỉ khu vực dùng đồ uống phù hợp",
+        "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+      },
+      "interactionBrief": "Kéo ly khỏi nguy cơ, chỉ khu vực dùng đồ uống phù hợp",
+      "frames": {
+        "establishing": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "interactive": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "resolution": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        }
+      },
+      "visualChanges": [],
+      "artReview": {
+        "status": "pending",
+        "reviewerType": null,
+        "reviewEvidence": null,
+        "ownerReviewPending": true
+      }
+    },
+    {
+      "id": "D16-03",
+      "day": 16,
+      "title": "Bạn quên ví",
+      "status": "planned",
+      "requiredBrief": {
+        "establishing": "Một bạn trẻ bối rối trước quầy, bạn bè đứng phía sau",
+        "interactive": "So lại món đã giao và cách thanh toán hợp lệ, tránh làm khách xấu hổ",
+        "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+      },
+      "interactionBrief": "So lại món đã giao và cách thanh toán hợp lệ, tránh làm khách xấu hổ",
+      "frames": {
+        "establishing": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "interactive": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "resolution": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        }
+      },
+      "visualChanges": [],
+      "artReview": {
+        "status": "pending",
+        "reviewerType": null,
+        "reviewEvidence": null,
+        "ownerReviewPending": true
+      }
+    },
+    {
+      "id": "D17-01",
+      "day": 17,
+      "title": "Bàn sân nắng gắt",
+      "status": "planned",
+      "requiredBrief": {
+        "establishing": "Vệt nắng dịch qua ghế, khách lấy tay che mặt, cây ngoài sân héo",
+        "interactive": "Chọn vị trí có bóng râm và điều chỉnh bố trí ghế",
+        "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+      },
+      "interactionBrief": "Chọn vị trí có bóng râm và điều chỉnh bố trí ghế",
+      "frames": {
+        "establishing": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "interactive": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "resolution": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        }
+      },
+      "visualChanges": [],
+      "artReview": {
+        "status": "pending",
+        "reviewerType": null,
+        "reviewEvidence": null,
+        "ownerReviewPending": true
+      }
+    },
+    {
+      "id": "D17-02",
+      "day": 17,
+      "title": "Thùng đá gần hết",
+      "status": "planned",
+      "requiredBrief": {
+        "establishing": "Máy làm đá báo không đủ, menu đồ lạnh vẫn sáng",
+        "interactive": "Chỉ định hạn mức đơn và cập nhật món tạm ngưng nhận",
+        "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+      },
+      "interactionBrief": "Chỉ định hạn mức đơn và cập nhật món tạm ngưng nhận",
+      "frames": {
+        "establishing": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "interactive": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "resolution": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        }
+      },
+      "visualChanges": [],
+      "artReview": {
+        "status": "pending",
+        "reviewerType": null,
+        "reviewEvidence": null,
+        "ownerReviewPending": true
+      }
+    },
+    {
+      "id": "D17-03",
+      "day": 17,
+      "title": "Khách choáng vì nóng",
+      "status": "planned",
+      "requiredBrief": {
+        "establishing": "Một khách ôm đầu ngồi xuống, người đi cùng tìm nước và chỗ mát",
+        "interactive": "Dọn đường hỗ trợ, gọi hỗ trợ y tế khi có dấu hiệu nghiêm trọng; không tự chẩn đoán",
+        "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+      },
+      "interactionBrief": "Dọn đường hỗ trợ, gọi hỗ trợ y tế khi có dấu hiệu nghiêm trọng; không tự chẩn đoán",
+      "frames": {
+        "establishing": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "interactive": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "resolution": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        }
+      },
+      "visualChanges": [],
+      "artReview": {
+        "status": "pending",
+        "reviewerType": null,
+        "reviewEvidence": null,
+        "ownerReviewPending": true
+      }
+    },
+    {
+      "id": "D18-01",
+      "day": 18,
+      "title": "Xe chắn lối đi",
+      "status": "planned",
+      "requiredBrief": {
+        "establishing": "Xe khách dựng lấn cổng bên cạnh, người hàng xóm đang dắt xe ra",
+        "interactive": "Chuyển vị trí đỗ trên sơ đồ có giới hạn thực tế",
+        "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+      },
+      "interactionBrief": "Chuyển vị trí đỗ trên sơ đồ có giới hạn thực tế",
+      "frames": {
+        "establishing": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "interactive": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "resolution": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        }
+      },
+      "visualChanges": [],
+      "artReview": {
+        "status": "pending",
+        "reviewerType": null,
+        "reviewEvidence": null,
+        "ownerReviewPending": true
+      }
+    },
+    {
+      "id": "D18-02",
+      "day": 18,
+      "title": "Nhạc vang sau 21 giờ",
+      "status": "planned",
+      "requiredBrief": {
+        "establishing": "Loa trong nhà hiện vòng âm, cửa hàng xóm khép lại",
+        "interactive": "Điều chỉnh mức âm và vị trí loa, hỏi hàng xóm nhu cầu thực tế",
+        "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+      },
+      "interactionBrief": "Điều chỉnh mức âm và vị trí loa, hỏi hàng xóm nhu cầu thực tế",
+      "frames": {
+        "establishing": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "interactive": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "resolution": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        }
+      },
+      "visualChanges": [],
+      "artReview": {
+        "status": "pending",
+        "reviewerType": null,
+        "reviewEvidence": null,
+        "ownerReviewPending": true
+      }
+    },
+    {
+      "id": "D18-03",
+      "day": 18,
+      "title": "Khói bay vào bàn",
+      "status": "planned",
+      "requiredBrief": {
+        "establishing": "Khói từ một vị trí ngoài sân trôi về nhóm khách khác",
+        "interactive": "Chỉ định khu vực không ảnh hưởng người khác, trao đổi nội quy rõ ràng",
+        "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+      },
+      "interactionBrief": "Chỉ định khu vực không ảnh hưởng người khác, trao đổi nội quy rõ ràng",
+      "frames": {
+        "establishing": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "interactive": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "resolution": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        }
+      },
+      "visualChanges": [],
+      "artReview": {
+        "status": "pending",
+        "reviewerType": null,
+        "reviewEvidence": null,
+        "ownerReviewPending": true
+      }
+    },
+    {
+      "id": "D19-01",
+      "day": 19,
+      "title": "Nhà cung cấp tăng giá",
+      "status": "planned",
+      "requiredBrief": {
+        "establishing": "Hai phiếu báo giá đặt cạnh nhau, giá mới được khoanh đỏ",
+        "interactive": "So giá, định lượng và chất lượng trước khi quyết định menu",
+        "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+      },
+      "interactionBrief": "So giá, định lượng và chất lượng trước khi quyết định menu",
+      "frames": {
+        "establishing": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "interactive": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "resolution": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        }
+      },
+      "visualChanges": [],
+      "artReview": {
+        "status": "pending",
+        "reviewerType": null,
+        "reviewEvidence": null,
+        "ownerReviewPending": true
+      }
+    },
+    {
+      "id": "D19-02",
+      "day": 19,
+      "title": "Thiếu cốt dừa",
+      "status": "planned",
+      "requiredBrief": {
+        "establishing": "Ngăn nguyên liệu vắng một chai, món cốt dừa vẫn ở menu",
+        "interactive": "Khóa món tạm hết và đề nghị thay thế chỉ sau khi khách đồng ý",
+        "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+      },
+      "interactionBrief": "Khóa món tạm hết và đề nghị thay thế chỉ sau khi khách đồng ý",
+      "frames": {
+        "establishing": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "interactive": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "resolution": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        }
+      },
+      "visualChanges": [],
+      "artReview": {
+        "status": "pending",
+        "reviewerType": null,
+        "reviewEvidence": null,
+        "ownerReviewPending": true
+      }
+    },
+    {
+      "id": "D19-03",
+      "day": 19,
+      "title": "Lô sữa có vấn đề",
+      "status": "planned",
+      "requiredBrief": {
+        "establishing": "Khay sữa có mã lô khác thường và dấu hiệu bảo quản chưa rõ",
+        "interactive": "Cách ly lô, đối chiếu điều kiện lưu trữ/nguồn hàng, không thử bằng mùi",
+        "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+      },
+      "interactionBrief": "Cách ly lô, đối chiếu điều kiện lưu trữ/nguồn hàng, không thử bằng mùi",
+      "frames": {
+        "establishing": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "interactive": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "resolution": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        }
+      },
+      "visualChanges": [],
+      "artReview": {
+        "status": "pending",
+        "reviewerType": null,
+        "reviewEvidence": null,
+        "ownerReviewPending": true
+      }
+    },
+    {
+      "id": "D20-01",
+      "day": 20,
+      "title": "Biển bạt rung mạnh",
+      "status": "planned",
+      "requiredBrief": {
+        "establishing": "Biển treo phía trước bị gió giật, dây giữ kéo căng",
+        "interactive": "Khoanh vùng phía dưới và gọi đơn vị phù hợp kiểm tra cố định",
+        "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+      },
+      "interactionBrief": "Khoanh vùng phía dưới và gọi đơn vị phù hợp kiểm tra cố định",
+      "frames": {
+        "establishing": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "interactive": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "resolution": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        }
+      },
+      "visualChanges": [],
+      "artReview": {
+        "status": "pending",
+        "reviewerType": null,
+        "reviewEvidence": null,
+        "ownerReviewPending": true
+      }
+    },
+    {
+      "id": "D20-02",
+      "day": 20,
+      "title": "Ghế ngoài sân bị xô",
+      "status": "planned",
+      "requiredBrief": {
+        "establishing": "Gió hất khăn và làm ghế chuyển chỗ, khách đứng dậy",
+        "interactive": "Thu đồ an toàn, dời khách khỏi khu nguy hiểm",
+        "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+      },
+      "interactionBrief": "Thu đồ an toàn, dời khách khỏi khu nguy hiểm",
+      "frames": {
+        "establishing": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "interactive": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "resolution": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        }
+      },
+      "visualChanges": [],
+      "artReview": {
+        "status": "pending",
+        "reviewerType": null,
+        "reviewEvidence": null,
+        "ownerReviewPending": true
+      }
+    },
+    {
+      "id": "D20-03",
+      "day": 20,
+      "title": "Miệng thoát nước nghẹt",
+      "status": "planned",
+      "requiredBrief": {
+        "establishing": "Lá cây gom quanh rãnh, mực nước dâng về cửa quán",
+        "interactive": "Chặn khu trơn và sắp thứ tự kiểm tra vệ sinh khi điều kiện an toàn",
+        "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+      },
+      "interactionBrief": "Chặn khu trơn và sắp thứ tự kiểm tra vệ sinh khi điều kiện an toàn",
+      "frames": {
+        "establishing": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "interactive": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "resolution": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        }
+      },
+      "visualChanges": [],
+      "artReview": {
+        "status": "pending",
+        "reviewerType": null,
+        "reviewEvidence": null,
+        "ownerReviewPending": true
+      }
+    },
+    {
+      "id": "D21-01",
+      "day": 21,
+      "title": "Phụ huynh tìm bé",
+      "status": "planned",
+      "requiredBrief": {
+        "establishing": "Khu khách nhiều người, ghế che khuất tầm nhìn, phụ huynh gọi tên con",
+        "interactive": "Đánh dấu lối cần rà soát, phân công tìm an toàn và liên hệ người có trách nhiệm",
+        "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+      },
+      "interactionBrief": "Đánh dấu lối cần rà soát, phân công tìm an toàn và liên hệ người có trách nhiệm",
+      "frames": {
+        "establishing": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "interactive": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "resolution": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        }
+      },
+      "visualChanges": [],
+      "artReview": {
+        "status": "pending",
+        "reviewerType": null,
+        "reviewEvidence": null,
+        "ownerReviewPending": true
+      }
+    },
+    {
+      "id": "D21-02",
+      "day": 21,
+      "title": "Khách có dấu hiệu cần trợ giúp",
+      "status": "planned",
+      "requiredBrief": {
+        "establishing": "Một khách ngồi khuỵu, người đi cùng ra hiệu, lối ra bị đông người",
+        "interactive": "Giải phóng lối tiếp cận và gọi hỗ trợ khẩn theo dấu hiệu, tránh chẩn đoán trong game",
+        "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+      },
+      "interactionBrief": "Giải phóng lối tiếp cận và gọi hỗ trợ khẩn theo dấu hiệu, tránh chẩn đoán trong game",
+      "frames": {
+        "establishing": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "interactive": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "resolution": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        }
+      },
+      "visualChanges": [],
+      "artReview": {
+        "status": "pending",
+        "reviewerType": null,
+        "reviewEvidence": null,
+        "ownerReviewPending": true
+      }
+    },
+    {
+      "id": "D21-03",
+      "day": 21,
+      "title": "Đám đông giơ máy quay",
+      "status": "planned",
+      "requiredBrief": {
+        "establishing": "Nhiều điện thoại cùng hướng vào người gặp sự cố",
+        "interactive": "Chọn vị trí che tầm quay, mời tôn trọng riêng tư, giữ không gian hỗ trợ",
+        "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+      },
+      "interactionBrief": "Chọn vị trí che tầm quay, mời tôn trọng riêng tư, giữ không gian hỗ trợ",
+      "frames": {
+        "establishing": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "interactive": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "resolution": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        }
+      },
+      "visualChanges": [],
+      "artReview": {
+        "status": "pending",
+        "reviewerType": null,
+        "reviewEvidence": null,
+        "ownerReviewPending": true
+      }
+    },
+    {
+      "id": "D22-01",
+      "day": 22,
+      "title": "Hai thẻ cùng ghi một lượt",
+      "status": "planned",
+      "requiredBrief": {
+        "establishing": "Hai thẻ mộc đặt cạnh hai biên lai, khách chỉ vào mộc vừa đóng",
+        "interactive": "Đối chiếu lượt mua và kết quả đóng dấu, sửa công bằng",
+        "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+      },
+      "interactionBrief": "Đối chiếu lượt mua và kết quả đóng dấu, sửa công bằng",
+      "frames": {
+        "establishing": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "interactive": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "resolution": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        }
+      },
+      "visualChanges": [],
+      "artReview": {
+        "status": "pending",
+        "reviewerType": null,
+        "reviewEvidence": null,
+        "ownerReviewPending": true
+      }
+    },
+    {
+      "id": "D22-02",
+      "day": 22,
+      "title": "Quà đổi mộc hết hàng",
+      "status": "planned",
+      "requiredBrief": {
+        "establishing": "Ngăn quà trống, khách đã đặt thẻ đủ mộc lên quầy",
+        "interactive": "Chọn phương án thông báo và quyền nhận bù có thể thực hiện",
+        "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+      },
+      "interactionBrief": "Chọn phương án thông báo và quyền nhận bù có thể thực hiện",
+      "frames": {
+        "establishing": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "interactive": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "resolution": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        }
+      },
+      "visualChanges": [],
+      "artReview": {
+        "status": "pending",
+        "reviewerType": null,
+        "reviewEvidence": null,
+        "ownerReviewPending": true
+      }
+    },
+    {
+      "id": "D22-03",
+      "day": 22,
+      "title": "Dấu đóng sai chỗ",
+      "status": "planned",
+      "requiredBrief": {
+        "establishing": "Nhân viên mới cầm mộc, thẻ đã có vết mực lem",
+        "interactive": "Chọn cách xử lý thẻ lỗi, kiểm tra số lượt không làm khách mất quyền lợi",
+        "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+      },
+      "interactionBrief": "Chọn cách xử lý thẻ lỗi, kiểm tra số lượt không làm khách mất quyền lợi",
+      "frames": {
+        "establishing": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "interactive": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "resolution": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        }
+      },
+      "visualChanges": [],
+      "artReview": {
+        "status": "pending",
+        "reviewerType": null,
+        "reviewEvidence": null,
+        "ownerReviewPending": true
+      }
+    },
+    {
+      "id": "D23-01",
+      "day": 23,
+      "title": "Khung quay dính người lạ",
+      "status": "planned",
+      "requiredBrief": {
+        "establishing": "Máy quay dựng cạnh bàn và khung preview hiện mặt khách chưa đồng ý",
+        "interactive": "Thay góc máy, cắt vùng có người hoặc dừng ghi hình",
+        "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+      },
+      "interactionBrief": "Thay góc máy, cắt vùng có người hoặc dừng ghi hình",
+      "frames": {
+        "establishing": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "interactive": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "resolution": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        }
+      },
+      "visualChanges": [],
+      "artReview": {
+        "status": "pending",
+        "reviewerType": null,
+        "reviewEvidence": null,
+        "ownerReviewPending": true
+      }
+    },
+    {
+      "id": "D23-02",
+      "day": 23,
+      "title": "Video bị hiểu sai",
+      "status": "planned",
+      "requiredBrief": {
+        "establishing": "Một đoạn ngắn và cảnh trước-sau đặt trên storyboard song song",
+        "interactive": "Sắp mảnh diễn biến đúng thứ tự trước khi viết lời giải thích",
+        "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+      },
+      "interactionBrief": "Sắp mảnh diễn biến đúng thứ tự trước khi viết lời giải thích",
+      "frames": {
+        "establishing": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "interactive": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "resolution": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        }
+      },
+      "visualChanges": [],
+      "artReview": {
+        "status": "pending",
+        "reviewerType": null,
+        "reviewEvidence": null,
+        "ownerReviewPending": true
+      }
+    },
+    {
+      "id": "D23-03",
+      "day": 23,
+      "title": "Tài khoản giả đăng ưu đãi",
+      "status": "planned",
+      "requiredBrief": {
+        "establishing": "Hai trang xã hội có logo gần giống, khách giơ điện thoại hỏi",
+        "interactive": "Đối chiếu kênh chính thức và soạn cảnh báo không lộ thông tin khách",
+        "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+      },
+      "interactionBrief": "Đối chiếu kênh chính thức và soạn cảnh báo không lộ thông tin khách",
+      "frames": {
+        "establishing": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "interactive": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "resolution": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        }
+      },
+      "visualChanges": [],
+      "artReview": {
+        "status": "pending",
+        "reviewerType": null,
+        "reviewEvidence": null,
+        "ownerReviewPending": true
+      }
+    },
+    {
+      "id": "D24-01",
+      "day": 24,
+      "title": "Hỏi hồ sơ vệ sinh",
+      "status": "planned",
+      "requiredBrief": {
+        "establishing": "Bàn giấy tờ với tập hồ sơ và nhiệt kế/tủ lạnh ở phía sau",
+        "interactive": "Tìm đúng hồ sơ có sẵn, chỉ rõ điểm chưa có thay vì dựng số liệu",
+        "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+      },
+      "interactionBrief": "Tìm đúng hồ sơ có sẵn, chỉ rõ điểm chưa có thay vì dựng số liệu",
+      "frames": {
+        "establishing": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "interactive": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "resolution": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        }
+      },
+      "visualChanges": [],
+      "artReview": {
+        "status": "pending",
+        "reviewerType": null,
+        "reviewEvidence": null,
+        "ownerReviewPending": true
+      }
+    },
+    {
+      "id": "D24-02",
+      "day": 24,
+      "title": "Chứng từ đặt nhầm chỗ",
+      "status": "planned",
+      "requiredBrief": {
+        "establishing": "Bìa giấy lẫn giữa menu và biên nhận, người kiểm tra đang chờ",
+        "interactive": "Sắp lại chứng từ theo nhóm, thừa nhận phần chưa xác minh",
+        "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+      },
+      "interactionBrief": "Sắp lại chứng từ theo nhóm, thừa nhận phần chưa xác minh",
+      "frames": {
+        "establishing": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "interactive": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "resolution": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        }
+      },
+      "visualChanges": [],
+      "artReview": {
+        "status": "pending",
+        "reviewerType": null,
+        "reviewEvidence": null,
+        "ownerReviewPending": true
+      }
+    },
+    {
+      "id": "D24-03",
+      "day": 24,
+      "title": "Lối rửa tay bị chắn",
+      "status": "planned",
+      "requiredBrief": {
+        "establishing": "Lavabo và thùng hàng chặn nửa lối, người cùng ca cần dùng",
+        "interactive": "Di chuyển thùng, mở lối và nhìn trạng thái sử dụng thay đổi",
+        "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+      },
+      "interactionBrief": "Di chuyển thùng, mở lối và nhìn trạng thái sử dụng thay đổi",
+      "frames": {
+        "establishing": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "interactive": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "resolution": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        }
+      },
+      "visualChanges": [],
+      "artReview": {
+        "status": "pending",
+        "reviewerType": null,
+        "reviewEvidence": null,
+        "ownerReviewPending": true
+      }
+    },
+    {
+      "id": "D25-01",
+      "day": 25,
+      "title": "Hai người làm trùng đơn",
+      "status": "planned",
+      "requiredBrief": {
+        "establishing": "Cả hai cùng cầm ly giống nhau, bảng phân công bị xóa mờ",
+        "interactive": "Gắn nhãn người phụ trách mỗi trạm, tránh làm trùng",
+        "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+      },
+      "interactionBrief": "Gắn nhãn người phụ trách mỗi trạm, tránh làm trùng",
+      "frames": {
+        "establishing": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "interactive": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "resolution": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        }
+      },
+      "visualChanges": [],
+      "artReview": {
+        "status": "pending",
+        "reviewerType": null,
+        "reviewEvidence": null,
+        "ownerReviewPending": true
+      }
+    },
+    {
+      "id": "D25-02",
+      "day": 25,
+      "title": "Bàn giao ca thiếu thông tin",
+      "status": "planned",
+      "requiredBrief": {
+        "establishing": "Sổ ca mở ở trang trống, một nguyên liệu hết chưa được báo",
+        "interactive": "Điền thẻ tình trạng đơn, tồn kho và thiết bị trên bảng bàn giao",
+        "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+      },
+      "interactionBrief": "Điền thẻ tình trạng đơn, tồn kho và thiết bị trên bảng bàn giao",
+      "frames": {
+        "establishing": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "interactive": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "resolution": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        }
+      },
+      "visualChanges": [],
+      "artReview": {
+        "status": "pending",
+        "reviewerType": null,
+        "reviewEvidence": null,
+        "ownerReviewPending": true
+      }
+    },
+    {
+      "id": "D25-03",
+      "day": 25,
+      "title": "Căng thẳng trước khách",
+      "status": "planned",
+      "requiredBrief": {
+        "establishing": "Người cùng ca nhìn đi chỗ khác, khách ngồi gần nghe được câu tranh luận",
+        "interactive": "Chọn dừng tranh cãi công khai, phân công tiếp tục phục vụ rồi trao đổi riêng",
+        "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+      },
+      "interactionBrief": "Chọn dừng tranh cãi công khai, phân công tiếp tục phục vụ rồi trao đổi riêng",
+      "frames": {
+        "establishing": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "interactive": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "resolution": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        }
+      },
+      "visualChanges": [],
+      "artReview": {
+        "status": "pending",
+        "reviewerType": null,
+        "reviewEvidence": null,
+        "ownerReviewPending": true
+      }
+    },
+    {
+      "id": "D26-01",
+      "day": 26,
+      "title": "Đơn đặt trước tràn quầy",
+      "status": "planned",
+      "requiredBrief": {
+        "establishing": "Hàng phiếu đặt trước phủ kín bàn pha, đơn tại chỗ mới tới",
+        "interactive": "Phân luồng cam kết đã nhận và năng lực làm món, cập nhật thời gian thực tế",
+        "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+      },
+      "interactionBrief": "Phân luồng cam kết đã nhận và năng lực làm món, cập nhật thời gian thực tế",
+      "frames": {
+        "establishing": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "interactive": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "resolution": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        }
+      },
+      "visualChanges": [],
+      "artReview": {
+        "status": "pending",
+        "reviewerType": null,
+        "reviewEvidence": null,
+        "ownerReviewPending": true
+      }
+    },
+    {
+      "id": "D26-02",
+      "day": 26,
+      "title": "Ghế chật lối ra",
+      "status": "planned",
+      "requiredBrief": {
+        "establishing": "Bàn ghế thêm vào làm lối đi hẹp, nhóm khách muốn ghép bàn",
+        "interactive": "Kéo sơ đồ bàn ghế, giữ lối an toàn và báo giới hạn chỗ",
+        "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+      },
+      "interactionBrief": "Kéo sơ đồ bàn ghế, giữ lối an toàn và báo giới hạn chỗ",
+      "frames": {
+        "establishing": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "interactive": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "resolution": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        }
+      },
+      "visualChanges": [],
+      "artReview": {
+        "status": "pending",
+        "reviewerType": null,
+        "reviewEvidence": null,
+        "ownerReviewPending": true
+      }
+    },
+    {
+      "id": "D26-03",
+      "day": 26,
+      "title": "Tiền lẻ và ly mang về",
+      "status": "planned",
+      "requiredBrief": {
+        "establishing": "Khay tiền lẻ trống cạnh chồng ly cuối; khách đang thanh toán",
+        "interactive": "Kiểm tra lựa chọn thanh toán và tồn bao bì trước khi nhận thêm món",
+        "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+      },
+      "interactionBrief": "Kiểm tra lựa chọn thanh toán và tồn bao bì trước khi nhận thêm món",
+      "frames": {
+        "establishing": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "interactive": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "resolution": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        }
+      },
+      "visualChanges": [],
+      "artReview": {
+        "status": "pending",
+        "reviewerType": null,
+        "reviewEvidence": null,
+        "ownerReviewPending": true
+      }
+    },
+    {
+      "id": "D27-01",
+      "day": 27,
+      "title": "Máy xay cà phê kẹt",
+      "status": "planned",
+      "requiredBrief": {
+        "establishing": "Núm máy đứng yên, hạt kẹt trong phễu và đèn cảnh báo",
+        "interactive": "Dừng nguồn đúng cách, kiểm tra theo hướng dẫn thay vì cố quay",
+        "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+      },
+      "interactionBrief": "Dừng nguồn đúng cách, kiểm tra theo hướng dẫn thay vì cố quay",
+      "frames": {
+        "establishing": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "interactive": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "resolution": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        }
+      },
+      "visualChanges": [],
+      "artReview": {
+        "status": "pending",
+        "reviewerType": null,
+        "reviewEvidence": null,
+        "ownerReviewPending": true
+      }
+    },
+    {
+      "id": "D27-02",
+      "day": 27,
+      "title": "Đá tan trong thùng",
+      "status": "planned",
+      "requiredBrief": {
+        "establishing": "Nước chảy ở đáy thùng, menu đồ đá vẫn đang mở",
+        "interactive": "Đánh dấu lượng đá còn dùng được và món cần tạm dừng",
+        "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+      },
+      "interactionBrief": "Đánh dấu lượng đá còn dùng được và món cần tạm dừng",
+      "frames": {
+        "establishing": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "interactive": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "resolution": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        }
+      },
+      "visualChanges": [],
+      "artReview": {
+        "status": "pending",
+        "reviewerType": null,
+        "reviewEvidence": null,
+        "ownerReviewPending": true
+      }
+    },
+    {
+      "id": "D27-03",
+      "day": 27,
+      "title": "Báo động nhiệt tủ lạnh",
+      "status": "planned",
+      "requiredBrief": {
+        "establishing": "Màn nhiệt độ vượt vùng cho phép, khay sữa có nhãn giờ nhập",
+        "interactive": "Đọc nhật ký nhiệt độ, cách ly nguyên liệu không đủ căn cứ an toàn",
+        "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+      },
+      "interactionBrief": "Đọc nhật ký nhiệt độ, cách ly nguyên liệu không đủ căn cứ an toàn",
+      "frames": {
+        "establishing": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "interactive": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "resolution": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        }
+      },
+      "visualChanges": [],
+      "artReview": {
+        "status": "pending",
+        "reviewerType": null,
+        "reviewEvidence": null,
+        "ownerReviewPending": true
+      }
+    },
+    {
+      "id": "D28-01",
+      "day": 28,
+      "title": "Dây trang trí chắn cửa",
+      "status": "planned",
+      "requiredBrief": {
+        "establishing": "Bóng và dây buộc qua lối đi, trẻ chạy quanh ghế",
+        "interactive": "Thay vị trí dây/bóng bằng kéo-thả, giữ thông thoáng lối ra",
+        "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+      },
+      "interactionBrief": "Thay vị trí dây/bóng bằng kéo-thả, giữ thông thoáng lối ra",
+      "frames": {
+        "establishing": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "interactive": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "resolution": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        }
+      },
+      "visualChanges": [],
+      "artReview": {
+        "status": "pending",
+        "reviewerType": null,
+        "reviewEvidence": null,
+        "ownerReviewPending": true
+      }
+    },
+    {
+      "id": "D28-02",
+      "day": 28,
+      "title": "Nhóm hát hơi lớn",
+      "status": "planned",
+      "requiredBrief": {
+        "establishing": "Bàn sinh nhật hát, khách ngồi bên cạnh đưa mắt nhìn, người nhà ở sân ngoài",
+        "interactive": "Điều chỉnh khu vực và trao đổi giới hạn âm lượng với người đặt bàn",
+        "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+      },
+      "interactionBrief": "Điều chỉnh khu vực và trao đổi giới hạn âm lượng với người đặt bàn",
+      "frames": {
+        "establishing": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "interactive": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "resolution": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        }
+      },
+      "visualChanges": [],
+      "artReview": {
+        "status": "pending",
+        "reviewerType": null,
+        "reviewEvidence": null,
+        "ownerReviewPending": true
+      }
+    },
+    {
+      "id": "D28-03",
+      "day": 28,
+      "title": "Rác sau tiệc",
+      "status": "planned",
+      "requiredBrief": {
+        "establishing": "Ly giấy và bóng vỡ ở sân, thùng phân loại sắp đầy",
+        "interactive": "Phân loại rác, xử lý mảnh vỡ và kiểm tra sân trước khi đón khách mới",
+        "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+      },
+      "interactionBrief": "Phân loại rác, xử lý mảnh vỡ và kiểm tra sân trước khi đón khách mới",
+      "frames": {
+        "establishing": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "interactive": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "resolution": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        }
+      },
+      "visualChanges": [],
+      "artReview": {
+        "status": "pending",
+        "reviewerType": null,
+        "reviewEvidence": null,
+        "ownerReviewPending": true
+      }
+    },
+    {
+      "id": "D29-01",
+      "day": 29,
+      "title": "Đề nghị bán giao tận nơi",
+      "status": "planned",
+      "requiredBrief": {
+        "establishing": "Người đề xuất giao hàng đưa bảng đơn, quầy có hai người với lịch kín",
+        "interactive": "Thử bố trí một đơn giao trên lịch và thấy ai phải rời quầy",
+        "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+      },
+      "interactionBrief": "Thử bố trí một đơn giao trên lịch và thấy ai phải rời quầy",
+      "frames": {
+        "establishing": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "interactive": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "resolution": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        }
+      },
+      "visualChanges": [],
+      "artReview": {
+        "status": "pending",
+        "reviewerType": null,
+        "reviewEvidence": null,
+        "ownerReviewPending": true
+      }
+    },
+    {
+      "id": "D29-02",
+      "day": 29,
+      "title": "Nên thêm người hay bớt món",
+      "status": "planned",
+      "requiredBrief": {
+        "establishing": "Bảng menu dày, lịch làm ca và chi phí hiển thị cạnh nhau",
+        "interactive": "Gỡ/giữ món trên bảng năng lực, thử phương án nhân sự với ngân sách",
+        "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+      },
+      "interactionBrief": "Gỡ/giữ món trên bảng năng lực, thử phương án nhân sự với ngân sách",
+      "frames": {
+        "establishing": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "interactive": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "resolution": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        }
+      },
+      "visualChanges": [],
+      "artReview": {
+        "status": "pending",
+        "reviewerType": null,
+        "reviewEvidence": null,
+        "ownerReviewPending": true
+      }
+    },
+    {
+      "id": "D29-03",
+      "day": 29,
+      "title": "Hợp đồng nguyên liệu mới",
+      "status": "planned",
+      "requiredBrief": {
+        "establishing": "Hai mẫu hợp đồng và khay nguyên liệu khác giá, yêu cầu chất lượng khác nhau",
+        "interactive": "So điều kiện giao, bảo quản và đổi trả trước khi lựa chọn",
+        "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+      },
+      "interactionBrief": "So điều kiện giao, bảo quản và đổi trả trước khi lựa chọn",
+      "frames": {
+        "establishing": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "interactive": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "resolution": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        }
+      },
+      "visualChanges": [],
+      "artReview": {
+        "status": "pending",
+        "reviewerType": null,
+        "reviewEvidence": null,
+        "ownerReviewPending": true
+      }
+    },
+    {
+      "id": "D30-01",
+      "day": 30,
+      "title": "Sự cố cũ quay lại",
+      "status": "planned",
+      "requiredBrief": {
+        "establishing": "Lối đi và góc quầy có chi tiết sửa chữa hoặc bỏ ngỏ tùy các cờ ngày trước",
+        "interactive": "Tìm dấu nguy cơ trong cảnh, kích hoạt quy trình đã chọn trước đó",
+        "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+      },
+      "interactionBrief": "Tìm dấu nguy cơ trong cảnh, kích hoạt quy trình đã chọn trước đó",
+      "frames": {
+        "establishing": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "interactive": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "resolution": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        }
+      },
+      "visualChanges": [],
+      "artReview": {
+        "status": "pending",
+        "reviewerType": null,
+        "reviewEvidence": null,
+        "ownerReviewPending": true
+      }
+    },
+    {
+      "id": "D30-02",
+      "day": 30,
+      "title": "Khách quen trở lại",
+      "status": "planned",
+      "requiredBrief": {
+        "establishing": "Một hoặc nhiều nhân vật từng gặp trở lại với biểu cảm/phụ kiện thay đổi theo ký ức câu chuyện",
+        "interactive": "Tương tác trực tiếp với nhân vật, phản hồi thay đổi theo mức tin tưởng",
+        "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+      },
+      "interactionBrief": "Tương tác trực tiếp với nhân vật, phản hồi thay đổi theo mức tin tưởng",
+      "frames": {
+        "establishing": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "interactive": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "resolution": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        }
+      },
+      "visualChanges": [],
+      "artReview": {
+        "status": "pending",
+        "reviewerType": null,
+        "reviewEvidence": null,
+        "ownerReviewPending": true
+      }
+    },
+    {
+      "id": "D30-03",
+      "day": 30,
+      "title": "Tắt đèn đóng cửa",
+      "status": "planned",
+      "requiredBrief": {
+        "establishing": "Máy pha yên, bảng tiền và ghế dọn gọn hoặc hỗn độn tùy hành trình; cửa quán khép dần",
+        "interactive": "Kiểm tra cuối ca bằng thao tác vật thể, mở cảnh kết phù hợp trạng thái tháng",
+        "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+      },
+      "interactionBrief": "Kiểm tra cuối ca bằng thao tác vật thể, mở cảnh kết phù hợp trạng thái tháng",
+      "frames": {
+        "establishing": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "interactive": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        },
+        "resolution": {
+          "background": null,
+          "actors": [],
+          "props": [],
+          "alt": null
+        }
+      },
+      "visualChanges": [],
+      "artReview": {
+        "status": "pending",
+        "reviewerType": null,
+        "reviewEvidence": null,
+        "ownerReviewPending": true
+      }
+    }
+  ]
+}
