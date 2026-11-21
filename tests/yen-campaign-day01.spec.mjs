@@ -419,3 +419,75 @@ test("the water hazard remains visibly on the floor until repaired; customers do
  await expect(page.locator('[data-sprite-id="spill"]')).toHaveAttribute("data-state","dry");
  await validateSpatialScene(page,"D01-02");
 });
+
+
+test("gamified Day 1: XP, levels, awards and debrief come from the actual three decisions",async({page})=>{
+ await page.setViewportSize({width:390,height:844});
+ await open(page);
+ await expect(page.locator("#scene-evidence,#character-reaction")).toHaveCount(0);
+ await expect(page.locator("#level-panel [data-level=title]")).toHaveText("Tập đứng quầy");
+ await expect(page.locator("#level-panel [data-level=xp]")).toHaveText("0/20 XP");
+ await decide(page,"explain");
+ await expect(page.locator("#level-panel [data-level=earned]")).toHaveText("Ca này +12 XP");
+ await expect(page.locator("#level-panel [data-level=xp]")).toHaveText("12/20 XP");
+ await expect(page.locator("#level-panel [data-level=next]")).toContainText("Quầy đã vào nhịp");
+ await next(page);
+ await decide(page,"clean");
+ await expect(page.locator("#level-panel")).toHaveAttribute("data-level","2");
+ await expect(page.locator("#level-panel")).toHaveAttribute("data-level-up","true");
+ await expect(page.locator("#level-panel [data-level=title]")).toHaveText("Quầy đã vào nhịp");
+ await expect(page.locator("#level-panel [data-level=xp]")).toHaveText("4/25 XP");
+ await next(page);
+ await decide(page,"refund");
+ await expect(page.locator("#level-panel [data-level=xp]")).toHaveText("16/25 XP");
+ await next(page);
+ await expect(page.locator("#day-level [data-level=title]")).toHaveText("Quầy đã vào nhịp");
+ await expect(page.locator("#day-level [data-level=earned]")).toHaveText("Ngày 1 · +36 XP");
+ await expect(page.locator("#day-level [data-level=xp]")).toHaveText("16/25 XP");
+ await expect(page.locator("#scene-evidence,#character-reaction")).toHaveCount(0);
+});
+
+test("unsafe actions and one recovery adjust XP once; restarting resets the shop rank",async({page})=>{
+ await page.setViewportSize({width:390,height:844});
+ await open(page);
+ await decide(page,"silent");
+ await expect(page.locator("#level-panel [data-level=earned]")).toHaveText("Ca này +6 XP");
+ await next(page);
+ await decide(page,"open");
+ await expect(page.locator("#level-panel [data-level=xp]")).toHaveText("8/20 XP");
+ await page.locator("#recover").click();
+ await expect(page.locator("#level-panel [data-level=xp]")).toHaveText("12/20 XP");
+ await expect(page.locator("#level-panel [data-level=earned]")).toHaveText("Ca này +6 XP");
+ await expect(page.locator("#recover")).toBeHidden();
+ await page.locator("#restart").click();
+ await expect(page.locator("#level-panel [data-level=xp]")).toHaveText("0/20 XP");
+ await expect(page.locator("#level-panel [data-level=title]")).toHaveText("Tập đứng quầy");
+});
+
+for(const viewport of [{width:320,height:480},{width:320,height:568},{width:375,height:667},
+ {width:390,height:660},{width:390,height:844},{width:812,height:375},{width:1440,height:900}]){
+ test("XP/level UI fits without scrolling at "+viewport.width+"×"+viewport.height,async({page},testInfo)=>{
+  await page.setViewportSize(viewport);
+  await page.emulateMedia({reducedMotion:"reduce"});
+  await open(page);
+  for(const choice of ["explain","clean","refund"]){
+   await decide(page,choice);
+   await expect(page.locator("#level-panel")).toBeVisible();
+   await expect(page.locator("#level-panel [data-level=title]")).not.toBeEmpty();
+   await assertOneViewport(page,"reward at "+viewport.width+"x"+viewport.height);
+   const layout=await page.evaluate(()=>{
+    const story=document.querySelector("#story").getBoundingClientRect();
+    const card=document.querySelector("#level-panel").getBoundingClientRect();
+    const actions=document.querySelector("#actions").getBoundingClientRect();
+    return {cardTop:card.top,cardBottom:card.bottom,storyBottom:story.bottom,actionsTop:actions.top,actionsBottom:actions.bottom};
+   });
+   expect(layout.cardBottom).toBeLessThanOrEqual(layout.storyBottom+1);
+   expect(layout.actionsBottom).toBeLessThanOrEqual(layout.storyBottom+1);
+   expect(layout.cardBottom).toBeLessThanOrEqual(layout.actionsTop+1);
+   await next(page);
+  }
+  await expect(page.locator("#day-level")).toBeVisible();
+  await assertOneViewport(page,"gamified debrief "+viewport.width+"x"+viewport.height);
+  await testInfo.attach("level-final-"+viewport.width+"x"+viewport.height,{body:await page.screenshot({fullPage:true}),contentType:"image/png"});
+ });
+}
