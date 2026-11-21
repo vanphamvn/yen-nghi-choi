@@ -1,6 +1,7 @@
 # Một Tháng Không Yên · roadmap visual novel 30 ngày
 
-> **Status: Ngày 1 (3 tình huống) đã playable ở bản thử; 87 tình huống còn lại PLANNED. Không phải 90 cảnh đã code/art.** 
+> **Status: Ngày 1 (3 tình huống) đã playable ở bản thử; 87 tình huống còn lại PLANNED, không phải 90 cảnh đã code/art.**
+> Trong catalog, `status: planned` nghĩa là chưa có cảnh hoàn chỉnh; `playable` chỉ dành cho phần đã có gameplay và kiểm thử. 
 > Epic [#218](https://github.com/vanphamvn/yen-nghi-choi/issues/218). Nền MVP [#216](https://github.com/vanphamvn/yen-nghi-choi/issues/216) / [PR #217](https://github.com/vanphamvn/yen-nghi-choi/pull/217) đang triển khai riêng.
 > Máy đọc: [episodes.json](episodes.json). Ngày 1 có 3 cảnh `playable`; các tình huống còn lại vẫn `planned`.
 
