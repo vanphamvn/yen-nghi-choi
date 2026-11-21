@@ -175,7 +175,7 @@ button:focus-visible, a:focus-visible, summary:focus-visible, [tabindex="-1"]:fo
 .end-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
 .bottom-note { max-width: 790px; margin: 32px auto 0; text-align: center; color: var(--muted); font-size: 14px; }
 .noscript { margin-top: 10px; padding: 16px; border: 1px solid var(--line); }
-@media (max-width: 767px) {
+@media (max-width: 1023px) {
   .main { padding: 0 0 32px; }
   .heading { padding: 4px 20px 14px; margin-bottom: 0; }
   .heading h1 { font-size: clamp(35px, 11vw, 46px); }
@@ -187,21 +187,28 @@ button:focus-visible, a:focus-visible, summary:focus-visible, [tabindex="-1"]:fo
   .scene-art { object-position: 50% 52%; }
   .scene-label { left: 20px; top: 16px; }
   .scene-label strong { font-size: 22px; }
-  .guide { width: 36%; max-width: 150px; right: 7%; bottom: 5%; }
+  .guide { width: 52%; max-width: 210px; right: 2%; bottom: 4%; }
   .scene-note { bottom: 23%; left: 5%; font-size: 14px; padding: 10px 12px; width: 44%; }
   .scene-counter { padding: 8px 20px; }
   .paper {
-    margin: -16px 12px 0; padding: 22px 18px; border-radius: 14px; box-shadow: 5px 6px 0 #bed0b1;
+    width: calc(100% - 24px); max-width: 680px; margin: -16px auto 0; padding: 22px 18px; border-radius: 14px; box-shadow: 5px 6px 0 #bed0b1;
   }
   .paper h2 { font-size: 28px; }
   .bottom-note { padding: 0 18px; }
+}
+@media (min-width: 600px) and (max-width: 1023px) {
+  .scene { height: 370px; }
+  .scene-label { left: 8%; }
+  .guide { width: 240px; max-width: none; right: 13%; }
+  .scene-note { left: 10%; bottom: 22%; max-width: 240px; }
+  .paper { padding: 30px; }
 }
 @media (max-width: 359px) {
   .masthead { padding-left: 12px; padding-right: 12px; }
   .brand img { width: 70px; }
   .masthead nav a { padding: 5px 8px; }
   .heading p { font-size: 15px; }
-  .paper { margin-left: 8px; margin-right: 8px; padding: 18px 13px; }
+  .paper { width: calc(100% - 16px); margin-left: auto; margin-right: auto; padding: 18px 13px; }
   .meter-grid { gap: 8px; }
   .panel-heading { gap: 2px; }
 }
