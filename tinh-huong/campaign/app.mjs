@@ -75,7 +75,7 @@ function incidentVisuals(entry) {
     if(prop.state)element.dataset.state=prop.state;
     element.style.setProperty("--sprite-x",prop.contact.x+"%");
     element.style.setProperty("--sprite-width",prop.size+"%");
-    element.style.setProperty("--sprite-foot",prop.footOffset+"%");
+    element.style.setProperty("--sprite-foot","-"+prop.footOffset+"%");
     element.style.setProperty("--sprite-rotation",prop.rotation+"deg");
     element.style.zIndex=String(prop.depth);
     if(prop.tint)element.dataset.tint=prop.tint;
