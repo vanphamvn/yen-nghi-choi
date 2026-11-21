@@ -31,8 +31,6 @@
             <a class="scene-exit" href="/tinh-huong/" aria-label="Thoát về Một Ca Không Yên">← Thoát</a>
             <span id="scene-number" class="scene-number">Ngày 1 · Sáng · 08:10</span>
           </div>
-          <div id="scene-evidence" class="scene-evidence" aria-hidden="true"></div>
-          <div id="character-reaction" class="character-reaction" aria-hidden="true"></div>
         </div>
         <p class="world-alt" id="world-alt">Tranh minh họa tình huống tại quán Yên.</p>
       </section>
@@ -48,6 +46,15 @@
         <div id="result" class="result day-result" hidden>
           <p id="reason" class="reason"></p>
         </div>
+        <section class="level-panel" id="level-panel" aria-label="Cấp độ quán Yên">
+          <div class="level-heading">
+            <span class="level-number" data-level="number">Cấp 1</span>
+            <strong class="level-title" data-level="title">Tập đứng quầy</strong>
+            <span class="level-earned" data-level="earned" hidden>+0 XP</span>
+          </div>
+          <progress data-level="meter" max="20" value="0" aria-label="Tiến độ lên cấp tiếp theo"></progress>
+          <p class="level-foot"><span data-level="xp">0/20 XP</span><span data-level="next">Sắp lên cấp 2</span></p>
+        </section>
         <div class="actions" id="actions" hidden>
           <button type="button" class="secondary" id="restart">Chơi lại</button>
           <button type="button" class="primary" id="recover" hidden>Khắc phục</button>
@@ -58,6 +65,15 @@
     <section id="debrief" hidden class="debrief" aria-labelledby="debrief-title">
       <span class="eyebrow">NGÀY 01 / 30 · TỔNG KẾT</span>
       <h2 id="debrief-title" tabindex="-1">Ngày đầu đã khép lại.</h2>
+      <section class="level-panel day-level" id="day-level" aria-label="Cấp độ quán sau Ngày 1">
+        <div class="level-heading">
+          <span class="level-number" data-level="number">Cấp 1</span>
+          <strong class="level-title" data-level="title">Tập đứng quầy</strong>
+          <span class="level-earned" data-level="earned" hidden>+0 XP</span>
+        </div>
+        <progress data-level="meter" max="20" value="0" aria-label="Tiến độ cấp quán"></progress>
+        <p class="level-foot"><span data-level="xp">0/20 XP</span><span data-level="next">Sắp lên cấp 2</span></p>
+      </section>
       <ul id="debrief-list" class="debrief-list"></ul>
       <p id="tomorrow" class="tomorrow"></p>
       <div class="actions">
