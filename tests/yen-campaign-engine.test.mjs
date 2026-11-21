@@ -78,7 +78,7 @@ function run(choiceFn, shouldRecover = () => false) {
     state = interact(catalog, scripts, state, "inspect-ticket");
     assert.equal(first.phase, "observe");
     state = choose(catalog, scripts, state, choiceFn(i));
-    if (shouldRecover(i)) state = recover(catalog, scripts, state);
+    if (shouldRecover(i) && state.pending?.recovery) state = recover(catalog, scripts, state);
     state = advance(catalog, state);
   }
   assert.equal(ids.length, 90);
