@@ -6,6 +6,12 @@ const C="/lab/assets/sprites/collections/assets/coffee-tea/";
 const S="/lab/assets/sprites/shared/";
 const M="/assets/cuc-yen/sprites/";
 
+export const VISUAL_ASSET_DIMENSIONS=Object.freeze({
+ backdrop:[1586,992],counter:[768,195],staff:[1024,1280],guest:[1024,1280],
+ mascot:[800,800],espresso:[256,262],tray:[367,161],pitcher:[207,190],
+ tea:[249,177],menu:[274,212],paper:[83,91],wetFloor:[181,50]
+});
+
 export const VISUAL_ASSETS=Object.freeze({
   backdrop:"/lab/assets/room-backdrop.jpg",
   counter:A+"scene/counter-painted-v1.webp",
