@@ -514,3 +514,14 @@ iframe[title="Netlify Drawer"],
 iframe[src^="https://app.netlify.com/cdp/"] {
   pointer-events:none!important;
 }
+
+/* Netlify adds a review Drawer to Deploy Preview pages outside the app DOM.
+   Its fixed iframe can cover the bottom CTA and intercept the first touch.
+   This stylesheet is loaded only by the full-screen campaign; suppress the
+   provider's injected wrapper, never arbitrary iframes or game controls.
+   The permanent alternative is to disable Drawer in Netlify site settings. */
+body [data-netlify-deploy-id],
+body [data-netlify-site-id][data-vcs]{
+  display:none!important;
+  pointer-events:none!important;
+}
