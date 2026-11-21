@@ -69,6 +69,8 @@ test("touch mode: direct scene tap, wrong placement reversible, no mandatory dra
   await page.locator('[data-item="spill"]').tap();
   await expect(page.locator("#result")).toBeVisible();
   await expect(page.locator('.item-spill')).toHaveClass(/is-marked/);
+  await expect(page.locator('[data-item="sign"]')).toHaveClass(/is-deployed/);
+  await expect(page.locator('[data-item="sign"]')).toHaveCSS("--x","51%");
   await page.locator("#next").tap();
   await expect(page.locator("#scene-title")).toContainText("Hóa đơn");
   await context.close();
@@ -113,6 +115,8 @@ for(const width of sizes){
     expect(failedImages).toEqual([]);
     await page.locator('[data-item="cup"]').click();
     await expect(page.locator("#result")).toBeVisible();
+    await expect(page.locator('[data-item="cup"]')).toHaveClass(/is-inspected/);
+    await expect(page.locator('[data-item="cup"]')).toContainText("ngọt tiêu chuẩn");
     await testInfo.attach("scene-interactions-"+width,{body:await page.screenshot({fullPage:true}),contentType:"image/png"});
   });
 }
