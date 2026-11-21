@@ -253,8 +253,8 @@
         "status": "agent-reviewed",
         "reviewerType": "agent",
         "reviewAuthority": "user-delegated",
-        "reviewEvidence": "https://github.com/vanphamvn/yen-nghi-choi/actions/runs/44885011176/artifacts/14699965889",
-        "reviewNotes": "Các hình ghép từ nguồn tranh Yên hiện có, gồm background/nhân vật/đạo cụ theo từng tình huống. Người chơi chỉ chọn câu trả lời dưới lời thoại; không tương tác vật thể. Ảnh QA Chromium, owner review pending.",
+        "reviewEvidence": "https://github.com/vanphamvn/yen-nghi-choi/actions/runs/44885837709/artifacts/14699972234",
+        "reviewNotes": "Agent đã xem screenshot visual novel thuần trên Chromium: cảnh mở đầu và phản ứng theo lựa chọn ở desktop/mobile. Nhân vật/đạo cụ raster có thật từ Yên, không có hotspot hay thao tác vật thể. Bối cảnh dùng bố cục phối ảnh từ nguồn hiện có, chưa phải minh họa nền vẽ mới. Owner visual review pending.",
         "ownerReviewPending": true
       }
     },
@@ -383,8 +383,8 @@
         "status": "agent-reviewed",
         "reviewerType": "agent",
         "reviewAuthority": "user-delegated",
-        "reviewEvidence": "https://github.com/vanphamvn/yen-nghi-choi/actions/runs/44885011176/artifacts/14699965889",
-        "reviewNotes": "Các hình ghép từ nguồn tranh Yên hiện có, gồm background/nhân vật/đạo cụ theo từng tình huống. Người chơi chỉ chọn câu trả lời dưới lời thoại; không tương tác vật thể. Ảnh QA Chromium, owner review pending.",
+        "reviewEvidence": "https://github.com/vanphamvn/yen-nghi-choi/actions/runs/44885837709/artifacts/14699972234",
+        "reviewNotes": "Agent đã xem screenshot visual novel thuần trên Chromium: cảnh mở đầu và phản ứng theo lựa chọn ở desktop/mobile. Nhân vật/đạo cụ raster có thật từ Yên, không có hotspot hay thao tác vật thể. Bối cảnh dùng bố cục phối ảnh từ nguồn hiện có, chưa phải minh họa nền vẽ mới. Owner visual review pending.",
         "ownerReviewPending": true
       }
     },
@@ -513,8 +513,8 @@
         "status": "agent-reviewed",
         "reviewerType": "agent",
         "reviewAuthority": "user-delegated",
-        "reviewEvidence": "https://github.com/vanphamvn/yen-nghi-choi/actions/runs/44885011176/artifacts/14699965889",
-        "reviewNotes": "Các hình ghép từ nguồn tranh Yên hiện có, gồm background/nhân vật/đạo cụ theo từng tình huống. Người chơi chỉ chọn câu trả lời dưới lời thoại; không tương tác vật thể. Ảnh QA Chromium, owner review pending.",
+        "reviewEvidence": "https://github.com/vanphamvn/yen-nghi-choi/actions/runs/44885837709/artifacts/14699972234",
+        "reviewNotes": "Agent đã xem screenshot visual novel thuần trên Chromium: cảnh mở đầu và phản ứng theo lựa chọn ở desktop/mobile. Nhân vật/đạo cụ raster có thật từ Yên, không có hotspot hay thao tác vật thể. Bối cảnh dùng bố cục phối ảnh từ nguồn hiện có, chưa phải minh họa nền vẽ mới. Owner visual review pending.",
         "ownerReviewPending": true
       }
     },
