@@ -1,0 +1,1428 @@
+{
+  "schemaVersion": 1,
+  "game": "mot-ca-khong-yen",
+  "campaign": "30-ngay-o-yen",
+  "sourceOfTruth": "docs/visual-novel/ROADMAP-30-NGAY.md",
+  "relatedEpic": "https://github.com/vanphamvn/yen-nghi-choi/issues/218",
+  "note": "This is a CONTENT PLANNING manifest. status: planned means not playable. No artwork has been generated or approved.",
+  "incidentStateContract": [
+    "establishing",
+    "interactive",
+    "resolution"
+  ],
+  "expectedDays": 30,
+  "expectedIncidentsPerDay": 3,
+  "expectedIncidents": 90,
+  "days": [
+    {
+      "id": "D01",
+      "day": 1,
+      "chapter": 1,
+      "title": "Mở cửa",
+      "incidents": [
+        {
+          "id": "D01-01",
+          "slot": "Sáng",
+          "title": "Hàng khách đầu tiên",
+          "visual": {
+            "establishing": "Quầy sáng, dải 7 phiếu in dài dần; khách ở cửa sốt ruột, ly chưa có nhãn",
+            "interactive": "Chạm phiếu, sắp thứ tự xử lý rồi nhìn hàng khách thay đổi",
+            "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+          },
+          "mechanic": "scene-action",
+          "carryFlag": "queue",
+          "status": "planned"
+        },
+        {
+          "id": "D01-02",
+          "slot": "Chiều",
+          "title": "Vũng nước cạnh quầy",
+          "visual": {
+            "establishing": "Bình nghiêng, vũng nước loang sát lối đi; bé và khách tiến gần khu vực ướt",
+            "interactive": "Đặt biển cảnh báo và ngăn lối trước khi lau; hình sàn đổi khô/ướt",
+            "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+          },
+          "mechanic": "scene-action",
+          "carryFlag": "safety",
+          "status": "planned"
+        },
+        {
+          "id": "D01-03",
+          "slot": "Tối",
+          "title": "Hóa đơn khai trương",
+          "visual": {
+            "establishing": "Màn POS hiện combo lệch giá, khách chỉ vào biên lai và khay tiền",
+            "interactive": "Chạm dòng sai, đối chiếu menu và sửa hóa đơn; khách đổi nét mặt",
+            "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+          },
+          "mechanic": "scene-action",
+          "carryFlag": "cash",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "D02",
+      "day": 2,
+      "chapter": 1,
+      "title": "Mưa đầu mùa",
+      "incidents": [
+        {
+          "id": "D02-01",
+          "slot": "Sáng",
+          "title": "Cơn mưa tạt hiên",
+          "visual": {
+            "establishing": "Mưa chéo qua mái, giọt bắn lên ghế; nhóm khách co vào hiên",
+            "interactive": "Di chuyển ghế vào vùng khô, đánh dấu chỗ trơn trên sơ đồ",
+            "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+          },
+          "mechanic": "scene-action",
+          "carryFlag": "rain",
+          "status": "planned"
+        },
+        {
+          "id": "D02-02",
+          "slot": "Chiều",
+          "title": "Nước ở mép ổ điện",
+          "visual": {
+            "establishing": "Dòng nước chảy men tường gần ổ cắm; công tắc và dây điện hiện rõ",
+            "interactive": "Khoanh vùng nguy hiểm, chọn gọi người có chuyên môn thay vì chạm thiết bị",
+            "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+          },
+          "mechanic": "scene-action",
+          "carryFlag": "safety",
+          "status": "planned"
+        },
+        {
+          "id": "D02-03",
+          "slot": "Tối",
+          "title": "Đơn hàng ướt",
+          "visual": {
+            "establishing": "Người giao nguyên liệu che thùng giấy ướt, túi hàng có dấu nước",
+            "interactive": "Kiểm tra từng kiện bằng thao tác mở/đối chiếu, tách hàng bị ảnh hưởng",
+            "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+          },
+          "mechanic": "scene-action",
+          "carryFlag": "inventory",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "D03",
+      "day": 3,
+      "chapter": 1,
+      "title": "Một người trực quầy",
+      "incidents": [
+        {
+          "id": "D03-01",
+          "slot": "Sáng",
+          "title": "Máy xay và máy pha",
+          "visual": {
+            "establishing": "Cận cảnh hai máy hoạt động, hàng vé order treo dồn và đồng hồ chỉ giờ",
+            "interactive": "Sắp thứ tự pha theo nhóm công đoạn thay vì bấm trắc nghiệm",
+            "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+          },
+          "mechanic": "scene-action",
+          "carryFlag": "flow",
+          "status": "planned"
+        },
+        {
+          "id": "D03-02",
+          "slot": "Chiều",
+          "title": "Hai ly giống nhau",
+          "visual": {
+            "establishing": "Hai ly màu gần giống, nhãn tên lệch chỗ; hai khách chìa tay",
+            "interactive": "Xoay và kiểm tra nhãn, đối chiếu phiếu rồi giao đúng ly",
+            "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+          },
+          "mechanic": "scene-action",
+          "carryFlag": "trust",
+          "status": "planned"
+        },
+        {
+          "id": "D03-03",
+          "slot": "Tối",
+          "title": "Khách tới giờ đóng",
+          "visual": {
+            "establishing": "Đèn quán chuyển vàng tối, chổi dọn sàn và khách mới đứng ở cửa",
+            "interactive": "Chọn vùng phục vụ còn an toàn và cập nhật bảng nhận món cuối",
+            "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+          },
+          "mechanic": "scene-action",
+          "carryFlag": "team",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "D04",
+      "day": 4,
+      "chapter": 1,
+      "title": "Giờ tan trường",
+      "incidents": [
+        {
+          "id": "D04-01",
+          "slot": "Sáng",
+          "title": "Nhóm bạn chia tiền",
+          "visual": {
+            "establishing": "Bốn bạn đứng quanh quầy, điện thoại thanh toán và tiền lẻ trải trên bàn",
+            "interactive": "Ghép số tiền từng bạn với đúng món, kiểm tra thiếu/thừa",
+            "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+          },
+          "mechanic": "scene-action",
+          "carryFlag": "cash",
+          "status": "planned"
+        },
+        {
+          "id": "D04-02",
+          "slot": "Chiều",
+          "title": "Bàn nói chuyện lớn",
+          "visual": {
+            "establishing": "Nhóm học sinh ở một phía, khách đọc sách ở phía đối diện; các đường âm thanh xuất hiện",
+            "interactive": "Chạm vị trí bàn, đề nghị đổi chỗ và xem biểu cảm hai nhóm",
+            "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+          },
+          "mechanic": "scene-action",
+          "carryFlag": "community",
+          "status": "planned"
+        },
+        {
+          "id": "D04-03",
+          "slot": "Tối",
+          "title": "Cặp sách bị bỏ quên",
+          "visual": {
+            "establishing": "Một chiếc balô dưới ghế trong lúc khách ra về; lối đi dần vắng",
+            "interactive": "Đưa vật vào điểm lưu giữ có nhãn, xác minh người nhận mà không công khai thông tin",
+            "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+          },
+          "mechanic": "scene-action",
+          "carryFlag": "privacy",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "D05",
+      "day": 5,
+      "chapter": 1,
+      "title": "Ngày nhập nguyên liệu",
+      "incidents": [
+        {
+          "id": "D05-01",
+          "slot": "Sáng",
+          "title": "Thiếu đá cho giờ cao điểm",
+          "visual": {
+            "establishing": "Thùng đá gần cạn, bảng tồn kho báo ít, khách đặt đồ lạnh liên tục",
+            "interactive": "Kéo lượng đá còn vào các nhóm đơn khả thi, đánh dấu món tạm hết",
+            "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+          },
+          "mechanic": "scene-action",
+          "carryFlag": "inventory",
+          "status": "planned"
+        },
+        {
+          "id": "D05-02",
+          "slot": "Chiều",
+          "title": "Thơm dập trong thùng",
+          "visual": {
+            "establishing": "Thùng trái cây mở ra, quả lành và quả dập có dấu rõ",
+            "interactive": "Phân loại từng quả, từ chối phần không đạt và cập nhật tồn kho",
+            "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+          },
+          "mechanic": "scene-action",
+          "carryFlag": "food",
+          "status": "planned"
+        },
+        {
+          "id": "D05-03",
+          "slot": "Tối",
+          "title": "Nhãn trong tủ lạnh",
+          "visual": {
+            "establishing": "Cửa tủ mở, khay sữa/nguyên liệu có nhãn mờ và khay mới nhập",
+            "interactive": "Sắp theo nhãn và điều kiện bảo quản đã kiểm chứng, không suy đoán hạn dùng",
+            "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+          },
+          "mechanic": "scene-action",
+          "carryFlag": "food",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "D06",
+      "day": 6,
+      "chapter": 1,
+      "title": "Chủ nhật có trẻ nhỏ",
+      "incidents": [
+        {
+          "id": "D06-01",
+          "slot": "Sáng",
+          "title": "Bé va cạnh bàn",
+          "visual": {
+            "establishing": "Góc bàn sát lối, bé khóc và phụ huynh chạy tới; cốc nước rung trên mặt bàn",
+            "interactive": "Đưa người hỗ trợ, đánh dấu góc bàn cần ngừng sử dụng và kiểm tra",
+            "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+          },
+          "mechanic": "scene-action",
+          "carryFlag": "safety",
+          "status": "planned"
+        },
+        {
+          "id": "D06-02",
+          "slot": "Chiều",
+          "title": "Khu chơi quá đông",
+          "visual": {
+            "establishing": "Khu vui chơi hiện nhiều bé cùng tiến vào, đồ chơi nằm sát lối thoát",
+            "interactive": "Di chuyển vật cản khỏi lối, phân khu hoạt động và báo phụ huynh",
+            "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+          },
+          "mechanic": "scene-action",
+          "carryFlag": "safety",
+          "status": "planned"
+        },
+        {
+          "id": "D06-03",
+          "slot": "Tối",
+          "title": "Xe đẩy chắn cửa",
+          "visual": {
+            "establishing": "Xe đẩy dựng ngay cửa ra vào, người khác đang đẩy cửa",
+            "interactive": "Chọn vị trí gửi xe đẩy, kiểm tra đường đi thoáng trên sơ đồ",
+            "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+          },
+          "mechanic": "scene-action",
+          "carryFlag": "flow",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "D07",
+      "day": 7,
+      "chapter": 1,
+      "title": "Khép tuần đầu",
+      "incidents": [
+        {
+          "id": "D07-01",
+          "slot": "Sáng",
+          "title": "Cuối ca lệch tiền",
+          "visual": {
+            "establishing": "Sổ tiền mặt và POS đặt cạnh nhau, một dòng thu chưa khớp",
+            "interactive": "Đối chiếu hóa đơn với khay tiền và đánh dấu khoản chênh cần tìm",
+            "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+          },
+          "mechanic": "scene-action",
+          "carryFlag": "cash",
+          "status": "planned"
+        },
+        {
+          "id": "D07-02",
+          "slot": "Chiều",
+          "title": "Ly nước bị quên",
+          "visual": {
+            "establishing": "Ly làm xong nằm lại trên quầy; giờ nhận nước trôi qua",
+            "interactive": "Truy lại phiếu, kiểm tra chất lượng món trước khi giao hay làm lại",
+            "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+          },
+          "mechanic": "scene-action",
+          "carryFlag": "trust",
+          "status": "planned"
+        },
+        {
+          "id": "D07-03",
+          "slot": "Tối",
+          "title": "Lịch ca tuần tới",
+          "visual": {
+            "establishing": "Bảng ca trực đầy ô trống, người cùng ca đang nghỉ mệt",
+            "interactive": "Kéo thẻ công việc vào lịch, giữ khung nghỉ và dự phòng khách đông",
+            "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+          },
+          "mechanic": "scene-action",
+          "carryFlag": "team",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "D08",
+      "day": 8,
+      "chapter": 2,
+      "title": "Khách muốn tự chọn",
+      "incidents": [
+        {
+          "id": "D08-01",
+          "slot": "Sáng",
+          "title": "Ly ít ngọt",
+          "visual": {
+            "establishing": "Khách chỉ vào vạch đường trên bảng công thức, ly mẫu đặt cạnh nhau",
+            "interactive": "Dùng thanh chỉnh trực quan mức ngọt, xác nhận bằng nhãn in lên ly",
+            "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+          },
+          "mechanic": "scene-action",
+          "carryFlag": "trust",
+          "status": "planned"
+        },
+        {
+          "id": "D08-02",
+          "slot": "Chiều",
+          "title": "Yêu cầu tránh thành phần dị ứng",
+          "visual": {
+            "establishing": "Thành phần trên khay và dụng cụ chạm nhau; khách hỏi cách chuẩn bị",
+            "interactive": "Kiểm tra bảng thành phần và điểm giao nhau dụng cụ, không bảo đảm an toàn khi chưa chắc",
+            "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+          },
+          "mechanic": "scene-action",
+          "carryFlag": "food",
+          "status": "planned"
+        },
+        {
+          "id": "D08-03",
+          "slot": "Tối",
+          "title": "Bình riêng của khách",
+          "visual": {
+            "establishing": "Bình cá nhân đưa qua quầy; miệng bình có vết bẩn và khay rửa đang bận",
+            "interactive": "Quan sát trạng thái bình, chọn quy trình từ chối/nhận theo điều kiện vệ sinh",
+            "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+          },
+          "mechanic": "scene-action",
+          "carryFlag": "food",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "D09",
+      "day": 9,
+      "chapter": 2,
+      "title": "Cao điểm trưa",
+      "incidents": [
+        {
+          "id": "D09-01",
+          "slot": "Sáng",
+          "title": "Hai vé giống số",
+          "visual": {
+            "establishing": "Hai phiếu cùng số nhưng giờ khác; khay nước đang được chuyển đi",
+            "interactive": "So phiếu với thời điểm và mã món, gỡ trùng trước khi giao",
+            "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+          },
+          "mechanic": "scene-action",
+          "carryFlag": "flow",
+          "status": "planned"
+        },
+        {
+          "id": "D09-02",
+          "slot": "Chiều",
+          "title": "Khách đợi quá lâu",
+          "visual": {
+            "establishing": "Hàng khách đổi tư thế, đồng hồ trôi và số thứ tự còn nằm trong máy",
+            "interactive": "Đặt lại thứ tự, chạm khách cần thông báo để cập nhật trung thực",
+            "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+          },
+          "mechanic": "scene-action",
+          "carryFlag": "trust",
+          "status": "planned"
+        },
+        {
+          "id": "D09-03",
+          "slot": "Tối",
+          "title": "Siro lỡ tay",
+          "visual": {
+            "establishing": "Cận bình siro rót quá vạch, màu ly đổi đậm; khách cần ít ngọt",
+            "interactive": "Kiểm tra thể tích, chọn làm lại nếu không thể sửa đạt yêu cầu",
+            "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+          },
+          "mechanic": "scene-action",
+          "carryFlag": "food",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "D10",
+      "day": 10,
+      "chapter": 2,
+      "title": "Ngày cúp điện",
+      "incidents": [
+        {
+          "id": "D10-01",
+          "slot": "Sáng",
+          "title": "Máy xay dừng ngang",
+          "visual": {
+            "establishing": "Đèn vụt tắt, máy xay đứng im, đèn báo nguồn nhấp nháy",
+            "interactive": "Ngừng thiết bị an toàn và chỉ định khu vực điện cần kiểm tra bởi người phù hợp",
+            "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+          },
+          "mechanic": "scene-action",
+          "carryFlag": "safety",
+          "status": "planned"
+        },
+        {
+          "id": "D10-02",
+          "slot": "Chiều",
+          "title": "Tủ lạnh im tiếng",
+          "visual": {
+            "establishing": "Cửa tủ đóng, nhãn nhiệt độ và thời gian mất điện hiện trên khung",
+            "interactive": "Ghi mốc thời gian, kiểm tra dữ liệu nhiệt độ, phân loại nguyên liệu có căn cứ",
+            "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+          },
+          "mechanic": "scene-action",
+          "carryFlag": "food",
+          "status": "planned"
+        },
+        {
+          "id": "D10-03",
+          "slot": "Tối",
+          "title": "POS mất kết nối",
+          "visual": {
+            "establishing": "Màn thu ngân tối, khách cầm mã thanh toán chưa được xác nhận",
+            "interactive": "Kiểm tra trạng thái giao dịch trước khi chốt, dùng quy trình dự phòng không trùng thu",
+            "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+          },
+          "mechanic": "scene-action",
+          "carryFlag": "cash",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "D11",
+      "day": 11,
+      "chapter": 2,
+      "title": "Thiếu người một buổi",
+      "incidents": [
+        {
+          "id": "D11-01",
+          "slot": "Sáng",
+          "title": "Người cùng ca đến muộn",
+          "visual": {
+            "establishing": "Đồng hồ chuyển, tạp dề treo trống trong khi bàn bắt đầu đông",
+            "interactive": "Phân vai lại trên sơ đồ trạm, đánh dấu công việc chưa có người xử lý",
+            "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+          },
+          "mechanic": "scene-action",
+          "carryFlag": "team",
+          "status": "planned"
+        },
+        {
+          "id": "D11-02",
+          "slot": "Chiều",
+          "title": "Pha chế mới đọc sai nhãn",
+          "visual": {
+            "establishing": "Người học việc bối rối trước hai chai màu giống nhau",
+            "interactive": "Chạm nhãn để kiểm tra, hướng dẫn từ trạm an toàn thay vì đoán",
+            "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+          },
+          "mechanic": "scene-action",
+          "carryFlag": "team",
+          "status": "planned"
+        },
+        {
+          "id": "D11-03",
+          "slot": "Tối",
+          "title": "Không ai kịp nghỉ",
+          "visual": {
+            "establishing": "Hai người trong quầy có tư thế mệt, phiếu đơn vẫn đến",
+            "interactive": "Điều chỉnh nhịp nhận đơn và lượt nghỉ qua bảng ca",
+            "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+          },
+          "mechanic": "scene-action",
+          "carryFlag": "team",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "D12",
+      "day": 12,
+      "chapter": 2,
+      "title": "Một sao trên mạng",
+      "incidents": [
+        {
+          "id": "D12-01",
+          "slot": "Sáng",
+          "title": "Khách quay lại quầy",
+          "visual": {
+            "establishing": "Khách chỉ ly nước và màn đánh giá, người phía sau quan sát",
+            "interactive": "Mở phiếu order gốc trên bàn, lắng nghe rồi xác minh điểm chưa khớp",
+            "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+          },
+          "mechanic": "scene-action",
+          "carryFlag": "trust",
+          "status": "planned"
+        },
+        {
+          "id": "D12-02",
+          "slot": "Chiều",
+          "title": "Ảnh cắt mất ngữ cảnh",
+          "visual": {
+            "establishing": "Màn hình điện thoại phóng một khung ảnh, góc rộng hiện câu chuyện khác",
+            "interactive": "Đổi giữa khung cắt và toàn cảnh, kiểm tra bằng chứng trước phản hồi",
+            "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+          },
+          "mechanic": "scene-action",
+          "carryFlag": "privacy",
+          "status": "planned"
+        },
+        {
+          "id": "D12-03",
+          "slot": "Tối",
+          "title": "Phản hồi công khai",
+          "visual": {
+            "establishing": "Giao diện bài đánh giá với ô soạn nháp, thông tin cá nhân bị lộ trong bản nháp",
+            "interactive": "Che dữ liệu riêng và chọn nội dung đáp có trách nhiệm, không gây tranh cãi công khai",
+            "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+          },
+          "mechanic": "scene-action",
+          "carryFlag": "privacy",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "D13",
+      "day": 13,
+      "chapter": 2,
+      "title": "Mái hiên bị dột",
+      "incidents": [
+        {
+          "id": "D13-01",
+          "slot": "Sáng",
+          "title": "Nước nhỏ gần đèn",
+          "visual": {
+            "establishing": "Giọt nước chạy dọc thanh mái đến đèn và dây điện",
+            "interactive": "Khoanh vùng, chọn ngắt/kiểm tra theo quy trình an toàn, không tự sửa khi nguy hiểm",
+            "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+          },
+          "mechanic": "scene-action",
+          "carryFlag": "safety",
+          "status": "planned"
+        },
+        {
+          "id": "D13-02",
+          "slot": "Chiều",
+          "title": "Ghế vườn ướt",
+          "visual": {
+            "establishing": "Các vệt nước rơi xuống bộ bàn ghế ngoài sân",
+            "interactive": "Di chuyển bàn theo bản đồ vùng khô, đổi vị trí khách có trao đổi",
+            "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+          },
+          "mechanic": "scene-action",
+          "carryFlag": "rain",
+          "status": "planned"
+        },
+        {
+          "id": "D13-03",
+          "slot": "Tối",
+          "title": "Nước chảy sang sân cạnh",
+          "visual": {
+            "establishing": "Máng thoát và vệt nước đi về ranh sân hàng xóm",
+            "interactive": "Đặt hướng xử lý thoát nước có kiểm tra, trao đổi trực tiếp thay vì đẩy nước đi",
+            "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+          },
+          "mechanic": "scene-action",
+          "carryFlag": "community",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "D14",
+      "day": 14,
+      "chapter": 2,
+      "title": "Đêm chơi board game",
+      "incidents": [
+        {
+          "id": "D14-01",
+          "slot": "Sáng",
+          "title": "Thiếu một quân cờ",
+          "visual": {
+            "establishing": "Hộp trò chơi mở, một ô cờ trống, khách lục dưới bàn",
+            "interactive": "Soi các vị trí đồ đạc, kiểm tra danh sách mảnh trước khi kết luận",
+            "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+          },
+          "mechanic": "scene-action",
+          "carryFlag": "flow",
+          "status": "planned"
+        },
+        {
+          "id": "D14-02",
+          "slot": "Chiều",
+          "title": "Tranh cãi về luật",
+          "visual": {
+            "establishing": "Hai nhóm chỉ vào lá bài, nét mặt căng dần",
+            "interactive": "Chọn cách đưa luật tham khảo/đổi game trên bàn và xem phản ứng",
+            "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+          },
+          "mechanic": "scene-action",
+          "carryFlag": "community",
+          "status": "planned"
+        },
+        {
+          "id": "D14-03",
+          "slot": "Tối",
+          "title": "Ồn khi gần đóng cửa",
+          "visual": {
+            "establishing": "Đồng hồ gần giờ đóng, âm lượng nhóm tăng, nhà bên cạnh tắt đèn",
+            "interactive": "Giảm âm thanh của không gian, thống nhất giờ kết thúc với khách",
+            "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+          },
+          "mechanic": "scene-action",
+          "carryFlag": "community",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "D15",
+      "day": 15,
+      "chapter": 3,
+      "title": "Khách quen và ưu tiên",
+      "incidents": [
+        {
+          "id": "D15-01",
+          "slot": "Sáng",
+          "title": "Khách quen xin làm trước",
+          "visual": {
+            "establishing": "Khách quen bước đến bên cạnh hàng số thứ tự, người đang chờ nhìn sang",
+            "interactive": "Di chuyển đơn trên bảng hàng chờ và nhìn phản ứng người đến trước",
+            "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+          },
+          "mechanic": "scene-action",
+          "carryFlag": "trust",
+          "status": "planned"
+        },
+        {
+          "id": "D15-02",
+          "slot": "Chiều",
+          "title": "Thẻ tám mộc",
+          "visual": {
+            "establishing": "Thẻ tích điểm có bảy dấu, khách nói đủ tám; phiếu mua nằm cạnh",
+            "interactive": "Đếm mộc và đối chiếu giao dịch hợp lệ với khách",
+            "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+          },
+          "mechanic": "scene-action",
+          "carryFlag": "cash",
+          "status": "planned"
+        },
+        {
+          "id": "D15-03",
+          "slot": "Tối",
+          "title": "Nợ một ly mai trả",
+          "visual": {
+            "establishing": "Khách quen chưa mang tiền, hóa đơn đang treo",
+            "interactive": "Chọn xử lý minh bạch trong quy định quán, ghi nhận bằng cách không lộ dữ liệu riêng",
+            "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+          },
+          "mechanic": "scene-action",
+          "carryFlag": "community",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "D16",
+      "day": 16,
+      "chapter": 3,
+      "title": "Những chiếc điện thoại",
+      "incidents": [
+        {
+          "id": "D16-01",
+          "slot": "Sáng",
+          "title": "Quay phim dính mặt khách",
+          "visual": {
+            "establishing": "Một điện thoại giơ cao, khung hình bắt trúng khách bàn bên",
+            "interactive": "Di chuyển góc máy hoặc yêu cầu dừng quay, màn hình mô phỏng vùng riêng tư",
+            "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+          },
+          "mechanic": "scene-action",
+          "carryFlag": "privacy",
+          "status": "planned"
+        },
+        {
+          "id": "D16-02",
+          "slot": "Chiều",
+          "title": "Nước sát ổ điện",
+          "visual": {
+            "establishing": "Nhóm học sinh để ly nước sát thiết bị sạc",
+            "interactive": "Kéo ly khỏi nguy cơ, chỉ khu vực dùng đồ uống phù hợp",
+            "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+          },
+          "mechanic": "scene-action",
+          "carryFlag": "safety",
+          "status": "planned"
+        },
+        {
+          "id": "D16-03",
+          "slot": "Tối",
+          "title": "Bạn quên ví",
+          "visual": {
+            "establishing": "Một bạn trẻ bối rối trước quầy, bạn bè đứng phía sau",
+            "interactive": "So lại món đã giao và cách thanh toán hợp lệ, tránh làm khách xấu hổ",
+            "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+          },
+          "mechanic": "scene-action",
+          "carryFlag": "trust",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "D17",
+      "day": 17,
+      "chapter": 3,
+      "title": "Trưa nóng như rang",
+      "incidents": [
+        {
+          "id": "D17-01",
+          "slot": "Sáng",
+          "title": "Bàn sân nắng gắt",
+          "visual": {
+            "establishing": "Vệt nắng dịch qua ghế, khách lấy tay che mặt, cây ngoài sân héo",
+            "interactive": "Chọn vị trí có bóng râm và điều chỉnh bố trí ghế",
+            "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+          },
+          "mechanic": "scene-action",
+          "carryFlag": "flow",
+          "status": "planned"
+        },
+        {
+          "id": "D17-02",
+          "slot": "Chiều",
+          "title": "Thùng đá gần hết",
+          "visual": {
+            "establishing": "Máy làm đá báo không đủ, menu đồ lạnh vẫn sáng",
+            "interactive": "Chỉ định hạn mức đơn và cập nhật món tạm ngưng nhận",
+            "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+          },
+          "mechanic": "scene-action",
+          "carryFlag": "inventory",
+          "status": "planned"
+        },
+        {
+          "id": "D17-03",
+          "slot": "Tối",
+          "title": "Khách choáng vì nóng",
+          "visual": {
+            "establishing": "Một khách ôm đầu ngồi xuống, người đi cùng tìm nước và chỗ mát",
+            "interactive": "Dọn đường hỗ trợ, gọi hỗ trợ y tế khi có dấu hiệu nghiêm trọng; không tự chẩn đoán",
+            "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+          },
+          "mechanic": "scene-action",
+          "carryFlag": "safety",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "D18",
+      "day": 18,
+      "chapter": 3,
+      "title": "Chuyện với hàng xóm",
+      "incidents": [
+        {
+          "id": "D18-01",
+          "slot": "Sáng",
+          "title": "Xe chắn lối đi",
+          "visual": {
+            "establishing": "Xe khách dựng lấn cổng bên cạnh, người hàng xóm đang dắt xe ra",
+            "interactive": "Chuyển vị trí đỗ trên sơ đồ có giới hạn thực tế",
+            "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+          },
+          "mechanic": "scene-action",
+          "carryFlag": "community",
+          "status": "planned"
+        },
+        {
+          "id": "D18-02",
+          "slot": "Chiều",
+          "title": "Nhạc vang sau 21 giờ",
+          "visual": {
+            "establishing": "Loa trong nhà hiện vòng âm, cửa hàng xóm khép lại",
+            "interactive": "Điều chỉnh mức âm và vị trí loa, hỏi hàng xóm nhu cầu thực tế",
+            "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+          },
+          "mechanic": "scene-action",
+          "carryFlag": "community",
+          "status": "planned"
+        },
+        {
+          "id": "D18-03",
+          "slot": "Tối",
+          "title": "Khói bay vào bàn",
+          "visual": {
+            "establishing": "Khói từ một vị trí ngoài sân trôi về nhóm khách khác",
+            "interactive": "Chỉ định khu vực không ảnh hưởng người khác, trao đổi nội quy rõ ràng",
+            "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+          },
+          "mechanic": "scene-action",
+          "carryFlag": "safety",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "D19",
+      "day": 19,
+      "chapter": 3,
+      "title": "Giá nguyên liệu đổi",
+      "incidents": [
+        {
+          "id": "D19-01",
+          "slot": "Sáng",
+          "title": "Nhà cung cấp tăng giá",
+          "visual": {
+            "establishing": "Hai phiếu báo giá đặt cạnh nhau, giá mới được khoanh đỏ",
+            "interactive": "So giá, định lượng và chất lượng trước khi quyết định menu",
+            "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+          },
+          "mechanic": "scene-action",
+          "carryFlag": "inventory",
+          "status": "planned"
+        },
+        {
+          "id": "D19-02",
+          "slot": "Chiều",
+          "title": "Thiếu cốt dừa",
+          "visual": {
+            "establishing": "Ngăn nguyên liệu vắng một chai, món cốt dừa vẫn ở menu",
+            "interactive": "Khóa món tạm hết và đề nghị thay thế chỉ sau khi khách đồng ý",
+            "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+          },
+          "mechanic": "scene-action",
+          "carryFlag": "trust",
+          "status": "planned"
+        },
+        {
+          "id": "D19-03",
+          "slot": "Tối",
+          "title": "Lô sữa có vấn đề",
+          "visual": {
+            "establishing": "Khay sữa có mã lô khác thường và dấu hiệu bảo quản chưa rõ",
+            "interactive": "Cách ly lô, đối chiếu điều kiện lưu trữ/nguồn hàng, không thử bằng mùi",
+            "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+          },
+          "mechanic": "scene-action",
+          "carryFlag": "food",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "D20",
+      "day": 20,
+      "chapter": 3,
+      "title": "Cơn giông lớn",
+      "incidents": [
+        {
+          "id": "D20-01",
+          "slot": "Sáng",
+          "title": "Biển bạt rung mạnh",
+          "visual": {
+            "establishing": "Biển treo phía trước bị gió giật, dây giữ kéo căng",
+            "interactive": "Khoanh vùng phía dưới và gọi đơn vị phù hợp kiểm tra cố định",
+            "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+          },
+          "mechanic": "scene-action",
+          "carryFlag": "safety",
+          "status": "planned"
+        },
+        {
+          "id": "D20-02",
+          "slot": "Chiều",
+          "title": "Ghế ngoài sân bị xô",
+          "visual": {
+            "establishing": "Gió hất khăn và làm ghế chuyển chỗ, khách đứng dậy",
+            "interactive": "Thu đồ an toàn, dời khách khỏi khu nguy hiểm",
+            "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+          },
+          "mechanic": "scene-action",
+          "carryFlag": "rain",
+          "status": "planned"
+        },
+        {
+          "id": "D20-03",
+          "slot": "Tối",
+          "title": "Miệng thoát nước nghẹt",
+          "visual": {
+            "establishing": "Lá cây gom quanh rãnh, mực nước dâng về cửa quán",
+            "interactive": "Chặn khu trơn và sắp thứ tự kiểm tra vệ sinh khi điều kiện an toàn",
+            "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+          },
+          "mechanic": "scene-action",
+          "carryFlag": "safety",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "D21",
+      "day": 21,
+      "chapter": 3,
+      "title": "Ngày quá đông",
+      "incidents": [
+        {
+          "id": "D21-01",
+          "slot": "Sáng",
+          "title": "Phụ huynh tìm bé",
+          "visual": {
+            "establishing": "Khu khách nhiều người, ghế che khuất tầm nhìn, phụ huynh gọi tên con",
+            "interactive": "Đánh dấu lối cần rà soát, phân công tìm an toàn và liên hệ người có trách nhiệm",
+            "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+          },
+          "mechanic": "scene-action",
+          "carryFlag": "safety",
+          "status": "planned"
+        },
+        {
+          "id": "D21-02",
+          "slot": "Chiều",
+          "title": "Khách có dấu hiệu cần trợ giúp",
+          "visual": {
+            "establishing": "Một khách ngồi khuỵu, người đi cùng ra hiệu, lối ra bị đông người",
+            "interactive": "Giải phóng lối tiếp cận và gọi hỗ trợ khẩn theo dấu hiệu, tránh chẩn đoán trong game",
+            "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+          },
+          "mechanic": "scene-action",
+          "carryFlag": "safety",
+          "status": "planned"
+        },
+        {
+          "id": "D21-03",
+          "slot": "Tối",
+          "title": "Đám đông giơ máy quay",
+          "visual": {
+            "establishing": "Nhiều điện thoại cùng hướng vào người gặp sự cố",
+            "interactive": "Chọn vị trí che tầm quay, mời tôn trọng riêng tư, giữ không gian hỗ trợ",
+            "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+          },
+          "mechanic": "scene-action",
+          "carryFlag": "privacy",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "D22",
+      "day": 22,
+      "chapter": 4,
+      "title": "Thẻ mộc gặp trục trặc",
+      "incidents": [
+        {
+          "id": "D22-01",
+          "slot": "Sáng",
+          "title": "Hai thẻ cùng ghi một lượt",
+          "visual": {
+            "establishing": "Hai thẻ mộc đặt cạnh hai biên lai, khách chỉ vào mộc vừa đóng",
+            "interactive": "Đối chiếu lượt mua và kết quả đóng dấu, sửa công bằng",
+            "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+          },
+          "mechanic": "scene-action",
+          "carryFlag": "trust",
+          "status": "planned"
+        },
+        {
+          "id": "D22-02",
+          "slot": "Chiều",
+          "title": "Quà đổi mộc hết hàng",
+          "visual": {
+            "establishing": "Ngăn quà trống, khách đã đặt thẻ đủ mộc lên quầy",
+            "interactive": "Chọn phương án thông báo và quyền nhận bù có thể thực hiện",
+            "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+          },
+          "mechanic": "scene-action",
+          "carryFlag": "inventory",
+          "status": "planned"
+        },
+        {
+          "id": "D22-03",
+          "slot": "Tối",
+          "title": "Dấu đóng sai chỗ",
+          "visual": {
+            "establishing": "Nhân viên mới cầm mộc, thẻ đã có vết mực lem",
+            "interactive": "Chọn cách xử lý thẻ lỗi, kiểm tra số lượt không làm khách mất quyền lợi",
+            "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+          },
+          "mechanic": "scene-action",
+          "carryFlag": "team",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "D23",
+      "day": 23,
+      "chapter": 4,
+      "title": "Yên xuất hiện trên mạng",
+      "incidents": [
+        {
+          "id": "D23-01",
+          "slot": "Sáng",
+          "title": "Khung quay dính người lạ",
+          "visual": {
+            "establishing": "Máy quay dựng cạnh bàn và khung preview hiện mặt khách chưa đồng ý",
+            "interactive": "Thay góc máy, cắt vùng có người hoặc dừng ghi hình",
+            "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+          },
+          "mechanic": "scene-action",
+          "carryFlag": "privacy",
+          "status": "planned"
+        },
+        {
+          "id": "D23-02",
+          "slot": "Chiều",
+          "title": "Video bị hiểu sai",
+          "visual": {
+            "establishing": "Một đoạn ngắn và cảnh trước-sau đặt trên storyboard song song",
+            "interactive": "Sắp mảnh diễn biến đúng thứ tự trước khi viết lời giải thích",
+            "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+          },
+          "mechanic": "scene-action",
+          "carryFlag": "trust",
+          "status": "planned"
+        },
+        {
+          "id": "D23-03",
+          "slot": "Tối",
+          "title": "Tài khoản giả đăng ưu đãi",
+          "visual": {
+            "establishing": "Hai trang xã hội có logo gần giống, khách giơ điện thoại hỏi",
+            "interactive": "Đối chiếu kênh chính thức và soạn cảnh báo không lộ thông tin khách",
+            "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+          },
+          "mechanic": "scene-action",
+          "carryFlag": "privacy",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "D24",
+      "day": 24,
+      "chapter": 4,
+      "title": "Khách kiểm tra ghé quán",
+      "incidents": [
+        {
+          "id": "D24-01",
+          "slot": "Sáng",
+          "title": "Hỏi hồ sơ vệ sinh",
+          "visual": {
+            "establishing": "Bàn giấy tờ với tập hồ sơ và nhiệt kế/tủ lạnh ở phía sau",
+            "interactive": "Tìm đúng hồ sơ có sẵn, chỉ rõ điểm chưa có thay vì dựng số liệu",
+            "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+          },
+          "mechanic": "scene-action",
+          "carryFlag": "food",
+          "status": "planned"
+        },
+        {
+          "id": "D24-02",
+          "slot": "Chiều",
+          "title": "Chứng từ đặt nhầm chỗ",
+          "visual": {
+            "establishing": "Bìa giấy lẫn giữa menu và biên nhận, người kiểm tra đang chờ",
+            "interactive": "Sắp lại chứng từ theo nhóm, thừa nhận phần chưa xác minh",
+            "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+          },
+          "mechanic": "scene-action",
+          "carryFlag": "cash",
+          "status": "planned"
+        },
+        {
+          "id": "D24-03",
+          "slot": "Tối",
+          "title": "Lối rửa tay bị chắn",
+          "visual": {
+            "establishing": "Lavabo và thùng hàng chặn nửa lối, người cùng ca cần dùng",
+            "interactive": "Di chuyển thùng, mở lối và nhìn trạng thái sử dụng thay đổi",
+            "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+          },
+          "mechanic": "scene-action",
+          "carryFlag": "safety",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "D25",
+      "day": 25,
+      "chapter": 4,
+      "title": "Hai người không cùng nhịp",
+      "incidents": [
+        {
+          "id": "D25-01",
+          "slot": "Sáng",
+          "title": "Hai người làm trùng đơn",
+          "visual": {
+            "establishing": "Cả hai cùng cầm ly giống nhau, bảng phân công bị xóa mờ",
+            "interactive": "Gắn nhãn người phụ trách mỗi trạm, tránh làm trùng",
+            "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+          },
+          "mechanic": "scene-action",
+          "carryFlag": "team",
+          "status": "planned"
+        },
+        {
+          "id": "D25-02",
+          "slot": "Chiều",
+          "title": "Bàn giao ca thiếu thông tin",
+          "visual": {
+            "establishing": "Sổ ca mở ở trang trống, một nguyên liệu hết chưa được báo",
+            "interactive": "Điền thẻ tình trạng đơn, tồn kho và thiết bị trên bảng bàn giao",
+            "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+          },
+          "mechanic": "scene-action",
+          "carryFlag": "team",
+          "status": "planned"
+        },
+        {
+          "id": "D25-03",
+          "slot": "Tối",
+          "title": "Căng thẳng trước khách",
+          "visual": {
+            "establishing": "Người cùng ca nhìn đi chỗ khác, khách ngồi gần nghe được câu tranh luận",
+            "interactive": "Chọn dừng tranh cãi công khai, phân công tiếp tục phục vụ rồi trao đổi riêng",
+            "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+          },
+          "mechanic": "scene-action",
+          "carryFlag": "team",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "D26",
+      "day": 26,
+      "chapter": 4,
+      "title": "Đêm đông không ngờ",
+      "incidents": [
+        {
+          "id": "D26-01",
+          "slot": "Sáng",
+          "title": "Đơn đặt trước tràn quầy",
+          "visual": {
+            "establishing": "Hàng phiếu đặt trước phủ kín bàn pha, đơn tại chỗ mới tới",
+            "interactive": "Phân luồng cam kết đã nhận và năng lực làm món, cập nhật thời gian thực tế",
+            "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+          },
+          "mechanic": "scene-action",
+          "carryFlag": "flow",
+          "status": "planned"
+        },
+        {
+          "id": "D26-02",
+          "slot": "Chiều",
+          "title": "Ghế chật lối ra",
+          "visual": {
+            "establishing": "Bàn ghế thêm vào làm lối đi hẹp, nhóm khách muốn ghép bàn",
+            "interactive": "Kéo sơ đồ bàn ghế, giữ lối an toàn và báo giới hạn chỗ",
+            "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+          },
+          "mechanic": "scene-action",
+          "carryFlag": "safety",
+          "status": "planned"
+        },
+        {
+          "id": "D26-03",
+          "slot": "Tối",
+          "title": "Tiền lẻ và ly mang về",
+          "visual": {
+            "establishing": "Khay tiền lẻ trống cạnh chồng ly cuối; khách đang thanh toán",
+            "interactive": "Kiểm tra lựa chọn thanh toán và tồn bao bì trước khi nhận thêm món",
+            "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+          },
+          "mechanic": "scene-action",
+          "carryFlag": "cash",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "D27",
+      "day": 27,
+      "chapter": 4,
+      "title": "Máy móc phản đối",
+      "incidents": [
+        {
+          "id": "D27-01",
+          "slot": "Sáng",
+          "title": "Máy xay cà phê kẹt",
+          "visual": {
+            "establishing": "Núm máy đứng yên, hạt kẹt trong phễu và đèn cảnh báo",
+            "interactive": "Dừng nguồn đúng cách, kiểm tra theo hướng dẫn thay vì cố quay",
+            "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+          },
+          "mechanic": "scene-action",
+          "carryFlag": "safety",
+          "status": "planned"
+        },
+        {
+          "id": "D27-02",
+          "slot": "Chiều",
+          "title": "Đá tan trong thùng",
+          "visual": {
+            "establishing": "Nước chảy ở đáy thùng, menu đồ đá vẫn đang mở",
+            "interactive": "Đánh dấu lượng đá còn dùng được và món cần tạm dừng",
+            "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+          },
+          "mechanic": "scene-action",
+          "carryFlag": "inventory",
+          "status": "planned"
+        },
+        {
+          "id": "D27-03",
+          "slot": "Tối",
+          "title": "Báo động nhiệt tủ lạnh",
+          "visual": {
+            "establishing": "Màn nhiệt độ vượt vùng cho phép, khay sữa có nhãn giờ nhập",
+            "interactive": "Đọc nhật ký nhiệt độ, cách ly nguyên liệu không đủ căn cứ an toàn",
+            "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+          },
+          "mechanic": "scene-action",
+          "carryFlag": "food",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "D28",
+      "day": 28,
+      "chapter": 4,
+      "title": "Buổi sinh nhật nhỏ",
+      "incidents": [
+        {
+          "id": "D28-01",
+          "slot": "Sáng",
+          "title": "Dây trang trí chắn cửa",
+          "visual": {
+            "establishing": "Bóng và dây buộc qua lối đi, trẻ chạy quanh ghế",
+            "interactive": "Thay vị trí dây/bóng bằng kéo-thả, giữ thông thoáng lối ra",
+            "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+          },
+          "mechanic": "scene-action",
+          "carryFlag": "safety",
+          "status": "planned"
+        },
+        {
+          "id": "D28-02",
+          "slot": "Chiều",
+          "title": "Nhóm hát hơi lớn",
+          "visual": {
+            "establishing": "Bàn sinh nhật hát, khách ngồi bên cạnh đưa mắt nhìn, người nhà ở sân ngoài",
+            "interactive": "Điều chỉnh khu vực và trao đổi giới hạn âm lượng với người đặt bàn",
+            "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+          },
+          "mechanic": "scene-action",
+          "carryFlag": "community",
+          "status": "planned"
+        },
+        {
+          "id": "D28-03",
+          "slot": "Tối",
+          "title": "Rác sau tiệc",
+          "visual": {
+            "establishing": "Ly giấy và bóng vỡ ở sân, thùng phân loại sắp đầy",
+            "interactive": "Phân loại rác, xử lý mảnh vỡ và kiểm tra sân trước khi đón khách mới",
+            "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+          },
+          "mechanic": "scene-action",
+          "carryFlag": "safety",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "D29",
+      "day": 29,
+      "chapter": 5,
+      "title": "Chọn cách lớn lên",
+      "incidents": [
+        {
+          "id": "D29-01",
+          "slot": "Sáng",
+          "title": "Đề nghị bán giao tận nơi",
+          "visual": {
+            "establishing": "Người đề xuất giao hàng đưa bảng đơn, quầy có hai người với lịch kín",
+            "interactive": "Thử bố trí một đơn giao trên lịch và thấy ai phải rời quầy",
+            "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+          },
+          "mechanic": "scene-action",
+          "carryFlag": "team",
+          "status": "planned"
+        },
+        {
+          "id": "D29-02",
+          "slot": "Chiều",
+          "title": "Nên thêm người hay bớt món",
+          "visual": {
+            "establishing": "Bảng menu dày, lịch làm ca và chi phí hiển thị cạnh nhau",
+            "interactive": "Gỡ/giữ món trên bảng năng lực, thử phương án nhân sự với ngân sách",
+            "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+          },
+          "mechanic": "scene-action",
+          "carryFlag": "inventory",
+          "status": "planned"
+        },
+        {
+          "id": "D29-03",
+          "slot": "Tối",
+          "title": "Hợp đồng nguyên liệu mới",
+          "visual": {
+            "establishing": "Hai mẫu hợp đồng và khay nguyên liệu khác giá, yêu cầu chất lượng khác nhau",
+            "interactive": "So điều kiện giao, bảo quản và đổi trả trước khi lựa chọn",
+            "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+          },
+          "mechanic": "scene-action",
+          "carryFlag": "food",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "D30",
+      "day": 30,
+      "chapter": 5,
+      "title": "Đêm cuối của tháng",
+      "incidents": [
+        {
+          "id": "D30-01",
+          "slot": "Sáng",
+          "title": "Sự cố cũ quay lại",
+          "visual": {
+            "establishing": "Lối đi và góc quầy có chi tiết sửa chữa hoặc bỏ ngỏ tùy các cờ ngày trước",
+            "interactive": "Tìm dấu nguy cơ trong cảnh, kích hoạt quy trình đã chọn trước đó",
+            "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+          },
+          "mechanic": "scene-action",
+          "carryFlag": "safety",
+          "status": "planned"
+        },
+        {
+          "id": "D30-02",
+          "slot": "Chiều",
+          "title": "Khách quen trở lại",
+          "visual": {
+            "establishing": "Một hoặc nhiều nhân vật từng gặp trở lại với biểu cảm/phụ kiện thay đổi theo ký ức câu chuyện",
+            "interactive": "Tương tác trực tiếp với nhân vật, phản hồi thay đổi theo mức tin tưởng",
+            "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+          },
+          "mechanic": "scene-action",
+          "carryFlag": "trust",
+          "status": "planned"
+        },
+        {
+          "id": "D30-03",
+          "slot": "Tối",
+          "title": "Tắt đèn đóng cửa",
+          "visual": {
+            "establishing": "Máy pha yên, bảng tiền và ghế dọn gọn hoặc hỗn độn tùy hành trình; cửa quán khép dần",
+            "interactive": "Kiểm tra cuối ca bằng thao tác vật thể, mở cảnh kết phù hợp trạng thái tháng",
+            "resolution": "Cảnh phải cập nhật đạo cụ/pose nhân vật/không gian theo kết quả: an toàn, tạm xử lý hoặc hậu quả còn tồn tại."
+          },
+          "mechanic": "scene-action",
+          "carryFlag": "ending",
+          "status": "planned"
+        }
+      ]
+    }
+  ]
+}
