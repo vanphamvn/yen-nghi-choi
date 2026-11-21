@@ -613,8 +613,14 @@ test("24 immediate mobile Continue touches stay hittable beneath an injected pre
     frame.style.cssText="width:100%;height:100%;border:0";
     wrapper.append(frame);
     document.body.append(wrapper);
+    // Some Drawer versions portal the iframe separately from the wrapper.
+    const portal=document.createElement("iframe");
+    portal.title="Netlify Drawer";
+    portal.style.cssText="position:fixed;inset:0;width:100%;height:100%;z-index:2147483646";
+    document.body.append(portal);
    });
    await expect(page.locator('[data-netlify-deploy-id="test-deploy-preview"]')).toBeHidden();
+   await expect(page.locator('body > iframe[title="Netlify Drawer"]')).toBeHidden();
    const choice=page.locator('[data-choice="explain"]');
    const choiceRect=await choice.boundingBox();
    await page.touchscreen.tap(choiceRect.x+choiceRect.width/2,choiceRect.y+choiceRect.height/2);
