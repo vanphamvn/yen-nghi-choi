@@ -60,8 +60,8 @@
 #story .dialogue-scene{
   position:relative;
   flex-shrink:0;
-  margin:5px 0 11px;
-  padding:16px 14px 10px;
+  margin:2px 0 8px;
+  padding:10px 12px 9px;
   color:var(--game-ink);
   background:
     radial-gradient(ellipse at 92% 0%,rgba(227,199,127,.18),transparent 55%),
@@ -81,27 +81,6 @@
 }
 #story .dialogue-scene::before{left:4px;bottom:4px;border-top:0;border-right:0}
 #story .dialogue-scene::after{right:4px;top:4px;border-bottom:0;border-left:0}
-#story .dialogue-scene strong{
-  position:absolute;
-  top:-13px;
-  left:12px;
-  z-index:1;
-  max-width:calc(100% - 25px);
-  margin:0;
-  padding:4px 12px 3px;
-  overflow:hidden;
-  text-overflow:ellipsis;
-  white-space:nowrap;
-  background:linear-gradient(#caa866,#a47a40);
-  border:1px solid #f3dba7;
-  border-bottom:2px solid #805d31;
-  border-radius:4px 9px 4px 4px;
-  box-shadow:0 2px 0 rgba(51,51,28,.38);
-  color:#24392d;
-  font-weight:850;
-  font-size:clamp(11px,1.12vw,13px);
-  line-height:1.1;
-}
 #story .dialogue-scene p{
   margin:0;
   color:#283e33;
@@ -348,13 +327,34 @@
 }
 #debrief .back-link{color:#fff1d1;text-decoration:underline}
 
+/* Story decisions outrank XP: three buttons must never be hidden by the rank panel.
+   Earned XP is revealed after choosing, when answers have left the layout. */
+#story[data-state="observe"] #level-panel,
+#story #level-panel[hidden]{display:none!important}
+#story[data-state="observe"] #choices{
+  flex:0 0 auto;
+  min-height:0;
+  margin-bottom:auto;
+}
+#story[data-state="observe"] .day-choice{flex-shrink:0}
+@media(orientation:portrait) and (max-height:550px){
+  #story[data-state="observe"] h1{font-size:clamp(17px,5vw,20px);margin-bottom:3px}
+  #story[data-state="observe"] .dialogue-scene{margin:0 0 3px;padding:5px 7px}
+  #story[data-state="observe"] #choices{gap:3px}
+  #story[data-state="observe"] .day-choice{
+    min-height:44px;
+    padding:2px 25px 2px 5px;
+    gap:5px;
+  }
+  #story[data-state="observe"] .choice-text{line-height:1.15}
+}
+
 /* Portrait: the illustrated world remains exactly one half, visual-novel HUD the other. */
 @media(orientation:portrait){
   #game .story{padding:clamp(9px,2.6vw,18px)}
-  #story h1{font-size:clamp(20px,5.2vw,26px);margin-bottom:10px}
-  #story .dialogue-scene{margin:6px 0 9px;padding:17px 12px 9px}
-  #story .dialogue-scene strong{font-size:12px}
-  #story .dialogue-scene p{font-size:clamp(13px,3.5vw,16px);line-height:1.31}
+  #story h1{font-size:clamp(20px,5.2vw,26px);margin-bottom:6px}
+  #story .dialogue-scene{margin:1px 0 7px;padding:9px 11px 8px}
+    #story .dialogue-scene p{font-size:clamp(13px,3.5vw,16px);line-height:1.31}
   #story #choices{gap:6px}
   #story .day-choice{min-height:47px;padding:6px 30px 6px 8px;gap:9px}
   #story .choice-index{width:27px;height:27px;flex-basis:27px}
@@ -366,9 +366,8 @@
   #game .story{padding:7px 8px 6px;border-top-width:4px}
   #game .story::after{top:7px}
   #story h1{font-size:clamp(18px,5vw,21px);padding-left:18px;margin-bottom:4px;line-height:1.1}
-  #story .dialogue-scene{margin:4px 0 5px;padding:13px 9px 6px;border-width:1px}
-  #story .dialogue-scene strong{top:-9px;left:8px;padding:2px 8px;font-size:10px}
-  #story .dialogue-scene p{font-size:12px;line-height:1.21}
+  #story .dialogue-scene{margin:1px 0 4px;padding:6px 9px 6px;border-width:1px}
+    #story .dialogue-scene p{font-size:12px;line-height:1.21}
   #story #choices{gap:4px}
   #story .day-choice{min-height:44px;padding:3px 27px 3px 6px;border-width:1px;gap:6px}
   #story .day-choice::after{right:8px;font-size:20px}
@@ -386,7 +385,7 @@
 }
 @media(orientation:portrait) and (max-height:520px){
   #story[data-state="observe"] .level-panel{display:none}
-  #story[data-state="resolve"] .dialogue-scene{margin:3px 0 4px;padding:7px 8px 5px}
+  #story[data-state="resolve"] .dialogue-scene{margin:1px 0 3px;padding:5px 8px 4px}
   #story[data-state="resolve"] .dialogue-scene strong{display:none}
   #story[data-state="resolve"] .day-result{margin:2px 0 3px;padding:4px 7px}
   #story[data-state="resolve"] .level-panel{margin:4px 0 5px;padding:4px 7px}
@@ -398,9 +397,8 @@
 @media(orientation:landscape) and (max-height:480px){
   #game .story{padding:8px 10px}
   #story h1{font-size:19px;margin-bottom:6px}
-  #story .dialogue-scene{margin:4px 0 7px;padding:14px 9px 7px}
-  #story .dialogue-scene strong{font-size:11px;top:-10px;padding:2px 8px}
-  #story .dialogue-scene p{font-size:12px;line-height:1.23}
+  #story .dialogue-scene{margin:2px 0 5px;padding:8px 9px 6px}
+    #story .dialogue-scene p{font-size:12px;line-height:1.23}
   #story #choices{gap:4px}
   #story .day-choice{min-height:44px;padding:4px 26px 4px 7px}
   #story .choice-index{width:25px;height:25px;flex-basis:25px}
