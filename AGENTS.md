@@ -36,6 +36,12 @@ For user-facing gameplay changes, a GitHub PR is **not** a finished production r
 
 Interactive game review links should append `?ntl-drawer-state=hidden` to the **Deploy Preview URL**. Netlify's injected 48px-wide-bottom iframe Drawer was directly observed to intercept `Tiếp tục ca sau` taps; a first touch reaches the game once the Drawer is disabled. Do not merge to production before owner preview approval, and do not confuse overlay interception with bugs in the game's own click handlers.
 
+## Netlify-only deployments (21/11/2026)
+
+Yên is deployed and previewed on **Netlify only**. Do not initiate Vercel deployments, create Vercel PR previews or treat a Vercel status check as release evidence. The Vercel project `yen-nghi-choi` has Ignored Build Step set to `exit 0`; `vercel.json` also sets `ignoreCommand: "exit 0"` to prevent future Git-triggered builds. Existing Vercel domains/deployments can remain accessible but are no longer a release target. Continue to verify the exact SHA/READY status of Netlify Preview before owner review, and Netlify production after authorized merge. Do not disable or delete the Vercel project to achieve this.
+
+GitHub Actions runner startup failures (empty runner name, zero executed steps, immediate failure and missing logs) are an account/runner provisioning blocker, not a passed or failed application test. Do not suppress GitHub Actions failures, weaken assertions or claim QA passed; inspect Actions usage/billing/runner eligibility and rerun CI when runner access is restored.
+
 ## Visual novel preview-first approval and choice visibility (21/11/2026)
 
 For `/tinh-huong/campaign/`, follow the owner-directed sequence: update rules/skill if needed → implement UI on a feature branch → **deploy and share a real Netlify Preview link** → **wait for explicit owner approval** → only then perform QA, merge or production deployment. Don't auto-merge this preview. Read `.agents/skills/yen-ui-craft/SKILL.md` for the story HUD hierarchy: all three choices must fit within the lower portrait half before any XP/reward panel; generic speaker label “Người cùng ca” is not part of the UI.
