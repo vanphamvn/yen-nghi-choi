@@ -11,6 +11,41 @@ const node = (tag, className, content = "") => {
   if (content) element.textContent = content;
   return element;
 };
+// Native WebKit click can be lost when a touch triggers :hover before the
+// button moves out from under the finger. A touch pointer-up activates the
+// button immediately; a subsequent synthetic click is suppressed. Mouse,
+// keyboard and assistive-technology clicks continue through the click handler.
+function bindGamePress(button, action){
+  let activePointer=null;
+  let lastTouchActivation=-Infinity;
+  button.addEventListener("pointerdown",event=>{
+    if(event.isPrimary&&["touch","pen"].includes(event.pointerType))
+      activePointer=event.pointerId;
+  },{passive:true});
+  button.addEventListener("pointercancel",event=>{
+    if(activePointer===event.pointerId)activePointer=null;
+  },{passive:true});
+  button.addEventListener("pointerup",event=>{
+    if(activePointer!==event.pointerId||!["touch","pen"].includes(event.pointerType))return;
+    activePointer=null;
+    const rect=button.getBoundingClientRect();
+    if(event.clientX<rect.left||event.clientX>rect.right||
+       event.clientY<rect.top||event.clientY>rect.bottom)return;
+    if(button.disabled||button.hidden)return;
+    lastTouchActivation=performance.now();
+    event.preventDefault();
+    action();
+  });
+  button.addEventListener("click",event=>{
+    // Touch WebViews may dispatch both pointerup and a delayed native click.
+    if(performance.now()-lastTouchActivation<650&&event.detail!==0){
+      event.preventDefault();
+      return;
+    }
+    if(!button.disabled&&!button.hidden)action();
+  });
+}
+
 const SPRITES = {
   relieved: "/assets/cuc-yen/sprites/delighted.webp",
   unsure: "/assets/cuc-yen/sprites/shy.webp",
@@ -133,11 +168,11 @@ function drawChoices(entry) {
     button.dataset.choice = option.id;
     button.append(node("span", "choice-index", String(index + 1).padStart(2, "0")),
       node("span", "choice-text", option.label));
-    button.addEventListener("click", () => {
-      if (state.phase !== "observe") return;
-      state = choose(catalog, DAY01_SCRIPTS, state, option.id);
+    bindGamePress(button, () => {
+      if(state.phase!=="observe")return;
+      state=choose(catalog,DAY01_SCRIPTS,state,option.id);
       render();
-      $("continue").focus({ preventScroll: true });
+      $("continue").focus({preventScroll:true});
     });
     choices.append(button);
   }
@@ -207,7 +242,7 @@ function showDebrief() {
   $("debrief-title").focus({ preventScroll: true });
 }
 
-$("continue").addEventListener("click", () => {
+bindGamePress($("continue"), () => {
   if (state.phase !== "resolve") return;
   state = advance(catalog, state);
   if (state.dayIndex !== 0) showDebrief();
@@ -216,14 +251,14 @@ $("continue").addEventListener("click", () => {
     $("incident-title").focus({ preventScroll: true });
   }
 });
-$("recover").addEventListener("click", () => {
+bindGamePress($("recover"), () => {
   if (state.phase !== "resolve" || !state.pending.recovery || state.pending.recovered) return;
   state = recover(catalog, DAY01_SCRIPTS, state);
   render();
   $("continue").focus({ preventScroll: true });
 });
-$("restart").addEventListener("click", start);
-$("play-again").addEventListener("click", start);
+bindGamePress($("restart"),start);
+bindGamePress($("play-again"),start);
 window.addEventListener("resize",()=>{
   if(!catalog||!state||state.dayIndex!==0)return;
   // Reproject staff feet, floor props and the countertop after an orientation change.
