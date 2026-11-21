@@ -48,3 +48,9 @@ The repository currently has a painted \`barista.png\` sheet, a painted \`shippe
 6. Are all visible materials from verified painted assets and in a reasonably consistent brushwork/palette?
 7. Does stage fit top 50% portrait and are all three answers visible without scrolling or clipping at 320px?
 8. Did someone actually review screenshots? Record reviewer type, artifact URL, and any remaining debt.
+
+## Regression rule: avoid giant barista and floating espresso (21/11/2026)
+
+- **Rear staff must be smaller than front guest:** `staff.size <= guest.size * 0.92` in this Day 1 perspective. For D01-01 and D01-03, painted staff uses 20% width vs foreground guest 23%; their foot contact is at y≈71% (deeper floor) rather than y80%. A staff member away from the counter can be 21% with a more forward contact point.
+- **Machine must touch the counter with its visible metal foot, not the transparent shadow:** artwork contact fraction = **0.90** of the 256×262 canvas. Verify `machine.getBoundingClientRect().top + 0.90 * machineHeight` matches `counter.getBoundingClientRect().top` within 1.5 CSS pixels. The former test using the element's anchor alone incorrectly passed even while the screenshot showed a gap.
+- Test on **375×667**, **390×660**, **390×844**, **320×480** and desktop. The rule applies before declaring scene artwork finished.
