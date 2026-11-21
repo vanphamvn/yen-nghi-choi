@@ -1,6 +1,6 @@
 # Một Tháng Không Yên · roadmap visual novel 30 ngày
 
-> **Status: PLANNED · đây là kế hoạch nội dung, không phải 90 cảnh đã code/art.** 
+> **Status: Ngày 1 (3 tình huống) đã playable ở bản thử; 87 tình huống còn lại PLANNED. Không phải 90 cảnh đã code/art.** 
 > Epic [#218](https://github.com/vanphamvn/yen-nghi-choi/issues/218). Nền MVP [#216](https://github.com/vanphamvn/yen-nghi-choi/issues/216) / [PR #217](https://github.com/vanphamvn/yen-nghi-choi/pull/217) đang triển khai riêng.
 > Máy đọc: [episodes.json](episodes.json). Ngày 1 có 3 cảnh `playable`; các tình huống còn lại vẫn `planned`.
 
@@ -15,7 +15,7 @@
 ### Trụ cột gameplay
 
 1. **Nhìn ra vấn đề trước khi nói:** khi mỗi tình huống bắt đầu, quán có nhân vật, thiết bị, bối cảnh và dấu hiệu vật lý cụ thể để quan sát.
-2. **Tương tác với cảnh:** ít nhất một thao tác có ý nghĩa (chọn điểm cần kiểm tra, dời vật cản, phân luồng order, soi nhãn, đánh dấu nguy cơ, ghép giao dịch, nói chuyện với NPC). **Không chấp nhận câu hỏi A/B/C đứng riêng trên ảnh nền không đổi.**
+2. **Visual novel chọn câu trả lời:** bối cảnh và nhân vật đúng sự cố; lời thoại tự nhiên, ba lựa chọn trả lời hiện ngay. Không có thao tác chạm/kéo đồ vật. **Không chấp nhận ba câu A/B/C trước một hình nền chung không thay đổi bất kể câu chuyện.**
 3. **Thấy hậu quả:** tối thiểu một thay đổi hiển thị trên cảnh và nét mặt/lời thoại nhân vật; trạng thái an toàn/không an toàn phải thể hiện bằng nội dung và hình ảnh, không chỉ màu.
 4. **Ký ức kéo dài:** lựa chọn phù hợp thay đổi dụng cụ, bố trí, đoạn thoại, năng lực quán hoặc khách quay lại ở ngày sau; lỗi có đường sửa/nhận trách nhiệm, không game-over tùy tiện.
 5. **Không biến thành ứng dụng theo dõi:** dữ liệu trong bộ nhớ phiên mặc định; muốn tiếp tục về sau thì tự chọn xuất/nhập mã lưu chỉ chứa trạng thái trò chơi, không có dữ liệu khách thật.
@@ -344,11 +344,11 @@ Các cờ cốt truyện: `safety`, `queue`, `trust`, `cash`, `food`, `inventory
 
 **D01-01 · Hàng khách đầu tiên:** wide shot trước quầy có dòng khách → cận vé order → người chơi sắp phiếu theo công suất và thứ tự → camera quay lại hàng khách, có người được báo thời gian hoặc bực vì bỏ quên.
 
-**D01-02 · Vũng nước cạnh quầy:** bình đổ và nước lan rõ trên nền → người chơi chạm biển cảnh báo, đặt vào lối đi và khoanh khu vực → theo lựa chọn, hiện sàn khô/an toàn hoặc lối còn ướt, khách né, có cơ hội sửa lại. Tình huống này là điểm **safety gate**, không được coi bỏ qua nguy cơ để pha nhanh là phương án tốt.
+**D01-02 · Vũng nước cạnh quầy:** thấy bình đổ và vùng sàn ướt gần đường đi → nhân vật nói tình huống, ba câu trả lời xuất hiện → theo lựa chọn, hình nền/nhân vật cho thấy đã ngăn lối và lau khô, hoặc khu vực vẫn trơn; có cơ hội sửa lại. Tình huống này là điểm **safety gate**, không được coi bỏ qua nguy cơ để pha nhanh là phương án tốt.
 
 **D01-03 · Hóa đơn khai trương:** cận POS, biên lai và các cốc đặt trên khay → người chơi đối chiếu giá món/bill thực → khách phản ứng khác nhau, quầy thu ngân thể hiện số dư mới.
 
-**Các màn bắt buộc:** chọn ngày, intro chuyển ca, story scene, inspect/drag/hotspot, hội thoại, phản ứng, summary cuối ngày, nút tiếp/nghỉ/chơi lại. Khi chưa có art thật, để nội dung ở trạng thái planned; không ghi “visual complete”.
+**Các màn bắt buộc:** chọn ngày, intro chuyển ca, cảnh nền/nhân vật phù hợp, lời thoại và nút chọn câu trả lời, phản ứng nhân vật theo nhánh, summary cuối ngày, nút tiếp/nghỉ/chơi lại. Không dùng inspect/drag/hotspot. Khi chưa có art thật, để nội dung ở trạng thái planned; không ghi “visual complete”.
 
 ## 6. Production architecture và chống bùng nổ nhánh
 
@@ -367,7 +367,7 @@ Thứ tự là **phụ thuộc kỹ thuật**, không phải ngày hẹn. Một 
 |---|---|---|---|
 | Foundation | [VN-F01 #219](https://github.com/vanphamvn/yen-nghi-choi/issues/219) | Story engine + flags và data schema | kiểm đường đi và transition |
 | Art foundation | [VN-F02 #220](https://github.com/vanphamvn/yen-nghi-choi/issues/220) | Visual bible + layer/pose manifest + pipeline | sample sprite/contact sheet ở kích thước thực |
-| Interaction | [VN-F03 #221](https://github.com/vanphamvn/yen-nghi-choi/issues/221) | Reusable inspect/drag/scene state | touch + keyboard + reduce-motion |
+| Interaction | [VN-F03 #221](https://github.com/vanphamvn/yen-nghi-choi/issues/221) | Legacy scene-action toolkit (optional, not part of campaign visual novel) | touch + keyboard + reduce-motion |
 | **Playable pilot** | [VN-F04 #222](https://github.com/vanphamvn/yen-nghi-choi/issues/222) | **Ngày 01 cả 3 incident có hình**, play + outcome | browser screenshots + QA + preview |
 | Story pack 1 | [VN-P01 #223](https://github.com/vanphamvn/yen-nghi-choi/issues/223) | Ngày 02–07: 18 incidents | visuals + callbacks + CI |
 | Story pack 2 | [VN-P02 #224](https://github.com/vanphamvn/yen-nghi-choi/issues/224) | Ngày 08–14: 21 incidents | visuals + callbacks + CI |
@@ -384,7 +384,7 @@ Thứ tự là **phụ thuộc kỹ thuật**, không phải ngày hẹn. Một 
 Mỗi `Dxx-yy` chỉ được `done` khi:
 
 - [ ] Có **3 visual states** với ít nhất một sự thay đổi nhìn thấy có nghĩa, đúng sự cố, không dùng background duy nhất lặp.
-- [ ] Tương tác với vật thể/hotspot/cảnh chạy thật và có hướng dẫn rõ. Có keyboard/touch alternative và fallback.
+- [ ] Câu trả lời hiện ngay dưới lời thoại; chọn được bằng keyboard/touch, không cần chạm vào tranh. Mỗi lựa chọn có phản ứng hình ảnh và văn bản.
 - [ ] Sau 2–3 quyết định, thoại/biểu cảm/đồ vật và flags phản hồi đúng; có repair path nếu lựa chọn xấu; các đường hợp lệ đều kết thúc.
 - [ ] Có alt text hoặc văn bản tương đương cho tín hiệu quan trọng; 320, 360, 390, 768, 1440 viewport không clip hoặc tràn.
 - [ ] Kiểm tra contrast, ít nhất 44×44 touch target, focus, reduced-motion, exit/replay/skip, file ảnh tải lỗi.
@@ -394,7 +394,7 @@ Mỗi `Dxx-yy` chỉ được `done` khi:
 
 ### Test tự động cho campaign
 
-1. `catalog: 30 days × 3 incidents = 90 unique IDs`; mỗi ID có visual establishing, interactive, resolution, mechanic, và callback fields.
+1. `catalog: 30 days × 3 incidents = 90 unique IDs`; mỗi ID có mô tả establishing, decision (`interactive` là tên trường cũ), resolution và các flags cho câu chuyện xuyên ngày.
 2. Asset references resolution tồn tại, không để icon/sprite thiếu và không dùng cùng ảnh placeholder làm bằng chứng cho 90 scenes.
 3. Path exploration/bounded fuzz: không dead-end, cùng một tình huống không cho double apply effect, mọi ending reachable.
 4. Snapshot scene before/action/after cho incident thuộc release; visual regressions trên mobile và desktop.
