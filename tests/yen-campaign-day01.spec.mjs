@@ -73,6 +73,7 @@ test("hazard can be repaired; otherwise it remains visibly hazardous and Day 2 c
  await expect(page.locator('[data-item="spill"]')).not.toHaveClass(/is-marked/);
  await page.locator("#recover").click();
  await expect(page.locator("#world")).toHaveAttribute("data-outcome","recovered");
+ await expect(page.locator("#world")).toHaveAttribute("data-risk","safe");
  await expect(page.locator("#recover")).toBeHidden();
  await expect(page.locator('[data-item="spill"]')).toHaveClass(/is-marked/);
  await next(page);
