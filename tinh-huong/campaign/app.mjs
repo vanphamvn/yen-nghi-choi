@@ -176,7 +176,6 @@ function render() {
   $("actions").hidden = !decided;
   $("scene-number").textContent = "Ngày 1 · " + entry.slot + " · " + entry.time + " (" + (state.incidentIndex + 1) + "/3)";
   $("incident-title").textContent = entry.title;
-  $("speaker").textContent = decided ? state.pending.reaction.speaker : entry.speaker;
   $("dialogue").textContent = decided ? state.pending.reaction.line : entry.cue;
   $("prompt").textContent = decided ? "Chuyện tiếp theo?" : entry.question;
   $("notice").hidden = !decided;
@@ -189,6 +188,8 @@ function render() {
   $("reason").textContent = decided ? state.pending.reason : "";
   incidentVisuals(entry);
   drawChoices(entry);
+  // Choices have the whole lower half. XP is a post-decision reward, not an overlay.
+  $("level-panel").hidden = !decided;
   drawShopLevel($("level-panel"));
 }
 
