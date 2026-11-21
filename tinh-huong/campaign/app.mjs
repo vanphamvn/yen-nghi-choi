@@ -143,6 +143,28 @@ function drawChoices(entry) {
   }
 }
 
+function drawShopLevel(panel,{daySummary=false}={}){
+  const progress=shopProgress(state.history);
+  const get=key=>panel.querySelector('[data-level="'+key+'"]');
+  get("number").textContent="Cấp "+progress.level;
+  get("title").textContent=progress.title;
+  const earned=get("earned");
+  earned.hidden=!daySummary&&state.phase!=="resolve";
+  earned.textContent=daySummary?"Ngày 1 · +"+progress.xp+" XP":"Ca này +"+progress.latest+" XP";
+  const meter=get("meter");
+  meter.max=progress.threshold||1;
+  meter.value=progress.threshold?progress.earned:1;
+  meter.setAttribute("aria-valuetext",progress.nextLevel?
+    progress.earned+" trên "+progress.threshold+" XP lên cấp "+progress.nextLevel:
+    "Đã đạt cấp cao nhất");
+  get("xp").textContent=progress.nextLevel?
+    progress.earned+"/"+progress.threshold+" XP":progress.xp+" XP";
+  get("next").textContent=progress.nextLevel?
+    "Còn "+progress.remaining+" XP · "+progress.nextTitle:"Danh hiệu cao nhất";
+  panel.dataset.level=String(progress.level);
+  panel.dataset.levelUp=progress.justLeveled&&state.phase==="resolve"?"true":"false";
+}
+
 function render() {
   if (state.dayIndex !== 0) {
     showDebrief();
@@ -167,6 +189,7 @@ function render() {
   $("reason").textContent = decided ? state.pending.reason : "";
   incidentVisuals(entry);
   drawChoices(entry);
+  drawShopLevel($("level-panel"));
 }
 
 function showDebrief() {
@@ -175,6 +198,7 @@ function showDebrief() {
   const list = $("debrief-list");
   list.replaceChildren();
   for (const summary of day01Debrief(state.flags)) list.append(node("li", "", summary));
+  drawShopLevel($("day-level"),{daySummary:true});
   $("tomorrow").textContent =
     state.flags.spillResolved && state.flags.billCorrected && state.flags.queueExplained ?
       "Quán đã có nền tảng tốt hơn cho Ngày 2. Mưa đầu mùa vẫn có những chuyện mới." :
