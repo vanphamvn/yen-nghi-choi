@@ -372,7 +372,17 @@ async function validateSpatialScene(page,incident){
  expect(Math.abs(result.paintedMachineBase-result.countertop),
    incident+" metal feet must contact painted wood, not upper image box").toBeLessThanOrEqual(1.5);
  const byId=Object.fromEntries(result.children.map(c=>[c.id,c]));
- expect(byId.staff.depth).toBeLessThan(byId.counter.depth);
+ if(incident==="D01-02"){
+   expect(byId.staff.depth).toBeGreaterThan(byId.counter.depth);
+   expect(byId.staff.contactX).toBeLessThan(byId.customer.contactX);
+   expect(byId["cuc-yen"].contactX).toBeLessThan(byId.staff.contactX);
+   expect(byId.spill.w).toBeGreaterThan(30);
+   const paintedHorizontalGap=(a,b)=>Math.max(b.x-(a.x+a.w),a.x-(b.x+b.w));
+   expect(paintedHorizontalGap(byId.staff,byId["cuc-yen"])).toBeGreaterThanOrEqual(0);
+   expect(paintedHorizontalGap(byId.staff,byId.customer)).toBeGreaterThanOrEqual(0);
+ }else{
+   expect(byId.staff.depth).toBeLessThan(byId.counter.depth);
+ }
  expect(byId.staff.w/byId.customer.w,incident+" staff must be smaller than guest").toBeLessThanOrEqual(.92);
  if(incident!=="D01-02"){
    const visibleBarista=byId.counter.y-byId.staff.y;
@@ -494,3 +504,30 @@ for(const viewport of [{width:320,height:480},{width:320,height:568},{width:375,
   await testInfo.attach("level-final-"+viewport.width+"x"+viewport.height,{body:await page.screenshot({fullPage:true}),contentType:"image/png"});
  });
 }
+
+test("wet floor is an irregular transparent watercolor illustration with no rectangular placeholder",async({page})=>{
+ await page.setViewportSize({width:390,height:844});
+ await open(page);
+ await decide(page,"explain");await next(page);
+ const asset=page.locator('[data-sprite-id="spill"]');
+ await expect(asset).toHaveAttribute("src",/watercolor-floor-puddle\\.webp$/);
+ const art=await asset.evaluate(async image=>{
+  await image.decode();
+  const canvas=document.createElement("canvas");
+  canvas.width=image.naturalWidth;
+  canvas.height=image.naturalHeight;
+  const ctx=canvas.getContext("2d",{willReadFrequently:true});
+  ctx.drawImage(image,0,0);
+  const {data,width,height}=ctx.getImageData(0,0,canvas.width,canvas.height);
+  const index=(x,y)=>(y*width+x)*4+3;
+  const transparentCorners=[[0,0],[width-1,0],[0,height-1],[width-1,height-1]]
+    .every(([x,y])=>data[index(x,y)]<15);
+  const hasWater=[.3,.5,.7].some(frac=>data[index(Math.floor(width*frac),Math.floor(height*.52))]>100);
+  return {width,height,transparentCorners,hasWater};
+ });
+ expect(art.transparentCorners).toBe(true);
+ expect(art.hasWater).toBe(true);
+ await decide(page,"clean");
+ await expect(asset).toHaveAttribute("data-state","dry");
+ await expect(asset).toBeHidden();
+});
