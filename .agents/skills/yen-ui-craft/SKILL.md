@@ -60,6 +60,12 @@ Run `node tools/audit-ui-design.mjs`, the relevant existing Node tests, and Play
 - Reflection input stays local to the current page and is optional; do not persist it.
 - Present effects as **possible user experiences**, not medical outcomes. Provide a quiet exit path.
 
+## Reliable single-tap actions on iOS / in-app browsers
+
+The owner observed that a visual-novel button can appear inert on the first tap but activate after repeated taps (21 Nov 2026, Netlify Preview #241). CSS touch `:hover` and `:active` must **never translate or move a tappable target beneath a finger**; confine movement-style hover to `(hover: hover) and (pointer: fine)`. On `(hover: none)`, taps may change color or inset shadows but not geometry. All decision and continue/recover/replay buttons require `touch-action: manipulation`, stable minimum 44px targets, and a synchronous visual state transition from a successful action. Do not let an overlay steal pointer events from the story controls. Avoid mobile double-activation (touch pointerup followed by synthetic click) and retain keyboard/screen-reader activation through semantic buttons.
+
+If a platform preview toolbar overlaps the page, log this as an external overlay and provide safe-area/layout resilience; do not claim CSS changes fix a third-party browser toolbar. Once preview feedback is approved, run touch-pointer tests in iPhone-like viewports, quick taps, keyboard and a full walkthrough with real screenshots before merge.
+
 ## Visual-novel dialogue hierarchy and owner preview gate
 
 For `/tinh-huong/campaign/` on portrait phones, the painted stage owns the **upper 50%**, and the story/game HUD owns the **lower 50%**. Content priority in the lower half is: **the situation, every answer (all three, at least 44px tap height), then rewards**. Never cover answer buttons with XP, inventory, floating panels, ribbons, fixed-position badges, or other UI. During the **observe/choose** phase, hide the optional XP/rank card if it competes with choices; show the XP/rank reward card after a decision and in the day debrief. Do not force a scroll to expose an answer. Treat 320×480, 375×667, 390×660, 390×844 and short landscape as required regression sizes when QA is authorized.
