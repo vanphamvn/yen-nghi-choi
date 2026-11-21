@@ -60,6 +60,16 @@ Run `node tools/audit-ui-design.mjs`, the relevant existing Node tests, and Play
 - Reflection input stays local to the current page and is optional; do not persist it.
 - Present effects as **possible user experiences**, not medical outcomes. Provide a quiet exit path.
 
+## Boot and first-tap reliability in Facebook/Safari webviews
+
+Reported on Netlify PR #241: buttons may look ready immediately after a new page load/reload but fail to react for several taps. Repeated initial tap diagnosis in Chromium (including CPU/network throttling) was successful; **the exact Facebook/iOS failure is not yet reproduced**, so avoid attributing it definitively to hover or one specific event.
+
+- The fixed 50/50 game must use **stable viewport height** (`100svh` where supported, with a fallback), not dynamic `100dvh` for the main interactive grid. Mobile browser chrome can alter `dvh` during the first seconds and move hit targets under the finger.
+- Never display **apparently actionable** story buttons before modules, scenario catalog, listeners and initial layout have settled. Use a short, clearly identified loading state; replace it with choices only once initialized. Do not rely on first paint or a static HTML label as proof of interactivity. Loading must not hide errors or take indefinitely.
+- Accept a native `click` for keyboard/mouse/assistive tech. For touch browsers, support a carefully guarded short touch gesture and dedupe it against `pointerup` and the synthesized click. Track the original touch target/position so a browser toolbar reflow does not silently cancel a legitimate short tap. Do not trigger a choice on `touchstart`, drag or `touchcancel`.
+- Avoid layout-changing hover/active transforms and avoid fixed overlays intercepting buttons. Keep three choices fully visible in the lower half. After each successful action, transition visibly and synchronously. Never silently swallow an exception without visible error feedback.
+- **Owner-preview gate remains in force:** implement on PR #241, wait for Netlify Preview success, share the updated link, stop for owner retest on iPhone/Facebook. Only after approval run the full independent QA/merge/production sequence.
+
 ## Reliable single-tap actions on iOS / in-app browsers
 
 The owner observed that a visual-novel button can appear inert on the first tap but activate after repeated taps (21 Nov 2026, Netlify Preview #241). CSS touch `:hover` and `:active` must **never translate or move a tappable target beneath a finger**; confine movement-style hover to `(hover: hover) and (pointer: fine)`. On `(hover: none)`, taps may change color or inset shadows but not geometry. All decision and continue/recover/replay buttons require `touch-action: manipulation`, stable minimum 44px targets, and a synchronous visual state transition from a successful action. Do not let an overlay steal pointer events from the story controls. Avoid mobile double-activation (touch pointerup followed by synthetic click) and retain keyboard/screen-reader activation through semantic buttons.
