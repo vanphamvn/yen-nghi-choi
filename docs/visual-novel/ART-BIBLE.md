@@ -25,7 +25,7 @@ Use the real Yên Coffee & Tea painted-web materials in `lab/assets/`: `room-bac
 
 Look for warm paper/wood/tea colors, visible imperfect painted texture, soft brush edges, dimensional shading and one coherent light source. Match the muted palette from `DESIGN.md` (`#f7f3e9`, `#243c35`, `#2e5a46`, etc.) but **color match alone does not establish style match**. Avoid flat geometric SVG or CSS illustration as a substitute for new painted world props. Answer controls can use CSS; in-world props should keep the painted art direction.
 
-Do not import the old archived Phaser sprite sheets into this web novel simply because they exist. The active web Cục Yên and room painting are the reference for this project; the Phaser game remains stopped. Any new actor/prop must be viewed next to these exact runtime images.
+Do not import archived Phaser sprites **without an actual image/style inspection**. The existing painted barista and courier character frames were compared alongside Yên's active web Cục Yên, background, painted counter and coffee tools before limited static reuse in Day 1; this does not restart Phaser or establish final owner art approval. A dedicated generic guest sprite and painted wet-floor asset are still missing.
 
 ## Character and prop scale
 
@@ -87,8 +87,8 @@ The first command writes `.webp` **and** a `.png` transparency-safe fallback; th
 
 ### First production illustration set (VN-F04 / Day 1)
 
-- **D01-01:** queue of seven tickets in a cafe wide shot; individual paper ticket with labels/orders in close-up; player rearranges order rail; customer and queue physically change afterwards.
-- **D01-02:** tipped water pitcher and clear wet footprint on actual floor; player places a physical warning sign and blocks a route; outcome depicts dry/cordoned or still slippery floor and guest path.
-- **D01-03:** POS screen, real-looking receipt and drink tray; player selects erroneous line and reconciles bill; corrected receipt and customer's face change.
+- **D01-01:** three paper tickets and espresso machine physically on the painted service counter; employee behind counter, takeaway customer in front and Cục Yên on the floor. The player immediately chooses how to handle queue fairness; the ticket grouping and guest reaction change.
+- **D01-02:** tipped pitcher and wet-floor cue in the walkway, staff leaving the service side, a guest approaching and Cục Yên on the floor. The player chooses the safe response, not a prop action. The wet area remains/changes according to the choice or recovery. Current tinted shadow is provisional, not an approved painted puddle.
+- **D01-03:** menu and a paper receipt on the counter, customer on the opposite side and staff behind it, Cục Yên on the floor. The player chooses whether to refund the wrong amount; paper state and customer reaction change.
 
-**Release gate:** publish Day 1 when it presents three distinct contextual backgrounds/character compositions, immediate story reply choices, and visible choice-dependent reactions. Object manipulation is not part of the game. See #220 → #221 → #222.
+**Spatial gate:** Read `.agents/skills/yen-visual-novel-staging/SKILL.md` and `docs/visual-novel/SCENE-SPATIAL-RULES.md` for floor/counter contacts, character placement, surface projection and 50/50 viewport QA. Do not invent image-based physical interactions. **Release gate:** all choice-driven scenes need coherent painterly context and visibly different outcomes; unresolved provisional water/guest art remains documented. See #220 → #221 → #222.

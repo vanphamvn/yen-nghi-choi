@@ -1,5 +1,6 @@
 // VN-F04: a traditional illustrated visual novel. No touching, dragging or sorting scenery.
 import { DAY01, DAY01_SCRIPTS, day01Debrief } from "./day01.mjs";
+import { getSceneComposition, projectContact, VISUAL_ASSET_DIMENSIONS } from "./scene-composition.mjs";
 import { createState, currentIncident, choose, recover, advance, sceneView, validatePlayable } from "./engine.mjs";
 
 const $ = id => document.getElementById(id);
@@ -56,25 +57,66 @@ function incidentVisuals(entry) {
   backdrop.src = scene.shot.backdrop;
   backdrop.alt = ""; // semantic description is on the scene container
   backdrop.style.objectPosition = camera.position;
-  backdrop.style.transform = "scale(" + camera.scale + ")";
+  // Do not zoom the painted floor under contact-anchored characters after a choice.
+  backdrop.style.transform = "scale(1)";
 
-  const illustration = $("illustrations");
+  const composition=getSceneComposition(entry.id,outcome);
+  world.setAttribute("aria-label",composition.description + (decided ? ". " + state.pending.reaction.line : ". " + entry.cue));
+  const illustration=$("illustrations");
   illustration.replaceChildren();
-  for (const prop of entry.assets) {
-    const image = node("img", "painted-layer " + prop.id);
-    image.style.setProperty("--x", prop.x + "%");
-    image.style.setProperty("--y", prop.y + "%");
-    image.style.setProperty("--size", prop.width + "%");
-    image.alt = "";
-    image.loading = "eager";
-    image.src = prop.id === "actor" && decided
-      ? recovered ? SPRITES.repaired
-        : choice.risk === "safe" ? SPRITES.relieved
-        : choice.risk === "hazard" ? SPRITES.worried
-        : SPRITES.unsure
-      : prop.src;
-    illustration.append(image);
+  for(const prop of composition.layers){
+    const sheet=prop.kind==="sheet";
+    const element=node(sheet?"div":"img","scene-sprite scene-sprite--"+prop.role+
+      (prop.id===composition.focusId?" is-focus":""));
+    element.dataset.spriteId=prop.id;
+    element.dataset.role=prop.role;
+    element.dataset.surface=prop.surface;
+    element.dataset.depth=String(prop.depth);
+    element.dataset.asset=prop.asset;
+    if(prop.state)element.dataset.state=prop.state;
+    element.style.setProperty("--sprite-x",prop.contact.x+"%");
+    element.style.setProperty("--sprite-width",prop.size+"%");
+    element.style.setProperty("--sprite-foot","-"+prop.footOffset+"%");
+    element.style.setProperty("--sprite-rotation",prop.rotation+"deg");
+    element.style.zIndex=String(prop.depth);
+    if(prop.tint)element.dataset.tint=prop.tint;
+    if(sheet){
+      // A 4×4 PNG sheet: display ONE 256×320 painted actor frame.
+      element.classList.add("scene-sprite-sheet");
+      element.style.backgroundImage='url("'+prop.src+'")';
+      element.style.backgroundPosition=(prop.frame%4)*100/3+"% "+Math.floor(prop.frame/4)*100/3+"%";
+      element.style.backgroundSize="400% 400%";
+      element.setAttribute("aria-hidden","true");
+    }else{
+      element.src=prop.role==="mascot"&&decided?
+        recovered?SPRITES.repaired:
+          choice.risk==="safe"?SPRITES.relieved:
+          choice.risk==="hazard"?SPRITES.worried:SPRITES.unsure
+        :prop.src;
+      element.alt="";
+      const [sourceWidth,sourceHeight]=VISUAL_ASSET_DIMENSIONS[prop.asset];
+      element.width=sourceWidth;
+      element.height=sourceHeight;
+      element.loading="eager";
+      element.decoding="async";
+    }
+    illustration.append(element);
   }
+  // Surface-attached props are projected to the counter's actual top edge.
+  // The floor-contact points are not element centers.
+  const positionSprites=()=>{
+    const rect=world.getBoundingClientRect();
+    if(rect.width<1||rect.height<1)return;
+    for(const prop of composition.layers){
+      const el=[...illustration.children].find(child=>child.dataset.spriteId===prop.id);
+      if(!el)continue;
+      const point=projectContact(prop,composition,rect.width,rect.height);
+      el.style.left=point.x+"px";
+      el.style.top=point.y+"px";
+    }
+  };
+  positionSprites();
+  requestAnimationFrame(positionSprites);
 
   // A single brief clue on the painting; the decisions stay in the lower half.
   const evidence = $("scene-evidence");
@@ -182,6 +224,11 @@ $("recover").addEventListener("click", () => {
 });
 $("restart").addEventListener("click", start);
 $("play-again").addEventListener("click", start);
+window.addEventListener("resize",()=>{
+  if(!catalog||!state||state.dayIndex!==0)return;
+  // Reproject staff feet, floor props and the countertop after an orientation change.
+  incidentVisuals(chapter());
+},{passive:true});
 
 try {
   const response = await fetch("../../docs/visual-novel/episodes.json", { cache: "no-store" });

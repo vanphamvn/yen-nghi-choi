@@ -25,11 +25,11 @@ test("Day 1: choose directly from illustrated story, then see reactions and debr
  await expect(page.locator("#scene-evidence")).toContainText("Phiếu in bị lẫn thứ tự");
  await loaded(page);
  await testInfo.attach("D01-01-before",{body:await page.screenshot({fullPage:true}),contentType:"image/png"});
- const morningFace=await page.locator("#illustrations img.actor").getAttribute("src");
+ const morningFace=await page.locator("#illustrations [data-role=mascot]").getAttribute("src");
  await decide(page,"explain");
  await expect(page.locator("#dialogue")).toContainText("Cảm ơn quán");
  await expect(page.locator("#scene-evidence")).toContainText("Khách đã được thông báo");
- await expect(page.locator("#illustrations img.actor")).not.toHaveAttribute("src",morningFace);
+ await expect(page.locator("#illustrations [data-role=mascot]")).not.toHaveAttribute("src",morningFace);
  await loaded(page);
  await testInfo.attach("D01-01-after",{body:await page.screenshot({fullPage:true}),contentType:"image/png"});
  await next(page);
@@ -324,3 +324,87 @@ for(const {width,height} of [{width:320,height:480},{width:320,height:568},{widt
   }
  });
 }
+
+
+const sceneRoles=["staff","customer","mascot"];
+async function validateSpatialScene(page,incident){
+ const result=await page.evaluate((id)=>{
+  const root=document.querySelector("#world").getBoundingClientRect();
+  const get=key=>document.querySelector('#illustrations [data-sprite-id="'+key+'"]');
+  const rect=e=>{
+   const r=e.getBoundingClientRect();
+   return {left:r.left,top:r.top,right:r.right,bottom:r.bottom,width:r.width,height:r.height};
+  };
+  const elements=[...document.querySelectorAll("#illustrations .scene-sprite")];
+  const counter=get("counter"),machine=get("espresso");
+  const roles=Object.fromEntries(["staff","customer","mascot"].map(role=>[role,elements.filter(e=>e.dataset.role===role).length]));
+  const sheets=elements.filter(e=>e.classList.contains("scene-sprite-sheet")).map(e=>({
+    id:e.dataset.spriteId,
+    image:getComputedStyle(e).backgroundImage,
+    size:getComputedStyle(e).backgroundSize,
+    pos:getComputedStyle(e).backgroundPosition
+  }));
+  const countertop=counter?rect(counter).top:NaN;
+  const machineFoot=machine?parseFloat(machine.style.top)+root.top:NaN;
+  const stageHeight=root.height,stageWidth=root.width;
+  const children=elements.map(e=>{
+   const r=rect(e);
+   return {id:e.dataset.spriteId,role:e.dataset.role,surface:e.dataset.surface,depth:+e.dataset.depth,
+    contactX:parseFloat(e.style.left),contactY:parseFloat(e.style.top),
+    x:r.left-root.left,y:r.top-root.top,right:r.right-root.left,bottom:r.bottom-root.top,w:r.width,h:r.height};
+  });
+  return{scene:id,roles,sheets,children,countertop,machineFoot,stageHeight,stageWidth,
+   focus:document.querySelector("#illustrations .is-focus")?.dataset.spriteId}
+ },incident);
+ expect(result.roles,{incident,result}).toEqual({staff:1,customer:1,mascot:1});
+ expect(result.sheets).toHaveLength(2);
+ for(const sheet of result.sheets){
+  expect(sheet.size).toBe("400% 400%");
+  expect(sheet.image).toContain("/game/preview-2d/assets/sprites/");
+ }
+ expect(Math.abs(result.machineFoot-result.countertop),incident+" countertop grounded").toBeLessThanOrEqual(2.5);
+ const byId=Object.fromEntries(result.children.map(c=>[c.id,c]));
+ expect(byId.staff.depth).toBeLessThan(byId.counter.depth);
+ expect(byId.customer.depth).toBeGreaterThan(byId.counter.depth);
+ expect(byId["cuc-yen"].depth).toBeGreaterThan(byId.counter.depth);
+ for(const id of ["staff","customer","cuc-yen"]){
+  const a=byId[id];
+  expect(a.surface).toBe("floor");
+  expect(a.contactY,incident+" actor feet on floor "+id).toBeGreaterThan(result.stageHeight*.79);
+  expect(a.contactY,incident+" actor feet below viewport "+id).toBeLessThanOrEqual(result.stageHeight*.99);
+  expect(a.w).toBeGreaterThan(20);
+  expect(a.h).toBeGreaterThan(20);
+ }
+ expect(result.focus).toBe(incident==="D01-01"?"ticket-center":incident==="D01-02"?"spill":"receipt");
+ return result;
+}
+
+for(const [width,height] of [[320,480],[390,844],[768,1024],[812,375],[1440,900]]){
+ test("painted staff, customer, Cục Yên on floor and machine on counter at "+width+"×"+height,async({page},testInfo)=>{
+  await page.setViewportSize({width,height});
+  await open(page);
+  for(const [id,choice] of [["D01-01","explain"],["D01-02","clean"],["D01-03","refund"]]){
+   await validateSpatialScene(page,id);
+   await loaded(page);
+   await testInfo.attach(id+"-staging-"+width+"x"+height,
+    {body:await page.screenshot({fullPage:true}),contentType:"image/png"});
+   await decide(page,choice);
+   await validateSpatialScene(page,id);
+   await next(page);
+  }
+ });
+}
+
+test("the water hazard remains visibly on the floor until repaired; customers do not step onto the counter",async({page})=>{
+ await page.setViewportSize({width:390,height:844});await open(page);
+ await decide(page,"explain");await next(page);
+ let info=await validateSpatialScene(page,"D01-02");
+ const spill=info.children.find(e=>e.id==="spill");
+ expect(spill.surface).toBe("floor");
+ expect(spill.contactY).toBeGreaterThan(info.stageHeight*.75);
+ await decide(page,"open");
+ await expect(page.locator('[data-sprite-id="spill"]')).toHaveAttribute("data-state","unsafe");
+ await page.locator("#recover").click();
+ await expect(page.locator('[data-sprite-id="spill"]')).toHaveAttribute("data-state","dry");
+ await validateSpatialScene(page,"D01-02");
+});
