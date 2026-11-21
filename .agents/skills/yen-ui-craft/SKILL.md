@@ -60,6 +60,14 @@ Run `node tools/audit-ui-design.mjs`, the relevant existing Node tests, and Play
 - Reflection input stays local to the current page and is optional; do not persist it.
 - Present effects as **possible user experiences**, not medical outcomes. Provide a quiet exit path.
 
+## Visual-novel dialogue hierarchy and owner preview gate
+
+For `/tinh-huong/campaign/` on portrait phones, the painted stage owns the **upper 50%**, and the story/game HUD owns the **lower 50%**. Content priority in the lower half is: **the situation, every answer (all three, at least 44px tap height), then rewards**. Never cover answer buttons with XP, inventory, floating panels, ribbons, fixed-position badges, or other UI. During the **observe/choose** phase, hide the optional XP/rank card if it competes with choices; show the XP/rank reward card after a decision and in the day debrief. Do not force a scroll to expose an answer. Treat 320×480, 375×667, 390×660, 390×844 and short landscape as required regression sizes when QA is authorized.
+
+Avoid generic speaker nameplates such as “Người cùng ca”. Narration and dialogue should be immediately readable, without extra forms, duplicate instructions, or status/debug labels. Remove the unused DOM and JS bindings when removing a nameplate, rather than hiding a single text value.
+
+**Owner-directed preview-first workflow (2026-11-21):** when the owner requests changes to these game scenes, apply relevant rules/skills first, implement the UI on an unmerged branch, publish a **fresh Netlify Deploy Preview**, and send its verified URL **before** QA, merging or production rollout. Stop and await explicit owner approval. The preview's build-status confirmation is not an art review or post-approval QA gate. Only after approval run QA, handle findings, then merge and verify production. Do not imply a preview was approved just because it deployed.
+
 ## Mini-game acceptance template
 
 For each new Yên Lab tool, record: **name and goal**, underlying technique and source, intended audience / cautions, 1–5 minute loop, full interaction states, reduced-motion equivalent, accessibility controls, privacy behavior, mobile screenshots, browser test evidence and deployment SHA. A calming animation without real interaction does **not** meet the game/tool acceptance criterion.
