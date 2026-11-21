@@ -45,9 +45,9 @@ export const SCENE_COMPOSITIONS=Object.freeze({
   focusId:"ticket-center",
   description:"Khách đang chờ trước quầy; nhân viên sau quầy, máy pha và ba phiếu order đặt trên quầy; Cục Yên đứng trên sàn",
   layers:[
-   employee(41,80,32),
+   employee(41,71,20),
    counter(43,82,72),
-   prop("espresso","espresso","counter",22,66,16,34),
+   prop("espresso","espresso","counter",22,66,16,34,{footOffset:90}),
    focus("ticket-left","paper","counter",55,67,7.5,44,{rotation:-8}),
    focus("ticket-center","paper","counter",63,67,8.5,45,{rotation:3}),
    focus("ticket-right","paper","counter",71,67,7.5,44,{rotation:8}),
@@ -66,9 +66,9 @@ export const SCENE_COMPOSITIONS=Object.freeze({
   focusId:"spill",
   description:"Bình nghiêng và sàn ướt ngay lối đi; nhân viên rời quầy, khách đi gần đó và Cục Yên đứng cạnh vũng nước",
   layers:[
-   employee(40,93,28),
+   employee(40,93,21),
    counter(24,80,45),
-   prop("espresso","espresso","counter",14,68,12,34),
+   prop("espresso","espresso","counter",14,68,12,34,{footOffset:90}),
    focus("spill","wetFloor","floor",64,91,34,43,{footOffset:91,tint:"wet",rotation:-5}),
    focus("pitcher","pitcher","floor",63,84,14,45,{rotation:-42,footOffset:90}),
    guest(86,96,23),
@@ -86,9 +86,9 @@ export const SCENE_COMPOSITIONS=Object.freeze({
   focusId:"receipt",
   description:"Máy pha và menu nằm trên quầy; giấy biên lai sai được đưa lên quầy; nhân viên đối diện khách, Cục Yên đứng trên sàn",
   layers:[
-   employee(42,80,32),
+   employee(42,71,20),
    counter(43,82,72),
-   prop("espresso","espresso","counter",20,66,15,34),
+   prop("espresso","espresso","counter",20,66,15,34,{footOffset:90}),
    prop("menu","menu","counter",54,67,10,38,{rotation:-7}),
    focus("receipt","paper","counter",66,66,11,45,{rotation:7}),
    prop("tea","tea","counter",75,66,8,35),
@@ -140,13 +140,20 @@ export function validateSceneComposition(id,scene=SCENE_COMPOSITIONS[id]){
   if(["staff","customer","mascot"].includes(item.role)&&item.surface!=="floor")errors.push("actor must stand on floor: "+item.id);
   if(["staff","customer","mascot"].includes(item.role)&&item.contact.y<80)errors.push("actor feet above floor: "+item.id);
   if(item.role==="staff"&&(item.depth>=28||item.contact.x>78))errors.push("staff not behind counter: "+item.id);
+  if(item.role==="staff" && item.contact.y<68)errors.push("staff feet outside rear café floor: "+item.id);
   if(item.role==="customer"&&item.depth<=28)errors.push("customer should be in front: "+item.id);
   if(item.role==="mascot"&&item.depth<=28)errors.push("Cuc Yen should stand in front on the floor: "+item.id);
   if(item.asset==="espresso"&&item.surface!=="counter")errors.push("espresso machine must be on counter: "+item.id);
   if(item.asset==="espresso"&&!(item.contact.y>=60&&item.contact.y<=70))errors.push("machine base not on countertop: "+item.id);
+  if(item.asset==="espresso"&&Math.abs(item.footOffset/100-ESPRESSO_PAINTED_BASE_RATIO)>.005)
+    errors.push("espresso must anchor at painted metal base, not transparent shadow: "+item.id);
   if(item.id==="spill"&&!(item.surface==="floor"&&item.contact.y>=76))errors.push("spill must be on the floor");
   if(item.kind==="sheet"&&!Number.isInteger(item.frame??0))errors.push("sheet frame invalid "+item.id);
  }
+ const staff=layers.find(item=>item.role==="staff");
+ const visitor=layers.find(item=>item.role==="customer");
+ if(staff&&visitor&&staff.size>visitor.size*.92)
+  errors.push("rear barista too large compared with foreground customer");
  for(const role of ["staff","customer","mascot","counter","focus"]){
   if(!roles.get(role))errors.push("missing "+role+" in "+id);
  }
@@ -163,6 +170,10 @@ export function validateSceneComposition(id,scene=SCENE_COMPOSITIONS[id]){
 
 
 // Projection with a physical tabletop, rather than guessing the machine's y%.
+// The visible painted metal feet end around 90% of the espresso sprite height.
+// Its transparent drop shadow extends lower; anchoring the outer image box left
+// the machine visibly floating over the wooden countertop.
+export const ESPRESSO_PAINTED_BASE_RATIO=0.90;
 export const COUNTER_ASPECT_RATIO=195/768;
 export function projectContact(layer,scene,stageWidth,stageHeight){
  const x=stageWidth*layer.contact.x/100;
