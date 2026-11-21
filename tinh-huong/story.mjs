@@ -4,7 +4,7 @@ export const DIMENSIONS = [
   { key: "safety", label: "An toàn" },
   { key: "trust", label: "Niềm tin" },
   { key: "flow", label: "Nhịp quán" },
-  { key: "budget", label: "Chi phí" }
+  { key: "budget", label: "Ngân sách" }
 ];
 
 export const STARTING_STATS = Object.freeze({ safety: 65, trust: 55, flow: 55, budget: 60 });
