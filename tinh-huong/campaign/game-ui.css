@@ -412,3 +412,20 @@
 @media(prefers-reduced-motion:reduce){
   #story .day-choice,#story .level-panel progress::-webkit-progress-value{transition:none!important}
 }
+
+/* D01-02: keep the organic watercolor alpha edge. The old "wet" sprite
+   was a rectangular placeholder, and its blue tint must not be inherited. */
+#game .scene-sprite[data-sprite-id="spill"]{
+  filter:drop-shadow(0 2px 3px rgba(49,90,78,.22));
+  object-fit:contain;
+}
+#game .scene-sprite[data-sprite-id="spill"][data-state="unsafe"],
+#game .scene-sprite[data-sprite-id="spill"][data-state="wet-warning"]{
+  opacity:1;
+  filter:drop-shadow(0 2px 3px rgba(49,90,78,.28));
+}
+#game .scene-sprite[data-sprite-id="spill"][data-state="dry"]{
+  opacity:0;
+  visibility:hidden;
+  filter:none;
+}
