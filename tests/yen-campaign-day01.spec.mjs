@@ -3,9 +3,8 @@ import { test, expect } from "@playwright/test";
 const open = async page => {
   await page.goto("/tinh-huong/campaign/");
   await expect(page.locator("#game")).toBeVisible();
-  // Netlify adds an external Deploy Preview drawer across the bottom of the viewport.
-  // Remove only that provider QA overlay so it cannot intercept gameplay clicks.
-  await page.evaluate(()=>document.querySelectorAll("[data-netlify-deploy-id]").forEach(element=>element.remove()));
+  // Do not remove third-party preview overlays in tests: gameplay must keep
+  // working in the same DOM that a real Netlify reviewer receives.
   await expect(page.locator("#world")).toHaveAttribute("data-incident","D01-01");
   await expect(page.locator("#choices button")).toHaveCount(3);
 };
@@ -578,7 +577,6 @@ test("real mobile touch works on first tap immediately after each ready reload",
   for(let reload=0;reload<5;reload++){
    await page.goto("/tinh-huong/campaign/",{waitUntil:"domcontentloaded"});
    await expect(page.locator("html")).toHaveAttribute("data-input-ready","true",{timeout:10000});
-   await page.evaluate(()=>document.querySelectorAll("[data-netlify-deploy-id]").forEach(el=>el.remove()));
    const button=page.locator('[data-choice="explain"]');
    await expect(button).toBeVisible();
    const rect=await button.boundingBox();
@@ -589,6 +587,45 @@ test("real mobile touch works on first tap immediately after each ready reload",
    const nextRect=await proceed.boundingBox();
    await page.touchscreen.tap(nextRect.x+nextRect.width/2,nextRect.y+nextRect.height/2);
    await expect(page.locator("#world")).toHaveAttribute("data-incident","D01-02");
+  }
+ }finally{
+  await context.close();
+ }
+});
+
+test("24 immediate mobile Continue touches stay hittable beneath an injected preview iframe",async({browser,baseURL})=>{
+ const context=await browser.newContext({
+  baseURL,viewport:{width:390,height:844},isMobile:true,hasTouch:true,deviceScaleFactor:1
+ });
+ try{
+  const page=await context.newPage();
+  for(let attempt=0;attempt<24;attempt++){
+   await page.goto("/tinh-huong/campaign/",{waitUntil:"domcontentloaded"});
+   await expect(page.locator("html")).toHaveAttribute("data-input-ready","true",{timeout:10000});
+   // Reproduce the provider's high-z-index wrapper; without our scoped CSS,
+   // the iframe receives elementFromPoint() and swallows both touch actions.
+   await page.evaluate(()=>{
+    const wrapper=document.createElement("div");
+    wrapper.dataset.netlifyDeployId="test-deploy-preview";
+    wrapper.style.cssText="position:fixed;inset:0;z-index:2147483647";
+    const frame=document.createElement("iframe");
+    frame.title="Simulated Netlify review drawer";
+    frame.style.cssText="width:100%;height:100%;border:0";
+    wrapper.append(frame);
+    document.body.append(wrapper);
+   });
+   await expect(page.locator('[data-netlify-deploy-id="test-deploy-preview"]')).toBeHidden();
+   const choice=page.locator('[data-choice="explain"]');
+   const choiceRect=await choice.boundingBox();
+   await page.touchscreen.tap(choiceRect.x+choiceRect.width/2,choiceRect.y+choiceRect.height/2);
+   await expect(page.locator("#story")).toHaveAttribute("data-state","resolve");
+   const continueRect=await page.locator("#continue").boundingBox();
+   const point={x:continueRect.x+continueRect.width/2,y:continueRect.y+continueRect.height/2};
+   const hit=await page.evaluate(({x,y})=>document.elementFromPoint(x,y)?.closest("button")?.id??null,point);
+   expect(hit,"the first Continue touch must target the button, not Netlify's iframe").toBe("continue");
+   await page.touchscreen.tap(point.x,point.y);
+   await expect(page.locator("#world")).toHaveAttribute("data-incident","D01-02");
+   await expect(page.locator("#interaction-error")).toBeHidden();
   }
  }finally{
   await context.close();
