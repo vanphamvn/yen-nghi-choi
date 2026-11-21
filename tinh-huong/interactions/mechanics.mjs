@@ -156,12 +156,16 @@ export function visualState(scene, state) {
       const selected = item.id === state.selected;
       const positions = scene.kind === "arrange" ? { x: 24 + i * 25, y: 59 } : { x: item.x, y: item.y };
       const placed = state.completed && ["place", "move"].includes(scene.kind) && item.id === ({ place:"cup",move:"plant" }[scene.kind]);
+      const warningPlaced = state.completed && scene.kind === "isolate" && item.id === "sign";
+      const inspected = state.completed && scene.kind === "inspect" && item.id === "cup";
       const mark = scene.kind === "isolate" && item.id === "spill" && state.completed;
       const corrected = scene.kind === "compare" && state.completed && (item.id === "tea" || item.id === "total");
-      const shift = placed ? { x: scene.kind === "move" ? 79 : 71, y: scene.kind === "move" ? 52 : 70 } : positions;
+      const shift = placed ? { x: scene.kind === "move" ? 79 : 71, y: scene.kind === "move" ? 52 : 70 } :
+        warningPlaced ? { x: 51, y: 57 } : positions;
       const label = corrected && item.id === "tea" ? "Trà đào · 25.000đ" :
-        corrected && item.id === "total" ? "Tổng · 41.000đ" : item.label;
-      return { ...item, ...shift, label, selected, marked: mark, corrected, placed };
+        corrected && item.id === "total" ? "Tổng · 41.000đ" :
+        inspected ? "Nhãn ly: ngọt tiêu chuẩn" : item.label;
+      return { ...item, ...shift, label, selected, marked: mark, corrected, placed, warningPlaced, inspected };
     });
   return { items, phase: state.completed ? "resolution" : state.selected ? "interactive" : "establishing",
     selected: state.selected, completed: state.completed, outcome: state.outcome };

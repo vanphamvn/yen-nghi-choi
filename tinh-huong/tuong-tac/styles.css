@@ -57,6 +57,10 @@ h1 em{color:var(--green);font-weight:600}
 .item-painted[data-item="plant"]{width:24%}
 .item-painted[data-item="plant"] img{height:clamp(90px,16vw,180px);width:100%}
 .scene-item.is-placed{background:rgba(218,238,177,.66);border-color:var(--green)}
+.item-sign.is-deployed{background:#f2d9a4;border:3px solid var(--green);box-shadow:0 0 0 6px rgba(255,250,240,.65),0 8px 14px rgba(0,0,0,.28)}
+.item-painted.is-inspected{z-index:10;width:32%;min-width:118px;background:rgba(255,250,240,.96);border:3px solid var(--green);box-shadow:0 8px 24px rgba(0,0,0,.33)}
+.item-painted.is-inspected img{width:clamp(90px,13vw,152px);height:clamp(90px,13vw,152px)}
+.item-painted.is-inspected .painted-label{font-size:14px;background:#dbe78d;color:var(--ink);font-weight:850;padding:6px 8px}
 .item-ticket{width:22%;min-height:92px;padding:8px 4px;border-radius:3px;border:1px solid #cab58f;background:#fff6db;box-shadow:2px 5px 1px rgba(33,50,34,.24);transform:translate(-50%,-50%) rotate(-2deg)}
 .ticket-number{font-size:14px;font-weight:850;border-bottom:1px dashed #c8bd97;display:block;width:100%}
 .ticket-description{font-size:12px;line-height:1.2;padding:5px 2px}

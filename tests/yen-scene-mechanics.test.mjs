@@ -44,10 +44,15 @@ test("all six have a playable complete result with a visible world state change"
       assert.notDeepEqual(before.items.map(t=>t.id),after.items.map(t=>t.id));
     } else if(scene.kind==="isolate") {
       assert.equal(after.items.find(i=>i.id==="spill").marked,true);
+      assert.equal(after.items.find(i=>i.id==="sign").warningPlaced,true);
+      assert.equal(after.items.find(i=>i.id==="sign").x,51);
+      assert.notEqual(before.items.find(i=>i.id==="sign").x,51);
     } else if(scene.kind==="compare") {
       assert.match(after.items.find(i=>i.id==="total").label,/41\.000/);
     } else if(scene.kind==="inspect") {
       assert.match(state.outcome,/mức ngọt tiêu chuẩn/);
+      assert.equal(after.items.find(i=>i.id==="cup").inspected,true);
+      assert.match(after.items.find(i=>i.id==="cup").label,/ngọt tiêu chuẩn/);
     } else {
       assert.ok(after.items.some(i=>i.placed));
       const target=after.items.find(i=>i.id===({place:"tray",move:"corner"}[scene.kind]));
