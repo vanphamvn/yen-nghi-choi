@@ -77,7 +77,7 @@ test("unsafe choice has meaningful aftermath and an optional correction without 
  await expect(page.locator("#world")).toHaveAttribute("data-outcome","recovered");
  await expect(page.locator("#world")).toHaveAttribute("data-risk","safe");
  await expect(page.locator("#recover")).toBeHidden();
- await expect(page.locator("#scene-evidence")).toContainText("Sàn đã lau khô");
+ await expect(page.locator('[data-sprite-id="spill"]')).toHaveAttribute("data-state","dry");
  await next(page);
  await decide(page,"ignore");await next(page);
  await expect(page.locator("#debrief-list")).toContainText("Lối đi đã được xử lý");
