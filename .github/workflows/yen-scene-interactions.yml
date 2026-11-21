@@ -1,0 +1,62 @@
+name: Yên visual scene interaction QA
+
+on:
+  pull_request:
+    paths:
+      - "tinh-huong/interactions/**"
+      - "tinh-huong/tuong-tac/**"
+      - "tinh-huong/index.html"
+      - "tests/yen-scene-mechanics.test.mjs"
+      - "tests/yen-scene-interactions.spec.mjs"
+      - "playwright.yen-scenes.config.mjs"
+      - ".github/workflows/yen-scene-interactions.yml"
+  push:
+    branches: [main]
+    paths:
+      - "tinh-huong/interactions/**"
+      - "tinh-huong/tuong-tac/**"
+      - "tinh-huong/index.html"
+      - "tests/yen-scene-mechanics.test.mjs"
+      - "tests/yen-scene-interactions.spec.mjs"
+      - "playwright.yen-scenes.config.mjs"
+      - ".github/workflows/yen-scene-interactions.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  mechanics:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with: {node-version: "22"}
+      - run: node --test tests/yen-scene-mechanics.test.mjs
+
+  browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with: {node-version: "22"}
+      - run: npm ci
+      - name: Find Chrome or install Playwright Chromium
+        shell: bash
+        run: |
+          if command -v google-chrome >/dev/null 2>&1; then
+            echo "LAB_UX_CHROMIUM_PATH=$(command -v google-chrome)" >> "$GITHUB_ENV"
+          else
+            npx playwright install --with-deps chromium
+          fi
+      - run: npx playwright test --config playwright.yen-scenes.config.mjs
+      - name: Preserve real browser screenshots and traces
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: yen-scene-interactions-browser-evidence
+          path: |
+            playwright-report/yen-scenes/
+            test-results/
+          if-no-files-found: warn

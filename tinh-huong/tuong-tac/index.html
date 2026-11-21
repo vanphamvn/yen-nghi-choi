@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f7f3e9">
+  <meta name="robots" content="noindex, nofollow, noarchive">
+  <meta name="referrer" content="no-referrer">
+  <meta name="description" content="Thử thao tác trực tiếp với cảnh quán Yên: sắp phiếu, khoanh vùng, kiểm tra vật dụng.">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; font-src 'none'; connect-src 'none'; frame-src 'none'; form-action 'none'; base-uri 'none'; object-src 'none'">
+  <link rel="stylesheet" href="styles.css">
+  <script type="module" src="app.mjs"></script>
+  <title>Thao tác trên cảnh · Một Ca Không Yên</title>
+</head>
+<body>
+  <a class="skip" href="#main">Đến màn chơi</a>
+  <header class="header">
+    <a href="/tinh-huong/" class="return">← Một Ca Không Yên</a>
+    <span class="stamp">YÊN · THỬ NGHIỆM TƯƠNG TÁC</span>
+  </header>
+  <main id="main">
+    <div class="intro">
+      <span class="eyebrow">VISUAL NOVEL · XƯỞNG THỬ NGHIỆM</span>
+      <h1>Chạm vào cảnh. <em>Thấy chuyện đổi.</em></h1>
+      <p>Không phải chọn đáp án trên một tấm ảnh. Hãy thao tác lên phiếu, ly, đồ vật và vị trí ngay trong quán.</p>
+      <p class="caveat">Đây là bản thử cơ chế, dùng artwork Yên hiện có. Chưa phải ba tình huống Ngày 1 hoàn chỉnh.</p>
+    </div>
+
+    <nav class="mode-list" aria-label="Chọn thao tác" id="mode-list"></nav>
+    <div class="layout">
+      <section class="world-panel" aria-labelledby="scene-title">
+        <div class="world-bar"><span id="scene-number">01 / 06</span><span id="scene-status">ĐANG QUAN SÁT</span></div>
+        <div class="world" id="world" data-phase="establishing" role="group" aria-labelledby="scene-title">
+          <img class="backdrop" src="../../lab/assets/room-backdrop.jpg" alt="Không gian quán Yên với quầy và khu vực khách ngồi" width="1586" height="992">
+          <div class="environment" aria-hidden="true">
+            <img class="bench" src="../../lab/assets/bench.webp" alt="" width="652" height="430">
+            <img class="table" src="../../lab/assets/table.webp" alt="" width="650" height="403">
+            <img class="ambient-cup" src="../../lab/assets/cup.webp" alt="" width="160" height="156">
+          </div>
+          <div id="targets" class="targets" aria-label="Vật và vị trí tương tác"></div>
+          <img class="mascot" src="../../lab/assets/cuc-yen-tea.webp" width="480" height="480" alt="" aria-hidden="true">
+          <div class="scene-reaction" id="scene-reaction" aria-hidden="true"></div>
+          <span class="world-footer" id="world-footer">YÊN COFFEE &amp; TEA · CẢNH THỬ NGHIỆM</span>
+        </div>
+        <p class="world-alt" id="world-alt">Các vật dụng có thể thao tác bằng chuột, cảm ứng và bàn phím.</p>
+      </section>
+      <section class="story" aria-labelledby="scene-title">
+        <span class="folio" id="scene-incident">TÌNH HUỐNG D01-01</span>
+        <h2 id="scene-title" tabindex="-1">Hàng khách đầu tiên</h2>
+        <p class="speaking"><strong>Người dẫn chuyện</strong> <span id="scene-actors"></span></p>
+        <h3 id="scene-prompt"></h3>
+        <p id="scene-goal" class="goal"></p>
+        <div class="status" id="status" role="status" aria-live="polite" aria-atomic="true"></div>
+        <div class="result" id="result" hidden>
+          <strong>Hệ quả trên cảnh</strong>
+          <p id="outcome"></p>
+        </div>
+        <div class="actions">
+          <button type="button" id="reset" class="secondary">Làm lại cảnh này</button>
+          <button type="button" id="next" class="primary" hidden>Thử cảnh tiếp theo</button>
+        </div>
+        <p class="keyboard">Dùng Tab để đến vật dụng, Enter hoặc Space để chọn. Có thể chọn hai vật liên tiếp để đổi chỗ, không cần kéo thả. Không có giới hạn thời gian.</p>
+      </section>
+    </div>
+    <p class="bottom">Không lưu dữ liệu, không theo dõi người chơi. Đây là thử nghiệm cơ chế trước khi sản xuất các bức tranh riêng cho chiến dịch 30 ngày.</p>
+  </main>
+  <noscript><p class="noscript">Cảnh tương tác cần JavaScript. Bạn có thể <a href="/tinh-huong/">quay lại trò chơi</a>.</p></noscript>
+</body>
+</html>
