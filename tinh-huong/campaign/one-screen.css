@@ -646,6 +646,10 @@ body{
   .level-panel progress{height:6px;margin:5px 0 3px}
   .level-foot{font-size:10px}
 }
+@media(orientation:portrait) and (max-height:520px){
+  #story[data-state="resolve"] .dialogue-scene strong{display:none}
+  #story[data-state="resolve"] .dialogue-scene{margin-bottom:3px}
+}
 @media(prefers-reduced-motion:reduce){
   .level-panel progress::-webkit-progress-value{transition:none}
 }
