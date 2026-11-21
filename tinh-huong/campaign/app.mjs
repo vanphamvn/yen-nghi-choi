@@ -89,7 +89,7 @@ function paintWorld(entry,view,visuals){
  $("world").dataset.incident=entry.id;
  $("world").dataset.phase=state.phase==="resolve"?"resolution":state.phase==="decide"?"interactive":"establishing";
  $("world").dataset.outcome=outcome;
- $("world").dataset.risk=risk||"";
+ $("world").dataset.risk=state.phase==="resolve"&&state.pending.recovered?"safe":risk||"";
  $("world").dataset.time=entry.sceneTheme;
  $("backdrop").src=view.shot.backdrop;
  $("backdrop").alt=view.shot.alt;
