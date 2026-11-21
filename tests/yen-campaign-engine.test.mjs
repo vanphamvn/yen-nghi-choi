@@ -92,7 +92,8 @@ function run(choiceFn, shouldRecover = () => false) {
 test("validate the real planned content catalog (not published as gameplay)", () => {
   assert.equal(validateCatalog(catalog), true);
   assert.equal(events.length, 90);
-  assert.equal(events.filter((e) => e.status === "planned").length, 90);
+  assert.equal(events.filter((e) => e.status === "planned").length, 87);
+  assert.equal(events.filter((e) => e.status === "playable").length, 3);
   assert.equal(validatePlayable(catalog, {}, { requireAll: false }), true);
   assert.throws(() => validatePlayable(catalog, {}, { requireAll: true }), /90 playable scripts/);
 });

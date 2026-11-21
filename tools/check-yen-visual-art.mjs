@@ -11,7 +11,7 @@ const filled = (v) => typeof v === "string" && v.trim().length > 2;
 
 function assetFile(path) {
   assert(filled(path) && !path.includes("\\") && !path.startsWith("/") &&
-    !path.includes("..") && /^(?:lab\/assets|tinh-huong\/assets)\//.test(path) &&
+    !path.includes("..") && /^(?:lab\/assets|assets\/cuc-yen\/sprites|tinh-huong\/assets)\//.test(path) &&
     /\.(?:png|jpe?g|webp|avif)$/i.test(path), "unsafe/unsupported asset path: " + path);
   const absolute = resolve(root, path);
   assert(absolute.startsWith(root + sep), "asset path escapes project");

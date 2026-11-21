@@ -1,0 +1,141 @@
+/* Day 1 campaign: illustrated visual scenes with a separate narrative track.
+   Reuses the visual-novel interaction target styling, not its quiz flow. */
+.intro{margin-bottom:24px;max-width:860px}
+.intro h1{font-size:clamp(40px,5vw,60px)}
+.chapter-steps{margin:0 0 18px;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;list-style:none}
+.chapter-steps li{display:flex;flex-direction:column;justify-content:center;min-height:70px;padding:11px 16px;border:1px solid var(--line);background:var(--cream);color:var(--muted);border-radius:11px}
+.chapter-steps li span{font-size:13px;font-weight:650}
+.chapter-steps li strong{font-size:16px}
+.chapter-steps li.is-current{border:2px solid var(--green);background:#eaf0d2;color:var(--ink);box-shadow:inset 0 0 0 1px #bdd3a6}
+.chapter-steps li.is-done{border-color:#91b68e;background:#eff6eb;color:var(--green)}
+.chapter-steps li.is-done strong::before{content:"✓  ";font-size:15px}
+.load-status{padding:30px;text-align:center;background:var(--cream);border:1px solid var(--line);border-radius:12px}
+.day-world{aspect-ratio:1.4;min-height:320px}
+.painted-backdrop{position:absolute;inset:0;display:block;z-index:-2;overflow:hidden}
+.painted-backdrop img{width:100%;height:100%;display:block;object-fit:cover;transition:transform .45s ease,object-position .45s ease;transform-origin:center}
+.scene-tone{position:absolute;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(circle at 62% 20%,transparent 36%,rgba(24,48,31,.15))}
+.day-world[data-time="afternoon"] .scene-tone{background:linear-gradient(145deg,rgba(159,189,191,.08),rgba(30,61,51,.17))}
+.day-world[data-time="evening"] .scene-tone{background:linear-gradient(135deg,rgba(80,48,15,.3),rgba(20,35,26,.31))}
+.day-illustrations{position:absolute;inset:0;pointer-events:none;z-index:4}
+/* Non-interactive story evidence: visual context, never a hotspot or a puzzle. */
+.scene-evidence{position:absolute;left:30%;bottom:13%;width:43%;z-index:8;pointer-events:none;
+  background:rgba(255,250,240,.94);border:1px solid rgba(36,60,53,.58);border-radius:8px;
+  padding:10px 12px;box-shadow:0 7px 14px rgba(36,60,53,.23);transform:rotate(-1deg)}
+.evidence-title{font-weight:850;font-size:12px;letter-spacing:.025em;color:var(--green)}
+.evidence-detail{font-weight:800;font-size:clamp(13px,1.3vw,17px);line-height:1.3;margin:4px 0;overflow-wrap:anywhere}
+.ticket-order{letter-spacing:.12em;font-variant-numeric:tabular-nums}
+.evidence-note{font-size:11px;color:var(--muted);line-height:1.3}
+.day-world[data-incident="D01-02"] .scene-evidence{left:34%;bottom:14%;width:37%}
+.day-world[data-incident="D01-03"] .scene-evidence{left:27%;bottom:12%;width:45%}
+.day-world[data-outcome="clean"] .scene-evidence,
+.day-world[data-outcome="recovered"] .scene-evidence,
+.day-world[data-outcome="refund"] .scene-evidence,
+.day-world[data-outcome="explain"] .scene-evidence{background:rgba(235,245,211,.94)}
+.day-world[data-outcome="open"] .scene-evidence,
+.day-world[data-outcome="priority"] .scene-evidence,
+.day-world[data-outcome="ignore"] .scene-evidence{background:rgba(248,225,206,.95)}
+.painted-layer{position:absolute;left:var(--x);top:var(--y);transform:translate(-50%,-50%);width:var(--size);height:auto;max-height:57%;object-fit:contain;filter:drop-shadow(0 6px 7px rgba(18,32,21,.2));transition:transform .26s ease,filter .26s ease}
+.painted-layer.actor{z-index:4;max-height:44%}
+.day-world[data-phase="interactive"] .painted-layer.actor{transform:translate(-50%,-51%) scale(1.1)}
+.day-world[data-phase="resolution"] .painted-layer.actor{transform:translate(-50%,-55%) scale(1.09)}
+.day-world[data-incident="D01-01"] .painted-layer.prop-machine{left:13%;top:76%;width:22%;max-height:47%}
+.day-world[data-incident="D01-01"] .painted-layer.prop-tray{left:86%;top:81%;width:17%}
+.day-world[data-incident="D01-02"] .painted-layer.prop-pitcher{left:22%;top:58%;width:16%;transform:translate(-50%,-50%) rotate(-38deg)}
+.day-world[data-incident="D01-02"] .painted-layer.prop-glass{left:85%;top:51%;width:11%}
+.day-world[data-incident="D01-03"] .painted-layer.prop-menu{left:15%;top:56%;width:17%}
+.day-world[data-incident="D01-03"] .painted-layer.prop-glass{left:85%;top:70%;width:14%}
+.day-world[data-outcome="clean"] .item-spill,.day-world[data-outcome="recovered"] .item-spill{opacity:.25;filter:saturate(.4)}
+.day-world[data-outcome="open"] .item-spill{background:rgba(75,158,192,.76);border:3px solid #aa3a28;box-shadow:0 0 0 8px rgba(171,65,32,.15)}
+.day-world[data-outcome="open"] .item-sign{opacity:.5}
+.day-world[data-outcome="refund"] .item-receipt{background:#eff6db}
+.day-world[data-outcome="priority"] .item-ticket:first-child{border-color:#a64b1d;background:#f6e9be}
+.day-world[data-outcome="ignore"] .item-receipt{border-color:#a64b1d}
+.day-world[data-risk="hazard"]{outline:4px solid #a64b1d;outline-offset:1px}
+.day-world .item-sign.is-deployed{z-index:7}
+.day-world .item-ticket{z-index:7}
+.day-world .item-receipt{z-index:7}
+.day-world .item-painted{z-index:7}
+.day-world .targets{z-index:8}
+.character-reaction{position:absolute;z-index:10;top:3%;right:3%;max-width:35%;padding:6px 10px;border-radius:6px;background:rgba(247,243,233,.91);color:#243c35;font-size:12px;font-weight:850;letter-spacing:.05em;pointer-events:none}
+.day-world:not([data-phase="resolution"]) .character-reaction{display:none}
+.day-world[data-risk="hazard"] .character-reaction{background:#f7d9c7}
+.world-caption{position:absolute;inset:auto 0 0;display:flex;gap:14px;align-items:center;justify-content:space-between;padding:9px 14px;background:rgba(36,60,53,.9);color:white;z-index:11;font-size:12px;font-weight:850;letter-spacing:.04em;pointer-events:none}
+.world-below{display:flex;gap:16px;justify-content:space-between;align-items:center;padding:3px 4px 10px;color:var(--muted);font-size:14px}
+.tiny-reset{min-height:44px;padding:4px 12px;border:1px solid var(--line);border-radius:10px;background:var(--cream);color:var(--green);flex-shrink:0;font-weight:750}
+.story{box-shadow:5px 7px 0 #bed0b1;padding:24px}
+.dialogue-scene{margin:0 0 17px;padding:14px 16px;background:#f2eada;border-left:4px solid var(--green);border-radius:8px}
+.dialogue-scene strong{display:block;color:var(--green);font-size:14px;margin-bottom:4px}
+.dialogue-scene p{margin:0;line-height:1.7}
+.story h3{margin:0 0 10px}
+.status{margin:17px 0;min-height:48px;padding:11px 14px}
+.day-choices{display:flex;flex-direction:column;gap:8px;margin:14px 0}
+.day-choice{display:flex;align-items:flex-start;gap:12px;width:100%;text-align:left;min-height:64px;padding:12px 14px;border:1.5px solid #b2c3ac;border-radius:12px;background:#fffdf5}
+.day-choice:hover{border-color:var(--green);background:#edf2df}
+.day-choice:active{background:#e3edcc}
+.choice-index{display:grid;place-items:center;flex:0 0 34px;height:34px;border:1.5px solid var(--green);border-radius:50%;font-size:13px;font-weight:850}
+.choice-text{font-weight:680;line-height:1.45}
+.day-result{margin:14px 0}
+.day-result p{margin:6px 0 0;line-height:1.65}
+.reason{font-size:14px;color:var(--muted);border-top:1px dashed #a7bd8d;margin-top:12px!important;padding-top:10px}
+.meter-section{margin-top:20px;border-top:1px dashed var(--line);padding-top:14px}
+.meter-heading{display:flex;align-items:baseline;justify-content:space-between;gap:8px;margin-bottom:10px}
+.meter-heading strong{font-weight:850}.meter-heading span{color:var(--muted);font-size:13px}
+.metric-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.metric-label{display:flex;justify-content:space-between;gap:6px;font-size:13px}
+.metric-label strong{font-size:13px;font-variant-numeric:tabular-nums}
+.metric progress{display:block;width:100%;height:12px;margin:7px 0 0;accent-color:var(--green)}
+.debrief{margin:22px auto;max-width:760px;background:var(--cream);padding:clamp(20px,5vw,44px);border:1px solid var(--green);border-radius:17px;box-shadow:7px 8px 0 #bcd2b5}
+.debrief h2{font:600 clamp(29px,4vw,43px)/1.25 var(--serif);margin:8px 0 14px}
+.debrief>p{margin:9px 0 17px}
+.debrief-list{padding:0;margin:18px 0;list-style:none;display:grid;gap:10px}
+.debrief-list li{background:#eff4e1;border-left:4px solid var(--green);padding:13px 16px;border-radius:8px}
+.tomorrow{font-weight:650;background:#f1e8ce;padding:15px 16px;border-radius:10px}
+.history{margin:20px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:14px 0}
+.history summary{cursor:pointer;font-weight:750;min-height:44px;padding:10px 0}
+.history ol{padding-left:24px}.history li{padding:6px 0}
+.back-link{display:inline-flex;align-items:center;min-height:48px;padding:10px 14px}
+.coming-soon{font-size:14px;color:var(--muted);margin-top:20px!important}
+@media(max-width:900px){
+ .day-world{aspect-ratio:1.45}
+ .story{margin-top:16px}
+}
+@media(max-width:520px){
+ .scene-evidence{left:28%;bottom:12%;width:49%;padding:7px 8px}
+ .day-world[data-incident="D01-02"] .scene-evidence{left:29%;bottom:11%;width:47%}
+ .day-world[data-incident="D01-03"] .scene-evidence{left:25%;bottom:11%;width:53%}
+ .evidence-title{font-size:10px}
+ .evidence-detail{font-size:12px;line-height:1.35}
+ .evidence-note{font-size:10px}
+
+ .chapter-steps{gap:5px;margin-bottom:13px}
+ .chapter-steps li{min-height:65px;padding:8px 7px}
+ .chapter-steps li span{font-size:11px}
+ .chapter-steps li strong{font-size:13px}
+ .day-world{aspect-ratio:1.08;min-height:290px}
+ .world-caption{font-size:10px;padding:7px 9px}
+ .world-bar{font-size:11px}
+ .day-world .painted-layer.actor{width:28%;max-height:42%}
+ .day-world[data-incident="D01-01"] .painted-layer.prop-machine{width:26%;left:14%;top:80%}
+ .day-world[data-incident="D01-02"] .painted-layer.prop-pitcher{width:21%;left:22%;top:55%}
+ .day-world[data-incident="D01-03"] .painted-layer.prop-menu{width:18%;left:15%;top:61%}
+ .day-world[data-incident="D01-03"] .item-receipt{width:50%;min-height:52px}
+ .day-world[data-incident="D01-03"] .receipt-text{font-size:12px}
+ .day-world .item-sign{min-height:80px}
+ .world-below{align-items:flex-start}
+ .world-below span{font-size:12px}
+ .world-below button{max-width:130px;line-height:1.2}
+ .story{padding:19px}
+ .metric-row{gap:8px}
+ .metric-label{font-size:12px}
+ .day-choice{padding:12px 10px;font-size:14px}
+}
+@media(max-width:359px){
+ .day-world{min-height:266px}
+ .story{padding:15px}
+ .day-world .item-sign{width:70px;font-size:10px}
+ .day-world[data-incident="D01-03"] .item-receipt{width:52%}
+ .day-choice{font-size:13px}
+}
+@media(prefers-reduced-motion:reduce){
+ .painted-backdrop img,.painted-layer,.scene-item{animation:none!important;transition:none!important}
+}
