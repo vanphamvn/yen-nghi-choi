@@ -4,7 +4,7 @@
   "campaign": "30-ngay-o-yen",
   "sourceOfTruth": "docs/visual-novel/ROADMAP-30-NGAY.md",
   "relatedEpic": "https://github.com/vanphamvn/yen-nghi-choi/issues/218",
-  "note": "This is a CONTENT PLANNING manifest. status: planned means not playable. No artwork has been generated or approved.",
+  "note": "Day 1 D01-01..03 is playable with three runtime visual compositions, direct scene actions, branching reactions and QA screenshots. Other 87 incidents are still planned; Day 2 is not released. Owner visual review remains pending.",
   "incidentStateContract": [
     "establishing",
     "interactive",
@@ -31,7 +31,7 @@
           },
           "mechanic": "scene-action",
           "carryFlag": "queue",
-          "status": "planned"
+          "status": "playable"
         },
         {
           "id": "D01-02",
@@ -44,7 +44,7 @@
           },
           "mechanic": "scene-action",
           "carryFlag": "safety",
-          "status": "planned"
+          "status": "playable"
         },
         {
           "id": "D01-03",
@@ -57,7 +57,7 @@
           },
           "mechanic": "scene-action",
           "carryFlag": "cash",
-          "status": "planned"
+          "status": "playable"
         }
       ]
     },
