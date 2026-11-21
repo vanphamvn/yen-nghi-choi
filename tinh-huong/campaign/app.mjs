@@ -2,6 +2,7 @@
 import { DAY01, DAY01_SCRIPTS, day01Debrief } from "./day01.mjs";
 import { getSceneComposition, projectContact, VISUAL_ASSET_DIMENSIONS } from "./scene-composition.mjs";
 import { createState, currentIncident, choose, recover, advance, sceneView, validatePlayable } from "./engine.mjs";
+import { shopProgress } from "./progression.mjs";
 
 const $ = id => document.getElementById(id);
 const node = (tag, className, content = "") => {
@@ -118,32 +119,6 @@ function incidentVisuals(entry) {
   positionSprites();
   requestAnimationFrame(positionSprites);
 
-  // A single brief clue on the painting; the decisions stay in the lower half.
-  const evidence = $("scene-evidence");
-  evidence.replaceChildren();
-  if (entry.id === "D01-01") {
-    const order = outcome === "priority" ? "02 · 01 · 03" :
-      decided ? "01 · 02 · 03" : "03 · 01 · 02";
-    evidence.textContent = decided
-      ? outcome === "priority" ? "Người đến sau được phục vụ trước · " + order :
-        outcome === "explain" ? "Khách đã được thông báo · " + order :
-        "Khách vẫn đang chờ thông tin · " + order
-      : "Phiếu in bị lẫn thứ tự · " + order;
-  } else if (entry.id === "D01-02") {
-    evidence.textContent = outcome === "clean" || outcome === "recovered" ? "Sàn đã lau khô" :
-      outcome === "later" ? "Đã chặn lối · sàn còn ướt" :
-      outcome === "open" ? "Sàn trơn · chưa có cảnh báo" : "Sàn ướt · khách đang đến gần";
-  } else {
-    evidence.textContent = outcome === "refund" ?
-      "Trà đào 25.000đ · Tổng 41.000đ · Đã hoàn 10.000đ" :
-      "Menu 25.000đ · hóa đơn 35.000đ · Tổng 51.000đ";
-  }
-
-  const feedback = $("character-reaction");
-  feedback.textContent = decided ? recovered ? "ĐÃ KHẮC PHỤC" :
-    choice.risk === "hazard" ? "NGUY CƠ CHƯA ĐƯỢC XỬ LÝ" :
-    choice.risk === "safe" ? "ĐÃ GIẢI QUYẾT" : "CẦN THEO DÕI" : "";
-
   $("world-alt").textContent = decided ? scene.shot.alt + ". " + state.pending.reason : scene.shot.alt;
 }
 
@@ -166,6 +141,28 @@ function drawChoices(entry) {
     });
     choices.append(button);
   }
+}
+
+function drawShopLevel(panel,{daySummary=false}={}){
+  const progress=shopProgress(state.history);
+  const get=key=>panel.querySelector('[data-level="'+key+'"]');
+  get("number").textContent="Cấp "+progress.level;
+  get("title").textContent=progress.title;
+  const earned=get("earned");
+  earned.hidden=!daySummary&&state.phase!=="resolve";
+  earned.textContent=daySummary?"Ngày 1 · +"+progress.xp+" XP":"Ca này +"+progress.latest+" XP";
+  const meter=get("meter");
+  meter.max=progress.threshold||1;
+  meter.value=progress.threshold?progress.earned:1;
+  meter.setAttribute("aria-valuetext",progress.nextLevel?
+    progress.earned+" trên "+progress.threshold+" XP lên cấp "+progress.nextLevel:
+    "Đã đạt cấp cao nhất");
+  get("xp").textContent=progress.nextLevel?
+    progress.earned+"/"+progress.threshold+" XP":progress.xp+" XP";
+  get("next").textContent=progress.nextLevel?
+    "Còn "+progress.remaining+" XP · "+progress.nextTitle:"Danh hiệu cao nhất";
+  panel.dataset.level=String(progress.level);
+  panel.dataset.levelUp=progress.justLeveled&&state.phase==="resolve"?"true":"false";
 }
 
 function render() {
@@ -192,6 +189,7 @@ function render() {
   $("reason").textContent = decided ? state.pending.reason : "";
   incidentVisuals(entry);
   drawChoices(entry);
+  drawShopLevel($("level-panel"));
 }
 
 function showDebrief() {
@@ -200,6 +198,7 @@ function showDebrief() {
   const list = $("debrief-list");
   list.replaceChildren();
   for (const summary of day01Debrief(state.flags)) list.append(node("li", "", summary));
+  drawShopLevel($("day-level"),{daySummary:true});
   $("tomorrow").textContent =
     state.flags.spillResolved && state.flags.billCorrected && state.flags.queueExplained ?
       "Quán đã có nền tảng tốt hơn cho Ngày 2. Mưa đầu mùa vẫn có những chuyện mới." :

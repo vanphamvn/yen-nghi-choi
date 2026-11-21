@@ -3,6 +3,9 @@ import { test, expect } from "@playwright/test";
 const open = async page => {
   await page.goto("/tinh-huong/campaign/");
   await expect(page.locator("#game")).toBeVisible();
+  // Netlify adds an external Deploy Preview drawer across the bottom of the viewport.
+  // Remove only that provider QA overlay so it cannot intercept gameplay clicks.
+  await page.evaluate(()=>document.querySelectorAll("[data-netlify-deploy-id]").forEach(element=>element.remove()));
   await expect(page.locator("#world")).toHaveAttribute("data-incident","D01-01");
   await expect(page.locator("#choices button")).toHaveCount(3);
 };
@@ -22,35 +25,36 @@ test("Day 1: choose directly from illustrated story, then see reactions and debr
  await open(page);
  await expect(page.locator("#targets")).toHaveCount(0);
  await expect(page.locator("#reset-mechanic")).toHaveCount(0);
- await expect(page.locator("#scene-evidence")).toContainText("Phiếu in bị lẫn thứ tự");
+ await expect(page.locator("#scene-evidence,#character-reaction")).toHaveCount(0);
+ await expect(page.locator("#level-panel")).toBeVisible();
  await loaded(page);
  await testInfo.attach("D01-01-before",{body:await page.screenshot({fullPage:true}),contentType:"image/png"});
  const morningFace=await page.locator("#illustrations [data-role=mascot]").getAttribute("src");
  await decide(page,"explain");
  await expect(page.locator("#dialogue")).toContainText("Cảm ơn quán");
- await expect(page.locator("#scene-evidence")).toContainText("Khách đã được thông báo");
+ await expect(page.locator("#level-panel [data-level=earned]")).toHaveText("Ca này +12 XP");
  await expect(page.locator("#illustrations [data-role=mascot]")).not.toHaveAttribute("src",morningFace);
  await loaded(page);
  await testInfo.attach("D01-01-after",{body:await page.screenshot({fullPage:true}),contentType:"image/png"});
  await next(page);
  await expect(page.locator("#world")).toHaveAttribute("data-incident","D01-02");
- await expect(page.locator("#scene-evidence")).toContainText("Sàn ướt");
+ await expect(page.locator('[data-sprite-id="spill"]')).toBeVisible();
  await expect(page.locator("#choices button")).toHaveCount(3);
  await loaded(page);
  await testInfo.attach("D01-02-before",{body:await page.screenshot({fullPage:true}),contentType:"image/png"});
  await decide(page,"clean");
- await expect(page.locator("#scene-evidence")).toContainText("Sàn đã lau khô");
- await expect(page.locator("#character-reaction")).toContainText("ĐÃ GIẢI QUYẾT");
+ await expect(page.locator('[data-sprite-id="spill"]')).toHaveAttribute("data-state","dry");
+ await expect(page.locator("#level-panel")).toHaveAttribute("data-level","2");
  await loaded(page);
  await testInfo.attach("D01-02-after",{body:await page.screenshot({fullPage:true}),contentType:"image/png"});
  await next(page);
  await expect(page.locator("#world")).toHaveAttribute("data-incident","D01-03");
- await expect(page.locator("#scene-evidence")).toContainText("Tổng 51.000đ");
+ await expect(page.locator('[data-sprite-id="receipt"]')).toBeVisible();
  await expect(page.locator("#choices button")).toHaveCount(3);
  await loaded(page);
  await testInfo.attach("D01-03-before",{body:await page.screenshot({fullPage:true}),contentType:"image/png"});
  await decide(page,"refund");
- await expect(page.locator("#scene-evidence")).toContainText("Tổng 41.000đ");
+ await expect(page.locator('[data-sprite-id="receipt"]')).toHaveAttribute("data-state","corrected");
  await expect(page.locator("#dialogue")).toContainText("cảm ơn quán");
  await loaded(page);
  await testInfo.attach("D01-03-after",{body:await page.screenshot({fullPage:true}),contentType:"image/png"});
@@ -67,13 +71,13 @@ test("unsafe choice has meaningful aftermath and an optional correction without 
  await decide(page,"silent");await next(page);
  await decide(page,"open");
  await expect(page.locator("#world")).toHaveAttribute("data-risk","hazard");
- await expect(page.locator("#scene-evidence")).toContainText("chưa có cảnh báo");
+ await expect(page.locator('[data-sprite-id="spill"]')).toHaveAttribute("data-state","unsafe");
  await expect(page.locator("#recover")).toBeVisible();
  await page.locator("#recover").click();
  await expect(page.locator("#world")).toHaveAttribute("data-outcome","recovered");
  await expect(page.locator("#world")).toHaveAttribute("data-risk","safe");
  await expect(page.locator("#recover")).toBeHidden();
- await expect(page.locator("#scene-evidence")).toContainText("Sàn đã lau khô");
+ await expect(page.locator('[data-sprite-id="spill"]')).toHaveAttribute("data-state","dry");
  await next(page);
  await decide(page,"ignore");await next(page);
  await expect(page.locator("#debrief-list")).toContainText("Lối đi đã được xử lý");
@@ -101,10 +105,10 @@ test("choices are initially visible; no duplicate scoring; restart clears entire
  await expect(page.locator("#world")).toHaveAttribute("data-phase","establishing");
  await decide(page,"priority");
  await expect(page.locator("#choices")).toBeHidden();
- await expect(page.locator("#scene-evidence")).toContainText("Người đến sau");
+ await expect(page.locator("#level-panel [data-level=earned]")).toHaveText("Ca này +6 XP");
  await page.locator("#restart").click();
  await expect(page.locator("#choices button")).toHaveCount(3);
- await expect(page.locator("#scene-evidence")).toContainText("Phiếu in bị lẫn thứ tự");
+ await expect(page.locator("#level-panel [data-level=xp]")).toHaveText("0/20 XP");
  await expect(page.locator("#world")).toHaveAttribute("data-phase","establishing");
  const persisted=await page.evaluate(()=>({cookie:document.cookie,local:localStorage.length,session:sessionStorage.length}));
  expect(persisted).toEqual({cookie:"",local:0,session:0});
@@ -178,7 +182,8 @@ async function assertOneViewport(page,label){
   };
   const itemList=[
    ".header","#main>.intro h1","#chapter-steps","#game:not([hidden]) #world",
-   "#game:not([hidden]) #scene-evidence",
+   "#game:not([hidden]) .level-panel",
+   "#debrief:not([hidden]) .level-panel",
    "#game:not([hidden]) #incident-title",
    "#game:not([hidden]) .dialogue-scene",
    "#game:not([hidden]) #prompt:not([hidden])",
@@ -417,3 +422,75 @@ test("the water hazard remains visibly on the floor until repaired; customers do
  await expect(page.locator('[data-sprite-id="spill"]')).toHaveAttribute("data-state","dry");
  await validateSpatialScene(page,"D01-02");
 });
+
+
+test("gamified Day 1: XP, levels, awards and debrief come from the actual three decisions",async({page})=>{
+ await page.setViewportSize({width:390,height:844});
+ await open(page);
+ await expect(page.locator("#scene-evidence,#character-reaction")).toHaveCount(0);
+ await expect(page.locator("#level-panel [data-level=title]")).toHaveText("Tập đứng quầy");
+ await expect(page.locator("#level-panel [data-level=xp]")).toHaveText("0/20 XP");
+ await decide(page,"explain");
+ await expect(page.locator("#level-panel [data-level=earned]")).toHaveText("Ca này +12 XP");
+ await expect(page.locator("#level-panel [data-level=xp]")).toHaveText("12/20 XP");
+ await expect(page.locator("#level-panel [data-level=next]")).toContainText("Quầy đã vào nhịp");
+ await next(page);
+ await decide(page,"clean");
+ await expect(page.locator("#level-panel")).toHaveAttribute("data-level","2");
+ await expect(page.locator("#level-panel")).toHaveAttribute("data-level-up","true");
+ await expect(page.locator("#level-panel [data-level=title]")).toHaveText("Quầy đã vào nhịp");
+ await expect(page.locator("#level-panel [data-level=xp]")).toHaveText("4/40 XP");
+ await next(page);
+ await decide(page,"refund");
+ await expect(page.locator("#level-panel [data-level=xp]")).toHaveText("16/40 XP");
+ await next(page);
+ await expect(page.locator("#day-level [data-level=title]")).toHaveText("Quầy đã vào nhịp");
+ await expect(page.locator("#day-level [data-level=earned]")).toHaveText("Ngày 1 · +36 XP");
+ await expect(page.locator("#day-level [data-level=xp]")).toHaveText("16/40 XP");
+ await expect(page.locator("#scene-evidence,#character-reaction")).toHaveCount(0);
+});
+
+test("unsafe actions and one recovery adjust XP once; restarting resets the shop rank",async({page})=>{
+ await page.setViewportSize({width:390,height:844});
+ await open(page);
+ await decide(page,"silent");
+ await expect(page.locator("#level-panel [data-level=earned]")).toHaveText("Ca này +6 XP");
+ await next(page);
+ await decide(page,"open");
+ await expect(page.locator("#level-panel [data-level=xp]")).toHaveText("8/20 XP");
+ await page.locator("#recover").click();
+ await expect(page.locator("#level-panel [data-level=xp]")).toHaveText("12/20 XP");
+ await expect(page.locator("#level-panel [data-level=earned]")).toHaveText("Ca này +6 XP");
+ await expect(page.locator("#recover")).toBeHidden();
+ await page.locator("#restart").click();
+ await expect(page.locator("#level-panel [data-level=xp]")).toHaveText("0/20 XP");
+ await expect(page.locator("#level-panel [data-level=title]")).toHaveText("Tập đứng quầy");
+});
+
+for(const viewport of [{width:320,height:480},{width:320,height:568},{width:375,height:667},
+ {width:390,height:660},{width:390,height:844},{width:812,height:375},{width:1440,height:900}]){
+ test("XP/level UI fits without scrolling at "+viewport.width+"×"+viewport.height,async({page},testInfo)=>{
+  await page.setViewportSize(viewport);
+  await page.emulateMedia({reducedMotion:"reduce"});
+  await open(page);
+  for(const choice of ["explain","clean","refund"]){
+   await decide(page,choice);
+   await expect(page.locator("#level-panel")).toBeVisible();
+   await expect(page.locator("#level-panel [data-level=title]")).not.toBeEmpty();
+   await assertOneViewport(page,"reward at "+viewport.width+"x"+viewport.height);
+   const layout=await page.evaluate(()=>{
+    const story=document.querySelector("#story").getBoundingClientRect();
+    const card=document.querySelector("#level-panel").getBoundingClientRect();
+    const actions=document.querySelector("#actions").getBoundingClientRect();
+    return {cardTop:card.top,cardBottom:card.bottom,storyBottom:story.bottom,actionsTop:actions.top,actionsBottom:actions.bottom};
+   });
+   expect(layout.cardBottom).toBeLessThanOrEqual(layout.storyBottom+1);
+   expect(layout.actionsBottom).toBeLessThanOrEqual(layout.storyBottom+1);
+   expect(layout.cardBottom).toBeLessThanOrEqual(layout.actionsTop+1);
+   await next(page);
+  }
+  await expect(page.locator("#day-level")).toBeVisible();
+  await assertOneViewport(page,"gamified debrief "+viewport.width+"x"+viewport.height);
+  await testInfo.attach("level-final-"+viewport.width+"x"+viewport.height,{body:await page.screenshot({fullPage:true}),contentType:"image/png"});
+ });
+}
