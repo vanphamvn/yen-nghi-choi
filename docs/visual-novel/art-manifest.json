@@ -107,7 +107,7 @@
       "id": "D01-01",
       "day": 1,
       "title": "Hàng khách đầu tiên",
-      "status": "planned",
+      "status": "ready",
       "requiredBrief": {
         "establishing": "Quầy sáng, dải 7 phiếu in dài dần; khách ở cửa sốt ruột, ly chưa có nhãn",
         "interactive": "Chạm phiếu, sắp thứ tự xử lý rồi nhìn hàng khách thay đổi",
@@ -116,29 +116,144 @@
       "interactionBrief": "Chạm phiếu, sắp thứ tự xử lý rồi nhìn hàng khách thay đổi",
       "frames": {
         "establishing": {
-          "background": null,
-          "actors": [],
-          "props": [],
-          "alt": null
+          "background": "lab/assets/room-backdrop.jpg",
+          "alt": "Phiếu nhận đơn tại Yên: bối cảnh trước khi thao tác",
+          "actors": [
+            {
+              "id": "cuc-yen",
+              "src": "assets/cuc-yen/sprites/barista.webp",
+              "state": "receiving",
+              "alt": "Cục Yên: receiving",
+              "x": 0.72,
+              "y": 0.28
+            }
+          ],
+          "props": [
+            {
+              "id": "espresso-machine",
+              "src": "lab/assets/sprites/collections/assets/coffee-tea/v2-espresso-machine.webp",
+              "state": "unordered-espresso-machine",
+              "alt": "Phiếu nhận đơn: espresso-machine ở nhịp establishing",
+              "x": 0.13,
+              "y": 0.76
+            },
+            {
+              "id": "tray",
+              "src": "lab/assets/sprites/collections/assets/coffee-tea/v2-serving-tray.webp",
+              "state": "unordered-tray",
+              "alt": "Phiếu nhận đơn: tray ở nhịp establishing",
+              "x": 0.84,
+              "y": 0.75
+            },
+            {
+              "id": "tickets",
+              "src": "lab/assets/sprites/shared/paper-note.webp",
+              "state": "unordered-tickets",
+              "alt": "Phiếu nhận đơn: tickets ở nhịp establishing",
+              "x": 0.48,
+              "y": 0.59
+            }
+          ]
         },
         "interactive": {
-          "background": null,
-          "actors": [],
-          "props": [],
-          "alt": null
+          "background": "lab/assets/room-backdrop.jpg",
+          "alt": "Phiếu nhận đơn tại Yên: góc cận khi người chơi tương tác",
+          "actors": [
+            {
+              "id": "cuc-yen",
+              "src": "assets/cuc-yen/sprites/barista.webp",
+              "state": "focused",
+              "alt": "Cục Yên: focused",
+              "x": 0.7,
+              "y": 0.3
+            }
+          ],
+          "props": [
+            {
+              "id": "espresso-machine",
+              "src": "lab/assets/sprites/collections/assets/coffee-tea/v2-espresso-machine.webp",
+              "state": "inspecting-espresso-machine",
+              "alt": "Phiếu nhận đơn: espresso-machine ở nhịp interactive",
+              "x": 0.14,
+              "y": 0.76
+            },
+            {
+              "id": "tray",
+              "src": "lab/assets/sprites/collections/assets/coffee-tea/v2-serving-tray.webp",
+              "state": "inspecting-tray",
+              "alt": "Phiếu nhận đơn: tray ở nhịp interactive",
+              "x": 0.85,
+              "y": 0.75
+            },
+            {
+              "id": "tickets",
+              "src": "lab/assets/sprites/shared/paper-note.webp",
+              "state": "inspecting-tickets",
+              "alt": "Phiếu nhận đơn: tickets ở nhịp interactive",
+              "x": 0.49,
+              "y": 0.59
+            }
+          ]
         },
         "resolution": {
-          "background": null,
-          "actors": [],
-          "props": [],
-          "alt": null
+          "background": "lab/assets/room-backdrop.jpg",
+          "alt": "Phiếu nhận đơn tại Yên: cảnh vật dụng và Cục Yên đổi trạng thái sau quyết định",
+          "actors": [
+            {
+              "id": "cuc-yen",
+              "src": "assets/cuc-yen/sprites/delighted.webp",
+              "state": "relieved",
+              "alt": "Cục Yên: relieved",
+              "x": 0.72,
+              "y": 0.28
+            }
+          ],
+          "props": [
+            {
+              "id": "espresso-machine",
+              "src": "lab/assets/sprites/collections/assets/coffee-tea/v2-espresso-machine.webp",
+              "state": "sorted-espresso-machine",
+              "alt": "Phiếu nhận đơn: espresso-machine ở nhịp resolution",
+              "x": 0.13,
+              "y": 0.74
+            },
+            {
+              "id": "tray",
+              "src": "lab/assets/sprites/collections/assets/coffee-tea/v2-serving-tray.webp",
+              "state": "sorted-tray",
+              "alt": "Phiếu nhận đơn: tray ở nhịp resolution",
+              "x": 0.84,
+              "y": 0.73
+            },
+            {
+              "id": "tickets",
+              "src": "lab/assets/sprites/shared/paper-note.webp",
+              "state": "sorted-tickets",
+              "alt": "Phiếu nhận đơn: tickets ở nhịp resolution",
+              "x": 0.48,
+              "y": 0.57
+            }
+          ]
         }
       },
-      "visualChanges": [],
+      "visualChanges": [
+        {
+          "layer": "prop",
+          "from": "unordered",
+          "to": "sorted"
+        },
+        {
+          "layer": "actor",
+          "from": "receiving",
+          "to": "relieved"
+        }
+      ],
       "artReview": {
-        "status": "pending",
-        "reviewerType": null,
-        "reviewEvidence": null,
+        "status": "agent-reviewed",
+        "reviewerType": "agent",
+        "reviewAuthority": "user-delegated",
+        "reviewEvidence": "https://github.com/vanphamvn/yen-nghi-choi/actions/runs/44885011176/artifacts/14699965889",
+        "reviewNotes": "Agent xem screenshot 320, 390, 768, 1440 và 3 pha thực trên Chromium. Painted props và nhân vật tái dùng từ repo; vùng tương tác biển/nước/biên lai là UI overlay. Chưa có background mới riêng, owner review pending.",
         "ownerReviewPending": true
       }
     },
@@ -146,7 +261,7 @@
       "id": "D01-02",
       "day": 1,
       "title": "Vũng nước cạnh quầy",
-      "status": "planned",
+      "status": "ready",
       "requiredBrief": {
         "establishing": "Bình nghiêng, vũng nước loang sát lối đi; bé và khách tiến gần khu vực ướt",
         "interactive": "Đặt biển cảnh báo và ngăn lối trước khi lau; hình sàn đổi khô/ướt",
@@ -155,29 +270,120 @@
       "interactionBrief": "Đặt biển cảnh báo và ngăn lối trước khi lau; hình sàn đổi khô/ướt",
       "frames": {
         "establishing": {
-          "background": null,
-          "actors": [],
-          "props": [],
-          "alt": null
+          "background": "lab/assets/room-backdrop.jpg",
+          "alt": "Nước đổ trước quầy tại Yên: bối cảnh trước khi thao tác",
+          "actors": [
+            {
+              "id": "cuc-yen",
+              "src": "assets/cuc-yen/sprites/surprised.webp",
+              "state": "alarmed",
+              "alt": "Cục Yên: alarmed",
+              "x": 0.72,
+              "y": 0.28
+            }
+          ],
+          "props": [
+            {
+              "id": "milk-pitcher",
+              "src": "lab/assets/sprites/collections/assets/coffee-tea/v2-milk-pitcher.webp",
+              "state": "wet-milk-pitcher",
+              "alt": "Nước đổ trước quầy: milk-pitcher ở nhịp establishing",
+              "x": 0.22,
+              "y": 0.58
+            },
+            {
+              "id": "glass-tea",
+              "src": "lab/assets/sprites/collections/assets/coffee-tea/v2-glass-tea.webp",
+              "state": "wet-glass-tea",
+              "alt": "Nước đổ trước quầy: glass-tea ở nhịp establishing",
+              "x": 0.85,
+              "y": 0.51
+            }
+          ]
         },
         "interactive": {
-          "background": null,
-          "actors": [],
-          "props": [],
-          "alt": null
+          "background": "lab/assets/room-backdrop.jpg",
+          "alt": "Nước đổ trước quầy tại Yên: góc cận khi người chơi tương tác",
+          "actors": [
+            {
+              "id": "cuc-yen",
+              "src": "assets/cuc-yen/sprites/surprised.webp",
+              "state": "watching",
+              "alt": "Cục Yên: watching",
+              "x": 0.7,
+              "y": 0.3
+            }
+          ],
+          "props": [
+            {
+              "id": "milk-pitcher",
+              "src": "lab/assets/sprites/collections/assets/coffee-tea/v2-milk-pitcher.webp",
+              "state": "isolated-milk-pitcher",
+              "alt": "Nước đổ trước quầy: milk-pitcher ở nhịp interactive",
+              "x": 0.23,
+              "y": 0.58
+            },
+            {
+              "id": "glass-tea",
+              "src": "lab/assets/sprites/collections/assets/coffee-tea/v2-glass-tea.webp",
+              "state": "isolated-glass-tea",
+              "alt": "Nước đổ trước quầy: glass-tea ở nhịp interactive",
+              "x": 0.86,
+              "y": 0.51
+            }
+          ]
         },
         "resolution": {
-          "background": null,
-          "actors": [],
-          "props": [],
-          "alt": null
+          "background": "lab/assets/room-backdrop.jpg",
+          "alt": "Nước đổ trước quầy tại Yên: cảnh vật dụng và Cục Yên đổi trạng thái sau quyết định",
+          "actors": [
+            {
+              "id": "cuc-yen",
+              "src": "assets/cuc-yen/sprites/happy.webp",
+              "state": "reassured",
+              "alt": "Cục Yên: reassured",
+              "x": 0.72,
+              "y": 0.28
+            }
+          ],
+          "props": [
+            {
+              "id": "milk-pitcher",
+              "src": "lab/assets/sprites/collections/assets/coffee-tea/v2-milk-pitcher.webp",
+              "state": "cleaned-milk-pitcher",
+              "alt": "Nước đổ trước quầy: milk-pitcher ở nhịp resolution",
+              "x": 0.22,
+              "y": 0.5599999999999999
+            },
+            {
+              "id": "glass-tea",
+              "src": "lab/assets/sprites/collections/assets/coffee-tea/v2-glass-tea.webp",
+              "state": "cleaned-glass-tea",
+              "alt": "Nước đổ trước quầy: glass-tea ở nhịp resolution",
+              "x": 0.85,
+              "y": 0.49
+            }
+          ]
         }
       },
-      "visualChanges": [],
+      "visualChanges": [
+        {
+          "layer": "prop",
+          "from": "wet",
+          "to": "cleaned"
+        },
+        {
+          "layer": "actor",
+          "from": "alarmed",
+          "to": "reassured"
+        }
+      ],
       "artReview": {
-        "status": "pending",
-        "reviewerType": null,
-        "reviewEvidence": null,
+        "status": "agent-reviewed",
+        "reviewerType": "agent",
+        "reviewAuthority": "user-delegated",
+        "reviewEvidence": "https://github.com/vanphamvn/yen-nghi-choi/actions/runs/44885011176/artifacts/14699965889",
+        "reviewNotes": "Agent xem screenshot 320, 390, 768, 1440 và 3 pha thực trên Chromium. Painted props và nhân vật tái dùng từ repo; vùng tương tác biển/nước/biên lai là UI overlay. Chưa có background mới riêng, owner review pending.",
         "ownerReviewPending": true
       }
     },
@@ -185,7 +391,7 @@
       "id": "D01-03",
       "day": 1,
       "title": "Hóa đơn khai trương",
-      "status": "planned",
+      "status": "ready",
       "requiredBrief": {
         "establishing": "Màn POS hiện combo lệch giá, khách chỉ vào biên lai và khay tiền",
         "interactive": "Chạm dòng sai, đối chiếu menu và sửa hóa đơn; khách đổi nét mặt",
@@ -194,29 +400,120 @@
       "interactionBrief": "Chạm dòng sai, đối chiếu menu và sửa hóa đơn; khách đổi nét mặt",
       "frames": {
         "establishing": {
-          "background": null,
-          "actors": [],
-          "props": [],
-          "alt": null
+          "background": "lab/assets/room-backdrop.jpg",
+          "alt": "Đối chiếu hóa đơn tại Yên: bối cảnh trước khi thao tác",
+          "actors": [
+            {
+              "id": "cuc-yen",
+              "src": "assets/cuc-yen/sprites/clerk.webp",
+              "state": "checking",
+              "alt": "Cục Yên: checking",
+              "x": 0.72,
+              "y": 0.28
+            }
+          ],
+          "props": [
+            {
+              "id": "menu-card",
+              "src": "lab/assets/sprites/collections/assets/coffee-tea/v2-menu-card.webp",
+              "state": "mismatch-menu-card",
+              "alt": "Đối chiếu hóa đơn: menu-card ở nhịp establishing",
+              "x": 0.15,
+              "y": 0.56
+            },
+            {
+              "id": "glass-tea",
+              "src": "lab/assets/sprites/collections/assets/coffee-tea/v2-glass-tea.webp",
+              "state": "mismatch-glass-tea",
+              "alt": "Đối chiếu hóa đơn: glass-tea ở nhịp establishing",
+              "x": 0.85,
+              "y": 0.7
+            }
+          ]
         },
         "interactive": {
-          "background": null,
-          "actors": [],
-          "props": [],
-          "alt": null
+          "background": "lab/assets/room-backdrop.jpg",
+          "alt": "Đối chiếu hóa đơn tại Yên: góc cận khi người chơi tương tác",
+          "actors": [
+            {
+              "id": "cuc-yen",
+              "src": "assets/cuc-yen/sprites/clerk.webp",
+              "state": "focused",
+              "alt": "Cục Yên: focused",
+              "x": 0.7,
+              "y": 0.3
+            }
+          ],
+          "props": [
+            {
+              "id": "menu-card",
+              "src": "lab/assets/sprites/collections/assets/coffee-tea/v2-menu-card.webp",
+              "state": "checked-menu-card",
+              "alt": "Đối chiếu hóa đơn: menu-card ở nhịp interactive",
+              "x": 0.16,
+              "y": 0.56
+            },
+            {
+              "id": "glass-tea",
+              "src": "lab/assets/sprites/collections/assets/coffee-tea/v2-glass-tea.webp",
+              "state": "checked-glass-tea",
+              "alt": "Đối chiếu hóa đơn: glass-tea ở nhịp interactive",
+              "x": 0.86,
+              "y": 0.7
+            }
+          ]
         },
         "resolution": {
-          "background": null,
-          "actors": [],
-          "props": [],
-          "alt": null
+          "background": "lab/assets/room-backdrop.jpg",
+          "alt": "Đối chiếu hóa đơn tại Yên: cảnh vật dụng và Cục Yên đổi trạng thái sau quyết định",
+          "actors": [
+            {
+              "id": "cuc-yen",
+              "src": "assets/cuc-yen/sprites/delighted.webp",
+              "state": "satisfied",
+              "alt": "Cục Yên: satisfied",
+              "x": 0.72,
+              "y": 0.28
+            }
+          ],
+          "props": [
+            {
+              "id": "menu-card",
+              "src": "lab/assets/sprites/collections/assets/coffee-tea/v2-menu-card.webp",
+              "state": "reconciled-menu-card",
+              "alt": "Đối chiếu hóa đơn: menu-card ở nhịp resolution",
+              "x": 0.15,
+              "y": 0.54
+            },
+            {
+              "id": "glass-tea",
+              "src": "lab/assets/sprites/collections/assets/coffee-tea/v2-glass-tea.webp",
+              "state": "reconciled-glass-tea",
+              "alt": "Đối chiếu hóa đơn: glass-tea ở nhịp resolution",
+              "x": 0.85,
+              "y": 0.6799999999999999
+            }
+          ]
         }
       },
-      "visualChanges": [],
+      "visualChanges": [
+        {
+          "layer": "prop",
+          "from": "mismatch",
+          "to": "reconciled"
+        },
+        {
+          "layer": "actor",
+          "from": "checking",
+          "to": "satisfied"
+        }
+      ],
       "artReview": {
-        "status": "pending",
-        "reviewerType": null,
-        "reviewEvidence": null,
+        "status": "agent-reviewed",
+        "reviewerType": "agent",
+        "reviewAuthority": "user-delegated",
+        "reviewEvidence": "https://github.com/vanphamvn/yen-nghi-choi/actions/runs/44885011176/artifacts/14699965889",
+        "reviewNotes": "Agent xem screenshot 320, 390, 768, 1440 và 3 pha thực trên Chromium. Painted props và nhân vật tái dùng từ repo; vùng tương tác biển/nước/biên lai là UI overlay. Chưa có background mới riêng, owner review pending.",
         "ownerReviewPending": true
       }
     },
@@ -3613,5 +3910,6 @@
         "ownerReviewPending": true
       }
     }
-  ]
+  ],
+  "note": "3 Day 1 incidents have composited painted visual scenes and agent-reviewed browser screenshot evidence; the remaining 87 incidents are still only planned. Owner art approval pending."
 }
