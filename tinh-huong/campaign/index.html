@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#f7f3e9">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <meta name="referrer" content="no-referrer">
+  <meta name="description" content="Một Tháng Không Yên: Ngày 1, ba tình huống liên tiếp tại Yên Coffee & Tea.">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; font-src 'none'; connect-src 'self'; frame-src 'none'; form-action 'none'; base-uri 'none'; object-src 'none'">
+  <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+  <link rel="stylesheet" href="../tuong-tac/styles.css">
+  <link rel="stylesheet" href="day01.css">
+  <script type="module" src="app.mjs"></script>
+  <title>Ngày 1 · Một Tháng Không Yên | Yên Coffee & Tea</title>
+</head>
+<body>
+  <a class="skip" href="#main">Đến câu chuyện</a>
+  <header class="header">
+    <a class="return" href="/tinh-huong/">← Một Ca Không Yên</a>
+    <span class="stamp">YÊN COFFEE &amp; TEA · VISUAL NOVEL</span>
+  </header>
+
+  <main id="main">
+    <div class="intro">
+      <span class="eyebrow">CHƯƠNG MỘT · NGÀY 01 / 30</span>
+      <h1>Ngày đầu <em>chưa yên.</em></h1>
+      <p>Ba ca trực, ba chuyện xảy ra trong cùng một ngày. Chạm vào những vật chứng trong quán trước khi quyết định.</p>
+      <p class="caveat">Mô phỏng hư cấu. An toàn luôn quan trọng hơn điểm số; không thay thế quy trình xử lý sự cố thực tế.</p>
+    </div>
+
+    <ol class="chapter-steps" aria-label="Ba tình huống của Ngày 1" id="chapter-steps">
+      <li data-step="0"><span>08:10 · Sáng</span><strong>Hàng khách</strong></li>
+      <li data-step="1"><span>15:40 · Chiều</span><strong>Nước đổ</strong></li>
+      <li data-step="2"><span>20:10 · Tối</span><strong>Hóa đơn</strong></li>
+    </ol>
+
+    <div id="loading" role="status" class="load-status">Đang chuẩn bị quán Yên…</div>
+    <div class="layout" id="game" hidden>
+      <section class="world-panel" aria-labelledby="incident-title">
+        <div class="world-bar">
+          <span id="scene-number">NGÀY 01 · SÁNG</span>
+          <span id="scene-status">ĐANG QUAN SÁT</span>
+        </div>
+        <div class="world day-world" id="world" role="group" data-phase="establishing" data-incident="D01-01" aria-label="Minh họa tình huống tương tác">
+          <picture class="painted-backdrop">
+            <img id="backdrop" src="../../lab/assets/room-backdrop.jpg" alt="Không gian Yên Coffee & Tea với quầy và khu khách ngồi" width="1586" height="992">
+          </picture>
+          <div class="scene-tone" aria-hidden="true"></div>
+          <div class="day-illustrations" id="illustrations" aria-hidden="true"></div>
+          <div id="targets" class="targets" role="group" aria-label="Vật dụng có thể tương tác trực tiếp"></div>
+          <div class="character-reaction" id="character-reaction" aria-hidden="true"></div>
+          <div class="world-caption" aria-hidden="true">
+            <span id="camera-caption">TOÀN CẢNH · QUẦY</span>
+            <span id="weather-caption">Nắng đầu ngày</span>
+          </div>
+        </div>
+        <p class="world-alt" id="world-alt">Quan sát tình huống trên cảnh.</p>
+        <div class="world-below">
+          <span>Không cần kéo thả. Dùng Tab, Enter hoặc Space nếu bạn chơi bằng bàn phím.</span>
+          <button class="tiny-reset" id="reset-mechanic" type="button">Làm lại thao tác</button>
+        </div>
+      </section>
+
+      <section class="story" id="story" aria-labelledby="incident-title">
+        <span class="folio" id="incident-id">D01-01 · 08:10</span>
+        <h2 id="incident-title" tabindex="-1">Hàng khách đầu tiên</h2>
+        <div class="dialogue-scene" role="group" aria-label="Hội thoại">
+          <strong id="speaker">Người cùng ca</strong>
+          <p id="dialogue">Em đã nhận ba đơn này. Nhờ anh xếp lại phiếu trước khi em bắt đầu pha nhé.</p>
+        </div>
+        <h3 id="prompt">Bạn sẽ làm gì trước?</h3>
+        <p class="goal" id="goal">Chọn phiếu để sắp xếp.</p>
+        <p class="status" id="notice" role="status" aria-live="polite" aria-atomic="true">Chạm vào phiếu để bắt đầu.</p>
+        <div id="choices" role="group" aria-label="Chọn cách xử lý" class="day-choices" hidden></div>
+        <div class="result day-result" id="result" hidden>
+          <strong id="outcome-speaker">Khách</strong>
+          <p id="outcome"></p>
+          <p id="reason" class="reason"></p>
+        </div>
+        <div class="actions" id="actions">
+          <button type="button" class="secondary" id="restart">Chơi lại Ngày 1</button>
+          <button type="button" class="primary" id="recover" hidden>Sửa cách xử lý</button>
+          <button type="button" class="primary" id="continue" hidden>Tiếp tục ca sau</button>
+        </div>
+        <div class="meter-section" aria-label="Chỉ số vận hành mô phỏng">
+          <div class="meter-heading"><strong>Tình hình quán</strong><span>Sau mỗi quyết định</span></div>
+          <div class="metric-row" id="metrics"></div>
+        </div>
+      </section>
+    </div>
+
+    <section id="debrief" hidden class="debrief" aria-labelledby="debrief-title">
+      <span class="eyebrow">KẾT SỔ NGÀY 1</span>
+      <h2 id="debrief-title" tabindex="-1">Ngày đầu đã khép lại.</h2>
+      <p>Những quyết định của bạn đã để lại dấu vết. Một số việc đã xong, một số cần được giải quyết trước ngày mai.</p>
+      <ul id="debrief-list" class="debrief-list"></ul>
+      <p id="tomorrow" class="tomorrow"></p>
+      <details class="history"><summary>Xem lại quyết định trong ba ca</summary><ol id="history"></ol></details>
+      <div class="actions">
+        <button class="primary" id="play-again" type="button">Chơi lại Ngày 1</button>
+        <a href="../" class="back-link">Quay về Một Ca Không Yên</a>
+      </div>
+      <p class="coming-soon">Ngày 2 chưa mở chơi. Trạng thái của Ngày 1 hiện được giữ trong phiên này, không tự lưu vào thiết bị.</p>
+    </section>
+    <p class="bottom">Không tài khoản, không phân tích hành vi, không lưu dữ liệu cá nhân. Mọi chỉ số và phản ứng là tình huống giả lập.</p>
+  </main>
+  <noscript><p class="noscript">Câu chuyện cần JavaScript. <a href="/tinh-huong/">Quay về Một Ca Không Yên.</a></p></noscript>
+</body>
+</html>
