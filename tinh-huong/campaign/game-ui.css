@@ -126,11 +126,24 @@
 #story .day-choice:hover{
   background:linear-gradient(110deg,#fff8e7,#e7edcf);
   border-color:#e6ca88;
-  transform:translateX(2px);
+}
+/* A tap may first trigger :hover in iOS WebKit. Moving the target under
+   the finger can cancel the native click until the user taps again. */
+@media (hover:hover) and (pointer:fine){
+  #story .day-choice:hover{transform:translateX(2px)}
 }
 #story .day-choice:active{
-  transform:translate(2px,2px);
   box-shadow:inset 0 0 0 2px #fff8e6,0 1px 0 #071e18;
+}
+@media (hover:none){
+  #story .day-choice,
+  #story .day-choice:hover,
+  #story .day-choice:active,
+  #story .actions button,
+  #story .actions button:active{
+    transform:none!important;
+    transition:none!important;
+  }
 }
 #story .day-choice:focus-visible,
 #story .actions button:focus-visible,
@@ -283,7 +296,10 @@
   border:2px solid #ad8c57;
   box-shadow:inset 0 0 0 2px #f8e7c1,0 3px 0 #0b211b;
 }
-#story .actions button:active{transform:translateY(2px);box-shadow:none}
+#story .actions button:active{box-shadow:none}
+@media (hover:hover) and (pointer:fine){
+  #story .actions button:active{transform:translateY(2px)}
+}
 #game .scene-exit{background:#f7ebcf;border-color:#ad8c57;box-shadow:0 2px 0 #695133}
 #game .scene-number{background:linear-gradient(#34594a,#204238);border:1px solid rgba(238,210,145,.65);box-shadow:0 2px 0 rgba(7,22,18,.65)}
 
@@ -428,4 +444,21 @@
   opacity:0;
   visibility:hidden;
   filter:none;
+}
+
+/* Native taps on iOS Safari, Facebook/Instagram webviews and Android.
+   Avoid browser double-tap zoom/delayed click and oversized tap highlights. */
+#story .day-choice,
+#story .actions button,
+#debrief .actions button,
+#game .scene-exit{
+  touch-action:manipulation;
+  -webkit-tap-highlight-color:transparent;
+  user-select:none;
+  -webkit-user-select:none;
+  cursor:pointer;
+}
+#story .day-choice .choice-index,
+#story .day-choice .choice-text{
+  pointer-events:none;
 }
