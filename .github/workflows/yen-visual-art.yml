@@ -7,6 +7,7 @@ on:
       - "docs/visual-novel/ART-BIBLE.md"
       - "tinh-huong/art-reference/**"
       - "tools/check-yen-visual-art.mjs"
+      - "tools/optimize-yen-art.mjs"
       - "tests/yen-visual-art.test.mjs"
       - "tests/yen-art-reference.spec.mjs"
       - "playwright.yen-art.config.mjs"
@@ -18,6 +19,7 @@ on:
       - "docs/visual-novel/ART-BIBLE.md"
       - "tinh-huong/art-reference/**"
       - "tools/check-yen-visual-art.mjs"
+      - "tools/optimize-yen-art.mjs"
       - "tests/yen-visual-art.test.mjs"
       - "tests/yen-art-reference.spec.mjs"
       - "playwright.yen-art.config.mjs"
@@ -55,6 +57,12 @@ jobs:
           else
             npx playwright install --with-deps chromium
           fi
+      - name: Optimize existing painted sources with browser-native WebP and fallback
+        run: |
+          node tools/optimize-yen-art.mjs --input lab/assets/cup.webp --output /tmp/yen-art-cup-test --alpha --max-width 160
+          node tools/optimize-yen-art.mjs --input lab/assets/room-backdrop.jpg --output /tmp/yen-art-room-test --max-width 800
+          test -s /tmp/yen-art-cup-test.webp && test -s /tmp/yen-art-cup-test.png
+          test -s /tmp/yen-art-room-test.webp && test -s /tmp/yen-art-room-test.jpg
       - run: npx playwright test --config playwright.yen-art.config.mjs
       - name: Preserve actual image reference screenshots
         if: always()
