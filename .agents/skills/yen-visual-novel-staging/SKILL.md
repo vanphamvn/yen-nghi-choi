@@ -1,0 +1,41 @@
+---
+name: yen-visual-novel-staging
+description: Mandatory spatial and painterly composition rules for Yên visual-novel scenes. Use whenever positioning Cục Yên, employees, customers, furniture, equipment, or incident props on a café background, or changing responsive crop/depth.
+---
+
+# Yên visual novel · Scene staging
+
+## Scope and prerequisites
+
+Applies to \`tinh-huong/campaign/**\`, future 30-day visual-novel chapters and scene asset changes. Read **this file**, [SCENE-SPATIAL-RULES.md](../../../docs/visual-novel/SCENE-SPATIAL-RULES.md), \`docs/visual-novel/ART-BIBLE.md\`, \`DESIGN.md\`, and \`.agents/skills/yen-sprite-style/SKILL.md\` for any visual asset/position change.
+
+This concerns the **visual novel with immediate dialogue choices**, not the archived Phaser 2D game. Reusing an existing painted static asset does not restart the Phaser roadmap. Do not add prop hotspots or drag interactions.
+
+## Required process
+
+1. **Inspect the actual background and art, not filenames.** View the room background at real crop size; locate the wall/floor boundary, counter surface, floor path and obstructions. Inspect a staff sprite's first 256×320 frame, a customer sprite and Cục Yên next to the props at runtime scale. Source spritesheets must be **cropped or displayed as one frame**, never rendered as an entire 4×4 sheet.
+2. **Pick one story focal prop.** The concrete physical incident must be visible (tickets/queue, spill/wet floor, receipt/POS). People and furniture support that object instead of competing with it.
+3. **Place using physical contact anchors.** Each prop declares \`surface\` (\`floor\`, \`counter\`, \`table\`, \`held\`) and \`anchor\` (where its feet or base make contact). Each scene declares the relevant surface and the supporting furniture. Never treat \`x,y\` as the picture center. No floating espresso machine or character foot above the floor.
+4. **Require a social scene.** The scene needs one employee, one customer and Cục Yên. Employee behind/service-side counter; customer in front or near the incident; Cục Yên anchored to floor, not on a tabletop. When a scene has no café counter, show the staff walking near the incident.
+5. **Use perspective and correct overlap.** Keep human-relative size within the scene, foreground characters larger than rear characters where appropriate. Staff can be partially hidden behind the painted counter, but their head and action must remain identifiable. The coffee machine's base rests on the counter surface. Use z-order for occlusion: back staff → counter → on-counter props → foreground customers/Cục Yên → interface.
+6. **Keep stage content inside the upper half** on portrait screens. On mobile portrait the world remains exactly 50% of \`100dvh\`, with dialogue/buttons in the lower 50%. No clipping of the three 44px answers, “Tiếp tục”, “Khắc phục” or exit. Crop must preserve all characters and the focal incident.
+7. **Show meaningful outcomes.** Choice changes Cục Yên expression, and at least one relevant character placement or focal prop state. Avoid misleading visual claims: if the spilled liquid has not been cleaned, it must still be visible; if the bill was not corrected, the original receipt remains.
+8. **Do not declare artwork approved solely from tests.** The current painted source assets are reused with agent-only visual review; owner review pending. A blue-tinted shadow is not a fully painted puddle and must be documented as temporary where used, never passed off as a finished illustration.
+
+## Code contract
+
+Store physical layout and roles in \`tinh-huong/campaign/scene-composition.mjs\`, not ad hoc \`x,y,width\` on incident scripts. The engine keeps pure game state in \`day01.mjs\`. Each composition object contains \`background\`, \`layers\`, \`role\`, \`surface\`, \`contact\`, \`size\`, \`depth\`, \`src\` and \`artKind\`; sheet actors have an explicit selected frame. Use \`validateSceneComposition()\` to enforce roles and surfaces.
+
+Standard anchors for the *current* painted café background, **not universal positions for all future art**:
+- Floor starts visually near 55% vertical; feet for foreground customers/Cục Yên near 90–97%, staff behind counter near 82–89%.
+- Counter prop artwork sits on the floor with bottom near 77–83%; its top edge defines the machine/receipt contact plane near 62–68%.
+- A spill belongs near the walkway floor (78–92%), not on the counter. A receipt/menu belongs on the counter; a coffee machine's footprint belongs on its surface.
+
+These percentages are a starting calibration. Always inspect browser screenshots and adjust for actual artwork, device crop and scene focus.
+
+## Mandatory evidence and test gate
+
+- Unit: \`node --test tests/yen-campaign-scene-composition.test.mjs\` checks all scene layers, role inventory, known asset paths, contact constraints, feet placement and depth order.
+- Browser: \`npx playwright test --config playwright.yen-day01.config.mjs\` checks all three scenes and outcome states at 320×480, 320×568, 360×640, 390×844, 768×1024 and landscape/desktop, one-screen no overflow, 44px buttons and loaded sheet backgrounds.
+- Inspect real screenshots at least 390×844 and 1440×900 with **two staff poses and the focal prop at runtime scale**. Capture what still needs repainting. Never claim human approval.
+- PR → green CI if available → merge → verify exact production revision and the live route. If hosted CI cannot execute, document independent test evidence and limitation precisely.
