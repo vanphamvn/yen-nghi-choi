@@ -135,6 +135,7 @@ for(const width of [320,360,390,768,1440]){
   await page.emulateMedia({reducedMotion:"reduce"});
   await open(page);
   const check=async()=>{
+   await expect.poll(()=>page.evaluate(()=>[...document.images].every(img=>img.complete&&img.naturalWidth>0)),{timeout:15000}).toBe(true);
    const info=await page.evaluate(()=>({
     overflow:document.documentElement.scrollWidth>window.innerWidth,
     images:[...document.images].map(img=>({src:img.getAttribute("src"),loaded:img.complete&&img.naturalWidth>0})),
