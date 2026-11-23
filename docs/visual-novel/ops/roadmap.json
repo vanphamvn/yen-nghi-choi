@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "epic": 218,
+  "note": "Machine-readable ticket order for the 30-day visual-novel epic. Read by tools/vn-next-work.mjs and the vn-coordinator skill. Incident status lives in docs/visual-novel/episodes.json; this file only holds ticket order, day ranges and file ownership. Do not mark a ticket done here: close it on GitHub after its acceptance evidence exists.",
+  "slicePolicy": "One playable day per PR (3 incidents). Never batch a whole pack into one PR.",
+  "tickets": [
+    { "id": "VN-F04", "issue": 222, "kind": "pilot", "days": [1, 1], "dependsOn": [] },
+    { "id": "VN-P01", "issue": 223, "kind": "story-pack", "days": [2, 7], "dependsOn": ["VN-F04"] },
+    { "id": "VN-P02", "issue": 224, "kind": "story-pack", "days": [8, 14], "dependsOn": ["VN-P01"] },
+    { "id": "VN-P03", "issue": 225, "kind": "story-pack", "days": [15, 21], "dependsOn": ["VN-P02"] },
+    { "id": "VN-P04", "issue": 226, "kind": "story-pack", "days": [22, 28], "dependsOn": ["VN-P03"] },
+    { "id": "VN-P05", "issue": 227, "kind": "endings", "days": [29, 30], "dependsOn": ["VN-P04"] },
+    { "id": "VN-F05", "issue": 228, "kind": "engine", "days": null, "dependsOn": ["VN-F04"] },
+    { "id": "VN-F06", "issue": 229, "kind": "release-gate", "days": null, "dependsOn": ["VN-P05", "VN-F05"] }
+  ],
+  "ownership": {
+    "vn-story-writer": ["tinh-huong/campaign/days/dayNN.mjs"],
+    "vn-scene-stager": ["tinh-huong/campaign/scene-composition.mjs"],
+    "vn-art-director": ["docs/visual-novel/art-manifest.json", "docs/visual-novel/art-briefs/", "docs/visual-novel/art-reviews/"],
+    "vn-engine-dev": ["tinh-huong/campaign/engine.mjs", "tinh-huong/campaign/app.mjs", "tinh-huong/campaign/progression.mjs", "tinh-huong/campaign/days/index.mjs", "tests/yen-campaign-*.test.mjs", "playwright.yen-*.config.mjs"],
+    "vn-qa": ["docs/visual-novel/qa/"],
+    "coordinator": ["docs/visual-novel/episodes.json", "docs/visual-novel/ROADMAP-30-NGAY.md", "docs/visual-novel/ops/roadmap.json"]
+  },
+  "sharedFiles": "scene-composition.mjs, art-manifest.json and episodes.json are shared across days: only one day slice may edit them at a time. The coordinator serialises those edits."
+}
