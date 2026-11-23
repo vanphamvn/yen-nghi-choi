@@ -32,6 +32,20 @@ Run `node game/preview-2d/tools/audit-art-style.mjs` and the game contract tests
 
 For user-facing gameplay changes, a GitHub PR is **not** a finished production release. Verify exact commit and READY status of the production target, provide the playable URL, or explicitly report deployment blocked.
 
+## Netlify Preview game tap safety (21/11/2026)
+
+Interactive game review links should append `?ntl-drawer-state=hidden` to the **Deploy Preview URL**. Netlify's injected 48px-wide-bottom iframe Drawer was directly observed to intercept `Tiếp tục ca sau` taps; a first touch reaches the game once the Drawer is disabled. Do not merge to production before owner preview approval, and do not confuse overlay interception with bugs in the game's own click handlers.
+
+## Netlify-only deployments (21/11/2026)
+
+Yên is deployed and previewed on **Netlify only**. Do not initiate Vercel deployments, create Vercel PR previews or treat a Vercel status check as release evidence. The Vercel project `yen-nghi-choi` has Ignored Build Step set to `exit 0`; `vercel.json` sets `git.deploymentEnabled: false` to disable automatic Git deployments for every branch, with `ignoreCommand: "exit 0"` as a second safety mechanism. Existing Vercel domains/deployments can remain accessible but are no longer a release target. Continue to verify the exact SHA/READY status of Netlify Preview before owner review, and Netlify production after authorized merge. Do not disable or delete the Vercel project to achieve this.
+
+GitHub Actions runner startup failures (empty runner name, zero executed steps, immediate failure and missing logs) are an account/runner provisioning blocker, not a passed or failed application test. Do not suppress GitHub Actions failures, weaken assertions or claim QA passed; inspect Actions usage/billing/runner eligibility and rerun CI when runner access is restored.
+
+## Visual novel preview-first approval and choice visibility (21/11/2026)
+
+For `/tinh-huong/campaign/`, follow the owner-directed sequence: update rules/skill if needed → implement UI on a feature branch → **deploy and share a real Netlify Preview link** → **wait for explicit owner approval** → only then perform QA, merge or production deployment. Don't auto-merge this preview. Read `.agents/skills/yen-ui-craft/SKILL.md` for the story HUD hierarchy: all three choices must fit within the lower portrait half before any XP/reward panel; generic speaker label “Người cùng ca” is not part of the UI.
+
 ## Active visual novel scene-composition rule
 
 For all work on `/tinh-huong/campaign/` or future illustrated `Một Tháng Không Yên` scenes, **read `.agents/skills/yen-visual-novel-staging/SKILL.md` and `docs/visual-novel/SCENE-SPATIAL-RULES.md` before positioning characters or props**. Cục Yên, employees and customers must stand on the painted floor; coffee equipment and receipts require a painted support surface. Layout coordinates are physical *contact anchors*, not arbitrary image centers. Use `tinh-huong/campaign/scene-composition.mjs` as the source of truth for roles, z-order and furniture-relative y positions, and run `tests/yen-campaign-scene-composition.test.mjs` plus visual browser QA. Do not add prop manipulation to this choice-driven visual novel or treat a reused archived art asset as an instruction to resume Phaser.

@@ -60,6 +60,40 @@ Run `node tools/audit-ui-design.mjs`, the relevant existing Node tests, and Play
 - Reflection input stays local to the current page and is optional; do not persist it.
 - Present effects as **possible user experiences**, not medical outcomes. Provide a quiet exit path.
 
+## Netlify Deploy Preview overlay and blocked next-shift button (confirmed)
+
+On 21/11/2026 PR #241, 24/24 immediate `Tiếp tục ca sau` taps failed in an iPhone-like browser with the ordinary Deploy Preview URL. The hit target was **not the game button**, but Netlify's injected `<iframe title="Netlify Drawer">` occupying the bottom **48 CSS px** of the viewport. The continue button occupied part of that strip. The exact same first tap succeeded when loading `?ntl-drawer-state=hidden`, which is Netlify's documented official option for hiding its feedback drawer.
+
+**Rules:**
+- Share interactive Netlify game previews with the official query parameter `?ntl-drawer-state=hidden` to keep reviewer chrome from blocking CTA targets. This is not a fix to game input events; do not add more touch event hacks to solve a third-party iframe intercept.
+- On this game page, disable pointer interception by BOTH the injected Netlify Drawer iframe AND its outer `[data-netlify-deploy-id]` wrapper in CSS as a fallback for the unmodified Preview URL. The wrapper still intercepted taps after the iframe alone was set to `pointer-events:none`. Do not alter the real game action layout, XP, half-screen proportions or production navigation to accommodate a Preview-only vendor control.
+- When diagnosing an apparently inert tap, always inspect `document.elementFromPoint()` at the center of the visible button **after the state transition**. A visible button does not guarantee it is the top hit target.
+- The preview gate remains: update rule/skill, implement the minimal fix, confirm Netlify Preview deployment and send link, stop for owner retest; full QA and merge only with explicit approval.
+
+## Boot and first-tap reliability in Facebook/Safari webviews
+
+Reported on Netlify PR #241: buttons may look ready immediately after a new page load/reload but fail to react for several taps. Repeated initial tap diagnosis in Chromium (including CPU/network throttling) was successful; **the exact Facebook/iOS failure is not yet reproduced**, so avoid attributing it definitively to hover or one specific event.
+
+- The fixed 50/50 game must use **stable viewport height** (`100svh` where supported, with a fallback), not dynamic `100dvh` for the main interactive grid. Mobile browser chrome can alter `dvh` during the first seconds and move hit targets under the finger.
+- Never display **apparently actionable** story buttons before modules, scenario catalog, listeners and initial layout have settled. Use a short, clearly identified loading state; replace it with choices only once initialized. Do not rely on first paint or a static HTML label as proof of interactivity. Loading must not hide errors or take indefinitely.
+- Accept a native `click` for keyboard/mouse/assistive tech. For touch browsers, support a carefully guarded short touch gesture and dedupe it against `pointerup` and the synthesized click. Track the original touch target/position so a browser toolbar reflow does not silently cancel a legitimate short tap. Do not trigger a choice on `touchstart`, drag or `touchcancel`.
+- Avoid layout-changing hover/active transforms and avoid fixed overlays intercepting buttons. Keep three choices fully visible in the lower half. After each successful action, transition visibly and synchronously. Never silently swallow an exception without visible error feedback.
+- **Owner-preview gate remains in force:** implement on PR #241, wait for Netlify Preview success, share the updated link, stop for owner retest on iPhone/Facebook. Only after approval run the full independent QA/merge/production sequence.
+
+## Reliable single-tap actions on iOS / in-app browsers
+
+The owner observed that a visual-novel button can appear inert on the first tap but activate after repeated taps (21 Nov 2026, Netlify Preview #241). CSS touch `:hover` and `:active` must **never translate or move a tappable target beneath a finger**; confine movement-style hover to `(hover: hover) and (pointer: fine)`. On `(hover: none)`, taps may change color or inset shadows but not geometry. All decision and continue/recover/replay buttons require `touch-action: manipulation`, stable minimum 44px targets, and a synchronous visual state transition from a successful action. Do not let an overlay steal pointer events from the story controls. Avoid mobile double-activation (touch pointerup followed by synthetic click) and retain keyboard/screen-reader activation through semantic buttons.
+
+If a platform preview toolbar overlaps the page, log this as an external overlay and provide safe-area/layout resilience; do not claim CSS changes fix a third-party browser toolbar. Once preview feedback is approved, run touch-pointer tests in iPhone-like viewports, quick taps, keyboard and a full walkthrough with real screenshots before merge.
+
+## Visual-novel dialogue hierarchy and owner preview gate
+
+For `/tinh-huong/campaign/` on portrait phones, the painted stage owns the **upper 50%**, and the story/game HUD owns the **lower 50%**. Content priority in the lower half is: **the situation, every answer (all three, at least 44px tap height), then rewards**. Never cover answer buttons with XP, inventory, floating panels, ribbons, fixed-position badges, or other UI. During the **observe/choose** phase, hide the optional XP/rank card if it competes with choices; show the XP/rank reward card after a decision and in the day debrief. Do not force a scroll to expose an answer. Treat 320×480, 375×667, 390×660, 390×844 and short landscape as required regression sizes when QA is authorized.
+
+Avoid generic speaker nameplates such as “Người cùng ca”. Narration and dialogue should be immediately readable, without extra forms, duplicate instructions, or status/debug labels. Remove the unused DOM and JS bindings when removing a nameplate, rather than hiding a single text value.
+
+**Owner-directed preview-first workflow (2026-11-21):** when the owner requests changes to these game scenes, apply relevant rules/skills first, implement the UI on an unmerged branch, publish a **fresh Netlify Deploy Preview**, and send its verified URL **before** QA, merging or production rollout. Stop and await explicit owner approval. The preview's build-status confirmation is not an art review or post-approval QA gate. Only after approval run QA, handle findings, then merge and verify production. Do not imply a preview was approved just because it deployed.
+
 ## Mini-game acceptance template
 
 For each new Yên Lab tool, record: **name and goal**, underlying technique and source, intended audience / cautions, 1–5 minute loop, full interaction states, reduced-motion equivalent, accessibility controls, privacy behavior, mobile screenshots, browser test evidence and deployment SHA. A calming animation without real interaction does **not** meet the game/tool acceptance criterion.
@@ -69,3 +103,12 @@ For each new Yên Lab tool, record: **name and goal**, underlying technique and 
 Return the exact changed paths, PR/commit, meaningful test results, real screenshots or URLs when available, limitations and deployment status. Avoid a generic UI quality score without inspection evidence.
 
 **References:** `references/RESEARCH-NOTES.md` and `references/QA-CHECKLIST.md`. External repos are inspiration and research, not silently installed packages or automatic permission to copy source.
+
+## Netlify Deploy Preview iframe collision: do not mask it in QA
+
+An observed 24/24 immediate-Continue touch failure (21 Nov 2026) exposed a provider iframe over the button. The campaign's static HTML contains no iframe, but Netlify can inject a fixed review Drawer into Deploy Previews, typically inside `[data-netlify-deploy-id]`. This is a **hit-target obstruction**, not an event-handler timing problem.
+
+- On the one-screen campaign only, hide the provider-specific injected Drawer wrapper through `game-ui.css`; never disable all iframes globally and never raise the game's z-index to arbitrary huge values.
+- Prefer disabling the Netlify Drawer in the site's Collaboration tools settings for a permanent platform-side fix. A clean preview can also be tested using `?ntl-drawer-state=hidden`.
+- Browser tests must **not delete** `[data-netlify-deploy-id]` to make clicks pass. Reproduce a fixed high-z-index wrapper with an iframe, check `document.elementFromPoint()` over **Tiếp tục**, and require 24/24 first taps to advance D01-01 to D01-02 on mobile.
+- Keep the preview-first owner gate. Unit/browser test implementation does not constitute a passed real-device QA run; don't claim iOS Facebook confirmation, merge, or production until explicitly approved.

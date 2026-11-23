@@ -9,7 +9,7 @@ const M="/assets/cuc-yen/sprites/";
 export const VISUAL_ASSET_DIMENSIONS=Object.freeze({
  backdrop:[1586,992],counter:[768,195],staff:[1024,1280],guest:[1024,1280],
  mascot:[800,800],espresso:[256,262],tray:[367,161],pitcher:[207,190],
- tea:[249,177],menu:[274,212],paper:[83,91],wetFloor:[181,50]
+ tea:[249,177],menu:[274,212],paper:[83,91],wetFloor:[220,76]
 });
 
 export const VISUAL_ASSETS=Object.freeze({
@@ -24,7 +24,7 @@ export const VISUAL_ASSETS=Object.freeze({
   tea:C+"v2-glass-tea.webp",
   menu:C+"v2-menu-card.webp",
   paper:S+"paper-note.webp",
-  wetFloor:S+"shadow.webp" // temporary painted shadow tinted blue, not finished water artwork
+  wetFloor:"/tinh-huong/campaign/assets/watercolor-floor-puddle.webp" // transparent hand-painted organic spill
 });
 
 const layer=(id,role,asset,surface,x,y,size,depth,extra={})=>({
@@ -33,7 +33,7 @@ const layer=(id,role,asset,surface,x,y,size,depth,extra={})=>({
  ...extra
 });
 const counter=(x,y,size)=>layer("counter","counter","counter","floor",x,y,size,28,{footOffset:100});
-const employee=(x,y,size)=>layer("staff","staff","staff","floor",x,y,size,12,{kind:"sheet",frame:0,footOffset:94});
+const employee=(x,y,size,depth=12)=>layer("staff","staff","staff","floor",x,y,size,depth,{kind:"sheet",frame:0,footOffset:94});
 const guest=(x,y,size)=>layer("customer","customer","guest","floor",x,y,size,53,{kind:"sheet",frame:0,footOffset:94});
 const yen=(x,y,size)=>layer("cuc-yen","mascot","mascot","floor",x,y,size,56,{footOffset:92});
 const prop=(id,asset,surface,x,y,size,depth,extra={})=>layer(id,"prop",asset,surface,x,y,size,depth,extra);
@@ -66,19 +66,19 @@ export const SCENE_COMPOSITIONS=Object.freeze({
   focusId:"spill",
   description:"Bình nghiêng và sàn ướt ngay lối đi; nhân viên rời quầy, khách đi gần đó và Cục Yên đứng cạnh vũng nước",
   layers:[
-   employee(40,93,21),
+   employee(46,95,17,52),
    counter(24,80,45),
    prop("espresso","espresso","counter",14,68,12,34,{footOffset:90}),
-   focus("spill","wetFloor","floor",64,91,34,43,{footOffset:91,tint:"wet",rotation:-5}),
-   focus("pitcher","pitcher","floor",63,84,14,45,{rotation:-42,footOffset:90}),
-   guest(86,96,23),
-   yen(47,96,21)
+   focus("spill","wetFloor","floor",69,92,23,43,{footOffset:96,rotation:-2}),
+   focus("pitcher","pitcher","floor",63,86,10,45,{rotation:-48,footOffset:90}),
+   guest(90,96,19),
+   yen(19,96,17)
   ],
   outcomeChanges:{
-    clean:{"spill":{state:"dry"},"pitcher":{rotation:0},"customer":{x:89,frame:1}},
+    clean:{"spill":{state:"dry"},"pitcher":{rotation:0},"customer":{x:90,frame:1}},
     later:{"spill":{state:"wet-warning"},"customer":{x:90,frame:1}},
-    open:{"spill":{state:"unsafe"},"customer":{x:80,frame:1}},
-    recovered:{"spill":{state:"dry"},"pitcher":{rotation:0},"customer":{x:89,frame:1}}
+    open:{"spill":{state:"unsafe"},"customer":{x:89,frame:1}},
+    recovered:{"spill":{state:"dry"},"pitcher":{rotation:0},"customer":{x:90,frame:1}}
   }
  },
  "D01-03":{
@@ -121,6 +121,27 @@ export function getSceneComposition(id,outcome){
  return {id,description:scene.description,background:VISUAL_ASSETS[scene.backdrop],focusId:scene.focusId,layers};
 }
 
+// Approximate painted (nontransparent) horizontal footprints for the cropped
+// front actor frames. These are narrower than the canvas boxes; position checks
+// must not treat an entire transparent 4×4 cell as the painted silhouette.
+const PAINTED_ACTOR_WIDTH={staff:.84,customer:.83,mascot:.85};
+export function paintedActorFootprint(item){
+ const paint=PAINTED_ACTOR_WIDTH[item.role];
+ if(!paint)throw new Error("Not an actor: "+item.id);
+ const w=item.size*paint;
+ return {left:item.contact.x-w/2,right:item.contact.x+w/2};
+}
+export function actorSeparation(scene){
+ const actors=scene.layers.filter(item=>PAINTED_ACTOR_WIDTH[item.role]);
+ const collisions=[];
+ for(let i=0;i<actors.length;i++)for(let j=i+1;j<actors.length;j++){
+  const a=paintedActorFootprint(actors[i]),b=paintedActorFootprint(actors[j]);
+  const gap=Math.max(b.left-a.right,a.left-b.right);
+  if(gap<2)collisions.push(actors[i].id+" touches "+actors[j].id);
+ }
+ return collisions;
+}
+
 export function validateSceneComposition(id,scene=SCENE_COMPOSITIONS[id]){
  const errors=[];
  if(!scene){return["missing scene "+id];}
@@ -139,7 +160,11 @@ export function validateSceneComposition(id,scene=SCENE_COMPOSITIONS[id]){
     errors.push("invalid contact "+item.id);
   if(["staff","customer","mascot"].includes(item.role)&&item.surface!=="floor")errors.push("actor must stand on floor: "+item.id);
   if(["staff","customer","mascot"].includes(item.role)&&item.contact.y<(item.role==="staff"?68:80))errors.push("actor feet above floor: "+item.id);
-  if(item.role==="staff"&&(item.depth>=28||item.contact.x>78))errors.push("staff not behind counter: "+item.id);
+  if(item.role==="staff"&&item.contact.x>78)errors.push("staff outside service area: "+item.id);
+  if(item.role==="staff"&&id!=="D01-02"&&item.depth>=28)
+    errors.push("counter-service staff must remain behind counter: "+item.id);
+  if(item.role==="staff"&&id==="D01-02"&&item.depth<=28)
+    errors.push("staff attending the spill must be in front of the counter: "+item.id);
   if(item.role==="customer"&&item.depth<=28)errors.push("customer should be in front: "+item.id);
   if(item.role==="mascot"&&item.depth<=28)errors.push("Cuc Yen should stand in front on the floor: "+item.id);
   if(item.asset==="espresso"&&item.surface!=="counter")errors.push("espresso machine must be on counter: "+item.id);
@@ -153,11 +178,27 @@ export function validateSceneComposition(id,scene=SCENE_COMPOSITIONS[id]){
  const visitor=layers.find(item=>item.role==="customer");
  if(staff&&visitor&&staff.size>visitor.size*.92)
   errors.push("rear barista too large compared with foreground customer");
+ // The same silhouette separation requirement applies to all three day-one scenes.
+ errors.push(...actorSeparation(scene).map(collision=>"visible actor overlap: "+collision));
+ if(id==="D01-02"){
+  const puddle=layers.find(item=>item.id==="spill"),pitcher=layers.find(item=>item.id==="pitcher");
+  const mascot=layers.find(item=>item.role==="mascot");
+  if(puddle&&puddle.asset!=="wetFloor")errors.push("puddle must use transparent painted floor asset");
+  if(pitcher&&mascot&&Math.abs(pitcher.contact.x-mascot.contact.x)<(pitcher.size+mascot.size)/2+4)
+    errors.push("pitcher overlaps Cục Yên");
+ }
  for(const role of ["staff","customer","mascot","counter","focus"]){
   if(!roles.get(role))errors.push("missing "+role+" in "+id);
  }
  if(!ids.has(scene.focusId))errors.push("focal object not on stage");
  if(layers.some(x=>x.surface==="counter")&&!roles.has("counter"))errors.push("counter-top item without furniture");
+ // Keep changed guest/employee poses in nonoverlapping physical lanes too.
+ for(const [outcome,changes] of Object.entries(scene.outcomeChanges||{})){
+  const placed={layers:layers.map(item=>({
+    ...item,contact:{...item.contact,x:changes[item.id]?.x??item.contact.x}
+  }))};
+  errors.push(...actorSeparation(placed).map(collision=>"visible actor overlap after "+outcome+": "+collision));
+ }
  for(const [outcome,changes] of Object.entries(scene.outcomeChanges||{})){
   for(const [key,patch] of Object.entries(changes)){
    if(!ids.has(key))errors.push("outcome "+outcome+" targets missing layer "+key);

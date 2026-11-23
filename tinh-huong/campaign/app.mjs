@@ -11,6 +11,79 @@ const node = (tag, className, content = "") => {
   if (content) element.textContent = content;
   return element;
 };
+// Native WebKit click can be lost when a touch triggers :hover before the
+// button moves out from under the finger. A touch pointer-up activates the
+// button immediately; a subsequent synthetic click is suppressed. Mouse,
+// keyboard and assistive-technology clicks continue through the click handler.
+// Do not rely on a synthesized click after a WebKit toolbar resize.
+// A short, single-finger touch gesture can still complete if a pointer
+// sequence is cancelled by a view reflow; mouse/keyboard keep native click.
+function reportGameInputError(error){
+  console.error("Không xử lý được lượt chơi",error);
+  const message=$("interaction-error");
+  if(message){
+    message.textContent="Lượt chơi chưa thực hiện được. Vui lòng thử lại.";
+    message.hidden=false;
+  }
+}
+function bindGamePress(button,action){
+  let activePointer=null;
+  let activeTouch=null;
+  let lastTouchActivation=-Infinity;
+  const invoke=()=>{
+    try{action()}catch(error){reportGameInputError(error)}
+  };
+  const activateTouch=event=>{
+    if(button.disabled||button.hidden)return;
+    if(performance.now()-lastTouchActivation<350)return;
+    lastTouchActivation=performance.now();
+    event.preventDefault();
+    invoke();
+  };
+  button.addEventListener("touchstart",event=>{
+    if(event.touches.length!==1)return;
+    const touch=event.changedTouches[0];
+    activeTouch={
+      id:touch.identifier,x:touch.clientX,y:touch.clientY,
+      time:performance.now()
+    };
+  },{passive:true});
+  button.addEventListener("touchcancel",()=>{activeTouch=null},{passive:true});
+  button.addEventListener("touchend",event=>{
+    if(!activeTouch)return;
+    const touch=[...event.changedTouches].find(t=>t.identifier===activeTouch.id);
+    if(!touch)return;
+    const initial=activeTouch;
+    activeTouch=null;
+    const dx=touch.clientX-initial.x,dy=touch.clientY-initial.y;
+    // A drag/scroll is not a game decision.
+    if(dx*dx+dy*dy>24*24||performance.now()-initial.time>850)return;
+    activateTouch(event);
+  },{passive:false});
+  button.addEventListener("pointerdown",event=>{
+    if(event.isPrimary&&["touch","pen"].includes(event.pointerType))
+      activePointer=event.pointerId;
+  },{passive:true});
+  button.addEventListener("pointercancel",event=>{
+    if(activePointer===event.pointerId)activePointer=null;
+  },{passive:true});
+  button.addEventListener("pointerup",event=>{
+    if(activePointer!==event.pointerId||!["touch","pen"].includes(event.pointerType))return;
+    activePointer=null;
+    const rect=button.getBoundingClientRect();
+    if(event.clientX<rect.left||event.clientX>rect.right||
+       event.clientY<rect.top||event.clientY>rect.bottom)return;
+    activateTouch(event);
+  });
+  button.addEventListener("click",event=>{
+    if(performance.now()-lastTouchActivation<650){
+      event.preventDefault();
+      return;
+    }
+    if(!button.disabled&&!button.hidden)invoke();
+  });
+}
+
 const SPRITES = {
   relieved: "/assets/cuc-yen/sprites/delighted.webp",
   unsure: "/assets/cuc-yen/sprites/shy.webp",
@@ -20,6 +93,36 @@ const SPRITES = {
 const chapterById = Object.fromEntries(DAY01.map(item => [item.id, item]));
 let catalog = null;
 let state = null;
+let repositionSprites=()=>{};
+let resizeFrame=0;
+
+// The first game paint is not proof the browser's touch viewport is stable.
+// Keep choices undisplayed until event handlers and the first layout are ready.
+function revealChoicesWhenReady(){
+  if(document.documentElement.dataset.inputReady==="true")return;
+  let stableFrames=0;
+  let previousWidth=window.visualViewport?.width??innerWidth;
+  let previousHeight=window.visualViewport?.height??innerHeight;
+  const began=performance.now();
+  function tick(){
+    const width=window.visualViewport?.width??innerWidth;
+    const height=window.visualViewport?.height??innerHeight;
+    const story=$("story").getBoundingClientRect();
+    const stable=story.height>0&&Math.abs(width-previousWidth)<1&&
+      Math.abs(height-previousHeight)<1;
+    stableFrames=stable?stableFrames+1:0;
+    previousWidth=width;previousHeight=height;
+    // Set a hard ceiling so a noisy in-app webview cannot keep the game locked.
+    if(stableFrames>=6||performance.now()-began>1500){
+      document.documentElement.dataset.inputReady="true";
+      $("controls-loading").hidden=true;
+      return;
+    }
+    requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+}
+
 
 function chapter() {
   const current = currentIncident(catalog, state);
@@ -34,6 +137,7 @@ function start() {
   $("game").hidden = false;
   $("loading").hidden = true;
   render();
+  revealChoicesWhenReady();
   $("incident-title").focus({ preventScroll: true });
 }
 
@@ -116,6 +220,7 @@ function incidentVisuals(entry) {
       el.style.top=point.y+"px";
     }
   };
+  repositionSprites=positionSprites;
   positionSprites();
   requestAnimationFrame(positionSprites);
 
@@ -133,11 +238,11 @@ function drawChoices(entry) {
     button.dataset.choice = option.id;
     button.append(node("span", "choice-index", String(index + 1).padStart(2, "0")),
       node("span", "choice-text", option.label));
-    button.addEventListener("click", () => {
-      if (state.phase !== "observe") return;
-      state = choose(catalog, DAY01_SCRIPTS, state, option.id);
+    bindGamePress(button, () => {
+      if(state.phase!=="observe")return;
+      state=choose(catalog,DAY01_SCRIPTS,state,option.id);
       render();
-      $("continue").focus({ preventScroll: true });
+      $("continue").focus({preventScroll:true});
     });
     choices.append(button);
   }
@@ -166,6 +271,7 @@ function drawShopLevel(panel,{daySummary=false}={}){
 }
 
 function render() {
+  $("interaction-error").hidden=true;
   if (state.dayIndex !== 0) {
     showDebrief();
     return;
@@ -176,7 +282,6 @@ function render() {
   $("actions").hidden = !decided;
   $("scene-number").textContent = "Ngày 1 · " + entry.slot + " · " + entry.time + " (" + (state.incidentIndex + 1) + "/3)";
   $("incident-title").textContent = entry.title;
-  $("speaker").textContent = decided ? state.pending.reaction.speaker : entry.speaker;
   $("dialogue").textContent = decided ? state.pending.reaction.line : entry.cue;
   $("prompt").textContent = decided ? "Chuyện tiếp theo?" : entry.question;
   $("notice").hidden = !decided;
@@ -189,6 +294,8 @@ function render() {
   $("reason").textContent = decided ? state.pending.reason : "";
   incidentVisuals(entry);
   drawChoices(entry);
+  // Choices have the whole lower half. XP is a post-decision reward, not an overlay.
+  $("level-panel").hidden = !decided;
   drawShopLevel($("level-panel"));
 }
 
@@ -206,7 +313,7 @@ function showDebrief() {
   $("debrief-title").focus({ preventScroll: true });
 }
 
-$("continue").addEventListener("click", () => {
+bindGamePress($("continue"), () => {
   if (state.phase !== "resolve") return;
   state = advance(catalog, state);
   if (state.dayIndex !== 0) showDebrief();
@@ -215,18 +322,21 @@ $("continue").addEventListener("click", () => {
     $("incident-title").focus({ preventScroll: true });
   }
 });
-$("recover").addEventListener("click", () => {
+bindGamePress($("recover"), () => {
   if (state.phase !== "resolve" || !state.pending.recovery || state.pending.recovered) return;
   state = recover(catalog, DAY01_SCRIPTS, state);
   render();
   $("continue").focus({ preventScroll: true });
 });
-$("restart").addEventListener("click", start);
-$("play-again").addEventListener("click", start);
+bindGamePress($("restart"),start);
+bindGamePress($("play-again"),start);
 window.addEventListener("resize",()=>{
   if(!catalog||!state||state.dayIndex!==0)return;
-  // Reproject staff feet, floor props and the countertop after an orientation change.
-  incidentVisuals(chapter());
+  // Browser chrome often changes visualViewport height during first load.
+  // Do not tear down and re-decode every sprite on those resize events:
+  // it can block real taps on mobile. Only reproject existing DOM nodes.
+  cancelAnimationFrame(resizeFrame);
+  resizeFrame=requestAnimationFrame(repositionSprites);
 },{passive:true});
 
 try {

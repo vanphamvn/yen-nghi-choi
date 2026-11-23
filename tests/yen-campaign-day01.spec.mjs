@@ -3,9 +3,8 @@ import { test, expect } from "@playwright/test";
 const open = async page => {
   await page.goto("/tinh-huong/campaign/");
   await expect(page.locator("#game")).toBeVisible();
-  // Netlify adds an external Deploy Preview drawer across the bottom of the viewport.
-  // Remove only that provider QA overlay so it cannot intercept gameplay clicks.
-  await page.evaluate(()=>document.querySelectorAll("[data-netlify-deploy-id]").forEach(element=>element.remove()));
+  // Do not remove third-party preview overlays in tests: gameplay must keep
+  // working in the same DOM that a real Netlify reviewer receives.
   await expect(page.locator("#world")).toHaveAttribute("data-incident","D01-01");
   await expect(page.locator("#choices button")).toHaveCount(3);
 };
@@ -372,7 +371,17 @@ async function validateSpatialScene(page,incident){
  expect(Math.abs(result.paintedMachineBase-result.countertop),
    incident+" metal feet must contact painted wood, not upper image box").toBeLessThanOrEqual(1.5);
  const byId=Object.fromEntries(result.children.map(c=>[c.id,c]));
- expect(byId.staff.depth).toBeLessThan(byId.counter.depth);
+ if(incident==="D01-02"){
+   expect(byId.staff.depth).toBeGreaterThan(byId.counter.depth);
+   expect(byId.staff.contactX).toBeLessThan(byId.customer.contactX);
+   expect(byId["cuc-yen"].contactX).toBeLessThan(byId.staff.contactX);
+   expect(byId.spill.w).toBeGreaterThan(30);
+   const paintedHorizontalGap=(a,b)=>Math.max(b.x-(a.x+a.w),a.x-(b.x+b.w));
+   expect(paintedHorizontalGap(byId.staff,byId["cuc-yen"])).toBeGreaterThanOrEqual(0);
+   expect(paintedHorizontalGap(byId.staff,byId.customer)).toBeGreaterThanOrEqual(0);
+ }else{
+   expect(byId.staff.depth).toBeLessThan(byId.counter.depth);
+ }
  expect(byId.staff.w/byId.customer.w,incident+" staff must be smaller than guest").toBeLessThanOrEqual(.92);
  if(incident!=="D01-02"){
    const visibleBarista=byId.counter.y-byId.staff.y;
@@ -494,3 +503,137 @@ for(const viewport of [{width:320,height:480},{width:320,height:568},{width:375,
   await testInfo.attach("level-final-"+viewport.width+"x"+viewport.height,{body:await page.screenshot({fullPage:true}),contentType:"image/png"});
  });
 }
+
+test("wet floor is an irregular transparent watercolor illustration with no rectangular placeholder",async({page})=>{
+ await page.setViewportSize({width:390,height:844});
+ await open(page);
+ await decide(page,"explain");await next(page);
+ const asset=page.locator('[data-sprite-id="spill"]');
+ await expect(asset).toHaveAttribute("src",/watercolor-floor-puddle\.webp$/);
+ const art=await asset.evaluate(async image=>{
+  await image.decode();
+  const canvas=document.createElement("canvas");
+  canvas.width=image.naturalWidth;
+  canvas.height=image.naturalHeight;
+  const ctx=canvas.getContext("2d",{willReadFrequently:true});
+  ctx.drawImage(image,0,0);
+  const {data,width,height}=ctx.getImageData(0,0,canvas.width,canvas.height);
+  const index=(x,y)=>(y*width+x)*4+3;
+  const transparentCorners=[[0,0],[width-1,0],[0,height-1],[width-1,height-1]]
+    .every(([x,y])=>data[index(x,y)]<15);
+  const hasWater=[.3,.5,.7].some(frac=>data[index(Math.floor(width*frac),Math.floor(height*.52))]>100);
+  return {width,height,transparentCorners,hasWater};
+ });
+ expect(art.transparentCorners).toBe(true);
+ expect(art.hasWater).toBe(true);
+ await decide(page,"clean");
+ await expect(asset).toHaveAttribute("data-state","dry");
+ await expect(asset).toBeHidden();
+});
+
+test("initial load never shows an apparently clickable button before game input is ready",async({page})=>{
+ await page.route("**/docs/visual-novel/episodes.json",async route=>{
+  await new Promise(resolve=>setTimeout(resolve,250));
+  await route.continue();
+ });
+ await page.goto("/tinh-huong/campaign/",{waitUntil:"domcontentloaded"});
+ await expect(page.locator("html")).toHaveAttribute("data-input-ready","false");
+ await expect(page.locator("#game")).toBeHidden();
+ await expect(page.locator("#loading")).toBeVisible();
+ await expect(page.locator("html")).toHaveAttribute("data-input-ready","true",{timeout:10000});
+ await expect(page.locator("#controls-loading")).toBeHidden();
+ await expect(page.locator("#choices")).toBeVisible();
+ await page.locator('[data-choice="explain"]').click();
+ await expect(page.locator("#story")).toHaveAttribute("data-state","resolve");
+});
+
+test("first tap after each reload responds without extra taps or sprite reconstruction on browser chrome resize",async({page})=>{
+ await page.setViewportSize({width:390,height:844});
+ for(let attempt=0;attempt<5;attempt++){
+  await page.goto("/tinh-huong/campaign/",{waitUntil:"domcontentloaded"});
+  await expect(page.locator("html")).toHaveAttribute("data-input-ready","true",{timeout:10000});
+  await expect(page.locator("#choices")).toBeVisible();
+  const sceneIdentity=await page.evaluate(()=>{
+   const initial=document.querySelector('[data-sprite-id="staff"]');
+   window.__firstSceneStaff=initial;
+   window.dispatchEvent(new Event("resize"));
+   return Boolean(initial);
+  });
+  expect(sceneIdentity).toBe(true);
+  await page.locator('[data-choice="explain"]').click();
+  await expect(page.locator("#story")).toHaveAttribute("data-state","resolve");
+  const preserved=await page.evaluate(()=>window.__firstSceneStaff?.isConnected);
+  expect(preserved).toBe(false); // valid state transition redraws, unlike browser resize
+  await expect(page.locator("#interaction-error")).toBeHidden();
+ }
+});
+
+test("real mobile touch works on first tap immediately after each ready reload",async({browser,baseURL})=>{
+ const context=await browser.newContext({
+  baseURL,viewport:{width:390,height:844},isMobile:true,hasTouch:true,deviceScaleFactor:1
+ });
+ try{
+  const page=await context.newPage();
+  for(let reload=0;reload<5;reload++){
+   await page.goto("/tinh-huong/campaign/",{waitUntil:"domcontentloaded"});
+   await expect(page.locator("html")).toHaveAttribute("data-input-ready","true",{timeout:10000});
+   const button=page.locator('[data-choice="explain"]');
+   await expect(button).toBeVisible();
+   const rect=await button.boundingBox();
+   await page.touchscreen.tap(rect.x+rect.width/2,rect.y+rect.height/2);
+   await expect(page.locator("#story")).toHaveAttribute("data-state","resolve");
+   await expect(page.locator("#interaction-error")).toBeHidden();
+   const proceed=page.locator("#continue");
+   const nextRect=await proceed.boundingBox();
+   await page.touchscreen.tap(nextRect.x+nextRect.width/2,nextRect.y+nextRect.height/2);
+   await expect(page.locator("#world")).toHaveAttribute("data-incident","D01-02");
+  }
+ }finally{
+  await context.close();
+ }
+});
+
+test("24 immediate mobile Continue touches stay hittable beneath an injected preview iframe",async({browser,baseURL})=>{
+ const context=await browser.newContext({
+  baseURL,viewport:{width:390,height:844},isMobile:true,hasTouch:true,deviceScaleFactor:1
+ });
+ try{
+  const page=await context.newPage();
+  for(let attempt=0;attempt<24;attempt++){
+   await page.goto("/tinh-huong/campaign/",{waitUntil:"domcontentloaded"});
+   await expect(page.locator("html")).toHaveAttribute("data-input-ready","true",{timeout:10000});
+   // Reproduce the provider's high-z-index wrapper; without our scoped CSS,
+   // the iframe receives elementFromPoint() and swallows both touch actions.
+   await page.evaluate(()=>{
+    const wrapper=document.createElement("div");
+    wrapper.dataset.netlifyDeployId="test-deploy-preview";
+    wrapper.style.cssText="position:fixed;inset:0;z-index:2147483647";
+    const frame=document.createElement("iframe");
+    frame.title="Simulated Netlify review drawer";
+    frame.style.cssText="width:100%;height:100%;border:0";
+    wrapper.append(frame);
+    document.body.append(wrapper);
+    // Some Drawer versions portal the iframe separately from the wrapper.
+    const portal=document.createElement("iframe");
+    portal.title="Netlify Drawer";
+    portal.style.cssText="position:fixed;inset:0;width:100%;height:100%;z-index:2147483646";
+    document.body.append(portal);
+   });
+   await expect(page.locator('[data-netlify-deploy-id="test-deploy-preview"]')).toBeHidden();
+   await expect(page.locator('body > iframe[title="Netlify Drawer"]')).toBeHidden();
+   const choice=page.locator('[data-choice="explain"]');
+   const choiceRect=await choice.boundingBox();
+   await page.touchscreen.tap(choiceRect.x+choiceRect.width/2,choiceRect.y+choiceRect.height/2);
+   await expect(page.locator("#story")).toHaveAttribute("data-state","resolve");
+   const continueRect=await page.locator("#continue").boundingBox();
+   const point={x:continueRect.x+continueRect.width/2,y:continueRect.y+continueRect.height/2};
+   const hit=await page.evaluate(({x,y})=>document.elementFromPoint(x,y)?.closest("button")?.id??null,point);
+   expect(hit,"the first Continue touch must target the button, not Netlify's iframe").toBe("continue");
+   await page.touchscreen.tap(point.x,point.y);
+   await expect(page.locator("#world")).toHaveAttribute("data-incident","D01-02");
+   await expect(page.locator("#interaction-error")).toBeHidden();
+  }
+ }finally{
+  await context.close();
+ }
+});

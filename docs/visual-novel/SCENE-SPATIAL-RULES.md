@@ -19,11 +19,11 @@ Each surface must be **drawn or part of the background**. A machine cannot belon
 | Depth | Content | Rule |
 |---|---|---|
 | 0 | Painted café backdrop | Room, lighting, wall and floor |
-| 10–19 | Staff standing behind counter | Feet rest on rear floor; counter may occlude lower body |
+| 10–19 | Staff standing behind counter (D01-01, D01-03) | Feet rest on rear floor; counter may occlude lower body, never face |
 | 20–29 | Fixed furniture | Painted counter has its foot/base on floor |
 | 30–39 | Items on furniture | Machine, receipts, tickets have bases aligned to visible countertop |
 | 40–49 | Physical incident | Spill/pitcher on floor; incident remains visible |
-| 50–59 | Foreground guest and Cục Yên | Ground contact; credible scale; no floating or standing on counter |
+| 50–59 | Floor-side staff (D01-02), foreground guest and Cục Yên | Independent silhouette and floor contact; no overlapping heads/faces |
 | 60+ | Essential scene HUD | Exit, short day/time label, one clue, no duplicate copy |
 
 Avoid piling people directly on top of the focus prop. Z-order alone cannot repair wrong geometry; adjust anchor and scale first.
@@ -36,7 +36,7 @@ Avoid piling people directly on top of the focus prop. Z-order alone cannot repa
 | D01-02 | Tipped pitcher, wet floor hazard | Barista approaching safe side of walkway | Guest near but outside wet footprint | Feet on floor near hazard | Counter left, spill only on floor |
 | D01-03 | Incorrect receipt beside menu/POS | Barista at cashier counter | Guest across cashier side | Feet on floor beside counter | Painted counter, receipt/menu resting on top |
 
-The repository currently has a painted \`barista.png\` sheet, a painted \`shipper.png\` character (used provisionally as a **takeaway customer** rather than inventing a non-existent generic guest illustration), a Cục Yên asset, a painted counter, and coffee props. The wet-floor illustration currently reuses a tinted painted shadow with a tipped pitcher; **replace it with genuinely painted puddle art when available**. Do not label either provisional role/prop as final custom illustration.
+The repository currently has a painted \`barista.png\` sheet, a painted \`shipper.png\` character (used provisionally as a **takeaway customer** rather than inventing a non-existent generic guest illustration), a Cục Yên asset, a painted counter, and coffee props. D01-02 now uses a transparent watercolor spill image and a tipped pitcher; the old tinted rectangular shadow is removed. Owner review of the replacement remains pending. Do not label either provisional role/prop as final custom illustration.
 
 ## Review checklist
 
@@ -54,3 +54,12 @@ The repository currently has a painted \`barista.png\` sheet, a painted \`shippe
 - **Rear staff must be smaller than front guest:** `staff.size <= guest.size * 0.92` in this Day 1 perspective. For D01-01 and D01-03, painted staff uses 20% width vs foreground guest 23%; their foot contact is at y≈71% (deeper floor) rather than y80%. A staff member away from the counter can be 21% with a more forward contact point.
 - **Machine must touch the counter with its visible metal foot, not the transparent shadow:** artwork contact fraction = **0.90** of the 256×262 canvas. Verify `machine.getBoundingClientRect().top + 0.90 * machineHeight` matches `counter.getBoundingClientRect().top` within 1.5 CSS pixels. The former test using the element's anchor alone incorrectly passed even while the screenshot showed a gap.
 - Test on **375×667**, **390×660**, **390×844**, **320×480** and desktop. The rule applies before declaring scene artwork finished.
+
+## Painted silhouette and collision contract (D01-02 fix)
+
+- **D01-01/D01-03:** Staff remains rear of counter. Never allow wood artwork to obscure the face; if crop changes, anchor foot position to the deeper floor plane instead of scaling barista into a giant.
+- **D01-02:** Staff has stepped **out from behind** the service counter. Render staff as **foreground** immediately to the right of the shortened counter, then an independently visible floor-level Cục Yên toward the left, the wet footprint and tipped pitcher toward the center-right, and visitor at the far right. No overlapping of character painted silhouettes. The floor hazard must be legible without relying on labels.
+- Compare actual painted alpha silhouettes: character element bounding boxes often contain transparent padding and are not sufficient evidence for a visible collision. For scene layout, maintain a visible horizontal gap between **staff–mascot** and **staff–customer**, and ensure the top-of-counter occlusion does not intersect the head or face of rear staff.
+- Wet floor art is **transparent WebP/PNG** with an organic edge and reflective watercolor washes. Never use the old tinted rectangular shadow or any legible text inside the water. After cleaning or recovery, the spill is completely hidden, not a weakly visible colored patch. During unsafe/delayed responses, it remains visible.
+- Ensure tipped pitcher is proportionate to the wet area, placed next to it, and does not overlap Cục Yên. Other Day 1 scenes retain their staged coffee/receipt/ticket relations and receive the same silhouette rules.
+- **Owner-preview gate:** commit changes on PR #241, share a real successful Netlify Deploy Preview link, and wait for approval. Full QA, merge and production follow only after that approval.

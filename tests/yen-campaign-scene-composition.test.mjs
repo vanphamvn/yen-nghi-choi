@@ -4,7 +4,7 @@ import {existsSync,readFileSync} from "node:fs";
 import {resolve} from "node:path";
 import {
   SCENE_COMPOSITIONS, VISUAL_ASSETS, getSceneComposition,
-  projectContact, validateSceneComposition, COUNTER_ASPECT_RATIO, COUNTER_PAINTED_SURFACE_INSET_RATIO, ESPRESSO_PAINTED_BASE_RATIO
+  projectContact, validateSceneComposition, actorSeparation, paintedActorFootprint, COUNTER_ASPECT_RATIO, COUNTER_PAINTED_SURFACE_INSET_RATIO, ESPRESSO_PAINTED_BASE_RATIO
 } from "../tinh-huong/campaign/scene-composition.mjs";
 
 const root=resolve(import.meta.dirname,"..");
@@ -22,6 +22,7 @@ test("each of three visual scenes has real actor and story roles on correct surf
  assert.deepEqual(Object.keys(SCENE_COMPOSITIONS),["D01-01","D01-02","D01-03"]);
  for(const [id,scene] of Object.entries(SCENE_COMPOSITIONS)){
   assert.deepEqual(validateSceneComposition(id),[],id+" staging violations");
+  assert.deepEqual(actorSeparation(scene),[],"all visible character silhouettes must be separated on "+id);
   const byRole=role=>scene.layers.filter(layer=>layer.role===role);
   assert.equal(byRole("staff").length,1);
   assert.equal(byRole("customer").length,1);
@@ -37,7 +38,18 @@ test("each of three visual scenes has real actor and story roles on correct surf
   assert.equal(byId["cuc-yen"].surface,"floor");
   assert.equal(byId.staff.surface,"floor");
   assert.equal(byId.customer.surface,"floor");
-  assert.ok(byId.staff.depth<byId.counter.depth,"staff must be behind painted service counter");
+  if(id==="D01-02"){
+   assert.ok(byId.staff.depth>byId.counter.depth,"spill-side staff must be in front of the counter to keep the face visible");
+   assert.deepEqual(actorSeparation(scene),[],"no painted character silhouettes may collide");
+   const splash=byId.spill;
+   assert.equal(splash.asset,"wetFloor");
+   assert.ok(splash.size>=20&&splash.size<=26);
+   assert.equal(byId.pitcher.surface,"floor");
+   assert.ok(byId.pitcher.contact.x>byId.staff.contact.x&&byId.pitcher.contact.x<byId.customer.contact.x);
+   assert.ok(byId["cuc-yen"].contact.x<byId.staff.contact.x);
+  } else {
+   assert.ok(byId.staff.depth<byId.counter.depth,"staff must remain behind the service counter");
+  }
   assert.ok(byId.customer.depth>byId.counter.depth,"customer must be in front of counter");
   assert.ok(byId["cuc-yen"].depth>byId.counter.depth,"Cục Yên must be foreground floor actor");
   assert.equal(byId.espresso.surface,"counter","espresso must not float or rest on floor");
@@ -61,6 +73,31 @@ test("regression: large rear barista and shadow-bottom espresso are rejected",()
   const floating=structuredClone(SCENE_COMPOSITIONS[id]);
   floating.layers.find(x=>x.id==="espresso").footOffset=98;
   assert.ok(validateSceneComposition(id,floating).some(e=>e.includes("painted metal base")),id);
+ }
+});
+
+test("floor spill uses a genuine alpha WebP, not the rectangular shadow placeholder",()=>{
+ const source=VISUAL_ASSETS.wetFloor;
+ assert.equal(source,"/tinh-huong/campaign/assets/watercolor-floor-puddle.webp");
+ const bytes=readFileSync(resolve(root,source.slice(1)));
+ assert.equal(bytes.toString("ascii",0,4),"RIFF");
+ assert.equal(bytes.toString("ascii",8,12),"WEBP");
+ assert.ok(bytes.length>2000,"watercolor scene art should not be a blank placeholder");
+ const unsafe=getSceneComposition("D01-02","open"),safe=getSceneComposition("D01-02","clean");
+ assert.equal(unsafe.layers.find(x=>x.id==="spill").state,"unsafe");
+ assert.equal(safe.layers.find(x=>x.id==="spill").state,"dry");
+});
+
+test("side-by-side painted actor silhouettes remain separated after every D01-02 response",()=>{
+ const scene=SCENE_COMPOSITIONS["D01-02"];
+ for(const answer of ["","clean","later","open","recovered"]){
+  const staged=getSceneComposition("D01-02",answer);
+  assert.deepEqual(actorSeparation(staged),[],answer||"initial");
+  for(const role of ["staff","customer","mascot"]){
+   const actor=staged.layers.find(x=>x.role===role);
+   const footprint=paintedActorFootprint(actor);
+   assert.ok(footprint.left>=0&&footprint.right<=100,"painted body stays in frame: "+role);
+  }
  }
 });
 
