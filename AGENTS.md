@@ -36,6 +36,10 @@ For user-facing gameplay changes, a GitHub PR is **not** a finished production r
 
 For all work on `/tinh-huong/campaign/` or future illustrated `Một Tháng Không Yên` scenes, **read `.agents/skills/yen-visual-novel-staging/SKILL.md` and `docs/visual-novel/SCENE-SPATIAL-RULES.md` before positioning characters or props**. Cục Yên, employees and customers must stand on the painted floor; coffee equipment and receipts require a painted support surface. Layout coordinates are physical *contact anchors*, not arbitrary image centers. Use `tinh-huong/campaign/scene-composition.mjs` as the source of truth for roles, z-order and furniture-relative y positions, and run `tests/yen-campaign-scene-composition.test.mjs` plus visual browser QA. Do not add prop manipulation to this choice-driven visual novel or treat a reused archived art asset as an instruction to resume Phaser.
 
+## Visual novel epic coordination (#218)
+
+To continue the 30-day visual novel (VN-P01..P05, VN-F05, VN-F06), use the `vn-coordinator` skill (`.agents/skills/vn-coordinator/SKILL.md`; Claude Code entry `.claude/skills/vn-coordinator/SKILL.md`). It picks work with `node tools/vn-next-work.mjs --gh`, runs one day per PR through the role agents in `.claude/agents/vn-*.md` (writer → independent continuity review → art gaps + wiring → staging → independent QA → release), and alone changes `episodes.json`, the roadmap and issue state. Ticket order and file ownership: `docs/visual-novel/ops/roadmap.json`.
+
 ## Archived autonomous Game Yên completion (only if owner reactivates the 2D game)
 
 For any game development session, first read `.agents/skills/yen-game-director/SKILL.md`, `game/preview-2d/ROADMAP.md`, and `game/preview-2d/ops/roadmap.json`. Select the next eligible issue using `node game/preview-2d/tools/next-work.mjs`. Use `.agents/skills/yen-game-release/SKILL.md` for every game-affecting PR and release. Apply the existing `yen-sprite-style` skill on every art task.
