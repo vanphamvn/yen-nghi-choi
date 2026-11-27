@@ -398,7 +398,7 @@ body{font-family:var(--sans);color:var(--black);touch-action:manipulation;user-s
         <div class="e-seal"><div class="logo-w"></div></div>
       </div>
       <p class="e-en"><span class="e1">You have an invitation.</span><span class="e2">Opening December 1, 2026.</span></p>
-      <div class="e-file"><header>Bạn có biết? · cà phê</header><p>Truyền thuyết kể rằng cà phê được phát hiện khi một người chăn dê thấy đàn dê của mình bỗng nhiên tỉnh như sáo sau khi ăn một loại quả đỏ. Chuyện kể rằng từ đó con người bắt đầu biết đến cà phê.</p></div>
+      <div class="e-file"><header>Bạn có biết? · cà phê</header><p>Truyền thuyết kể rằng cà phê được phát hiện khi một người chăn dê thấy đàn dê của mình bỗng nhiên tỉnh như sáo sau khi ăn một loại quả đỏ. Anh ta bèn hái thử, và</p></div>
     </section>
     <nav id="bar" class="ia">
       <button id="b-prev" title="Lùi (←)" aria-label="Lùi"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
@@ -1443,10 +1443,10 @@ const SLIDES = [
       { n: 'Đường 2 vẽ từ Dốc Cây Cám, qua chợ. Đọc ba bước. Nhấn: “bên tay trái, ngay sau trạm xe buýt”.' },
       { n: 'Bản đồ gấp lại, lộ ra tấm biển đỏ bên đường (có trong ảnh). “Thấy tấm biển này là tới.” Dừng một nhịp rồi bấm sang phong bì.' }] },
 
-  { id: 'end', kind: 'env', seen: [18, 18], bed: { air: .12, wind: .15 }, stamp: { at: 1, no: '11', name: 'Hẹn gặp', half: true },
+  { id: 'end', kind: 'env', seen: [18, 18], bed: { air: .12, wind: .15 }, stamp: { at: 1, no: '11', name: 'Dang dở', half: true },
     steps: [
       { n: 'Tấm thiệp trở về phong bì. Hẹn gặp ở Yên!' },
-      { n: 'Lời mời khép lại với một mẩu chuyện cà phê.' }] }
+      { n: 'Mẩu chuyện cà phê dừng giữa câu: “Anh ta bèn hái thử, và”. Không đọc thêm.' }] }
 ];
 
 // ───────────────────────── deck engine (the invitation) ─────────────────────────
@@ -1625,7 +1625,7 @@ const SLIDES = [
   let chan = null; try { chan = new BroadcastChannel('yen-invite'); chan.onmessage = (e) => { const m = e.data || {}; if (m.i !== undefined && (m.i !== D.i || m.s !== D.s)) goto(m.i, m.s, true); }; } catch (e) { chan = null; }
   const syncNotes = (silent) => { const sl = SLIDES[D.i], nx = sl.steps[D.s + 1] || (SLIDES[D.i + 1] && SLIDES[D.i + 1].steps[0]);
     $('#n-title').textContent = sl.title || (sl.id === 'env' ? 'Phong bì' : 'Phong bì (kết)'); $('#n-pos').textContent = `trang ${D.i + 1}/${SLIDES.length} · nhịp ${D.s + 1}/${sl.steps.length}`;
-    $('#n-cur').textContent = sl.steps[D.s].n; $('#n-next').textContent = nx ? nx.n : 'Hẹn gặp ở Yên.'; if (chan && !silent) try { chan.postMessage({ i: D.i, s: D.s }); } catch (e) {} };
+    $('#n-cur').textContent = sl.steps[D.s].n; $('#n-next').textContent = nx ? nx.n : 'Hết (cố ý dang dở).'; if (chan && !silent) try { chan.postMessage({ i: D.i, s: D.s }); } catch (e) {} };
   setInterval(() => { const t = Math.floor((performance.now() - D.t0) / 1000); $('#n-time').textContent = String(Math.floor(t / 60)).padStart(2, '0') + ':' + String(t % 60).padStart(2, '0'); }, 1000);
 
   // ── controls
