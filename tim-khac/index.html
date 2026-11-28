@@ -16,17 +16,16 @@
 <style>
 .page > *{max-width:920px}
 .boards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
-.board{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:0;background:var(--scene-color);padding:5px;border:5px solid var(--paper);box-shadow:0 4px 12px #171a1c24}
-.tile{position:relative;min-width:0;min-height:44px;aspect-ratio:1.16;border:0;border-radius:8px;background:none;padding:0;font-size:clamp(22px,4.2vw,44px);cursor:pointer;touch-action:manipulation}
-.tile:nth-child(n+6):nth-child(-n+10){background:#ffffff28}
-.tile.is-found::after{position:absolute;inset:3px;content:'';border:2px solid #6a2028;border-radius:50%;box-shadow:0 0 0 2px #fbfaf5;pointer-events:none}
+.board{position:relative;overflow:hidden;align-self:start;aspect-ratio:4/3;border:5px solid var(--paper);background:#e9dfd0;box-shadow:0 4px 12px #171a1c24}
+.board img{display:block;width:100%;height:100%;object-fit:contain;pointer-events:none}
+.tile{position:absolute;top:var(--y);left:var(--x);width:clamp(44px,15%,68px);aspect-ratio:1;transform:translate(-50%,-50%);border:0;border-radius:50%;padding:0;background:none;cursor:pointer;touch-action:manipulation}
+.tile.is-found{border:2px solid #fbfaf5;box-shadow:0 0 0 2px #6a2028}
 .tile:focus-visible{z-index:1;outline-offset:-3px}
 .round-bar{display:flex;align-items:center;flex-wrap:wrap;gap:8px 14px}
 .round-bar p{margin:0}
 .round-bar .go{min-height:44px;font-size:15px}
 @media(max-width:660px){
   .boards{grid-template-columns:1fr;gap:8px;width:min(100%,440px)}
-  .tile{font-size:clamp(22px,7.2vw,35px);aspect-ratio:1.48}
 }
 </style>
 </head>
@@ -55,13 +54,12 @@
 <script>
 (() => {
   'use strict';
+  // Hotspot centers are percentages of each 600 × 450 photo.
   const decks = [
-    { name: 'Bàn cà phê', color: '#e9d9bd', items: '🪴 🫖 🍪 🥄 🕯️ ☕ 🍰 🍋 🥛 🍯 📖 🥐 🍫 🧁 🌿', changes: [[0,'🌵'],[2,'🍩'],[4,''],[5,'🍵'],[7,'🍊'],[11,'🥨'],[13,'🍮']] },
-    { name: 'Sân vườn', color: '#d8e4c2', items: '🌳 🐦 🌼 🦋 🌳 🍄 🐌 🌷 🐝 🌱 🪨 🌿 🐈 🍂 🪴', changes: [[1,'🦜'],[2,'🌻'],[5,''],[7,'🌸'],[8,'🐞'],[12,'🐕'],[14,'🌵']] },
-    { name: 'Kệ sách', color: '#e6d5cf', items: '📚 🕰️ 🪴 🖼️ 📕 🧸 📗 🎨 📘 🕯️ 🔎 🖋️ 📙 🎁 ☕', changes: [[1,'⏳'],[3,''],[5,'🪆'],[6,'📓'],[7,'✂️'],[11,'✏️'],[14,'🍵']] },
-    { name: 'Quầy trái cây', color: '#f0deae', items: '🍉 🍍 🍊 🍎 🍐 🍌 🍇 🥭 🍓 🥥 🍋 🥝 🍒 🍑 🫐', changes: [[0,'🍈'],[2,'🍋'],[3,'🍏'],[5,''],[8,'🍒'],[9,'🥑'],[13,'🍅']] },
-    { name: 'Bãi biển', color: '#cee5e7', items: '☀️ ☁️ 🐦 ⛵ 🌤️ 🐬 🌊 🏝️ 🐟 🛟 🦀 🐚 🏖️ 🩴 🪸', changes: [[1,''],[2,'🪁'],[3,'🚤'],[5,'🐳'],[8,'🐠'],[10,'🦞'],[13,'🕶️']] },
-    { name: 'Buổi cắm trại', color: '#dfdbbd', items: '🌲 ⭐ 🌙 ☁️ 🌲 🏕️ 🐿️ 🦉 🪵 🔦 🥾 🔥 🍵 🎒 🪨', changes: [[1,''],[2,'🌕'],[5,'⛺'],[6,'🦔'],[7,'🦇'],[12,'☕'],[14,'🍄']] }
+    { file: 'mat-tien', name: 'Mặt tiền quán Yên', spots: [[22,53],[59,33],[71,51],[63,81]] },
+    { file: 'cong', name: 'Cổng quán Yên', spots: [[43,55],[91,39],[8,78],[68,80]] },
+    { file: 'goc-san', name: 'Góc sân quán Yên', spots: [[26,26],[61,23],[63,64],[74,93]] },
+    { file: 'loi-di', name: 'Lối đi qua vườn', spots: [[51,33],[82,26],[40,92],[86,83]] }
   ];
   const total = 4;
   const boards = document.querySelector('#boards');
@@ -71,57 +69,64 @@
   const clock = createPlayClock(document.querySelector('#clock'));
   let previous = -1;
   let bag = [];
-  let differences;
   let found;
 
-  function draw(items) {
-    return items.map((item, index) => {
-      const tile = document.createElement('button');
-      tile.type = 'button';
-      tile.className = 'tile';
-      tile.dataset.index = index;
-      tile.textContent = item;
-      tile.setAttribute('aria-label', `Hàng ${Math.floor(index / 5) + 1}, cột ${index % 5 + 1}`);
-      return tile;
-    });
+  function draw(spot, index) {
+    const tile = document.createElement('button');
+    tile.type = 'button';
+    tile.className = 'tile';
+    tile.dataset.index = index;
+    tile.style.setProperty('--x', spot[0] + '%');
+    tile.style.setProperty('--y', spot[1] + '%');
+    tile.setAttribute('aria-label', `Vị trí ${index + 1}`);
+    return tile;
   }
 
-  function startRound() {
+  async function startRound() {
+    next.disabled = true;
+    clock.reset();
+    found = new Set();
+    progress.textContent = `0 / ${total}`;
+    say.textContent = 'Đang mở ảnh…';
+    for (const board of boards.children) board.replaceChildren();
     if (!bag.length) bag = decks.map((_, index) => index);
     const candidates = bag.filter(index => index !== previous);
     const pick = candidates[Math.floor(Math.random() * candidates.length)];
     bag.splice(bag.indexOf(pick), 1);
     previous = pick;
     const deck = decks[pick];
-    const original = deck.items.split(' ');
-    const altered = [...original];
-    const changes = [...deck.changes];
-    differences = new Set();
-    found = new Set();
-    for (let i = 0; i < total; i++) {
-      const [index, replacement] = changes.splice(Math.floor(Math.random() * changes.length), 1)[0];
-      altered[index] = replacement;
-      differences.add(index);
+    const suffixes = Math.random() < .5 ? ['', '-khac'] : ['-khac', ''];
+    const images = suffixes.map(suffix => {
+      const img = new Image(600, 450);
+      img.alt = deck.name;
+      img.src = `./${deck.file}${suffix}.webp`;
+      return img;
+    });
+    try {
+      await Promise.all(images.map(img => img.decode()));
+      images.forEach((img, index) => {
+        boards.children[index].replaceChildren(img, ...deck.spots.map(draw));
+      });
+      next.textContent = 'Đổi bộ hình';
+      say.textContent = deck.name;
+      clock.start();
+    } catch {
+      say.textContent = 'Ảnh chưa mở được. Bấm “Đổi bộ hình” để thử lại.';
+      next.textContent = 'Đổi bộ hình';
+    } finally {
+      next.disabled = false;
     }
-    const [first, second] = Math.random() < .5 ? [original, altered] : [altered, original];
-    boards.style.setProperty('--scene-color', deck.color);
-    boards.children[0].replaceChildren(...draw(first));
-    boards.children[1].replaceChildren(...draw(second));
-    next.textContent = 'Đổi bộ hình';
-    progress.textContent = `0 / ${total}`;
-    say.textContent = deck.name;
-    clock.start();
   }
 
   boards.addEventListener('click', (event) => {
     const tile = event.target.closest('.tile');
-    if (!tile || found.size === total) return;
-    const index = Number(tile.dataset.index);
-    if (found.has(index)) return;
-    if (!differences.has(index)) {
+    if (next.disabled || found.size === total) return;
+    if (!tile) {
       say.textContent = 'Chỗ này giống nhau.';
       return;
     }
+    const index = Number(tile.dataset.index);
+    if (found.has(index)) return;
     found.add(index);
     boards.querySelectorAll(`[data-index="${index}"]`).forEach(match => {
       match.classList.add('is-found');
