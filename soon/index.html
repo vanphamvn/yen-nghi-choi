@@ -334,7 +334,11 @@ body:not(.capture) #app.play-corner-open + .e-more{display:inline-flex}
 #bar button,#notes button{font:600 12px var(--sans);color:#f2f1ea;background:transparent;border:0;border-radius:6px;min-width:40px;height:40px;padding:0 9px;display:flex;align-items:center;gap:6px;cursor:pointer}
 #bar #b-play{min-height:44px;font-size:14px}
 #bar #b-play[hidden]{display:none}
-#bar:has(#b-play:not([hidden])){opacity:1}
+#bar:has(#b-play:not([hidden]),#b-audio-hint:not([hidden])){opacity:1}
+#bar-status{position:absolute;right:0;bottom:calc(100% + 4px);display:flex;gap:10px;align-items:center;padding:5px 9px;background:rgba(23,26,28,.88);color:#f2f1ea;border-radius:6px;font:500 12px/1.35 var(--sans);white-space:nowrap}
+#bar-status:not(:has(#b-play-status:not(:empty),#b-audio-hint:not([hidden]))){display:none}
+#b-play-status:empty{display:none}
+#b-play-status:not(:empty) + #b-audio-hint{border-left:1px solid rgba(255,255,255,.35);padding-left:10px}
 #bar button:hover,#notes button:hover{background:rgba(255,255,255,.14)}
 #bar button[aria-pressed=true]{background:#f2f1ea;color:#171a1c}
 #bar svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
@@ -416,12 +420,16 @@ body:not(.capture) #app.play-corner-open + .e-more{display:inline-flex}
       <div class="e-file"><header>Bạn có biết? · cà phê</header><p>Truyền thuyết kể rằng cà phê được phát hiện khi một người chăn dê thấy đàn dê của mình bỗng nhiên tỉnh như sáo sau khi ăn một loại quả đỏ. Anh ta bèn hái thử, và</p></div>
     </section>
     <nav id="bar" class="ia">
+      <div id="bar-status">
+        <span id="b-play-status" role="status"></span>
+        <span id="b-audio-hint">Bấm loa để bật âm thanh</span>
+      </div>
       <button id="b-prev" title="Lùi (←)" aria-label="Lùi"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
       <button id="b-next" title="Tiếp (→ / Space)" aria-label="Tiếp"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button>
       <button id="b-skip" title="Bỏ qua tới trang sau (S)" aria-label="Bỏ qua trang"><svg viewBox="0 0 24 24"><path d="M6 5l7 7-7 7M17 5v14"/></svg></button>
       <button id="b-play" type="button" hidden>Tự chuyển</button>
       <i></i>
-      <button id="b-sound" title="Âm thanh (M)" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9z"/><path class="w" d="M16.5 8.5a5 5 0 010 7M19 6a8.5 8.5 0 010 12"/><path class="x" d="M17 9l5 6M22 9l-5 6"/></svg><span>Âm thanh</span></button>
+      <button id="b-sound" title="Bật hoặc tắt âm thanh (M)" aria-label="Âm thanh" aria-describedby="b-audio-hint" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9z"/><path class="w" d="M16.5 8.5a5 5 0 010 7M19 6a8.5 8.5 0 010 12"/><path class="x" d="M17 9l5 6M22 9l-5 6"/></svg><span>Âm thanh</span></button>
       <button id="b-full" title="Toàn màn hình (F)" aria-label="Toàn màn hình"><svg viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button>
     </nav>
   </main>
@@ -1694,12 +1702,12 @@ const SLIDES = [
   // ── continuous playback
   // The reading time starts after the camera settles. Cards and optional activities get longer.
   const readingTimes = {
-    curio: [5200, 8500], expo: [4800, 4800, 6100, 8500], anchor: [5200, 10000, 6400, 8500],
-    foot: [4800, 4800, 4800, 8500], ikea: [12500, 10500, 8500], scarce: [6800, 6200, 8500],
-    progress: [4500, 5700, 5700, 8500], gift: [4500, 11000, 8500], peak: [4800, 5400, 8500],
-    vow: [12000, 6500, 8500], way: [5200, 13000, 13000, 6500], end: [6500]
+    curio: [3000, 5500], expo: [2800, 2800, 3600, 5500], anchor: [2900, 6800, 4100, 5500],
+    foot: [2800, 2800, 2800, 5500], ikea: [7500, 6500, 5500], scarce: [4300, 3700, 5500],
+    progress: [2700, 3400, 3400, 5500], gift: [2700, 10200, 5500], peak: [3000, 3200, 5500],
+    vow: [7600, 4200, 5500], way: [3200, 8100, 8100, 4000], end: [4000]
   };
-  const playButton = $('#b-play');
+  const playButton = $('#b-play'), playStatus = $('#b-play-status');
   let playing = false, playbackTimer;
   const schedulePlayback = () => {
     clearTimeout(playbackTimer);
@@ -1707,13 +1715,15 @@ const SLIDES = [
     if (D.i === 0 || atEnd) playing = false;
     playButton.hidden = CAPTURE || D.i === 0 || atEnd || app.classList.contains('presenter');
     playButton.textContent = playing ? 'Tạm dừng' : 'Tự chuyển';
+    const status = playButton.hidden ? '' : playing ? 'Đang tự chuyển' : 'Đã tạm dừng';
+    if (playStatus.textContent !== status) playStatus.textContent = status;
     if (!D.ready || !playing || document.hidden || playButton.hidden) return;
     const waitForScene = () => {
       if (envSkip || (slide.kind !== 'env' && !D.still && stage?.busy)) {
         playbackTimer = setTimeout(waitForScene, 180);
         return;
       }
-      playbackTimer = setTimeout(next, readingTimes[slide.id]?.[D.s] ?? 5200);
+      playbackTimer = setTimeout(next, readingTimes[slide.id]?.[D.s] ?? 3200);
     };
     waitForScene();
   };
@@ -1749,7 +1759,17 @@ const SLIDES = [
   // ── controls
   let wakeT = 0; const bar = $('#bar'), wake = () => { bar.classList.add('wake'); clearTimeout(wakeT); wakeT = setTimeout(() => bar.classList.remove('wake'), 2600); };
   const press = (id, fn) => $(id).addEventListener('click', (e) => { e.stopPropagation(); fn(); });
-  const toggleSound = () => { const on = sound.toggle(); $('#b-sound').setAttribute('aria-pressed', !!on); if (on) { sound.scene(SLIDES[D.i].bed, .5); humUpdate(); } };
+  const toggleSound = () => {
+    const on = sound.toggle();
+    const button = $('#b-sound');
+    button.setAttribute('aria-pressed', !!on);
+    $('#b-audio-hint').hidden = !!on;
+    if (on) {
+      button.removeAttribute('aria-describedby');
+      sound.scene(SLIDES[D.i].bed, .5);
+      humUpdate();
+    } else button.setAttribute('aria-describedby', 'b-audio-hint');
+  };
   const toggleNotes = () => { app.classList.toggle('presenter'); setPlayback(false); setTimeout(resize, 30); };
   const setStill = (on) => { D.still = on || !D.webgl; app.classList.toggle('still', D.still); if (stage) stage.still = D.still; goto(D.i, D.s, true); };
   const full = () => { try { const d = document; if (d.fullscreenElement || d.webkitFullscreenElement) (d.exitFullscreen || d.webkitExitFullscreen).call(d); else { const el = d.documentElement; const p = (el.requestFullscreen || el.webkitRequestFullscreen).call(el); if (p && p.catch) p.catch(() => {}); } } catch (e) {} };
