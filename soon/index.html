@@ -282,6 +282,9 @@ body{font-family:var(--sans);color:var(--black);touch-action:manipulation;user-s
 #env.gone{opacity:0;pointer-events:none}
 .e-say{position:absolute;left:0;right:0;top:max(8vh,env(safe-area-inset-top));text-align:center;z-index:9;padding:0 5vw}
 .e-say p{margin:0;font:400 clamp(26px,4.2vw,64px)/1.15 var(--serif);font-variation-settings:'opsz' 144;transition:opacity .6s}
+.e-start{margin-top:12px;min-height:44px;padding:0 16px;border:0;border-radius:999px;background:var(--black);color:var(--paper);font:600 15px var(--sans);cursor:pointer}
+#env:not(.closed) .e-start{display:none}
+.e-start:focus-visible,#b-play:focus-visible{outline:3px solid #a64b1d;outline-offset:3px}
 .e-say .e2{font-size:clamp(20px,2.9vw,44px)}
 #env .e2{display:none}#env.end .e2{display:block}#env.end .e1{display:none}
 #env.open:not(.end) .e-say p,#env.end.out .e-say p{opacity:0}
@@ -329,6 +332,9 @@ body:not(.capture) #app.play-corner-open + .e-more{display:inline-flex}
 #bar:hover,#bar.wake,#bar:focus-within{opacity:1}
 #bar i{width:1px;height:22px;background:rgba(255,255,255,.25);margin:0 4px}
 #bar button,#notes button{font:600 12px var(--sans);color:#f2f1ea;background:transparent;border:0;border-radius:6px;min-width:40px;height:40px;padding:0 9px;display:flex;align-items:center;gap:6px;cursor:pointer}
+#bar #b-play{min-height:44px;font-size:14px}
+#bar #b-play[hidden]{display:none}
+#bar:has(#b-play:not([hidden])){opacity:1}
 #bar button:hover,#notes button:hover{background:rgba(255,255,255,.14)}
 #bar button[aria-pressed=true]{background:#f2f1ea;color:#171a1c}
 #bar svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
@@ -397,7 +403,7 @@ body:not(.capture) #app.play-corner-open + .e-more{display:inline-flex}
     <div id="stamp" aria-hidden="true"><div><small>góc Yên</small><b></b><i></i></div></div>
     <div id="counter" class="hide" aria-live="polite"><span class="seen"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20C4 9 11 4 20 4c0 9-5 16-16 16zm0 0L14 10"/></svg><em>yên</em> × <b>1</b></span><span class="pips"></span></div>
     <section id="env" class="closed">
-      <div class="e-say"><p class="e1">Bạn có một lời mời.</p></div>
+      <div class="e-say"><p class="e1">Bạn có một lời mời.</p><button id="e-start" class="e-start" type="button" aria-label="Mở thư và xem tự động">Mở thư và xem</button></div>
       <div class="e-wrap">
         <div class="e-back"></div>
         <div class="e-flap"></div>
@@ -413,6 +419,7 @@ body:not(.capture) #app.play-corner-open + .e-more{display:inline-flex}
       <button id="b-prev" title="Lùi (←)" aria-label="Lùi"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
       <button id="b-next" title="Tiếp (→ / Space)" aria-label="Tiếp"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button>
       <button id="b-skip" title="Bỏ qua tới trang sau (S)" aria-label="Bỏ qua trang"><svg viewBox="0 0 24 24"><path d="M6 5l7 7-7 7M17 5v14"/></svg></button>
+      <button id="b-play" type="button" hidden>Tự chuyển</button>
       <i></i>
       <button id="b-sound" title="Âm thanh (M)" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9z"/><path class="w" d="M16.5 8.5a5 5 0 010 7M19 6a8.5 8.5 0 010 12"/><path class="x" d="M17 9l5 6M22 9l-5 6"/></svg><span>Âm thanh</span></button>
       <button id="b-full" title="Toàn màn hình (F)" aria-label="Toàn màn hình"><svg viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button>
@@ -1680,15 +1687,51 @@ const SLIDES = [
   const next = () => { wake(); const sl = SLIDES[D.i]; if (!D.ready) { D.pendNext = true; return; }
     if (busy()) { if (stage.fx || popTween) { stage.finishAll(); if (popTween) { popTween = null; W.popT = 1; } if (performance.now() - (D.tEnter || 0) < 350) return; /* an accidental double tap */ } else { if (envSkip) envSkip(); return; } }
     if (D.s < sl.steps.length - 1) { clearTimers(); D.s++; applyStep(false); syncNotes(); } else if (D.i < SLIDES.length - 1) enter(D.i + 1, 1); };
-  const prev = () => { wake(); if (D.s > 0) { clearTimers(); D.s--; applyStep(true); syncNotes(); } else if (D.i > 0) enter(D.i - 1, -1); };
+  const prev = () => { setPlayback(false); wake(); if (D.s > 0) { clearTimers(); D.s--; applyStep(true); syncNotes(); } else if (D.i > 0) enter(D.i - 1, -1); };
   const skip = () => { wake(); if (D.i < SLIDES.length - 1) enter(D.i + 1, 1, true); };
   const goto = (i, s = 0, silent) => { enter(clamp(i, 0, SLIDES.length - 1), 1, true); const last = clamp(s, 0, SLIDES[D.i].steps.length - 1); for (let k = 0; k <= last; k++) { D.s = k; applyStep(true); } syncNotes(silent); };
+
+  // ── continuous playback
+  // The reading time starts after the camera settles. Cards and optional activities get longer.
+  const readingTimes = {
+    curio: [5200, 8500], expo: [4800, 4800, 6100, 8500], anchor: [5200, 10000, 6400, 8500],
+    foot: [4800, 4800, 4800, 8500], ikea: [12500, 10500, 8500], scarce: [6800, 6200, 8500],
+    progress: [4500, 5700, 5700, 8500], gift: [4500, 11000, 8500], peak: [4800, 5400, 8500],
+    vow: [12000, 6500, 8500], way: [5200, 13000, 13000, 6500], end: [6500]
+  };
+  const playButton = $('#b-play');
+  let playing = false, playbackTimer;
+  const schedulePlayback = () => {
+    clearTimeout(playbackTimer);
+    const slide = SLIDES[D.i], atEnd = slide.id === 'end' && D.s === slide.steps.length - 1;
+    if (D.i === 0 || atEnd) playing = false;
+    playButton.hidden = CAPTURE || D.i === 0 || atEnd || app.classList.contains('presenter');
+    playButton.textContent = playing ? 'Tạm dừng' : 'Tự chuyển';
+    if (!D.ready || !playing || document.hidden || playButton.hidden) return;
+    const waitForScene = () => {
+      if (envSkip || (slide.kind !== 'env' && !D.still && stage?.busy)) {
+        playbackTimer = setTimeout(waitForScene, 180);
+        return;
+      }
+      playbackTimer = setTimeout(next, readingTimes[slide.id]?.[D.s] ?? 5200);
+    };
+    waitForScene();
+  };
+  const setPlayback = (on) => { playing = on; schedulePlayback(); };
+  const advance = () => {
+    const opening = D.i === 0 && !CAPTURE && !app.classList.contains('presenter');
+    if (opening) playing = true;
+    next();
+  };
+  document.addEventListener('visibilitychange', () => {
+    if (D.i !== 0) schedulePlayback();
+  });
 
   // ── presenter view + two-window sync
   let chan = null; try { chan = new BroadcastChannel('yen-invite'); chan.onmessage = (e) => { const m = e.data || {}; if (m.i !== undefined && (m.i !== D.i || m.s !== D.s)) goto(m.i, m.s, true); }; } catch (e) { chan = null; }
   const syncNotes = (silent) => { const sl = SLIDES[D.i], nx = sl.steps[D.s + 1] || (SLIDES[D.i + 1] && SLIDES[D.i + 1].steps[0]);
     $('#n-title').textContent = sl.title || (sl.id === 'env' ? 'Phong bì' : 'Phong bì (kết)'); $('#n-pos').textContent = `trang ${D.i + 1}/${SLIDES.length} · nhịp ${D.s + 1}/${sl.steps.length}`;
-    $('#n-cur').textContent = sl.steps[D.s].n; $('#n-next').textContent = nx ? nx.n : 'Hết (cố ý dang dở).'; if (chan && !silent) try { chan.postMessage({ i: D.i, s: D.s }); } catch (e) {} };
+    $('#n-cur').textContent = sl.steps[D.s].n; $('#n-next').textContent = nx ? nx.n : 'Hết (cố ý dang dở).'; if (chan && !silent) try { chan.postMessage({ i: D.i, s: D.s }); } catch (e) {} schedulePlayback(); };
   setInterval(() => { const t = Math.floor((performance.now() - D.t0) / 1000); $('#n-time').textContent = String(Math.floor(t / 60)).padStart(2, '0') + ':' + String(t % 60).padStart(2, '0'); }, 1000);
 
   // ── the host's badge: Netlify's free plan adds a "Powered by Netlify" frame, fixed at the bottom right, above everything.
@@ -1707,27 +1750,38 @@ const SLIDES = [
   let wakeT = 0; const bar = $('#bar'), wake = () => { bar.classList.add('wake'); clearTimeout(wakeT); wakeT = setTimeout(() => bar.classList.remove('wake'), 2600); };
   const press = (id, fn) => $(id).addEventListener('click', (e) => { e.stopPropagation(); fn(); });
   const toggleSound = () => { const on = sound.toggle(); $('#b-sound').setAttribute('aria-pressed', !!on); if (on) { sound.scene(SLIDES[D.i].bed, .5); humUpdate(); } };
-  const toggleNotes = () => { const on = app.classList.toggle('presenter'); setTimeout(resize, 30); };
+  const toggleNotes = () => { app.classList.toggle('presenter'); setPlayback(false); setTimeout(resize, 30); };
   const setStill = (on) => { D.still = on || !D.webgl; app.classList.toggle('still', D.still); if (stage) stage.still = D.still; goto(D.i, D.s, true); };
   const full = () => { try { const d = document; if (d.fullscreenElement || d.webkitFullscreenElement) (d.exitFullscreen || d.webkitExitFullscreen).call(d); else { const el = d.documentElement; const p = (el.requestFullscreen || el.webkitRequestFullscreen).call(el); if (p && p.catch) p.catch(() => {}); } } catch (e) {} };
-  press('#b-prev', prev); press('#b-next', next); press('#b-skip', skip); press('#b-sound', toggleSound); press('#b-full', full);
+  press('#e-start', () => {
+    const moveFocus = document.activeElement === $('#e-start');
+    advance();
+    if (moveFocus && !playButton.hidden) playButton.focus();
+  });
+  press('#b-play', () => setPlayback(!playing));
+  press('#b-prev', prev); press('#b-next', advance); press('#b-skip', skip); press('#b-sound', toggleSound); press('#b-full', full);
   press('#n-prev', prev); press('#n-next-b', next); press('#n-skip', skip);
   ['#bar', '#notes'].forEach(s => $(s).addEventListener('click', e => e.stopPropagation()));
   const sweeping = () => SLIDES[D.i].id === 'ikea' && D.s === 0;
+  const pauseForActivity = (e) => {
+    if (playing && e.target.closest('#overlays button,#overlays input,#hot button')) setPlayback(false);
+  };
+  stageEl.addEventListener('pointerdown', pauseForActivity, true);
+  stageEl.addEventListener('focusin', pauseForActivity);
   // a control is something that handles its own tap; the paper around it (e.g. the wish card) still navigates
   const isCtl = (el) => !!(el && el.closest && (el.closest('button,input,a,select,label,#bar,#notes,.guess,.hotspot') || (el.closest('.ia') && !el.closest('.vowb'))));
-  stageEl.addEventListener('click', (e) => { if (isCtl(e.target)) return; if (D.dragged > 18) { D.dragged = 0; return; } const r = stageEl.getBoundingClientRect(); if ((e.clientX - r.left) / r.width < .12 && (D.i > 0 || D.s > 0)) prev(); else next(); });
+  stageEl.addEventListener('click', (e) => { if (isCtl(e.target)) return; if (D.dragged > 18) { D.dragged = 0; return; } const r = stageEl.getBoundingClientRect(); if ((e.clientX - r.left) / r.width < .12 && (D.i > 0 || D.s > 0)) prev(); else advance(); });
   addEventListener('keydown', (e) => { if (e.metaKey || e.ctrlKey || e.altKey) return; const k = e.key; if (e.target.matches && e.target.matches('input') && (k === 'ArrowLeft' || k === 'ArrowRight')) return;
     if ((k === 'Enter' || k === ' ') && e.target.closest && e.target.closest('button,a,input,select')) return;
-    if (k === 'ArrowRight' || k === ' ' || k === 'PageDown' || k === 'Enter' || k === 'ArrowDown') { e.preventDefault(); next(); } else if (k === 'ArrowLeft' || k === 'PageUp' || k === 'Backspace' || k === 'ArrowUp') { e.preventDefault(); prev(); }
-    else if (k === 's' || k === 'S') skip(); else if (k === 'm' || k === 'M') toggleSound(); else if (k === 'p' || k === 'P' || k === 'n' || k === 'N') toggleNotes(); else if (k === 'r' || k === 'R') { if (D.webgl) setStill(!D.still); } else if (k === 'f' || k === 'F') full(); else if (k === 'Home') goto(0); else if (k === 'End') goto(SLIDES.length - 1); });
+    if (k === 'ArrowRight' || k === ' ' || k === 'PageDown' || k === 'Enter' || k === 'ArrowDown') { e.preventDefault(); advance(); } else if (k === 'ArrowLeft' || k === 'PageUp' || k === 'Backspace' || k === 'ArrowUp') { e.preventDefault(); prev(); }
+    else if (k === 's' || k === 'S') skip(); else if (k === 'm' || k === 'M') toggleSound(); else if (k === 'p' || k === 'P' || k === 'n' || k === 'N') toggleNotes(); else if (k === 'r' || k === 'R') { if (D.webgl) setStill(!D.still); } else if (k === 'f' || k === 'F') full(); else if (k === 'Home' || k === 'End') { setPlayback(false); goto(k === 'Home' ? 0 : SLIDES.length - 1); } });
   { let t = null; stageEl.addEventListener('touchstart', (e) => { t = isCtl(e.target) ? null : { x: e.touches[0].clientX, y: e.touches[0].clientY }; }, { passive: true });
-    stageEl.addEventListener('touchend', (e) => { if (!t || sweeping()) { t = null; return; } const dx = e.changedTouches[0].clientX - t.x, dy = e.changedTouches[0].clientY - t.y; if (Math.abs(dx) > 44 && Math.abs(dx) > Math.abs(dy) * 1.3) { e.preventDefault(); dx < 0 ? next() : prev(); } t = null; }, { passive: false }); }
+    stageEl.addEventListener('touchend', (e) => { if (!t || sweeping()) { t = null; return; } const dx = e.changedTouches[0].clientX - t.x, dy = e.changedTouches[0].clientY - t.y; if (Math.abs(dx) > 44 && Math.abs(dx) > Math.abs(dy) * 1.3) { e.preventDefault(); dx < 0 ? advance() : prev(); } t = null; }, { passive: false }); }
   { let down = null, acc = 0;
     let from = null;
     stageEl.addEventListener('pointerdown', (e) => { D.dragged = 0; if (isCtl(e.target)) return; down = { x: e.clientX, y: e.clientY }; from = { x: e.clientX, y: e.clientY }; acc = 0; });
     stageEl.addEventListener('pointermove', (e) => { const r = stageEl.getBoundingClientRect(); if (stage && e.pointerType !== 'touch') { stage.par.tx = ((e.clientX - r.left) / r.width - .5) * 2; stage.par.ty = ((e.clientY - r.top) / r.height - .5) * 2; if (e.clientY > r.bottom - 90) wake(); }
-      if (!down) return; const d = Math.hypot(e.clientX - down.x, e.clientY - down.y); D.dragged = Math.max(D.dragged, Math.hypot(e.clientX - from.x, e.clientY - from.y)); if (sweeping()) { acc += d; if (acc > Math.max(90, r.width * .12)) { acc = 0; sweep(9); } } down = { x: e.clientX, y: e.clientY }; });
+      if (!down) return; const d = Math.hypot(e.clientX - down.x, e.clientY - down.y); D.dragged = Math.max(D.dragged, Math.hypot(e.clientX - from.x, e.clientY - from.y)); if (sweeping()) { acc += d; if (acc > Math.max(90, r.width * .12)) { acc = 0; if (playing) setPlayback(false); sweep(9); } } down = { x: e.clientX, y: e.clientY }; });
     const up = () => { down = null; }; addEventListener('pointerup', up); addEventListener('pointercancel', up); }
   const resize = () => { if (stage) stage.resize(); }; addEventListener('resize', resize); if (window.ResizeObserver) new ResizeObserver(resize).observe(stageEl);
 
