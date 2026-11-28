@@ -56,20 +56,23 @@
   </div>
 
   <div class="row">
+    <span class="play-clock" id="clock" aria-label="Thời gian" aria-live="off">0.000 s</span>
     <button class="go" id="next" type="button" hidden>Trốn chỗ khác</button>
     <button class="back" id="hint" type="button">Gợi ý</button>
     <button class="back" id="show" type="button">Chỉ cho tôi</button>
   </div>
   <p class="say" id="say" role="status" aria-live="polite"></p>
-  <p class="fine">Không tính điểm, không tính giờ, không lưu gì hết. Tìm không ra thì bấm “Chỉ cho tôi”.</p>
+  <p class="fine">Không tính điểm, không lưu gì hết. Tìm không ra thì bấm “Chỉ cho tôi”.</p>
 </main>
 
+<script src="/choi/clock.js"></script>
 <script>
 (() => {
   'use strict';
   const $ = (s) => document.querySelector(s);
   const scene = $('#scene'), say = $('#say'), next = $('#next'), hint = $('#hint'), show = $('#show');
   const veil = $('#replay-veil');
+  const clock = createPlayClock($('#clock'));
   // hiding places, measured on the picture: x, y = where the cat's paws touch (fractions of the picture), w = how wide the cat is,
   // cut = how much of its lower body is hidden behind something
   const SPOTS = [
@@ -95,7 +98,7 @@
     cat.style.cssText = `--x:${s.x};--y:${s.y};--w:${s.w};--coat:${COATS[coat]}`; cat.innerHTML = CAT; scene.appendChild(cat);
     const fit = () => { const sw = scene.clientWidth, c = cat.querySelector('svg'); c.style.setProperty('--cw', Math.max(18, s.w * sw) + 'px'); c.style.width = Math.max(18, s.w * sw) + 'px'; if (s.cut) c.style.clipPath = `inset(0 0 ${s.cut * 100}% 0)`; }; fit(); cat._fit = fit;
     next.hidden = true; hint.disabled = false; show.disabled = false; say.textContent = ''; };
-  const win = (how) => { if (found || !veil.hidden) return; found = true; cat.classList.add('found'); cat.setAttribute('aria-label', 'Con mèo, thấy rồi'); const c = cat.querySelector('svg'); c.style.clipPath = 'none';
+  const win = (how) => { if (found || !veil.hidden) return; found = true; clock.stop(); cat.classList.add('found'); cat.setAttribute('aria-label', 'Con mèo, thấy rồi'); const c = cat.querySelector('svg'); c.style.clipPath = 'none';
     say.textContent = (how === 'shown' ? 'Đây nè. Nó nằm ' : 'Thấy rồi! Nó ngủ ') + SPOTS[cur].o + '.'; next.hidden = false; hint.disabled = true; show.disabled = true; next.focus({ preventScroll: true }); };
 
   scene.addEventListener('click', (e) => { if (found || !veil.hidden) return; if (e.target.closest('.cat')) return win('found');
@@ -111,15 +114,24 @@
     coat = (coat + 1 + Math.floor(Math.random() * (COATS.length - 1))) % COATS.length;
     if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
       veil.hidden = false;
-      setTimeout(() => { veil.hidden = true; }, 460);
+      setTimeout(() => { veil.hidden = true; clock.start(); }, 460);
     }
     place();
+    if (veil.hidden) clock.start();
+    else clock.reset();
     hint.focus({ preventScroll: true });
     say.textContent = 'Nó đi kiếm chỗ ngủ khác rồi. Tìm lại nha.';
   });
   addEventListener('resize', () => { if (cat && cat._fit) cat._fit(); });
 
   place();
+  const photo = scene.querySelector('.bg');
+  if (photo.complete) clock.start();
+  else {
+    const startClock = () => { if (cur >= 0 && !found && veil.hidden && next.hidden) clock.start(); };
+    photo.addEventListener('load', startClock, { once: true });
+    photo.addEventListener('error', startClock, { once: true });
+  }
   // for checking the hiding places: /meo-ngu/?tatca shows a cat on every one of them
   if (/[?&]tatca\b/.test(location.search)) SPOTS.forEach((s) => { const b = document.createElement('i'); b.className = 'cat'; b.style.cssText = `--x:${s.x};--y:${s.y};--w:${s.w};pointer-events:none`; b.innerHTML = CAT; scene.appendChild(b); const c = b.querySelector('svg'); c.style.width = Math.max(18, s.w * scene.clientWidth) + 'px'; if (s.cut) c.style.clipPath = `inset(0 0 ${s.cut * 100}% 0)`; });
 })();

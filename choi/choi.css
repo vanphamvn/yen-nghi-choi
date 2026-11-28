@@ -38,3 +38,5 @@ h1 .w{display:inline-block;margin-right:.16em;transform:rotate(var(--r));animati
 .scene img.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;-webkit-user-drag:none}
 .scene canvas{position:absolute;inset:0;width:100%;height:100%}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+
+.play-clock{display:inline-block;min-width:8ch;color:var(--burg);font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}
