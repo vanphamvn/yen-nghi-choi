@@ -15,9 +15,17 @@
 <title>Mèo ngủ ở đâu? | Yên Coffee &amp; Tea</title>
 <style>
 .scene{touch-action:manipulation;cursor:pointer}
+.replay-veil{position:absolute;inset:0;z-index:4;background:var(--stucco);backdrop-filter:blur(12px);pointer-events:none}
+.replay-veil:not([hidden]){animation:replay-reveal 460ms ease-out both}
+@keyframes replay-reveal{
+  0%,30%{opacity:1}
+  55%{opacity:.85;background:rgba(242,241,234,.55)}
+  100%{opacity:0;background:rgba(242,241,234,.55)}
+}
 /* the cat: a real button at least 44px across, with the small paper cat inside it */
 .cat{position:absolute;left:calc(var(--x) * 100%);top:calc(var(--y) * 100%);width:max(44px,calc(var(--w) * 100%));aspect-ratio:1;transform:translate(-50%,-78%);display:grid;place-items:end center;padding:0;border:0;background:transparent;cursor:pointer;z-index:2}
 .cat svg{width:var(--cw);max-width:none;height:auto;overflow:visible;filter:drop-shadow(1px 2px 1px rgba(20,24,18,.35));transform-origin:50% 100%;transition:transform .45s cubic-bezier(.3,1.6,.4,1)}
+.cat .coat{fill:var(--coat,#171a1c)}
 .cat .eye{opacity:0;transition:opacity .2s}
 .cat.found svg{transform:scale(2.1) translateY(-6%)}
 .cat.found .eye{opacity:1}.cat.found .shut{opacity:0}
@@ -44,6 +52,7 @@
 
   <div class="scene" id="scene">
     <img class="bg" src="quan.jpg" width="900" height="1200" alt="Quán Yên nhìn từ ngoài đường: cây lớn che sân, tường trắng có chữ Yên, cổng có tấm biển đỏ, một bộ bàn ghế ngoài sân.">
+    <div class="replay-veil" id="replay-veil" aria-hidden="true" hidden></div>
   </div>
 
   <div class="row">
@@ -60,6 +69,7 @@
   'use strict';
   const $ = (s) => document.querySelector(s);
   const scene = $('#scene'), say = $('#say'), next = $('#next'), hint = $('#hint'), show = $('#show');
+  const veil = $('#replay-veil');
   // hiding places, measured on the picture: x, y = where the cat's paws touch (fractions of the picture), w = how wide the cat is,
   // cut = how much of its lower body is hidden behind something
   const SPOTS = [
@@ -74,28 +84,39 @@
     { x: .76, y: .506, w: .042, o: 'trên bệ cửa sổ' },
     { x: .385, y: .76, w: .08, o: 'ngoài lề đường, trước cổng' }
   ];
-  const CAT = '<svg viewBox="0 0 100 62" aria-hidden="true"><g fill="#171a1c"><path d="M92 44c10-4 9-22-4-22-6 0-8 6-4 8 5 2 6 8-1 9z"/><ellipse cx="54" cy="42" rx="38" ry="19"/><circle cx="24" cy="34" r="16"/><path d="M10 26l2-17 13 10zM27 18l12-10 2 17z"/></g><g class="shut" fill="none" stroke="#f6e7c1" stroke-width="2" stroke-linecap="round"><path d="M15 35q4 3 7 0M26 35q4 3 7 0"/></g><g class="eye" fill="#e9a23b"><circle cx="18.5" cy="34" r="3"/><circle cx="29.5" cy="34" r="3"/></g></svg>';
+  const CAT = '<svg viewBox="0 0 100 62" aria-hidden="true"><g class="coat"><path d="M92 44c10-4 9-22-4-22-6 0-8 6-4 8 5 2 6 8-1 9z"/><ellipse cx="54" cy="42" rx="38" ry="19"/><circle cx="24" cy="34" r="16"/><path d="M10 26l2-17 13 10zM27 18l12-10 2 17z"/></g><g class="shut" fill="none" stroke="#f6e7c1" stroke-width="2" stroke-linecap="round"><path d="M15 35q4 3 7 0M26 35q4 3 7 0"/></g><g class="eye" fill="#e9a23b"><circle cx="18.5" cy="34" r="3"/><circle cx="29.5" cy="34" r="3"/></g></svg>';
   const WRONG = { far: ['Lạnh tanh. Chỗ này chỉ có gió.', 'Xa lắm. Mèo không ưa chỗ này.', 'Không có. Thử chỗ khác coi.'], warm: ['Ấm ấm rồi đó.', 'Hơi gần rồi. Ngó quanh coi.'], hot: ['Nóng lắm rồi! Sát bên luôn.', 'Gần xịt. Nhìn kỹ chút nữa.'] };
   const any = (a) => a[Math.floor(Math.random() * a.length)];
-  let cur = -1, found = false, cat = null;
+  const COATS = ['#171a1c', '#a65b30', '#5b6b7a', '#795047', '#d9c39e'];
+  let cur = -1, found = false, cat = null, coat = 0;
 
   const place = () => { let i; do { i = Math.floor(Math.random() * SPOTS.length); } while (i === cur && SPOTS.length > 1); cur = i; found = false;
     scene.querySelectorAll('.cat,.ring,.puff').forEach((e) => e.remove()); const s = SPOTS[i]; cat = document.createElement('button'); cat.type = 'button'; cat.className = 'cat'; cat.setAttribute('aria-label', 'Con mèo đang ngủ');
-    cat.style.cssText = `--x:${s.x};--y:${s.y};--w:${s.w}`; cat.innerHTML = CAT; scene.appendChild(cat);
+    cat.style.cssText = `--x:${s.x};--y:${s.y};--w:${s.w};--coat:${COATS[coat]}`; cat.innerHTML = CAT; scene.appendChild(cat);
     const fit = () => { const sw = scene.clientWidth, c = cat.querySelector('svg'); c.style.setProperty('--cw', Math.max(18, s.w * sw) + 'px'); c.style.width = Math.max(18, s.w * sw) + 'px'; if (s.cut) c.style.clipPath = `inset(0 0 ${s.cut * 100}% 0)`; }; fit(); cat._fit = fit;
     next.hidden = true; hint.disabled = false; show.disabled = false; say.textContent = ''; };
-  const win = (how) => { if (found) return; found = true; cat.classList.add('found'); cat.setAttribute('aria-label', 'Con mèo, thấy rồi'); const c = cat.querySelector('svg'); c.style.clipPath = 'none';
+  const win = (how) => { if (found || !veil.hidden) return; found = true; cat.classList.add('found'); cat.setAttribute('aria-label', 'Con mèo, thấy rồi'); const c = cat.querySelector('svg'); c.style.clipPath = 'none';
     say.textContent = (how === 'shown' ? 'Đây nè. Nó nằm ' : 'Thấy rồi! Nó ngủ ') + SPOTS[cur].o + '.'; next.hidden = false; hint.disabled = true; show.disabled = true; next.focus({ preventScroll: true }); };
 
-  scene.addEventListener('click', (e) => { if (found) return; if (e.target.closest('.cat')) return win('found');
+  scene.addEventListener('click', (e) => { if (found || !veil.hidden) return; if (e.target.closest('.cat')) return win('found');
     const r = scene.getBoundingClientRect(), px = (e.clientX - r.left) / r.width, py = (e.clientY - r.top) / r.height, s = SPOTS[cur], d = Math.hypot(px - s.x, (py - (s.y - .02)) * (r.height / r.width));
     const p = document.createElement('i'); p.className = 'puff'; p.style.left = px * 100 + '%'; p.style.top = py * 100 + '%'; scene.appendChild(p); setTimeout(() => p.remove(), 650);
     say.textContent = any(d < .13 ? WRONG.hot : d < .3 ? WRONG.warm : WRONG.far); });
   const ring = (tight) => { scene.querySelectorAll('.ring').forEach((e) => e.remove()); const s = SPOTS[cur], g = document.createElement('i'); g.className = 'ring' + (tight ? ' tight' : '');
     const off = tight ? 0 : .09, ox = s.x + (Math.random() - .5) * off * 2, oy = s.y - .02 + (Math.random() - .5) * off * 2; g.style.cssText = `--x:${Math.min(.8, Math.max(.2, ox))};--y:${Math.min(.86, Math.max(.16, oy))}`; if (tight) g.style.cssText = `--x:${s.x};--y:${s.y - .02}`; scene.appendChild(g); setTimeout(() => g.remove(), tight ? 3300 : 2700); };
-  hint.addEventListener('click', () => { if (found) return; ring(false); say.textContent = 'Nó nằm đâu đó trong vòng này.'; });
-  show.addEventListener('click', () => { if (found) return; ring(true); win('shown'); });
-  next.addEventListener('click', () => { place(); say.textContent = 'Nó đi kiếm chỗ ngủ khác rồi. Tìm lại nha.'; });
+  hint.addEventListener('click', () => { if (found || !veil.hidden) return; ring(false); say.textContent = 'Nó nằm đâu đó trong vòng này.'; });
+  show.addEventListener('click', () => { if (found || !veil.hidden) return; ring(true); win('shown'); });
+  next.addEventListener('click', () => {
+    if (!found || !veil.hidden) return;
+    coat = (coat + 1 + Math.floor(Math.random() * (COATS.length - 1))) % COATS.length;
+    if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      veil.hidden = false;
+      setTimeout(() => { veil.hidden = true; }, 460);
+    }
+    place();
+    hint.focus({ preventScroll: true });
+    say.textContent = 'Nó đi kiếm chỗ ngủ khác rồi. Tìm lại nha.';
+  });
   addEventListener('resize', () => { if (cat && cat._fit) cat._fit(); });
 
   place();
