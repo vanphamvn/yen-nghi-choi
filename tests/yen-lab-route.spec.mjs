@@ -95,7 +95,8 @@ test('hero, three needs, release-status list, house rules and way back to Yên',
   const home = page.locator('footer').getByRole('link', { name: 'Về Yên' });
   await home.click();
   await expect(page).toHaveURL(/\/$/);
-  await expect(page.locator('#dau')).toBeAttached();
+  // "/" is the opening notice for now; the Cục Yên homepage lives at /trang-chu.html until the café opens.
+  await expect(page.getByRole('heading', { level: 1, name: 'Sắp khai trương' })).toBeVisible();
 });
 
 test('room playthings: poke Cục Yên by mouse, touch and keyboard, nothing stored', async ({ page }, testInfo) => {
@@ -139,7 +140,7 @@ test('unknown Lab paths return the Lab 404 page with a way back (LAB-F14)', asyn
 test('M1 (#134): homepage link is on, ≥44px, leads to a playable game; back/forward; rollback flag hides it', async ({ page }) => {
   await blockExternal(page);
   await page.clock.install();
-  await page.goto('/');
+  await page.goto('/trang-chu.html');
   expect(await page.evaluate(() => window.flag_yenlab)).toBe(1);
   const link = page.locator('a.yen-lab-link');
   await expect(link).toHaveCount(1);
@@ -165,18 +166,18 @@ test('M1 (#134): homepage link is on, ≥44px, leads to a playable game; back/fo
   await page.goBack();
   await expect(page).toHaveURL(/\/lab\/$/);
   await page.goBack();
-  await expect(page).toHaveURL(`http://127.0.0.1:${process.env.LAB_UX_PORT || 4189}/`);
+  await expect(page).toHaveURL(`http://127.0.0.1:${process.env.LAB_UX_PORT || 4189}/trang-chu.html`);
   await page.goForward();
   await page.goForward();
   await expect(page.locator('#game')).toHaveAttribute('data-state', 'idle');
 
   // Rollback path: flag_yenlab = 0 in the served source hides the link again (the toggle code itself runs).
-  await page.route(`**/127.0.0.1:${process.env.LAB_UX_PORT || 4189}/`, async route => {
+  await page.route(`**/127.0.0.1:${process.env.LAB_UX_PORT || 4189}/trang-chu.html`, async route => {
     const res = await route.fetch();
     const body = (await res.text()).replace('var flag_yenlab = 1;', 'var flag_yenlab = 0;');
     await route.fulfill({ response: res, body });
   });
-  await page.goto('/');
+  await page.goto('/trang-chu.html');
   expect(await page.evaluate(() => window.flag_yenlab)).toBe(0);
   await expect(link).toBeHidden();
 });

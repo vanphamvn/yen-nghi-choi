@@ -3,7 +3,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync, existsSync } from "node:fs";
 
-const html=readFileSync(new URL("../index.html",import.meta.url),"utf8");
+const html=readFileSync(new URL("../trang-chu.html",import.meta.url),"utf8");
 const svg=readFileSync(new URL("../assets/cuc-yen/mascot.svg",import.meta.url),"utf8");
 const spriteIds=new Set(Array.from(svg.matchAll(/<symbol id="(cuc-yen-[a-z-]+)"/g),m=>m[1]));
 const sceneMatch=html.match(/const YEN_SCENE_ART=(\{[\s\S]*?\});\s*function renderYenScene\(/);
