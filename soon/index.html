@@ -1687,7 +1687,8 @@ const SLIDES = [
   // ── the host's badge: Netlify's free plan adds a "Powered by Netlify" frame, fixed at the bottom right, above everything.
   //    It cannot be turned off on that plan, so make room: --nl is its height and --nlw its width (0 when there is no badge).
   //    Upright screens end the stage above it; wide screens slide the control bar to its left.
-  { const room = () => { const f = document.getElementById('nl-badge-frame'); if (!f) return false; const r = f.getBoundingClientRect(), h = Math.round(r.height), w = Math.round(r.width), st = document.documentElement.style; st.setProperty('--nl', (h > 0 && h < 140 ? h : 64) + 'px'); st.setProperty('--nlw', (w > 0 && w < 320 ? w : 202) + 'px'); return true; };
+  { const room = () => { const f = document.getElementById('nl-badge-frame'); if (!f) return false; const r = f.getBoundingClientRect(), h = Math.round(r.height), w = Math.round(r.width), st = document.documentElement.style; st.setProperty('--nl', (h > 0 && h < 140 ? h : 64) + 'px'); st.setProperty('--nlw', (w > 0 && w < 320 ? w : 202) + 'px');
+      if (!f._nlRO && window.ResizeObserver) { f._nlRO = new ResizeObserver(() => { room(); dispatchEvent(new Event('resize')); }); f._nlRO.observe(f); } /* the frame starts oversized and shrinks to fit the badge */ return true; };
     if (!room() && window.MutationObserver) { const mo = new MutationObserver(() => { if (room()) { mo.disconnect(); dispatchEvent(new Event('resize')); } }); mo.observe(document.body, { childList: true }); setTimeout(() => mo.disconnect(), 30000); } }
   // ── controls
   let wakeT = 0; const bar = $('#bar'), wake = () => { bar.classList.add('wake'); clearTimeout(wakeT); wakeT = setTimeout(() => bar.classList.remove('wake'), 2600); };
