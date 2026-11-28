@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#f2f1ea">
+<meta name="description" content="Góc chơi của Yên Coffee &amp; Tea: mấy trò nhỏ chơi trong lúc chờ ly nước. Không tính điểm, không lưu gì.">
+<meta name="referrer" content="no-referrer">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;700&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,900;1,9..144,400&display=swap">
+<link rel="stylesheet" href="/choi/choi.css">
+<title>Góc chơi | Yên Coffee &amp; Tea</title>
+<style>
+.page > *{max-width:880px}
+.games{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,190px),1fr));gap:clamp(14px,2.4vw,22px)}
+.card{display:grid;gap:8px;height:100%;padding:8px 8px 14px;background:var(--paper);color:inherit;text-decoration:none;box-shadow:0 2px 0 #e4dfd0,0 14px 26px rgba(30,22,16,.2);transform:rotate(var(--r,0deg));transition:transform .2s ease-out,box-shadow .2s ease-out}
+.card:hover,.card:focus-visible{transform:translateY(-5px) rotate(0deg);box-shadow:0 2px 0 #e4dfd0,0 22px 34px rgba(30,22,16,.26)}
+.card .pic{display:block;aspect-ratio:4/3;background:var(--c,#a9c4e2) var(--img) var(--pos,center)/cover no-repeat}
+.card b{padding:0 6px;font:600 21px/1.15 var(--serif)}
+.card span{padding:0 6px;font-size:15px;line-height:1.4;color:var(--soft)}
+/* the bookshelf has no photo: a row of paper spines stands in for it */
+.card .pic.shelf{display:flex;align-items:flex-end;justify-content:center;gap:3px;padding:0 10% 0;background:#efe9da;border-bottom:9px solid var(--walnut)}
+.card .pic.shelf i{width:11%;border-radius:2px 2px 0 0;background:var(--c)}
+@media (max-width:440px){.games{grid-template-columns:1fr 1fr;gap:12px}.card b{font-size:18px}.card span{font-size:14px}}
+</style>
+</head>
+<body>
+<main class="page">
+  <header class="top">
+    <a class="home" href="/" aria-label="Yên Coffee &amp; Tea, về trang chủ"><span class="logo"></span></a>
+    <a class="back" href="/soon/">Mở thư mời</a>
+  </header>
+  <div>
+    <h1 aria-label="Góc chơi"><span class="w" aria-hidden="true" style="--i:0;--r:-2deg">Góc</span><span class="w" aria-hidden="true" style="--i:1;--r:1.8deg">chơi</span></h1>
+    <p class="lede">Mấy trò nhỏ, chơi trong lúc chờ ly nước.</p>
+  </div>
+
+  <ul class="games">
+    <li><a class="card" href="/doc-gi/" style="--r:-1.2deg"><span class="pic shelf" aria-hidden="true"><i style="--c:#6a2028;height:74%"></i><i style="--c:#171a1c;height:60%"></i><i style="--c:#9a5522;height:82%"></i><i style="--c:#3f6f9a;height:66%"></i><i style="--c:#40561f;height:78%"></i><i style="--c:#6a2028;height:58%"></i><i style="--c:#9a5522;height:70%"></i></span><b>Hôm nay đọc gì?</b><span>Lắc kệ sách, rớt ra một cuốn.</span></a></li>
+    <li><a class="card" href="/quet-la/" style="--r:1deg"><span class="pic" style="--img:url(/quet-la/san.jpg);--pos:40% 62%" aria-hidden="true"></span><b>Quét lá sân Yên</b><span>Quẹt để quét. Gió sẽ còn thổi nữa.</span></a></li>
+    <li><a class="card" href="/meo-ngu/" style="--r:-.8deg"><span class="pic" style="--img:url(/meo-ngu/quan.jpg);--pos:60% 52%" aria-hidden="true"></span><b>Mèo ngủ ở đâu?</b><span>Con mèo trốn trong quán. Tìm thử coi.</span></a></li>
+    <li><a class="card" href="/ve-mai/" style="--r:1.4deg"><span class="pic" style="--img:url(/ve-mai/mai.jpg);--pos:62% 40%" aria-hidden="true"></span><b>Vẽ lên mái nhà Yên</b><span>Mái trắng như tờ giấy. Vẽ rồi bay lên nhìn.</span></a></li>
+  </ul>
+
+  <p class="fine">Trò nào cũng vậy: không tính điểm, không tính giờ, không lưu gì hết. Chán thì nghỉ.</p>
+</main>
+</body>
+</html>

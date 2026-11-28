@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#f2f1ea">
+<meta name="description" content="Vẽ lên mái nhà Yên: mái quán là một tờ giấy trắng. Vẽ gì đó lên rồi bay lên cao mà nhìn.">
+<meta name="referrer" content="no-referrer">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;700&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,900;1,9..144,400&display=swap">
+<link rel="stylesheet" href="/choi/choi.css">
+<title>Vẽ lên mái nhà Yên | Yên Coffee &amp; Tea</title>
+<style>
+/* draw mode: the camera drops down until the white roof fills the picture; "Bay lên nhìn" pulls it back up */
+.world{position:absolute;inset:0;transform-origin:0 0;transition:transform 1.3s cubic-bezier(.55,0,.2,1)}
+.scene.draw .world{transform:translate(calc((.5 - .596 * 2.15) * 100%),calc((.5 - .431 * 2.15) * 100%)) scale(2.15)}
+.scene.draw canvas{cursor:crosshair}
+.cloud{position:absolute;z-index:2;left:-40%;width:30%;aspect-ratio:3.2/1;border-radius:999px;background:#fbfaf5;pointer-events:none;opacity:0;transition:opacity .8s;filter:drop-shadow(0 6px 5px rgba(40,50,70,.2));animation:drift 38s linear infinite}
+.cloud::before,.cloud::after{content:'';position:absolute;border-radius:50%;background:#fbfaf5;aspect-ratio:1}
+.cloud::before{left:16%;top:-58%;width:40%}.cloud::after{right:16%;top:-34%;width:30%}
+.cloud.b{top:70%;width:22%;animation-duration:52s;animation-delay:-20s}.cloud.a{top:9%}
+.scene:not(.draw) .cloud{opacity:.92}
+@keyframes drift{to{left:110%}}
+.sw{display:flex;flex-wrap:wrap;align-items:center;gap:7px;padding:3px}
+.scene{width:min(100%,calc((100dvh - 484px) * .75),560px)}
+@media (min-width:700px){.scene{width:min(100%,calc((100dvh - 372px) * .75),560px)}}
+.sw label{position:relative;width:44px;height:44px;border-radius:50%;background:var(--c);box-shadow:0 0 0 2px var(--paper),0 0 0 3.5px rgba(23,26,28,.35);cursor:pointer;transition:transform .16s ease-out}
+.sw input{position:absolute;inset:0;opacity:0;margin:0;cursor:pointer}
+.sw label:has(input:checked){transform:scale(1.14);box-shadow:0 0 0 3px var(--paper),0 0 0 6px var(--black)}
+.sw label:has(input:focus-visible){outline:3px solid #a64b1d;outline-offset:6px}
+.sw label.gom{background:var(--paper);display:grid;place-items:center;font-size:13px;font-weight:700}
+</style>
+</head>
+<body>
+<main class="page">
+  <header class="top">
+    <a class="home" href="/" aria-label="Yên Coffee &amp; Tea, về trang chủ"><span class="logo"></span></a>
+    <a class="back" href="/choi/">← Góc chơi</a>
+  </header>
+  <div>
+    <h1 aria-label="Vẽ lên mái nhà Yên"><span class="w" aria-hidden="true" style="--i:0;--r:-2deg">Vẽ</span><span class="w" aria-hidden="true" style="--i:1;--r:1.5deg">lên</span><span class="w" aria-hidden="true" style="--i:2;--r:-1deg">mái</span><span class="w" aria-hidden="true" style="--i:3;--r:2deg">nhà</span><span class="w" aria-hidden="true" style="--i:4;--r:-1.5deg">Yên</span></h1>
+    <p class="lede">Mái quán là một tờ giấy trắng. Vẽ gì đó lên, rồi bay lên cao mà nhìn.</p>
+  </div>
+
+  <div class="scene draw" id="scene">
+    <div class="world">
+      <img class="bg" id="bg" src="mai.jpg" width="900" height="1200" alt="Quán Yên nhìn thẳng từ trên cao: mái quán là một hình chữ nhật trắng, bên trái là sân gạch xám và ba tán cây.">
+      <canvas id="cv" width="1350" height="1800" aria-label="Mái quán, chỗ để vẽ"></canvas>
+    </div>
+    <i class="cloud a" aria-hidden="true"></i><i class="cloud b" aria-hidden="true"></i>
+  </div>
+
+  <div class="sw" role="radiogroup" aria-label="Màu sơn">
+    <label style="--c:#6a2028"><input type="radio" name="mau" value="#6a2028" aria-label="Đỏ rượu" checked></label>
+    <label style="--c:#c9772e"><input type="radio" name="mau" value="#c9772e" aria-label="Cam đất"></label>
+    <label style="--c:#40561f"><input type="radio" name="mau" value="#40561f" aria-label="Xanh lá"></label>
+    <label style="--c:#3f6f9a"><input type="radio" name="mau" value="#3f6f9a" aria-label="Xanh trời"></label>
+    <label style="--c:#171a1c"><input type="radio" name="mau" value="#171a1c" aria-label="Đen"></label>
+    <label class="gom"><input type="radio" name="mau" value="gom" aria-label="Cục gôm">gôm</label>
+  </div>
+  <div class="row">
+    <button class="go" id="fly" type="button" aria-pressed="false">Bay lên nhìn</button>
+    <button class="back" id="auto" type="button">Yên vẽ giùm</button>
+    <button class="back" id="undo" type="button" disabled>Lùi một nét</button>
+    <button class="back" id="clear" type="button" disabled>Xóa hết</button>
+    <button class="back" id="save" type="button">Lưu hình</button>
+  </div>
+  <p class="say" id="say" role="status" aria-live="polite"></p>
+  <p class="fine">Hình bạn vẽ chỉ nằm trên máy bạn. Yên không lưu và không gửi đi đâu hết. Tải lại trang là mái trắng trở lại.</p>
+</main>
+
+<script>
+(() => {
+  'use strict';
+  const $ = (s) => document.querySelector(s);
+  const scene = $('#scene'), cv = $('#cv'), x = cv.getContext('2d'), say = $('#say'), bg = $('#bg');
+  const CW = cv.width, CH = cv.height;
+  // the white roof in the picture, corner by corner (top-left, top-right, bottom-right, bottom-left), measured from the paper model
+  const ROOF = [[.4724, .2254], [.7163, .2291], [.7388, .6373], [.4525, .6322]];
+  const IDEAS = ['một con mèo nằm phơi nắng', 'tên của bạn, thật bự', 'một ly cà phê cho máy bay coi', 'một cái mặt đang lè lưỡi', 'mũi tên chỉ xuống: “quán ở đây nè”', 'ông mặt trời đeo kính râm'];
+  let strokes = [], cur = null;
+
+  const clip = () => { x.beginPath(); ROOF.forEach(([px, py], i) => (i ? x.lineTo(px * CW, py * CH) : x.moveTo(px * CW, py * CH))); x.closePath(); x.clip(); };
+  const paint = (s) => { if (!s.p.length) return; x.globalCompositeOperation = s.c === 'gom' ? 'destination-out' : 'source-over'; x.strokeStyle = s.c === 'gom' ? '#000' : s.c; x.fillStyle = x.strokeStyle; x.lineWidth = (s.c === 'gom' ? .03 : .0115) * CW; x.lineCap = 'round'; x.lineJoin = 'round';
+    if (s.p.length === 1) { x.beginPath(); x.arc(s.p[0][0] * CW, s.p[0][1] * CH, x.lineWidth / 2, 0, 6.2832); x.fill(); return; }
+    x.beginPath(); x.moveTo(s.p[0][0] * CW, s.p[0][1] * CH); for (let i = 1; i < s.p.length; i++) { const a = s.p[i - 1], b = s.p[i]; x.quadraticCurveTo(a[0] * CW, a[1] * CH, (a[0] + b[0]) / 2 * CW, (a[1] + b[1]) / 2 * CH); } const z = s.p[s.p.length - 1]; x.lineTo(z[0] * CW, z[1] * CH); x.stroke(); };
+  const redraw = () => { x.setTransform(1, 0, 0, 1, 0, 0); x.clearRect(0, 0, CW, CH); x.save(); clip(); x.globalAlpha = .94; strokes.forEach(paint); if (cur) paint(cur); x.restore(); x.globalCompositeOperation = 'source-over';
+    $('#undo').disabled = $('#clear').disabled = !strokes.length; };
+  const colour = () => (document.querySelector('input[name=mau]:checked') || {}).value || '#6a2028';
+
+  // ── drawing with a finger, a mouse or a pen (only while the camera is down on the roof)
+  const pos = (e) => { const r = cv.getBoundingClientRect(); return [(e.clientX - r.left) / r.width, (e.clientY - r.top) / r.height]; };
+  cv.addEventListener('pointerdown', (e) => { if (!scene.classList.contains('draw')) { say.textContent = 'Đang ở trên cao. Bấm “Xuống vẽ tiếp” để vẽ.'; return; } e.preventDefault(); cur = { c: colour(), p: [pos(e)] }; try { cv.setPointerCapture(e.pointerId); } catch (_) {} redraw(); });
+  cv.addEventListener('pointermove', (e) => { if (!cur) return; const p = pos(e), q = cur.p[cur.p.length - 1]; if (Math.hypot(p[0] - q[0], p[1] - q[1]) < .002) return; cur.p.push(p); redraw(); });
+  const end = () => { if (!cur) return; strokes.push(cur); cur = null; redraw(); say.textContent = ''; };
+  cv.addEventListener('pointerup', end); cv.addEventListener('pointercancel', end);
+
+  $('#undo').addEventListener('click', () => { strokes.pop(); redraw(); });
+  $('#clear').addEventListener('click', () => { strokes = []; redraw(); say.textContent = 'Mái trắng lại rồi.'; });
+
+  // ── up and down
+  const fly = $('#fly');
+  fly.addEventListener('click', () => { const down = scene.classList.toggle('draw'); fly.setAttribute('aria-pressed', !down); fly.textContent = down ? 'Bay lên nhìn' : 'Xuống vẽ tiếp';
+    say.textContent = down ? '' : (strokes.length ? 'Từ trên cao nhìn xuống, mái nhà Yên giờ vầy nè.' : 'Mái còn trắng trơn. Xuống vẽ gì đó đi.'); });
+
+  // ── "Yên vẽ giùm": a doodle for anyone who would rather not draw, or cannot drag
+  const onRoof = (u, v) => { const [a, b, c, d] = ROOF, tx = a[0] + (b[0] - a[0]) * u, ty = a[1] + (b[1] - a[1]) * u, bx = d[0] + (c[0] - d[0]) * u, by = d[1] + (c[1] - d[1]) * u; return [tx + (bx - tx) * v, ty + (by - ty) * v]; };
+  const arc = (cx, cy, r, a0, a1, n = 26) => Array.from({ length: n + 1 }, (_, k) => { const a = a0 + (a1 - a0) * k / n; return [cx + Math.cos(a) * r, cy + Math.sin(a) * r]; });
+  const DOODLES = [
+    ['một cái mặt lè lưỡi', () => [arc(0, 0, 1, 0, 6.2832, 40), arc(-.36, -.25, .13, 3.5, 6.0, 8), arc(.36, -.3, .06, 0, 6.2832, 10), arc(0, .05, .55, .35, 2.8, 16), [[.12, .52], [.12, .86], [.2, .95], [.34, .95], [.42, .86], [.42, .42]]]],
+    ['một trái tim', () => [Array.from({ length: 41 }, (_, k) => { const a = k / 40 * 6.2832; return [16 * Math.pow(Math.sin(a), 3) / 16, -(13 * Math.cos(a) - 5 * Math.cos(2 * a) - 2 * Math.cos(3 * a) - Math.cos(4 * a)) / 16]; })]],
+    ['ông mặt trời', () => [arc(0, 0, .5, 0, 6.2832, 30), ...Array.from({ length: 10 }, (_, k) => { const a = k / 10 * 6.2832; return [[Math.cos(a) * .7, Math.sin(a) * .7], [Math.cos(a) * 1, Math.sin(a) * 1]]; })]],
+    ['một con mèo', () => [arc(0, .15, .78, 0, 6.2832, 36), [[-.7, -.2], [-.72, -.95], [-.2, -.6]], [[.7, -.2], [.72, -.95], [.2, -.6]], arc(-.3, .05, .07, 0, 6.2832, 8), arc(.3, .05, .07, 0, 6.2832, 8), [[-.1, .35], [0, .45], [.1, .35]], [[-.25, .4], [-.95, .3]], [[.25, .4], [.95, .3]]]]
+  ];
+  let turn = 0;
+  $('#auto').addEventListener('click', () => { const [name, f] = DOODLES[turn++ % DOODLES.length], cols = ['#6a2028', '#c9772e', '#40561f', '#3f6f9a', '#171a1c'], c = cols[turn % cols.length];
+    const vc = [.2, .5, .8][(turn - 1) % 3], size = .27, asp = .46; // the roof is about twice as long as it is wide, so shapes are squeezed back to round
+    f().forEach((line) => strokes.push({ c, p: line.map(([px, py]) => onRoof(.5 + px * size, vc + py * size * asp)) })); redraw(); say.textContent = 'Yên vẽ ' + name + '. Tới lượt bạn: thử vẽ ' + IDEAS[turn % IDEAS.length] + '.'; });
+
+  // ── save: the picture is put together and handed to the visitor's own device. Nothing is uploaded.
+  $('#save').addEventListener('click', () => { const c = document.createElement('canvas'); c.width = 900; c.height = 1200; const g = c.getContext('2d');
+    try { g.drawImage(bg, 0, 0, 900, 1200); g.drawImage(cv, 0, 0, 900, 1200); c.toBlob((b) => { if (!b) { say.textContent = 'Máy này không cho lưu hình. Bạn chụp màn hình giùm nha.'; return; } const u = URL.createObjectURL(b), a = document.createElement('a'); a.href = u; a.download = 'mai-nha-yen.jpg'; document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(u), 4000); say.textContent = 'Đã lưu hình vô máy bạn. Yên không giữ bản nào.'; }, 'image/jpeg', .92); }
+    catch (_) { say.textContent = 'Máy này không cho lưu hình. Bạn chụp màn hình giùm nha.'; } });
+
+  redraw(); say.textContent = 'Vẽ gì giờ? Thử: ' + IDEAS[Math.floor(Math.random() * IDEAS.length)] + '.';
+})();
+</script>
+</body>
+</html>
