@@ -365,8 +365,8 @@ body{font-family:var(--sans);color:var(--black);touch-action:manipulation;user-s
   .e-file{left:9vw;right:9vw;width:auto;top:29vh;font-size:12px}
   #env.eleven .e-wrap{transform:translate(0,23vh) rotate(-3deg) scale(.6)}
   .file,.e-file{background:#fbfaf5}
-  #bar #b-notes span,#bar #b-still span,#bar #b-sound span{display:none}
-  #bar #b-notes::after{content:'Ghi chú';font-size:11px}#bar #b-still::after{content:'Tĩnh';font-size:11px}
+  #bar #b-sound span{display:none}
+  
   .presenter #app{flex-direction:column}.presenter #notes{width:100%;height:42vh}
 }
 @media (max-height:480px) and (min-aspect-ratio:1/1){
@@ -409,8 +409,6 @@ body{font-family:var(--sans);color:var(--black);touch-action:manipulation;user-s
       <button id="b-skip" title="Bỏ qua tới trang sau (S)" aria-label="Bỏ qua trang"><svg viewBox="0 0 24 24"><path d="M6 5l7 7-7 7M17 5v14"/></svg></button>
       <i></i>
       <button id="b-sound" title="Âm thanh (M)" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9z"/><path class="w" d="M16.5 8.5a5 5 0 010 7M19 6a8.5 8.5 0 010 12"/><path class="x" d="M17 9l5 6M22 9l-5 6"/></svg><span>Âm thanh</span></button>
-      <button id="b-notes" title="Ghi chú người trình bày (P)" aria-pressed="false"><span>Ghi chú</span></button>
-      <button id="b-still" title="Giảm chuyển động (R)" aria-pressed="false"><span>Ảnh tĩnh</span></button>
       <button id="b-full" title="Toàn màn hình (F)" aria-label="Toàn màn hình"><svg viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button>
     </nav>
   </main>
@@ -1694,10 +1692,10 @@ const SLIDES = [
   let wakeT = 0; const bar = $('#bar'), wake = () => { bar.classList.add('wake'); clearTimeout(wakeT); wakeT = setTimeout(() => bar.classList.remove('wake'), 2600); };
   const press = (id, fn) => $(id).addEventListener('click', (e) => { e.stopPropagation(); fn(); });
   const toggleSound = () => { const on = sound.toggle(); $('#b-sound').setAttribute('aria-pressed', !!on); if (on) { sound.scene(SLIDES[D.i].bed, .5); humUpdate(); } };
-  const toggleNotes = () => { const on = app.classList.toggle('presenter'); $('#b-notes').setAttribute('aria-pressed', on); setTimeout(resize, 30); };
-  const setStill = (on) => { D.still = on || !D.webgl; app.classList.toggle('still', D.still); $('#b-still').setAttribute('aria-pressed', D.still); if (stage) stage.still = D.still; goto(D.i, D.s, true); };
+  const toggleNotes = () => { const on = app.classList.toggle('presenter'); setTimeout(resize, 30); };
+  const setStill = (on) => { D.still = on || !D.webgl; app.classList.toggle('still', D.still); if (stage) stage.still = D.still; goto(D.i, D.s, true); };
   const full = () => { try { const d = document; if (d.fullscreenElement || d.webkitFullscreenElement) (d.exitFullscreen || d.webkitExitFullscreen).call(d); else { const el = d.documentElement; const p = (el.requestFullscreen || el.webkitRequestFullscreen).call(el); if (p && p.catch) p.catch(() => {}); } } catch (e) {} };
-  press('#b-prev', prev); press('#b-next', next); press('#b-skip', skip); press('#b-sound', toggleSound); press('#b-notes', toggleNotes); press('#b-still', () => { if (D.webgl) setStill(!D.still); }); press('#b-full', full);
+  press('#b-prev', prev); press('#b-next', next); press('#b-skip', skip); press('#b-sound', toggleSound); press('#b-full', full);
   press('#n-prev', prev); press('#n-next-b', next); press('#n-skip', skip);
   ['#bar', '#notes'].forEach(s => $(s).addEventListener('click', e => e.stopPropagation()));
   const sweeping = () => SLIDES[D.i].id === 'ikea' && D.s === 0;
@@ -1727,7 +1725,7 @@ const SLIDES = [
     { const li = new Image(); li.onload = () => $('.logo-w').appendChild(signCanvas(li, '#fbfaf4', null)); li.src = ASSETS.leafMask; }
     { const wURL = signCanvas(img, '#fbfaf4', null).toDataURL('image/png'), G = [['cup', 'ly giấy', logoURL], ['tote', 'túi vải', logoURL], ['coaster', 'lót ly', wURL], ['bag', 'túi giấy', logoURL], ['card', 'thẻ nhỏ', wURL]];
       $('.storm').innerHTML = '<div class="goods">' + G.map(([c, t, u], k) => `<figure class="gd g-${c}" style="--k:${k}"><div class="ob"><img alt="" src="${u}"></div><figcaption>${t}</figcaption></figure>`).join('') + `</div><small class="idea">ý tưởng trên giấy · chưa có món nào là thật</small><img alt="" class="keep" src="${logoURL}">`; }
-    D.still = reduce || !D.webgl; app.classList.toggle('still', D.still); $('#b-still').setAttribute('aria-pressed', D.still); if (!D.webgl) $('#b-still').disabled = true; if (stage) stage.still = D.still;
+    D.still = reduce || !D.webgl; app.classList.toggle('still', D.still); if (stage) stage.still = D.still;
     if (W) { W.popT = 1; stage.jump(SLIDES[1].cam); W.setLeaves(20, true); }
     vowApply();
     let last = performance.now(), t0 = last;
