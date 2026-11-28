@@ -319,7 +319,7 @@ body{font-family:var(--sans);color:var(--black);touch-action:manipulation;user-s
 .still #stamp.hit{animation:none;opacity:1}.still #stage.shake>*{animation:none!important}
 @media (prefers-reduced-motion:reduce){.slide [data-s]{transition:opacity .4s;transform:rotate(var(--r,0deg))!important}}
 /* ── controls ── */
-#bar{position:absolute;right:max(1.2vw,env(safe-area-inset-right));bottom:max(1.2vh,env(safe-area-inset-bottom));display:flex;align-items:center;gap:2px;background:rgba(23,26,28,.78);padding:4px;border-radius:8px;opacity:.28;transition:opacity .4s;z-index:20}
+#bar{position:absolute;right:calc(max(1.2vw,env(safe-area-inset-right)) + var(--nlw,0px));bottom:max(1.2vh,env(safe-area-inset-bottom));display:flex;align-items:center;gap:2px;background:rgba(23,26,28,.78);padding:4px;border-radius:8px;opacity:.28;transition:opacity .4s;z-index:20}
 #bar:hover,#bar.wake,#bar:focus-within{opacity:1}
 #bar i{width:1px;height:22px;background:rgba(255,255,255,.25);margin:0 4px}
 #bar button,#notes button{font:600 12px var(--sans);color:#f2f1ea;background:transparent;border:0;border-radius:6px;min-width:40px;height:40px;padding:0 9px;display:flex;align-items:center;gap:6px;cursor:pointer}
@@ -340,6 +340,7 @@ body{font-family:var(--sans);color:var(--black);touch-action:manipulation;user-s
 
 /* ── phones and narrow windows ── */
 @media (max-aspect-ratio:1/1){
+  #app{bottom:var(--nl,0px)}#bar{right:max(1.2vw,env(safe-area-inset-right))}
   .says{left:5vw;right:5vw;max-width:none;top:max(10vh,env(safe-area-inset-top))}
   .say{font-size:clamp(21px,6.2vw,34px)}.say.sm{font-size:clamp(13px,3.8vw,18px)}.say.big{font-size:clamp(34px,11vw,60px)}
   .en{font-size:clamp(12px,3.4vw,16px);max-width:72vw;bottom:max(9vh,env(safe-area-inset-bottom))}
@@ -1683,6 +1684,11 @@ const SLIDES = [
     $('#n-cur').textContent = sl.steps[D.s].n; $('#n-next').textContent = nx ? nx.n : 'Hết (cố ý dang dở).'; if (chan && !silent) try { chan.postMessage({ i: D.i, s: D.s }); } catch (e) {} };
   setInterval(() => { const t = Math.floor((performance.now() - D.t0) / 1000); $('#n-time').textContent = String(Math.floor(t / 60)).padStart(2, '0') + ':' + String(t % 60).padStart(2, '0'); }, 1000);
 
+  // ── the host's badge: Netlify's free plan adds a "Powered by Netlify" frame, fixed at the bottom right, above everything.
+  //    It cannot be turned off on that plan, so make room: --nl is its height and --nlw its width (0 when there is no badge).
+  //    Upright screens end the stage above it; wide screens slide the control bar to its left.
+  { const room = () => { const f = document.getElementById('nl-badge-frame'); if (!f) return false; const r = f.getBoundingClientRect(), h = Math.round(r.height), w = Math.round(r.width), st = document.documentElement.style; st.setProperty('--nl', (h > 0 && h < 140 ? h : 64) + 'px'); st.setProperty('--nlw', (w > 0 && w < 320 ? w : 202) + 'px'); return true; };
+    if (!room() && window.MutationObserver) { const mo = new MutationObserver(() => { if (room()) { mo.disconnect(); dispatchEvent(new Event('resize')); } }); mo.observe(document.body, { childList: true }); setTimeout(() => mo.disconnect(), 30000); } }
   // ── controls
   let wakeT = 0; const bar = $('#bar'), wake = () => { bar.classList.add('wake'); clearTimeout(wakeT); wakeT = setTimeout(() => bar.classList.remove('wake'), 2600); };
   const press = (id, fn) => $(id).addEventListener('click', (e) => { e.stopPropagation(); fn(); });
