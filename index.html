@@ -4,12 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#f2f1ea">
-<meta name="description" content="Yên Coffee &amp; Tea ở Láng Dài, Đất Đỏ sắp khai trương ngày 01.12.2026. Mở thư mời để dạo một vòng quanh quán trước.">
+<meta name="description" content="Yên Coffee &amp; Tea ở Láng Dài, Đất Đỏ khai trương ngày 12.12.2026, trước đó có mở thử vài hôm. Mở thư mời để dạo một vòng quanh quán trước.">
 <meta name="referrer" content="no-referrer">
 <meta name="robots" content="noindex, nofollow, noarchive">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Yên Coffee &amp; Tea | Sắp khai trương">
-<meta property="og:description" content="Yên Coffee &amp; Tea ở Láng Dài, Đất Đỏ sắp khai trương ngày 01.12.2026.">
+<meta property="og:description" content="Yên Coffee &amp; Tea ở Láng Dài, Đất Đỏ khai trương ngày 12.12.2026.">
 <meta property="og:image" content="https://yen-nghi-choi.vercel.app/og-preview.png">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -111,6 +111,7 @@ h1{margin:0;font-family:var(--serif);font-weight:900;font-variation-settings:'op
 .cta .flap{transform-origin:19px 3px;transition:transform .35s cubic-bezier(.3,1.4,.4,1)}
 .cta:hover .flap,.cta:focus-visible .flap{transform:scaleY(-.72)}
 .cta i{font-style:normal;transition:transform .2s}.cta:hover i{transform:translateX(4px)}
+.soft{margin:0;font:italic 400 clamp(15px,2vh,18px)/1.35 var(--serif);text-wrap:balance}
 .note{margin:0;font-size:14px;text-wrap:balance;color:var(--soft);transition:color 1.4s}
 
 /* ── falling leaves and the slat curtain that leads to /soon */
@@ -165,13 +166,14 @@ h1{margin:0;font-family:var(--serif);font-weight:900;font-variation-settings:'op
     </h1>
 
     <div class="info" id="yen-ngoai-doi">
-      <p class="when"><b>01 · 12 · 2026</b> ở Láng Dài, Đất Đỏ</p>
-      <ul class="count" id="count" aria-label="Đếm ngược tới ngày khai trương 01 tháng 12 năm 2026">
+      <p class="when"><b>12 · 12 · 2026</b> ở Láng Dài, Đất Đỏ</p>
+      <ul class="count" id="count" aria-label="Đếm ngược tới ngày khai trương 12 tháng 12 năm 2026">
         <li><span class="tile"><b data-u="d">--</b></span>ngày</li>
         <li><span class="tile"><b data-u="h">--</b></span>giờ</li>
         <li><span class="tile"><b data-u="m">--</b></span>phút</li>
         <li><span class="tile"><b data-u="s">--</b></span>giây</li>
       </ul>
+      <p class="soft" id="soft">Trước đó Yên mở thử vài hôm.<br>Ngày nào thì chưa chốt.</p>
       <a class="cta" id="cta" href="/soon/">
         <svg viewBox="0 0 38 28" aria-hidden="true"><rect x="1" y="3" width="36" height="24" rx="2.5" fill="#f6f0e0" stroke="#171a1c" stroke-width="1.2"/><path class="flap" d="M1.6 4 19 17 36.4 4Z" fill="#ebe3cf" stroke="#171a1c" stroke-width="1.2" stroke-linejoin="round"/><circle cx="19" cy="17" r="4.2" fill="#6a2028"/></svg>
         Mở thư mời <i aria-hidden="true">→</i>
@@ -191,7 +193,7 @@ h1{margin:0;font-family:var(--serif);font-weight:900;font-variation-settings:'op
   const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   // the tape: the same words twice over, so the loop has no seam
-  { const one = Array(8).fill('<span>SẮP KHAI TRƯƠNG</span><span>01.12.2026</span><span>YÊN COFFEE &amp; TEA</span>').join(''); $('#tape').innerHTML = one + one; }
+  { const one = Array(8).fill('<span>SẮP KHAI TRƯƠNG</span><span>12.12.2026</span><span>YÊN COFFEE &amp; TEA</span>').join(''); $('#tape').innerHTML = one + one; }
 
   // leaf shadows on the wall: a few branches of blurred leaves hanging in from the corners
   { let seed = 7; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
@@ -223,10 +225,11 @@ h1{margin:0;font-family:var(--serif);font-weight:900;font-variation-settings:'op
       const vt = document.startViewTransition(() => set(on));
       vt.ready.then(() => root.animate({ clipPath: [`circle(0 at ${cx}px ${cy}px)`, `circle(${R}px at ${cx}px ${cy}px)`] }, { duration: 900, easing: 'cubic-bezier(.6,0,.2,1)', pseudoElement: '::view-transition-new(root)' })).catch(() => {}); }); }
 
-  // countdown to 01.12.2026, midnight in Việt Nam (UTC+7). The date is the fact; the hour is only the start of that day.
-  { const T = Date.UTC(2026, 10, 30, 17, 0, 0), el = {}; document.querySelectorAll('#count b').forEach((b) => el[b.dataset.u] = b);
+  // countdown to the official opening, 12.12.2026, midnight in Việt Nam (UTC+7). The date is the fact; the hour is only the start of that day.
+  // A soft opening comes before it on a date not yet set, so the page names none.
+  { const T = Date.UTC(2026, 11, 11, 17, 0, 0), el = {}; document.querySelectorAll('#count b').forEach((b) => el[b.dataset.u] = b);
     const put = (u, v) => { const s = String(v).padStart(2, '0'), b = el[u]; if (b.textContent === s) return; b.textContent = s; if (!still) { const t = b.parentNode; t.classList.remove('flip'); void t.offsetWidth; t.classList.add('flip'); } };
-    const tick = () => { let ms = T - Date.now(); if (ms <= 0) { ms = 0; $('#note').textContent = 'Tới ngày rồi. Ghé Yên nha.'; clearInterval(iv); }
+    const tick = () => { let ms = T - Date.now(); if (ms <= 0) { ms = 0; $('#soft').hidden = true; $('#note').textContent = 'Tới ngày rồi. Ghé Yên nha.'; clearInterval(iv); }
       const s = Math.floor(ms / 1000); put('d', Math.floor(s / 86400)); put('h', Math.floor(s % 86400 / 3600)); put('m', Math.floor(s % 3600 / 60)); put('s', s % 60); };
     const iv = setInterval(tick, 1000); tick(); }
 
