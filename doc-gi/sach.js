@@ -13,6 +13,10 @@
 // Khi kệ đã có đúng những cuốn dưới đây, đổi thành false.
 window.YEN_SACH_DU_KIEN = true;
 
+// AN = true nghĩa là ẩn trò này đi: trang /doc-gi/ chỉ hiện một dòng báo "kệ đang chờ sách",
+// và thẻ "Hôm nay đọc gì?" không hiện trong Góc chơi. Khi sách đã về quán, đổi thành false là trò mở lại.
+window.YEN_SACH_AN = true;
+
 window.YEN_SACH = [
   // ── đọc là cười
   { ten: 'Nhật ký Mèo Mốc', tacgia: 'Đặng Quang Dũng', ngan: 'cuoi', phut: 5, vi: 'Mỗi trang một mẩu. Mở đâu cười đó.' },

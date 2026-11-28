@@ -147,6 +147,10 @@ legend{padding:0;margin:0 0 .55em;font-weight:700}
 .stage.on .note{opacity:1}
 .foot{display:flex;flex-wrap:wrap;gap:10px}
 
+/* hidden for now (YEN_SACH_AN in sach.js): only the title and one line stay */
+.an .shelfwrap,.an .act,.an #ask,.an .lede,.an .rules{display:none}
+.wait{margin:0;max-width:32ch;font:italic 400 clamp(18px,2.6vh,22px)/1.45 var(--serif)}
+[hidden]{display:none!important}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 </style>
 </head>
@@ -162,6 +166,7 @@ legend{padding:0;margin:0 0 .55em;font-weight:700}
   <div>
     <h1 aria-label="Hôm nay đọc gì?"><span class="w" aria-hidden="true" style="--i:0;--r:-2deg">Hôm</span><span class="w" aria-hidden="true" style="--i:1;--r:1.4deg">nay</span><span class="w" aria-hidden="true" style="--i:2;--r:-1.2deg">đọc</span><span class="w" aria-hidden="true" style="--i:3;--r:2deg">gì?</span></h1>
     <p class="lede">Nói Yên nghe bạn có bao lâu. Yên lắc kệ, rớt ra một cuốn.</p>
+    <p class="wait" id="wait" hidden>Kệ sách của Yên còn đang chờ sách về. Có sách rồi thì trò này mở, bạn ghé lại nha.</p>
   </div>
 
   <div class="shelfwrap"><ul class="shelf" id="shelf" aria-label="Kệ sách của Yên"></ul></div>
@@ -196,7 +201,7 @@ legend{padding:0;margin:0 0 .55em;font-weight:700}
     </fieldset>
   </form>
 
-  <div>
+  <div class="rules">
     <p class="fine" id="dukien" hidden>Kệ sách của Yên còn đang chọn sách. Đây là danh sách dự kiến, tới quán có thể khác chút.</p>
     <p class="fine">Trò này không tính điểm và không lưu gì hết. Số phút là Yên ước chừng. Chán thì gấp lại.</p>
   </div>
@@ -238,6 +243,8 @@ legend{padding:0;margin:0 0 .55em;font-weight:700}
   const esc = (t) => String(t).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
   const rnd = (seed) => () => (seed = (seed * 16807) % 2147483647) / 2147483647;
   const form = $('#ask'), shelf = $('#shelf'), go = $('#go'), msg = $('#msg'), stage = $('#stage'), fly = $('#fly'), book = $('#book'), cover = $('#cover'), slip = $('#slip');
+  // the shelf is not stocked yet: show the waiting line and nothing to play with
+  if (window.YEN_SACH_AN) { document.body.classList.add('an'); $('#wait').hidden = false; return; }
   if (window.YEN_SACH_DU_KIEN) $('#dukien').hidden = false;
 
   // leaf shadows on the wall, the same trick as the home page
