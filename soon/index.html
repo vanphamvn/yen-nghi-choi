@@ -25,6 +25,7 @@ body{font-family:var(--sans);color:var(--black);touch-action:manipulation;user-s
 .still #stills{display:block}.still #gl{visibility:hidden}.still #hot,.still .sun{display:none!important}
 #overlays,#hot{pointer-events:none}
 .ia{pointer-events:auto;cursor:auto}
+.slide [data-s]:not(.on).ia,.slide [data-s]:not(.on) .ia{pointer-events:none}
 
 /* ── slides: paper labels laid over the diorama ── */
 .slide{position:absolute;inset:0;visibility:hidden;pointer-events:none}
@@ -1580,7 +1581,9 @@ const SLIDES = [
 
   // ── envelope
   const envSet = (cls) => { env.className = cls; D.tEnv = performance.now(); };
-  const envOpen = (done) => { envSet('warn open'); sound.paper(.7, true); later(() => { envSet('warn open out'); sound.paper(.9, true); }, 800); later(() => { envSet('warn open out zoom'); sound.whoosh(1.4); }, 1900); later(() => { envSet('gone'); done(); }, 2800); };
+  let envSkip = null; // set while the envelope is opening: call it to finish the opening at once
+  const envOpen = (done) => { const fin = () => { if (envSkip !== fin) return; envSkip = null; envSet('gone'); done(); }; envSkip = fin;
+    envSet('warn open'); sound.paper(.7, true); later(() => { if (envSkip === fin) { envSet('warn open out'); sound.paper(.9, true); } }, 800); later(() => { if (envSkip === fin) { envSet('warn open out zoom'); sound.whoosh(1.4); } }, 1900); later(fin, 2800); };
 
   // ── per-slide behaviour
   const sweep = (k) => { if (D.leaf <= 0) return; D.leaf = Math.max(0, D.leaf - k); if (W) W.setLeaves(D.leaf); $('.leafn').textContent = D.leaf; sound.swish(Math.random() - .5); if (D.leaf === 0) $('#s-ikea .hint').textContent = 'Sạch rồi. Cảm ơn bạn.'; };
@@ -1636,7 +1639,7 @@ const SLIDES = [
 
   // ── entering a slide
   const enter = (i, dir, instant) => {
-    const sl = SLIDES[i]; clearTimers(); giftStop(); if (stage) stage.finishAll(); if (popTween) { popTween = null; W.popT = 1; }
+    const sl = SLIDES[i]; clearTimers(); envSkip = null; D.tEnter = performance.now(); giftStop(); if (stage) stage.finishAll(); if (popTween) { popTween = null; W.popT = 1; }
     D.i = i; D.s = dir < 0 ? sl.steps.length - 1 : 0; if (dir < 0 || D.still) instant = true;
     SLIDES.forEach(o => { if (o.el) o.el.classList.toggle('cur', o === sl); if (o.still) o.still.classList.toggle('cur', o === sl); });
     sound.scene(sl.bed, 1.0); counter.classList.remove('hide', 'xi', 'bump');
@@ -1666,7 +1669,8 @@ const SLIDES = [
   const applyStepNoCam = (instant, keep) => { if (!keep) return applyStep(instant); const sl = SLIDES[D.i]; showSteps(sl, 0); setStamp(instant); setPips(); setSeen(sl.seen[0], instant); if (HOOK[sl.id]) HOOK[sl.id](0, instant); };
 
   const busy = () => stage && !D.still && (stage.fx || popTween || (SLIDES[D.i].enter && SLIDES[D.i].enter.fx === 'env' && !env.classList.contains('gone')));
-  const next = () => { wake(); const sl = SLIDES[D.i]; if (!D.ready) return; if (busy()) { if (stage.fx || popTween) { stage.finishAll(); if (popTween) { popTween = null; W.popT = 1; } } return; }
+  const next = () => { wake(); const sl = SLIDES[D.i]; if (!D.ready) { D.pendNext = true; return; }
+    if (busy()) { if (stage.fx || popTween) { stage.finishAll(); if (popTween) { popTween = null; W.popT = 1; } if (performance.now() - (D.tEnter || 0) < 350) return; /* an accidental double tap */ } else { if (envSkip) envSkip(); return; } }
     if (D.s < sl.steps.length - 1) { clearTimers(); D.s++; applyStep(false); syncNotes(); } else if (D.i < SLIDES.length - 1) enter(D.i + 1, 1); };
   const prev = () => { wake(); if (D.s > 0) { clearTimers(); D.s--; applyStep(true); syncNotes(); } else if (D.i > 0) enter(D.i - 1, -1); };
   const skip = () => { wake(); if (D.i < SLIDES.length - 1) enter(D.i + 1, 1, true); };
@@ -1690,16 +1694,20 @@ const SLIDES = [
   press('#n-prev', prev); press('#n-next-b', next); press('#n-skip', skip);
   ['#bar', '#notes'].forEach(s => $(s).addEventListener('click', e => e.stopPropagation()));
   const sweeping = () => SLIDES[D.i].id === 'ikea' && D.s === 0;
-  stageEl.addEventListener('click', (e) => { if (e.target.closest('.ia')) return; if (D.dragged > 14) { D.dragged = 0; return; } const r = stageEl.getBoundingClientRect(); if ((e.clientX - r.left) / r.width < .12) prev(); else next(); });
+  // a control is something that handles its own tap; the paper around it (e.g. the wish card) still navigates
+  const isCtl = (el) => !!(el && el.closest && (el.closest('button,input,a,select,label,#bar,#notes,.guess,.hotspot') || (el.closest('.ia') && !el.closest('.vowb'))));
+  stageEl.addEventListener('click', (e) => { if (isCtl(e.target)) return; if (D.dragged > 18) { D.dragged = 0; return; } const r = stageEl.getBoundingClientRect(); if ((e.clientX - r.left) / r.width < .12 && (D.i > 0 || D.s > 0)) prev(); else next(); });
   addEventListener('keydown', (e) => { if (e.metaKey || e.ctrlKey || e.altKey) return; const k = e.key; if (e.target.matches && e.target.matches('input') && (k === 'ArrowLeft' || k === 'ArrowRight')) return;
+    if ((k === 'Enter' || k === ' ') && e.target.closest && e.target.closest('button,a,input,select')) return;
     if (k === 'ArrowRight' || k === ' ' || k === 'PageDown' || k === 'Enter' || k === 'ArrowDown') { e.preventDefault(); next(); } else if (k === 'ArrowLeft' || k === 'PageUp' || k === 'Backspace' || k === 'ArrowUp') { e.preventDefault(); prev(); }
     else if (k === 's' || k === 'S') skip(); else if (k === 'm' || k === 'M') toggleSound(); else if (k === 'p' || k === 'P' || k === 'n' || k === 'N') toggleNotes(); else if (k === 'r' || k === 'R') { if (D.webgl) setStill(!D.still); } else if (k === 'f' || k === 'F') full(); else if (k === 'Home') goto(0); else if (k === 'End') goto(SLIDES.length - 1); });
-  { let t = null; stageEl.addEventListener('touchstart', (e) => { t = e.target.closest('.ia') ? null : { x: e.touches[0].clientX, y: e.touches[0].clientY }; }, { passive: true });
+  { let t = null; stageEl.addEventListener('touchstart', (e) => { t = isCtl(e.target) ? null : { x: e.touches[0].clientX, y: e.touches[0].clientY }; }, { passive: true });
     stageEl.addEventListener('touchend', (e) => { if (!t || sweeping()) { t = null; return; } const dx = e.changedTouches[0].clientX - t.x, dy = e.changedTouches[0].clientY - t.y; if (Math.abs(dx) > 44 && Math.abs(dx) > Math.abs(dy) * 1.3) { e.preventDefault(); dx < 0 ? next() : prev(); } t = null; }, { passive: false }); }
   { let down = null, acc = 0;
-    stageEl.addEventListener('pointerdown', (e) => { if (e.target.closest('.ia')) return; down = { x: e.clientX, y: e.clientY }; D.dragged = 0; acc = 0; });
+    let from = null;
+    stageEl.addEventListener('pointerdown', (e) => { D.dragged = 0; if (isCtl(e.target)) return; down = { x: e.clientX, y: e.clientY }; from = { x: e.clientX, y: e.clientY }; acc = 0; });
     stageEl.addEventListener('pointermove', (e) => { const r = stageEl.getBoundingClientRect(); if (stage && e.pointerType !== 'touch') { stage.par.tx = ((e.clientX - r.left) / r.width - .5) * 2; stage.par.ty = ((e.clientY - r.top) / r.height - .5) * 2; if (e.clientY > r.bottom - 90) wake(); }
-      if (!down) return; const d = Math.hypot(e.clientX - down.x, e.clientY - down.y); D.dragged += d; if (sweeping()) { acc += d; if (acc > Math.max(90, r.width * .12)) { acc = 0; sweep(9); } } down = { x: e.clientX, y: e.clientY }; });
+      if (!down) return; const d = Math.hypot(e.clientX - down.x, e.clientY - down.y); D.dragged = Math.max(D.dragged, Math.hypot(e.clientX - from.x, e.clientY - from.y)); if (sweeping()) { acc += d; if (acc > Math.max(90, r.width * .12)) { acc = 0; sweep(9); } } down = { x: e.clientX, y: e.clientY }; });
     const up = () => { down = null; }; addEventListener('pointerup', up); addEventListener('pointercancel', up); }
   const resize = () => { if (stage) stage.resize(); }; addEventListener('resize', resize); if (window.ResizeObserver) new ResizeObserver(resize).observe(stageEl);
 
@@ -1727,7 +1735,7 @@ const SLIDES = [
       }
       window.__frames = (window.__frames || 0) + 1; requestAnimationFrame(loop); };
     requestAnimationFrame(loop);
-    paintAll(); D.ready = true; bar.classList.add('wake'); wakeT = setTimeout(() => bar.classList.remove('wake'), 7000);
+    paintAll(); D.ready = true; if (D.pendNext) { D.pendNext = false; setTimeout(next, 0); } bar.classList.add('wake'); wakeT = setTimeout(() => bar.classList.remove('wake'), 7000);
   };
   setSeen(1, true); setPips(); syncNotes(true); counter.classList.remove('hide');
   const img = new Image(); img.onload = () => setTimeout(() => boot(img), 60); img.src = ASSETS.signMask;
