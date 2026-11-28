@@ -48,3 +48,13 @@ test("the page keeps its promises: no score, no storage, no network calls, and s
   assert.equal(typeof win.YEN_SACH_DU_KIEN, "boolean");
   assert.ok(html.includes('id="dukien"'), "has the provisional-list notice");
 });
+
+// Owner decision (28.11.2026): the books are not bought yet, so the game is hidden behind one switch in sach.js.
+test("one switch hides the game: the page shows a waiting line, and the play corner hides its card", () => {
+  assert.equal(typeof win.YEN_SACH_AN, "boolean", "sach.js sets YEN_SACH_AN");
+  assert.ok(html.includes("if (window.YEN_SACH_AN)") && html.includes('id="wait" hidden'), "the page has a waiting line it shows when hidden");
+  assert.ok(/\.an \.shelfwrap,[^{]*\{display:none\}/.test(html), "the shelf, the button and the questions disappear when hidden");
+  const hub = readFileSync(new URL("../choi/index.html", import.meta.url), "utf8");
+  assert.ok(hub.includes('<li id="card-doc-gi" hidden>'), "the card is hidden unless the switch says otherwise");
+  assert.ok(hub.includes("window.YEN_SACH_AN === false"), "the play corner reads the same switch");
+});
