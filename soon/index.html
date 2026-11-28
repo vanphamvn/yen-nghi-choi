@@ -1361,7 +1361,6 @@ const SLIDES = [
     cam: { p: [2.5, 7.5, 21.5], l: [0, 1.9, -2.5], fov: 40 },
     stamp: { at: 1, no: '01', name: 'Một lời mời' },
     en: 'A little café, almost ready.',
-    says: SAY(0, 0, 'Một góc nhỏ ở Láng Dài, đang chờ ngày đón khách.', 'sm'),
     steps: [
       { n: 'Phong bì mở ra và mô hình quán hiện lên.' },
       { cam: { p: [-2.5, 4.6, 17.5], l: [1.5, 2.2, -2], fov: 40 }, n: 'Ngắm toàn cảnh quán và đọc mẩu chuyện cà phê nếu thích.' }] },
@@ -1370,7 +1369,7 @@ const SLIDES = [
     cam: { p: [-3.0, 1.8, 8.4], l: [-3.3, 1.72, 5.1], fov: 38 },
     stamp: { at: 3, no: '02', name: 'Gặp Yên' },
     en: 'Little details of Yên.',
-    says: SAY(0, 0, 'Tên quán chỉ có một chữ: Yên.') + SAY(1, 1, 'Một tấm biển nhỏ bên đường, một tấm biển trước cửa.') + SAY(2, 2, 'Và vài ý tưởng nhỏ cho những món đồ ở quán.'),
+    says: SAY(0, 0, 'Tên quán có đúng một chữ. Yên.') + SAY(1, 1, 'Ngoài đường có tấm biển đỏ. Trên tường có chữ Yên bự hơn.') + SAY(2, 2, 'Mấy món này mới vẽ chơi thôi, chưa có thiệt.'),
     extra: '<div class="storm" data-s="2"></div>',
     steps: [
       { n: 'Ngắm biển hiệu nhỏ bên đường.' },
@@ -1382,7 +1381,7 @@ const SLIDES = [
     cam: { p: [1.0, 1.75, -2.0], l: [4.4, 1.1, -4.5], fov: 50 },
     stamp: { at: 3, no: '03', name: 'Những chi tiết nhỏ' },
     en: 'Wood, glass and little details.',
-    says: SAY(0, 0, 'Một quầy nhỏ với khoảng <b>95</b> nan gỗ. ' + KK.uoc) + SAY(1, 1, 'Thử đếm xem ô gạch kính có bao nhiêu viên?') + SAY(2, 2, '<b>18</b> viên. ' + KK.dem, 'big') + SAY(2, 2, '', 'sm verdict'),
+    says: SAY(0, 0, 'Quầy ốp chừng <b>95</b> nan gỗ. ' + KK.uoc) + SAY(1, 1, 'Đố bạn ô gạch kính ngoài cổng có mấy viên?') + SAY(2, 2, '<b>18</b> viên. ' + KK.dem, 'big') + SAY(2, 2, '', 'sm verdict'),
     extra: '<p class="giant" data-s="0" data-until="1">95</p><label class="guess ia" data-s="1" data-until="1"><span>tôi đoán</span><output>?</output><input class="rng" type="range" min="1" max="120" value="1" aria-label="Đoán số viên gạch kính"><span>viên</span></label>',
     steps: [
       { n: 'Nhìn những nan gỗ ở quầy.' },
@@ -1394,7 +1393,7 @@ const SLIDES = [
     cam: { p: [-1.2, 1.7, 10.2], l: [-4.6, 1.5, 0], fov: 45 },
     stamp: { at: 3, no: '04', name: 'Dạo một vòng' },
     en: 'A stroll through the garden.',
-    says: SAY(0, 0, 'Nắng và bóng lá trên bức tường trắng.') + SAY(1, 1, 'Dọc lối đi là một bồn cây nhỏ.') + SAY(2, 2, 'Phía trước là cổng vòm dẫn vào sân.'),
+    says: SAY(0, 0, 'Nắng xuyên qua tán cây, in bóng lá lên tường.') + SAY(1, 1, 'Cây trong bồn mọc chen nhau, không ai nhường ai.') + SAY(2, 2, 'Đi hết lối là tới cổng vòm. Qua cổng lại gặp vườn.'),
     extra: '<button class="yes y1 ia" data-s="0" data-until="0">Ngắm lá</button><button class="yes y2 ia" data-s="1" data-until="1">Dạo tiếp</button><button class="yes y3 ia" data-s="2" data-until="2">Qua vòm</button>',
     steps: [
       { n: 'Ngắm bóng lá trên tường.' },
@@ -1406,7 +1405,7 @@ const SLIDES = [
     cam: { p: [-4.9, 2.9, 4.9], l: [-2.6, .2, -3.2], fov: 54 },
     stamp: { at: 2, no: '05', name: 'Sân vườn' },
     en: 'A little garden, ready for the day.',
-    says: SAY(0, 0, 'Sân còn <b class="leafn">64</b> chiếc lá. Thử quét một chút nhé!') + SAY(0, 0, 'Quẹt ngang màn hình để quét. (Hoặc bấm tiếp: lá tự đi.)', 'sm hint') + SAY(1, 1, 'Sân sạch rồi. Thử bật ba chiếc đèn dọc lối đi.') + SAY(1, 1, 'Chạm vào từng chiếc đèn.', 'sm hint'),
+    says: SAY(0, 0, 'Sân còn <b class="leafn">64</b> chiếc lá. Quét phụ Yên một tay nha.') + SAY(0, 0, 'Quẹt ngang màn hình để quét. Làm biếng thì bấm tiếp, lá tự đi.', 'sm hint') + SAY(1, 1, 'Sân sạch rồi. Giờ bật thử ba cái đèn dọc lối đi.') + SAY(1, 1, 'Chạm vô từng cái đèn.', 'sm hint'),
     steps: [
       { n: 'Có thể quẹt màn hình để quét lá hoặc bấm tiếp.' },
       { cam: { p: [-3.6, 1.7, -2.6], l: [0, 2.4, -8.6], fov: 46 }, n: 'Chạm từng chiếc đèn để nghe âm thanh, hoặc bấm tiếp.' },
@@ -1416,7 +1415,7 @@ const SLIDES = [
     cam: { p: [-.9, 3.5, 11.6], l: [.9, 1.5, -2.5], fov: 44 },
     stamp: { at: 2, no: '06', name: 'Những ngày chuẩn bị' },
     en: 'The finishing touches.',
-    says: SAY(0, 1, 'Yên trong những ngày cuối trước khi mở cửa.') + '<div class="chips" data-s="0" data-until="1"><span class="chip">thang đỏ</span><span class="chip">lan can tạm</span><span class="chip">khung cửa còn băng keo</span><span class="chip">dây điện vắt ngang quầy</span><span class="chip">thùng giấy</span></div>' + SAY(1, 1, 'Thêm một chút nữa là quán sẵn sàng.', 'sm'),
+    says: SAY(0, 1, 'Còn mấy ngày nữa mở cửa, quán đang bừa vầy nè.') + '<div class="chips" data-s="0" data-until="1"><span class="chip">thang đỏ</span><span class="chip">lan can tạm</span><span class="chip">khung cửa còn băng keo</span><span class="chip">dây điện vắt ngang quầy</span><span class="chip">thùng giấy</span></div>' + SAY(1, 1, 'Dọn chút xíu nữa là xong.', 'sm'),
     steps: [
       { n: 'Những vật dụng còn lại trong lúc hoàn thiện quán.' },
       { cam: { p: [.6, 3.1, 12.0], l: [1.2, 1.5, -2.5], fov: 44 }, n: 'Mô hình minh họa sân quán sau khi dọn dẹp.' },
@@ -1426,7 +1425,7 @@ const SLIDES = [
     cam: { p: [10, 31, -3.6], l: [-.6, 0, -3.6], fov: 40, P: { p: [-1, 27, 5.5], l: [-1, 0, -4.2] } },
     stamp: { at: 3, no: '07', name: 'Nhìn từ trên cao' },
     en: 'A bird’s-eye view of Yên.',
-    says: SAY(0, 0, 'Bay lên một chút để nhìn toàn cảnh Yên.') + SAY(1, 1, 'Một tấm thiệp lưu lại những góc vừa đi qua.') + SAY(2, 2, 'Còn vài góc nữa để khám phá, nếu bạn muốn.'),
+    says: SAY(0, 0, 'Leo lên cao ngó xuống, Yên có nhiêu đây thôi.') + SAY(1, 1, 'Ghé góc nào, đóng một dấu lá góc đó.') + SAY(2, 2, 'Còn bốn góc chưa ghé.'),
     extra: '<div class="map" data-s="0" data-until="2"><svg><polyline/></svg>' + ['Lời mời', 'Biển hiệu', 'Quầy', 'Lối đi', 'Sân vườn', 'Chuẩn bị', 'bạn đang ở đây', 'Bóng lá', 'Đèn lên', 'Hẹn gặp'].map((t, k) => `<i class="mk ${k < 6 ? 'v' : k === 6 ? 'h' : 'f'}" style="--k:${k}"><b>${k + 1}</b><em>${t}</em></i>`).join('') + '</div>'
       + '<div class="pwrap" data-s="1" data-until="2"><div class="pcard"><header><span class="logo"></span><small>thẻ dạo một vòng Yên</small></header><div class="slots">' + [...Array(10)].map((_, k) => `<i class="${k < 6 ? 'st' : ''}" style="--k:${k}">${LEAF}<b>${k + 1}</b></i>`).join('') + '</div><footer>đã qua <b>6 / 10</b> góc tham quan</footer></div></div>',
     steps: [
@@ -1439,8 +1438,8 @@ const SLIDES = [
     cam: { p: [-2.6, 1.5, -1.0], l: [-7.0, 1.5, -1.3], fov: 46 },
     stamp: { at: 2, no: '08', name: 'Một chút gió' },
     en: 'Ten quiet seconds in the garden.',
-    says: SAY(0, 0, 'Ở đây có một chút gió và bóng lá.'),
-    extra: '<div class="ring" data-s="1" data-until="1"><b>10</b><span>Một chút bình yên.</span></div>',
+    says: SAY(0, 0, 'Chỗ này gió mát.'),
+    extra: '<div class="ring" data-s="1" data-until="1"><b>10</b><span>Mười giây khỏi làm gì hết.</span></div>',
     steps: [
       { n: 'Ngắm bóng lá trên bức tường trắng.' },
       { n: 'Mười giây ngắm lá rơi và nghe tiếng gió. Có thể bấm tiếp bất cứ lúc nào.' },
@@ -1450,7 +1449,7 @@ const SLIDES = [
     cam: { p: [1.9, 1.9, 8.8], l: [2.1, 2.65, 0], fov: 42 },
     stamp: { at: 2, no: '09', name: 'Khi đèn lên' },
     en: 'Yên after sunset.',
-    says: SAY(0, 0, 'Thử tưởng tượng Yên khi trời tối.') + SAY(1, 1, 'Đèn lên, sân nhỏ sáng thêm một chút.'),
+    says: SAY(0, 0, 'Giờ tắt mặt trời thử coi.') + SAY(1, 1, 'Đèn lên rồi. Sân ấm hẳn.'),
     extra: '<div class="curve" data-s="0" data-until="1"><svg viewBox="0 0 100 20" preserveAspectRatio="none"><path pathLength="1" d="M2 15 C10 14 14 16.5 20 15.5 S30 13 36 14.5 S46 16 52 12 S58 2 63 2 S70 11 76 12 S88 13.5 96 8"/></svg><em class="st">ban ngày</em><em class="pk">đèn lên</em><em class="nd">buổi tối</em></div>',
     steps: [
       { n: 'Cảnh buổi tối là hình ảnh minh họa.' },
@@ -1461,7 +1460,7 @@ const SLIDES = [
     cam: { p: [-2.6, 2.7, 12.5], l: [1.4, 2.4, -1], fov: 42 },
     stamp: { at: 2, no: '10', name: 'Hẹn gặp ở Yên' },
     en: 'Come by whenever you like.',
-    says: SAY(0, 0, 'Bạn thích ghé Yên vào lúc nào?') + SAY(1, 1, 'Một tấm thiệp nhỏ gửi bạn.'),
+    says: SAY(0, 0, 'Chừng nào bạn ghé?') + SAY(1, 1, 'Thiệp này của bạn đó.'),
     extra: '<div class="vowb ia" data-s="0" data-until="0">Ghé Yên vào buổi <span class="og" data-g="t"><button class="opt" data-v="0">sáng</button><button class="opt sel" data-v="1">chiều</button><button class="opt" data-v="2">chạng vạng</button></span><span class="pn">, </span><span class="og" data-g="w"><button class="opt" data-v="0">một mình</button><button class="opt sel" data-v="1">cùng một người bạn</button><button class="opt" data-v="2">cùng cả nhóm</button></span><span class="pn">.</span></div><div class="vowcard" data-s="1" data-until="1"><div class="logo"></div><p class="vowtxt"></p><small>khai trương · 01/12/2026</small></div>',
     steps: [
       { n: 'Chọn thời điểm và người đi cùng nếu thích; ánh sáng mô hình đổi theo.' },
@@ -1471,7 +1470,7 @@ const SLIDES = [
   { id: 'way', title: 'Đường tới', seen: [17], tod: .18, leaves: 0, enter: { fx: 'glass', dur: 3.0 }, bed: { wind: .4, street: 1 }, off: [.04, -.1],
     cam: { p: [-3.0, 1.8, 8.4], l: [-3.3, 1.72, 5.1], fov: 38 },
     en: 'Two ways in, both along QL55.',
-    says: SAY(0, 0, 'Giờ thì: đi đường nào tới Yên?') + SAY(1, 1, 'Đường 1 — từ Trường Tiểu học Láng Dài.') + SAY(2, 2, 'Đường 2 — từ Dốc Cây Cám, qua Chợ Láng Dài.') + SAY(3, 3, 'Thấy tấm biển đỏ nhỏ này bên đường là tới.'),
+    says: SAY(0, 0, 'Rồi, đi đường nào tới Yên?') + SAY(1, 1, 'Đường 1: từ Trường Tiểu học Láng Dài.') + SAY(2, 2, 'Đường 2: từ Dốc Cây Cám, qua Chợ Láng Dài.') + SAY(3, 3, 'Thấy tấm biển đỏ này là tới rồi đó.'),
     extra: `<div class="way" data-s="0" data-until="2"><div class="wmap"><svg viewBox="205 -34 800 640" preserveAspectRatio="xMidYMid meet">
       <g class="gr"><path d="M205 -34h330l-60 120-150 60-120 130z"/><path d="M640 300l150-20 120 60 95 160v106H600l-40-150z"/><path d="M205 420l150-40 60 60-120 166H205z"/><path d="M700 -34h305v40l-160 40z"/></g>
       <g class="sr"><path d="M571 209L500 150 470 60M517 298L380 250 330 160M458 409L560 470 640 520M671 141L720 230 800 250M592 187L660 260 740 330"/></g>
@@ -1587,7 +1586,7 @@ const SLIDES = [
     envSet('warn open'); sound.paper(.7, true); later(() => { if (envSkip === fin) { envSet('warn open out'); sound.paper(.9, true); } }, 800); later(() => { if (envSkip === fin) { envSet('warn open out zoom'); sound.whoosh(1.4); } }, 1900); later(fin, 2800); };
 
   // ── per-slide behaviour
-  const sweep = (k) => { if (D.leaf <= 0) return; D.leaf = Math.max(0, D.leaf - k); if (W) W.setLeaves(D.leaf); $('.leafn').textContent = D.leaf; sound.swish(Math.random() - .5); if (D.leaf === 0) $('#s-ikea .hint').textContent = 'Sạch rồi. Cảm ơn bạn.'; };
+  const sweep = (k) => { if (D.leaf <= 0) return; D.leaf = Math.max(0, D.leaf - k); if (W) W.setLeaves(D.leaf); $('.leafn').textContent = D.leaf; sound.swish(Math.random() - .5); if (D.leaf === 0) $('#s-ikea .hint').textContent = 'Sạch bong. Cảm ơn nha.'; };
   let giftT = null;
   const giftStop = () => { clearInterval(giftT); giftT = null; };
   const giftRun = (instant) => { giftStop(); const ring = $('.ring'), leaves = $$('i', ring), b = $('b', ring); let n = 10; const show = () => { leaves.forEach((l, k) => l.classList.toggle('off', k >= n)); b.textContent = n; ring.classList.toggle('done', n === 0); };
@@ -1598,7 +1597,7 @@ const SLIDES = [
   $$('.vowb .opt').forEach(o => o.addEventListener('click', (e) => { e.stopPropagation(); const g = o.parentNode.dataset.g; if (g === 't') { D.vt = +o.dataset.v; todTarget = VTOD[D.vt]; if (W && D.still) W.tod = todTarget; lampsAll(D.vt === 2 ? 1 : 0, null, false, 120); } else D.vw = +o.dataset.v; sound.yes(+o.dataset.v); vowApply(); }));
   { const g = $('.guess input'), out = $('.guess output'); g.addEventListener('input', () => { D.guess = +g.value; out.textContent = g.value; }); ['pointerdown', 'click', 'touchstart'].forEach(ev => $('.guess').addEventListener(ev, e => e.stopPropagation())); }
   $$('.yes').forEach(b => b.addEventListener('click', (e) => { e.stopPropagation(); next(); }));
-  const verdict = () => { const g = D.guess; return g === null ? 'Ba hàng, mỗi hàng sáu viên.' : g === 18 ? 'Bạn đoán đúng 18 viên!' : `Bạn đoán <b>${g}</b> viên. Đáp án là 18.`; };
+  const verdict = () => { const g = D.guess; return g === null ? 'Ba hàng, mỗi hàng sáu viên.' : g === 18 ? 'Trúng luôn, 18 viên!' : `Bạn đoán <b>${g}</b>. Đếm lại thì ra 18.`; };
 
   const MAPP = [[-1.6, .3, 5.6], [4.7, .3, 1.3], [5.2, 4.1, -4.6], [-5.5, 3.4, -10.6], [-3.3, .3, -1.2], [1.6, .3, 2.6], [-3.2, .3, -6.2], [-6.4, 1.6, 1.8], [2.2, .3, 4.3], [-3.9, 2.5, 4.9]].map(p => new THREE.Vector3(...p));
   const HOOK = {
@@ -1610,7 +1609,7 @@ const SLIDES = [
     expo: (s, instant) => { const st = $('.storm'); st.classList.toggle('go', s >= 2); st.classList.toggle('clear', s >= 3); if (s === 2 && !instant) for (let k = 0; k < 5; k++) later(() => { sound.pop(k * 2, (k - 2) * .35); sound.paper(.25, true); }, 350 + k * 420); if (s === 3 && !instant) sound.paper(.9, false); },
     anchor: (s) => { if (s < 1) { D.guess = null; $('.guess input').value = 1; $('.guess output').textContent = '?'; } if (s >= 2) $('.verdict').innerHTML = verdict(); },
     foot: (s, instant) => { if (s >= 1 && !instant) sound.yes(s - 1); },
-    ikea: (s, instant) => { if (s === 0) { D.leaf = W ? Math.min(D.leaf, 64) : D.leaf; if (instant) { D.leaf = 64; if (W) W.setLeaves(64, true); } $('.leafn').textContent = D.leaf; $('#s-ikea .hint').textContent = 'Quẹt ngang màn hình để quét. (Hoặc bấm tiếp: lá tự đi.)'; lampsAll(0, null, true); }
+    ikea: (s, instant) => { if (s === 0) { D.leaf = W ? Math.min(D.leaf, 64) : D.leaf; if (instant) { D.leaf = 64; if (W) W.setLeaves(64, true); } $('.leafn').textContent = D.leaf; $('#s-ikea .hint').textContent = 'Quẹt ngang màn hình để quét. Làm biếng thì bấm tiếp, lá tự đi.'; lampsAll(0, null, true); }
       if (s >= 1) { if (D.leaf > 0) { if (!instant) sound.sweep(); D.leaf = 0; if (W) W.setLeaves(0, instant); } }
       if (s === 1 && instant) lampsAll(0, null, true); if (s >= 2) lampsAll(1, [2, 3, 4], instant); },
     scarce: (s, instant) => { if (s !== 1) return siteVis(1, instant); if (instant || D.still) return siteVis(0, true);
