@@ -1,0 +1,14 @@
+interface:
+  display_name: Yên Soft Opening Presentation
+  short_description: Lên kịch bản và dựng presentation mở thử
+  default_prompt: Dùng $yen-soft-opening-presentation để lên storyboard bản trình
+    chiếu mở thử Yên từ ảnh và thông tin đã chốt.
+  icon_small: assets/icon.svg
+  icon_large: assets/icon.svg
+policy:
+  products:
+  - chatgpt
+  - codex
+  - api
+  - atlas
+  allow_implicit_invocation: true
