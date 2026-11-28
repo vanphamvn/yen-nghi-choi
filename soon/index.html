@@ -316,8 +316,8 @@ body{font-family:var(--sans);color:var(--black);touch-action:manipulation;user-s
 /* after the invitation: one way on, to the play corner. It appears only on the very last step, a moment after the story stops. */
 .e-more{position:fixed;right:var(--play-right,max(16px,env(safe-area-inset-right)));bottom:calc(var(--play-center,max(36px,env(safe-area-inset-bottom))) - 22px);z-index:20;display:none;align-items:center;min-height:44px;padding:0 14px;border-radius:999px;background:var(--black);color:var(--paper);font:600 16px/1 var(--sans);white-space:nowrap;text-decoration:none;box-shadow:0 .5em 1.2em rgba(15,18,20,.38)}
 .e-more:focus-visible{outline:3px solid #a64b1d;outline-offset:3px}
-body:not(.capture) #app:has(#env.eleven) + .e-more{display:inline-flex}
-@media (orientation:landscape){#env.eleven ~ #bar{bottom:max(64px,calc(env(safe-area-inset-bottom) + 56px))}}
+body:not(.capture) #app.play-corner-open + .e-more{display:inline-flex}
+@media (orientation:landscape){#app.play-corner-open #bar{bottom:max(64px,calc(env(safe-area-inset-bottom) + 56px))}}
 #env.eleven .e-say .e2{opacity:.0}
 
 .still .slide [data-s]{transition:opacity .4s;transform:rotate(var(--r,0deg))}
@@ -347,6 +347,7 @@ body:not(.capture) #app:has(#env.eleven) + .e-more{display:inline-flex}
 /* ── phones and narrow windows ── */
 @media (max-aspect-ratio:1/1){
   #app{bottom:var(--nl,0px)}#bar{right:max(1.2vw,env(safe-area-inset-right))}
+  #app.play-corner-open #bar{bottom:max(1.2vh,calc(64px + env(safe-area-inset-bottom) - var(--nl,0px)))}
   .says{left:5vw;right:5vw;max-width:none;top:max(10vh,env(safe-area-inset-top))}
   .say{font-size:clamp(21px,6.2vw,34px)}.say.sm{font-size:clamp(13px,3.8vw,18px)}.say.big{font-size:clamp(34px,11vw,60px)}
   .en{font-size:clamp(12px,3.4vw,16px);max-width:72vw;bottom:max(9vh,env(safe-area-inset-bottom))}
@@ -1643,8 +1644,10 @@ const SLIDES = [
   };
 
   // ── entering a slide
+  const playCornerStart = SLIDES.findIndex(slide => slide.id === 'anchor');
   const enter = (i, dir, instant) => {
     const sl = SLIDES[i]; clearTimers(); envSkip = null; D.tEnter = performance.now(); giftStop(); if (stage) stage.finishAll(); if (popTween) { popTween = null; W.popT = 1; }
+    app.classList.toggle('play-corner-open', i >= playCornerStart);
     D.i = i; D.s = dir < 0 ? sl.steps.length - 1 : 0; if (dir < 0 || D.still) instant = true;
     SLIDES.forEach(o => { if (o.el) o.el.classList.toggle('cur', o === sl); if (o.still) o.still.classList.toggle('cur', o === sl); });
     sound.scene(sl.bed, 1.0); counter.classList.remove('hide', 'xi', 'bump');
