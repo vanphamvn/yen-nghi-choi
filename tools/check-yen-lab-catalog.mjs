@@ -121,7 +121,7 @@ export function checkCatalog() {
   }
 
   // Homepage cost: the catalog and the games are never loaded by the homepage.
-  const home = read('index.html');
+  const home = read('trang-chu.html'); // the Cục Yên homepage, kept at this address while / shows the opening notice
   check(!/catalog\.json|\.mjs["']/.test(home), 'homepage must not load the catalog or any game module');
 
   // Fallback: unknown /lab/ addresses (planned routes included) get the Lab 404 page with a way back.

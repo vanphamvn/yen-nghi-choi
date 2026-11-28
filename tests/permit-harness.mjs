@@ -2,7 +2,7 @@
 // Run the user-facing behavior without a browser or external dependencies.
 import {readFileSync} from "node:fs";
 
-export const html=readFileSync(new URL("../index.html",import.meta.url),"utf8");
+export const html=readFileSync(new URL("../trang-chu.html",import.meta.url),"utf8");
 export const permitScript=html.split('<script id="yen-permit-script">')[1]?.split("</script>")[0]||"";
 
 export function mountPermit({reduced=false,randomValues=[0]}={}){

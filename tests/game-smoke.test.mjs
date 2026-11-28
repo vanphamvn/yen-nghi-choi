@@ -7,7 +7,7 @@ import vm from 'node:vm';
 const html=readFileSync(new URL('../game/index.html',import.meta.url),'utf8');
 const css=readFileSync(new URL('../game/style.css',import.meta.url),'utf8');
 const js=readFileSync(new URL('../game/game.js',import.meta.url),'utf8');
-const site=readFileSync(new URL('../index.html',import.meta.url),'utf8');
+const site=readFileSync(new URL('../trang-chu.html',import.meta.url),'utf8');
 const extract=(before,after)=>{
   const start=js.indexOf(before),end=js.indexOf(after,start+before.length);
   assert.ok(start>=0&&end>start,'Missing source block: '+before);

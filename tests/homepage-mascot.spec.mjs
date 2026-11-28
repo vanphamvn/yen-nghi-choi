@@ -38,7 +38,7 @@ for (const width of [390, 1440]) {
       await blockExternal(page, baseURL);
       const errors = [];
       page.on('pageerror', e => errors.push(e.message));
-      await page.goto('/', { waitUntil: 'domcontentloaded' });
+      await page.goto('/trang-chu.html', { waitUntil: 'domcontentloaded' });
       await noExternalMascotUse(page);
 
       const hero = page.locator('#mascot image');
@@ -76,7 +76,7 @@ for (const width of [390, 1440]) {
 
     test('cutscene actor and clone props are raster sprites', async ({ page, baseURL }) => {
       await blockExternal(page, baseURL);
-      await page.goto('/?cuc_scene=clone', { waitUntil: 'domcontentloaded' });
+      await page.goto('/trang-chu.html?cuc_scene=clone', { waitUntil: 'domcontentloaded' });
       await page.locator('#poke-btn').click();
       const actor = page.locator('#mascot-cutscene image.scene-cuc-model');
       await expect(actor).toHaveCount(1);
