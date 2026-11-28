@@ -10,113 +10,191 @@
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;700&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,900;1,9..144,400&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;700&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,900;1,9..144,400;1,9..144,600&display=swap">
 <title>Hôm nay đọc gì? | Yên Coffee &amp; Tea</title>
 <style>
-/* "Hôm nay đọc gì?": a small game, not an exercise. Say how long you have, shake the shelf, one book falls out.
-   No score, no streak, nothing stored, nothing sent. Same look as / and /soon (stucco, burgundy, walnut shelf). */
-:root{--stucco:#f2f1ea;--paper:#fbfaf5;--burg:#6a2028;--amber:#b3682d;--leaf:#40561f;--blue:#3f6f9a;--black:#171a1c;--walnut:#644629;--soft:#4b4f50;
+/* "Hôm nay đọc gì?": a small game, not an exercise. Say how long you have, shake the shelf, one book flies out
+   under the lamp and turns over into a reading slip. No score, no streak, nothing stored, nothing sent.
+   Same world as / and /soon: a sunlit stucco wall, leaf shadows, burgundy, a walnut shelf, a cone lamp. */
+:root{--stucco:#f2f1ea;--paper:#fbfaf5;--burg:#6a2028;--amber:#9a5522;--leaf:#40561f;--blue:#3f6f9a;--black:#171a1c;--walnut:#644629;--night:#161d2c;--soft:#4b4f50;
   --serif:'Fraunces',Georgia,'Times New Roman',serif;--sans:'Be Vietnam Pro',system-ui,-apple-system,'Segoe UI',sans-serif}
 *{box-sizing:border-box}
 html{background:var(--stucco)}
-body{margin:0;min-height:100dvh;background:var(--stucco);color:var(--black);font:400 16px/1.55 var(--sans);-webkit-tap-highlight-color:transparent}
-body::before{content:'';position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(110vmax 80vmax at 70% 0,rgba(255,250,232,.95),rgba(255,250,232,0) 60%)}
+body{margin:0;min-height:100dvh;background:var(--stucco);color:var(--black);font:400 16px/1.55 var(--sans);overflow-x:hidden;-webkit-tap-highlight-color:transparent}
 a,button,input{font:inherit;color:inherit}
 :focus-visible{outline:3px solid #a64b1d;outline-offset:3px;border-radius:6px}
-.page{max-width:720px;margin:0 auto;padding:max(14px,env(safe-area-inset-top)) clamp(16px,5vw,32px) calc(96px + env(safe-area-inset-bottom));display:grid;gap:clamp(16px,2.6vh,26px)}
+
+/* ── the wall */
+.page{position:relative;isolation:isolate;overflow:hidden;min-height:100dvh;padding:max(14px,env(safe-area-inset-top)) 0 calc(96px + env(safe-area-inset-bottom));display:grid;grid-template-columns:minmax(0,1fr);align-content:start;gap:clamp(14px,2.4vh,26px)}
+.page > *{padding-inline:clamp(16px,5vw,40px);width:100%;max-width:980px;margin-inline:auto;min-width:0}
+.page::before{content:'';position:absolute;inset:0;z-index:-3;background:radial-gradient(120vmax 90vmax at 72% 2%,rgba(255,250,232,.96),rgba(255,250,232,0) 60%),linear-gradient(180deg,rgba(203,214,224,.32),rgba(203,214,224,0) 44%)}
+.page::after{content:'';position:absolute;inset:0;z-index:5;pointer-events:none;opacity:.45;mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .36 0 0 0 0 .34 0 0 0 0 .3 0 0 0 .2 0'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)'/%3E%3C/svg%3E")}
+.page > .shade{position:absolute;inset:-6%;z-index:-2;width:112%;max-width:none;height:112%;padding:0;margin:0;pointer-events:none;filter:blur(5px);opacity:.26}
+.shade g{fill:#33414f;transform-box:fill-box;animation:sway 8s ease-in-out infinite alternate}
+.shade g:nth-child(2n){animation-duration:10s;animation-delay:-3s}.shade g:nth-child(3n){animation-duration:11.5s;animation-delay:-6s}
+@keyframes sway{from{transform:rotate(-2.2deg)}to{transform:rotate(2.6deg)}}
+
 .top{display:flex;align-items:center;justify-content:space-between;gap:12px}
 .logo{display:block;width:104px;aspect-ratio:1450/585;background:var(--burg);-webkit-mask:url(/yen-logo.svg) center/contain no-repeat;mask:url(/yen-logo.svg) center/contain no-repeat}
-.home{display:inline-flex;align-items:center;min-height:44px;padding:0 4px;border-radius:8px;text-decoration:none}
-.back{display:inline-flex;align-items:center;min-height:44px;padding:0 .9em;border:1.5px solid currentColor;border-radius:999px;text-decoration:none;font-size:14px;font-weight:600}
+.home{display:inline-flex;align-items:center;min-height:44px;padding:0 4px;border-radius:8px}
+.back{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 1em;border:1.5px solid currentColor;border-radius:999px;background:transparent;text-decoration:none;font-size:15px;font-weight:600;cursor:pointer;transition:background-color .16s,color .16s}
 .back:hover{background:var(--black);color:var(--stucco)}
-h1{margin:0;font:900 clamp(40px,11.5vw,84px)/1 var(--serif);font-variation-settings:'opsz' 144;letter-spacing:-.012em;word-spacing:.08em;color:var(--burg);text-wrap:balance}
-.lede{margin:.5em 0 0;font:italic 400 clamp(17px,2.4vh,21px)/1.4 var(--serif);max-width:min(30ch,100%)}
+
+/* ── the title, cut from paper */
+h1{margin:0;text-wrap:balance;font:900 clamp(44px,13vw,112px)/.98 var(--serif);font-variation-settings:'opsz' 144;letter-spacing:-.015em;color:var(--burg);
+  filter:drop-shadow(-3px 6px 0 rgba(45,16,20,.15)) drop-shadow(-7px 14px 12px rgba(45,16,20,.18))}
+h1 .w{display:inline-block;margin-right:.16em;transform:rotate(var(--r));animation:drop .9s cubic-bezier(.2,1.45,.35,1) both;animation-delay:calc(.15s + var(--i) * 110ms)}
+@keyframes drop{from{opacity:0;transform:translateY(-60vh) rotate(calc(var(--r) * 8))}55%{opacity:1}to{opacity:1;transform:rotate(var(--r))}}
+.lede{margin:.55em 0 0;font:italic 400 clamp(17px,2.4vh,22px)/1.4 var(--serif);max-width:min(32ch,100%)}
 
 /* ── the two questions */
+#ask{display:grid;gap:clamp(14px,2.2vh,22px)}
 fieldset{margin:0;padding:0;border:0;min-width:0}
-legend{padding:0;margin:0 0 .5em;font-weight:700}
+legend{padding:0;margin:0 0 .55em;font-weight:700}
+.cups{display:flex;gap:10px}
+.cups label{position:relative;flex:1 1 0;max-width:150px;display:grid;justify-items:center;gap:4px;padding:10px 6px 8px;border:1.5px solid var(--black);border-radius:16px;font-weight:600;cursor:pointer;transition:background-color .18s ease-out,color .18s ease-out,transform .18s ease-out}
+.cups input,.chips input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
+.cups svg{width:40px;height:52px;overflow:visible}
+.cups .gl{fill:rgba(255,255,255,.55);stroke:currentColor;stroke-width:2;stroke-linejoin:round}
+.cups .lq{fill:#b97a35;transform-box:fill-box;transform-origin:50% 100%;transform:scaleY(var(--lv));transition:transform .5s cubic-bezier(.3,1.5,.4,1),fill .2s}
+.cups label:hover{transform:translateY(-2px)}
+.cups label:has(input:checked){background:var(--black);color:var(--paper)}
+.cups label:has(input:checked) .lq{fill:#e9a23b}
+.cups label:has(input:checked) .gl{fill:rgba(255,255,255,.1)}
+.cups label:has(input:focus-visible),.chips label:has(input:focus-visible){outline:3px solid #a64b1d;outline-offset:3px}
 .chips{display:flex;flex-wrap:wrap;gap:8px}
-.chips label{position:relative;display:inline-flex;align-items:center;min-height:44px;padding:0 1.05em;border:1.5px solid var(--black);border-radius:999px;font-weight:600;cursor:pointer;transition:background-color .16s ease-out,color .16s ease-out}
-.chips input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
+.chips label{position:relative;display:inline-flex;align-items:center;gap:.5em;min-height:44px;padding:0 1.05em 0 .8em;border:1.5px solid var(--black);border-radius:999px;font-weight:600;cursor:pointer;transition:background-color .16s ease-out,color .16s ease-out}
+.chips label::before{content:'';width:12px;height:12px;border-radius:3px;background:var(--c,conic-gradient(#9a5522 0 20%,#6a2028 0 40%,#40561f 0 60%,#3f6f9a 0 80%,#171a1c 0));box-shadow:0 0 0 2px var(--paper)}
 .chips label:hover{background:rgba(23,26,28,.08)}
 .chips label:has(input:checked){background:var(--black);color:var(--paper)}
-.chips label:has(input:focus-visible){outline:3px solid #a64b1d;outline-offset:3px}
-.go{justify-self:start;display:inline-flex;align-items:center;gap:.6em;min-height:58px;padding:.6em 1.7em;border:0;border-radius:999px;background:var(--burg);color:#f8efe0;font-weight:700;font-size:clamp(18px,2.4vh,21px);cursor:pointer;box-shadow:0 10px 22px rgba(60,20,24,.28);transition:transform .16s ease-out,box-shadow .16s ease-out}
+.row{display:flex;flex-wrap:wrap;align-items:center;gap:12px 18px}
+.go{display:inline-flex;align-items:center;justify-content:center;gap:.6em;min-height:58px;padding:.6em 1.8em;border:0;border-radius:999px;background:var(--burg);color:#f8efe0;font-weight:700;font-size:clamp(18px,2.4vh,21px);cursor:pointer;box-shadow:0 10px 22px rgba(60,20,24,.28);transition:transform .16s ease-out,box-shadow .16s ease-out}
 .go:hover{transform:translateY(-2px);box-shadow:0 14px 26px rgba(60,20,24,.32)}
 .go:active{transform:translateY(1px)}
 .go[disabled]{opacity:.6;cursor:default;transform:none}
+.hint{margin:0;font:italic 400 16px/1.4 var(--serif);color:var(--soft)}
+.msg{margin:0;font-weight:600;color:var(--burg)}
+.msg:empty{display:none}
 
-/* ── the shelf: walnut planks, paper spines */
-.shelf{display:grid;gap:14px;padding-top:6px}
-.plank{position:relative;display:flex;align-items:flex-end;justify-content:center;gap:3px;height:clamp(64px,10vh,116px);padding:0 10px;border-bottom:12px solid var(--walnut);box-shadow:0 14px 14px -10px rgba(40,24,12,.45)}
-.plank::after{content:'';position:absolute;left:0;right:0;bottom:-12px;height:3px;background:rgba(255,255,255,.14)}
-.sp{flex:0 1 var(--w);min-width:9px;height:var(--h);border-radius:3px 3px 1px 1px;background:var(--c);box-shadow:inset -3px 0 0 rgba(0,0,0,.16),inset 2px 0 0 rgba(255,255,255,.14);transform-origin:50% 100%;transition:opacity .3s,transform .45s cubic-bezier(.3,1.5,.4,1),filter .3s}
-.sp::before{content:'';display:block;height:5px;margin:14% 22% 0;background:rgba(255,255,255,.5);border-radius:1px}
-.sp.off{opacity:.24}
-.sp.out{transform:translateY(-34%) rotate(-3deg);filter:drop-shadow(0 10px 8px rgba(40,24,12,.4))}
-.shelf.shake .plank{animation:shake .62s ease-in-out}
-.shelf.shake .sp:not(.off){animation:jit .62s ease-in-out}
-.shelf.shake .sp:nth-child(2n){animation-delay:.04s}.shelf.shake .sp:nth-child(3n){animation-delay:.09s}
-@keyframes shake{0%,100%{transform:none}20%{transform:rotate(-1.6deg) translateX(-5px)}40%{transform:rotate(1.4deg) translateX(5px)}60%{transform:rotate(-1deg) translateX(-3px)}80%{transform:rotate(.6deg) translateX(2px)}}
-@keyframes jit{0%,100%{transform:none}30%{transform:rotate(-5deg)}60%{transform:rotate(4deg)}85%{transform:rotate(-2deg)}}
+/* ── the shelf: walnut plank, paper spines you can read and pull */
+.page > .shelfwrap{padding-inline:0;max-width:none;margin-top:-30px}
+.act{display:grid;gap:8px;margin-top:-8px}
+.shelf{list-style:none;margin:0 auto;padding:52px clamp(16px,5vw,40px) 26px;max-width:min(980px,100%);display:flex;align-items:stretch;overflow-x:auto;scroll-snap-type:x proximity;scrollbar-width:none;-webkit-overflow-scrolling:touch;
+  -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 16px,#000 calc(100% - 34px),transparent 100%);mask-image:linear-gradient(90deg,transparent 0,#000 16px,#000 calc(100% - 34px),transparent 100%)}
+.shelf::-webkit-scrollbar{display:none}
+.slot{flex:none;display:flex;align-items:flex-end;height:176px;padding:0 1.5px;border-bottom:13px solid var(--walnut);box-shadow:0 13px 12px -9px rgba(40,24,12,.5);scroll-snap-align:center}
+.slot.fill{flex:1 0 74px;justify-content:center;padding:0 12px;scroll-snap-align:none}
+.sp{position:relative;display:flex;align-items:center;justify-content:center;width:var(--w);height:var(--h);padding:0;border:0;border-radius:3px 3px 1px 1px;background:var(--c);color:#fff8ea;cursor:pointer;
+  box-shadow:inset -4px 0 0 rgba(0,0,0,.18),inset 3px 0 0 rgba(255,255,255,.14),inset 0 -14px 0 -8px rgba(255,255,255,.28),inset 0 14px 0 -8px rgba(255,255,255,.28);
+  transform-origin:50% 100%;transform:rotate(var(--lean,0deg));transition:opacity .3s,transform .4s cubic-bezier(.3,1.5,.4,1),filter .3s;animation:arrive .6s cubic-bezier(.2,1.3,.4,1) both;animation-delay:calc(.5s + var(--k) * 38ms)}
+.sp span{writing-mode:vertical-rl;transform:rotate(180deg);max-height:calc(100% - 26px);overflow:hidden;white-space:nowrap;text-overflow:ellipsis;font:600 12.5px/1 var(--sans);letter-spacing:.01em}
+.sp:hover,.sp:focus-visible{transform:translateY(-12px) rotate(var(--lean,0deg));filter:drop-shadow(0 8px 6px rgba(40,24,12,.35))}
+.sp.off{opacity:.3}
+.sp.pulled{transform:translateY(-46px) rotate(-4deg);filter:drop-shadow(0 12px 8px rgba(40,24,12,.4))}
+.shelf.shake .sp{animation:hop .6s cubic-bezier(.3,1.6,.5,1) both;animation-delay:calc(var(--k) * 16ms)}
+.shelf.shake{animation:rattle .7s ease-in-out}
+@keyframes arrive{from{opacity:0;transform:translateX(60px) rotate(14deg)}to{opacity:1;transform:rotate(var(--lean,0deg))}}
+@keyframes hop{0%,100%{transform:rotate(var(--lean,0deg))}35%{transform:translateY(-22px) rotate(calc(var(--lean,0deg) - 6deg))}65%{transform:translateY(-4px) rotate(calc(var(--lean,0deg) + 4deg))}}
+@keyframes rattle{0%,100%{transform:none}20%{transform:rotate(-.8deg) translateX(-4px)}45%{transform:rotate(.7deg) translateX(4px)}70%{transform:rotate(-.4deg) translateX(-2px)}}
+.pine{position:relative;width:46px;height:96px}
+.pine i{position:absolute;left:50%;bottom:0;width:34px;height:30px;margin-left:-17px;border-radius:3px 3px 7px 7px;background:repeating-linear-gradient(90deg,#efe9d6 0 5px,#ddd5bd 5px 6px)}
+.pine b{position:absolute;left:50%;bottom:28px;width:0;height:0;border:solid transparent;border-bottom-color:#40561f;border-width:0 20px 30px;margin-left:-20px}
+.pine b:nth-of-type(2){bottom:46px;border-width:0 16px 26px;margin-left:-16px;border-bottom-color:#4f6a26}
+.pine b:nth-of-type(3){bottom:62px;border-width:0 11px 22px;margin-left:-11px;border-bottom-color:#5e7b30}
+@media (min-width:860px){.shelf{flex-wrap:wrap;overflow:visible;row-gap:30px;justify-content:flex-start;-webkit-mask-image:none;mask-image:none}.slot{height:200px}.sp{width:calc(var(--w) * 1.72);height:calc(var(--h) * 1.08)}.sp span{font-size:14px}}
 
-/* ── the book that fell out */
-.out-area{min-height:150px;scroll-margin:16px 0 96px}
-.card{position:relative;background:var(--paper);padding:1.5em 1.25em 1.25em;border-top:10px solid var(--c,var(--burg));box-shadow:0 14px 28px rgba(30,22,16,.2);transform:rotate(-.6deg);animation:land .5s cubic-bezier(.3,1.4,.4,1) both}
-@keyframes land{from{opacity:0;transform:translateY(-26px) rotate(-6deg) scale(.96)}to{opacity:1;transform:rotate(-.6deg)}}
-.card small{display:block;font-weight:700;letter-spacing:.02em;color:var(--c,var(--burg));font-size:14px}
-.card h2{margin:.25em 0 .1em;font:600 clamp(24px,5.6vw,34px)/1.15 var(--serif);text-wrap:balance}
-.card .by{margin:0;font:italic 400 16px/1.4 var(--serif);color:var(--soft)}
-.card .vi{margin:.8em 0 0;font-size:17px}
-.card .t{margin:.6em 0 0;font-size:14px;color:var(--soft)}
-.empty{margin:0;padding:1.1em 1.25em;background:var(--paper);box-shadow:0 8px 18px rgba(30,22,16,.14)}
 .fine{margin:0;font-size:14px;color:var(--soft)}
-.fine + .fine{margin-top:.5em}
+.fine + .fine{margin-top:.45em}
+
+/* ── the stage: the lamp comes on, the book flies out and turns over */
+.stage{position:fixed;inset:0;z-index:40;display:grid;place-items:center;align-content:center;gap:clamp(12px,2.4vh,22px);padding:max(18px,env(safe-area-inset-top)) 16px calc(88px + env(safe-area-inset-bottom));background:rgba(22,29,44,0);transition:background-color .5s ease;overflow:hidden}
+.stage[hidden]{display:none}
+.stage.on{background:rgba(22,29,44,.9)}
+.lampw{position:absolute;left:50%;top:0;width:0;height:0;pointer-events:none}
+.lampw i{position:absolute;left:-17px;top:0;width:34px;height:36px;background:#0d0f10;clip-path:polygon(41% 0,59% 0,100% 100%,0 100%)}
+.lampw::after{content:'';position:absolute;left:0;top:30px;width:min(150vw,900px);height:min(105vh,900px);transform:translateX(-50%);opacity:0;transition:opacity .7s .15s;mix-blend-mode:screen;
+  background:radial-gradient(50% 55% at 50% 0,rgba(255,216,160,.6),rgba(255,198,120,.2) 45%,rgba(255,198,120,0) 75%);clip-path:polygon(47% 0,53% 0,100% 100%,0 100%)}
+.stage.on .lampw::after{opacity:1}
+.fly{position:relative;z-index:1}
+.book{position:relative;width:min(72vw,290px,calc((100dvh - 250px) * .714));aspect-ratio:5/7;perspective:1400px;cursor:pointer}
+.turn{position:absolute;inset:0;transform-style:preserve-3d;transition:transform .85s cubic-bezier(.3,1.25,.4,1)}
+.book.turned .turn{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:3px 9px 9px 3px;overflow:hidden;box-shadow:3px 3px 0 #e9e3d2,6px 6px 0 #d9d2bf,0 26px 40px rgba(0,0,0,.5)}
+.cover{background:var(--c);color:#fff8ea}
+.cover svg{position:absolute;inset:0;width:100%;height:100%}
+.cover::before{content:'';position:absolute;inset:0;z-index:2;pointer-events:none;background:linear-gradient(90deg,rgba(0,0,0,.28) 0,rgba(255,255,255,.14) 4%,rgba(0,0,0,.12) 7%,rgba(0,0,0,0) 12%)}
+.cover::after{content:'';position:absolute;inset:0;z-index:3;pointer-events:none;opacity:.5;mix-blend-mode:multiply;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .3 0 0 0 0 .28 0 0 0 0 .25 0 0 0 .22 0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E")}
+.lbl{position:absolute;z-index:1;left:12%;right:8%;bottom:9%;padding:.8em .8em .9em;background:#fbf7ea;color:var(--black);box-shadow:0 3px 8px rgba(0,0,0,.25);transform:rotate(-1.2deg)}
+.lbl b{display:block;font:600 clamp(17px,5.2vw,23px)/1.14 var(--serif);text-wrap:balance}
+.lbl em{display:block;margin-top:.4em;font:italic 400 14px/1.3 var(--serif);color:var(--soft)}
+.slip{transform:rotateY(180deg);background:#fbf7ea;color:var(--black);border-radius:9px 3px 3px 9px;padding:1.05em 1.05em 1em;display:flex;flex-direction:column;
+  background-image:linear-gradient(#fbf7ea 0 0),repeating-linear-gradient(180deg,transparent 0 27px,rgba(63,111,154,.2) 27px 28px);background-size:100% 4.6em,100% 100%;background-repeat:no-repeat,repeat}
+.slip .hd{display:flex;justify-content:space-between;gap:8px;font-size:14px;font-weight:700;color:var(--c)}
+.slip h2{margin:.5em 0 .1em;font:600 clamp(19px,5.6vw,25px)/1.14 var(--serif);text-wrap:balance}
+.slip .by{margin:0;font:italic 400 15px/1.3 var(--serif);color:var(--soft)}
+.slip .vi{margin:.9em 0 0;font-size:clamp(15px,4.3vw,17px);line-height:1.5}
+.slip .ft{margin-top:auto;display:flex;align-items:flex-end;justify-content:space-between;gap:8px;font-size:14px;color:var(--soft)}
+.stamp{flex:none;display:grid;place-items:center;align-content:center;width:86px;height:86px;border-radius:50%;border:3px double #a3262c;color:#a3262c;transform:rotate(-11deg);font-weight:700;line-height:1;opacity:.9}
+.stamp b{font:600 30px/1 var(--serif)}.stamp i{font-style:normal;font-size:14px;margin-top:2px}
+.book.turned .stamp{animation:stampin .45s .7s cubic-bezier(.3,1.6,.4,1) both}
+@keyframes stampin{from{opacity:0;transform:rotate(-11deg) scale(2.2)}to{opacity:.9;transform:rotate(-11deg)}}
+.acts{position:relative;z-index:1;display:flex;flex-wrap:wrap;justify-content:center;gap:10px;opacity:0;transition:opacity .4s .5s}
+.stage.on .acts{opacity:1}
+.stage .back{color:#f3ead6;border-color:#f3ead6}.stage .back:hover{background:#f3ead6;color:var(--night)}
+.stage :focus-visible{outline-color:#ffd79a}
+.note{position:relative;z-index:1;margin:0;max-width:34ch;text-align:center;font-size:14px;color:#c9cfda;opacity:0;transition:opacity .4s .6s}
+.stage.on .note{opacity:1}
 .foot{display:flex;flex-wrap:wrap;gap:10px}
-.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
-<main class="page">
+<main class="page" id="page">
+  <svg class="shade" id="shade" aria-hidden="true" viewBox="0 0 1000 1000" preserveAspectRatio="xMidYMid slice"></svg>
+
   <header class="top">
     <a class="home" href="/" aria-label="Yên Coffee &amp; Tea, về trang chủ"><span class="logo"></span></a>
     <a class="back" href="/soon/">Mở thư mời</a>
   </header>
 
   <div>
-    <h1>Hôm nay đọc gì?</h1>
+    <h1 aria-label="Hôm nay đọc gì?"><span class="w" aria-hidden="true" style="--i:0;--r:-2deg">Hôm</span><span class="w" aria-hidden="true" style="--i:1;--r:1.4deg">nay</span><span class="w" aria-hidden="true" style="--i:2;--r:-1.2deg">đọc</span><span class="w" aria-hidden="true" style="--i:3;--r:2deg">gì?</span></h1>
     <p class="lede">Nói Yên nghe bạn có bao lâu. Yên lắc kệ, rớt ra một cuốn.</p>
   </div>
 
-  <form id="ask" novalidate>
-    <div style="display:grid;gap:clamp(14px,2.2vh,22px)">
-      <fieldset>
-        <legend>Bạn ngồi được bao lâu?</legend>
-        <div class="chips">
-          <label><input type="radio" name="phut" value="5">5 phút</label>
-          <label><input type="radio" name="phut" value="15" checked>15 phút</label>
-          <label><input type="radio" name="phut" value="30">30 phút</label>
-        </div>
-      </fieldset>
-      <fieldset>
-        <legend>Thích kiểu nào?</legend>
-        <div class="chips">
-          <label><input type="radio" name="ngan" value="" checked>Gì cũng được</label>
-          <label><input type="radio" name="ngan" value="cuoi">Cho cười</label>
-          <label><input type="radio" name="ngan" value="am">Cho ấm lòng</label>
-          <label><input type="radio" name="ngan" value="nam">Miền Nam mình</label>
-          <label><input type="radio" name="ngan" value="con">Đọc với con</label>
-          <label><input type="radio" name="ngan" value="khong">Khỏi đọc chữ</label>
-        </div>
-      </fieldset>
-      <button class="go" id="go" type="submit">Lắc kệ</button>
+  <div class="shelfwrap"><ul class="shelf" id="shelf" aria-label="Kệ sách của Yên"></ul></div>
+
+  <div class="act">
+    <div class="row">
+      <button class="go" id="go" type="submit" form="ask">Lắc kệ</button>
+      <p class="hint">Hoặc tự rút một cuốn trên kệ.</p>
     </div>
+    <p class="msg" id="msg" role="status" aria-live="polite"></p>
+  </div>
+
+  <form id="ask" novalidate>
+    <fieldset>
+      <legend>Ly nước của bạn còn bao lâu?</legend>
+      <div class="cups">
+        <label style="--lv:.22"><input type="radio" name="phut" value="5"><svg viewBox="0 0 40 52" aria-hidden="true"><clipPath id="g5"><path d="M5 5h30l-3.5 42h-23z"/></clipPath><rect class="lq" x="0" y="5" width="40" height="42" clip-path="url(#g5)"/><path class="gl" d="M5 5h30l-3.5 42h-23z"/></svg>5 phút</label>
+        <label style="--lv:.56"><input type="radio" name="phut" value="15" checked><svg viewBox="0 0 40 52" aria-hidden="true"><clipPath id="g15"><path d="M5 5h30l-3.5 42h-23z"/></clipPath><rect class="lq" x="0" y="5" width="40" height="42" clip-path="url(#g15)"/><path class="gl" d="M5 5h30l-3.5 42h-23z"/></svg>15 phút</label>
+        <label style="--lv:.9"><input type="radio" name="phut" value="30"><svg viewBox="0 0 40 52" aria-hidden="true"><clipPath id="g30"><path d="M5 5h30l-3.5 42h-23z"/></clipPath><rect class="lq" x="0" y="5" width="40" height="42" clip-path="url(#g30)"/><path class="gl" d="M5 5h30l-3.5 42h-23z"/></svg>30 phút</label>
+      </div>
+    </fieldset>
+    <fieldset>
+      <legend>Thích kiểu nào?</legend>
+      <div class="chips">
+        <label><input type="radio" name="ngan" value="" checked>Gì cũng được</label>
+        <label style="--c:#9a5522"><input type="radio" name="ngan" value="cuoi">Cho cười</label>
+        <label style="--c:#6a2028"><input type="radio" name="ngan" value="am">Cho ấm lòng</label>
+        <label style="--c:#40561f"><input type="radio" name="ngan" value="nam">Miền Nam mình</label>
+        <label style="--c:#3f6f9a"><input type="radio" name="ngan" value="con">Đọc với con</label>
+        <label style="--c:#171a1c"><input type="radio" name="ngan" value="khong">Khỏi đọc chữ</label>
+      </div>
+    </fieldset>
   </form>
-
-  <div class="shelf" id="shelf" aria-hidden="true"><div class="plank"></div><div class="plank"></div></div>
-
-  <section class="out-area" id="out" aria-live="polite" aria-label="Cuốn sách rớt ra"></section>
 
   <div>
     <p class="fine" id="dukien" hidden>Kệ sách của Yên còn đang chọn sách. Đây là danh sách dự kiến, tới quán có thể khác chút.</p>
@@ -128,6 +206,24 @@ legend{padding:0;margin:0 0 .5em;font-weight:700}
   </nav>
 </main>
 
+<div class="stage" id="stage" role="dialog" aria-modal="true" aria-labelledby="bk-title" hidden>
+  <div class="lampw" aria-hidden="true"><i></i></div>
+  <div class="fly" id="fly">
+    <div class="book" id="book">
+      <div class="turn">
+        <div class="face cover" id="cover"></div>
+        <div class="face slip" id="slip"></div>
+      </div>
+    </div>
+  </div>
+  <div class="acts">
+    <button class="go" id="again" type="button">Lắc lại</button>
+    <button class="back" id="flip" type="button">Lật sách</button>
+    <button class="back" id="close" type="button">Cất lên kệ</button>
+  </div>
+  <p class="note">Bìa này Yên vẽ chơi, không phải bìa thật.</p>
+</div>
+
 <noscript><p style="max-width:720px;margin:0 auto;padding:0 20px 40px">Trò này cần bật JavaScript để lắc kệ. Không bật cũng không sao: tới quán, kệ sách nằm ngay đó.</p></noscript>
 
 <script src="sach.js"></script>
@@ -137,40 +233,85 @@ legend{padding:0;margin:0 0 .5em;font-weight:700}
   const $ = (s) => document.querySelector(s);
   const SACH = Array.isArray(window.YEN_SACH) ? window.YEN_SACH : [];
   const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const NGAN = { cuoi: ['Đọc là cười', '#b3682d'], am: ['Ấm lòng', '#6a2028'], nam: ['Miền Nam mình', '#40561f'], con: ['Đọc với con', '#3f6f9a'], khong: ['Khỏi đọc chữ', '#171a1c'] };
-  const TIME = { 5: 'Chừng 5 phút là đủ vui.', 15: 'Ngồi chừng 15 phút là vừa.', 30: 'Cần chừng 30 phút. Đọc dở thì bữa sau ghé đọc tiếp.' };
+  const NGAN = { cuoi: ['Đọc là cười', '#9a5522', '#c98a4b'], am: ['Ấm lòng', '#6a2028', '#9c4a4f'], nam: ['Miền Nam mình', '#40561f', '#6f8a3c'], con: ['Đọc với con', '#3f6f9a', '#7fa6c6'], khong: ['Khỏi đọc chữ', '#171a1c', '#4a4f52'] };
   const esc = (t) => String(t).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
-  const form = $('#ask'), out = $('#out'), shelf = $('#shelf'), go = $('#go');
+  const rnd = (seed) => () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+  const form = $('#ask'), shelf = $('#shelf'), go = $('#go'), msg = $('#msg'), stage = $('#stage'), fly = $('#fly'), book = $('#book'), cover = $('#cover'), slip = $('#slip');
   if (window.YEN_SACH_DU_KIEN) $('#dukien').hidden = false;
 
-  // the shelf: one paper spine per book, in a fixed mixed-up order so the two planks look lived in
-  const order = SACH.map((_, i) => i).sort((a, b) => ((a * 7 + 3) % 11) - ((b * 7 + 3) % 11) || a - b);
-  const planks = shelf.querySelectorAll('.plank'), half = Math.ceil(order.length / 2), spine = [];
-  order.forEach((i, k) => { const b = SACH[i], el = document.createElement('i'); el.className = 'sp';
-    el.style.setProperty('--c', (NGAN[b.ngan] || NGAN.am)[1]); el.style.setProperty('--w', (16 + (i * 5) % 13) + 'px'); el.style.setProperty('--h', (62 + (i * 11) % 36) + '%');
-    planks[k < half ? 0 : 1].appendChild(el); spine[i] = el; });
+  // leaf shadows on the wall, the same trick as the home page
+  { const r = rnd(11), leaf = (x, y, a, s) => `<path transform="translate(${x.toFixed(1)} ${y.toFixed(1)}) rotate(${a.toFixed(0)}) scale(${s.toFixed(2)})" d="M0 0C14-13 44-13 62 0 44 13 14 13 0 0Z"/>`;
+    const branch = (ox, oy, ang, len) => { let h = ''; for (let k = 0; k < 14; k++) { const t = (k + 1) / 14, a = ang * Math.PI / 180, bx = ox + Math.cos(a) * len * t, by = oy + Math.sin(a) * len * t + Math.sin(t * 3) * 26; h += leaf(bx, by, ang + (k % 2 ? 58 : -58) + (r() - .5) * 40, .85 + r()); if (r() > .5) h += leaf(bx + (r() - .5) * 60, by + (r() - .5) * 60, r() * 360, .7 + r() * .8); } return `<g style="transform-origin:${ox < 500 ? 0 : 100}% 0%">${h}</g>`; };
+    $('#shade').innerHTML = branch(1030, 0, 152, 560) + branch(1040, 280, 170, 420) + branch(-30, 120, 14, 430) + branch(420, -40, 80, 300) + branch(1040, 700, 196, 360); }
+
+  // ── a paper cover for each book, drawn from its place on the list. These are Yên's doodles, not the real covers.
+  const MOTIF = [
+    () => `<circle cx="125" cy="118" r="52" fill="#f6e7c1"/>` + Array.from({ length: 14 }, (_, k) => { const a = k / 14 * 6.283; return `<path d="M${(125 + Math.cos(a) * 66).toFixed(1)} ${(118 + Math.sin(a) * 66).toFixed(1)}L${(125 + Math.cos(a) * 96).toFixed(1)} ${(118 + Math.sin(a) * 96).toFixed(1)}" stroke="#f6e7c1" stroke-width="7" stroke-linecap="round"/>`; }).join(''),
+    (c2) => Array.from({ length: 6 }, (_, k) => `<path d="M-10 ${52 + k * 30}q32-26 65 0t65 0 65 0 65 0" fill="none" stroke="${k % 2 ? c2 : '#f6e7c1'}" stroke-width="9" stroke-linecap="round"/>`).join(''),
+    (c2, r) => Array.from({ length: 11 }, (_, k) => `<path transform="translate(${(20 + r() * 200).toFixed(0)} ${(24 + r() * 170).toFixed(0)}) rotate(${(r() * 360).toFixed(0)}) scale(${(.9 + r() * .9).toFixed(2)})" d="M0 0C10-10 30-10 42 0 30 10 10 10 0 0Z" fill="${k % 3 ? '#f6e7c1' : c2}"/>`).join(''),
+    (c2) => `<path d="M62 232V118a63 63 0 01126 0v114z" fill="#f6e7c1"/><path d="M88 232V124a37 37 0 0174 0v108z" fill="${c2}"/>`,
+    (c2) => Array.from({ length: 18 }, (_, k) => `<rect x="${44 + (k % 6) * 28}" y="${52 + Math.floor(k / 6) * 50}" width="22" height="42" rx="5" fill="${k % 4 === 1 ? c2 : '#f6e7c1'}" opacity="${k % 5 === 2 ? .55 : .95}"/>`).join(''),
+    (c2) => `<g transform="translate(0 -30)"><path d="M80 122h90l-9 96a12 12 0 01-12 11h-48a12 12 0 01-12-11z" fill="#f6e7c1"/><path d="M170 140h14a17 17 0 010 34h-17" fill="none" stroke="#f6e7c1" stroke-width="9"/><path d="M104 100c-13-17 13-25 0-44M134 100c-13-17 13-25 0-44" fill="none" stroke="${c2}" stroke-width="8" stroke-linecap="round"/></g>`
+  ];
+  const HINH = ['mattroi', 'song', 'la', 'vom', 'gach', 'ly']; // names the owner can put in sach.js as `hinh`, in the order of MOTIF
+  const coverHTML = (b, i) => { const n = NGAN[b.ngan] || NGAN.am;
+    return `<svg viewBox="0 0 250 350" preserveAspectRatio="xMidYMid slice" aria-hidden="true">${MOTIF[HINH.indexOf(b.hinh) >= 0 ? HINH.indexOf(b.hinh) : i % MOTIF.length](n[2], rnd(i * 97 + 13))}</svg><div class="lbl"><b>${esc(b.ten)}</b>${b.tacgia ? `<em>${esc(b.tacgia)}</em>` : ''}</div>`; };
+  const today = () => { const d = new Date(); return String(d.getDate()).padStart(2, '0') + '.' + String(d.getMonth() + 1).padStart(2, '0'); };
+  const slipHTML = (b) => { const n = NGAN[b.ngan] || NGAN.am;
+    return `<div class="hd"><span>Thẻ đọc tại chỗ</span><span>${esc(n[0])}</span></div><h2 id="bk-title">${esc(b.ten)}</h2>${b.tacgia ? `<p class="by">${esc(b.tacgia)}</p>` : ''}<p class="vi">${esc(b.vi)}</p>` +
+      `<div class="ft"><span>Hôm nay, ${today()}<br>chừng ${b.phut} phút</span><span class="stamp" aria-hidden="true"><b>${b.phut}</b><i>phút</i></span></div>`; };
+
+  // ── the shelf: one spine per book, in a fixed mixed-up order so it looks lived in
+  const order = SACH.map((_, i) => i).sort((a, b) => ((a * 7 + 3) % 11) - ((b * 7 + 3) % 11) || a - b), spine = [];
+  order.forEach((i, k) => { const b = SACH[i], n = NGAN[b.ngan] || NGAN.am, li = document.createElement('li'), bt = document.createElement('button');
+    li.className = 'slot'; bt.type = 'button'; bt.className = 'sp'; bt.setAttribute('aria-label', 'Rút cuốn: ' + b.ten);
+    bt.style.cssText = `--c:${n[1]};--w:${34 + (i * 5) % 13}px;--h:${128 + (i * 11) % 44}px;--k:${k};--lean:${k % 9 === 4 ? -5 : k % 11 === 7 ? 4 : 0}deg;filter:brightness(${(.92 + ((i * 3) % 5) * .05).toFixed(2)})`;
+    bt.innerHTML = '<span>' + esc(b.ten) + '</span>'; bt.addEventListener('click', () => open(i, bt)); li.appendChild(bt); shelf.appendChild(li); spine[i] = bt; });
+  { const li = document.createElement('li'); li.className = 'slot fill'; li.setAttribute('aria-hidden', 'true'); li.innerHTML = '<div class="pine"><b></b><b></b><b></b><i></i></div>'; shelf.appendChild(li); }
 
   const wants = () => { const d = new FormData(form); return { phut: +d.get('phut') || 15, ngan: d.get('ngan') || '' }; };
   // books that fit: the chosen shelf (or any), and no longer than the time given
   const fits = (w) => SACH.map((b, i) => ({ b, i })).filter(({ b }) => (!w.ngan || b.ngan === w.ngan) && b.phut <= w.phut);
-  const dim = () => { const ok = new Set(fits(wants()).map((x) => x.i)); spine.forEach((el, i) => { el.classList.toggle('off', !ok.has(i)); el.classList.remove('out'); }); };
+  const dim = () => { const ok = new Set(fits(wants()).map((x) => x.i)); spine.forEach((el, i) => { el.classList.toggle('off', !ok.has(i)); el.classList.remove('pulled'); }); msg.textContent = ''; };
   form.addEventListener('change', dim); dim();
 
-  let last = -1, busy = false;
+  let last = -1, busy = false, cur = -1, opener = null;
   const pick = (w) => { const all = fits(w); if (!all.length) return null;
     const exact = all.filter((x) => x.b.phut === w.phut), pool0 = exact.length ? exact : all, pool = pool0.length > 1 ? pool0.filter((x) => x.i !== last) : pool0;
     return pool[Math.floor(Math.random() * pool.length)]; };
-  const show = (hit, w) => {
-    if (!hit) { out.innerHTML = '<p class="empty">Ngăn này chưa có cuốn nào vừa ' + w.phut + ' phút. Thử cho Yên thêm chút thời gian, hoặc chọn “Gì cũng được”.</p>'; return; }
-    const b = hit.b, n = NGAN[b.ngan] || NGAN.am; last = hit.i; spine[hit.i].classList.add('out');
-    out.innerHTML = '<article class="card" style="--c:' + n[1] + '"><small>' + esc(n[0]) + '</small><h2>' + esc(b.ten) + '</h2>' + (b.tacgia ? '<p class="by">' + esc(b.tacgia) + '</p>' : '') + '<p class="vi">' + esc(b.vi) + '</p><p class="t">' + esc(TIME[b.phut] || '') + '</p></article>';
-    go.textContent = 'Lắc lại'; };
-  // on a phone the card lands below the fold: bring it into view, without yanking the page when it is already visible
-  const reveal = () => { const r = out.getBoundingClientRect(); if (r.bottom > innerHeight - 70 || r.top < 0) out.scrollIntoView({ block: 'end', behavior: still ? 'auto' : 'smooth' }); };
-  form.addEventListener('submit', (e) => { e.preventDefault(); if (busy) return; const w = wants(), hit = pick(w); dim();
-    if (still) { show(hit, w); return reveal(); }
+
+  // ── the stage
+  const turn = (on) => { book.classList.toggle('turned', on); cover.setAttribute('aria-hidden', on); slip.setAttribute('aria-hidden', !on); $('#flip').textContent = on ? 'Coi bìa' : 'Lật sách'; };
+  function open(i, from) { if (busy && from) return; const b = SACH[i], n = NGAN[b.ngan] || NGAN.am; cur = last = i; opener = from || go;
+    book.style.setProperty('--c', n[1]); cover.innerHTML = coverHTML(b, i); slip.innerHTML = slipHTML(b);
+    spine.forEach((el) => el.classList.remove('pulled')); spine[i].classList.add('pulled');
+    stage.hidden = false; turn(still); void stage.offsetWidth; stage.classList.add('on'); document.body.style.overflow = 'hidden';
+    if (!still && fly.animate) { const s = spine[i].getBoundingClientRect(), t = book.getBoundingClientRect();
+      const dx = s.left + s.width / 2 - (t.left + t.width / 2), dy = s.top + s.height / 2 - (t.top + t.height / 2), sx = s.width / t.width, sy = s.height / t.height;
+      fly.animate([{ transform: `translate(${dx}px,${dy}px) scale(${sx},${sy}) rotate(-6deg)`, opacity: .9 }, { transform: `translate(${dx * .35}px,${Math.min(dy * .2, -40)}px) scale(.8) rotate(9deg)`, opacity: 1, offset: .55 }, { transform: 'none', opacity: 1 }], { duration: 820, easing: 'cubic-bezier(.3,.9,.3,1)' });
+      setTimeout(() => { if (cur === i && !stage.hidden && !book.classList.contains('turned')) turn(true); }, 2200); } // long enough to take in the cover first
+    $('#again').focus({ preventScroll: true }); }
+  const shut = (after) => { stage.classList.remove('on'); document.body.style.overflow = ''; const done = () => { stage.hidden = true; spine.forEach((el) => el.classList.remove('pulled')); cur = -1; if (after) after(); else if (opener) opener.focus({ preventScroll: true }); };
+    if (still) done(); else setTimeout(done, 320); };
+  $('#close').addEventListener('click', () => shut());
+  $('#flip').addEventListener('click', () => turn(!book.classList.contains('turned')));
+  book.addEventListener('click', () => turn(!book.classList.contains('turned')));
+  stage.addEventListener('click', (e) => { if (e.target === stage) shut(); });
+  stage.addEventListener('keydown', (e) => { if (e.key === 'Escape') { e.preventDefault(); shut(); return; }
+    if (e.key !== 'Tab') return; const f = [...stage.querySelectorAll('button')], a = f[0], z = f[f.length - 1];
+    if (e.shiftKey && document.activeElement === a) { e.preventDefault(); z.focus(); } else if (!e.shiftKey && document.activeElement === z) { e.preventDefault(); a.focus(); } });
+
+  // ── shake: the books hop in a wave, then one is pulled
+  const shake = () => { if (busy) return; const w = wants(), hit = pick(w); dim();
+    if (!hit) { msg.textContent = 'Ngăn này chưa có cuốn nào vừa ' + w.phut + ' phút. Thử cho Yên thêm chút thời gian, hoặc chọn “Gì cũng được”.'; return; }
+    go.textContent = 'Lắc lại';
+    if (still) return open(hit.i);
     busy = true; go.disabled = true; shelf.classList.remove('shake'); void shelf.offsetWidth; shelf.classList.add('shake');
-    setTimeout(() => { shelf.classList.remove('shake'); show(hit, w); reveal(); busy = false; go.disabled = false; }, 640); });
+    // on a phone the shelf scrolls sideways: bring the chosen book to the middle before it leaves
+    setTimeout(() => { const r = spine[hit.i].getBoundingClientRect(), sr = shelf.getBoundingClientRect(); if (shelf.scrollWidth > shelf.clientWidth + 4) shelf.scrollTo({ left: shelf.scrollLeft + r.left + r.width / 2 - (sr.left + sr.width / 2), behavior: 'smooth' }); }, 420);
+    setTimeout(() => { shelf.classList.remove('shake'); busy = false; go.disabled = false; open(hit.i); }, 1050); };
+  form.addEventListener('submit', (e) => { e.preventDefault(); shake(); });
+  $('#again').addEventListener('click', () => { opener = go; shut(() => { go.focus({ preventScroll: true }); shake(); }); });
 })();
 </script>
 </body>

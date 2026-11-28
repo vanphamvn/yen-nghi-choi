@@ -10,6 +10,7 @@ const win = {};
 new Function("window", src)(win);
 const SACH = win.YEN_SACH;
 const NGAN = ["cuoi", "am", "nam", "con", "khong"];
+const HINH = ["mattroi", "song", "la", "vom", "gach", "ly"];
 
 test("every entry has a title, a known shelf, an allowed time and a reason", () => {
   assert.ok(Array.isArray(SACH) && SACH.length >= 10, "at least ten entries");
@@ -19,6 +20,7 @@ test("every entry has a title, a known shelf, an allowed time and a reason", () 
     assert.ok(NGAN.includes(b.ngan), "ngan: " + b.ten);
     assert.ok([5, 15, 30].includes(b.phut), "phut: " + b.ten);
     assert.ok(typeof b.vi === "string" && b.vi.trim().length >= 8, "vi: " + b.ten);
+    if (b.hinh !== undefined) assert.ok(HINH.includes(b.hinh), "hinh: " + b.ten);
   }
   assert.equal(new Set(SACH.map(b => b.ten)).size, SACH.length, "no title twice");
 });
@@ -32,6 +34,12 @@ test("the page offers exactly the shelves and times the list uses", () => {
   const radios = name => Array.from(html.matchAll(new RegExp('name="' + name + '" value="([^"]*)"', "g")), m => m[1]);
   assert.deepEqual(radios("phut"), ["5", "15", "30"]);
   assert.deepEqual(radios("ngan"), ["", ...NGAN]);
+});
+
+test("the cover picture names in the list match the ones the page can draw", () => {
+  const m = html.match(/const HINH = \[([^\]]+)\]/);
+  assert.ok(m, "page declares its cover pictures");
+  assert.deepEqual(m[1].split(",").map(x => x.trim().replace(/'/g, "")), HINH);
 });
 
 test("the page keeps its promises: no score, no storage, no network calls, and says when the list is provisional", () => {
