@@ -82,20 +82,18 @@
     ['#abc88a', '#5f855b'], ['#e5d9ba', '#9d855d'], ['#c9b0e2', '#8264a3']
   ];
 
-  // The fourth spot value selects suitable shapes; true puts an object in both pictures.
-
   const decks = [
     {
       src: '/meo-ngu/quan.jpg', crop: '43%', name: 'Mặt tiền mô hình giấy Yên',
-      spots: [[76,17,9,'sky'],[58,54,8,'wall'],[82,77,11,'ground',true],[28,82,8,'ground']]
+      spots: [[76,17,7,'sky'],[58,54,6,'wall'],[82,77,8,'ground'],[28,82,7,'ground'],[48,72,7,'ground'],[17,44,6,'wall'],[89,43,6,'wall']]
     },
     {
       src: '/quet-la/san.jpg', crop: '44%', name: 'Sân mô hình giấy Yên',
-      spots: [[48,18,9,'ground',true],[47,71,9,'ground'],[77,83,11,'ground'],[29,48,8,'ground']]
+      spots: [[48,18,7,'ground'],[47,71,7,'ground'],[77,83,8,'ground'],[29,48,6,'ground'],[63,36,6,'ground'],[24,79,7,'ground'],[79,57,6,'wall']]
     },
     {
       src: '/ve-mai/mai.jpg', crop: '61%', name: 'Mái mô hình giấy Yên',
-      spots: [[77,15,9,'sky'],[63,45,8,'ground'],[66,82,10,'ground',true],[26,74,8,'ground']]
+      spots: [[77,15,7,'sky'],[63,45,6,'ground'],[66,82,8,'ground'],[26,74,7,'ground'],[41,41,6,'ground'],[83,59,6,'ground'],[17,23,6,'sky']]
     }
   ];
   const total = 4;
@@ -121,23 +119,32 @@
 
   const pickRandom = items => items[Math.floor(Math.random() * items.length)];
 
-  function pickProps([, , , category, bothSides]) {
-    const options = shapes[category];
-    const shape = pickRandom(options);
-    const palette = pickRandom(palettes);
-    const pair = [{ shape, palette }, null];
-    if (bothSides) {
-      pair[1] = {
-        shape: pickRandom(options.filter(option => option !== shape)),
-        palette: pickRandom(palettes.filter(option => option !== palette))
-      };
+  function createRoundProps(spots) {
+    const remaining = spots.map((_, index) => index);
+    const changes = new Map();
+    for (const kind of ['shape', 'shift', 'shift', 'size']) {
+      const [index] = remaining.splice(Math.floor(Math.random() * remaining.length), 1);
+      changes.set(index, kind);
     }
-    return Math.random() < .5 ? pair : pair.reverse();
+    return spots.map(([x, y, size, category], index) => {
+      const options = shapes[category];
+      const original = { x, y, size, shape: pickRandom(options), palette: pickRandom(palettes) };
+      const altered = { ...original };
+      const change = changes.get(index);
+      if (change === 'shape') {
+        altered.shape = pickRandom(options.filter(shape => shape !== original.shape));
+        altered.palette = pickRandom(palettes.filter(palette => palette !== original.palette));
+      } else if (change === 'shift') {
+        altered.x += Math.random() < .5 ? -4.5 : 4.5;
+      } else if (change === 'size') {
+        altered.size *= .72;
+      }
+      const pair = Math.random() < .5 ? [original, altered] : [altered, original];
+      return { pair, differs: changes.has(index) };
+    });
   }
 
-  function drawProp([x, y, size], item) {
-    if (!item) return [];
-    const { shape, palette: [light, dark] } = item;
+  function drawProp({ x, y, size, shape, palette: [light, dark] }) {
     const prop = document.createElement('span');
     prop.className = 'prop ' + shape;
     prop.style.setProperty('--x', x + '%');
@@ -146,7 +153,7 @@
     prop.style.setProperty('--paper-light', light);
     prop.style.setProperty('--paper-dark', dark);
     prop.setAttribute('aria-hidden', 'true');
-    return [prop];
+    return prop;
   }
 
   async function startRound() {
@@ -162,7 +169,8 @@
     bag.splice(bag.indexOf(pick), 1);
     previous = pick;
     const deck = decks[pick];
-    const props = deck.spots.map(pickProps);
+    const props = createRoundProps(deck.spots);
+    const targets = deck.spots.flatMap((spot, index) => props[index].differs ? [draw(spot, index)] : []);
     const image = new Image(900, 1200);
     image.alt = deck.name;
     image.src = deck.src;
@@ -170,7 +178,7 @@
       await image.decode();
       Array.from(boards.children).forEach((board, index) => {
         board.style.setProperty('--crop', deck.crop);
-        board.replaceChildren(image.cloneNode(), ...deck.spots.flatMap((spot, spotIndex) => drawProp(spot, props[spotIndex][index])), ...deck.spots.map(draw));
+        board.replaceChildren(image.cloneNode(), ...props.map(({ pair }) => drawProp(pair[index])), ...targets.map(tile => tile.cloneNode()));
       });
       next.textContent = 'Đổi bộ hình';
       say.textContent = deck.name;
