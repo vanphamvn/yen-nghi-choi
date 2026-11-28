@@ -17,8 +17,23 @@
 .page > *{max-width:920px}
 .boards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
 .board{position:relative;overflow:hidden;align-self:start;aspect-ratio:4/3;border:5px solid var(--paper);background:#e9dfd0;box-shadow:0 4px 12px #171a1c24}
-.board img{display:block;width:100%;height:100%;object-fit:contain;pointer-events:none}
-.tile{position:absolute;top:var(--y);left:var(--x);width:clamp(44px,15%,68px);aspect-ratio:1;transform:translate(-50%,-50%);border:0;border-radius:50%;padding:0;background:none;cursor:pointer;touch-action:manipulation}
+.board img{display:block;width:100%;height:100%;object-fit:cover;object-position:center var(--crop,60%);pointer-events:none}
+.prop{position:absolute;left:var(--x);top:var(--y);width:var(--size);aspect-ratio:1;transform:translate(-50%,-50%);filter:drop-shadow(2px 3px 1px #17231f70);pointer-events:none}
+.prop::before,.prop::after{content:'';position:absolute;inset:0}
+.planter::before{background:#47613e;clip-path:polygon(48% 68%,14% 49%,5% 24%,35% 36%,45% 53%,43% 12%,59% 1%,65% 25%,57% 53%,78% 29%,98% 24%,85% 49%,57% 68%)}
+.planter::after{background:linear-gradient(100deg,#b98560 60%,#97664e 61%);clip-path:polygon(20% 62%,80% 62%,70% 96%,29% 96%)}
+.umbrella::before{background:linear-gradient(115deg,#ecd5a1 52%,#c99559 53%);clip-path:polygon(0 49%,20% 18%,52% 7%,82% 18%,100% 49%,76% 43%,52% 49%,24% 43%)}
+.umbrella::after{background:#74583e;clip-path:polygon(48% 45%,54% 45%,55% 88%,69% 94%,32% 94%,48% 88%)}
+.stool::before{background:#996747;clip-path:polygon(19% 31%,77% 31%,86% 98%,71% 98%,60% 56%,38% 56%,27% 98%,13% 98%)}
+.stool::after{background:#d6a775;clip-path:polygon(0 27%,26% 14%,91% 15%,99% 33%,79% 47%,13% 46%)}
+.crate::before{background:linear-gradient(90deg,#a87049 63%,#78553c 64%);clip-path:polygon(6% 38%,66% 38%,96% 22%,91% 74%,65% 93%,14% 87%)}
+.crate::after{background:#cf9a67;clip-path:polygon(6% 38%,33% 20%,96% 22%,66% 44%)}
+.bird::before{background:#eee7d5;clip-path:polygon(0 51%,24% 49%,45% 27%,53% 1%,65% 34%,74% 40%,84% 30%,93% 32%,100% 44%,88% 46%,78% 62%,54% 73%,23% 69%)}
+.lantern::before{background:#a65246;clip-path:polygon(46% 0,54% 0,54% 21%,76% 24%,89% 46%,79% 72%,58% 79%,56% 98%,45% 98%,44% 79%,20% 72%,11% 46%,24% 24%,46% 21%)}
+.lantern::after{inset:29% 34% 26%;border-inline:1px solid #edbc82;border-radius:50%}
+.sign::before{background:#78553c;clip-path:polygon(45% 44%,53% 44%,53% 86%,68% 94%,32% 94%,45% 86%)}
+.sign::after{background:#d7af77;clip-path:polygon(6% 19%,75% 19%,98% 38%,75% 56%,6% 56%)}
+.tile{position:absolute;top:var(--y);left:var(--x);width:clamp(44px,15%,68px);z-index:1;aspect-ratio:1;transform:translate(-50%,-50%);border:0;border-radius:50%;padding:0;background:none;cursor:pointer;touch-action:manipulation}
 .tile.is-found{border:2px solid #fbfaf5;box-shadow:0 0 0 2px #6a2028}
 .tile:focus-visible{z-index:1;outline-offset:-3px}
 .round-bar{display:flex;align-items:center;flex-wrap:wrap;gap:8px 14px}
@@ -54,12 +69,20 @@
 <script>
 (() => {
   'use strict';
-  // Hotspot centers are percentages of each 600 × 450 photo.
+  // Each spot pairs two silhouettes. A null entry leaves that side empty.
   const decks = [
-    { file: 'mat-tien', name: 'Mặt tiền quán Yên', spots: [[22,53],[59,33],[71,51],[63,81]] },
-    { file: 'cong', name: 'Cổng quán Yên', spots: [[43,55],[91,39],[8,78],[68,80]] },
-    { file: 'goc-san', name: 'Góc sân quán Yên', spots: [[26,26],[61,23],[63,64],[74,93]] },
-    { file: 'loi-di', name: 'Lối đi qua vườn', spots: [[51,33],[82,26],[40,92],[86,83]] }
+    {
+      src: '/meo-ngu/quan.jpg', crop: '43%', name: 'Mặt tiền mô hình giấy Yên',
+      spots: [[76,17,9,'bird',null],[58,54,8,'lantern',null],[82,77,11,'umbrella','planter'],[28,82,8,null,'crate']]
+    },
+    {
+      src: '/quet-la/san.jpg', crop: '44%', name: 'Sân mô hình giấy Yên',
+      spots: [[48,18,9,'planter','crate'],[47,71,9,'stool',null],[77,83,11,null,'umbrella'],[29,48,8,null,'sign']]
+    },
+    {
+      src: '/ve-mai/mai.jpg', crop: '61%', name: 'Mái mô hình giấy Yên',
+      spots: [[77,15,9,null,'bird'],[63,45,8,'crate',null],[66,82,10,'umbrella','planter'],[26,74,8,null,'stool']]
+    }
   ];
   const total = 4;
   const boards = document.querySelector('#boards');
@@ -82,6 +105,18 @@
     return tile;
   }
 
+  function drawProp([x, y, size, first, second], variant) {
+    const shape = variant ? second : first;
+    if (!shape) return [];
+    const prop = document.createElement('span');
+    prop.className = 'prop ' + shape;
+    prop.style.setProperty('--x', x + '%');
+    prop.style.setProperty('--y', y + '%');
+    prop.style.setProperty('--size', size + '%');
+    prop.setAttribute('aria-hidden', 'true');
+    return [prop];
+  }
+
   async function startRound() {
     next.disabled = true;
     clock.reset();
@@ -95,17 +130,16 @@
     bag.splice(bag.indexOf(pick), 1);
     previous = pick;
     const deck = decks[pick];
-    const suffixes = Math.random() < .5 ? ['', '-khac'] : ['-khac', ''];
-    const images = suffixes.map(suffix => {
-      const img = new Image(600, 450);
-      img.alt = deck.name;
-      img.src = `./${deck.file}${suffix}.webp`;
-      return img;
-    });
+    const variants = Math.random() < .5 ? [0, 1] : [1, 0];
+    const image = new Image(900, 1200);
+    image.alt = deck.name;
+    image.src = deck.src;
     try {
-      await Promise.all(images.map(img => img.decode()));
-      images.forEach((img, index) => {
-        boards.children[index].replaceChildren(img, ...deck.spots.map(draw));
+      await image.decode();
+      variants.forEach((variant, index) => {
+        const board = boards.children[index];
+        board.style.setProperty('--crop', deck.crop);
+        board.replaceChildren(image.cloneNode(), ...deck.spots.flatMap(spot => drawProp(spot, variant)), ...deck.spots.map(draw));
       });
       next.textContent = 'Đổi bộ hình';
       say.textContent = deck.name;
