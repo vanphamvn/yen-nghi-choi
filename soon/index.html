@@ -314,10 +314,11 @@ body{font-family:var(--sans);color:var(--black);touch-action:manipulation;user-s
 .e-file h3{font:600 1.55em/1.15 var(--serif);margin:.15em 0 .05em}.e-file .src{font:italic 400 .86em var(--serif);color:#555;margin:0 0 .5em}.e-file p{margin:.55em 0 0}.e-file b{font-weight:600}
 #env.eleven .e-file{opacity:1;transform:rotate(.8deg)}
 /* after the invitation: one way on, to the play corner. It appears only on the very last step, a moment after the story stops. */
-.e-more{position:absolute;left:28%;top:78%;z-index:12;transform:translate(-50%,12px);display:inline-flex;align-items:center;gap:.5em;min-height:48px;padding:0 1.25em;border-radius:999px;background:var(--black);color:var(--paper);font:600 16px/1 var(--sans);white-space:nowrap;text-decoration:none;box-shadow:0 .5em 1.2em rgba(15,18,20,.38);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .6s,transform .6s cubic-bezier(.3,1.4,.4,1),visibility 0s .6s}
+.e-more{position:fixed;right:var(--games-right,max(14px,env(safe-area-inset-right)));bottom:var(--games-center,max(30px,env(safe-area-inset-bottom)));z-index:25;transform:translateY(50%);align-items:center;gap:.45em;min-height:44px;padding:0 .9em;border-radius:999px;background:var(--black);color:var(--paper);font:600 14px/1 var(--sans);white-space:nowrap;text-decoration:none;box-shadow:0 .3em .8em rgba(15,18,20,.28);display:none}
 .e-more i{font-style:normal;transition:transform .2s}.e-more:hover i{transform:translateX(4px)}
 .e-more:focus-visible{outline:3px solid #a64b1d;outline-offset:3px}
-#env.eleven .e-more{opacity:1;visibility:visible;pointer-events:auto;transform:translate(-50%,0);transition:opacity .6s 1.5s,transform .6s cubic-bezier(.3,1.4,.4,1) 1.5s,visibility 0s 1.5s}
+body:not(.capture):has(#env.eleven) .e-more{display:inline-flex}
+@media (min-aspect-ratio: 1/1){body:has(#env.eleven) #bar{bottom:max(56px,var(--nl,0px),env(safe-area-inset-bottom))}}
 #env.eleven .e-say .e2{opacity:.0}
 
 .still .slide [data-s]{transition:opacity .4s;transform:rotate(var(--r,0deg))}
@@ -346,7 +347,6 @@ body{font-family:var(--sans);color:var(--black);touch-action:manipulation;user-s
 
 /* ── phones and narrow windows ── */
 @media (max-aspect-ratio:1/1){
-  .e-more{left:50%;top:77%}
   #app{bottom:var(--nl,0px)}#bar{right:max(1.2vw,env(safe-area-inset-right))}
   .says{left:5vw;right:5vw;max-width:none;top:max(10vh,env(safe-area-inset-top))}
   .say{font-size:clamp(21px,6.2vw,34px)}.say.sm{font-size:clamp(13px,3.8vw,18px)}.say.big{font-size:clamp(34px,11vw,60px)}
@@ -407,7 +407,6 @@ body{font-family:var(--sans);color:var(--black);touch-action:manipulation;user-s
         <div class="e-seal"><div class="logo-w"></div></div>
       </div>
       <p class="e-en"><span class="e1">You have an invitation.</span><span class="e2">Opening December 12, 2026.</span></p>
-      <a class="e-more" href="/choi/">Ghé Góc chơi <i aria-hidden="true">→</i></a>
       <div class="e-file"><header>Bạn có biết? · cà phê</header><p>Truyền thuyết kể rằng cà phê được phát hiện khi một người chăn dê thấy đàn dê của mình bỗng nhiên tỉnh như sáo sau khi ăn một loại quả đỏ. Anh ta bèn hái thử, và</p></div>
     </section>
     <nav id="bar" class="ia">
@@ -1689,23 +1688,16 @@ const SLIDES = [
     $('#n-cur').textContent = sl.steps[D.s].n; $('#n-next').textContent = nx ? nx.n : 'Hết (cố ý dang dở).'; if (chan && !silent) try { chan.postMessage({ i: D.i, s: D.s }); } catch (e) {} };
   setInterval(() => { const t = Math.floor((performance.now() - D.t0) / 1000); $('#n-time').textContent = String(Math.floor(t / 60)).padStart(2, '0') + ':' + String(t % 60).padStart(2, '0'); }, 1000);
 
-  // ── the way on to the play corner, on the very last step. The envelope sits in a different place on every screen shape,
-  //    so the link is placed by measuring: centred on the envelope, under the wax seal where there is room, and never over any words.
-  { const envEl = document.getElementById('env'), more = envEl.querySelector('.e-more');
-    const placeMore = () => { if (!more || !envEl.classList.contains('eleven')) return; const o = envEl.getBoundingClientRect(), w = envEl.querySelector('.e-wrap').getBoundingClientRect(), seal = envEl.querySelector('.e-seal').getBoundingClientRect(), h = more.offsetHeight || 48;
-      const rg = document.createRange(); rg.selectNodeContents(envEl.querySelector('.e-en .e2')); const en = rg.getBoundingClientRect();
-      const floor = (en.height ? en.top : o.bottom) - h - 8, file = envEl.querySelector('.e-file').getBoundingClientRect(); let top;
-      if (seal.bottom + 4 <= floor) top = Math.max(seal.bottom + 4, Math.min(w.bottom - h * .45, floor)); // under the seal
-      else if (w.top - h - 8 >= file.bottom + 6 || file.left > w.right) top = w.top - h - 8; // no room there: just above the envelope
-      else top = floor; // smallest screens: over the seal, but never over the words
-      more.style.left = (w.left + w.width / 2 - o.left) + 'px'; more.style.top = (top - o.top) + 'px'; };
-    if (more && window.MutationObserver) new MutationObserver(() => [0, 500, 1150].forEach((t) => setTimeout(placeMore, t))).observe(envEl, { attributes: true, attributeFilter: ['class'] });
-    addEventListener('resize', () => setTimeout(placeMore, 60)); }
   // ── the host's badge: Netlify's free plan adds a "Powered by Netlify" frame, fixed at the bottom right, above everything.
   //    It cannot be turned off on that plan, so make room: --nl is its height and --nlw its width (0 when there is no badge).
   //    Upright screens end the stage above it; wide screens slide the control bar to its left.
   { const room = () => { const f = document.getElementById('nl-badge-frame'); if (!f) return false; const r = f.getBoundingClientRect(), h = Math.round(r.height), w = Math.round(r.width), st = document.documentElement.style; st.setProperty('--nl', (h > 0 && h < 140 ? h : 64) + 'px'); st.setProperty('--nlw', (w > 0 && w < 320 ? w : 202) + 'px');
+      if (w > 0 && w < 320 && h > 0 && h < 140) {
+        st.setProperty('--games-right', Math.round(innerWidth - r.left) + 'px');
+        st.setProperty('--games-center', Math.round(innerHeight - r.bottom + h - 27) + 'px');
+      }
       if (!f._nlRO && window.ResizeObserver) { f._nlRO = new ResizeObserver(() => { room(); dispatchEvent(new Event('resize')); }); f._nlRO.observe(f); } /* the frame starts oversized and shrinks to fit the badge */ return true; };
+    addEventListener('resize', room);
     if (!room() && window.MutationObserver) { const mo = new MutationObserver(() => { if (room()) { mo.disconnect(); dispatchEvent(new Event('resize')); } }); mo.observe(document.body, { childList: true }); setTimeout(() => mo.disconnect(), 30000); } }
   // ── controls
   let wakeT = 0; const bar = $('#bar'), wake = () => { bar.classList.add('wake'); clearTimeout(wakeT); wakeT = setTimeout(() => bar.classList.remove('wake'), 2600); };
@@ -1767,4 +1759,5 @@ const SLIDES = [
   window.__deck = { goto, next, prev, D, SLIDES, paintData: (k, w = 420) => { const c = $(`.ev[data-p="${k}"] canvas`); if (!c) return null; const o = mkCanvas(w, Math.round(c.height * w / c.width)); o.getContext('2d').drawImage(c, 0, 0, o.width, o.height); return o.toDataURL('image/jpeg', .72); } };
 })();
 </script>
+<a class="e-more" href="/choi/">Góc chơi <i aria-hidden="true">→</i></a>
 </body></html>
