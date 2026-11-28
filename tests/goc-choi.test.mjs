@@ -56,3 +56,12 @@ test("the cat's hiding places are on the picture and big enough to tap", () => {
   for (const [x, y, w] of spots) { assert.ok(x > .04 && x < .96 && y > .1 && y < .9, "on the picture: " + x + "," + y); assert.ok(w >= .04 && w <= .1, "cat size: " + w); }
   assert.ok(html.includes("max(44px"), "the cat is a button at least 44px across");
 });
+
+// Owner decision (28.11.2026): visitors find the play corner after they have seen the invitation, not on the homepage.
+test("the play corner is offered at the end of the invitation, and not on the homepage", () => {
+  const soon = read("soon/index.html");
+  assert.ok(soon.includes('<a class="e-more" href="/choi/">'), "the invitation links to the play corner");
+  assert.ok(/\.e-more\{[^}]*visibility:hidden[^}]*pointer-events:none/.test(soon), "the link is hidden and untouchable by default");
+  assert.ok(soon.includes("#env.eleven .e-more{opacity:1;visibility:visible;pointer-events:auto"), "it appears only on the invitation's very last step");
+  assert.ok(!read("index.html").includes('href="/choi/"'), "the homepage carries only the opening notice and the invitation");
+});
