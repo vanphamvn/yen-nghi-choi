@@ -128,13 +128,15 @@ h1{margin:0;font-family:var(--serif);font-weight:900;font-variation-settings:'op
 @media (min-width:700px) and (min-aspect-ratio:11/10){
   .wall{grid-template-rows:auto 1fr}
   .mid{grid-template-columns:minmax(0,1.25fr) minmax(270px,.75fr);align-items:center;justify-items:start;column-gap:clamp(24px,5vw,90px)}
-  h1{font-size:clamp(60px,min(12.8vw,24.5vh),280px);text-align:left;grid-row:1;margin-bottom:6vh}
+  h1{font-size:clamp(60px,min(12.8vw,21vh),280px);text-align:left;grid-row:1;margin-bottom:4vh}
   .sign{width:clamp(160px,26vh,300px)}
   .info{min-width:0}.tile{min-width:clamp(52px,6.2vw,92px)}.count{gap:clamp(6px,1.2vw,18px)}.note{max-width:30ch}
   .info{grid-row:1;grid-column:2;justify-items:start;text-align:left}
   .tape{position:absolute;left:0;bottom:calc(74px + env(safe-area-inset-bottom));margin:0 0 0 -9vw;z-index:-1}
   .top{grid-template-columns:auto 1fr;}.front{grid-column:1}.sun{grid-column:2}
 }
+/* a phone held sideways: no room for the tape to float over the bottom, so it follows the content */
+@media (min-width:700px) and (min-aspect-ratio:11/10) and (max-height:520px){.tape{position:relative;left:auto;bottom:auto;margin:30px 0 0;z-index:auto}}
 @media (max-height:620px) and (max-width:699px){h1{font-size:clamp(46px,min(19vw,11.5vh),120px)}.tile{height:52px}.cta{min-height:50px}}
 
 @media (prefers-reduced-motion:reduce){
@@ -173,7 +175,7 @@ h1{margin:0;font-family:var(--serif);font-weight:900;font-variation-settings:'op
         <li><span class="tile"><b data-u="m">--</b></span>phút</li>
         <li><span class="tile"><b data-u="s">--</b></span>giây</li>
       </ul>
-      <p class="soft" id="soft">Trước đó Yên mở thử vài hôm.<br>Ngày nào thì chưa chốt.</p>
+      <p class="soft" id="soft">Trước đó Yên mở thử vài hôm.<br>Mời bạn ghé trải nghiệm.</p>
       <a class="cta" id="cta" href="/soon/">
         <svg viewBox="0 0 38 28" aria-hidden="true"><rect x="1" y="3" width="36" height="24" rx="2.5" fill="#f6f0e0" stroke="#171a1c" stroke-width="1.2"/><path class="flap" d="M1.6 4 19 17 36.4 4Z" fill="#ebe3cf" stroke="#171a1c" stroke-width="1.2" stroke-linejoin="round"/><circle cx="19" cy="17" r="4.2" fill="#6a2028"/></svg>
         Mở thư mời <i aria-hidden="true">→</i>
