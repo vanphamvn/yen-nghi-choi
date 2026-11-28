@@ -330,7 +330,13 @@ body:not(.capture) #app.play-corner-open + .e-more{display:inline-flex}
 /* ── controls ── */
 #bar{position:absolute;right:calc(max(1.2vw,env(safe-area-inset-right)) + var(--nlw,0px));bottom:max(1.2vh,env(safe-area-inset-bottom));display:flex;align-items:center;gap:2px;background:rgba(23,26,28,.78);padding:4px;border-radius:8px;opacity:.28;transition:opacity .4s;z-index:20}
 #bar:hover,#bar.wake,#bar:focus-within{opacity:1}
-#bar i{width:1px;height:22px;background:rgba(255,255,255,.25);margin:0 4px}
+.bar-more summary{display:flex;align-items:center;justify-content:center;min-width:46px;min-height:44px;padding:0 8px;border-radius:6px;color:#f2f1ea;cursor:pointer;font:600 13px var(--sans);list-style:none}
+.bar-more summary::-webkit-details-marker{display:none}
+.bar-more summary:hover,.bar-more[open] summary{background:rgba(255,255,255,.14)}
+.bar-more summary:focus-visible,.bar-more button:focus-visible{outline:3px solid #e7bc93;outline-offset:-3px}
+.bar-more .bar-options{position:absolute;bottom:calc(100% + 34px);right:0;min-width:154px;display:grid;gap:2px;padding:4px;background:#222628;border-radius:8px;box-shadow:0 5px 16px rgba(0,0,0,.3)}
+#bar .bar-options button{font-size:14px;min-height:44px;text-align:left}
+#bar .bar-more:not([open]) .bar-options{display:none}
 #bar button,#notes button{font:600 12px var(--sans);color:#f2f1ea;background:transparent;border:0;border-radius:6px;min-width:40px;height:40px;padding:0 9px;display:flex;align-items:center;gap:6px;cursor:pointer}
 #bar #b-play{min-height:44px;font-size:14px}
 #bar #b-play[hidden]{display:none}
@@ -424,13 +430,17 @@ body:not(.capture) #app.play-corner-open + .e-more{display:inline-flex}
         <span id="b-play-status" role="status"></span>
         <span id="b-audio-hint">Bấm loa để bật âm thanh</span>
       </div>
-      <button id="b-prev" title="Lùi (←)" aria-label="Lùi"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
       <button id="b-next" title="Tiếp (→ / Space)" aria-label="Tiếp"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button>
-      <button id="b-skip" title="Bỏ qua tới trang sau (S)" aria-label="Bỏ qua trang"><svg viewBox="0 0 24 24"><path d="M6 5l7 7-7 7M17 5v14"/></svg></button>
       <button id="b-play" type="button" hidden>Tự chuyển</button>
-      <i></i>
       <button id="b-sound" title="Bật hoặc tắt âm thanh (M)" aria-label="Âm thanh" aria-describedby="b-audio-hint" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9z"/><path class="w" d="M16.5 8.5a5 5 0 010 7M19 6a8.5 8.5 0 010 12"/><path class="x" d="M17 9l5 6M22 9l-5 6"/></svg><span>Âm thanh</span></button>
-      <button id="b-full" title="Toàn màn hình (F)" aria-label="Toàn màn hình"><svg viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button>
+      <details id="bar-more" class="bar-more">
+        <summary>Thêm</summary>
+        <div class="bar-options">
+          <button type="button" id="b-prev" title="Lùi (←)">Lùi một nhịp</button>
+          <button type="button" id="b-skip" title="Cảnh tiếp theo (S)">Qua cảnh tiếp</button>
+          <button type="button" id="b-full" title="Toàn màn hình (F)">Toàn màn hình</button>
+        </div>
+      </details>
     </nav>
   </main>
   <aside id="notes" class="ia">
@@ -1373,6 +1383,7 @@ const KK = { dem: '<i class="k dem">đếm</i>', uoc: '<i class="k uoc">ước l
 const SAY = (s, u, h, c = '') => `<p class="say ${c}" data-s="${s}"${u === null ? '' : ` data-until="${u}"`}>${h}</p>`;
 const LEAF = '<svg viewBox="-60 -110 120 220"><path d="M0 -100 C46 -52 50 30 0 100 C-50 30 -46 -52 0 -100Z"/></svg>';
 
+const GIFT_SECONDS = 6;
 const SLIDES = [
   { id: 'env', kind: 'env', seen: [1], bed: { air: .12 },
     steps: [
@@ -1460,10 +1471,10 @@ const SLIDES = [
     stamp: { at: 2, no: '08', name: 'Một chút gió' },
     en: 'Ten quiet seconds in the garden.',
     says: SAY(0, 0, 'Chỗ này gió mát.'),
-    extra: '<div class="ring" data-s="1" data-until="1"><b>10</b><span>Mười giây khỏi làm gì hết.</span></div>',
+    extra: `<div class="ring" data-s="1" data-until="1"><b>${GIFT_SECONDS}</b><span>Sáu giây khỏi làm gì hết.</span></div>`,
     steps: [
       { n: 'Ngắm bóng lá trên bức tường trắng.' },
-      { n: 'Mười giây ngắm lá rơi và nghe tiếng gió. Có thể bấm tiếp bất cứ lúc nào.' },
+      { n: 'Sáu giây ngắm lá rơi và nghe tiếng gió. Có thể bấm tiếp bất cứ lúc nào.' },
       { n: 'Tiếp tục chuyến dạo nếu muốn.' }] },
 
   { id: 'peak', title: 'Khi đèn lên', seen: [14], tod: 1, leaves: 0, enter: { fx: 'cone', dur: 3.6 }, bed: { wind: .3, street: .2 }, off: [.1, -.06],
@@ -1566,7 +1577,7 @@ const SLIDES = [
   });
   $('.pips', counter).innerHTML = '<i></i>'.repeat(10);
   const hots = [0, 1, 2, 3, 4].map(i => { const b = document.createElement('button'); b.className = 'hotspot ia'; b.setAttribute('aria-label', 'Bật đèn ' + (i + 1)); b.onclick = (e) => { e.stopPropagation(); lampToggle(i); }; hot.appendChild(b); return b; });
-  { const ring = $('.ring'); for (let k = 0; k < 10; k++) { const i = document.createElement('i'); i.style.setProperty('--a', (k * 36) + 'deg'); i.innerHTML = LEAF; ring.appendChild(i); } }
+  { const ring = $('.ring'); for (let k = 0; k < GIFT_SECONDS; k++) { const i = document.createElement('i'); i.style.setProperty('--a', (k * 360 / GIFT_SECONDS) + 'deg'); i.innerHTML = LEAF; ring.appendChild(i); } }
 
   // ── evidence: photo crops through the oil filter (pre-filtered still if WebGL is missing)
   const paintAll = async () => {
@@ -1604,13 +1615,13 @@ const SLIDES = [
   const envSet = (cls) => { env.className = cls; D.tEnv = performance.now(); };
   let envSkip = null; // set while the envelope is opening: call it to finish the opening at once
   const envOpen = (done) => { const fin = () => { if (envSkip !== fin) return; envSkip = null; envSet('gone'); done(); }; envSkip = fin;
-    envSet('warn open'); sound.paper(.7, true); later(() => { if (envSkip === fin) { envSet('warn open out'); sound.paper(.9, true); } }, 800); later(() => { if (envSkip === fin) { envSet('warn open out zoom'); sound.whoosh(1.4); } }, 1900); later(fin, 2800); };
+    envSet('warn open'); sound.paper(.7, true); later(() => { if (envSkip === fin) { envSet('warn open out'); sound.paper(.9, true); } }, 750); later(() => { if (envSkip === fin) { envSet('warn open out zoom'); sound.whoosh(1.1); } }, 1600); later(fin, 2400); };
 
   // ── per-slide behaviour
   const sweep = (k) => { if (D.leaf <= 0) return; D.leaf = Math.max(0, D.leaf - k); if (W) W.setLeaves(D.leaf); $('.leafn').textContent = D.leaf; sound.swish(Math.random() - .5); if (D.leaf === 0) $('#s-ikea .hint').textContent = 'Sạch bong. Cảm ơn nha.'; };
   let giftT = null;
   const giftStop = () => { clearInterval(giftT); giftT = null; };
-  const giftRun = (instant) => { giftStop(); const ring = $('.ring'), leaves = $$('i', ring), b = $('b', ring); let n = 10; const show = () => { leaves.forEach((l, k) => l.classList.toggle('off', k >= n)); b.textContent = n; ring.classList.toggle('done', n === 0); };
+  const giftRun = (instant) => { giftStop(); const ring = $('.ring'), leaves = $$('i', ring), b = $('b', ring); let n = GIFT_SECONDS; const show = () => { leaves.forEach((l, k) => l.classList.toggle('off', k >= n)); b.textContent = n; ring.classList.toggle('done', n === 0); };
     if (instant) { n = 0; return show(); } show(); giftT = setInterval(() => { n--; show(); sound.tickLeaf(); if (n <= 0) giftStop(); }, 1000); };
   const SITE = ['ladder', 'rail', 'frames', 'loose', 'loose'];
   const siteVis = (v, instant) => { if (W) ['ladder', 'rail', 'frames', 'loose'].forEach(g => W.setVis(g, v, instant)); $$('#s-scarce .chip').forEach(c => c.classList.toggle('gone', !v)); };
@@ -1681,7 +1692,7 @@ const SLIDES = [
       todTarget = sl.id === 'vow' ? VTOD[D.vt] : todOf(sl, D.s);
       if (fx === 'jump') { stage.jump(c0); W.tod = todTarget; W.popT = 1; }
       else if (fx === 'env') { W.tod = todTarget; W.popT = 0; stage.jump({ p: [6, 15, 34], l: [0, 1, -3], fov: 40 });
-        envOpen(() => { stage.fly(c0, 5.2); popTween = { t: 0, dur: 3.4 }; W.pops.slice().sort((a, b) => a.d - b.d).filter((p, k) => k % 6 === 0).forEach((p, k) => later(() => sound.pop(k, clamp(p.o.position.x / 8, -1, 1)), (p.d / 1.9) * 3400 + 100)); }); }
+        envOpen(() => { stage.fly(c0, 3.6); popTween = { t: 0, dur: 3.1 }; W.pops.slice().sort((a, b) => a.d - b.d).filter((p, k) => k % 6 === 0).forEach((p, k) => later(() => sound.pop(k, clamp(p.o.position.x / 8, -1, 1)), (p.d / 1.9) * 3400 + 100)); }); }
       else if (fx === 'fly') { stage.fly(c0, dur); sound.whoosh(dur, -.4, .4); }
       else { stage.startFx(fx, dur, fx === 'slats' ? PAL.amber : PAL.ladder); W.tod = todTarget; stage.jump(pushIn(c0)); stage.fly(c0, dur + .8);
         if (fx === 'slats') sound.slats(dur, Math.round(12 * stage.aspect)); else if (fx === 'tiles') sound.tiles(dur, Math.round(6 * stage.aspect)); else if (fx === 'tape') sound.tape(dur * .8); else if (fx === 'fade') sound.whoosh(dur); else sound[fx](dur); }
@@ -1702,10 +1713,10 @@ const SLIDES = [
   // ── continuous playback
   // The reading time starts after the camera settles. Cards and optional activities get longer.
   const readingTimes = {
-    curio: [3000, 5500], expo: [2800, 2800, 3600, 5500], anchor: [2900, 6800, 4100, 5500],
-    foot: [2800, 2800, 2800, 5500], ikea: [7500, 6500, 5500], scarce: [4300, 3700, 5500],
-    progress: [2700, 3400, 3400, 5500], gift: [2700, 10200, 5500], peak: [3000, 3200, 5500],
-    vow: [7600, 4200, 5500], way: [3200, 8100, 8100, 4000], end: [4000]
+    curio: [2200, 4200], expo: [2000, 2000, 2800, 4200], anchor: [2100, 5200, 3200, 4200],
+    foot: [2200, 2200, 2200, 4200], ikea: [5700, 4800, 4200], scarce: [3300, 2800, 4200],
+    progress: [2100, 2500, 2600, 4200], gift: [2100, GIFT_SECONDS * 1000 + 300, 4200], peak: [2200, 2600, 4200],
+    vow: [5500, 3200, 4200], way: [2400, 6500, 6500, 3000], end: [3200]
   };
   const playButton = $('#b-play'), playStatus = $('#b-play-status');
   let playing = false, playbackTimer;
@@ -1723,7 +1734,7 @@ const SLIDES = [
         playbackTimer = setTimeout(waitForScene, 180);
         return;
       }
-      playbackTimer = setTimeout(next, readingTimes[slide.id]?.[D.s] ?? 3200);
+      playbackTimer = setTimeout(next, readingTimes[slide.id]?.[D.s] ?? 2400);
     };
     waitForScene();
   };
@@ -1779,7 +1790,17 @@ const SLIDES = [
     if (moveFocus && !playButton.hidden) playButton.focus();
   });
   press('#b-play', () => setPlayback(!playing));
-  press('#b-prev', prev); press('#b-next', advance); press('#b-skip', skip); press('#b-sound', toggleSound); press('#b-full', full);
+  const more = $('#bar-more'), moreSummary = $('summary', more);
+  const closeMore = (restoreFocus = false) => {
+    more.open = false;
+    if (restoreFocus) moreSummary.focus();
+  };
+  for (const [selector, action] of [['#b-prev', prev], ['#b-skip', skip], ['#b-full', full]]) {
+    press(selector, () => { closeMore(true); action(); });
+  }
+  document.addEventListener('pointerdown', (e) => { if (more.open && !more.contains(e.target)) closeMore(); });
+  press('#b-next', advance);
+  press('#b-sound', toggleSound);
   press('#n-prev', prev); press('#n-next-b', next); press('#n-skip', skip);
   ['#bar', '#notes'].forEach(s => $(s).addEventListener('click', e => e.stopPropagation()));
   const sweeping = () => SLIDES[D.i].id === 'ikea' && D.s === 0;
@@ -1792,7 +1813,8 @@ const SLIDES = [
   const isCtl = (el) => !!(el && el.closest && (el.closest('button,input,a,select,label,#bar,#notes,.guess,.hotspot') || (el.closest('.ia') && !el.closest('.vowb'))));
   stageEl.addEventListener('click', (e) => { if (isCtl(e.target)) return; if (D.dragged > 18) { D.dragged = 0; return; } const r = stageEl.getBoundingClientRect(); if ((e.clientX - r.left) / r.width < .12 && (D.i > 0 || D.s > 0)) prev(); else advance(); });
   addEventListener('keydown', (e) => { if (e.metaKey || e.ctrlKey || e.altKey) return; const k = e.key; if (e.target.matches && e.target.matches('input') && (k === 'ArrowLeft' || k === 'ArrowRight')) return;
-    if ((k === 'Enter' || k === ' ') && e.target.closest && e.target.closest('button,a,input,select')) return;
+    if (k === 'Escape' && more.open) { closeMore(more.contains(document.activeElement)); return; }
+    if ((k === 'Enter' || k === ' ') && e.target.closest && e.target.closest('button,a,input,select,summary')) return;
     if (k === 'ArrowRight' || k === ' ' || k === 'PageDown' || k === 'Enter' || k === 'ArrowDown') { e.preventDefault(); advance(); } else if (k === 'ArrowLeft' || k === 'PageUp' || k === 'Backspace' || k === 'ArrowUp') { e.preventDefault(); prev(); }
     else if (k === 's' || k === 'S') skip(); else if (k === 'm' || k === 'M') toggleSound(); else if (k === 'p' || k === 'P' || k === 'n' || k === 'N') toggleNotes(); else if (k === 'r' || k === 'R') { if (D.webgl) setStill(!D.still); } else if (k === 'f' || k === 'F') full(); else if (k === 'Home' || k === 'End') { setPlayback(false); goto(k === 'Home' ? 0 : SLIDES.length - 1); } });
   { let t = null; stageEl.addEventListener('touchstart', (e) => { t = isCtl(e.target) ? null : { x: e.touches[0].clientX, y: e.touches[0].clientY }; }, { passive: true });
