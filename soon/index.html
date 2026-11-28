@@ -208,6 +208,7 @@ body{font-family:var(--sans);color:var(--black);touch-action:manipulation;user-s
 .mk.v{background:var(--red);color:#fbfaf4}
 .mk.h{background:var(--black);color:#ffcf8a;animation:here 1.3s ease-in-out infinite}.mk.h em{background:var(--black);color:var(--paper)}
 .mk.f{background:rgba(23,26,28,.45);color:var(--paper);box-shadow:0 0 0 2px transparent;outline:2px dashed var(--paper)}.mk.f em{display:none}
+.mk.v,.mk.h{z-index:2}.mk.f{z-index:1}
 @keyframes here{50%{box-shadow:0 0 0 3px var(--paper),0 0 0 14px rgba(255,207,138,.35),0 4px 10px rgba(0,0,0,.45)}}
 .pwrap{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;--r:0deg;z-index:5;perspective:1400px;padding-top:15vh}
 .pcard{width:min(56vw,74vh,760px);background:#fbfaf5;padding:1.4em 1.8em 1.2em;box-shadow:0 1.2vw 3.5vw rgba(10,12,14,.55);transform:rotate(-2deg);font:400 clamp(12px,1.25vw,18px) var(--sans);border-radius:6px;transition:transform 1s cubic-bezier(.5,0,.3,1),opacity .9s .15s}
