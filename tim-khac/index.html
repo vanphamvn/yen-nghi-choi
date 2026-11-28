@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#f2f1ea">
-<meta name="description" content="Tìm bốn điểm khác nhau giữa hai hình trong Góc chơi của Yên.">
+<meta name="description" content="Tìm năm điểm khác nhau giữa hai hình trong Góc chơi của Yên.">
 <meta name="referrer" content="no-referrer">
 <meta name="robots" content="noindex, nofollow, noarchive">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
@@ -17,7 +17,7 @@
 .page > *{max-width:920px}
 .boards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
 .board{position:relative;overflow:hidden;align-self:start;aspect-ratio:4/3;border:5px solid var(--paper);background:#e9dfd0;box-shadow:0 4px 12px #171a1c24}
-.board img{display:block;width:100%;height:100%;object-fit:cover;object-position:center var(--crop,60%);pointer-events:none}
+.board img{display:block;width:100%;height:100%;object-fit:cover;object-position:center var(--crop,60%);transform:scale(var(--zoom,1));transform-origin:var(--anchor,50% 50%);pointer-events:none}
 .prop{position:absolute;left:var(--x);top:var(--y);width:var(--size);aspect-ratio:1;transform:translate(-50%,-50%);filter:drop-shadow(2px 3px 1px #17231f70);pointer-events:none}
 .prop::before,.prop::after{content:'';position:absolute;inset:0}
 .planter::before{background:#47613e;clip-path:polygon(48% 68%,14% 49%,5% 24%,35% 36%,45% 53%,43% 12%,59% 1%,65% 25%,57% 53%,78% 29%,98% 24%,85% 49%,57% 68%)}
@@ -55,11 +55,11 @@
   </header>
   <div>
     <h1>Tìm điểm khác nhau</h1>
-    <p class="lede">Chạm vào 4 chỗ khác nhau trên một trong hai hình.</p>
+    <p class="lede">Chạm vào 5 chỗ khác nhau trên một trong hai hình.</p>
   </div>
   <div class="round-bar">
     <span class="play-clock" id="clock" aria-label="Thời gian" aria-live="off">0.000 s</span>
-    <p id="progress" aria-live="polite">0 / 4</p>
+    <p id="progress" aria-live="polite">0 / 5</p>
     <button type="button" class="go" id="next">Đổi bộ hình</button>
   </div>
   <div class="boards" id="boards">
@@ -85,18 +85,46 @@
   const decks = [
     {
       src: '/meo-ngu/quan.jpg', crop: '43%', name: 'Mặt tiền mô hình giấy Yên',
-      spots: [[76,17,7,'sky'],[58,54,6,'wall'],[82,77,8,'ground'],[28,82,7,'ground'],[48,72,7,'ground'],[17,44,6,'wall'],[89,43,6,'wall']]
+      spots: [[76,17,7,'sky'],[58,54,6,'wall'],[82,77,8,'ground'],[28,82,7,'ground'],[48,72,7,'ground'],[17,44,6,'wall'],[89,43,6,'wall'],[64,88,6,'ground']]
     },
     {
       src: '/quet-la/san.jpg', crop: '44%', name: 'Sân mô hình giấy Yên',
-      spots: [[48,18,7,'ground'],[47,71,7,'ground'],[77,83,8,'ground'],[29,48,6,'ground'],[63,36,6,'ground'],[24,79,7,'ground'],[79,57,6,'wall']]
+      spots: [[48,18,7,'ground'],[47,71,7,'ground'],[77,83,8,'ground'],[29,48,6,'ground'],[63,36,6,'ground'],[24,79,7,'ground'],[79,57,6,'wall'],[82,24,6,'wall']]
     },
     {
       src: '/ve-mai/mai.jpg', crop: '61%', name: 'Mái mô hình giấy Yên',
-      spots: [[77,15,7,'sky'],[63,45,6,'ground'],[66,82,8,'ground'],[26,74,7,'ground'],[41,41,6,'ground'],[83,59,6,'ground'],[17,23,6,'sky']]
+      spots: [[77,15,7,'sky'],[63,45,6,'ground'],[66,82,8,'ground'],[26,74,7,'ground'],[41,41,6,'ground'],[83,59,6,'ground'],[17,23,6,'sky'],[47,89,6,'ground']]
+    },
+    {
+      src: '/meo-ngu/quan.jpg', crop: '68%', zoom: 1.42, anchor: '20% 55%', name: 'Cổng gạch kính mô hình giấy Yên',
+      spots: [[16,19,6,'wall'],[38,38,7,'ground'],[19,57,6,'wall'],[58,18,7,'wall'],[76,48,7,'ground'],[39,79,7,'ground'],[60,70,6,'ground'],[86,83,7,'ground']]
+    },
+    {
+      src: '/meo-ngu/quan.jpg', crop: '44%', zoom: 1.52, anchor: '88% 43%', name: 'Biển hiệu mô hình giấy Yên',
+      spots: [[18,16,7,'sky'],[55,15,6,'sky'],[80,37,6,'wall'],[32,45,6,'wall'],[13,73,7,'ground'],[41,82,7,'ground'],[64,66,7,'ground'],[88,80,7,'ground']]
+    },
+    {
+      src: '/meo-ngu/quan.jpg', crop: '78%', zoom: 1.31, anchor: '90% 70%', name: 'Bàn ngoài hiên mô hình giấy Yên',
+      spots: [[18,20,6,'wall'],[42,33,7,'wall'],[71,17,6,'wall'],[85,46,7,'ground'],[58,62,7,'ground'],[21,67,6,'ground'],[38,86,7,'ground'],[82,85,6,'ground']]
+    },
+    {
+      src: '/quet-la/san.jpg', crop: '24%', zoom: 1.43, anchor: '50% 20%', name: 'Bồn cây cuối sân mô hình giấy Yên',
+      spots: [[20,18,6,'wall'],[44,29,7,'ground'],[71,15,6,'wall'],[86,43,6,'wall'],[61,61,7,'ground'],[31,57,7,'ground'],[16,80,6,'ground'],[69,85,7,'ground']]
+    },
+    {
+      src: '/quet-la/san.jpg', crop: '67%', zoom: 1.36, anchor: '35% 63%', name: 'Ghế cạnh lối đi mô hình giấy Yên',
+      spots: [[14,19,6,'wall'],[39,16,7,'ground'],[67,24,7,'ground'],[85,46,6,'wall'],[45,48,6,'ground'],[19,64,7,'ground'],[58,80,7,'ground'],[84,84,7,'ground']]
+    },
+    {
+      src: '/ve-mai/mai.jpg', crop: '35%', zoom: 1.42, anchor: '33% 28%', name: 'Tán cây bên mái mô hình giấy Yên',
+      spots: [[18,15,7,'sky'],[51,20,6,'sky'],[81,15,7,'sky'],[20,47,6,'wall'],[58,46,7,'ground'],[83,62,6,'ground'],[31,83,7,'ground'],[64,84,7,'ground']]
+    },
+    {
+      src: '/ve-mai/mai.jpg', crop: '83%', zoom: 1.41, anchor: '73% 76%', name: 'Sân trước nhìn từ mái mô hình giấy Yên',
+      spots: [[22,17,6,'wall'],[47,18,7,'ground'],[80,21,6,'wall'],[64,46,7,'ground'],[31,52,7,'ground'],[16,80,6,'ground'],[53,83,7,'ground'],[84,74,7,'ground']]
     }
   ];
-  const total = 4;
+  const total = 5;
   const boards = document.querySelector('#boards');
   const progress = document.querySelector('#progress');
   const say = document.querySelector('#say');
@@ -122,7 +150,7 @@
   function createRoundProps(spots) {
     const remaining = spots.map((_, index) => index);
     const changes = new Map();
-    for (const kind of ['shape', 'shift', 'shift', 'size']) {
+    for (const kind of ['shape', 'shift', 'shift', 'size', 'size']) {
       const [index] = remaining.splice(Math.floor(Math.random() * remaining.length), 1);
       changes.set(index, kind);
     }
@@ -178,6 +206,8 @@
       await image.decode();
       Array.from(boards.children).forEach((board, index) => {
         board.style.setProperty('--crop', deck.crop);
+        board.style.setProperty('--zoom', deck.zoom ?? 1);
+        board.style.setProperty('--anchor', deck.anchor ?? '50% 50%');
         board.replaceChildren(image.cloneNode(), ...props.map(({ pair }) => drawProp(pair[index])), ...targets.map(tile => tile.cloneNode()));
       });
       next.textContent = 'Đổi bộ hình';
