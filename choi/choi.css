@@ -1,0 +1,40 @@
+/* Góc chơi của Yên: shared look for the small games (/choi/, /quet-la/, /meo-ngu/, /ve-mai/).
+   Games, not exercises: no score, no streak, nothing stored, nothing sent. Same world as / and /soon:
+   a sunlit stucco wall, burgundy paper-cut type, pictures taken from the paper model of the café. */
+:root{--stucco:#f2f1ea;--paper:#fbfaf5;--burg:#6a2028;--amber:#9a5522;--leaf:#40561f;--blue:#3f6f9a;--black:#171a1c;--walnut:#644629;--night:#161d2c;--soft:#4b4f50;
+  --serif:'Fraunces',Georgia,'Times New Roman',serif;--sans:'Be Vietnam Pro',system-ui,-apple-system,'Segoe UI',sans-serif}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{background:var(--stucco)}
+body{margin:0;min-height:100dvh;background:var(--stucco);color:var(--black);font:400 16px/1.55 var(--sans);overflow-x:hidden;-webkit-tap-highlight-color:transparent}
+a,button,input{font:inherit;color:inherit}
+:focus-visible{outline:3px solid #a64b1d;outline-offset:3px;border-radius:6px}
+.page{position:relative;isolation:isolate;min-height:100dvh;padding:max(12px,env(safe-area-inset-top)) clamp(16px,5vw,40px) calc(96px + env(safe-area-inset-bottom));display:grid;grid-template-columns:minmax(0,1fr);align-content:start;justify-items:center;gap:clamp(10px,1.8vh,20px)}
+.page > *{width:100%;max-width:640px;min-width:0}
+.page::before{content:'';position:fixed;inset:0;z-index:-2;background:radial-gradient(120vmax 90vmax at 72% 2%,rgba(255,250,232,.96),rgba(255,250,232,0) 60%),linear-gradient(180deg,rgba(203,214,224,.32),rgba(203,214,224,0) 44%)}
+.page::after{content:'';position:fixed;inset:0;z-index:30;pointer-events:none;opacity:.4;mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .36 0 0 0 0 .34 0 0 0 0 .3 0 0 0 .2 0'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)'/%3E%3C/svg%3E")}
+.top{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.logo{display:block;width:96px;aspect-ratio:1450/585;background:var(--burg);-webkit-mask:url(/yen-logo.svg) center/contain no-repeat;mask:url(/yen-logo.svg) center/contain no-repeat}
+.home{display:inline-flex;align-items:center;min-height:44px;padding:0 4px;border-radius:8px}
+.back{display:inline-flex;align-items:center;justify-content:center;gap:.4em;min-height:44px;padding:0 1em;border:1.5px solid currentColor;border-radius:999px;background:transparent;text-decoration:none;font-size:15px;font-weight:600;cursor:pointer;transition:background-color .16s,color .16s}
+.back:hover{background:var(--black);color:var(--stucco)}
+.back[aria-pressed=true]{background:var(--black);color:var(--paper)}
+.back[disabled]{opacity:.45;cursor:default}
+h1{margin:0;text-wrap:balance;font:900 clamp(34px,9.6vw,62px)/1 var(--serif);font-variation-settings:'opsz' 144;letter-spacing:-.012em;color:var(--burg);
+  filter:drop-shadow(-2px 4px 0 rgba(45,16,20,.14)) drop-shadow(-5px 10px 9px rgba(45,16,20,.16))}
+h1 .w{display:inline-block;margin-right:.16em;transform:rotate(var(--r));animation:drop .85s cubic-bezier(.2,1.45,.35,1) both;animation-delay:calc(.1s + var(--i) * 100ms)}
+@keyframes drop{from{opacity:0;transform:translateY(-50vh) rotate(calc(var(--r) * 8))}55%{opacity:1}to{opacity:1;transform:rotate(var(--r))}}
+.lede{margin:.4em 0 0;font:italic 400 clamp(16px,2.2vh,20px)/1.4 var(--serif)}
+.go{display:inline-flex;align-items:center;justify-content:center;gap:.6em;min-height:52px;padding:.5em 1.5em;border:0;border-radius:999px;background:var(--burg);color:#f8efe0;font-weight:700;font-size:18px;cursor:pointer;text-decoration:none;box-shadow:0 8px 18px rgba(60,20,24,.26);transition:transform .16s ease-out,box-shadow .16s ease-out}
+.go:hover{transform:translateY(-2px);box-shadow:0 12px 22px rgba(60,20,24,.3)}
+.go:active{transform:translateY(1px)}
+.go[disabled]{opacity:.55;cursor:default;transform:none}
+.row{display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+.say{margin:0;min-height:1.55em;font-weight:600;color:var(--burg)}
+.fine{margin:0;font-size:14px;color:var(--soft)}
+/* the picture: a print from the paper model, in a white paper border */
+.scene{position:relative;width:min(100%,calc((100dvh - 300px) * .75),560px);min-width:250px;max-width:560px;aspect-ratio:3/4;border:7px solid var(--paper);border-radius:5px;background:#a9c4e2;box-shadow:0 2px 0 #e4dfd0,0 18px 34px rgba(30,22,16,.26);overflow:hidden;touch-action:none;user-select:none;-webkit-user-select:none}
+.scene img.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;-webkit-user-drag:none}
+.scene canvas{position:absolute;inset:0;width:100%;height:100%}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}

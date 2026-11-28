@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#f2f1ea">
+<meta name="description" content="Mèo ngủ ở đâu? Con mèo của Yên trốn đâu đó trong quán để ngủ. Tìm thử coi.">
+<meta name="referrer" content="no-referrer">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;700&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,900;1,9..144,400&display=swap">
+<link rel="stylesheet" href="/choi/choi.css">
+<title>Mèo ngủ ở đâu? | Yên Coffee &amp; Tea</title>
+<style>
+.scene{touch-action:manipulation;cursor:pointer}
+/* the cat: a real button at least 44px across, with the small paper cat inside it */
+.cat{position:absolute;left:calc(var(--x) * 100%);top:calc(var(--y) * 100%);width:max(44px,calc(var(--w) * 100%));aspect-ratio:1;transform:translate(-50%,-78%);display:grid;place-items:end center;padding:0;border:0;background:transparent;cursor:pointer;z-index:2}
+.cat svg{width:var(--cw);max-width:none;height:auto;overflow:visible;filter:drop-shadow(1px 2px 1px rgba(20,24,18,.35));transform-origin:50% 100%;transition:transform .45s cubic-bezier(.3,1.6,.4,1)}
+.cat .eye{opacity:0;transition:opacity .2s}
+.cat.found svg{transform:scale(2.1) translateY(-6%)}
+.cat.found .eye{opacity:1}.cat.found .shut{opacity:0}
+.cat.found::after{content:'Meo.';position:absolute;left:50%;bottom:calc(100% + 6px);transform:translateX(-50%) rotate(-3deg);padding:.15em .6em;background:var(--paper);font:600 15px/1.3 var(--sans);white-space:nowrap;box-shadow:0 2px 8px rgba(20,24,28,.3);animation:pop .4s cubic-bezier(.3,1.6,.4,1) both}
+@keyframes pop{from{opacity:0;transform:translateX(-50%) scale(.4)}to{opacity:1;transform:translateX(-50%) rotate(-3deg)}}
+.puff{position:absolute;width:34px;height:34px;margin:-17px 0 0 -17px;border-radius:50%;border:3px solid var(--paper);pointer-events:none;animation:puff .6s ease-out forwards}
+@keyframes puff{from{opacity:.95;transform:scale(.3)}to{opacity:0;transform:scale(1.5)}}
+.ring{position:absolute;left:calc(var(--x) * 100%);top:calc(var(--y) * 100%);width:46%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;border:4px dashed var(--paper);box-shadow:0 0 0 3px rgba(23,26,28,.35),inset 0 0 0 3px rgba(23,26,28,.35);pointer-events:none;animation:ring 2.6s ease-in-out forwards}
+.ring.tight{width:20%;animation-duration:3.2s}
+@keyframes ring{0%{opacity:0;transform:translate(-50%,-50%) scale(1.3)}15%,75%{opacity:1;transform:translate(-50%,-50%)}100%{opacity:0;transform:translate(-50%,-50%)}}
+@media (prefers-reduced-motion:reduce){.puff{display:none}.ring{opacity:1}}
+</style>
+</head>
+<body>
+<main class="page">
+  <header class="top">
+    <a class="home" href="/" aria-label="Yên Coffee &amp; Tea, về trang chủ"><span class="logo"></span></a>
+    <a class="back" href="/choi/">← Góc chơi</a>
+  </header>
+  <div>
+    <h1 aria-label="Mèo ngủ ở đâu?"><span class="w" aria-hidden="true" style="--i:0;--r:-2deg">Mèo</span><span class="w" aria-hidden="true" style="--i:1;--r:1.5deg">ngủ</span><span class="w" aria-hidden="true" style="--i:2;--r:-1deg">ở</span><span class="w" aria-hidden="true" style="--i:3;--r:2deg">đâu?</span></h1>
+    <p class="lede">Con mèo của Yên kiếm được chỗ ngủ rồi. Chạm vô chỗ bạn nghĩ nó đang nằm.</p>
+  </div>
+
+  <div class="scene" id="scene">
+    <img class="bg" src="quan.jpg" width="900" height="1200" alt="Quán Yên nhìn từ ngoài đường: cây lớn che sân, tường trắng có chữ Yên, cổng có tấm biển đỏ, một bộ bàn ghế ngoài sân.">
+  </div>
+
+  <div class="row">
+    <button class="go" id="next" type="button" hidden>Trốn chỗ khác</button>
+    <button class="back" id="hint" type="button">Gợi ý</button>
+    <button class="back" id="show" type="button">Chỉ cho tôi</button>
+  </div>
+  <p class="say" id="say" role="status" aria-live="polite"></p>
+  <p class="fine">Không tính điểm, không tính giờ, không lưu gì hết. Tìm không ra thì bấm “Chỉ cho tôi”.</p>
+</main>
+
+<script>
+(() => {
+  'use strict';
+  const $ = (s) => document.querySelector(s);
+  const scene = $('#scene'), say = $('#say'), next = $('#next'), hint = $('#hint'), show = $('#show');
+  // hiding places, measured on the picture: x, y = where the cat's paws touch (fractions of the picture), w = how wide the cat is,
+  // cut = how much of its lower body is hidden behind something
+  const SPOTS = [
+    { x: .455, y: .567, w: .085, o: 'trên cột cổng, ngay trên tấm biển đỏ' },
+    { x: .285, y: .684, w: .08, o: 'trên bờ tường gạch kính' },
+    { x: .845, y: .592, w: .05, o: 'dưới cái bàn ngoài sân' },
+    { x: .72, y: .336, w: .055, o: 'trên nóc quán' },
+    { x: .925, y: .44, w: .055, o: 'trên bờ tường có dây leo' },
+    { x: .625, y: .54, w: .045, o: 'ngay cửa quán' },
+    { x: .16, y: .63, w: .075, cut: .34, o: 'trong bồn cây' },
+    { x: .665, y: .665, w: .07, o: 'giữa sân trước, chẳng thèm trốn' },
+    { x: .76, y: .506, w: .042, o: 'trên bệ cửa sổ' },
+    { x: .385, y: .76, w: .08, o: 'ngoài lề đường, trước cổng' }
+  ];
+  const CAT = '<svg viewBox="0 0 100 62" aria-hidden="true"><g fill="#171a1c"><path d="M92 44c10-4 9-22-4-22-6 0-8 6-4 8 5 2 6 8-1 9z"/><ellipse cx="54" cy="42" rx="38" ry="19"/><circle cx="24" cy="34" r="16"/><path d="M10 26l2-17 13 10zM27 18l12-10 2 17z"/></g><g class="shut" fill="none" stroke="#f6e7c1" stroke-width="2" stroke-linecap="round"><path d="M15 35q4 3 7 0M26 35q4 3 7 0"/></g><g class="eye" fill="#e9a23b"><circle cx="18.5" cy="34" r="3"/><circle cx="29.5" cy="34" r="3"/></g></svg>';
+  const WRONG = { far: ['Lạnh tanh. Chỗ này chỉ có gió.', 'Xa lắm. Mèo không ưa chỗ này.', 'Không có. Thử chỗ khác coi.'], warm: ['Ấm ấm rồi đó.', 'Hơi gần rồi. Ngó quanh coi.'], hot: ['Nóng lắm rồi! Sát bên luôn.', 'Gần xịt. Nhìn kỹ chút nữa.'] };
+  const any = (a) => a[Math.floor(Math.random() * a.length)];
+  let cur = -1, found = false, cat = null;
+
+  const place = () => { let i; do { i = Math.floor(Math.random() * SPOTS.length); } while (i === cur && SPOTS.length > 1); cur = i; found = false;
+    scene.querySelectorAll('.cat,.ring,.puff').forEach((e) => e.remove()); const s = SPOTS[i]; cat = document.createElement('button'); cat.type = 'button'; cat.className = 'cat'; cat.setAttribute('aria-label', 'Con mèo đang ngủ');
+    cat.style.cssText = `--x:${s.x};--y:${s.y};--w:${s.w}`; cat.innerHTML = CAT; scene.appendChild(cat);
+    const fit = () => { const sw = scene.clientWidth, c = cat.querySelector('svg'); c.style.setProperty('--cw', Math.max(18, s.w * sw) + 'px'); c.style.width = Math.max(18, s.w * sw) + 'px'; if (s.cut) c.style.clipPath = `inset(0 0 ${s.cut * 100}% 0)`; }; fit(); cat._fit = fit;
+    next.hidden = true; hint.disabled = false; show.disabled = false; say.textContent = ''; };
+  const win = (how) => { if (found) return; found = true; cat.classList.add('found'); cat.setAttribute('aria-label', 'Con mèo, thấy rồi'); const c = cat.querySelector('svg'); c.style.clipPath = 'none';
+    say.textContent = (how === 'shown' ? 'Đây nè. Nó nằm ' : 'Thấy rồi! Nó ngủ ') + SPOTS[cur].o + '.'; next.hidden = false; hint.disabled = true; show.disabled = true; next.focus({ preventScroll: true }); };
+
+  scene.addEventListener('click', (e) => { if (found) return; if (e.target.closest('.cat')) return win('found');
+    const r = scene.getBoundingClientRect(), px = (e.clientX - r.left) / r.width, py = (e.clientY - r.top) / r.height, s = SPOTS[cur], d = Math.hypot(px - s.x, (py - (s.y - .02)) * (r.height / r.width));
+    const p = document.createElement('i'); p.className = 'puff'; p.style.left = px * 100 + '%'; p.style.top = py * 100 + '%'; scene.appendChild(p); setTimeout(() => p.remove(), 650);
+    say.textContent = any(d < .13 ? WRONG.hot : d < .3 ? WRONG.warm : WRONG.far); });
+  const ring = (tight) => { scene.querySelectorAll('.ring').forEach((e) => e.remove()); const s = SPOTS[cur], g = document.createElement('i'); g.className = 'ring' + (tight ? ' tight' : '');
+    const off = tight ? 0 : .09, ox = s.x + (Math.random() - .5) * off * 2, oy = s.y - .02 + (Math.random() - .5) * off * 2; g.style.cssText = `--x:${Math.min(.8, Math.max(.2, ox))};--y:${Math.min(.86, Math.max(.16, oy))}`; if (tight) g.style.cssText = `--x:${s.x};--y:${s.y - .02}`; scene.appendChild(g); setTimeout(() => g.remove(), tight ? 3300 : 2700); };
+  hint.addEventListener('click', () => { if (found) return; ring(false); say.textContent = 'Nó nằm đâu đó trong vòng này.'; });
+  show.addEventListener('click', () => { if (found) return; ring(true); win('shown'); });
+  next.addEventListener('click', () => { place(); say.textContent = 'Nó đi kiếm chỗ ngủ khác rồi. Tìm lại nha.'; });
+  addEventListener('resize', () => { if (cat && cat._fit) cat._fit(); });
+
+  place();
+  // for checking the hiding places: /meo-ngu/?tatca shows a cat on every one of them
+  if (/[?&]tatca\b/.test(location.search)) SPOTS.forEach((s) => { const b = document.createElement('i'); b.className = 'cat'; b.style.cssText = `--x:${s.x};--y:${s.y};--w:${s.w};pointer-events:none`; b.innerHTML = CAT; scene.appendChild(b); const c = b.querySelector('svg'); c.style.width = Math.max(18, s.w * scene.clientWidth) + 'px'; if (s.cut) c.style.clipPath = `inset(0 0 ${s.cut * 100}% 0)`; });
+})();
+</script>
+</body>
+</html>

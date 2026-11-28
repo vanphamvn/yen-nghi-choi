@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#f2f1ea">
+<meta name="description" content="Quét lá sân Yên: quẹt ngang màn hình để quét lá ra khỏi sân. Không tính điểm.">
+<meta name="referrer" content="no-referrer">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;700&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,900;1,9..144,400&display=swap">
+<link rel="stylesheet" href="/choi/choi.css">
+<title>Quét lá sân Yên | Yên Coffee &amp; Tea</title>
+<style>
+.scene{cursor:grab}.scene.sweeping{cursor:grabbing}
+.left{position:absolute;left:10px;top:10px;z-index:2;margin:0;padding:.25em .7em;background:var(--paper);font:600 15px/1.3 var(--sans);box-shadow:0 2px 8px rgba(20,24,28,.25);transform:rotate(-1.5deg);pointer-events:none}
+.left b{font:600 1.25em/1 var(--serif);color:var(--burg)}
+</style>
+</head>
+<body>
+<main class="page">
+  <header class="top">
+    <a class="home" href="/" aria-label="Yên Coffee &amp; Tea, về trang chủ"><span class="logo"></span></a>
+    <a class="back" href="/choi/">← Góc chơi</a>
+  </header>
+  <div>
+    <h1 aria-label="Quét lá sân Yên"><span class="w" aria-hidden="true" style="--i:0;--r:-2deg">Quét</span><span class="w" aria-hidden="true" style="--i:1;--r:1.5deg">lá</span><span class="w" aria-hidden="true" style="--i:2;--r:-1deg">sân</span><span class="w" aria-hidden="true" style="--i:3;--r:2deg">Yên</span></h1>
+    <p class="lede">Quẹt lên sân để quét lá ra ngoài. Quét phụ Yên một tay nha.</p>
+  </div>
+
+  <div class="scene" id="scene">
+    <img class="bg" src="san.jpg" width="900" height="1200" alt="Sân quán Yên nhìn từ trên xuống: nền gạch xám chạy dọc theo bồn cây, cổng vòm ở cuối sân, tấm biển Yên bên phải, vài bộ bàn ghế nhỏ.">
+    <canvas id="cv" aria-hidden="true"></canvas>
+    <p class="left" id="left" aria-hidden="true">Còn <b id="n">0</b> chiếc lá</p>
+  </div>
+
+  <div class="row">
+    <button class="go" id="auto" type="button">Quét giùm tôi</button>
+    <button class="back" id="wind" type="button">Cho gió thổi lại</button>
+  </div>
+  <p class="say" id="say" role="status" aria-live="polite"></p>
+  <p class="fine">Không tính điểm, không tính giờ, không lưu gì hết. Quét chán thì thôi.</p>
+</main>
+
+<script>
+(() => {
+  'use strict';
+  const $ = (s) => document.querySelector(s);
+  const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const scene = $('#scene'), cv = $('#cv'), x = cv.getContext('2d'), say = $('#say'), nEl = $('#n');
+  // the slate yard in the picture, as fractions of its width and height (measured from the paper model)
+  const YARD = [[.36, .2], [.56, .2], [.575, .58], [.985, .59], [.985, .82], [.3, .82], [.33, .45]];
+  const COL = ['#b3682d', '#8a6a2a', '#7c4a1f', '#a8532a', '#94702f', '#6f7a34', '#c98a4b'];
+  const inYard = (px, py) => { let c = false; for (let i = 0, j = YARD.length - 1; i < YARD.length; j = i++) { const [xi, yi] = YARD[i], [xj, yj] = YARD[j]; if ((yi > py) !== (yj > py) && px < (xj - xi) * (py - yi) / (yj - yi) + xi) c = !c; } return c; };
+  const rnd = (a, b) => a + Math.random() * (b - a);
+  let W = 1, H = 1, leaves = [], raf = 0, broom = null, done = false, wave = 0;
+
+  const size = () => { const r = scene.getBoundingClientRect(), d = Math.min(devicePixelRatio || 1, 2); W = r.width - 14; H = r.height - 14; cv.width = Math.round(W * d); cv.height = Math.round(H * d); x.setTransform(d, 0, 0, d, 0, 0); draw(); };
+  const scatter = (n) => { leaves = []; let guard = 0; while (leaves.length < n && guard++ < 4000) { const px = rnd(.29, .99), py = rnd(.19, .83); if (inYard(px, py)) leaves.push({ x: px, y: py, vx: 0, vy: 0, r: rnd(0, 6.28), s: rnd(.75, 1.35), c: COL[leaves.length % COL.length], a: 1, out: false }); } done = false; count(); };
+  const count = () => { const n = leaves.filter((l) => !l.out).length; nEl.textContent = n; return n; };
+
+  const leafPath = (s) => { x.beginPath(); x.moveTo(-7 * s, 0); x.bezierCurveTo(-3 * s, -5 * s, 4 * s, -5 * s, 8 * s, 0); x.bezierCurveTo(4 * s, 5 * s, -3 * s, 5 * s, -7 * s, 0); x.closePath(); };
+  function draw() { x.clearRect(0, 0, W, H); const k = W / 340;
+    for (const l of leaves) { if (l.a <= 0) continue; x.save(); x.globalAlpha = l.a; x.translate(l.x * W, l.y * H); x.rotate(l.r);
+      x.fillStyle = 'rgba(20,24,18,.28)'; x.translate(1.5 * k, 2 * k); leafPath(l.s * k); x.fill(); x.translate(-1.5 * k, -2 * k);
+      x.fillStyle = l.c; leafPath(l.s * k); x.fill(); x.strokeStyle = 'rgba(255,255,255,.35)'; x.lineWidth = .8 * k; x.beginPath(); x.moveTo(-6 * l.s * k, 0); x.lineTo(7 * l.s * k, 0); x.stroke(); x.restore(); }
+    if (broom) { x.save(); x.translate(broom.x * W, broom.y * H); x.rotate(broom.a + Math.PI / 2);
+      x.fillStyle = 'rgba(20,24,18,.25)'; x.fillRect(-13 * k + 2, -4 * k + 3, 26 * k, 14 * k);
+      x.fillStyle = '#c9a25a'; x.beginPath(); x.moveTo(-9 * k, -4 * k); x.lineTo(9 * k, -4 * k); x.lineTo(14 * k, 11 * k); x.lineTo(-14 * k, 11 * k); x.closePath(); x.fill();
+      x.strokeStyle = '#8a6a2a'; x.lineWidth = 1 * k; for (let i = -10; i <= 10; i += 4) { x.beginPath(); x.moveTo(i * .7 * k, -3 * k); x.lineTo(i * k, 10 * k); x.stroke(); }
+      x.fillStyle = '#644629'; x.fillRect(-2 * k, -44 * k, 4 * k, 41 * k); x.fillStyle = '#6a2028'; x.fillRect(-10 * k, -6 * k, 20 * k, 4 * k); x.restore(); } }
+
+  const tick = () => { raf = 0; let moving = false;
+    for (const l of leaves) { if (l.a <= 0) continue;
+      if (l.tx !== undefined) { l.x += (l.tx - l.x) * .09; l.y += (l.ty - l.y) * .09; l.r += .06; if (Math.abs(l.tx - l.x) + Math.abs(l.ty - l.y) > .002) moving = true; continue; }
+      if (Math.abs(l.vx) + Math.abs(l.vy) > .0003) { l.x += l.vx; l.y += l.vy; l.vx *= .88; l.vy *= .88; l.r += (l.vx + l.vy) * 22; moving = true; }
+      if (!l.out && !inYard(l.x, l.y)) { l.out = true; l.vx *= 1.6; l.vy *= 1.6; }
+      if (l.out) { l.a -= .045; moving = true; } }
+    draw(); const n = count(); if (!done && n === 0 && leaves.length) finish();
+    if (moving) raf = requestAnimationFrame(tick); };
+  const kick = () => { if (!raf) raf = requestAnimationFrame(tick); };
+
+  // push every leaf near the stroke (a → b) along it
+  const push = (ax, ay, bx, by) => { const dx = bx - ax, dy = by - ay, len = Math.hypot(dx * W, dy * H); if (len < .5) return; const R = .058;
+    for (const l of leaves) { if (l.out || l.tx !== undefined) continue; const t = Math.max(0, Math.min(1, ((l.x - ax) * dx + (l.y - ay) * dy) / (dx * dx + dy * dy || 1))), cx = ax + dx * t, cy = ay + dy * t, d = Math.hypot((l.x - cx), (l.y - cy) * (H / W));
+      if (d < R) { const f = (1 - d / R) * .9 + .25; if (still) { l.out = true; l.a = 0; } else { l.vx += dx * f * .3 + rnd(-.002, .002); l.vy += dy * f * .3 + rnd(-.002, .002); } } }
+    if (still) { draw(); if (count() === 0 && !done) finish(); } else kick(); };
+
+  // ── when the yard is clean, the wind brings the leaves back in a shape
+  const SHAPES = [
+    ['một trái tim', (t) => { const a = t * 6.283; return [16 * Math.pow(Math.sin(a), 3) / 17, -(13 * Math.cos(a) - 5 * Math.cos(2 * a) - 2 * Math.cos(3 * a) - Math.cos(4 * a)) / 17]; }],
+    ['một cái mặt cười', (t) => { if (t < .62) { const a = t / .62 * 6.283; return [Math.cos(a), Math.sin(a)]; } if (t < .7) return [-.38, -.3]; if (t < .78) return [.38, -.3]; const a = (t - .78) / .22 * 2.2 + .47; return [Math.cos(a) * .55, Math.sin(a) * .55 - .02]; }],
+    ['một ly nước', (t) => { if (t < .25) return [-.62 + t / .25 * .16, -.8 + t / .25 * 1.6]; if (t < .5) { const u = (t - .25) / .25; return [-.46 + u * .92, .8]; } if (t < .75) { const u = (t - .5) / .25; return [.46 + u * .16, .8 - u * 1.6]; } const u = (t - .75) / .25; return [.62 - u * 1.24, -.8]; }]
+  ];
+  const finish = () => { done = true; say.textContent = 'Sạch bong. Cảm ơn nha.';
+    setTimeout(() => { if (!done) return; const [name, f] = SHAPES[wave++ % SHAPES.length], n = 46, cx = .6, cy = .7, sx = .17, sy = .1; leaves = [];
+      for (let i = 0; i < n; i++) { const [px, py] = f(i / n), tx = cx + px * sx, ty = cy + py * sy; leaves.push({ x: still ? tx : rnd(-.1, 1.1), y: still ? ty : rnd(-.25, -.05), tx, ty, vx: 0, vy: 0, r: rnd(0, 6.28), s: rnd(.8, 1.2), c: COL[i % COL.length], a: 1, out: false }); }
+      say.textContent = 'Ủa, gió lại thổi. Lần này lá xếp thành ' + name + '.'; count(); draw(); kick();
+      setTimeout(() => { for (const l of leaves) { if (l.tx !== undefined) { l.x = l.tx; l.y = l.ty; delete l.tx; delete l.ty; } } done = false; draw(); }, still ? 0 : 2600); }, still ? 0 : 900); };
+
+  // ── sweeping by finger, mouse or pen
+  let last = null;
+  const pos = (e) => { const r = cv.getBoundingClientRect(); return [(e.clientX - r.left) / r.width, (e.clientY - r.top) / r.height]; };
+  cv.addEventListener('pointerdown', (e) => { const [px, py] = pos(e); last = [px, py]; broom = { x: px, y: py, a: 0 }; scene.classList.add('sweeping'); try { cv.setPointerCapture(e.pointerId); } catch (_) {} if (still) push(px - .001, py, px + .001, py); draw(); });
+  cv.addEventListener('pointermove', (e) => { if (!last) return; const [px, py] = pos(e); broom = { x: px, y: py, a: Math.atan2((py - last[1]) * H, (px - last[0]) * W) }; push(last[0], last[1], px, py); last = [px, py]; if (!raf) draw(); });
+  const up = () => { last = null; broom = null; scene.classList.remove('sweeping'); draw(); };
+  cv.addEventListener('pointerup', up); cv.addEventListener('pointercancel', up);
+
+  // ── the same thing without dragging: Yên sweeps for you, a few strokes at a time
+  $('#auto').addEventListener('click', () => { if (count() === 0) return; say.textContent = '';
+    if (still) { for (const l of leaves) { l.out = true; l.a = 0; } draw(); count(); if (!done) finish(); return; }
+    // strokes run down the side yard, then across the front yard, always towards the street
+    const strokes = [[.38, .2, .36, .86], [.44, .2, .43, .86], [.5, .2, .5, .86], [.56, .2, .57, .86], [.64, .58, .64, .86], [.72, .58, .72, .86], [.8, .58, .8, .86], [.88, .58, .88, .86], [.96, .58, .96, .86]];
+    strokes.forEach(([ax, ay, bx, by], k) => setTimeout(() => { const steps = 16; for (let s = 0; s < steps; s++) setTimeout(() => { const t0 = s / steps, t1 = (s + 1.6) / steps, x0 = ax + (bx - ax) * t0, y0 = ay + (by - ay) * t0, x1 = ax + (bx - ax) * t1, y1 = ay + (by - ay) * t1; broom = { x: x1, y: y1, a: Math.PI / 2 }; push(x0, y0, x1, y1); if (s === steps - 1 && k === strokes.length - 1) { broom = null; draw(); } }, s * 24); }, k * 400)); });
+  $('#wind').addEventListener('click', () => { say.textContent = 'Gió thổi một cái, lá rụng đầy sân.'; scatter(64); draw(); });
+
+  addEventListener('resize', size); if (window.ResizeObserver) new ResizeObserver(size).observe(scene);
+  scatter(64); size();
+})();
+</script>
+</body>
+</html>
