@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#f2f1ea">
+<meta name="description" content="Hôm nay đọc gì? Nói Yên nghe bạn có bao lâu, Yên lắc kệ sách và rớt ra một cuốn.">
+<meta name="referrer" content="no-referrer">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;700&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,900;1,9..144,400&display=swap">
+<title>Hôm nay đọc gì? | Yên Coffee &amp; Tea</title>
+<style>
+/* "Hôm nay đọc gì?": a small game, not an exercise. Say how long you have, shake the shelf, one book falls out.
+   No score, no streak, nothing stored, nothing sent. Same look as / and /soon (stucco, burgundy, walnut shelf). */
+:root{--stucco:#f2f1ea;--paper:#fbfaf5;--burg:#6a2028;--amber:#b3682d;--leaf:#40561f;--blue:#3f6f9a;--black:#171a1c;--walnut:#644629;--soft:#4b4f50;
+  --serif:'Fraunces',Georgia,'Times New Roman',serif;--sans:'Be Vietnam Pro',system-ui,-apple-system,'Segoe UI',sans-serif}
+*{box-sizing:border-box}
+html{background:var(--stucco)}
+body{margin:0;min-height:100dvh;background:var(--stucco);color:var(--black);font:400 16px/1.55 var(--sans);-webkit-tap-highlight-color:transparent}
+body::before{content:'';position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(110vmax 80vmax at 70% 0,rgba(255,250,232,.95),rgba(255,250,232,0) 60%)}
+a,button,input{font:inherit;color:inherit}
+:focus-visible{outline:3px solid #a64b1d;outline-offset:3px;border-radius:6px}
+.page{max-width:720px;margin:0 auto;padding:max(14px,env(safe-area-inset-top)) clamp(16px,5vw,32px) calc(96px + env(safe-area-inset-bottom));display:grid;gap:clamp(16px,2.6vh,26px)}
+.top{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.logo{display:block;width:104px;aspect-ratio:1450/585;background:var(--burg);-webkit-mask:url(/yen-logo.svg) center/contain no-repeat;mask:url(/yen-logo.svg) center/contain no-repeat}
+.home{display:inline-flex;align-items:center;min-height:44px;padding:0 4px;border-radius:8px;text-decoration:none}
+.back{display:inline-flex;align-items:center;min-height:44px;padding:0 .9em;border:1.5px solid currentColor;border-radius:999px;text-decoration:none;font-size:14px;font-weight:600}
+.back:hover{background:var(--black);color:var(--stucco)}
+h1{margin:0;font:900 clamp(40px,11.5vw,84px)/1 var(--serif);font-variation-settings:'opsz' 144;letter-spacing:-.012em;word-spacing:.08em;color:var(--burg);text-wrap:balance}
+.lede{margin:.5em 0 0;font:italic 400 clamp(17px,2.4vh,21px)/1.4 var(--serif);max-width:min(30ch,100%)}
+
+/* ── the two questions */
+fieldset{margin:0;padding:0;border:0;min-width:0}
+legend{padding:0;margin:0 0 .5em;font-weight:700}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips label{position:relative;display:inline-flex;align-items:center;min-height:44px;padding:0 1.05em;border:1.5px solid var(--black);border-radius:999px;font-weight:600;cursor:pointer;transition:background-color .16s ease-out,color .16s ease-out}
+.chips input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
+.chips label:hover{background:rgba(23,26,28,.08)}
+.chips label:has(input:checked){background:var(--black);color:var(--paper)}
+.chips label:has(input:focus-visible){outline:3px solid #a64b1d;outline-offset:3px}
+.go{justify-self:start;display:inline-flex;align-items:center;gap:.6em;min-height:58px;padding:.6em 1.7em;border:0;border-radius:999px;background:var(--burg);color:#f8efe0;font-weight:700;font-size:clamp(18px,2.4vh,21px);cursor:pointer;box-shadow:0 10px 22px rgba(60,20,24,.28);transition:transform .16s ease-out,box-shadow .16s ease-out}
+.go:hover{transform:translateY(-2px);box-shadow:0 14px 26px rgba(60,20,24,.32)}
+.go:active{transform:translateY(1px)}
+.go[disabled]{opacity:.6;cursor:default;transform:none}
+
+/* ── the shelf: walnut planks, paper spines */
+.shelf{display:grid;gap:14px;padding-top:6px}
+.plank{position:relative;display:flex;align-items:flex-end;justify-content:center;gap:3px;height:clamp(64px,10vh,116px);padding:0 10px;border-bottom:12px solid var(--walnut);box-shadow:0 14px 14px -10px rgba(40,24,12,.45)}
+.plank::after{content:'';position:absolute;left:0;right:0;bottom:-12px;height:3px;background:rgba(255,255,255,.14)}
+.sp{flex:0 1 var(--w);min-width:9px;height:var(--h);border-radius:3px 3px 1px 1px;background:var(--c);box-shadow:inset -3px 0 0 rgba(0,0,0,.16),inset 2px 0 0 rgba(255,255,255,.14);transform-origin:50% 100%;transition:opacity .3s,transform .45s cubic-bezier(.3,1.5,.4,1),filter .3s}
+.sp::before{content:'';display:block;height:5px;margin:14% 22% 0;background:rgba(255,255,255,.5);border-radius:1px}
+.sp.off{opacity:.24}
+.sp.out{transform:translateY(-34%) rotate(-3deg);filter:drop-shadow(0 10px 8px rgba(40,24,12,.4))}
+.shelf.shake .plank{animation:shake .62s ease-in-out}
+.shelf.shake .sp:not(.off){animation:jit .62s ease-in-out}
+.shelf.shake .sp:nth-child(2n){animation-delay:.04s}.shelf.shake .sp:nth-child(3n){animation-delay:.09s}
+@keyframes shake{0%,100%{transform:none}20%{transform:rotate(-1.6deg) translateX(-5px)}40%{transform:rotate(1.4deg) translateX(5px)}60%{transform:rotate(-1deg) translateX(-3px)}80%{transform:rotate(.6deg) translateX(2px)}}
+@keyframes jit{0%,100%{transform:none}30%{transform:rotate(-5deg)}60%{transform:rotate(4deg)}85%{transform:rotate(-2deg)}}
+
+/* ── the book that fell out */
+.out-area{min-height:150px;scroll-margin:16px 0 96px}
+.card{position:relative;background:var(--paper);padding:1.5em 1.25em 1.25em;border-top:10px solid var(--c,var(--burg));box-shadow:0 14px 28px rgba(30,22,16,.2);transform:rotate(-.6deg);animation:land .5s cubic-bezier(.3,1.4,.4,1) both}
+@keyframes land{from{opacity:0;transform:translateY(-26px) rotate(-6deg) scale(.96)}to{opacity:1;transform:rotate(-.6deg)}}
+.card small{display:block;font-weight:700;letter-spacing:.02em;color:var(--c,var(--burg));font-size:14px}
+.card h2{margin:.25em 0 .1em;font:600 clamp(24px,5.6vw,34px)/1.15 var(--serif);text-wrap:balance}
+.card .by{margin:0;font:italic 400 16px/1.4 var(--serif);color:var(--soft)}
+.card .vi{margin:.8em 0 0;font-size:17px}
+.card .t{margin:.6em 0 0;font-size:14px;color:var(--soft)}
+.empty{margin:0;padding:1.1em 1.25em;background:var(--paper);box-shadow:0 8px 18px rgba(30,22,16,.14)}
+.fine{margin:0;font-size:14px;color:var(--soft)}
+.fine + .fine{margin-top:.5em}
+.foot{display:flex;flex-wrap:wrap;gap:10px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<main class="page">
+  <header class="top">
+    <a class="home" href="/" aria-label="Yên Coffee &amp; Tea, về trang chủ"><span class="logo"></span></a>
+    <a class="back" href="/soon/">Mở thư mời</a>
+  </header>
+
+  <div>
+    <h1>Hôm nay đọc gì?</h1>
+    <p class="lede">Nói Yên nghe bạn có bao lâu. Yên lắc kệ, rớt ra một cuốn.</p>
+  </div>
+
+  <form id="ask" novalidate>
+    <div style="display:grid;gap:clamp(14px,2.2vh,22px)">
+      <fieldset>
+        <legend>Bạn ngồi được bao lâu?</legend>
+        <div class="chips">
+          <label><input type="radio" name="phut" value="5">5 phút</label>
+          <label><input type="radio" name="phut" value="15" checked>15 phút</label>
+          <label><input type="radio" name="phut" value="30">30 phút</label>
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend>Thích kiểu nào?</legend>
+        <div class="chips">
+          <label><input type="radio" name="ngan" value="" checked>Gì cũng được</label>
+          <label><input type="radio" name="ngan" value="cuoi">Cho cười</label>
+          <label><input type="radio" name="ngan" value="am">Cho ấm lòng</label>
+          <label><input type="radio" name="ngan" value="nam">Miền Nam mình</label>
+          <label><input type="radio" name="ngan" value="con">Đọc với con</label>
+          <label><input type="radio" name="ngan" value="khong">Khỏi đọc chữ</label>
+        </div>
+      </fieldset>
+      <button class="go" id="go" type="submit">Lắc kệ</button>
+    </div>
+  </form>
+
+  <div class="shelf" id="shelf" aria-hidden="true"><div class="plank"></div><div class="plank"></div></div>
+
+  <section class="out-area" id="out" aria-live="polite" aria-label="Cuốn sách rớt ra"></section>
+
+  <div>
+    <p class="fine" id="dukien" hidden>Kệ sách của Yên còn đang chọn sách. Đây là danh sách dự kiến, tới quán có thể khác chút.</p>
+    <p class="fine">Trò này không tính điểm và không lưu gì hết. Số phút là Yên ước chừng. Chán thì gấp lại.</p>
+  </div>
+
+  <nav class="foot" aria-label="Đi chỗ khác">
+    <a class="back" href="/">← Về trang Yên</a>
+  </nav>
+</main>
+
+<noscript><p style="max-width:720px;margin:0 auto;padding:0 20px 40px">Trò này cần bật JavaScript để lắc kệ. Không bật cũng không sao: tới quán, kệ sách nằm ngay đó.</p></noscript>
+
+<script src="sach.js"></script>
+<script>
+(() => {
+  'use strict';
+  const $ = (s) => document.querySelector(s);
+  const SACH = Array.isArray(window.YEN_SACH) ? window.YEN_SACH : [];
+  const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const NGAN = { cuoi: ['Đọc là cười', '#b3682d'], am: ['Ấm lòng', '#6a2028'], nam: ['Miền Nam mình', '#40561f'], con: ['Đọc với con', '#3f6f9a'], khong: ['Khỏi đọc chữ', '#171a1c'] };
+  const TIME = { 5: 'Chừng 5 phút là đủ vui.', 15: 'Ngồi chừng 15 phút là vừa.', 30: 'Cần chừng 30 phút. Đọc dở thì bữa sau ghé đọc tiếp.' };
+  const esc = (t) => String(t).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const form = $('#ask'), out = $('#out'), shelf = $('#shelf'), go = $('#go');
+  if (window.YEN_SACH_DU_KIEN) $('#dukien').hidden = false;
+
+  // the shelf: one paper spine per book, in a fixed mixed-up order so the two planks look lived in
+  const order = SACH.map((_, i) => i).sort((a, b) => ((a * 7 + 3) % 11) - ((b * 7 + 3) % 11) || a - b);
+  const planks = shelf.querySelectorAll('.plank'), half = Math.ceil(order.length / 2), spine = [];
+  order.forEach((i, k) => { const b = SACH[i], el = document.createElement('i'); el.className = 'sp';
+    el.style.setProperty('--c', (NGAN[b.ngan] || NGAN.am)[1]); el.style.setProperty('--w', (16 + (i * 5) % 13) + 'px'); el.style.setProperty('--h', (62 + (i * 11) % 36) + '%');
+    planks[k < half ? 0 : 1].appendChild(el); spine[i] = el; });
+
+  const wants = () => { const d = new FormData(form); return { phut: +d.get('phut') || 15, ngan: d.get('ngan') || '' }; };
+  // books that fit: the chosen shelf (or any), and no longer than the time given
+  const fits = (w) => SACH.map((b, i) => ({ b, i })).filter(({ b }) => (!w.ngan || b.ngan === w.ngan) && b.phut <= w.phut);
+  const dim = () => { const ok = new Set(fits(wants()).map((x) => x.i)); spine.forEach((el, i) => { el.classList.toggle('off', !ok.has(i)); el.classList.remove('out'); }); };
+  form.addEventListener('change', dim); dim();
+
+  let last = -1, busy = false;
+  const pick = (w) => { const all = fits(w); if (!all.length) return null;
+    const exact = all.filter((x) => x.b.phut === w.phut), pool0 = exact.length ? exact : all, pool = pool0.length > 1 ? pool0.filter((x) => x.i !== last) : pool0;
+    return pool[Math.floor(Math.random() * pool.length)]; };
+  const show = (hit, w) => {
+    if (!hit) { out.innerHTML = '<p class="empty">Ngăn này chưa có cuốn nào vừa ' + w.phut + ' phút. Thử cho Yên thêm chút thời gian, hoặc chọn “Gì cũng được”.</p>'; return; }
+    const b = hit.b, n = NGAN[b.ngan] || NGAN.am; last = hit.i; spine[hit.i].classList.add('out');
+    out.innerHTML = '<article class="card" style="--c:' + n[1] + '"><small>' + esc(n[0]) + '</small><h2>' + esc(b.ten) + '</h2>' + (b.tacgia ? '<p class="by">' + esc(b.tacgia) + '</p>' : '') + '<p class="vi">' + esc(b.vi) + '</p><p class="t">' + esc(TIME[b.phut] || '') + '</p></article>';
+    go.textContent = 'Lắc lại'; };
+  // on a phone the card lands below the fold: bring it into view, without yanking the page when it is already visible
+  const reveal = () => { const r = out.getBoundingClientRect(); if (r.bottom > innerHeight - 70 || r.top < 0) out.scrollIntoView({ block: 'end', behavior: still ? 'auto' : 'smooth' }); };
+  form.addEventListener('submit', (e) => { e.preventDefault(); if (busy) return; const w = wants(), hit = pick(w); dim();
+    if (still) { show(hit, w); return reveal(); }
+    busy = true; go.disabled = true; shelf.classList.remove('shake'); void shelf.offsetWidth; shelf.classList.add('shake');
+    setTimeout(() => { shelf.classList.remove('shake'); show(hit, w); reveal(); busy = false; go.disabled = false; }, 640); });
+})();
+</script>
+</body>
+</html>
